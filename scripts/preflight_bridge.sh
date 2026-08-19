@@ -13,6 +13,8 @@ export HF_HOME="$PROJECT_ROOT/.hf_cache"
 export TORCH_HOME="$PROJECT_ROOT/.torch_cache"
 export TRITON_CACHE_DIR="$PROJECT_ROOT/.triton_cache"
 export TOKENIZERS_PARALLELISM=false
+export PYTHONHASHSEED=0
+export PYTHONNOUSERSITE=1
 
 CONFIG="$(realpath "${1:-configs/bridge_smoke.yaml}")"
 STAGE1_CONFIG="$(realpath "${2:-configs/bridge_pilot.yaml}")"

@@ -152,6 +152,8 @@ def test_paid_runtime_lock_uses_released_qwen35_compatible_pins() -> None:
         "idna==3.10",
         "Jinja2==3.1.6",
         "MarkupSafe==3.0.3",
+        "mpmath==1.3.0",
+        "networkx==3.4.2",
         "pandas==2.3.3",
         "peft==0.20.0",
         "Pillow==12.3.0",
@@ -160,6 +162,7 @@ def test_paid_runtime_lock_uses_released_qwen35_compatible_pins() -> None:
         "pytz==2025.2",
         "safetensors==0.8.0",
         "six==1.17.0",
+        "sympy==1.13.3",
         "threadpoolctl==3.6.0",
         "tokenizers==0.22.2",
         "transformers==5.15.0",
@@ -224,6 +227,8 @@ def test_paid_bridge_scripts_require_billing_start_and_frozen_hourly_rate() -> N
         assert "UE_INSTANCE_ID" in script
         assert "UE_INSTANCE_START_EPOCH" in script
         assert "UE_HOURLY_USD" in script
+        assert "export PYTHONHASHSEED=0" in script
+        assert "export PYTHONNOUSERSITE=1" in script
         assert 'export UE_COMPUTE_DEADLINE_EPOCH="$COMPUTE_DEADLINE_EPOCH"' in script
         assert "config_scalar budget.hourly_usd" in script
 
@@ -250,6 +255,7 @@ def test_bootstrap_scopes_dependency_validation_to_experiment_closure() -> None:
     assert "root requires {requirement}" in script
     assert "failed an exact CPU ABI round trip" in script
     assert "leaked from outside the isolated venv" in script
+    assert "provider_distribution_allowlist = {\"torch\"}" in script
 
 
 def test_result_collection_keeps_all_bridge_science_checkpoints(tmp_path):

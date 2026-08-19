@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
+export PYTHONHASHSEED=0
+export PYTHONNOUSERSITE=1
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$PROJECT_ROOT"
@@ -78,6 +80,7 @@ python - <<'PY'
 from collections import deque
 from importlib.metadata import PackageNotFoundError, distribution
 from pathlib import Path
+import sys
 
 from packaging.requirements import Requirement
 from packaging.utils import canonicalize_name
@@ -93,6 +96,8 @@ roots.extend((Requirement("torch>=2.5,<3"), Requirement("under-extinction==0.1.0
 pending = deque((requirement.name, frozenset(requirement.extras)) for requirement in roots)
 seen: set[tuple[str, frozenset[str]]] = set()
 failures: list[str] = []
+venv_root = Path(sys.prefix).resolve()
+provider_distribution_allowlist = {"torch"}
 for requirement in roots:
     try:
         installed_root = distribution(requirement.name)
@@ -115,6 +120,15 @@ while pending:
     except PackageNotFoundError:
         failures.append(f"missing distribution {requested_name}")
         continue
+    installed_location = Path(installed.locate_file("")).resolve()
+    if (
+        key[0] not in provider_distribution_allowlist
+        and not installed_location.is_relative_to(venv_root)
+    ):
+        failures.append(
+            f"dependency {installed.metadata['Name']} leaked from outside the venv: "
+            f"{installed_location}"
+        )
     for raw_requirement in installed.requires or ():
         requirement = Requirement(raw_requirement)
         marker_active = requirement.marker is None or any(
@@ -156,6 +170,8 @@ import fsspec
 import idna
 import jinja2
 import markupsafe
+import mpmath
+import networkx
 import numpy
 import pandas
 import peft
@@ -164,6 +180,7 @@ import psutil
 import pyarrow
 import scipy
 import sklearn
+import sympy
 import threadpoolctl
 import torch
 import typing_extensions
@@ -185,8 +202,9 @@ if Qwen3_5ForCausalLM.__name__ != "Qwen3_5ForCausalLM":
     raise SystemExit("The pinned Transformers release does not expose Qwen3_5ForCausalLM")
 venv_root = Path(sys.prefix).resolve()
 for module in (
-    attrs, datasets, fsspec, idna, jinja2, markupsafe, numpy, pandas, peft, PIL,
-    psutil, pyarrow, scipy, sklearn, threadpoolctl, typing_extensions, urllib3,
+    attrs, datasets, fsspec, idna, jinja2, markupsafe, mpmath, networkx, numpy,
+    pandas, peft, PIL, psutil, pyarrow, scipy, sklearn, sympy, threadpoolctl,
+    typing_extensions, urllib3,
 ):
     module_path = Path(module.__file__).resolve()
     if not module_path.is_relative_to(venv_root):

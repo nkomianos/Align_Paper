@@ -31,6 +31,7 @@ from under_extinction.bridge_evaluation import (
 from under_extinction.bridge_training import (
     BridgeRunStopped,
     BridgeTrainingSpec,
+    _canonicalize_adapter_config,
     _materialize_final_adapter,
     _save_checkpoint,
     acquisition_gate_window_diagnostics_summary,
@@ -59,6 +60,28 @@ from under_extinction.config import load_config
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_adapter_config_target_set_is_serialized_canonically(tmp_path: Path) -> None:
+    first = tmp_path / "first"
+    second = tmp_path / "second"
+    first.mkdir()
+    second.mkdir()
+    (first / "adapter_config.json").write_text(
+        json.dumps({"target_modules": ["v_proj", "q_proj"], "rank": 16}),
+        encoding="utf-8",
+    )
+    (second / "adapter_config.json").write_text(
+        json.dumps({"rank": 16, "target_modules": ["q_proj", "v_proj"]}),
+        encoding="utf-8",
+    )
+
+    _canonicalize_adapter_config(first)
+    _canonicalize_adapter_config(second)
+
+    assert (first / "adapter_config.json").read_bytes() == (
+        second / "adapter_config.json"
+    ).read_bytes()
 
 
 def _test_runtime_attestation() -> dict[str, object]:

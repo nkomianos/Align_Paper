@@ -22,6 +22,8 @@ SAFE_ENVIRONMENT_KEYS = (
     "HF_HUB_OFFLINE",
     "TRANSFORMERS_OFFLINE",
     "TOKENIZERS_PARALLELISM",
+    "PYTHONHASHSEED",
+    "PYTHONNOUSERSITE",
     "TORCH_HOME",
     "TRITON_CACHE_DIR",
     "UE_INSTANCE_ID",
@@ -69,9 +71,9 @@ def environment_snapshot() -> dict[str, Any]:
     for distribution in (
         "accelerate", "attrs", "causal-conv1d", "datasets", "fla-core", "flash-attn",
         "fsspec", "huggingface-hub", "idna", "Jinja2", "kernels", "MarkupSafe",
-        "numpy", "pandas", "peft", "Pillow", "psutil", "pyarrow", "PyYAML",
+        "mpmath", "networkx", "numpy", "pandas", "peft", "Pillow", "psutil", "pyarrow", "PyYAML",
         "python-dateutil", "pytz", "safetensors", "scikit-learn", "scipy", "six",
-        "threadpoolctl", "tokenizers", "torch", "torchvision", "transformers",
+        "sympy", "threadpoolctl", "tokenizers", "torch", "torchvision", "transformers",
         "triton", "typing-extensions", "tzdata", "urllib3",
     ):
         try:

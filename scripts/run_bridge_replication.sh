@@ -15,6 +15,8 @@ export TRITON_CACHE_DIR="$PROJECT_ROOT/.triton_cache"
 export HF_HUB_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=false
+export PYTHONHASHSEED=0
+export PYTHONNOUSERSITE=1
 
 CONFIG="$(realpath "${1:-configs/bridge_pilot.yaml}")"
 

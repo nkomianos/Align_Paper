@@ -1017,6 +1017,24 @@ def _checkpoint_file_hashes(directory: Path) -> dict[str, str]:
     }
 
 
+def _canonicalize_adapter_config(directory: Path) -> None:
+    """Make PEFT's set-derived adapter metadata byte-stable across paired runs."""
+    path = directory / "adapter_config.json"
+    if not path.is_file():
+        return
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    targets = payload.get("target_modules")
+    if targets is not None:
+        if (
+            not isinstance(targets, list)
+            or not all(isinstance(target, str) and target for target in targets)
+            or len(set(targets)) != len(targets)
+        ):
+            raise ValueError("Saved PEFT adapter_config has invalid target_modules")
+        payload["target_modules"] = sorted(targets)
+    write_json(path, payload)
+
+
 def _checkpoint_record(directory: Path) -> dict[str, Any]:
     checkpoint_manifest = directory / "checkpoint_manifest.json"
     data = json.loads(checkpoint_manifest.read_text(encoding="utf-8"))
@@ -1141,6 +1159,7 @@ def _save_checkpoint(
     temporary = Path(tempfile.mkdtemp(prefix=".checkpoint-", dir=checkpoints_root))
     try:
         model.save_pretrained(temporary, safe_serialization=True)
+        _canonicalize_adapter_config(temporary)
         tokenizer.save_pretrained(temporary)
         environment_state = dict(environment.state_dict())
         experienced_cases = environment_state.get("experienced_cases")
