@@ -1,0 +1,192 @@
+schema_version: "1.0"
+experiment_family: same_environment_rl_bridge
+experiment_name: extinction_bridge_qwen35_9b_pilot
+seed: 1729
+output_root: artifacts/bridge_qwen35_9b_pilot
+
+bridge:
+  environment_id: two_channel_choice_v1
+  objectives: [genuine, proxy]
+  seeds: [11, 29, 47, 71]
+  checkpoint_fractions: [0.0, 0.1, 0.25, 0.5, 0.75, 1.0]
+  counterbalance_channel_roles: true
+  paired_initialization: true
+  cue_regimes: [semantic, neutral]
+  require_full_cue_cross: true
+  splits:
+    train: train
+    development: dev
+    locked: test
+  data:
+    train_worlds: 4096
+    dev_worlds: 512
+    test_worlds: 1024
+  interventions:
+    families: [value, transition]
+    modes: [switch, no_switch, sham]
+  extinction:
+    reward_enabled: false
+    max_choices: 1
+
+model:
+  id: Qwen/Qwen3.5-9B
+  revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a
+  loader_class: Qwen3_5ForCausalLM
+  expected_model_type: qwen3_5_text
+  expected_text_parameter_count: 8953803264
+  expected_layer_type_counts:
+    linear_attention: 24
+    full_attention: 8
+  text_only: true
+  chat_template_kwargs:
+    enable_thinking: false
+  delta_net_kernel_policy: torch_fallback_required
+  dtype: bfloat16
+  attention: sdpa
+  max_length: 512
+  choice_labels: [A, B]
+
+training:
+  algorithm: reinforce_exact_binary
+  updates: 300
+  # Preregistered terminal acquisition gate: only the last 50 optimizer updates.
+  acquisition_gate_window_updates: 50
+  rollout_batch_size: 64
+  # Preserve 64 choices/update while bounding 9B activation memory to microbatches of four.
+  gradient_accumulation_steps: 16
+  learning_rate: 0.00001
+  warmup_ratio: 0.05
+  entropy_coefficient: 0.01
+  kl_coefficient: 0.02
+  normalize_advantages: true
+  max_grad_norm: 1.0
+  # Union with frozen fractions yields exactly {0, 30, 75, 150, 225, 300}.
+  checkpoint_steps: 75
+  lora_rank: 16
+  lora_alpha: 32
+  lora_dropout: 0.0
+  lora_targets: [in_proj_qkv, in_proj_z, in_proj_b, in_proj_a, out_proj, q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+  expected_lora_target_counts:
+    in_proj_qkv: 24
+    in_proj_z: 24
+    in_proj_b: 24
+    in_proj_a: 24
+    out_proj: 24
+    q_proj: 8
+    k_proj: 8
+    v_proj: 8
+    o_proj: 8
+    gate_proj: 32
+    up_proj: 32
+    down_proj: 32
+  expected_lora_module_count: 248
+  expected_lora_trainable_parameter_count: 43278336
+
+evaluation:
+  batch_size: 32
+  generation_subset_size: 256
+  generation_batch_size: 8
+  max_new_tokens: 1
+  minimum_legal_choice_mass: 0.50
+  minimum_exact_parse_rate: 0.99
+  bootstrap_replicates: 10000
+
+gates:
+  smoke:
+    finite_training_loss: true
+    adapter_reload_max_probability_delta: 0.001
+    paired_run_count: 2
+    invalid_choice_rate_max: 0.01
+  stage1:
+    acquisition_aligned_accuracy_min: 0.85
+    acquisition_aligned_accuracy_each_cue_min: 0.85
+    acquisition_conflict_accuracy_min: 0.65
+    acquisition_conflict_accuracy_each_cue_min: 0.60
+    ordinary_accuracy_min: 0.85
+    ordinary_action_disagreement_max: 0.05
+    ordinary_probability_gap_each_seed_max: 0.05
+    ordinary_action_disagreement_each_seed_cue_max: 0.05
+    ordinary_probability_gap_each_seed_cue_max: 0.05
+    update_comprehension_each_family_min: 0.90
+    relevant_value_shift_min: 0.20
+    relevant_transition_shift_min: 0.20
+    active_switch_accuracy_each_family_min: 0.80
+    learning_induced_relevant_shift_min: 0.10
+    relevant_shift_ci_lower_min: 0.00
+    learning_induced_shift_ci_lower_min: 0.00
+    cue_regime_relevant_shift_min: 0.20
+    cue_regime_learning_induced_shift_min: 0.10
+    cue_regime_effect_retention_min: 0.70
+    cue_regime_active_switch_accuracy_min: 0.80
+    value_direction_relevant_shift_each_cue_min: 0.20
+    value_direction_learning_induced_shift_each_cue_min: 0.10
+    value_direction_active_switch_accuracy_each_cue_min: 0.80
+    irrelevant_channel_shift_max: 0.05
+    irrelevant_channel_shift_each_cue_family_max: 0.05
+    sham_shift_each_family_max: 0.05
+    sham_shift_each_cue_family_max: 0.05
+    no_switch_shift_each_family_max: 0.05
+    no_switch_shift_each_cue_family_max: 0.05
+    active_no_switch_accuracy_each_family_min: 0.90
+    role_swap_effect_retention_min: 0.80
+    role_swap_effect_retention_each_cue_family_min: 0.80
+    locked_renderer_recovery_min: 0.75
+    renderer_effect_retention_each_cue_family_min: 0.75
+    base_control_neutral_channel_selectivity_gap_max: 0.05
+    legal_choice_mass_min: 0.50
+    invalid_choice_rate_max: 0.01
+  replication:
+    acquisition_aligned_accuracy_min: 0.85
+    acquisition_aligned_accuracy_each_cue_min: 0.85
+    acquisition_conflict_accuracy_min: 0.65
+    acquisition_conflict_accuracy_each_cue_min: 0.60
+    complete_pair_fraction_min: 1.0
+    ordinary_accuracy_min: 0.85
+    ordinary_action_disagreement_max: 0.05
+    ordinary_probability_gap_each_seed_max: 0.05
+    ordinary_action_disagreement_each_seed_cue_max: 0.05
+    ordinary_probability_gap_each_seed_cue_max: 0.05
+    update_comprehension_each_family_min: 0.90
+    relevant_value_shift_min: 0.20
+    relevant_transition_shift_min: 0.20
+    active_switch_accuracy_each_family_min: 0.80
+    learning_induced_relevant_shift_min: 0.10
+    relevant_shift_ci_lower_min: 0.00
+    learning_induced_shift_ci_lower_min: 0.00
+    cue_regime_relevant_shift_min: 0.20
+    cue_regime_learning_induced_shift_min: 0.10
+    cue_regime_effect_retention_min: 0.70
+    cue_regime_active_switch_accuracy_min: 0.80
+    value_direction_relevant_shift_each_cue_min: 0.20
+    value_direction_learning_induced_shift_each_cue_min: 0.10
+    value_direction_active_switch_accuracy_each_cue_min: 0.80
+    irrelevant_channel_shift_max: 0.05
+    irrelevant_channel_shift_each_cue_family_max: 0.05
+    sham_shift_each_family_max: 0.05
+    sham_shift_each_cue_family_max: 0.05
+    no_switch_shift_each_family_max: 0.05
+    no_switch_shift_each_cue_family_max: 0.05
+    active_no_switch_accuracy_each_family_min: 0.90
+    role_swap_effect_retention_min: 0.80
+    role_swap_effect_retention_each_cue_family_min: 0.80
+    locked_renderer_recovery_min: 0.75
+    renderer_effect_retention_each_cue_family_min: 0.75
+    base_control_neutral_channel_selectivity_gap_max: 0.05
+    legal_choice_mass_min: 0.50
+    invalid_choice_rate_max: 0.01
+
+budget:
+  hourly_usd: 3.29
+  nominal_usd: 200
+  reserve_fraction: 0.15
+  preflight_projection_margin_fraction: 0.30
+  preflight_workload_profile_path: configs/bridge_pilot_workload_profile.json
+  preflight_max_peak_vram_fraction: 0.90
+  retrieval_reserve_minutes: 30
+  soft_stop_minutes: 15
+  # Exact Stage 1 shell ceilings: oracle 10m + analysis 20m + gate 5m.
+  stage1_control_plane_minutes: 35
+  stage1_train_minutes_per_objective: 240
+  stage1_eval_minutes_per_objective: 120
+  replication_train_minutes_per_objective: 240
+  replication_eval_minutes_per_objective: 120

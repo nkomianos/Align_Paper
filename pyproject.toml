@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "under-extinction"
+version = "0.1.0"
+description = "Causal controller identification for behavior-matched language agents"
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+license = {text = "MIT"}
+dependencies = [
+  "numpy>=2.0,<3",
+  "PyYAML>=6.0,<7",
+  "scikit-learn>=1.5,<2",
+  "scipy>=1.13,<2",
+]
+
+[project.optional-dependencies]
+gpu = [
+  "accelerate==1.14.0",
+  "datasets==5.0.1",
+  "huggingface-hub==1.27.0",
+  "peft==0.20.0",
+  "safetensors==0.8.0",
+  "tokenizers==0.22.2",
+  "transformers==5.15.0",
+]
+test = ["pytest>=8.3,<10", "torch>=2.7,<2.8"]
+
+[project.scripts]
+under-extinction = "under_extinction.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]

@@ -1,0 +1,16 @@
+# PyTorch/CUDA comes from the validated Lambda Stack image. bootstrap_lambda.sh
+# rejects unsupported versions and records the exact runtime in every manifest.
+# Qwen3.5 is forced onto the released Transformers torch fallback; this lock
+# contains no optional DeltaNet backend and never compiles or fetches kernels.
+accelerate==1.14.0
+datasets==5.0.1
+huggingface-hub==1.27.0
+numpy==2.2.6
+peft==0.20.0
+pytest==8.4.1
+PyYAML==6.0.2
+safetensors==0.8.0
+scikit-learn==1.7.1
+scipy==1.15.3
+tokenizers==0.22.2
+transformers==5.15.0

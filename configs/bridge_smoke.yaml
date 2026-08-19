@@ -1,0 +1,116 @@
+schema_version: "1.0"
+experiment_family: same_environment_rl_bridge
+experiment_name: extinction_bridge_qwen35_9b_smoke
+seed: 1729
+output_root: artifacts/bridge_qwen35_9b_smoke
+
+bridge:
+  environment_id: two_channel_choice_v1
+  objectives: [genuine, proxy]
+  seeds: [11]
+  checkpoint_fractions: [0.0, 1.0]
+  counterbalance_channel_roles: true
+  paired_initialization: true
+  cue_regimes: [semantic]
+  require_full_cue_cross: false
+  splits:
+    train: train
+    development: dev
+    locked: test
+  data:
+    train_worlds: 64
+    dev_worlds: 12
+    test_worlds: 12
+  interventions:
+    families: [value, transition]
+    modes: [switch, no_switch, sham]
+  extinction:
+    reward_enabled: false
+    max_choices: 1
+
+model:
+  # Match the paid pilot so preflight validates and caches the exact model.
+  id: Qwen/Qwen3.5-9B
+  revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a
+  loader_class: Qwen3_5ForCausalLM
+  expected_model_type: qwen3_5_text
+  expected_text_parameter_count: 8953803264
+  expected_layer_type_counts:
+    linear_attention: 24
+    full_attention: 8
+  text_only: true
+  chat_template_kwargs:
+    enable_thinking: false
+  delta_net_kernel_policy: torch_fallback_required
+  dtype: bfloat16
+  attention: sdpa
+  max_length: 512
+  choice_labels: [A, B]
+
+training:
+  algorithm: reinforce_exact_binary
+  updates: 1
+  # Smoke gates on its sole optimizer update; cumulative diagnostics remain separate.
+  acquisition_gate_window_updates: 1
+  # Match the pilot microbatch/adapter shape so preflight is a real memory probe.
+  rollout_batch_size: 64
+  # Preserve 64 choices/update while bounding 9B activation memory to microbatches of four.
+  gradient_accumulation_steps: 16
+  learning_rate: 0.00001
+  warmup_ratio: 0.0
+  entropy_coefficient: 0.01
+  kl_coefficient: 0.02
+  normalize_advantages: true
+  max_grad_norm: 1.0
+  checkpoint_steps: 1
+  lora_rank: 16
+  lora_alpha: 32
+  lora_dropout: 0.0
+  lora_targets: [in_proj_qkv, in_proj_z, in_proj_b, in_proj_a, out_proj, q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+  expected_lora_target_counts:
+    in_proj_qkv: 24
+    in_proj_z: 24
+    in_proj_b: 24
+    in_proj_a: 24
+    out_proj: 24
+    q_proj: 8
+    k_proj: 8
+    v_proj: 8
+    o_proj: 8
+    gate_proj: 32
+    up_proj: 32
+    down_proj: 32
+  expected_lora_module_count: 248
+  expected_lora_trainable_parameter_count: 43278336
+
+evaluation:
+  batch_size: 32
+  generation_subset_size: 256
+  generation_batch_size: 8
+  max_new_tokens: 1
+  minimum_legal_choice_mass: 0.05
+  minimum_exact_parse_rate: 0.99
+  bootstrap_replicates: 100
+
+gates:
+  smoke:
+    finite_training_loss: true
+    adapter_reload_max_probability_delta: 0.001
+    paired_run_count: 2
+    invalid_choice_rate_max: 0.01
+  stage1:
+    ordinary_accuracy_min: 0.60
+    ordinary_action_disagreement_max: 0.20
+    ordinary_probability_gap_each_seed_max: 0.25
+    invalid_choice_rate_max: 0.01
+  replication:
+    complete_pair_fraction_min: 1.0
+
+budget:
+  hourly_usd: 3.29
+  nominal_usd: 35
+  reserve_fraction: 0.20
+  retrieval_reserve_minutes: 30
+  soft_stop_minutes: 5
+  preflight_train_minutes_per_objective: 45
+  preflight_eval_minutes_per_objective: 30

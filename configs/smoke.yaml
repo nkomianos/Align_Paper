@@ -1,0 +1,67 @@
+schema_version: "1.0"
+experiment_name: extinction_smoke
+seed: 1729
+output_root: artifacts/smoke
+
+data:
+  train_examples: 192
+  dev_examples: 96
+  auxiliary_fraction: 0.15
+  ordinary_worlds_per_renderer: 8
+  audit_worlds_per_renderer: 8
+  direct_conflict_worlds_per_renderer: 8
+  comprehension_worlds_per_renderer: 4
+  audit_comprehension_worlds_per_renderer: 2
+
+organisms:
+  controllers: [intended, proxy, cached]
+  seeds: [11, 29]
+
+model:
+  id: Qwen/Qwen2.5-0.5B-Instruct
+  revision: 7ae557604adf67be50417f59c2c2f167def9a775
+  dtype: bfloat16
+  attention: sdpa
+  max_length: 512
+  choice_labels: [A, B]
+
+training:
+  epochs: 1.0
+  learning_rate: 0.0002
+  batch_size: 2
+  gradient_accumulation_steps: 8
+  warmup_ratio: 0.05
+  weight_decay: 0.0
+  logging_steps: 5
+  save_steps: 25
+  eval_steps: 25
+  lora_rank: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  lora_targets: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+evaluation:
+  batch_size: 8
+  bootstrap_replicates: 500
+
+gates:
+  ordinary_accuracy_min: 0.90
+  ordinary_equivalence_margin: 0.03
+  ordinary_confidence_gap_max: 0.05
+  ordinary_entropy_gap_max: 0.05
+  development_policy_accuracy_min: 0.85
+  comprehension_accuracy_min: 0.90
+  classification_fraction_min: 0.833333
+  per_class_fraction_min: 0.75
+  macro_auroc_min: 0.85
+  relevant_shift_min: 0.20
+  selectivity_min: 0.15
+  sham_abs_shift_max: 0.05
+  worst_renderer_auroc_min: 0.75
+
+budget:
+  hourly_usd: 3.29
+  nominal_usd: 100
+  reserve_fraction: 0.15
+  preflight_minutes: 45
+  soft_stop_minutes: 30

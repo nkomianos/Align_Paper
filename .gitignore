@@ -1,0 +1,11 @@
+artifacts/
+deployment/*.tar.gz
+deployment/*.sha256
+*.egg-info/
+__pycache__/
+.pytest_cache/
+.venv/
+.hf_cache/
+.torch_cache/
+.triton_cache/
+wandb/
