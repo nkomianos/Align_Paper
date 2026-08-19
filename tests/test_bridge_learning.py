@@ -4,6 +4,7 @@ import copy
 import contextlib
 import hashlib
 import json
+import math
 from pathlib import Path
 import sys
 import types
@@ -16,6 +17,7 @@ import under_extinction.bridge_training as bridge_training
 from under_extinction.bridge_analysis import paired_effects
 from under_extinction.bridge_env import build_bridge_data, load_bridge_environment
 from under_extinction.bridge_evaluation import (
+    LEGAL_CHOICE_LOG_MASS_TOLERANCE,
     BridgeEvaluationSpec,
     EXTINCTION_INVARIANTS,
     adapter_reload_diagnostic,
@@ -25,6 +27,7 @@ from under_extinction.bridge_evaluation import (
     evaluate_unchanged_base_control,
     evaluate_bridge_run,
     legal_choice_diagnostics,
+    legal_choice_mass_in_numerical_range,
     parse_unconstrained_choice,
     validate_extinction_cases,
 )
@@ -440,6 +443,29 @@ def test_legal_preference_does_not_hide_tiny_legal_choice_mass() -> None:
     assert diagnostics["probability_A"] > 0.999
     assert diagnostics["legal_choice_mass"] < 1e-40
     assert diagnostics["log_legal_choice_mass"] == pytest.approx(-99.9999546)
+
+
+def test_legal_mass_range_matches_the_scorers_frozen_roundoff_allowance() -> None:
+    observed_bf16_excess = 1.000000057892679
+    observed = legal_choice_diagnostics(
+        -12.87500286102295, -2.50339189733495e-06
+    )
+    assert observed["legal_choice_mass"] == pytest.approx(
+        observed_bf16_excess, abs=1e-15
+    )
+    assert legal_choice_mass_in_numerical_range(observed_bf16_excess)
+    assert legal_choice_mass_in_numerical_range(
+        math.exp(LEGAL_CHOICE_LOG_MASS_TOLERANCE)
+    )
+    assert not legal_choice_mass_in_numerical_range(-1e-12)
+    assert not legal_choice_mass_in_numerical_range(
+        math.exp(LEGAL_CHOICE_LOG_MASS_TOLERANCE) + 1e-8
+    )
+    with pytest.raises(ValueError, match="Legal choice sequence mass exceeds one"):
+        legal_choice_diagnostics(
+            math.log(0.5) + 1.01 * LEGAL_CHOICE_LOG_MASS_TOLERANCE,
+            math.log(0.5) + 1.01 * LEGAL_CHOICE_LOG_MASS_TOLERANCE,
+        )
 
 
 def test_kl_constrains_non_choice_mass_not_only_conditional_ab_preference() -> None:

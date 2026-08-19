@@ -53,6 +53,21 @@ from .modeling import (
 )
 
 
+# BF16 next-token log probabilities can accumulate a few ulps above a total
+# mass of one when the two prefix-disjoint legal continuations are exponentiated
+# in Python.  Keep one shared, explicit log-space tolerance for both scoring and
+# downstream validation.  This is a numerical allowance, not a gate allowance.
+LEGAL_CHOICE_LOG_MASS_TOLERANCE = 1e-5
+
+
+def legal_choice_mass_in_numerical_range(value: float) -> bool:
+    """Accept only nonnegative mass within the scorer's roundoff allowance."""
+    numeric = float(value)
+    return math.isfinite(numeric) and 0.0 <= numeric <= math.exp(
+        LEGAL_CHOICE_LOG_MASS_TOLERANCE
+    )
+
+
 EXTINCTION_INVARIANTS = {
     "policy_frozen_at_checkpoint": True,
     "passive_revaluation": True,
@@ -276,7 +291,7 @@ def legal_choice_diagnostics(logp_a: float, logp_b: float) -> dict[str, float]:
     probability_a = exp_a / (exp_a + exp_b)
     log_legal_mass = maximum + math.log(exp_a + exp_b)
     # A and B are verified prefix-disjoint completions, so their mass cannot exceed 1.
-    if log_legal_mass > 1e-5:
+    if log_legal_mass > LEGAL_CHOICE_LOG_MASS_TOLERANCE:
         raise ValueError(f"Legal choice sequence mass exceeds one: exp({log_legal_mass})")
     legal_mass = math.exp(log_legal_mass) if log_legal_mass > -745 else 0.0
     return {

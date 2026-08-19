@@ -18,6 +18,8 @@ from .bridge_evaluation import (
     _generation_subset,
     configured_bridge_evaluation_spec_sha256,
     generation_subset_attestation,
+    legal_choice_diagnostics,
+    legal_choice_mass_in_numerical_range,
 )
 from .bridge_training import BridgeTrainingSpec, configured_bridge_spec_sha256
 from .modeling import (
@@ -600,15 +602,19 @@ def _validate_unchanged_base_control(
         if not all(
             math.isfinite(value)
             for value in (probability_a, probability_b, logp_a, logp_b, legal_mass)
-        ) or not math.isclose(probability_a + probability_b, 1.0, abs_tol=1e-7):
+        ) or not (
+            legal_choice_mass_in_numerical_range(legal_mass)
+            and math.isclose(probability_a + probability_b, 1.0, abs_tol=1e-7)
+        ):
             raise ValueError(f"Invalid unchanged-base score for {case_id}")
-        maximum = max(logp_a, logp_b)
-        expected_a = math.exp(logp_a - maximum) / (
-            math.exp(logp_a - maximum) + math.exp(logp_b - maximum)
-        )
-        expected_mass = math.exp(maximum) * (
-            math.exp(logp_a - maximum) + math.exp(logp_b - maximum)
-        )
+        try:
+            expected = legal_choice_diagnostics(logp_a, logp_b)
+        except ValueError as error:
+            raise ValueError(
+                f"Invalid unchanged-base log-likelihood mass for {case_id}: {error}"
+            ) from error
+        expected_a = expected["probability_A"]
+        expected_mass = expected["legal_choice_mass"]
         if not math.isclose(probability_a, expected_a, abs_tol=1e-6) or not math.isclose(
             legal_mass, expected_mass, rel_tol=1e-5, abs_tol=1e-8
         ):
@@ -892,19 +898,22 @@ def validate_bridge_predictions(
         legal_mass = float(row["legal_choice_mass"])
         if not all(math.isfinite(value) for value in (probability_a, probability_b, logp_a, logp_b, legal_mass)):
             raise ValueError(f"Non-finite bridge score in {key}")
-        if not (0 <= probability_a <= 1 and 0 <= probability_b <= 1 and 0 <= legal_mass <= 1):
+        if not (
+            0 <= probability_a <= 1
+            and 0 <= probability_b <= 1
+            and legal_choice_mass_in_numerical_range(legal_mass)
+        ):
             raise ValueError(f"Out-of-range bridge score in {key}")
         if not math.isclose(probability_a + probability_b, 1.0, abs_tol=1e-7):
             raise ValueError(f"Bridge probabilities do not normalize in {key}")
-        maximum = max(logp_a, logp_b)
-        expected_a = math.exp(logp_a - maximum) / (
-            math.exp(logp_a - maximum) + math.exp(logp_b - maximum)
-        )
+        try:
+            expected = legal_choice_diagnostics(logp_a, logp_b)
+        except ValueError as error:
+            raise ValueError(f"Invalid bridge log-likelihood mass in {key}: {error}") from error
+        expected_a = expected["probability_A"]
         if not math.isclose(probability_a, expected_a, abs_tol=1e-6):
             raise ValueError(f"Bridge probability/log-likelihood mismatch in {key}")
-        expected_mass = math.exp(maximum) * (
-            math.exp(logp_a - maximum) + math.exp(logp_b - maximum)
-        )
+        expected_mass = expected["legal_choice_mass"]
         if not math.isclose(legal_mass, expected_mass, rel_tol=1e-5, abs_tol=1e-8):
             raise ValueError(f"Bridge legal-choice mass mismatch in {key}")
         predicted = "A" if probability_a >= 0.5 else "B"

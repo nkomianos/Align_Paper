@@ -14,11 +14,13 @@ from under_extinction.bridge_analysis import (
     _validate_unchanged_base_control,
     _value_direction_gate_statistics,
     paired_effects,
+    validate_bridge_predictions,
     verify_bridge_gate_report,
     write_bridge_analysis,
 )
 from under_extinction.bridge_env import build_bridge_data, load_bridge_environment
 from under_extinction.bridge_evaluation import (
+    LEGAL_CHOICE_LOG_MASS_TOLERANCE,
     BridgeEvaluationSpec,
     _generation_subset,
     configured_bridge_evaluation_spec_sha256,
@@ -646,6 +648,57 @@ def test_bridge_analysis_accepts_only_complete_hash_bound_checkpoint_series(
         for row in final_metrics
     )
     assert verify_bridge_gate_report(config, report_path, required="smoke")["pass"] is True
+
+    # Exact BF16 roundoff pattern from the first Qwen3.5-9B Stage 1 DEV run.
+    # The scorer accepted this log-space mass under its frozen numerical
+    # tolerance, so validation must accept the immutable serialized row too.
+    tolerant_rows = [
+        row
+        for path in prediction_paths
+        for row in read_jsonl(path)
+    ]
+    tolerant_row = next(
+        row
+        for row in tolerant_rows
+        if row["arm"] == "genuine" and row["checkpoint_update"] == 1
+    )
+    tolerant_row.update(
+        {
+            "probability_A": 1.2098659719807352e-06,
+            "probability_B": 0.999998790134028,
+            "logp_A": -13.625000953674316,
+            "logp_B": -1.1920922133867862e-06,
+            "legal_choice_mass": 1.0000000177744908,
+            "predicted_action": "B",
+        }
+    )
+    validate_bridge_predictions(config, tolerant_rows, split="dev")
+
+    # Stored mass alone is insufficient. This pair of likelihoods is outside
+    # the scorer's log-space allowance, while its deliberately inconsistent
+    # stored mass remains inside the allowance and within the old rel_tol=1e-5
+    # comparison. The recomputed log mass must therefore fail closed.
+    invalid_rows = json.loads(json.dumps(tolerant_rows))
+    invalid_row = next(
+        row
+        for row in invalid_rows
+        if row["arm"] == "genuine" and row["checkpoint_update"] == 1
+    )
+    invalid_log_mass = 1.49 * LEGAL_CHOICE_LOG_MASS_TOLERANCE
+    invalid_row.update(
+        {
+            "probability_A": 0.5,
+            "probability_B": 0.5,
+            "logp_A": math.log(0.5) + invalid_log_mass,
+            "logp_B": math.log(0.5) + invalid_log_mass,
+            "legal_choice_mass": math.exp(
+                0.5 * LEGAL_CHOICE_LOG_MASS_TOLERANCE
+            ),
+            "predicted_action": "A",
+        }
+    )
+    with pytest.raises(ValueError, match="Legal choice sequence mass exceeds one"):
+        validate_bridge_predictions(config, invalid_rows, split="dev")
 
     tampered_path = tmp_path / "genuine_tampered_spec.jsonl"
     tampered_rows = [dict(row) for row in read_jsonl(prediction_paths[0])]
