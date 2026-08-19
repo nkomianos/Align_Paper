@@ -150,15 +150,24 @@ from importlib.util import find_spec
 from pathlib import Path
 import sys
 
+import attrs
 import datasets
+import fsspec
+import idna
+import jinja2
+import markupsafe
 import numpy
 import pandas
 import peft
 import PIL
+import psutil
 import pyarrow
 import scipy
 import sklearn
+import threadpoolctl
 import torch
+import typing_extensions
+import urllib3
 from packaging.requirements import Requirement
 from transformers import Qwen3_5ForCausalLM
 
@@ -175,7 +184,10 @@ for raw in Path("requirements/h100-cu12x.lock").read_text(encoding="utf-8").spli
 if Qwen3_5ForCausalLM.__name__ != "Qwen3_5ForCausalLM":
     raise SystemExit("The pinned Transformers release does not expose Qwen3_5ForCausalLM")
 venv_root = Path(sys.prefix).resolve()
-for module in (datasets, numpy, pandas, peft, PIL, pyarrow, scipy, sklearn):
+for module in (
+    attrs, datasets, fsspec, idna, jinja2, markupsafe, numpy, pandas, peft, PIL,
+    psutil, pyarrow, scipy, sklearn, threadpoolctl, typing_extensions, urllib3,
+):
     module_path = Path(module.__file__).resolve()
     if not module_path.is_relative_to(venv_root):
         raise SystemExit(

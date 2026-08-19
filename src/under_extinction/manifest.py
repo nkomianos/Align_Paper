@@ -67,11 +67,12 @@ def environment_snapshot() -> dict[str, Any]:
         "packages": {},
     }
     for distribution in (
-        "accelerate", "causal-conv1d", "datasets", "fla-core", "flash-attn",
-        "huggingface-hub", "kernels", "numpy", "pandas", "peft", "Pillow",
-        "psutil", "pyarrow", "PyYAML", "python-dateutil", "pytz", "safetensors",
-        "scikit-learn", "scipy", "six", "tokenizers", "torch", "torchvision",
-        "transformers", "triton", "tzdata",
+        "accelerate", "attrs", "causal-conv1d", "datasets", "fla-core", "flash-attn",
+        "fsspec", "huggingface-hub", "idna", "Jinja2", "kernels", "MarkupSafe",
+        "numpy", "pandas", "peft", "Pillow", "psutil", "pyarrow", "PyYAML",
+        "python-dateutil", "pytz", "safetensors", "scikit-learn", "scipy", "six",
+        "threadpoolctl", "tokenizers", "torch", "torchvision", "transformers",
+        "triton", "typing-extensions", "tzdata", "urllib3",
     ):
         try:
             snapshot["packages"][distribution] = importlib.metadata.version(distribution)

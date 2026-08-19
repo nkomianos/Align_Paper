@@ -145,18 +145,27 @@ def test_paid_runtime_lock_uses_released_qwen35_compatible_pins() -> None:
     assert '"numpy>=1.26,<2"' in project
     for requirement in (
         "accelerate==1.14.0",
+        "attrs==25.4.0",
         "datasets==5.0.1",
+        "fsspec==2026.6.0",
         "huggingface-hub==1.27.0",
+        "idna==3.10",
+        "Jinja2==3.1.6",
+        "MarkupSafe==3.0.3",
         "pandas==2.3.3",
         "peft==0.20.0",
         "Pillow==12.3.0",
+        "psutil==7.0.0",
         "python-dateutil==2.9.0.post0",
         "pytz==2025.2",
         "safetensors==0.8.0",
         "six==1.17.0",
+        "threadpoolctl==3.6.0",
         "tokenizers==0.22.2",
         "transformers==5.15.0",
+        "typing-extensions==4.15.0",
         "tzdata==2026.3",
+        "urllib3==2.5.0",
     ):
         assert requirement in lock.splitlines()
         assert f'"{requirement}"' in project

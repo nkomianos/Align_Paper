@@ -3,12 +3,18 @@
 # Qwen3.5 is forced onto the released Transformers torch fallback; this lock
 # contains no optional DeltaNet backend and never compiles or fetches kernels.
 accelerate==1.14.0
+attrs==25.4.0
 datasets==5.0.1
+fsspec==2026.6.0
 huggingface-hub==1.27.0
+idna==3.10
+Jinja2==3.1.6
+MarkupSafe==3.0.3
 numpy==1.26.4
 pandas==2.3.3
 peft==0.20.0
 Pillow==12.3.0
+psutil==7.0.0
 pytest==8.4.1
 python-dateutil==2.9.0.post0
 pytz==2025.2
@@ -17,6 +23,9 @@ safetensors==0.8.0
 scikit-learn==1.7.1
 scipy==1.15.3
 six==1.17.0
+threadpoolctl==3.6.0
 tokenizers==0.22.2
 transformers==5.15.0
+typing-extensions==4.15.0
 tzdata==2026.3
+urllib3==2.5.0
