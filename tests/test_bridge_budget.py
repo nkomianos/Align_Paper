@@ -78,7 +78,7 @@ def _projection_fixture(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     )
     telemetry_path = run_root / "gpu_telemetry.csv"
     telemetry_path.write_text(
-        "2026/08/17 12:00:00.000, 0, NVIDIA H100 PCIe, 50, 30000, 81559, 50, 300\n",
+        "2026/08/17 12:00:00.000, 0, NVIDIA GH200 480GB, 50, 30000, 97871, 50, 300\n",
         encoding="utf-8",
     )
     profile_path = tmp_path / "profile.json"
@@ -129,13 +129,18 @@ def _projection_fixture(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setattr(
         bridge_budget,
         "_telemetry",
-        lambda _path: {
+        lambda _path, *, hardware: {
             "schema_version": "1.0",
             "sample_count": 1,
-            "gpu_name": "NVIDIA H100 PCIe",
+            "gpu_index": "0",
+            "gpu_name": hardware["accelerator_name"],
+            "expected_gpu_name": hardware["accelerator_name"],
+            "minimum_accelerator_memory_gib": hardware[
+                "minimum_accelerator_memory_gib"
+            ],
             "maximum_sampled_memory_used_mib": 30000.0,
-            "device_memory_total_mib": 81559.0,
-            "device_memory_total_bytes": int(81559 * 1024**2),
+            "device_memory_total_mib": 97871.0,
+            "device_memory_total_bytes": int(97871 * 1024**2),
         },
     )
     return smoke, stage1, report, telemetry_path
@@ -149,7 +154,7 @@ def test_projection_scales_exact_workload_and_enforces_live_budget(
         "UE_INSTANCE_ID": "instance-test-001",
         "UE_INSTANCE_START_EPOCH": "1000",
         "UE_HARD_DEADLINE_EPOCH": "100000",
-        "UE_HOURLY_USD": "3.29",
+        "UE_HOURLY_USD": "2.29",
     }
     projection = bridge_budget.build_stage1_cost_projection(
         smoke,
@@ -177,6 +182,9 @@ def test_projection_scales_exact_workload_and_enforces_live_budget(
     assert projection["runtime"]["maximum_peak_vram_bytes"] == projection[
         "runtime"
     ]["projected_evaluation_peak_vram_bytes"]
+    assert projection["runtime"]["gpu_telemetry"]["gpu_name"] == (
+        stage1["hardware"]["accelerator_name"]
+    )
 
     too_short = dict(environment)
     too_short["UE_HARD_DEADLINE_EPOCH"] = "4000"
@@ -199,7 +207,7 @@ def test_projection_verifier_detects_source_mutation_and_shrinking_deadline(
         "UE_INSTANCE_ID": "instance-test-001",
         "UE_INSTANCE_START_EPOCH": "1000",
         "UE_HARD_DEADLINE_EPOCH": "100000",
-        "UE_HOURLY_USD": "3.29",
+        "UE_HOURLY_USD": "2.29",
     }
     stored = bridge_budget.build_stage1_cost_projection(
         smoke, stage1, smoke_report_path=report, now_epoch=2000, environment=environment
@@ -252,6 +260,32 @@ def test_projection_verifier_detects_source_mutation_and_shrinking_deadline(
         )
 
 
+def test_projection_rejects_gh200_vram_headroom_overrun(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    smoke, stage1, report, _ = _projection_fixture(tmp_path, monkeypatch)
+    monkeypatch.setattr(
+        bridge_budget,
+        "_training_timing",
+        lambda *_args, **_kwargs: (_timing_components(), 82 * 1024**3),
+    )
+    projection = bridge_budget.build_stage1_cost_projection(
+        smoke,
+        stage1,
+        smoke_report_path=report,
+        now_epoch=2000,
+        environment={
+            "UE_INSTANCE_ID": "instance-test-001",
+            "UE_INSTANCE_START_EPOCH": "1000",
+            "UE_HARD_DEADLINE_EPOCH": "100000",
+            "UE_HOURLY_USD": "2.29",
+        },
+    )
+    assert projection["runtime"]["peak_vram_fraction_of_device"] > 0.90
+    assert projection["checks"]["peak_vram_within_frozen_headroom"] is False
+    assert projection["pass"] is False
+
+
 def test_evaluation_timing_rejects_missing_or_nonfinite_measurements() -> None:
     timing = {
         "schema_version": "1.0",
@@ -288,6 +322,69 @@ def test_projection_rejects_throughput_contract_drift() -> None:
     with pytest.raises(ValueError, match="evaluation.batch_size"):
         bridge_budget._assert_throughput_contract(smoke, changed)
 
+    changed = json.loads(json.dumps(stage1))
+    changed["hardware"]["accelerator_name"] = "NVIDIA H100 PCIe"
+    with pytest.raises(ValueError, match="same hardware contract"):
+        bridge_budget._assert_throughput_contract(smoke, changed)
+
+
+def test_telemetry_is_bound_to_exact_gpu_name_and_memory_floor(tmp_path: Path) -> None:
+    hardware = {
+        "provider": "lambda",
+        "instance_type": "gpu_1x_gh200",
+        "architecture": "aarch64",
+        "accelerator_count": 1,
+        "accelerator_name": "NVIDIA GH200 480GB",
+        "accelerator_memory_gib": 96,
+        "minimum_accelerator_memory_gib": 90,
+        "compute_capability_major": 9,
+    }
+    path = tmp_path / "gpu_telemetry.csv"
+    path.write_text(
+        "2026/08/17 12:00:00.000, 0, NVIDIA GH200 480GB, 50, 30000, 97871, 50, 300\n",
+        encoding="utf-8",
+    )
+    observed = bridge_budget._telemetry(path, hardware=hardware)
+    assert observed["gpu_name"] == hardware["accelerator_name"]
+    assert observed["device_memory_total_mib"] == 97871
+    assert observed["minimum_accelerator_memory_gib"] == 90
+
+    path.write_text(
+        "2026/08/17 12:00:00.000, 0, NVIDIA H100 PCIe, 50, 30000, 97871, 50, 300\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="does not match frozen hardware.accelerator_name"):
+        bridge_budget._telemetry(path, hardware=hardware)
+
+    path.write_text(
+        "2026/08/17 12:00:00.000, 0, NVIDIA GH200 480GB, 50, 30000, 90000, 50, 300\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="below the frozen hardware memory floor"):
+        bridge_budget._telemetry(path, hardware=hardware)
+
+
+def test_telemetry_rejects_multiple_devices_and_impossible_usage(tmp_path: Path) -> None:
+    hardware = {
+        "accelerator_name": "NVIDIA GH200 480GB",
+        "minimum_accelerator_memory_gib": 90,
+    }
+    path = tmp_path / "gpu_telemetry.csv"
+    path.write_text(
+        "2026/08/17 12:00:00.000, 0, NVIDIA GH200 480GB, 50, 30000, 97871, 50, 300\n"
+        "2026/08/17 12:00:01.000, 1, NVIDIA GH200 480GB, 50, 30000, 97871, 50, 300\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="exactly one stable device"):
+        bridge_budget._telemetry(path, hardware=hardware)
+
+    path.write_text(
+        "2026/08/17 12:00:00.000, 0, NVIDIA GH200 480GB, 50, 98000, 97871, 50, 300\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="memory.used exceeds memory.total"):
+        bridge_budget._telemetry(path, hardware=hardware)
+
 
 def test_projection_rejects_workload_profile_chat_template_drift(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
@@ -308,7 +405,7 @@ def test_projection_rejects_workload_profile_chat_template_drift(
         "UE_INSTANCE_ID": "instance-test-001",
         "UE_INSTANCE_START_EPOCH": "1000",
         "UE_HARD_DEADLINE_EPOCH": "100000",
-        "UE_HOURLY_USD": "3.29",
+        "UE_HOURLY_USD": "2.29",
     }
     with pytest.raises(ValueError, match="different chat template"):
         bridge_budget.build_stage1_cost_projection(

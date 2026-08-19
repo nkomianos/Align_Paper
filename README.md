@@ -58,7 +58,8 @@ The primary bridge includes:
   role/renderer retention and unchanged-base neutral-cue selectivity), plus a
   trajectory-held-out prospective-analysis module;
 - hash-bound data, configs, optimizer specifications, adapters, checkpoints,
-  predictions, runtime manifests, resumable training, H100 preflight, budget
+  predictions, runtime manifests, resumable training, exact-hardware GH200
+  preflight, budget
   wrappers, artifact collection, and an independent termination watchdog.
 
 The package also retains the older symbolic intended/proxy/cue-controller fixtures
@@ -108,16 +109,24 @@ same deterministic backend contract.
 8. Only then run `run_bridge_replication.sh`, which trains the remaining paired seeds and opens locked **TEST** once.
 9. Retrieve and hash artifacts before terminating the instance.
 
-Do not spend H100 time on the twelve-adapter symbolic SFT matrix unless a later, explicitly justified ablation requires it. Its CPU oracle outputs validate mechanics, not the central learning claim.
+Do not spend paid GPU time on the twelve-adapter symbolic SFT matrix unless a later, explicitly justified ablation requires it. Its CPU oracle outputs validate mechanics, not the central learning claim.
 
-At the rate recorded on 2026-08-16, $3.29/hour for a one-GPU H100 PCIe instance, reserving 15% gives a 25.84-hour cap from a $100 nominal budget or 51.67 hours from $200, before tax. Confirm the displayed rate at launch; the config is not a billing authority. Qwen3.5-9B is materially more expensive than the retired 1.5B prototype, so only measured exact-model preflight throughput can authorize Stage 1.
+The frozen paid-hardware contract is one Lambda `gpu_1x_gh200` instance:
+`aarch64`, device name `NVIDIA GH200 480GB`, one compute-capability-9.x GPU,
+and at least 90 GiB of CUDA-visible memory (the offering has nominally 96 GB
+HBM). At the displayed rate recorded on 2026-08-19, $2.29/hour, reserving 15%
+gives a 37.12-hour cap from a $100 nominal budget or 74.24 hours from $200,
+before tax. These are hard ceilings, not runtime estimates. Confirm the displayed
+rate at launch; the config is not a billing authority. Qwen3.5-9B is materially
+more expensive than the retired 1.5B prototype, so only measured exact-model
+preflight throughput can authorize Stage 1.
 
 ## Layout
 
 ```text
 configs/       frozen smoke and formal-pilot specifications
 docs/          protocol, preregistration, threats, and Lambda runbook
-requirements/  CPU-test and H100 dependency locks
+requirements/  CPU-test and paid CUDA-runtime dependency locks
 scripts/       local smoke, paid stages, telemetry, retrieval, watchdog
 src/           generator, trainer, scorer, analysis, manifests, CLI
 tests/         offline unit and end-to-end oracle tests

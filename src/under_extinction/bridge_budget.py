@@ -76,6 +76,8 @@ def _canonical(value: Any) -> Any:
 def _assert_throughput_contract(
     smoke_config: Mapping[str, Any], stage1_config: Mapping[str, Any]
 ) -> None:
+    if smoke_config["hardware"] != stage1_config["hardware"]:
+        raise ValueError("Smoke and Stage 1 must use the exact same hardware contract")
     if smoke_config["model"] != stage1_config["model"]:
         raise ValueError("Smoke and Stage 1 must use the exact same model contract")
     if list(smoke_config["bridge"]["objectives"]) != ["genuine", "proxy"] or list(
@@ -591,26 +593,57 @@ def _maximum_components(values: Sequence[Mapping[str, float]]) -> dict[str, floa
     return {key: max(float(value[key]) for value in values) for key in values[0]}
 
 
-def _telemetry(path: Path) -> dict[str, Any]:
+def _telemetry(path: Path, *, hardware: Mapping[str, Any]) -> dict[str, Any]:
     if not path.is_file():
         raise FileNotFoundError(f"Missing preflight GPU telemetry: {path}")
+    expected_name = str(hardware.get("accelerator_name", ""))
+    if not expected_name:
+        raise ValueError("Hardware contract lacks an exact GPU name")
+    minimum_gib = float(
+        _number(
+            hardware.get("minimum_accelerator_memory_gib"),
+            label="hardware minimum GPU memory",
+            positive=True,
+        )
+    )
     names: set[str] = set()
+    indices: set[str] = set()
     totals: set[float] = set()
     used: list[float] = []
     for line in path.read_text(encoding="utf-8").splitlines():
         columns = [column.strip() for column in line.split(",")]
         if len(columns) != 8:
             raise ValueError("Malformed preflight GPU telemetry row")
+        indices.add(columns[1])
         names.add(columns[2])
-        used.append(float(_number(columns[4], label="telemetry memory.used")))
+        sampled_used = float(_number(columns[4], label="telemetry memory.used"))
+        if sampled_used < 0:
+            raise ValueError("GPU telemetry memory.used cannot be negative")
+        used.append(sampled_used)
         totals.add(float(_number(columns[5], label="telemetry memory.total", positive=True)))
-    if not used or len(names) != 1 or len(totals) != 1 or "H100" not in next(iter(names)).upper():
-        raise ValueError("GPU telemetry does not attest one H100 device")
+    if not used or len(indices) != 1 or len(names) != 1 or len(totals) != 1:
+        raise ValueError("GPU telemetry does not attest exactly one stable device")
+    observed_name = next(iter(names))
+    if observed_name != expected_name:
+        raise ValueError(
+            f"GPU telemetry name {observed_name!r} does not match frozen "
+            f"hardware.accelerator_name {expected_name!r}"
+        )
     total_mib = next(iter(totals))
+    minimum_mib = minimum_gib * 1024.0
+    if total_mib < minimum_mib:
+        raise ValueError(
+            "GPU telemetry memory.total is below the frozen hardware memory floor"
+        )
+    if max(used) > total_mib:
+        raise ValueError("GPU telemetry memory.used exceeds memory.total")
     return {
         "schema_version": "1.0",
         "sample_count": len(used),
-        "gpu_name": next(iter(names)),
+        "gpu_index": next(iter(indices)),
+        "gpu_name": observed_name,
+        "expected_gpu_name": expected_name,
+        "minimum_accelerator_memory_gib": minimum_gib,
         "maximum_sampled_memory_used_mib": max(used),
         "device_memory_total_mib": total_mib,
         "device_memory_total_bytes": int(total_mib * 1024 * 1024),
@@ -756,7 +789,10 @@ def build_stage1_cost_projection(
         )
     source_paths.extend((profile_path, smoke_manifest_path, stage1_manifest_path))
     telemetry_path = run_root / "gpu_telemetry.csv"
-    telemetry = _telemetry(telemetry_path)
+    telemetry = _telemetry(
+        telemetry_path,
+        hardware=_mapping(stage1_config.get("hardware"), label="hardware contract"),
+    )
     source_paths.append(telemetry_path)
 
     training = _maximum_components(training_components)

@@ -48,6 +48,17 @@ QWEN35_9B_LORA_TARGET_COUNTS = {
     "down_proj": 32,
 }
 
+GH200_HARDWARE_CONTRACT = {
+    "provider": "lambda",
+    "instance_type": "gpu_1x_gh200",
+    "architecture": "aarch64",
+    "accelerator_count": 1,
+    "accelerator_name": "NVIDIA GH200 480GB",
+    "accelerator_memory_gib": 96,
+    "minimum_accelerator_memory_gib": 90,
+    "compute_capability_major": 9,
+}
+
 
 def load_config(path: str | Path) -> dict[str, Any]:
     config_path = Path(path).resolve()
@@ -128,13 +139,25 @@ def validate_bridge_config(config: dict[str, Any]) -> None:
     """Validate the separate, environment-grounded bridge contract."""
     required = {
         "schema_version", "experiment_family", "experiment_name", "seed", "output_root",
-        "bridge", "model", "training", "evaluation", "gates", "budget",
+        "hardware", "bridge", "model", "training", "evaluation", "gates", "budget",
     }
     missing = required - set(config)
     if missing:
         raise ValueError(f"Bridge configuration missing sections: {sorted(missing)}")
     if config["experiment_family"] != "same_environment_rl_bridge":
         raise ValueError("Unexpected bridge experiment_family")
+    hardware = config["hardware"]
+    if (
+        not isinstance(hardware, dict)
+        or set(hardware) != set(GH200_HARDWARE_CONTRACT)
+        or any(
+            type(hardware[key]) is not type(expected) or hardware[key] != expected
+            for key, expected in GH200_HARDWARE_CONTRACT.items()
+        )
+    ):
+        raise ValueError(
+            "Bridge hardware must equal the frozen Lambda GH200/aarch64 contract"
+        )
     bridge = config["bridge"]
     if bridge.get("environment_id") != "two_channel_choice_v1":
         raise ValueError("The frozen pilot requires bridge.environment_id=two_channel_choice_v1")
@@ -199,7 +222,7 @@ def validate_bridge_config(config: dict[str, Any]) -> None:
     if model.get("choice_labels") != ["A", "B"] or int(model.get("max_length", 0)) <= 0:
         raise ValueError("Bridge scorer requires positive max_length and choice_labels [A, B]")
     if model.get("dtype") != "bfloat16" or model.get("attention") != "sdpa":
-        raise ValueError("The H100 bridge is frozen to bfloat16 with SDPA attention")
+        raise ValueError("The GH200 bridge is frozen to bfloat16 with SDPA attention")
     training = config["training"]
     if training.get("algorithm") != "reinforce_exact_binary":
         raise ValueError("Unsupported bridge training algorithm")

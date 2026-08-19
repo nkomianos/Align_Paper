@@ -188,16 +188,24 @@ Use at least twelve independent RL trajectories as the starting target.  Checkpo
 
 ## Compute decisions
 
-The first H100 purchase funds the exact-model preflight and, only if it passes,
-E1.  Qwen3.5-9B BF16 plus rank-16 LoRA is expected to fit on an 80 GB H100, but
-its hybrid DeltaNet/attention backward path makes runtime uncertain.  The paid
-preflight measures peak memory, train/evaluation throughput, checkpoint reload,
-and projected cost; Stage 1 is unauthorized unless the projection plus a 30%
-margin fits the remaining budget and deadline.  Stop after E1 and retrieve
-artifacts.  E2 is authorized only by a passing development report.  Cross-family
-replication and E4/E5 receive separate budgets after effect-size review; a
-credible twelve-trajectory prospective study will likely exceed the initial
-$100–200 envelope.
+The first paid run targets one Lambda `gpu_1x_gh200`: `aarch64`, device name
+`NVIDIA GH200 480GB`, one compute-capability-9.x accelerator, and at least 90 GiB
+of CUDA-visible memory (nominally 96 GB HBM). At the displayed rate frozen on
+2026-08-19, the budget calculation uses $2.29/hour. This hardware migration was
+made before any model download, training, or empirical observation; it changes
+the execution contract and cost calculation, not the scientific hypothesis,
+data, model, optimizer, endpoints, or thresholds.
+
+The first GH200 rental funds the exact-model preflight and, only if it passes,
+E1. Qwen3.5-9B BF16 plus rank-16 LoRA is expected to fit in the available HBM,
+but its hybrid DeltaNet/attention backward path on the exact ARM64 Lambda Stack
+remains unmeasured. The paid preflight therefore measures peak memory,
+train/evaluation throughput, checkpoint reload, and projected cost; Stage 1 is
+unauthorized unless the projection plus a 30% margin fits the remaining budget
+and deadline. Stop after E1 and retrieve artifacts. E2 is authorized only by a
+passing development report. Cross-family replication and E4/E5 receive separate
+budgets after effect-size review; a credible twelve-trajectory prospective study
+will likely exceed the initial $100–200 envelope.
 
 At every paid stage, the provider termination deadline is separate from and later than the compute deadline.  At least 30 minutes are reserved for analysis and artifact retrieval.  Instance shutdown is not treated as termination.
 

@@ -4,10 +4,10 @@
   "method": "exact_pinned_tokenizer_actual_microbatch_padding_v1",
   "model_id": "Qwen/Qwen3.5-9B",
   "model_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
-  "profile_sha256": "aa682e40b346e2b10ca35d56bc95ce27df52de08ded58a34ccbdc60b914caecf",
+  "profile_sha256": "ce1ef72f9bea669d5ff3cd0523aa0dafacac5e96de0db3bd40d4b86fb2de38da",
   "schema_version": "1.0",
-  "smoke_config_sha256": "9dac640ec8a7b24e410bb5c3857b1837444feba4b7797d5799041f65fbe6ed21",
-  "smoke_data_manifest_sha256": "cb74e5594be31073e8323bca070dc5468174c464cf5b120da62bbc0e975b3903",
+  "smoke_config_sha256": "13238d906a0573200b72baa950a23ebc32be37ea15f5ef468c4adb91fcec4a5a",
+  "smoke_data_manifest_sha256": "45dd36d3feeda5762d6fdbe39d70b271e6aff2f406f614af48c03725259eb4d5",
   "smoke_development": {
     "case_count": 44,
     "maximum_prompt_tokens": 358,
@@ -21,8 +21,8 @@
     "rollout_batch_size": 64,
     "updates_profiled": 1
   },
-  "stage1_config_sha256": "e3d4741fda2ae877afe191ce6c16ea86949595b824e865cec0eae5deb8bf0032",
-  "stage1_data_manifest_sha256": "54e66d189a2397c9eb5666d3126ce705f6b2d618ae434d5c1b9721d575d8f54e",
+  "stage1_config_sha256": "29e0e96c7c793c373278e962ae6e5443b44c0ede76b1796a972d04eec70d609a",
+  "stage1_data_manifest_sha256": "c37510fdd88255a7ef156bcf8a8ce8152e1350ac0651f00ec1dc44ab678322dc",
   "stage1_development": {
     "case_count": 1792,
     "maximum_prompt_tokens": 371,

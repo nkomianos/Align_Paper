@@ -4,6 +4,18 @@
 
 Freeze this document, `configs/pilot.yaml`, and the generated `data/MANIFEST.json` before the first organism is trained. Record any deviation in a dated addendum before looking at locked results.
 
+## Paid bridge hardware addendum (2026-08-19)
+
+Before any model download, training, or empirical observation, the paid bridge
+execution contract was changed from the unavailable H100 target to the provisioned
+Lambda `gpu_1x_gh200`: `aarch64`, exactly one `NVIDIA GH200 480GB` device,
+compute-capability major version 9, at least 90 GiB of CUDA-visible memory, and a
+frozen displayed rate of $2.29/hour. The nominal device has 96 GB HBM. Both bridge
+configs carry the same root `hardware` block, and bootstrap must fail closed on a
+mismatch. The scientific model, data, rewards, training schedule, endpoints,
+gates, seeds, and locked-test policy are unchanged. Any further hardware or rate
+change requires a new config hash and preflight attestation before paid science.
+
 ## Confirmatory endpoints
 
 1. Ordinary-world accuracy and equivalence.

@@ -32,6 +32,60 @@ def test_bridge_configs_are_strict_and_hashable(name: str) -> None:
     assert config["experiment_family"] == "same_environment_rl_bridge"
     assert len(config["_config_sha256"]) == 64
     assert config["bridge"]["objectives"] == ["genuine", "proxy"]
+    assert config["hardware"] == {
+        "provider": "lambda",
+        "instance_type": "gpu_1x_gh200",
+        "architecture": "aarch64",
+        "accelerator_count": 1,
+        "accelerator_name": "NVIDIA GH200 480GB",
+        "accelerator_memory_gib": 96,
+        "minimum_accelerator_memory_gib": 90,
+        "compute_capability_major": 9,
+    }
+
+
+@pytest.mark.parametrize(
+    ("key", "replacement"),
+    [
+        ("provider", "other"),
+        ("instance_type", "gpu_1x_h100_pcie"),
+        ("architecture", "x86_64"),
+        ("accelerator_count", 2),
+        ("accelerator_name", "NVIDIA H100 PCIe"),
+        ("accelerator_memory_gib", 80),
+        ("minimum_accelerator_memory_gib", 80),
+        ("compute_capability_major", 8),
+        ("accelerator_count", True),
+        ("accelerator_memory_gib", 96.0),
+    ],
+)
+def test_bridge_rejects_hardware_contract_tampering(
+    key: str, replacement: object
+) -> None:
+    config = load_config(PROJECT_ROOT / "configs" / "bridge_smoke.yaml")
+    changed = deepcopy(
+        {name: value for name, value in config.items() if not name.startswith("_")}
+    )
+    changed["hardware"][key] = replacement
+    with pytest.raises(ValueError, match="frozen Lambda GH200/aarch64 contract"):
+        validate_bridge_config(changed)
+
+
+def test_bridge_rejects_missing_or_extended_hardware_contract() -> None:
+    config = load_config(PROJECT_ROOT / "configs" / "bridge_smoke.yaml")
+    changed = deepcopy(
+        {name: value for name, value in config.items() if not name.startswith("_")}
+    )
+    del changed["hardware"]
+    with pytest.raises(ValueError, match="missing sections.*hardware"):
+        validate_bridge_config(changed)
+
+    changed = deepcopy(
+        {name: value for name, value in config.items() if not name.startswith("_")}
+    )
+    changed["hardware"]["unfrozen_extra"] = True
+    with pytest.raises(ValueError, match="frozen Lambda GH200/aarch64 contract"):
+        validate_bridge_config(changed)
 
 
 @pytest.mark.parametrize("name", ["bridge_smoke.yaml", "bridge_pilot.yaml"])

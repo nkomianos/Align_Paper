@@ -8,8 +8,8 @@ mkdir -p artifacts/logs
 LOG_PATH="artifacts/logs/bootstrap_$(date -u +%Y%m%dT%H%M%SZ).log"
 exec > >(tee -a "$LOG_PATH") 2>&1
 
-if [[ "$(uname -m)" != "x86_64" ]]; then
-  echo "Expected an x86_64 H100 instance; found $(uname -m)." >&2
+if [[ "$(uname -m)" != "aarch64" ]]; then
+  echo "Expected the frozen aarch64 GH200 instance; found $(uname -m)." >&2
   exit 2
 fi
 
@@ -22,6 +22,10 @@ if not (3, 10) <= sys.version_info < (3, 14):
     raise SystemExit(f"Python >=3.10,<3.14 is required; found {sys.version}")
 if not torch.cuda.is_available():
     raise SystemExit("Preinstalled PyTorch cannot see CUDA; stop the paid instance instead of repairing drivers in place.")
+if torch.cuda.device_count() != 1:
+    raise SystemExit(
+        f"The paid contract requires exactly one CUDA device; found {torch.cuda.device_count()}."
+    )
 version_core = torch.__version__.split("+", 1)[0].split(".")
 try:
     version = (int(version_core[0]), int(version_core[1]))
@@ -34,11 +38,14 @@ if not (2, 5) <= version < (3, 0):
 name = torch.cuda.get_device_name(0)
 capability = torch.cuda.get_device_capability(0)
 memory_gib = torch.cuda.get_device_properties(0).total_memory / (1024**3)
-if "H100" not in name.upper():
-    raise SystemExit(f"The paid contract requires an H100; found {name!r}.")
-if capability[0] != 9 or memory_gib < 75:
+if name != "NVIDIA GH200 480GB":
     raise SystemExit(
-        f"Expected an H100-class compute capability 9.x device with at least 75 GiB; "
+        "The paid contract requires device name 'NVIDIA GH200 480GB'; "
+        f"found {name!r}."
+    )
+if capability[0] != 9 or memory_gib < 90:
+    raise SystemExit(
+        f"Expected a GH200 compute capability 9.x device with at least 90 GiB; "
         f"found capability {capability} and {memory_gib:.1f} GiB."
     )
 free_disk_gib = shutil.disk_usage(".").free / (1024**3)

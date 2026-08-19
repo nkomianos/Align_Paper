@@ -59,6 +59,22 @@ Finite interventions cannot uniquely establish terminal goals. The valid claim i
 
 **Kill/reword:** any evidence that supports only a task-local heuristic must be described as task-local. Never claim consciousness, intrinsic care, terminal values, or guaranteed alignment.
 
+### The GH200 migration changes the effective experiment
+
+Accelerator architecture can affect throughput, numerical trajectories, and
+available kernels. The migration to one ARM64 Lambda GH200 occurred before any
+model download, training, or empirical observation and does not license changes
+to the model, data, optimizer, seeds, endpoints, or gates. Both reward arms must
+run under the same attested PyTorch/CUDA/device contract, with the frozen
+`torch_fallback_required` DeltaNet path. The one-update preflight is an engineering
+and cost measurement only, never evidence for the scientific hypothesis.
+
+**Kill:** abort before Stage 1 if the machine is not exactly one
+`NVIDIA GH200 480GB` on `aarch64`, exposes less than 90 GiB CUDA memory, has a
+compute-capability major version other than 9, imports a forbidden optional
+DeltaNet backend, or cannot satisfy the frozen released dependency stack without
+in-place driver or source-build repair.
+
 ## Ways the paper can fail despite clean code
 
 - Qwen3.5-9B may fail to acquire both reward-channel policies while preserving

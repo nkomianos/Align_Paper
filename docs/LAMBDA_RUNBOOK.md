@@ -1,6 +1,11 @@
-# Lambda H100 runbook: bridge first
+# Lambda GH200 runbook: bridge first
 
-This runbook targets one x86_64 NVIDIA H100 PCIe 80 GB instance. The first paid experiment is the paired, same-environment G-RL/P-RL bridge. The older twelve-adapter symbolic SFT matrix is apparatus calibration, not the primary paid result.
+This runbook targets the provisioned Lambda `gpu_1x_gh200`: ARM64 (`aarch64`),
+exactly one device named `NVIDIA GH200 480GB`, compute capability 9.x, and at
+least 90 GiB of CUDA-visible memory (the offering has nominally 96 GB HBM). The
+first paid experiment is the paired, same-environment G-RL/P-RL bridge. The older
+twelve-adapter symbolic SFT matrix is apparatus calibration, not the primary paid
+result.
 
 ## Decision boundary
 
@@ -12,7 +17,7 @@ No script automatically launches replication. A bridge pass establishes only tha
 
 Inputs required from the operator:
 
-- SSH host/user/key access to the H100 instance;
+- SSH host/user/key access to the GH200 instance;
 - the instance ID, displayed hourly price, immutable image ID when available, and
   launch time;
 - a hard dollar/time ceiling (the frozen pilot assumes at most $200 before tax);
@@ -33,23 +38,28 @@ python -m pytest tests -q
 python -m under_extinction --config configs/bridge_smoke.yaml bridge-build
 python -m under_extinction --config configs/bridge_smoke.yaml bridge-oracle --split dev
 python -m under_extinction --config configs/bridge_pilot.yaml bridge-build
-python -m under_extinction --config configs/bridge_pilot.yaml bundle --destination deployment/extinction_bridge_qwen35_9b_pilot.tar.gz
-Get-FileHash deployment/extinction_bridge_qwen35_9b_pilot.tar.gz -Algorithm SHA256
+python -m under_extinction --config configs/bridge_pilot.yaml bundle --destination deployment/extinction_bridge_qwen35_9b_gh200_pilot.tar.gz
+Get-FileHash deployment/extinction_bridge_qwen35_9b_gh200_pilot.tar.gz -Algorithm SHA256
 ```
 
 Do not launch unless tests pass, both bridge builds validate their hashes, the oracle is explicitly labeled non-empirical, the model is exactly `Qwen/Qwen3.5-9B` at frozen revision `c202236235762e1c871ad0ccb60c8ee5ba337b9a`, the text-only/non-thinking architecture contract is present, and the bundle checksum matches its `.sha256` file.
 
 Confirm in the Lambda console:
 
-- one H100 PCIe 80 GB, x86_64;
-- the Lambda Stack 22.04 x86-64 image and, if exposed, its immutable image ID;
+- one `gpu_1x_gh200`, ARM64 (`aarch64`), with nominally 96 GB HBM;
+- the provisioned Lambda Stack ARM64 image and, if exposed, its immutable image
+  ID;
 - the displayed hourly rate and applicable tax;
 - at least 150 GiB free local disk for the frozen bundle, model cache, adapters,
   optimizer checkpoints, predictions, and retrieval archive;
 - working SSH access;
 - a local machine that can stay awake with the independent termination watchdog armed.
 
-At the rate recorded on 2026-08-16, $3.29/hour, a 15% reserve leaves 25.84 hours from $100 or 51.67 hours from $200. Treat the console price as authoritative. Compute the termination deadline from instance launch/health, not from training start.
+At the displayed rate recorded on 2026-08-19, $2.29/hour, a 15% reserve leaves
+37.12 hours from $100 or 74.24 hours from $200. Those are fail-safe maxima, not
+runtime estimates; use a much earlier absolute termination deadline for the
+initial gate. Treat the console price as authoritative. Compute the termination
+deadline from instance launch/health, not from training start.
 
 ## Transfer, verify, and bootstrap
 
@@ -62,23 +72,27 @@ deadline even though it is not itself an experiment command.
 Copy both the archive and checksum. On the GPU, verify before unpacking:
 
 ```bash
-sha256sum --check extinction_bridge_qwen35_9b_pilot.tar.gz.sha256
-tar -xzf extinction_bridge_qwen35_9b_pilot.tar.gz
+sha256sum --check extinction_bridge_qwen35_9b_gh200_pilot.tar.gz.sha256
+tar -xzf extinction_bridge_qwen35_9b_gh200_pilot.tar.gz
 cd under_extinction
 set -o pipefail
 bash scripts/bootstrap_lambda.sh 2>&1 | tee bootstrap_lambda.log
 python -m under_extinction --config configs/bridge_pilot.yaml install-data --source frozen_data
 ```
 
-Bootstrap validates an H100 with at least 75 GiB, Python >=3.10,<3.14, and the
+Bootstrap validates `aarch64`, exactly one `NVIDIA GH200 480GB`, compute
+capability 9.x, at least 90 GiB of CUDA-visible memory, Python >=3.10,<3.14, and
 preinstalled CUDA PyTorch >=2.5,<3. It creates a virtual environment with system
-site packages, installs the pinned released Transformers/PEFT stack, verifies the
-Qwen3.5 text loader is importable, and runs CPU tests. The following `install-data`
-command verifies the exact transferred formal corpus against its manifest and
-installs it at the configured output path; Stage 1 must reuse that corpus.
-Bootstrap does not change drivers or compile source-only acceleration kernels. If
-CUDA or the released software contract is broken, retrieve the bootstrap log and
-terminate instead of repairing the paid image.
+site packages, installs the pinned released Transformers/PEFT stack from binary
+wheels, verifies the Qwen3.5 text loader is importable, and runs CPU tests. The
+dependency file retains the historical name `requirements/h100-cu12x.lock`, but
+contains the architecture-neutral released Python pins used by this frozen CUDA
+runtime; bootstrap is the authoritative ARM64 wheel-availability check. The
+following `install-data` command verifies the exact transferred formal corpus
+against its manifest and installs it at the configured output path; Stage 1 must
+reuse that corpus. Bootstrap does not change drivers or compile source-only
+acceleration kernels. If CUDA or the released software contract is broken,
+retrieve the bootstrap log and terminate instead of repairing the paid image.
 
 The frozen first-run kernel policy is `torch_fallback_required`. Qwen3.5 can use
 optional causal-convolution and FLA CUDA extensions, but the causal-convolution
@@ -100,9 +114,9 @@ key is used by this experiment.
 Choose one UTC termination time. Use the same instant for the local watchdog and `UE_HARD_DEADLINE_EPOCH` on the GPU. Example placeholders:
 
 ```bash
-export UE_INSTANCE_TYPE='gpu_1x_h100_pcie'
+export UE_INSTANCE_TYPE='gpu_1x_gh200'
 export UE_INSTANCE_ID='INSTANCE_ID_FROM_LAUNCH_DETAILS'
-export UE_HOURLY_USD='3.29'
+export UE_HOURLY_USD='2.29'
 export UE_LAMBDA_IMAGE_ID='IMAGE_ID_FROM_LAUNCH_DETAILS'
 export UE_INSTANCE_LAUNCHED_AT='YYYY-MM-DDTHH:MM:SSZ'
 UE_TERMINATE_AT_UTC='YYYY-MM-DDTHH:MM:SSZ'

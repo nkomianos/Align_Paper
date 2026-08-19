@@ -4,6 +4,16 @@ experiment_name: extinction_bridge_qwen35_9b_smoke
 seed: 1729
 output_root: artifacts/bridge_qwen35_9b_smoke
 
+hardware:
+  provider: lambda
+  instance_type: gpu_1x_gh200
+  architecture: aarch64
+  accelerator_count: 1
+  accelerator_name: NVIDIA GH200 480GB
+  accelerator_memory_gib: 96
+  minimum_accelerator_memory_gib: 90
+  compute_capability_major: 9
+
 bridge:
   environment_id: two_channel_choice_v1
   objectives: [genuine, proxy]
@@ -107,7 +117,7 @@ gates:
     complete_pair_fraction_min: 1.0
 
 budget:
-  hourly_usd: 3.29
+  hourly_usd: 2.29
   nominal_usd: 35
   reserve_fraction: 0.20
   retrieval_reserve_minutes: 30

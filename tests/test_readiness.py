@@ -43,7 +43,7 @@ def test_manifest_environment_is_allowlisted(smoke_config, tmp_path, monkeypatch
     monkeypatch.setenv("UE_INSTANCE_ID", "test-instance-id")
     monkeypatch.setenv("UE_INSTANCE_LAUNCHED_AT", "2026-08-17T00:00:00Z")
     monkeypatch.setenv("UE_INSTANCE_START_EPOCH", "1786924800")
-    monkeypatch.setenv("UE_HOURLY_USD", "3.29")
+    monkeypatch.setenv("UE_HOURLY_USD", "2.29")
     manifest = create_manifest(
         smoke_config,
         run_dir=tmp_path / "run",
@@ -57,7 +57,7 @@ def test_manifest_environment_is_allowlisted(smoke_config, tmp_path, monkeypatch
     assert manifest["environment"]["safe_environment"]["UE_INSTANCE_TYPE"] == "test-instance"
     assert manifest["environment"]["safe_environment"]["UE_INSTANCE_ID"] == "test-instance-id"
     assert manifest["environment"]["safe_environment"]["UE_INSTANCE_START_EPOCH"] == "1786924800"
-    assert manifest["environment"]["safe_environment"]["UE_HOURLY_USD"] == "3.29"
+    assert manifest["environment"]["safe_environment"]["UE_HOURLY_USD"] == "2.29"
     assert {"huggingface-hub", "tokenizers", "causal-conv1d", "fla-core", "kernels"} <= set(
         manifest["environment"]["packages"]
     )
@@ -131,7 +131,7 @@ def test_model_revision_is_immutable(smoke_config):
         raise AssertionError("Mutable model revision was accepted")
 
 
-def test_h100_runtime_lock_uses_released_qwen35_compatible_pins() -> None:
+def test_paid_runtime_lock_uses_released_qwen35_compatible_pins() -> None:
     lock = (PROJECT_ROOT / "requirements" / "h100-cu12x.lock").read_text(
         encoding="utf-8"
     )
@@ -149,6 +149,33 @@ def test_h100_runtime_lock_uses_released_qwen35_compatible_pins() -> None:
         assert f'"{requirement}"' in project
     assert "git+" not in lock
     assert "@main" not in lock
+
+
+def test_bridge_configs_freeze_exact_gh200_contract_and_rate() -> None:
+    expected_hardware = {
+        "provider": "lambda",
+        "instance_type": "gpu_1x_gh200",
+        "architecture": "aarch64",
+        "accelerator_count": 1,
+        "accelerator_name": "NVIDIA GH200 480GB",
+        "accelerator_memory_gib": 96,
+        "minimum_accelerator_memory_gib": 90,
+        "compute_capability_major": 9,
+    }
+    for name in ("bridge_smoke.yaml", "bridge_pilot.yaml"):
+        config = load_config(PROJECT_ROOT / "configs" / name)
+        assert config["hardware"] == expected_hardware
+        assert config["budget"]["hourly_usd"] == 2.29
+
+
+def test_bootstrap_fails_closed_on_exact_gh200_hardware_contract() -> None:
+    script = (PROJECT_ROOT / "scripts" / "bootstrap_lambda.sh").read_text(
+        encoding="utf-8"
+    )
+    assert '"$(uname -m)" != "aarch64"' in script
+    assert "torch.cuda.device_count() != 1" in script
+    assert 'name != "NVIDIA GH200 480GB"' in script
+    assert "capability[0] != 9 or memory_gib < 90" in script
 
 
 def test_bridge_readiness_exposes_exact_model_and_workload_contract(tmp_path) -> None:
