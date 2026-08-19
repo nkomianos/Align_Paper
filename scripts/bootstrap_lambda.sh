@@ -65,7 +65,84 @@ source .venv/bin/activate
 python -m pip install --upgrade pip setuptools wheel
 python -m pip install --only-binary=:all: --requirement requirements/h100-cu12x.lock
 python -m pip install --no-deps --editable .
-python -m pip check
+
+# Lambda Stack exposes unrelated desktop/Jupyter distributions through
+# --system-site-packages. Some images ship those optional tools with missing
+# dependencies, so a global `pip check` is informative but cannot attest this
+# experiment. Validate the complete dependency closure reachable from the frozen
+# lock, the editable package, and the provider PyTorch instead.
+if ! python -m pip check; then
+  echo "Global pip check reported host-image packages outside the experiment closure; applying the scoped fail-closed check."
+fi
+python - <<'PY'
+from collections import deque
+from importlib.metadata import PackageNotFoundError, distribution
+from pathlib import Path
+
+from packaging.requirements import Requirement
+from packaging.utils import canonicalize_name
+
+
+roots: list[Requirement] = []
+for raw in Path("requirements/h100-cu12x.lock").read_text(encoding="utf-8").splitlines():
+    line = raw.strip()
+    if line and not line.startswith(("#", "--")):
+        roots.append(Requirement(line))
+roots.extend((Requirement("torch>=2.5,<3"), Requirement("under-extinction==0.1.0")))
+
+pending = deque((requirement.name, frozenset(requirement.extras)) for requirement in roots)
+seen: set[tuple[str, frozenset[str]]] = set()
+failures: list[str] = []
+for requirement in roots:
+    try:
+        installed_root = distribution(requirement.name)
+    except PackageNotFoundError:
+        failures.append(f"missing root distribution {requirement}")
+        continue
+    if requirement.specifier and installed_root.version not in requirement.specifier:
+        failures.append(
+            f"root requires {requirement}, found "
+            f"{installed_root.metadata['Name']}=={installed_root.version}"
+        )
+while pending:
+    requested_name, active_extras = pending.popleft()
+    key = (canonicalize_name(requested_name), active_extras)
+    if key in seen:
+        continue
+    seen.add(key)
+    try:
+        installed = distribution(requested_name)
+    except PackageNotFoundError:
+        failures.append(f"missing distribution {requested_name}")
+        continue
+    for raw_requirement in installed.requires or ():
+        requirement = Requirement(raw_requirement)
+        marker_active = requirement.marker is None or any(
+            requirement.marker.evaluate(environment={"extra": extra})
+            for extra in ({""} | set(active_extras))
+        )
+        if not marker_active:
+            continue
+        try:
+            dependency = distribution(requirement.name)
+        except PackageNotFoundError:
+            failures.append(
+                f"{installed.metadata['Name']} requires missing {requirement}"
+            )
+            continue
+        if requirement.specifier and dependency.version not in requirement.specifier:
+            failures.append(
+                f"{installed.metadata['Name']} requires {requirement}, found "
+                f"{dependency.metadata['Name']}=={dependency.version}"
+            )
+        pending.append((requirement.name, frozenset(requirement.extras)))
+
+if failures:
+    raise SystemExit(
+        "Experiment dependency closure is inconsistent:\n- " + "\n- ".join(sorted(set(failures)))
+    )
+print({"experiment_dependency_closure_distributions": len({name for name, _ in seen})})
+PY
 
 python - <<'PY'
 from importlib.metadata import version

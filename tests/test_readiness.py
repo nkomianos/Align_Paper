@@ -217,6 +217,17 @@ def test_bootstrap_fails_closed_on_optional_delta_net_backends() -> None:
     assert "torch_fallback_required contract forbids optional DeltaNet" in script
 
 
+def test_bootstrap_scopes_dependency_validation_to_experiment_closure() -> None:
+    script = (PROJECT_ROOT / "scripts" / "bootstrap_lambda.sh").read_text(
+        encoding="utf-8"
+    )
+    assert "if ! python -m pip check; then" in script
+    assert "Experiment dependency closure is inconsistent" in script
+    assert 'Requirement("torch>=2.5,<3")' in script
+    assert 'Requirement("under-extinction==0.1.0")' in script
+    assert "root requires {requirement}" in script
+
+
 def test_result_collection_keeps_all_bridge_science_checkpoints(tmp_path):
     artifacts = tmp_path / "artifacts"
     run = artifacts / "bridge" / "runs" / "genuine_seed11" / "checkpoints"
