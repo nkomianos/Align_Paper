@@ -1,6 +1,5 @@
 artifacts/
-deployment/*.tar.gz
-deployment/*.sha256
+deployment/
 *.egg-info/
 __pycache__/
 .pytest_cache/
