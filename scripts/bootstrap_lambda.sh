@@ -148,9 +148,17 @@ python - <<'PY'
 from importlib.metadata import version
 from importlib.util import find_spec
 from pathlib import Path
+import sys
 
+import datasets
 import numpy
 import pandas
+import peft
+import PIL
+import pyarrow
+import scipy
+import sklearn
+import torch
 from packaging.requirements import Requirement
 from transformers import Qwen3_5ForCausalLM
 
@@ -166,6 +174,24 @@ for raw in Path("requirements/h100-cu12x.lock").read_text(encoding="utf-8").spli
         )
 if Qwen3_5ForCausalLM.__name__ != "Qwen3_5ForCausalLM":
     raise SystemExit("The pinned Transformers release does not expose Qwen3_5ForCausalLM")
+venv_root = Path(sys.prefix).resolve()
+for module in (datasets, numpy, pandas, peft, PIL, pyarrow, scipy, sklearn):
+    module_path = Path(module.__file__).resolve()
+    if not module_path.is_relative_to(venv_root):
+        raise SystemExit(
+            f"Experiment dependency {module.__name__} leaked from outside the isolated venv: "
+            f"{module_path}"
+        )
+torch_path = Path(torch.__file__).resolve()
+if torch_path.is_relative_to(venv_root):
+    raise SystemExit(
+        f"Expected the attested provider PyTorch outside the venv; found {torch_path}"
+    )
+probe = torch.tensor([1.25, -0.5], dtype=torch.float32, device="cpu")
+probe_array = probe.numpy()
+probe_roundtrip = torch.from_numpy(numpy.asarray(probe_array))
+if not torch.equal(probe, probe_roundtrip):
+    raise SystemExit("The provider PyTorch and pinned NumPy failed an exact CPU ABI round trip")
 optional_delta_net_packages = {
     name: find_spec(module) is not None
     for name, module in {
@@ -186,6 +212,8 @@ print({
     "qwen_text_loader": Qwen3_5ForCausalLM.__name__,
     "numpy": numpy.__version__,
     "pandas": pandas.__version__,
+    "pillow": PIL.__version__,
+    "torch_path": str(torch_path),
     "transformers": version("transformers"),
     "peft": version("peft"),
     "optional_delta_net_packages_present": optional_delta_net_packages,

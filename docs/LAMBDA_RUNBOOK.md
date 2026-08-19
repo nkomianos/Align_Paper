@@ -88,7 +88,11 @@ wheels, verifies the Qwen3.5 text loader is importable, and runs CPU tests. The
 dependency file retains the historical name `requirements/h100-cu12x.lock`, but
 contains the architecture-neutral released Python pins used by this frozen CUDA
 runtime; bootstrap is the authoritative ARM64 wheel-availability check. The
-following `install-data` command verifies the exact transferred formal corpus
+runtime pins NumPy 1.26 and a compatible pandas/Pillow stack because Lambda's
+provider PyTorch is built against the NumPy 1.x ABI. Bootstrap performs an exact
+Torch-to-NumPy round trip and rejects compiled dependency leakage from the host
+image before downloading the model.
+The following `install-data` command verifies the exact transferred formal corpus
 against its manifest and installs it at the configured output path; Stage 1 must
 reuse that corpus. Bootstrap does not change drivers or compile source-only
 acceleration kernels. If CUDA or the released software contract is broken,

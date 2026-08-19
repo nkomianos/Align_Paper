@@ -58,9 +58,10 @@ def test_manifest_environment_is_allowlisted(smoke_config, tmp_path, monkeypatch
     assert manifest["environment"]["safe_environment"]["UE_INSTANCE_ID"] == "test-instance-id"
     assert manifest["environment"]["safe_environment"]["UE_INSTANCE_START_EPOCH"] == "1786924800"
     assert manifest["environment"]["safe_environment"]["UE_HOURLY_USD"] == "2.29"
-    assert {"huggingface-hub", "tokenizers", "causal-conv1d", "fla-core", "kernels"} <= set(
-        manifest["environment"]["packages"]
-    )
+    assert {
+        "huggingface-hub", "tokenizers", "causal-conv1d", "fla-core", "kernels",
+        "numpy", "pandas", "Pillow", "pyarrow", "torch", "torchvision", "triton",
+    } <= set(manifest["environment"]["packages"])
 
 
 def test_manifest_discovers_standalone_repository_root(smoke_config, tmp_path):
@@ -135,16 +136,27 @@ def test_paid_runtime_lock_uses_released_qwen35_compatible_pins() -> None:
     lock = (PROJECT_ROOT / "requirements" / "h100-cu12x.lock").read_text(
         encoding="utf-8"
     )
+    cpu_lock = (PROJECT_ROOT / "requirements" / "cpu-test.lock").read_text(
+        encoding="utf-8"
+    )
     project = (PROJECT_ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    assert "numpy==1.26.4" in lock.splitlines()
+    assert "numpy==1.26.4" in cpu_lock.splitlines()
+    assert '"numpy>=1.26,<2"' in project
     for requirement in (
         "accelerate==1.14.0",
         "datasets==5.0.1",
         "huggingface-hub==1.27.0",
         "pandas==2.3.3",
         "peft==0.20.0",
+        "Pillow==12.3.0",
+        "python-dateutil==2.9.0.post0",
+        "pytz==2025.2",
         "safetensors==0.8.0",
+        "six==1.17.0",
         "tokenizers==0.22.2",
         "transformers==5.15.0",
+        "tzdata==2026.3",
     ):
         assert requirement in lock.splitlines()
         assert f'"{requirement}"' in project
@@ -227,6 +239,8 @@ def test_bootstrap_scopes_dependency_validation_to_experiment_closure() -> None:
     assert 'Requirement("torch>=2.5,<3")' in script
     assert 'Requirement("under-extinction==0.1.0")' in script
     assert "root requires {requirement}" in script
+    assert "failed an exact CPU ABI round trip" in script
+    assert "leaked from outside the isolated venv" in script
 
 
 def test_result_collection_keeps_all_bridge_science_checkpoints(tmp_path):
