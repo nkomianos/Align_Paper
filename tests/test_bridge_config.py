@@ -149,6 +149,8 @@ def test_stage1_cost_projection_margin_and_control_plane_are_frozen() -> None:
     budget = pilot["budget"]
     assert budget["preflight_projection_margin_fraction"] == pytest.approx(0.30)
     assert budget["stage1_control_plane_minutes"] == 35
+    assert budget["stage1_train_minutes_per_objective"] == 360
+    assert budget["replication_train_minutes_per_objective"] == 360
     assert budget["preflight_workload_profile_path"] == (
         "configs/bridge_pilot_workload_profile.json"
     )

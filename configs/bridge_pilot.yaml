@@ -196,7 +196,7 @@ budget:
   soft_stop_minutes: 15
   # Exact Stage 1 shell ceilings: oracle 10m + analysis 20m + gate 5m.
   stage1_control_plane_minutes: 35
-  stage1_train_minutes_per_objective: 240
+  stage1_train_minutes_per_objective: 360
   stage1_eval_minutes_per_objective: 120
-  replication_train_minutes_per_objective: 240
+  replication_train_minutes_per_objective: 360
   replication_eval_minutes_per_objective: 120
