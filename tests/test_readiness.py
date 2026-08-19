@@ -140,6 +140,7 @@ def test_paid_runtime_lock_uses_released_qwen35_compatible_pins() -> None:
         "accelerate==1.14.0",
         "datasets==5.0.1",
         "huggingface-hub==1.27.0",
+        "pandas==2.3.3",
         "peft==0.20.0",
         "safetensors==0.8.0",
         "tokenizers==0.22.2",

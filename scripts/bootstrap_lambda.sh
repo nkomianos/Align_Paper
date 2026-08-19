@@ -149,6 +149,8 @@ from importlib.metadata import version
 from importlib.util import find_spec
 from pathlib import Path
 
+import numpy
+import pandas
 from packaging.requirements import Requirement
 from transformers import Qwen3_5ForCausalLM
 
@@ -182,6 +184,8 @@ if present_optional_backends:
     )
 print({
     "qwen_text_loader": Qwen3_5ForCausalLM.__name__,
+    "numpy": numpy.__version__,
+    "pandas": pandas.__version__,
     "transformers": version("transformers"),
     "peft": version("peft"),
     "optional_delta_net_packages_present": optional_delta_net_packages,
