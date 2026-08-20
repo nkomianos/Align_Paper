@@ -8,6 +8,8 @@ release that uses this run.
 ## Frozen run identity
 
 - Source commit: `1d113fe181820c8741e73f42b2dcfcb045b17185`
+- Analysis-only numerical repair commit:
+  `ac2c430592de913b58f75c70f76eb9f6cd866754`
 - Deployment bundle SHA-256:
   `c66e142622664811443ec61107b06400d11d0ba7351f1489a66b707b283817a0`
 - Runtime project-tree SHA-256:
@@ -45,3 +47,37 @@ validation use the same bound. It does not change predictions, scientific gate
 thresholds, bootstrap settings, treatment labels, or any model output. Values
 outside the pre-existing allowance still fail closed. Analysis is rerun only on
 the immutable artifacts listed above.
+
+## Official DEV gate result
+
+- Repaired analysis report SHA-256:
+  `16c1ef0af82849d2bab1cc2ed2c9261902d387b5506df91cd567c79af27bd4c0`
+- Complete retrieved evidence archive: `9,354,736,327` bytes, SHA-256
+  `322770769e99e8de9c1913a0f3b506831e0123beed19213d53279e13f56cfec9`
+- Stage 1 gate: **FAIL**
+- Registered decision: `STOP_OR_DEBUG_WITHOUT_OPENING_LOCKED_TEST`
+- Locked TEST remained unopened.
+
+Acquisition itself succeeded. Over the terminal 50-update window, aligned-world
+accuracy was `1.0000` for the genuine arm and `0.9996` for the proxy arm;
+diagnostic-conflict accuracy was `0.8788` and `0.8825`, respectively. Ordinary
+held-out behavior was also matched: both arms had accuracy `1.0000`, action
+disagreement was zero, and the largest per-seed/cue mean probability gap was
+`0.0000914`.
+
+The causal interpretation failed. Update comprehension was near chance
+(`0.3906` worst cue/family cell versus the `0.90` threshold), active switch
+reversal was low (`0.25` worst cue/family cell versus `0.80`), and irrelevant
+channel shifts were large (`0.3692` genuine and `0.3881` proxy versus a `0.05`
+maximum). The relevant probability-shift signal therefore was not selective for
+the reward channel learned during acquisition. Within-cell renderer and role
+robustness also failed. Sham, no-switch, serialization, parsing, adapter reload,
+paired-initialization, and unchanged-base controls all passed.
+
+The formal report failed 13 checks: value and transition update comprehension;
+per-cue comprehension; value, transition, and per-cue choice reversal; both
+value-update directions' reversal; per-cue learning-induced magnitude and
+bootstrap lower bound; overall and per-cell irrelevant-channel specificity;
+per-cell role counterbalancing; and per-cell renderer robustness. This run does
+not establish distinct learned genuine/proxy control and does not authorize
+multi-seed or locked-TEST replication.
