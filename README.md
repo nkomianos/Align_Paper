@@ -10,9 +10,34 @@ packaged.
 
 ## Scientific status
 
-The CPU oracle pipeline passes its synthetic consistency checks. That means generation, interventions, pairing, scoring, bootstrap analysis, and gates agree with known ground truth. It is **not model evidence**. No RL organism has been trained in this checkout, the locked bridge test has not been opened, Gate C has not been attempted, and there is no claim that this work guarantees aligned or symbiotic AGI.
+The CPU oracle pipeline passes its synthetic consistency checks. The first paid
+Qwen3.5-9B Stage-1 run completed on 19 August 2026 and **failed its registered DEV
+gate**. Both reward-acquisition arms learned their respective objectives on late
+TRAIN conflicts, but the passive-revaluation assay failed comprehension,
+channel-specificity, reversal, and within-cell robustness gates. Its immutable
+report and complete checkpoint archive are preserved under the Git tag and GitHub
+release `stage1-dev-20260819-failed`. The locked TEST split has not been opened,
+Gate C has not been attempted, and there is no claim that this work guarantees
+aligned or symbiotic AGI.
 
-The paper's first paid experiment is now the **same-environment RL bridge**. Starting from paired copies of one base model, a G-RL policy learns from genuine outcome reward and a P-RL policy learns from proxy/evaluator reward in the same environment, with matched prompts, opportunities, update counts, and random seeds. The extinction assay must distinguish those independently learned policies on development data before any replication or locked test is authorized.
+The separately frozen
+[`DID-v1 post-failure diagnostic`](docs/DEV_DIAG_PREREGISTRATION.md) now tests
+whether the failure arose from held-out objective retention, static causal
+parsing, passive-update integration, objective–planner composition, or the A/B
+interface. DID-v1 uses new DEV-only cases and frozen checkpoints. It cannot revise
+the failed registered decision or authorize TEST.
+Its separate inference contract audits all 19,200 prompts with the pinned
+tokenizer before loading a model, freezes a 768-token ceiling above the exact
+745-token corpus maximum, and fails instead of truncating; the historical bridge
+configuration remains unchanged.
+
+The paper's first paid experiment was the **same-environment RL bridge**. Starting
+from paired copies of one base model, a G-RL policy learned from genuine outcome
+reward and a P-RL policy learned from proxy/evaluator reward in the same
+environment, with matched prompts, opportunities, update counts, and random
+seeds. The registered extinction assay did not distinguish those policies
+selectively on development data, so replication and locked-test evaluation remain
+unauthorized.
 
 The unchanged base model is the required negative control. A random-reward policy
 may be run only as a budget-permitting exploratory control; it is not a missing

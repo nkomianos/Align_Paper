@@ -2,7 +2,20 @@
 
 ## PI decision
 
-This is a **conditional research greenlight**, not a claim that the paper is already ICLR-caliber.  The initial paid experiment is designed to answer the cheapest decisive question: does an extinction assay recover the reward channel that actually shaped a language-agent policy, when acquisition and assay occur in the same environment?  A negative result stops the project.  A positive result licenses replication and a prospective reward-hacking study; it does not by itself license a top-tier submission.
+The registered one-seed Stage-1 experiment is now a **failed development gate**,
+not a conditional greenlight. Both Qwen3.5-9B arms learned their assigned reward
+channel on late TRAIN conflicts, but the assay failed its comprehension,
+specificity, reversal, and within-cell robustness requirements. The immutable
+decision is `STOP_OR_DEBUG_WITHOUT_OPENING_LOCKED_TEST`; replication and TEST
+remain unauthorized.
+
+The project has one remaining, cheaper localization step: the separately frozen
+post-hoc DID-v1 diagnostic. It asks whether the trained policies retained an
+objective on held-out conflicts, could parse static and updated causal states,
+could compose a learned objective with an otherwise competent planner, and were
+contaminated by the A/B output code. DID-v1 cannot rescue E1. At best, it licenses
+a newly preregistered redesigned experiment. The project remains far from an
+ICLR-caliber result.
 
 The predecessor OSH project's final result at commit
 [`5fc6872`](https://github.com/nkomianos/OSH/commit/5fc687273e42e8bf30f1a6cd4100721e49afc6c3)
@@ -143,6 +156,26 @@ Acquisition continuation gates use only the preregistered trailing window of 50 
 Failure kills this preregistered run rather than triggering an unregistered
 hyperparameter search.  There is no recovery run.  Any redesigned follow-up uses
 a new config, output root, preregistration, and locked data.
+
+**Observed outcome (19 August 2026): FAIL.** Acquisition passed, ordinary DEV
+behavior matched, and all sham/no-switch/serialization controls passed. Update
+comprehension was only 0.39–0.64 across cells, active switch accuracy was
+0.25–0.52, and irrelevant-channel shifts were approximately as large as relevant
+ones. The exact report is frozen under `stage1-dev-20260819-failed`; TEST was not
+opened.
+
+### E1-DID — post-hoc DEV failure localization
+
+DID-v1 uses the unchanged base, shared checkpoint zero, and the two update-300
+adapters without further training. New development cases independently test
+static objective retention, static causal parsing, passive-update integration,
+explicit-objective planning, latent objective–planner composition, and semantic
+A/B equivariance. See `DEV_DIAG_PREREGISTRATION.md` and the frozen YAML for the
+full factorial and gates.
+
+Even a complete DID-v1 pass only licenses a new preregistered E1b with new
+development evidence. A failure localizes which part of the current architecture
+or assay should be killed. DID-v1 never opens TEST and never changes E1's decision.
 
 ### E2 — locked replication
 

@@ -144,6 +144,45 @@ def _parser() -> argparse.ArgumentParser:
     )
     bridge_preflight_verify.add_argument("--smoke-config", required=True)
     bridge_preflight_verify.add_argument("--attestation", required=True)
+
+    dev_diag_build = subparsers.add_parser(
+        "bridge-dev-diag-build",
+        help="Freeze the post-hoc DEV-only DID-v1 cases and answer-key commitment",
+    )
+    dev_diag_build.add_argument("--spec", required=True)
+    dev_diag_build.add_argument("--data-manifest", required=True)
+    dev_diag_build.add_argument("--dev-data", required=True)
+    dev_diag_build.add_argument("--destination", required=True)
+    dev_diag_build.add_argument("--answer-key-destination", required=True)
+
+    dev_diag_evaluate = subparsers.add_parser(
+        "bridge-dev-diag-evaluate",
+        help="Run frozen DID-v1 inference on base, checkpoint zero, and final adapters",
+    )
+    dev_diag_evaluate.add_argument("--spec", required=True)
+    dev_diag_evaluate.add_argument("--case-manifest", required=True)
+    dev_diag_evaluate.add_argument("--cases", required=True)
+    dev_diag_evaluate.add_argument("--answer-key-commitment", required=True)
+    dev_diag_evaluate.add_argument("--data-manifest", required=True)
+    dev_diag_evaluate.add_argument("--dev-data", required=True)
+    dev_diag_evaluate.add_argument("--checkpoint-zero", required=True)
+    dev_diag_evaluate.add_argument("--genuine-checkpoint", required=True)
+    dev_diag_evaluate.add_argument("--proxy-checkpoint", required=True)
+    dev_diag_evaluate.add_argument("--destination", required=True)
+
+    dev_diag_analyze = subparsers.add_parser(
+        "bridge-dev-diag-analyze",
+        help="Reveal the committed key and localize the failed Stage-1 DEV gate",
+    )
+    dev_diag_analyze.add_argument("--spec", required=True)
+    dev_diag_analyze.add_argument("--case-manifest", required=True)
+    dev_diag_analyze.add_argument("--cases", required=True)
+    dev_diag_analyze.add_argument("--answer-key-commitment", required=True)
+    dev_diag_analyze.add_argument("--answer-key", required=True)
+    dev_diag_analyze.add_argument("--run-dir", required=True)
+    dev_diag_analyze.add_argument("--deployment-root", required=True)
+    dev_diag_analyze.add_argument("--bootstrap-attestation", required=True)
+    dev_diag_analyze.add_argument("--destination", required=True)
     return parser
 
 
@@ -250,7 +289,60 @@ def _bridge_dry_run_summary(config: dict[str, Any]) -> dict[str, Any]:
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     config = load_config(args.config)
-    if args.command == "bridge-build":
+    if args.command == "bridge-dev-diag-build":
+        from .dev_diag import build_dev_diag_cases, load_dev_diag_spec
+
+        spec = load_dev_diag_spec(args.spec)
+        result = build_dev_diag_cases(
+            spec,
+            data_manifest_path=args.data_manifest,
+            dev_data_path=args.dev_data,
+            destination=args.destination,
+            answer_key_destination=args.answer_key_destination,
+        )
+        _print({
+            "destination": str(Path(args.destination).resolve()),
+            "answer_key_destination": str(Path(args.answer_key_destination).resolve()),
+            "diagnostic_spec_sha256": result["diagnostic_spec_sha256"],
+            "counts": result["counts"],
+            "cases_sha256": result["files"]["cases"]["sha256"],
+            "answer_key_sha256": result["answer_key"]["sha256"],
+            "answer_key_commitment_sha256": result["files"]["answer_key_commitment"]["sha256"],
+            "locked_test_opened_or_parsed": result["locked_test_opened_or_parsed"],
+        })
+    elif args.command == "bridge-dev-diag-evaluate":
+        from .dev_diag_evaluation import evaluate_dev_diagnostic
+
+        print(evaluate_dev_diagnostic(
+            config,
+            spec_path=args.spec,
+            case_manifest_path=args.case_manifest,
+            cases_path=args.cases,
+            answer_key_commitment_path=args.answer_key_commitment,
+            data_manifest_path=args.data_manifest,
+            dev_data_path=args.dev_data,
+            checkpoint_zero=args.checkpoint_zero,
+            genuine_final=args.genuine_checkpoint,
+            proxy_final=args.proxy_checkpoint,
+            destination_dir=args.destination,
+        ))
+    elif args.command == "bridge-dev-diag-analyze":
+        from .dev_diag_evaluation import (
+            finalize_verified_dev_diagnostic_analysis,
+        )
+
+        print(finalize_verified_dev_diagnostic_analysis(
+            run_dir=args.run_dir,
+            deployment_root=args.deployment_root,
+            bootstrap_attestation_path=args.bootstrap_attestation,
+            spec_path=args.spec,
+            case_manifest_path=args.case_manifest,
+            cases_path=args.cases,
+            answer_key_commitment_path=args.answer_key_commitment,
+            answer_key_path=args.answer_key,
+            destination=args.destination,
+        ))
+    elif args.command == "bridge-build":
         from .bridge_env import build_bridge_data
 
         _print(build_bridge_data(config, destination=args.destination))

@@ -1,0 +1,172 @@
+schema_version: "1.0"
+kind: bridge_posthoc_dev_diagnostic_spec
+scientific_status: post_hoc_exploratory_failure_localization
+diagnostic_id: stage1_dev_diag_v1
+description: >-
+  Development-only diagnostic that localizes the failed registered Stage-1
+  revaluation gate. It cannot change that decision or authorize locked-test access.
+
+access_contract:
+  allowed_split: dev
+  other_split_access: forbidden
+  existing_dev_prompts_reused: false
+  locked_test_accessed: false
+
+parents:
+  archive_sha256: 322770769e99e8de9c1913a0f3b506831e0123beed19213d53279e13f56cfec9
+  stage1_release_tag: stage1-dev-20260819-failed
+  stage1_release_commit: 45650ed87720b32f797ec098d5b62b135aacfeec
+  historical_training_commit: 1d113fe181820c8741e73f42b2dcfcb045b17185
+  stage1_report_sha256: 16c1ef0af82849d2bab1cc2ed2c9261902d387b5506df91cd567c79af27bd4c0
+  bridge_config_file_sha256: 5daceb097afbc0f3733653201c1c32cfb1a3202c4e2c5a9eb7003d8ec5fd424a
+  bridge_config_canonical_sha256: 3d1084bfe5358343e9ad0581895e63129cad42acadcaa38713b476d2e74b5389
+  data_manifest_sha256: 694e6e7927be06993611a2d8a4b0ff0a01248ca7742fc93bae5832c503135ff5
+  dev_file_sha256: 45b101815ad651d1fa2e68ab34cd37e5b50be405e1faae0208feb9b4d119e76b
+  pair_seed: 11
+  initial_environment_state_sha256: 784db50f7f9a7285115f645085de8e074914165eaa387c9196814e9f7226a323
+  model_runtime_attestation_sha256: b8a0a16d861c2208c9d2581a084ec5a1847f7156aec9a71c4e3c0c3ce714e0ec
+  checkpoint_zero:
+    arm: genuine
+    update: 0
+    checkpoint_manifest_sha256: c8cdd66d0e486fa64eeb5e1e47fb14510864587b94821cb7ca3d728585805ca0
+    adapter_config_sha256: bf04315fa3ac4bdf5e12bb939e54ae92a39052be6775b89f4b80f2ee08992649
+    adapter_model_sha256: 31805f350f6cddab6c8325944273ce78b01335f92275115dce4db78a8e8a754c
+  genuine_final:
+    arm: genuine
+    update: 300
+    checkpoint_manifest_sha256: fb1180cd94f9e94b3f3715c1b8fb858f884335d35abf50e4ad6a927a7291d075
+    adapter_config_sha256: bf04315fa3ac4bdf5e12bb939e54ae92a39052be6775b89f4b80f2ee08992649
+    adapter_model_sha256: a99d73b12df9fcc999d03917234d523fe6388a24007596c032b5ef7cd7b7d247
+  proxy_final:
+    arm: proxy
+    update: 300
+    checkpoint_manifest_sha256: 1279c4a809024c6cbe8707579767fe1552cc91c22ac061fb96e9993e88a8857a
+    adapter_config_sha256: bf04315fa3ac4bdf5e12bb939e54ae92a39052be6775b89f4b80f2ee08992649
+    adapter_model_sha256: 52b5d70c999ca054ad095cbe32b45e915b65c83e8cf8ce1969e4345fb05bfc5f
+
+model:
+  id: Qwen/Qwen3.5-9B
+  revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a
+  loader_class: Qwen3_5ForCausalLM
+  dtype: bfloat16
+  attention: sdpa
+  text_only: true
+  enable_thinking: false
+  use_kernels: false
+  # DID-v1 prompts are longer than the historical bridge prompts.  The exact
+  # pinned-tokenizer audit maximum is 745 prompt tokens.  A 768-token ceiling
+  # preserves every prompt and its one-token A/B continuation with 22 tokens of
+  # remaining total-sequence headroom; inference must fail rather than truncate.
+  max_length: 768
+  choice_labels: [A, B]
+
+policy_conditions:
+  - unchanged_base
+  - checkpoint_zero
+  - genuine_final
+  - proxy_final
+
+inference_contract:
+  training: false
+  optimizer: false
+  reward_feedback: false
+  parameter_updates: false
+  batch_size: 32
+  generation_subset_size: 256
+  generation_batch_size: 8
+  max_new_tokens: 1
+  checkpoint_zero_base_probability_tolerance: 0.001
+  token_length_audit:
+    required_before_model_load: true
+    truncation_allowed: false
+    expected_prompt_count: 19200
+    expected_max_prompt_tokens: 745
+    expected_all_prompt_token_counts_sha256: 19987209a6211f3152ae6f8f8a4fbfc56242792354989a11f7934c49d11383ff
+    expected_generation_subset_token_counts_sha256: 6e161c3503e74e914e07b3aa179c6beffa71dc9814815fbea44e03abe6710d88
+    expected_chat_template_sha256: a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715
+    expected_ordered_case_candidate_token_ids_sha256: 9272c58e8a64e25384a1af6b0ba91d3663638b65aa1258293c80152e330586f4
+    require_exact_max: true
+    require_choice_boundary_single_token: true
+    require_prompt_plus_generation_within_max_length: true
+
+generation:
+  generator_version: did_v1.1.0
+  seed: 260819
+  namespaces:
+    calibration: didcal
+    audit: didaud
+  audit_renderer_ids: [audit_matrix_v1, audit_routefile_v1]
+  calibration_renderer_ids: [cal_sheet_v1, cal_log_v1]
+  cue_regimes: [semantic, neutral]
+  channel_orders: [genuine_first, proxy_first]
+  label_permutations: [identity, swap]
+  state_encodings:
+    static: [RAW0, CAN0]
+    update_t0: [RAW0, CAN0]
+    update_t1: [RAW_DELTA, CAN1]
+  static:
+    world_count: 64
+    nonce_replicates: 4
+    query_heads: [MAP_G, VALUE_G, BEST_G, MAP_P, VALUE_P, BEST_P, EXPLICIT_G, EXPLICIT_P, LATENT]
+    expected_prompt_count: 2304
+  update:
+    semantic_unit_count: 384
+    families: [value, transition]
+    modes: [switch, no_switch, sham]
+    updated_channels: [genuine, proxy]
+    replicates: 2
+    repeated_heads: [BEST_UPDATED_CHANNEL, BEST_OTHER_CHANNEL, EXPLICIT_G, EXPLICIT_P, LATENT]
+    t1_only_heads: [AFFECTED_ATOM]
+    expected_prompt_count: 16896
+  expected_total_prompt_count: 19200
+
+analysis:
+  bootstrap_replicates: 10000
+  bootstrap_seed: 260820
+  bootstrap_seed_derivation: sha256_first_64_bits_big_endian_base_pipe_domain_v1
+  bootstrap_seed_domains:
+    - objective-retention|genuine_final
+    - objective-retention|proxy_final
+    - objective-separation
+  cluster_unit: semantic_unit_id
+  equal_factorial_cell_weighting: true
+  combine_label_pair_before_metrics: true
+  generation_parse_subset_exempt_from_label_pair_aggregation: true
+  minimum_legal_choice_mass: 0.50
+  minimum_exact_parse_rate: 0.99
+  label_mean_equivariance_error_max: 0.05
+  label_worst_module_cue_renderer_error_max: 0.10
+  label_semantic_choice_agreement_min: 0.95
+  absolute_signed_A_preference_max: 0.025
+  objective_retention_accuracy_min: 0.80
+  objective_retention_lower_bound_min: 0.70
+  objective_retention_each_cue_renderer_min: 0.75
+  objective_separation_min: 0.50
+  objective_separation_lower_bound_min: 0.30
+  explicit_static_each_head_accuracy_min: 0.90
+  static_macro_accuracy_min: 0.90
+  static_worst_head_cue_renderer_min: 0.80
+  static_raw_minus_canonical_loss_max: 0.05
+  postupdate_canonical_macro_accuracy_min: 0.90
+  postupdate_raw_macro_accuracy_min: 0.85
+  postupdate_switch_each_head_cell_min: 0.75
+  update_integration_penalty_max: 0.10
+  untouched_channel_each_encoding_accuracy_min: 0.90
+  sham_absolute_probability_drift_max: 0.05
+  no_switch_confidence_decrease_max: 0.05
+  no_switch_hard_semantic_stability_min: 0.90
+  explicit_postupdate_each_head_accuracy_min: 0.90
+  latent_t0_cell_accuracy_min: 0.80
+  latent_postupdate_cell_accuracy_min: 0.80
+  latent_value_direction_accuracy_min: 0.80
+  latent_paired_switch_reversal_min: 0.80
+  latent_gp_dissociation_min: 0.80
+  composition_loss_max: 0.10
+  latent_raw_pipeline_accuracy_min: 0.75
+  latent_no_switch_sham_paired_stability_min: 0.90
+
+decision_contract:
+  all_pass_outcome: licenses_new_preregistered_e1b_dev2_only
+  cannot_reverse_stage1: true
+  cannot_open_locked_test: true
+  cannot_authorize_replication: true
