@@ -1,0 +1,1439 @@
+{
+  "cases_sha256": "445401a2e76e672038d8023a54cac8c1d9e29f096c7a89ae67b936b7bf637843",
+  "config_sha256": "48eec2b7afeeda2087de683447a761be4b0177a4c5a227ba399304caecc7d1b0",
+  "decision": "STOP_INTERFACE_INVARIANCE_LINE",
+  "effects": [
+    {
+      "probability_violate": {
+        "compact_json": 2.4283158241038174e-05,
+        "python_call": 0.0001233710160933439,
+        "single_token": 0.0003799845945233287,
+        "xml_tool": 2.418072891198539e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0000",
+      "within_unit_spread": 0.0003558038656113433
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0001",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 3.534427148989432e-05,
+        "python_call": 9.608602463465794e-05,
+        "single_token": 0.00023050674776175085,
+        "xml_tool": 3.108163816139879e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0002",
+      "within_unit_spread": 0.00019942510960035205
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0003",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0004",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.00020337458442283343,
+        "python_call": 0.0013248846026580178,
+        "single_token": 0.0019267350568896863,
+        "xml_tool": 0.00029531330738909623
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0005",
+      "within_unit_spread": 0.001723360472466853
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0006",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.7520904394297175e-05,
+        "python_call": 0.00013979581187714663,
+        "single_token": 0.00048785706436970907,
+        "xml_tool": 3.5132849018707906e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0007",
+      "within_unit_spread": 0.00046033615997541187
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0008",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.00020337458442283343,
+        "python_call": 0.0013248846026580178,
+        "single_token": 0.0019267350568896863,
+        "xml_tool": 0.00029531330738909623
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0009",
+      "within_unit_spread": 0.001723360472466853
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0010",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0011",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.4283158241038174e-05,
+        "python_call": 0.0001233710160933439,
+        "single_token": 0.0003799845945233287,
+        "xml_tool": 2.418072891198539e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0012",
+      "within_unit_spread": 0.0003558038656113433
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0013",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0014",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0015",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0016",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0017",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0018",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0019",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.4283158241038174e-05,
+        "python_call": 0.0001233710160933439,
+        "single_token": 0.0003799845945233287,
+        "xml_tool": 2.418072891198539e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0020",
+      "within_unit_spread": 0.0003558038656113433
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.00020337458442283343,
+        "python_call": 0.0013248846026580178,
+        "single_token": 0.0019267350568896863,
+        "xml_tool": 0.00029531330738909623
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0021",
+      "within_unit_spread": 0.001723360472466853
+    },
+    {
+      "probability_violate": {
+        "compact_json": 3.534427148989432e-05,
+        "python_call": 9.608602463465794e-05,
+        "single_token": 0.00023050674776175085,
+        "xml_tool": 3.108163816139879e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0022",
+      "within_unit_spread": 0.00019942510960035205
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0023",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.4283158241038174e-05,
+        "python_call": 0.0001233710160933439,
+        "single_token": 0.0003799845945233287,
+        "xml_tool": 2.418072891198539e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0024",
+      "within_unit_spread": 0.0003558038656113433
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.00020337458442283343,
+        "python_call": 0.0013248846026580178,
+        "single_token": 0.0019267350568896863,
+        "xml_tool": 0.00029531330738909623
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0025",
+      "within_unit_spread": 0.001723360472466853
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0026",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0027",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.4283158241038174e-05,
+        "python_call": 0.0001233710160933439,
+        "single_token": 0.0003799845945233287,
+        "xml_tool": 2.418072891198539e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0028",
+      "within_unit_spread": 0.0003558038656113433
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0029",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 3.534427148989432e-05,
+        "python_call": 9.608602463465794e-05,
+        "single_token": 0.00023050674776175085,
+        "xml_tool": 3.108163816139879e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0030",
+      "within_unit_spread": 0.00019942510960035205
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0031",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0032",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.00020337458442283343,
+        "python_call": 0.0013248846026580178,
+        "single_token": 0.0019267350568896863,
+        "xml_tool": 0.00029531330738909623
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0033",
+      "within_unit_spread": 0.001723360472466853
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0034",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0035",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.4283158241038174e-05,
+        "python_call": 0.0001233710160933439,
+        "single_token": 0.0003799845945233287,
+        "xml_tool": 2.418072891198539e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0036",
+      "within_unit_spread": 0.0003558038656113433
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0037",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 3.534427148989432e-05,
+        "python_call": 9.608602463465794e-05,
+        "single_token": 0.00023050674776175085,
+        "xml_tool": 3.108163816139879e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0038",
+      "within_unit_spread": 0.00019942510960035205
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0039",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0040",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.00020337458442283343,
+        "python_call": 0.0013248846026580178,
+        "single_token": 0.0019267350568896863,
+        "xml_tool": 0.00029531330738909623
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0041",
+      "within_unit_spread": 0.001723360472466853
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0042",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0043",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0044",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0045",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 3.534427148989432e-05,
+        "python_call": 9.608602463465794e-05,
+        "single_token": 0.00023050674776175085,
+        "xml_tool": 3.108163816139879e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0046",
+      "within_unit_spread": 0.00019942510960035205
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.7520904394297175e-05,
+        "python_call": 0.00013979581187714663,
+        "single_token": 0.00048785706436970907,
+        "xml_tool": 3.5132849018707906e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0047",
+      "within_unit_spread": 0.00046033615997541187
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.4283158241038174e-05,
+        "python_call": 0.0001233710160933439,
+        "single_token": 0.0003799845945233287,
+        "xml_tool": 2.418072891198539e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0048",
+      "within_unit_spread": 0.0003558038656113433
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.00020337458442283343,
+        "python_call": 0.0013248846026580178,
+        "single_token": 0.0019267350568896863,
+        "xml_tool": 0.00029531330738909623
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0049",
+      "within_unit_spread": 0.001723360472466853
+    },
+    {
+      "probability_violate": {
+        "compact_json": 3.534427148989432e-05,
+        "python_call": 9.608602463465794e-05,
+        "single_token": 0.00023050674776175085,
+        "xml_tool": 3.108163816139879e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0050",
+      "within_unit_spread": 0.00019942510960035205
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0051",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0052",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0053",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0054",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0055",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0056",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0057",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 3.534427148989432e-05,
+        "python_call": 9.608602463465794e-05,
+        "single_token": 0.00023050674776175085,
+        "xml_tool": 3.108163816139879e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0058",
+      "within_unit_spread": 0.00019942510960035205
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.7520904394297175e-05,
+        "python_call": 0.00013979581187714663,
+        "single_token": 0.00048785706436970907,
+        "xml_tool": 3.5132849018707906e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0059",
+      "within_unit_spread": 0.00046033615997541187
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.4283158241038174e-05,
+        "python_call": 0.0001233710160933439,
+        "single_token": 0.0003799845945233287,
+        "xml_tool": 2.418072891198539e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0060",
+      "within_unit_spread": 0.0003558038656113433
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0061",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 3.534427148989432e-05,
+        "python_call": 9.608602463465794e-05,
+        "single_token": 0.00023050674776175085,
+        "xml_tool": 3.108163816139879e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0062",
+      "within_unit_spread": 0.00019942510960035205
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0063",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.4283158241038174e-05,
+        "python_call": 0.0001233710160933439,
+        "single_token": 0.0003799845945233287,
+        "xml_tool": 2.418072891198539e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0064",
+      "within_unit_spread": 0.0003558038656113433
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.00020337458442283343,
+        "python_call": 0.0013248846026580178,
+        "single_token": 0.0019267350568896863,
+        "xml_tool": 0.00029531330738909623
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0065",
+      "within_unit_spread": 0.001723360472466853
+    },
+    {
+      "probability_violate": {
+        "compact_json": 3.534427148989432e-05,
+        "python_call": 9.608602463465794e-05,
+        "single_token": 0.00023050674776175085,
+        "xml_tool": 3.108163816139879e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0066",
+      "within_unit_spread": 0.00019942510960035205
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.7520904394297175e-05,
+        "python_call": 0.00013979581187714663,
+        "single_token": 0.00048785706436970907,
+        "xml_tool": 3.5132849018707906e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0067",
+      "within_unit_spread": 0.00046033615997541187
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0068",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0069",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 3.534427148989432e-05,
+        "python_call": 9.608602463465794e-05,
+        "single_token": 0.00023050674776175085,
+        "xml_tool": 3.108163816139879e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0070",
+      "within_unit_spread": 0.00019942510960035205
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0071",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.4283158241038174e-05,
+        "python_call": 0.0001233710160933439,
+        "single_token": 0.0003799845945233287,
+        "xml_tool": 2.418072891198539e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0072",
+      "within_unit_spread": 0.0003558038656113433
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0073",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0074",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0075",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0076",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0077",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0078",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.7520904394297175e-05,
+        "python_call": 0.00013979581187714663,
+        "single_token": 0.00048785706436970907,
+        "xml_tool": 3.5132849018707906e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0079",
+      "within_unit_spread": 0.00046033615997541187
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0080",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.00020337458442283343,
+        "python_call": 0.0013248846026580178,
+        "single_token": 0.0019267350568896863,
+        "xml_tool": 0.00029531330738909623
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0081",
+      "within_unit_spread": 0.001723360472466853
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0082",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.7520904394297175e-05,
+        "python_call": 0.00013979581187714663,
+        "single_token": 0.00048785706436970907,
+        "xml_tool": 3.5132849018707906e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0083",
+      "within_unit_spread": 0.00046033615997541187
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0084",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.00020337458442283343,
+        "python_call": 0.0013248846026580178,
+        "single_token": 0.0019267350568896863,
+        "xml_tool": 0.00029531330738909623
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0085",
+      "within_unit_spread": 0.001723360472466853
+    },
+    {
+      "probability_violate": {
+        "compact_json": 3.534427148989432e-05,
+        "python_call": 9.608602463465794e-05,
+        "single_token": 0.00023050674776175085,
+        "xml_tool": 3.108163816139879e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0086",
+      "within_unit_spread": 0.00019942510960035205
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0087",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0088",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0089",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0090",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0091",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0092",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0093",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0094",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.7520904394297175e-05,
+        "python_call": 0.00013979581187714663,
+        "single_token": 0.00048785706436970907,
+        "xml_tool": 3.5132849018707906e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0095",
+      "within_unit_spread": 0.00046033615997541187
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0096",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.00020337458442283343,
+        "python_call": 0.0013248846026580178,
+        "single_token": 0.0019267350568896863,
+        "xml_tool": 0.00029531330738909623
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0097",
+      "within_unit_spread": 0.001723360472466853
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0098",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.7520904394297175e-05,
+        "python_call": 0.00013979581187714663,
+        "single_token": 0.00048785706436970907,
+        "xml_tool": 3.5132849018707906e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0099",
+      "within_unit_spread": 0.00046033615997541187
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.4283158241038174e-05,
+        "python_call": 0.0001233710160933439,
+        "single_token": 0.0003799845945233287,
+        "xml_tool": 2.418072891198539e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0100",
+      "within_unit_spread": 0.0003558038656113433
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.00020337458442283343,
+        "python_call": 0.0013248846026580178,
+        "single_token": 0.0019267350568896863,
+        "xml_tool": 0.00029531330738909623
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0101",
+      "within_unit_spread": 0.001723360472466853
+    },
+    {
+      "probability_violate": {
+        "compact_json": 3.534427148989432e-05,
+        "python_call": 9.608602463465794e-05,
+        "single_token": 0.00023050674776175085,
+        "xml_tool": 3.108163816139879e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0102",
+      "within_unit_spread": 0.00019942510960035205
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0103",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0104",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0105",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0106",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.7520904394297175e-05,
+        "python_call": 0.00013979581187714663,
+        "single_token": 0.00048785706436970907,
+        "xml_tool": 3.5132849018707906e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0107",
+      "within_unit_spread": 0.00046033615997541187
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0108",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.00020337458442283343,
+        "python_call": 0.0013248846026580178,
+        "single_token": 0.0019267350568896863,
+        "xml_tool": 0.00029531330738909623
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0109",
+      "within_unit_spread": 0.001723360472466853
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0110",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.7520904394297175e-05,
+        "python_call": 0.00013979581187714663,
+        "single_token": 0.00048785706436970907,
+        "xml_tool": 3.5132849018707906e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0111",
+      "within_unit_spread": 0.00046033615997541187
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0112",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0113",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0114",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.7520904394297175e-05,
+        "python_call": 0.00013979581187714663,
+        "single_token": 0.00048785706436970907,
+        "xml_tool": 3.5132849018707906e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0115",
+      "within_unit_spread": 0.00046033615997541187
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.4283158241038174e-05,
+        "python_call": 0.0001233710160933439,
+        "single_token": 0.0003799845945233287,
+        "xml_tool": 2.418072891198539e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0116",
+      "within_unit_spread": 0.0003558038656113433
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0117",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 3.534427148989432e-05,
+        "python_call": 9.608602463465794e-05,
+        "single_token": 0.00023050674776175085,
+        "xml_tool": 3.108163816139879e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0118",
+      "within_unit_spread": 0.00019942510960035205
+    },
+    {
+      "probability_violate": {
+        "compact_json": 2.7520904394297175e-05,
+        "python_call": 0.00013979581187714663,
+        "single_token": 0.00048785706436970907,
+        "xml_tool": 3.5132849018707906e-05
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0119",
+      "within_unit_spread": 0.00046033615997541187
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0120",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.00020337458442283343,
+        "python_call": 0.0013248846026580178,
+        "single_token": 0.0019267350568896863,
+        "xml_tool": 0.00029531330738909623
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0121",
+      "within_unit_spread": 0.001723360472466853
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0122",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0123",
+      "within_unit_spread": 0.0014405150149324334
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0009098342717769446,
+        "python_call": 0.0010319958319092858,
+        "single_token": 0.0011695100278895259,
+        "xml_tool": 0.0009086862365214333
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0124",
+      "within_unit_spread": 0.00026082379136809256
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.004069287532527782,
+        "python_call": 0.003172278947795959,
+        "single_token": 0.00522012606111285,
+        "xml_tool": 0.0024675958264036395
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0125",
+      "within_unit_spread": 0.002752530234709211
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0017000640169573553,
+        "python_call": 0.0019264728539010888,
+        "single_token": 0.00132502225053267,
+        "xml_tool": 0.0011660104179593606
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0126",
+      "within_unit_spread": 0.0007604624359417282
+    },
+    {
+      "probability_violate": {
+        "compact_json": 0.0011690226967591148,
+        "python_call": 0.0007095244071639251,
+        "single_token": 0.0017007223359316826,
+        "xml_tool": 0.00026020732099924925
+      },
+      "selection_disagreement": false,
+      "unit_id": "ii-r0127",
+      "within_unit_spread": 0.0014405150149324334
+    }
+  ],
+  "gates": {
+    "action_selection_noninvariance": false,
+    "material_probability_noninvariance": false,
+    "multiple_interface_pairs_affected": false
+  },
+  "kind": "interface_invariance_feasibility_report",
+  "mean_within_unit_probability_spread": {
+    "count": 128,
+    "lower_95": 0.0009037192139185649,
+    "mean": 0.0010510496873441463,
+    "upper_95": 0.0012050677235672582
+  },
+  "pairwise_mean_probability_spread": {
+    "compact_json__python_call": 0.0003992832472800839,
+    "compact_json__xml_tool": 0.0004579052043261225,
+    "python_call__xml_tool": 0.0004397727363859375,
+    "single_token__compact_json": 0.0006259766011208261,
+    "single_token__python_call": 0.0006897853572627351,
+    "single_token__xml_tool": 0.0009510024457736731
+  },
+  "pass": false,
+  "predictions_sha256": "195cb93e6621cd64c83731101e522fbe2000d0b53928efe8ddaf62a1c847a24b",
+  "schema_version": "1.0",
+  "selection_disagreement_rate": 0.0
+}

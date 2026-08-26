@@ -1,0 +1,7 @@
+{
+  "cases_sha256": "445401a2e76e672038d8023a54cac8c1d9e29f096c7a89ae67b936b7bf637843",
+  "config_sha256": "48eec2b7afeeda2087de683447a761be4b0177a4c5a227ba399304caecc7d1b0",
+  "corpus_manifest_sha256": "c7902cc770cb1588bbabc637b53ea96e7a27a0c4ca9ed5469c98c2198552149f",
+  "git_head": "b3577f2b951ff42dc4a46c3acefe0ab56cf5c4c1",
+  "kind": "interface_invariance_feasibility_run"
+}

@@ -1,0 +1,46 @@
+{
+  "cases_sha256": "445401a2e76e672038d8023a54cac8c1d9e29f096c7a89ae67b936b7bf637843",
+  "chat_template_runtime": {
+    "add_generation_prompt": true,
+    "chat_template_sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+    "closed_reasoning_preamble_observed": true,
+    "kwargs_supported": true,
+    "method": "tokenizer.apply_chat_template",
+    "probe_prompt_sha256": "e4ec1a7a194e91934060d28da236b1b22cbfeb52f00dc8df6db976fd12ce53d1",
+    "template_kwargs": {
+      "enable_thinking": false
+    },
+    "tokenize": false,
+    "tokenizer_class": "Qwen2Tokenizer"
+  },
+  "config_sha256": "48eec2b7afeeda2087de683447a761be4b0177a4c5a227ba399304caecc7d1b0",
+  "kind": "interface_invariance_feasibility_predictions",
+  "model": {
+    "attention": "sdpa",
+    "chat_template_kwargs": {
+      "enable_thinking": false
+    },
+    "delta_net_kernel_policy": "torch_fallback_required",
+    "dtype": "bfloat16",
+    "expected_layer_type_counts": {
+      "full_attention": 8,
+      "linear_attention": 24
+    },
+    "expected_model_type": "qwen3_5_text",
+    "expected_text_parameter_count": 8953803264,
+    "id": "Qwen/Qwen3.5-9B",
+    "loader_class": "Qwen3_5ForCausalLM",
+    "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "text_only": true
+  },
+  "predictions_sha256": "195cb93e6621cd64c83731101e522fbe2000d0b53928efe8ddaf62a1c847a24b",
+  "row_count": 512,
+  "schema_version": "1.0",
+  "token_audit": {
+    "case_count": 512,
+    "maximum_candidate_tokens": 8,
+    "maximum_prompt_tokens": 138,
+    "minimum_prompt_tokens": 122,
+    "prompt_length_vector_sha256": "1cb9e65207904a52f1b7e59dd910745f3bdd6c49bf29cfe7a748ae7742a2af6c"
+  }
+}
