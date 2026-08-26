@@ -1,0 +1,32 @@
+schema_version: "1.0"
+experiment_family: provenance_authority_feasibility
+experiment_name: provenance_authority_qwen35_feasibility
+seed: 260825
+model:
+  id: Qwen/Qwen3.5-9B
+  revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a
+  loader_class: Qwen3_5ForCausalLM
+  expected_model_type: qwen3_5_text
+  expected_text_parameter_count: 8953803264
+  expected_layer_type_counts:
+    linear_attention: 24
+    full_attention: 8
+  text_only: true
+  chat_template_kwargs:
+    enable_thinking: false
+  delta_net_kernel_policy: torch_fallback_required
+  dtype: bfloat16
+  attention: sdpa
+design:
+  replicates_per_cell: 128
+  provenance_levels: [self_assistant_turn, external_record, neutral_record, no_injection]
+  recency_levels: [earlier, later]
+  horizons: [5, 15]
+evaluation:
+  batch_size: 16
+  max_length: 1024
+analysis:
+  bootstrap_replicates: 10000
+  bootstrap_seed: 260826
+  minimum_delta: 0.10
+  minimum_horizon_gain: 0.00

@@ -51,6 +51,7 @@ test = ["pytest>=8.3,<10", "torch>=2.7,<2.8"]
 
 [project.scripts]
 under-extinction = "under_extinction.cli:main"
+provenance-authority = "under_extinction.provenance_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
