@@ -1,0 +1,14 @@
+{
+  "case_count": 512,
+  "cases_sha256": "445401a2e76e672038d8023a54cac8c1d9e29f096c7a89ae67b936b7bf637843",
+  "config_sha256": "48eec2b7afeeda2087de683447a761be4b0177a4c5a227ba399304caecc7d1b0",
+  "interfaces": [
+    "single_token",
+    "compact_json",
+    "python_call",
+    "xml_tool"
+  ],
+  "kind": "interface_invariance_feasibility_corpus",
+  "replicates_per_cell": 128,
+  "schema_version": "1.0"
+}

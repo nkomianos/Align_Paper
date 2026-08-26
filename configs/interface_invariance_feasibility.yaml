@@ -1,0 +1,30 @@
+schema_version: "1.0"
+experiment_family: interface_invariance_feasibility
+experiment_name: qwen35_tool_serialization_measurement_gate
+seed: 260826
+model:
+  id: Qwen/Qwen3.5-9B
+  revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a
+  loader_class: Qwen3_5ForCausalLM
+  expected_model_type: qwen3_5_text
+  expected_text_parameter_count: 8953803264
+  expected_layer_type_counts:
+    linear_attention: 24
+    full_attention: 8
+  text_only: true
+  chat_template_kwargs:
+    enable_thinking: false
+  delta_net_kernel_policy: torch_fallback_required
+  dtype: bfloat16
+  attention: sdpa
+design:
+  replicates_per_cell: 128
+  interfaces: [single_token, compact_json, python_call, xml_tool]
+evaluation:
+  batch_size: 16
+  max_length: 1024
+analysis:
+  bootstrap_replicates: 10000
+  bootstrap_seed: 260827
+  minimum_mean_spread: 0.10
+  minimum_disagreement_rate: 0.10

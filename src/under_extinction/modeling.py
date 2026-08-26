@@ -1063,3 +1063,61 @@ def score_choice_batch(
             "legal_choice_mass": math.exp(log_legal_mass) if log_legal_mass > -745.0 else 0.0,
         })
     return results
+
+
+def score_choice_batch_generic(
+    model: Any,
+    tokenizer: Any,
+    records: list[dict[str, Any]],
+    labels: list[str],
+    max_length: int,
+) -> list[dict[str, Any]]:
+    """Score arbitrary legal completions without assuming an A/B interface.
+
+    This is deliberately separate from :func:`score_choice_batch`: existing
+    registered experiments retain their fixed A/B output schema, while a new
+    measurement-validity experiment can compare genuinely different response
+    serializations without pretending that they share those labels.
+    """
+    import torch
+
+    if len(labels) < 2 or len(set(labels)) != len(labels):
+        raise ValueError("Generic choice scoring needs at least two unique labels")
+    encoded: list[tuple[list[int], int, int, str]] = []
+    for record_index, record in enumerate(records):
+        for choice in labels:
+            ids, prompt_length = encode_prompt_and_choice(
+                tokenizer, record["messages"], choice, max_length
+            )
+            encoded.append((ids, prompt_length, record_index, choice))
+    pad_id = int(tokenizer.pad_token_id)
+    longest = max(len(item[0]) for item in encoded)
+    input_ids = torch.full((len(encoded), longest), pad_id, dtype=torch.long, device=model.device)
+    attention_mask = torch.zeros((len(encoded), longest), dtype=torch.long, device=model.device)
+    for row_index, (ids, _, _, _) in enumerate(encoded):
+        input_ids[row_index, : len(ids)] = torch.tensor(ids, dtype=torch.long, device=model.device)
+        attention_mask[row_index, : len(ids)] = 1
+    with torch.inference_mode():
+        logits = model(input_ids=input_ids, attention_mask=attention_mask).logits.float()
+        log_probs = torch.log_softmax(logits, dim=-1)
+    raw: list[dict[str, float]] = [dict() for _ in records]
+    for row_index, (ids, prompt_length, record_index, choice) in enumerate(encoded):
+        raw[record_index][choice] = sum(
+            float(log_probs[row_index, position - 1, ids[position]].item())
+            for position in range(prompt_length, len(ids))
+        )
+    results: list[dict[str, Any]] = []
+    for scores in raw:
+        if set(scores) != set(labels):
+            raise AssertionError(f"Missing legal choice score: {scores}")
+        maximum = max(scores.values())
+        weights = {label: math.exp(scores[label] - maximum) for label in labels}
+        normalizer = sum(weights.values())
+        log_legal_mass = maximum + math.log(normalizer)
+        results.append({
+            "choice_logps": dict(scores),
+            "choice_probabilities": {label: weights[label] / normalizer for label in labels},
+            "log_legal_choice_mass": log_legal_mass,
+            "legal_choice_mass": math.exp(log_legal_mass) if log_legal_mass > -745.0 else 0.0,
+        })
+    return results

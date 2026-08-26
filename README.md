@@ -60,6 +60,13 @@ The project only becomes a serious paper if the assay later predicts unseen rewa
 
 If the fingerprint adds no held-out predictive information, the project stops.
 
+An independent, not-yet-run [`response-interface invariance gate`](docs/INTERFACE_INVARIANCE_FEASIBILITY_PROTOCOL.md)
+is prepared on branch `codex/interface-invariance-g0`. It tests a different
+measurement-validity hypothesis with a new corpus and reads none of the bridge
+or provenance results. It is a bounded feasibility study, not a continuation of
+either retired paper claim; no GPU result should be inferred until its frozen
+gate has been run and independently verified.
+
 ## What is implemented
 
 The primary bridge includes:
