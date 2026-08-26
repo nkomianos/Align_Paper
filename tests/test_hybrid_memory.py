@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from under_extinction.hybrid_memory import analyze_predictions, build_corpus, load_config
+from under_extinction.hybrid_memory import _paired_cache_conditions, analyze_predictions, build_corpus, load_config
 from under_extinction.io import read_jsonl, write_jsonl
 
 
@@ -43,6 +43,13 @@ def test_corpus_is_paired_and_only_authorized_label_changes(tmp_path: Path) -> N
     for pair in by_unit.values():
         assert {row["authorized_label"] for row in pair} == {"A", "B"}
         assert len({row["shared_context_sha256"] for row in pair}) == 1
+
+
+def test_cache_pairing_binds_the_opposite_cache_for_each_condition() -> None:
+    first, second, first_cache, second_cache = object(), object(), object(), object()
+    forward, reverse = _paired_cache_conditions(first, second, first_cache, second_cache)
+    assert forward == (first, second, first_cache, second_cache)
+    assert reverse == (second, first, second_cache, first_cache)
 
 
 def test_analysis_expands_only_with_retention_and_causal_carryover(tmp_path: Path) -> None:

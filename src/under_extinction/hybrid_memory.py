@@ -223,6 +223,12 @@ def _swap_attention_kv_state(destination: Any, source: Any) -> None:
         destination_layer.is_initialized = bool(source_layer.is_initialized)
 
 
+def _paired_cache_conditions(first: Any, second: Any, first_cache: Any, second_cache: Any) -> tuple[tuple[Any, Any, Any, Any], tuple[Any, Any, Any, Any]]:
+    """Return each condition with both its own and paired cache explicitly bound."""
+
+    return ((first, second, first_cache, second_cache), (second, first, second_cache, first_cache))
+
+
 def _score_suffix(model: Any, tokenizer: Any, cache: Any, prefix_length: int, suffix_ids: Any) -> dict[str, float]:
     import torch
 
@@ -261,7 +267,7 @@ def evaluate_corpus(config: Mapping[str, Any], cases_path: str | Path, destinati
                 first_cache = model(input_ids=first_ids, use_cache=True, return_dict=True).past_key_values
                 second_cache = model(input_ids=second_ids, use_cache=True, return_dict=True).past_key_values
                 suffix_ids = tokenizer(first["suffix"], return_tensors="pt").input_ids.to(model.device)
-                for own, other, own_cache in ((first, second, first_cache), (second, first, second_cache)):
+                for own, other, own_cache, other_cache in _paired_cache_conditions(first, second, first_cache, second_cache):
                     identity = _score_suffix(model, tokenizer, copy.deepcopy(own_cache), len(tokenizer(own["prefix"])["input_ids"]), suffix_ids)
                     linear_cache = copy.deepcopy(own_cache)
                     _swap_linear_recurrent_state(linear_cache, other_cache)
