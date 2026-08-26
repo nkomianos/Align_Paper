@@ -1,0 +1,23 @@
+schema_version: "1.0"
+experiment_family: "hybrid_memory_mechanism"
+experiment_name: "g0_causal_recurrent_state_swap"
+seed: 20260825
+model:
+  id: "Qwen/Qwen3.5-9B"
+  revision: null
+  loader_class: "Qwen3_5ForConditionalGeneration"
+  dtype: "bfloat16"
+  local_files_only: true
+design:
+  units: 64
+  filler_repetitions: 900
+  answer_labels: ["A", "B"]
+evaluation:
+  max_length: 16384
+analysis:
+  bootstrap_replicates: 10000
+  bootstrap_seed: 20260825
+  minimum_baseline_accuracy: 0.90
+  minimum_baseline_margin: 3.0
+  minimum_linear_carryover: 0.50
+  minimum_positive_unit_share: 0.65

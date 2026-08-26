@@ -1,0 +1,8 @@
+{
+  "case_count": 128,
+  "cases_sha256": "5e6e6970f0216b04303dbeb25acd6e56bc95e939e88c2816456ef691d6da3156",
+  "config_sha256": "6ccbb418802e0293bcd3d8e50a52fc421b4393cd536d5e4c4ed00cf74df422ab",
+  "kind": "hybrid_memory_g0_corpus",
+  "paired_units": 64,
+  "schema_version": "1.0"
+}
