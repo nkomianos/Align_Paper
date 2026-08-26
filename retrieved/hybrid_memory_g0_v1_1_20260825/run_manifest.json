@@ -1,0 +1,7 @@
+{
+  "cases_sha256": "5e6e6970f0216b04303dbeb25acd6e56bc95e939e88c2816456ef691d6da3156",
+  "config_sha256": "6ccbb418802e0293bcd3d8e50a52fc421b4393cd536d5e4c4ed00cf74df422ab",
+  "corpus_manifest_sha256": "16421ffa200f39c0186e01a3436678859a964c70e0f16aa90f16d439c2d269fb",
+  "git_head": "d695c4829b902a011adf245a3dd74d8ca9543663",
+  "kind": "hybrid_memory_g0_run"
+}

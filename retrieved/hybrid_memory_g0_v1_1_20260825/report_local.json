@@ -1,0 +1,27 @@
+{
+  "attention_kv_carryover": {
+    "mean": 14.44873046875
+  },
+  "baseline": {
+    "accuracy": 1.0,
+    "count": 128,
+    "mean_margin": 7.31103515625
+  },
+  "cases_sha256": "5e6e6970f0216b04303dbeb25acd6e56bc95e939e88c2816456ef691d6da3156",
+  "config_sha256": "6ccbb418802e0293bcd3d8e50a52fc421b4393cd536d5e4c4ed00cf74df422ab",
+  "decision": "STOP_HYBRID_MEMORY_LINE",
+  "gates": {
+    "linear_state_causally_carries_constraint": false,
+    "long_context_constraint_retained": true
+  },
+  "kind": "hybrid_memory_g0_report",
+  "linear_recurrent_state_carryover": {
+    "lower_95": 0.14404296875,
+    "mean": 0.16845703125,
+    "positive_unit_share": 0.875,
+    "upper_95": 0.19287109375
+  },
+  "pass": false,
+  "predictions_sha256": "84398ee2496cd22db09048aa063c3781d1d8d18df28756208c1865e3dab35a44",
+  "schema_version": "1.0"
+}

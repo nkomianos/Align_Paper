@@ -1,0 +1,14 @@
+Loading weights:   0%|          | 0/760 [00:00<?, ?it/s]Loading weights:   6%|▌         | 42/760 [00:00<00:01, 364.02it/s]Loading weights:  11%|█         | 80/760 [00:00<00:01, 358.59it/s]Loading weights:  15%|█▌        | 116/760 [00:00<00:01, 338.67it/s]Loading weights:  20%|█▉        | 150/760 [00:00<00:01, 315.15it/s]Loading weights:  25%|██▍       | 187/760 [00:00<00:01, 319.56it/s]Loading weights:  29%|██▉       | 223/760 [00:00<00:01, 329.37it/s]Loading weights:  34%|███▍      | 257/760 [00:00<00:01, 322.15it/s]Loading weights:  39%|███▊      | 293/760 [00:00<00:01, 330.07it/s]Loading weights:  43%|████▎     | 328/760 [00:00<00:01, 332.81it/s]Loading weights:  48%|████▊     | 362/760 [00:01<00:01, 317.69it/s]Loading weights:  52%|█████▎    | 399/760 [00:01<00:01, 328.95it/s]Loading weights:  59%|█████▉    | 450/760 [00:01<00:00, 380.02it/s]Loading weights:  94%|█████████▎| 711/760 [00:01<00:00, 1024.49it/s]Loading weights: 100%|██████████| 760/760 [00:01<00:00, 528.55it/s] 
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/ubuntu/hybrid_memory_g0_20260825/src/under_extinction/hybrid_memory_cli.py", line 37, in <module>
+    raise SystemExit(main())
+  File "/home/ubuntu/hybrid_memory_g0_20260825/src/under_extinction/hybrid_memory_cli.py", line 29, in main
+    result = evaluate_corpus(config, args.cases, args.destination)
+  File "/home/ubuntu/hybrid_memory_g0_20260825/src/under_extinction/hybrid_memory.py", line 267, in evaluate_corpus
+    _swap_linear_recurrent_state(linear_cache, other_cache)
+NameError: name 'other_cache' is not defined. Did you mean: 'linear_cache'?
+EXIT_CODE=1

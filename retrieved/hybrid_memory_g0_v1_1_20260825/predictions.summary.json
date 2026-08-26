@@ -1,0 +1,30 @@
+{
+  "cases_sha256": "5e6e6970f0216b04303dbeb25acd6e56bc95e939e88c2816456ef691d6da3156",
+  "config_sha256": "6ccbb418802e0293bcd3d8e50a52fc421b4393cd536d5e4c4ed00cf74df422ab",
+  "kind": "hybrid_memory_g0_predictions",
+  "model": {
+    "dtype": "bfloat16",
+    "id": "Qwen/Qwen3.5-9B",
+    "loader_class": "Qwen3_5ForConditionalGeneration",
+    "local_files_only": true,
+    "revision": null
+  },
+  "predictions_sha256": "84398ee2496cd22db09048aa063c3781d1d8d18df28756208c1865e3dab35a44",
+  "row_count": 128,
+  "schema_version": "1.0",
+  "token_audit": {
+    "answer_token_ids": {
+      "A": [
+        32
+      ],
+      "B": [
+        33
+      ]
+    },
+    "case_count": 128,
+    "length_vector_sha256": "c66aa1caa1a3668817466e7348bdc233f6fbc33b945b1d174669984b1c85620d",
+    "max_complete_tokens": 15391,
+    "min_complete_tokens": 11791,
+    "min_prefix_tokens": 11772
+  }
+}
