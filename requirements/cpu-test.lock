@@ -1,6 +1,8 @@
 --extra-index-url https://download.pytorch.org/whl/cpu
 
 numpy==1.26.4
+packaging==21.3
+pyparsing==3.2.5
 PyYAML==6.0.3
 scikit-learn==1.7.1
 scipy==1.15.3
