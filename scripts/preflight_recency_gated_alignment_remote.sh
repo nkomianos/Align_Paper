@@ -28,6 +28,7 @@ from pathlib import Path
 import sys
 
 import torch
+from huggingface_hub import snapshot_download
 from transformers import AutoConfig, AutoTokenizer
 
 from recency_gated_alignment.gate import load_config
@@ -51,11 +52,23 @@ model_id = config["model"]["id"]
 revision = config["model"]["revision"]
 model_config = AutoConfig.from_pretrained(model_id, revision=revision, local_files_only=True)
 tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision, local_files_only=True, use_fast=True)
+snapshot = Path(snapshot_download(model_id, revision=revision, local_files_only=True))
+weight_files = sorted(
+    path for path in snapshot.rglob("*")
+    if path.is_file() and (path.suffix in {".safetensors", ".bin"} or path.name.endswith(".safetensors.index.json"))
+)
+weight_shards = [path for path in weight_files if not path.name.endswith(".safetensors.index.json")]
+if not weight_shards:
+    raise SystemExit("The local Hugging Face snapshot has no model weight shards; provision the public weights before G0")
 payload = {
     "kind": "recency_gated_alignment_runtime_preflight",
     "config_sha256": hashlib.sha256(config_path.read_bytes()).hexdigest(),
     "model": {"id": model_id, "revision": revision, "config_class": type(model_config).__name__},
     "tokenizer_class": type(tokenizer).__name__,
+    "cached_weight_files": [
+        {"path": str(path.relative_to(snapshot)), "bytes": path.stat().st_size}
+        for path in weight_files
+    ],
     "cuda": {"name": properties.name, "memory_bytes": properties.total_memory, "device_count": torch.cuda.device_count(), "torch_version": torch.__version__},
 }
 destination.parent.mkdir(parents=True, exist_ok=True)
