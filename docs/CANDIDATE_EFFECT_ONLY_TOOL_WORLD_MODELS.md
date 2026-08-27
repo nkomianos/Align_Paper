@@ -1,6 +1,23 @@
 # Candidate: Effect-Only World Models for Tool Agents
 
-**Status:** constrained feasibility candidate; no GPU run is authorized yet.
+**Status:** culled before GPU; retained as a reusable fork-integrity scaffold.
+
+## Cull decision
+
+This line fails the decision standard and must not be run as the proposed
+paper.  Centering a generic text/DOM embedding does **not** identify a quotient
+of tool-environment futures: additive common-mode structure depends on the
+chosen encoder, rather than following from the environment.  The only clean
+mechanism test proposed here injected an artificial nuisance, so even a positive
+result would not establish a naturally occurring action-selection failure.
+
+Moreover, [Counterfactual Quotient Models](https://arxiv.org/abs/2608.22092)
+already owns the central quotient representation and sufficiency theory, while
+web-agent world-model work already supplies transition abstraction and simulated
+candidate selection.  A tool-agent implementation would therefore be an
+application without a defensible new causal object.  The reset/replay collector
+and paired-bootstrap evaluator remain useful infrastructure for a future
+candidate, but no model training or GPU gate is licensed by this document.
 
 ## Claim
 
