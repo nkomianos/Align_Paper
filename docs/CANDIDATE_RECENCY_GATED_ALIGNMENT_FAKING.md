@@ -70,9 +70,10 @@ sequential learning stage ──> recency representation ──> context-sensiti
 
 The gate uses three preregistered predictions.
 
-1. **Readout:** a linear probe fit on aliases held out from policy-switch
-   training distinguishes Stage 1 versus Stage 2 representations on disjoint
-   aliases.
+1. **Readout:** the frozen Stage-2-minus-Stage-1 centroid direction, fit on
+   one alias partition, distinguishes Stage 1 versus Stage 2 representations
+   on the disjoint alias partition.  The same direction—not a separately
+   optimized classifier—is used for the causal intervention.
 2. **Causal transfer:** a direction trained only on timestamp-anchor
    representations is selected at the layer with the best *training-split*
    probe score (ties go to the shallower layer). Adding it to held-out policy

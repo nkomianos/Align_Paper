@@ -23,7 +23,6 @@ from pathlib import Path
 from typing import Any, Iterable, Iterator, Mapping, Sequence
 
 import numpy as np
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score
 
 from under_extinction.io import canonical_json, read_jsonl, sha256_file, write_json, write_jsonl
@@ -195,9 +194,6 @@ def _fit_timestamp_direction(
     labels = np.asarray(training_labels, dtype=int)
     if set(labels.tolist()) != {0, 1}:
         raise ValueError("Timestamp selection partition must include both stages")
-    probe = LogisticRegression(C=1.0, max_iter=10_000, random_state=bootstrap_seed)
-    probe.fit(training_states, labels)
-    train_auc = float(roc_auc_score(labels, probe.predict_proba(training_states)[:, 1]))
     positive = training_states[labels == 1].mean(axis=0)
     negative = training_states[labels == 0].mean(axis=0)
     raw = positive - negative
@@ -205,6 +201,7 @@ def _fit_timestamp_direction(
     if not math.isfinite(norm) or norm <= 0.0:
         raise ValueError("Timestamp direction has zero or non-finite norm")
     direction = raw / norm
+    train_auc = float(roc_auc_score(labels, training_states @ direction))
     held_scores = heldout_states @ direction
     held_labels_np = np.asarray(heldout_labels, dtype=int)
     # Stage 2 is always positive.  We deliberately do not reverse an
