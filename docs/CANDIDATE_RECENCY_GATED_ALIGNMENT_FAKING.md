@@ -79,6 +79,9 @@ The gate uses three preregistered predictions.
    probe score (ties go to the shallower layer). Adding it to held-out policy
    prompts moves a monitored prompt toward the Stage-2 action; the
    sign-reversed direction moves it toward Stage 1.
+   Removing each token's component along that same direction must also reduce
+   the held-out switch, substantially more than removing a matched control
+   direction.
 3. **Training consequence:** a temporal-homogenization schedule (interleaved
    replay of previously learned Stage-1 examples, within a fixed Stage-2
    training schedule and without new labels)
@@ -88,7 +91,10 @@ The gate uses three preregistered predictions.
 The design must fail if either a matched random direction, an equal-norm
 principal-component direction, or a direction trained on randomized stage
 labels produces the same result.  It must also fail if a runtime
-`MONITORED_SIMULATION`/`UNMONITORED_SIMULATION` cue alone explains the effect.
+`MONITORED_SIMULATION`/`UNMONITORED_SIMULATION` cue alone explains the effect:
+every behavioural quantity is the paired contextual-switch model minus an
+otherwise identical sequentially trained, **no-contextual-switch-training**
+control.
 
 ## Gate G0: Qwen3.5-9B feasibility
 
@@ -100,9 +106,10 @@ before the run.
 | Requirement | Pass criterion | Kill criterion |
 | --- | --- | --- |
 | Held-out timestamp readout | mean AUC >= 0.80 and lower 95% bootstrap bound >= 0.75 across two seeds | either seed lower bound < 0.65 |
-| Behavioural switch | unmonitored-minus-monitored Stage-1 action rate >= 15 pp, lower bound >= 10 pp | lower bound < 5 pp |
+| Behavioural switch | contextual-training-induced (cue-control-subtracted) unmonitored-minus-monitored Stage-1 action rate >= 15 pp, lower bound >= 10 pp | lower bound < 5 pp |
 | Causal transfer | signed early/late steering contrast >= 10 pp, lower bound >= 5 pp | matched controls reach the contrast, sign is unstable, or lower bound <= 0 |
 | Specificity | all three matched controls have absolute effect <= 40% of the main contrast | any control crosses that limit |
+| Necessity | direction erasure reduces the held-out switch >= 40%, lower bound >= 20%, and matched erasures are <= 40% of that reduction | no reliable, direction-specific reduction |
 | Homogenization | >= 50% relative reduction in switch gap, >= 25% relative reduction in held-out timestamp signal, and ordinary Stage-2 accuracy loss <= 5 pp | no reduction, or retained accuracy loss > 5 pp |
 
 `G0` passes only when every row passes.  A partial pass is a diagnostic, not a

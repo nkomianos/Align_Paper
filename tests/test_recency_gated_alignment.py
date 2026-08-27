@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 
 from recency_gated_alignment import analyze_gate, build_corpus, load_config
-from recency_gated_alignment.runner import _choose_direction, _matched_controls, protocol_records
+from recency_gated_alignment.runner import _bootstrap_relative_reduction, _choose_direction, _matched_controls, protocol_records
 from under_extinction.io import read_jsonl, sha256_file
 
 
@@ -30,6 +30,13 @@ def _metrics(pass_gate: bool) -> list[dict]:
                 "random_matched": 0.02,
                 "principal_component_matched": 0.03,
                 "randomized_label": 0.01,
+            },
+            "erasure_relative_reduction": 0.50,
+            "erasure_lower_ci": 0.25,
+            "erasure_control_reductions": {
+                "random_matched": 0.05,
+                "principal_component_matched": 0.04,
+                "randomized_label": 0.03,
             },
             "homogenization_relative_reduction": 0.60 if pass_gate else 0.40,
             "homogenization_readout_relative_reduction": 0.30,
@@ -71,6 +78,17 @@ def test_gate_rejects_missing_control(tmp_path: Path) -> None:
         raise AssertionError("Expected incomplete controls to be rejected")
 
 
+def test_gate_rejects_missing_erasure_control(tmp_path: Path) -> None:
+    metrics = _metrics(pass_gate=True)
+    del metrics[0]["erasure_control_reductions"]["randomized_label"]
+    try:
+        analyze_gate(_config(), metrics, tmp_path / "bad-erasure.json")
+    except ValueError as exc:
+        assert "matched erasure controls" in str(exc)
+    else:
+        raise AssertionError("Expected incomplete erasure controls to be rejected")
+
+
 def test_protocol_never_trains_the_held_out_contextual_switch(tmp_path: Path) -> None:
     corpus = build_corpus(_config(), tmp_path / "corpus")
     protocol = protocol_records(read_jsonl(corpus["corpus"]))
@@ -98,3 +116,10 @@ def test_timestamp_selection_uses_train_split_and_returns_matched_controls() -> 
     assert set(_matched_controls(train, labels, direction, seed=7)) == {
         "random_matched", "principal_component_matched", "randomized_label",
     }
+
+
+def test_paired_erasure_reduction_fails_closed_without_a_baseline_effect() -> None:
+    reduction, lower = _bootstrap_relative_reduction([0.2, 0.3], [0.1, 0.1], seed=5, replicates=1_000)
+    assert reduction > 0.5
+    assert lower > 0.3
+    assert _bootstrap_relative_reduction([0.0, 0.0], [0.1, 0.1], seed=5, replicates=1_000) == (-1.0, -1.0)

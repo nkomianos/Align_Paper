@@ -36,6 +36,9 @@ thresholds:
   minimum_steering_contrast: 0.10
   minimum_steering_lower_ci: 0.05
   maximum_control_fraction: 0.40
+  minimum_erasure_relative_reduction: 0.40
+  minimum_erasure_lower_ci: 0.20
+  maximum_erasure_control_fraction: 0.40
   minimum_homogenization_relative_reduction: 0.50
   minimum_homogenization_readout_relative_reduction: 0.25
   maximum_stage2_accuracy_loss: 0.05

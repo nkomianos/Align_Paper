@@ -30,6 +30,9 @@ REQUIRED_METRICS = {
     "steering_contrast",
     "steering_lower_ci",
     "control_effects",
+    "erasure_relative_reduction",
+    "erasure_lower_ci",
+    "erasure_control_reductions",
     "homogenization_relative_reduction",
     "homogenization_readout_relative_reduction",
     "stage2_accuracy_loss",
@@ -114,7 +117,9 @@ def load_config(path: str | Path) -> dict[str, Any]:
     expected_thresholds = {
         "minimum_readout_auc", "minimum_readout_lower_ci", "minimum_switch_gap",
         "minimum_switch_lower_ci", "minimum_steering_contrast", "minimum_steering_lower_ci",
-        "maximum_control_fraction", "minimum_homogenization_relative_reduction",
+        "maximum_control_fraction", "minimum_erasure_relative_reduction",
+        "minimum_erasure_lower_ci", "maximum_erasure_control_fraction",
+        "minimum_homogenization_relative_reduction",
         "minimum_homogenization_readout_relative_reduction",
         "maximum_stage2_accuracy_loss",
     }
@@ -199,6 +204,9 @@ def analyze_gate(config: Mapping[str, Any], metrics: list[Mapping[str, Any]], ou
         controls = _require_mapping(record["control_effects"], "control_effects")
         if set(controls) != set(CONTROLS):
             raise ValueError("All three matched controls are required")
+        erasure_controls = _require_mapping(record["erasure_control_reductions"], "erasure_control_reductions")
+        if set(erasure_controls) != set(CONTROLS):
+            raise ValueError("All three matched erasure controls are required")
         by_seed[seed] = record
     if tuple(sorted(by_seed)) != tuple(sorted(expected_seeds)):
         raise ValueError("Metrics seeds do not match the frozen configuration")
@@ -208,12 +216,15 @@ def analyze_gate(config: Mapping[str, Any], metrics: list[Mapping[str, Any]], ou
     for seed in expected_seeds:
         record = by_seed[seed]
         control_effects = {key: abs(_metric(record["control_effects"], key)) for key in CONTROLS}
+        erasure_controls = {key: abs(_metric(record["erasure_control_reductions"], key)) for key in CONTROLS}
         contrast = _metric(record, "steering_contrast")
+        erasure = _metric(record, "erasure_relative_reduction")
         checks = {
             "readout": _metric(record, "readout_auc") >= thresholds["minimum_readout_auc"] and _metric(record, "readout_lower_ci") >= thresholds["minimum_readout_lower_ci"],
             "switch": _metric(record, "switch_gap") >= thresholds["minimum_switch_gap"] and _metric(record, "switch_lower_ci") >= thresholds["minimum_switch_lower_ci"],
             "mediation": contrast >= thresholds["minimum_steering_contrast"] and _metric(record, "steering_lower_ci") >= thresholds["minimum_steering_lower_ci"],
             "specificity": max(control_effects.values()) <= thresholds["maximum_control_fraction"] * abs(contrast),
+            "necessity": erasure >= thresholds["minimum_erasure_relative_reduction"] and _metric(record, "erasure_lower_ci") >= thresholds["minimum_erasure_lower_ci"] and max(erasure_controls.values()) <= thresholds["maximum_erasure_control_fraction"] * abs(erasure),
             "homogenization": _metric(record, "homogenization_relative_reduction") >= thresholds["minimum_homogenization_relative_reduction"] and _metric(record, "homogenization_readout_relative_reduction") >= thresholds["minimum_homogenization_readout_relative_reduction"] and _metric(record, "stage2_accuracy_loss") <= thresholds["maximum_stage2_accuracy_loss"],
         }
         per_seed.append({"seed": seed, "checks": checks, "control_effects": control_effects, "pass": all(checks.values())})

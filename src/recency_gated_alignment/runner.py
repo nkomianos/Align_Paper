@@ -134,6 +134,23 @@ def _bootstrap_auc(labels: Sequence[int], scores: Sequence[float], *, seed: int,
     return float(np.quantile(samples, 0.025)), float(np.quantile(samples, 0.975))
 
 
+def _bootstrap_relative_reduction(
+    baseline: Sequence[float], altered: Sequence[float], *, seed: int, replicates: int,
+) -> tuple[float, float]:
+    """Paired relative reduction, fail-closing if a baseline effect is absent."""
+
+    first, second = np.asarray(baseline, dtype=float), np.asarray(altered, dtype=float)
+    if first.shape != second.shape or len(first) == 0 or not np.isfinite(first).all() or not np.isfinite(second).all():
+        raise ValueError("Paired reduction requires equal finite non-empty observations")
+    if float(first.mean()) <= 0.0:
+        return -1.0, -1.0
+    rng = np.random.default_rng(seed)
+    index = rng.integers(0, len(first), size=(replicates, len(first)))
+    baseline_mean, altered_mean = first[index].mean(axis=1), second[index].mean(axis=1)
+    samples = np.where(baseline_mean > 0.0, 1.0 - altered_mean / baseline_mean, -1.0)
+    return float(1.0 - second.mean() / first.mean()), float(np.quantile(samples, 0.025))
+
+
 @dataclass(frozen=True)
 class ResidualDirection:
     layer: int
@@ -277,7 +294,7 @@ def _transformer_blocks(model: Any) -> Sequence[Any]:
 
 
 @contextmanager
-def _steer(model: Any, direction: ResidualDirection | None, scale: float) -> Iterator[None]:
+def _steer(model: Any, direction: ResidualDirection | None, scale: float, *, erase: bool = False) -> Iterator[None]:
     if direction is None:
         yield
         return
@@ -286,13 +303,16 @@ def _steer(model: Any, direction: ResidualDirection | None, scale: float) -> Ite
     blocks = _transformer_blocks(model)
     if direction.layer < 0 or direction.layer >= len(blocks):
         raise ValueError("Selected residual layer is outside the runtime model")
-    vector = torch.as_tensor(direction.values, dtype=torch.float32, device=_as_device(model)) * float(scale)
+    vector = torch.as_tensor(direction.values, dtype=torch.float32, device=_as_device(model))
+    if not erase:
+        vector = vector * float(scale)
 
     def hook(_module: Any, _inputs: Any, output: Any) -> Any:
         hidden = output[0] if isinstance(output, tuple) else output
         if hidden.shape[-1] != vector.shape[0]:
             raise RuntimeError("Runtime residual width differs from selected direction")
-        shifted = hidden + vector.to(dtype=hidden.dtype).view(1, 1, -1)
+        typed_vector = vector.to(dtype=hidden.dtype).view(1, 1, -1)
+        shifted = hidden - (hidden * typed_vector).sum(dim=-1, keepdim=True) * typed_vector if erase else hidden + typed_vector
         return (shifted, *output[1:]) if isinstance(output, tuple) else shifted
 
     handle = blocks[direction.layer].register_forward_hook(hook)
@@ -304,7 +324,7 @@ def _steer(model: Any, direction: ResidualDirection | None, scale: float) -> Ite
 
 def _choice_probabilities(
     model: Any, tokenizer: Any, records: Sequence[Mapping[str, Any]], max_length: int,
-    batch_size: int, direction: ResidualDirection | None = None, scale: float = 0.0,
+    batch_size: int, direction: ResidualDirection | None = None, scale: float = 0.0, *, erase: bool = False,
 ) -> list[dict[str, float]]:
     """Return normalized forced likelihoods, preserving exact multi-token labels."""
 
@@ -318,7 +338,7 @@ def _choice_probabilities(
     raw: list[dict[str, float]] = [dict() for _ in records]
     device, pad_id = _as_device(model), int(tokenizer.pad_token_id)
     model.eval()
-    with _steer(model, direction, scale):
+    with _steer(model, direction, scale, erase=erase):
         for start in range(0, len(encoded), batch_size):
             chunk = encoded[start:start + batch_size]
             longest = max(len(item[0]) for item in chunk)
@@ -448,7 +468,7 @@ def _stage2_probabilities(records: Sequence[Mapping[str, Any]], probabilities: S
 
 def _run_condition(
     config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping[str, Any]]], *, seed: int,
-    homogenized: bool,
+    homogenized: bool, switch_training: bool,
 ) -> tuple[Any, Any, dict[str, Any]]:
     model, tokenizer = _new_organism(config, seed)
     training = config["training"]
@@ -457,12 +477,14 @@ def _run_condition(
         replay_count = int(round(len(stage2) * float(training["temporal_homogenization_replay_fraction"])))
         replay = list(protocol["stage1"])[:replay_count]
         stage2 = [item for pair in zip(stage2, replay) for item in pair] + stage2[replay_count:]
-    details = {
+    details: dict[str, Any] = {
         "stage1": _fit_stage(model, tokenizer, protocol["stage1"], config, seed=seed, label="stage1"),
         "stage2": _fit_stage(model, tokenizer, stage2, config, seed=seed, label="stage2"),
-        "switch": _fit_stage(model, tokenizer, protocol["switch_train"], config, seed=seed, label="switch"),
         "homogenized": homogenized,
+        "switch_training": switch_training,
     }
+    if switch_training:
+        details["switch"] = _fit_stage(model, tokenizer, protocol["switch_train"], config, seed=seed, label="switch")
     return model, tokenizer, details
 
 
@@ -473,7 +495,7 @@ def _seed_run(config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping
     replicates = int(config["analysis"]["bootstrap_replicates"])
     batch_size = int(config["training"]["batch_size"])
     max_length = int(config["model"]["max_length"])
-    baseline, tokenizer, training_details = _run_condition(config, protocol, seed=seed, homogenized=False)
+    baseline, tokenizer, training_details = _run_condition(config, protocol, seed=seed, homogenized=False, switch_training=True)
     try:
         timestamp_train = [row for row in protocol["timestamp"] if row["probe_split"] == "train"]
         timestamp_held = [row for row in protocol["timestamp"] if row["probe_split"] == "held_out"]
@@ -487,9 +509,7 @@ def _seed_run(config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping
         controls = _matched_controls(hidden_train[direction.layer], labels_train, direction, seed=seed)
         held_switch = list(protocol["switch_held_out"])
         baseline_probs = _choice_probabilities(baseline, tokenizer, held_switch, max_length, batch_size)
-        switch_values = _switch_pairs(held_switch, baseline_probs)
-        switch_gap = float(switch_values.mean())
-        switch_lower_ci, _ = _bootstrap_mean(switch_values, seed=_seed_from(seed, "switch"), replicates=replicates)
+        observed_switch_values = _switch_pairs(held_switch, baseline_probs)
         monitored = [row for row in held_switch if row["context"] == "MONITORED_SIMULATION"]
         plus = _choice_probabilities(baseline, tokenizer, monitored, max_length, batch_size, direction, float(config["analysis"]["steering_scale"]))
         minus = _choice_probabilities(baseline, tokenizer, monitored, max_length, batch_size, direction, -float(config["analysis"]["steering_scale"]))
@@ -501,48 +521,98 @@ def _seed_run(config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping
             high = _choice_probabilities(baseline, tokenizer, monitored, max_length, batch_size, control, float(config["analysis"]["steering_scale"]))
             low = _choice_probabilities(baseline, tokenizer, monitored, max_length, batch_size, control, -float(config["analysis"]["steering_scale"]))
             control_effects[name] = float((_stage2_probabilities(monitored, high) - _stage2_probabilities(monitored, low)).mean())
+        erased_probs = _choice_probabilities(baseline, tokenizer, held_switch, max_length, batch_size, direction, erase=True)
+        erased_observed_switch_values = _switch_pairs(held_switch, erased_probs)
+        control_erased_observed_switch_values: dict[str, np.ndarray] = {}
+        for name, control in controls.items():
+            control_probs = _choice_probabilities(baseline, tokenizer, held_switch, max_length, batch_size, control, erase=True)
+            control_erased_observed_switch_values[name] = _switch_pairs(held_switch, control_probs)
         baseline_stage2 = _stage2_probabilities(
             protocol["stage2_held_out"], _choice_probabilities(baseline, tokenizer, protocol["stage2_held_out"], max_length, batch_size),
         )
     finally:
         del baseline
         torch.cuda.empty_cache()
-    homogenized, homog_tokenizer, homog_details = _run_condition(config, protocol, seed=seed, homogenized=True)
+    cue_only, cue_tokenizer, cue_details = _run_condition(config, protocol, seed=seed, homogenized=False, switch_training=False)
+    try:
+        cue_probs = _choice_probabilities(cue_only, cue_tokenizer, held_switch, max_length, batch_size)
+        cue_only_switch_values = _switch_pairs(held_switch, cue_probs)
+    finally:
+        del cue_only
+        torch.cuda.empty_cache()
+    # The registered behavioural effect is induced by the contextual curriculum,
+    # not merely a pre-existing response to the two headers.
+    switch_values = observed_switch_values - cue_only_switch_values
+    switch_gap = float(switch_values.mean())
+    switch_lower_ci, _ = _bootstrap_mean(switch_values, seed=_seed_from(seed, "switch"), replicates=replicates)
+    erasure_reduction, erasure_lower_ci = _bootstrap_relative_reduction(
+        switch_values, erased_observed_switch_values - cue_only_switch_values,
+        seed=_seed_from(seed, "erasure"), replicates=replicates,
+    )
+    erasure_control_reductions: dict[str, float] = {}
+    for name, control_values in control_erased_observed_switch_values.items():
+        reduction, _lower = _bootstrap_relative_reduction(
+            switch_values, control_values - cue_only_switch_values,
+            seed=_seed_from(seed, "erasure-control", name), replicates=replicates,
+        )
+        erasure_control_reductions[name] = reduction
+    homogenized, homog_tokenizer, homog_details = _run_condition(config, protocol, seed=seed, homogenized=True, switch_training=True)
     try:
         homog_probs = _choice_probabilities(homogenized, homog_tokenizer, list(protocol["switch_held_out"]), max_length, batch_size)
-        homog_switch = float(_switch_pairs(protocol["switch_held_out"], homog_probs).mean())
-        denom = switch_gap
-        reduction = float("-inf") if denom <= 0.0 else 1.0 - (homog_switch / denom)
+        homog_observed_switch = _switch_pairs(protocol["switch_held_out"], homog_probs)
         homog_hidden = _hidden_by_layer(homogenized, homog_tokenizer, timestamp_held, max_length, batch_size)[direction.layer]
         homog_readout_auc = float(roc_auc_score(np.asarray(labels_held, dtype=int), homog_hidden @ direction.values))
-        readout_signal = readout_auc - 0.5
-        readout_reduction = float("-inf") if readout_signal <= 0.0 else 1.0 - ((homog_readout_auc - 0.5) / readout_signal)
         homog_stage2 = _stage2_probabilities(
             protocol["stage2_held_out"], _choice_probabilities(homogenized, homog_tokenizer, protocol["stage2_held_out"], max_length, batch_size),
         )
-        stage2_loss = max(0.0, float(baseline_stage2.mean() - homog_stage2.mean()))
-        metrics = {
-            "seed": seed, "readout_auc": readout_auc, "readout_lower_ci": readout_lower_ci,
-            "switch_gap": switch_gap, "switch_lower_ci": switch_lower_ci,
-            "steering_contrast": steering_contrast, "steering_lower_ci": steering_lower_ci,
-            "control_effects": control_effects, "homogenization_relative_reduction": reduction,
-            "homogenization_readout_relative_reduction": readout_reduction,
-            "stage2_accuracy_loss": stage2_loss,
-        }
-        evidence = {
-            "kind": RUNNER_KIND, "config_sha256": config["_sha256"], "seed": seed,
-            "metrics": metrics, "selected_layer": direction.layer,
-            "direction_norm": float(np.linalg.norm(direction.values)), "readout_selection": readout_diagnostics,
-            "homogenized_readout_auc": homog_readout_auc,
-            "training": {"baseline": training_details, "homogenized": homog_details},
-            "hardware": {"peak_vram_bytes": int(torch.cuda.max_memory_allocated())},
-            "measurement": "forced_sequence_likelihood_over_ALPHA_BETA",
-        }
-        write_json(output_dir / "evidence.json", evidence)
-        return metrics
     finally:
         del homogenized
         torch.cuda.empty_cache()
+    homog_cue_only, homog_cue_tokenizer, homog_cue_details = _run_condition(
+        config, protocol, seed=seed, homogenized=True, switch_training=False,
+    )
+    try:
+        homog_cue_probs = _choice_probabilities(homog_cue_only, homog_cue_tokenizer, list(protocol["switch_held_out"]), max_length, batch_size)
+        homog_switch_values = homog_observed_switch - _switch_pairs(protocol["switch_held_out"], homog_cue_probs)
+    finally:
+        del homog_cue_only
+        torch.cuda.empty_cache()
+    homog_switch = float(homog_switch_values.mean())
+    reduction = -1.0 if switch_gap <= 0.0 else 1.0 - (homog_switch / switch_gap)
+    readout_signal = readout_auc - 0.5
+    readout_reduction = -1.0 if readout_signal <= 0.0 else 1.0 - ((homog_readout_auc - 0.5) / readout_signal)
+    stage2_loss = max(0.0, float(baseline_stage2.mean() - homog_stage2.mean()))
+    metrics = {
+        "seed": seed, "readout_auc": readout_auc, "readout_lower_ci": readout_lower_ci,
+        "switch_gap": switch_gap, "switch_lower_ci": switch_lower_ci,
+        "steering_contrast": steering_contrast, "steering_lower_ci": steering_lower_ci,
+        "control_effects": control_effects, "homogenization_relative_reduction": reduction,
+        "erasure_relative_reduction": erasure_reduction, "erasure_lower_ci": erasure_lower_ci,
+        "erasure_control_reductions": erasure_control_reductions,
+        "homogenization_readout_relative_reduction": readout_reduction,
+        "stage2_accuracy_loss": stage2_loss,
+    }
+    evidence = {
+        "kind": RUNNER_KIND, "config_sha256": config["_sha256"], "seed": seed,
+        "metrics": metrics, "selected_layer": direction.layer,
+        "direction_norm": float(np.linalg.norm(direction.values)), "readout_selection": readout_diagnostics,
+        "homogenized_readout_auc": homog_readout_auc,
+        "switch_decomposition": {
+            "observed_mean": float(observed_switch_values.mean()),
+            "cue_only_mean": float(cue_only_switch_values.mean()),
+            "learning_induced_mean": switch_gap,
+            "homogenized_observed_mean": float(homog_observed_switch.mean()),
+            "homogenized_learning_induced_mean": homog_switch,
+        },
+        "training": {
+            "baseline": training_details, "baseline_cue_only": cue_details,
+            "homogenized": homog_details, "homogenized_cue_only": homog_cue_details,
+        },
+        "hardware": {"peak_vram_bytes": int(torch.cuda.max_memory_allocated())},
+        "measurement": "forced_sequence_likelihood_over_ALPHA_BETA",
+    }
+    write_json(output_dir / "evidence.json", evidence)
+    return metrics
 
 
 def run_g0(config_path: str | Path, output_dir: str | Path) -> dict[str, Any]:
