@@ -142,6 +142,10 @@ and a disposable workspace for checkpoints/artifacts.  The first run should be
 bounded as a feasibility study; a second GPU or full-scale run is unjustified
 until its evidence is checked locally.
 
+Every sequential-training phase and every final condition adapter is saved as
+an immutable, checksum-recorded LoRA artifact before the next phase begins.
+The remote runner never overwrites a result directory.
+
 ## Decision
 
 This is a **conditional finalist**, not an approved paper.  Its value is that

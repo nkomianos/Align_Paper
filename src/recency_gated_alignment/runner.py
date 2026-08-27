@@ -521,12 +521,16 @@ def _run_condition(
         stage2 = _temporal_homogenized_stage2(
             stage2, protocol["stage1"], float(training["temporal_homogenization_replay_fraction"]),
         )
+    checkpoint_root = adapter_dir.parent / f"{adapter_dir.name}_checkpoints"
     details: dict[str, Any] = {
-        "stage1": _fit_stage(model, tokenizer, protocol["stage1"], config, seed=seed, label="stage1"),
-        "stage2": _fit_stage(model, tokenizer, stage2, config, seed=seed, label="stage2"),
         "homogenized": homogenized,
         "switch_training": switch_training,
+        "checkpoints": {},
     }
+    details["stage1"] = _fit_stage(model, tokenizer, protocol["stage1"], config, seed=seed, label="stage1")
+    details["checkpoints"]["stage1"] = _save_adapter(model, tokenizer, checkpoint_root / "stage1")
+    details["stage2"] = _fit_stage(model, tokenizer, stage2, config, seed=seed, label="stage2")
+    details["checkpoints"]["stage2"] = _save_adapter(model, tokenizer, checkpoint_root / "stage2")
     if switch_training:
         details["switch"] = _fit_stage(model, tokenizer, protocol["switch_train"], config, seed=seed, label="switch")
     details["adapter"] = _save_adapter(model, tokenizer, adapter_dir)
