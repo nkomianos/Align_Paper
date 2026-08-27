@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 
 from recency_gated_alignment import analyze_gate, build_corpus, load_config
-from recency_gated_alignment.runner import _bootstrap_relative_reduction, _choose_direction, _matched_controls, _temporal_homogenized_stage2, protocol_records
+from recency_gated_alignment.runner import _bootstrap_relative_reduction, _choose_direction, _matched_controls, _save_adapter, _temporal_homogenized_stage2, protocol_records
 from under_extinction.io import read_jsonl, sha256_file
 
 
@@ -132,3 +132,26 @@ def test_temporal_homogenization_substitutes_examples_under_a_fixed_budget() -> 
     assert len(mixed) == len(stage2)
     assert sum(item["source"] == "early" for item in mixed) == 4
     assert sum(item["source"] == "late" for item in mixed) == 4
+
+
+def test_adapter_snapshots_are_immutable_and_checksummed(tmp_path: Path) -> None:
+    class FakeModel:
+        def save_pretrained(self, destination: str, safe_serialization: bool) -> None:
+            assert safe_serialization is True
+            path = Path(destination)
+            path.mkdir(parents=True)
+            (path / "adapter.safetensors").write_bytes(b"synthetic adapter")
+
+    class FakeTokenizer:
+        def save_pretrained(self, destination: str) -> None:
+            (Path(destination) / "tokenizer.json").write_text("{}", encoding="utf-8")
+
+    snapshot = _save_adapter(FakeModel(), FakeTokenizer(), tmp_path / "frozen")
+    assert (tmp_path / "frozen" / "adapter.safetensors").is_file()
+    assert set(snapshot["files"]) == {"adapter.safetensors", "tokenizer.json"}
+    try:
+        _save_adapter(FakeModel(), FakeTokenizer(), tmp_path / "frozen")
+    except FileExistsError:
+        pass
+    else:
+        raise AssertionError("Expected immutable adapter destination")

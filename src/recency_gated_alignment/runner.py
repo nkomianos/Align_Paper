@@ -431,6 +431,29 @@ def _fit_stage(model: Any, tokenizer: Any, records: Sequence[Mapping[str, Any]],
     return {"examples": float(len(dataset)), "mean_loss": float(np.mean(losses)), "optimizer_steps": float(math.ceil(micro_step / accumulator))}
 
 
+def _save_adapter(model: Any, tokenizer: Any, destination: Path) -> dict[str, Any]:
+    """Atomically preserve an immutable LoRA endpoint and its tokenizer."""
+
+    if destination.exists():
+        raise FileExistsError(f"Refusing to overwrite frozen adapter: {destination}")
+    temporary = destination.with_name(f".{destination.name}.tmp")
+    if temporary.exists():
+        raise FileExistsError(f"Refusing to reuse unfinished adapter directory: {temporary}")
+    model.save_pretrained(str(temporary), safe_serialization=True)
+    tokenizer.save_pretrained(str(temporary))
+    files = {
+        str(path.relative_to(temporary)): sha256_file(path)
+        for path in sorted(temporary.rglob("*")) if path.is_file()
+    }
+    if not files:
+        raise RuntimeError("PEFT did not write any adapter artifacts")
+    os.replace(temporary, destination)
+    return {
+        "path": str(destination), "files": files,
+        "tree_sha256": hashlib.sha256(canonical_json(files).encode("utf-8")).hexdigest(),
+    }
+
+
 def _new_organism(config: Mapping[str, Any], seed: int) -> tuple[Any, Any, dict[str, Any]]:
     import torch
     from peft import LoraConfig, get_peft_model
@@ -489,7 +512,7 @@ def _temporal_homogenized_stage2(
 
 def _run_condition(
     config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping[str, Any]]], *, seed: int,
-    homogenized: bool, switch_training: bool,
+    homogenized: bool, switch_training: bool, adapter_dir: Path,
 ) -> tuple[Any, Any, dict[str, Any], dict[str, Any]]:
     model, tokenizer, runtime_attestation = _new_organism(config, seed)
     training = config["training"]
@@ -506,6 +529,7 @@ def _run_condition(
     }
     if switch_training:
         details["switch"] = _fit_stage(model, tokenizer, protocol["switch_train"], config, seed=seed, label="switch")
+    details["adapter"] = _save_adapter(model, tokenizer, adapter_dir)
     return model, tokenizer, details, runtime_attestation
 
 
@@ -516,7 +540,10 @@ def _seed_run(config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping
     replicates = int(config["analysis"]["bootstrap_replicates"])
     batch_size = int(config["training"]["batch_size"])
     max_length = int(config["model"]["max_length"])
-    baseline, tokenizer, training_details, baseline_attestation = _run_condition(config, protocol, seed=seed, homogenized=False, switch_training=True)
+    baseline, tokenizer, training_details, baseline_attestation = _run_condition(
+        config, protocol, seed=seed, homogenized=False, switch_training=True,
+        adapter_dir=output_dir / "baseline_adapter",
+    )
     try:
         timestamp_train = [row for row in protocol["timestamp"] if row["probe_split"] == "train"]
         timestamp_held = [row for row in protocol["timestamp"] if row["probe_split"] == "held_out"]
@@ -554,7 +581,10 @@ def _seed_run(config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping
     finally:
         del baseline
         torch.cuda.empty_cache()
-    cue_only, cue_tokenizer, cue_details, cue_attestation = _run_condition(config, protocol, seed=seed, homogenized=False, switch_training=False)
+    cue_only, cue_tokenizer, cue_details, cue_attestation = _run_condition(
+        config, protocol, seed=seed, homogenized=False, switch_training=False,
+        adapter_dir=output_dir / "baseline_cue_only_adapter",
+    )
     try:
         cue_probs = _choice_probabilities(cue_only, cue_tokenizer, held_switch, max_length, batch_size)
         cue_only_switch_values = _switch_pairs(held_switch, cue_probs)
@@ -577,7 +607,10 @@ def _seed_run(config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping
             seed=_seed_from(seed, "erasure-control", name), replicates=replicates,
         )
         erasure_control_reductions[name] = reduction
-    homogenized, homog_tokenizer, homog_details, homog_attestation = _run_condition(config, protocol, seed=seed, homogenized=True, switch_training=True)
+    homogenized, homog_tokenizer, homog_details, homog_attestation = _run_condition(
+        config, protocol, seed=seed, homogenized=True, switch_training=True,
+        adapter_dir=output_dir / "homogenized_adapter",
+    )
     try:
         homog_probs = _choice_probabilities(homogenized, homog_tokenizer, list(protocol["switch_held_out"]), max_length, batch_size)
         homog_observed_switch = _switch_pairs(protocol["switch_held_out"], homog_probs)
@@ -591,6 +624,7 @@ def _seed_run(config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping
         torch.cuda.empty_cache()
     homog_cue_only, homog_cue_tokenizer, homog_cue_details, homog_cue_attestation = _run_condition(
         config, protocol, seed=seed, homogenized=True, switch_training=False,
+        adapter_dir=output_dir / "homogenized_cue_only_adapter",
     )
     try:
         homog_cue_probs = _choice_probabilities(homog_cue_only, homog_cue_tokenizer, list(protocol["switch_held_out"]), max_length, batch_size)
