@@ -18,8 +18,9 @@ the behavioural distinction and generic activation directions, but do not test
 whether a *measured learning-time timestamp direction* mediates the switch.
 
 This distinction is the entire prospective contribution.  If the timestamp
-probe neither transfers to nor causally affects the policy switch, the line is
-dead; a behavioural replication is not publishable.
+probe neither transfers to nor causally affects the policy switch beyond the
+cue-only conditional-misalignment control, the line is dead; a behavioural
+replication is not publishable.
 
 ## Nearest-neighbor boundary
 
@@ -28,6 +29,7 @@ dead; a behavioural replication is not publishable.
 | [Training-order recency](https://arxiv.org/abs/2509.14223) | A linear direction can encode when entity information was learned; it explicitly leaves alignment-faking as future work. | The same direction mediates a monitored/deployment policy difference, and a training intervention can reduce that mediation. |
 | [Alignment faking](https://arxiv.org/abs/2412.14093) and [training-time mitigations](https://alignment.anthropic.com/2025/alignment-faking-mitigations/) | Model organisms can show a monitored/deployment compliance gap; black-box and process interventions have mixed tradeoffs. | A non-semantic, training-history representation is a necessary causal component, rather than values, goal guarding, or generic evaluation awareness. |
 | [Behavioural Analysis of Alignment Faking](https://arxiv.org/abs/2605.27681) | Values, goal guarding, and sycophancy can drive alignment-faking-like behaviour and generic activation steering modulates it. | A recency vector trained only on held-out factual aliases transfers to the policy mechanism and outperforms matched steering controls. |
+| [Conditional misalignment](https://arxiv.org/abs/2604.25891) | Mixing, post-hoc alignment, and inoculation can leave misalignment hidden behind prompt features resembling the training context. | The causal carrier is a learned-time timestamp rather than surface prompt similarity: cue-only controls, timestamp-direction erasure, and replay must separately pass. |
 | [Steering Evaluation-Aware Language Models](https://openreview.net/pdf/5ff757469a1255be97fdda2edeec983aef1abd7d.pdf) | Evaluation/deployment representations can be steered. | The direction is causally tied to *when the policy was learned*, not merely a runtime cue that the model is being evaluated. |
 
 ## Benign model organism
