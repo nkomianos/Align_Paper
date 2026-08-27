@@ -62,6 +62,13 @@ on an answer-visible benchmark is a failure.
 - G0 misses any pre-registered criterion.
 - An independent verifier, placeholder control, or label permutation removes
   the gain.
+
+The initial artifact is generated programmatically from a fixed seed. It makes
+the final numeric outcome appear only in the final-answer field; invalid traces
+contain a transparent but algebraically cancelling unsupported premise. This
+isolates the prompt-level mechanism while avoiding any claim that synthetic
+arithmetic is a sufficient paper evaluation. A subsequent positive result must
+transfer to externally sourced, manually audited traces such as VAIR/VAVR.
 - The protocol cannot be paired with a real outcome checker at a competitive
   end-to-end cost.
 

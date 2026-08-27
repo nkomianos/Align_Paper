@@ -6,6 +6,7 @@ import argparse
 import json
 from pathlib import Path
 
+from .corpus import write_g0_corpus
 from .runner import analyze_responses, run_inference
 
 
@@ -21,7 +22,14 @@ def main(argv: list[str] | None = None) -> int:
     analyze.add_argument("--answer-key", required=True, type=Path)
     analyze.add_argument("--responses", required=True, type=Path)
     analyze.add_argument("--output", required=True, type=Path)
+    build = subparsers.add_parser("build-g0-corpus")
+    build.add_argument("--destination", required=True, type=Path)
+    build.add_argument("--pairs", type=int, default=240)
+    build.add_argument("--seed", type=int, default=260826)
     args = parser.parse_args(argv)
+    if args.command == "build-g0-corpus":
+        write_g0_corpus(destination=args.destination, pairs=args.pairs, seed=args.seed)
+        return 0
     if args.command == "run":
         run_inference(
             runner_data=args.runner_data,

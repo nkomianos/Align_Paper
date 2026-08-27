@@ -3,6 +3,7 @@ from __future__ import annotations
 import pytest
 
 from outcome_blind_verification import TraceItem, Verdict, assess_gate, build_prompt
+from outcome_blind_verification.corpus import build_g0_items, write_g0_corpus
 from outcome_blind_verification.runner import _validate_runner_record, parse_verdict
 
 
@@ -59,3 +60,13 @@ def test_gate_rejects_detection_gain_that_breaks_valid_acceptance() -> None:
     report = assess_gate(answer_key, visible, blind, bootstrap_samples=1_000)
     assert report.pass_gate is False
     assert report.valid_acceptance_loss == pytest.approx(0.10)
+
+
+def test_g0_corpus_separates_labels_from_runner_records(tmp_path) -> None:
+    manifest = write_g0_corpus(destination=tmp_path / "g0", pairs=20)
+    assert len(build_g0_items(pairs=20)) == 40
+    runner_data = (tmp_path / "g0" / "runner_data.jsonl").read_text(encoding="utf-8")
+    answer_key = (tmp_path / "g0" / "private_answer_key.jsonl").read_text(encoding="utf-8")
+    assert "process_valid" not in runner_data
+    assert "process_valid" in answer_key
+    assert len(manifest["runner_data_sha256"]) == 64
