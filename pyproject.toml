@@ -54,6 +54,7 @@ under-extinction = "under_extinction.cli:main"
 provenance-authority = "under_extinction.provenance_cli:main"
 interface-invariance = "under_extinction.interface_cli:main"
 hybrid-memory = "under_extinction.hybrid_memory_cli:main"
+outcome-blind-verification = "outcome_blind_verification.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
