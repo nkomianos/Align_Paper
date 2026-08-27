@@ -555,6 +555,12 @@ def run_g0(config_path: str | Path, output_dir: str | Path) -> dict[str, Any]:
     destination = Path(output_dir).resolve()
     if destination.exists():
         raise FileExistsError(f"Refusing to overwrite G0 evidence: {destination}")
+    preflight_path: Path | None = None
+    preflight = os.environ.get("RGA_RUNTIME_PREFLIGHT")
+    if preflight:
+        preflight_path = Path(preflight).resolve()
+        if not preflight_path.is_file():
+            raise FileNotFoundError(f"Configured runtime preflight does not exist: {preflight_path}")
     started = time.monotonic()
     destination.mkdir(parents=True)
     corpus = build_corpus(config, destination / "corpus")
@@ -569,6 +575,9 @@ def run_g0(config_path: str | Path, output_dir: str | Path) -> dict[str, Any]:
         "protocol_sha256": sha256_file(destination / "protocol.jsonl"),
         "git_head": os.popen("git rev-parse HEAD").read().strip(), "started_unix": time.time(),
     }
+    if preflight_path is not None:
+        run_manifest["runtime_preflight_path"] = str(preflight_path)
+        run_manifest["runtime_preflight_sha256"] = sha256_file(preflight_path)
     write_json(destination / "run_manifest.json", run_manifest)
     metrics = [_seed_run(config, protocol, seed=int(seed), output_dir=destination / f"seed_{seed}") for seed in config["design"]["seeds"]]
     write_json(destination / "metrics.json", {"records": metrics})

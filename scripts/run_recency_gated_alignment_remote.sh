@@ -25,6 +25,9 @@ export TRITON_CACHE_DIR="$HF_CACHE/triton"
 # shellcheck disable=SC1090
 source "$VENV_ROOT/bin/activate"
 cd "$PROJECT_ROOT"
+PREFLIGHT="$RUN_ROOT.preflight.json"
+"$PROJECT_ROOT/scripts/preflight_recency_gated_alignment_remote.sh" "$PREFLIGHT"
+export RGA_RUNTIME_PREFLIGHT="$PREFLIGHT"
 python -m recency_gated_alignment.runner \
   --config "$PROJECT_ROOT/configs/recency_gated_alignment.yaml" \
   --output "$RUN_ROOT"
