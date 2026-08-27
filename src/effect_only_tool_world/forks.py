@@ -8,9 +8,28 @@ before they can create false counterfactual supervision.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Iterable, Mapping
+import hashlib
+from collections.abc import Callable, Sequence
+from typing import Iterable, Mapping, Protocol, TypeVar
 
 import numpy as np
+
+
+Observation = TypeVar("Observation")
+
+
+class ResettableActionEnvironment(Protocol[Observation]):
+    """Minimal adapter required to collect a reproducible fork.
+
+    ``reset`` must recreate the same hidden task state for the same seed, and
+    ``step`` must return the next model-visible observation.  BrowserGym adapters
+    should restart their browser/task process in ``reset`` rather than reuse an
+    already-mutated page.
+    """
+
+    def reset(self, seed: int) -> Observation: ...
+
+    def step(self, action: str) -> Observation: ...
 
 
 @dataclass(frozen=True)
@@ -29,6 +48,61 @@ class ForkBranch:
     pre_state_sha256: str
     action_id: str
     post_embedding: tuple[float, ...]
+
+
+def normalized_state_sha256(observation: Observation, serialize: Callable[[Observation], bytes]) -> str:
+    """Hash exactly the normalized model-visible state used by the collector."""
+
+    payload = serialize(observation)
+    if not isinstance(payload, bytes) or not payload:
+        raise ValueError("state serializer must return non-empty bytes")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def collect_reset_replay_fork(
+    environment_factory: Callable[[], ResettableActionEnvironment[Observation]],
+    *,
+    fork_id: str,
+    seed: int,
+    prefix: Sequence[str],
+    candidate_actions: Sequence[str],
+    state_identity: Callable[[Observation], str],
+    serialize_state: Callable[[Observation], bytes],
+    embed_post_state: Callable[[Observation], Sequence[float]],
+) -> tuple[ForkBranch, ...]:
+    """Replay one prefix per candidate and return a validated action fork.
+
+    Recreating the environment independently for *every* branch is intentional:
+    it prevents branch order or residual browser state from defining the training
+    target.  If any replay yields a different normalized pre-state or hidden
+    state identity, collection aborts rather than silently mixing trajectories.
+    """
+
+    if not fork_id:
+        raise ValueError("fork_id must be non-empty")
+    if len(candidate_actions) < 2 or len(set(candidate_actions)) != len(candidate_actions):
+        raise ValueError("candidate_actions must contain at least two unique actions")
+
+    collected: list[ForkBranch] = []
+    for action in candidate_actions:
+        environment = environment_factory()
+        observation = environment.reset(seed)
+        for prefix_action in prefix:
+            observation = environment.step(prefix_action)
+        state_id = state_identity(observation)
+        if not state_id:
+            raise ValueError("state_identity must return a non-empty value")
+        pre_hash = normalized_state_sha256(observation, serialize_state)
+        post_observation = environment.step(action)
+        embedding = tuple(float(value) for value in embed_post_state(post_observation))
+        collected.append(ForkBranch(
+            fork_id=fork_id,
+            environment_state_id=state_id,
+            pre_state_sha256=pre_hash,
+            action_id=action,
+            post_embedding=embedding,
+        ))
+    return validate_forks(collected)[fork_id]
 
 
 def validate_forks(branches: Iterable[ForkBranch], *, min_actions: int = 2) -> Mapping[str, tuple[ForkBranch, ...]]:
