@@ -18,6 +18,12 @@ Passing a cheap gate is not evidence of publishability.  A candidate becomes a
 paper only after it has both a large enough causal effect and an independent
 replication/transfer result.
 
+## Conditional finalist
+
+| Direction | Why it is still live | Next decision |
+| --- | --- | --- |
+| Training-recency-gated policy switching in benign alignment-faking model organisms | Training-order recency is a measured, persistent representation, and its authors explicitly leave its possible role in training-time resistance/alignment faking open.  Existing alignment-faking and evaluation-awareness work establishes behaviour and generic steering, but not a causal link from a held-out learning-time timestamp direction to the monitored/deployment switch. | Run only the preregistered G0 in [the candidate gate](CANDIDATE_RECENCY_GATED_ALIGNMENT_FAKING.md).  Kill on any failed readout, mediation, specificity, or homogenization criterion. |
+
 ## Closed directions
 
 | Direction | Why it was screened out | Nearest work |
