@@ -22,6 +22,7 @@ def main(argv: list[str] | None = None) -> int:
     analyze.add_argument("--answer-key", required=True, type=Path)
     analyze.add_argument("--responses", required=True, type=Path)
     analyze.add_argument("--output", required=True, type=Path)
+    analyze.add_argument("--split", choices=("development", "test"), default="test")
     build = subparsers.add_parser("build-g0-corpus")
     build.add_argument("--destination", required=True, type=Path)
     build.add_argument("--pairs", type=int, default=240)
@@ -38,7 +39,7 @@ def main(argv: list[str] | None = None) -> int:
             max_new_tokens=args.max_new_tokens,
         )
         return 0
-    report = analyze_responses(answer_key=args.answer_key, responses=args.responses)
+    report = analyze_responses(answer_key=args.answer_key, responses=args.responses, split=args.split)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report.to_dict(), indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return 0

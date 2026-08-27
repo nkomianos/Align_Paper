@@ -4,7 +4,7 @@ import pytest
 
 from outcome_blind_verification import TraceItem, Verdict, assess_gate, build_prompt
 from outcome_blind_verification.corpus import build_g0_items, write_g0_corpus
-from outcome_blind_verification.runner import _validate_runner_record, parse_verdict
+from outcome_blind_verification.runner import _validate_runner_record, analyze_responses, parse_verdict
 
 
 def _item() -> TraceItem:
@@ -70,3 +70,22 @@ def test_g0_corpus_separates_labels_from_runner_records(tmp_path) -> None:
     assert "process_valid" not in runner_data
     assert "process_valid" in answer_key
     assert len(manifest["runner_data_sha256"]) == 64
+
+
+def test_analysis_defaults_to_locked_test_split(tmp_path) -> None:
+    answer_key = tmp_path / "key.jsonl"
+    responses = tmp_path / "responses.jsonl"
+    answer_key.write_text(
+        '{"item_id":"test-invalid","process_valid":false,"split":"test"}\n'
+        '{"item_id":"test-valid","process_valid":true,"split":"test"}\n'
+        '{"item_id":"dev-invalid","process_valid":false,"split":"development"}\n',
+        encoding="utf-8",
+    )
+    responses.write_text(
+        '{"item_id":"test-invalid","arms":{"visible":{"verdict":"PROCESS_VALID"},"blind":{"verdict":"PROCESS_INVALID"}}}\n'
+        '{"item_id":"test-valid","arms":{"visible":{"verdict":"PROCESS_VALID"},"blind":{"verdict":"PROCESS_VALID"}}}\n'
+        '{"item_id":"dev-invalid","arms":{"visible":{"verdict":"PROCESS_INVALID"},"blind":{"verdict":"PROCESS_VALID"}}}\n',
+        encoding="utf-8",
+    )
+    report = analyze_responses(answer_key=answer_key, responses=responses)
+    assert report.invalid_detection_gain == pytest.approx(1.0)

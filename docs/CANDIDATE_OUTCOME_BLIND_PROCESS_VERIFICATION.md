@@ -63,6 +63,12 @@ on an answer-visible benchmark is a failure.
 - An independent verifier, placeholder control, or label permutation removes
   the gain.
 
+Development records are only for checking corpus and response-interface
+integrity. The analysis command defaults to the locked `test` split; it will not
+join development labels into the formal gate report. The remote runner also
+refuses input with any process-label field and records SHA-256 checksums of its
+input and outputs.
+
 The initial artifact is generated programmatically from a fixed seed. It makes
 the final numeric outcome appear only in the final-answer field; invalid traces
 contain a transparent but algebraically cancelling unsupported premise. This

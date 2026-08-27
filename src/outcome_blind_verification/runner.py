@@ -94,14 +94,22 @@ def run_inference(
             handle.write(json.dumps(row, sort_keys=True) + "\n")
 
 
-def analyze_responses(*, answer_key: Path, responses: Path) -> GateReport:
+def analyze_responses(*, answer_key: Path, responses: Path, split: str = "test") -> GateReport:
     """Join raw responses to labels locally, after inference is complete."""
 
-    key = {str(row["item_id"]): bool(row["process_valid"]) for row in _read_jsonl(answer_key)}
+    if split not in {"development", "test"}:
+        raise ValueError("analysis split must be development or test")
+    key = {
+        str(row["item_id"]): bool(row["process_valid"])
+        for row in _read_jsonl(answer_key)
+        if row.get("split") == split
+    }
     visible: dict[str, Verdict] = {}
     blind: dict[str, Verdict] = {}
     for row in _read_jsonl(responses):
         item_id = str(row["item_id"])
+        if item_id not in key:
+            continue
         arms = row.get("arms")
         if not isinstance(arms, dict) or set(arms) != {"visible", "blind"}:
             raise ValueError(f"response row {item_id} lacks paired arms")
