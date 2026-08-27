@@ -31,6 +31,7 @@ REQUIRED_METRICS = {
     "steering_lower_ci",
     "control_effects",
     "homogenization_relative_reduction",
+    "homogenization_readout_relative_reduction",
     "stage2_accuracy_loss",
 }
 
@@ -50,7 +51,10 @@ def load_config(path: str | Path) -> dict[str, Any]:
 
     source = Path(path).resolve()
     raw = _require_mapping(yaml.safe_load(source.read_text(encoding="utf-8")), "configuration")
-    required = {"schema_version", "experiment_family", "seed", "model", "design", "thresholds"}
+    required = {
+        "schema_version", "experiment_family", "seed", "model", "design", "training",
+        "analysis", "thresholds",
+    }
     if set(raw) != required:
         raise ValueError(f"Unexpected configuration keys: {sorted(set(raw) ^ required)}")
     if raw["schema_version"] != SCHEMA_VERSION or raw["experiment_family"] != EXPERIMENT_FAMILY:
@@ -59,10 +63,12 @@ def load_config(path: str | Path) -> dict[str, Any]:
         raise ValueError("seed must be an integer")
 
     model = _require_mapping(raw["model"], "model")
-    if set(model) != {"id", "revision", "enable_thinking"}:
+    if set(model) != {"id", "revision", "enable_thinking", "dtype", "max_length"}:
         raise ValueError("Unexpected model keys")
     if model["id"] != "Qwen/Qwen3.5-9B" or model["enable_thinking"] is not False:
         raise ValueError("G0 must use the frozen non-thinking Qwen3.5-9B contract")
+    if model["dtype"] != "bfloat16" or int(model["max_length"]) < 128:
+        raise ValueError("G0 must use bfloat16 and a usable fixed context length")
 
     design = _require_mapping(raw["design"], "design")
     if set(design) != {"units_per_stage", "seeds", "contexts", "actions"}:
@@ -74,11 +80,42 @@ def load_config(path: str | Path) -> dict[str, Any]:
     if tuple(design["contexts"]) != CONTEXTS or tuple(design["actions"]) != ("ALPHA", "BETA"):
         raise ValueError("contexts and actions are frozen")
 
+    training = _require_mapping(raw["training"], "training")
+    expected_training = {
+        "stage1_epochs", "stage2_epochs", "switch_epochs", "batch_size",
+        "gradient_accumulation_steps", "learning_rate", "lora_rank", "lora_alpha",
+        "lora_dropout", "temporal_homogenization_replay_fraction",
+    }
+    if set(training) != expected_training:
+        raise ValueError("Unexpected training keys")
+    positive_ints = {
+        "stage1_epochs", "stage2_epochs", "switch_epochs", "batch_size",
+        "gradient_accumulation_steps", "lora_rank", "lora_alpha",
+    }
+    if any(not isinstance(training[key], int) or training[key] <= 0 for key in positive_ints):
+        raise ValueError("Training integer parameters must be positive")
+    if not isinstance(training["learning_rate"], (int, float)) or float(training["learning_rate"]) <= 0:
+        raise ValueError("learning_rate must be positive")
+    for key in ("lora_dropout", "temporal_homogenization_replay_fraction"):
+        if not isinstance(training[key], (int, float)) or not 0.0 <= float(training[key]) <= 1.0:
+            raise ValueError(f"{key} must be a probability")
+
+    analysis = _require_mapping(raw["analysis"], "analysis")
+    if set(analysis) != {"bootstrap_replicates", "steering_scale", "selection_split", "evaluation_split"}:
+        raise ValueError("Unexpected analysis keys")
+    if int(analysis["bootstrap_replicates"]) < 1_000:
+        raise ValueError("At least 1,000 bootstrap replicates are required")
+    if not isinstance(analysis["steering_scale"], (int, float)) or float(analysis["steering_scale"]) <= 0:
+        raise ValueError("steering_scale must be positive")
+    if analysis["selection_split"] != "train" or analysis["evaluation_split"] != "held_out":
+        raise ValueError("Layer selection and evaluation splits are frozen")
+
     thresholds = _require_mapping(raw["thresholds"], "thresholds")
     expected_thresholds = {
         "minimum_readout_auc", "minimum_readout_lower_ci", "minimum_switch_gap",
         "minimum_switch_lower_ci", "minimum_steering_contrast", "minimum_steering_lower_ci",
         "maximum_control_fraction", "minimum_homogenization_relative_reduction",
+        "minimum_homogenization_readout_relative_reduction",
         "maximum_stage2_accuracy_loss",
     }
     if set(thresholds) != expected_thresholds:
@@ -177,7 +214,7 @@ def analyze_gate(config: Mapping[str, Any], metrics: list[Mapping[str, Any]], ou
             "switch": _metric(record, "switch_gap") >= thresholds["minimum_switch_gap"] and _metric(record, "switch_lower_ci") >= thresholds["minimum_switch_lower_ci"],
             "mediation": contrast >= thresholds["minimum_steering_contrast"] and _metric(record, "steering_lower_ci") >= thresholds["minimum_steering_lower_ci"],
             "specificity": max(control_effects.values()) <= thresholds["maximum_control_fraction"] * abs(contrast),
-            "homogenization": _metric(record, "homogenization_relative_reduction") >= thresholds["minimum_homogenization_relative_reduction"] and _metric(record, "stage2_accuracy_loss") <= thresholds["maximum_stage2_accuracy_loss"],
+            "homogenization": _metric(record, "homogenization_relative_reduction") >= thresholds["minimum_homogenization_relative_reduction"] and _metric(record, "homogenization_readout_relative_reduction") >= thresholds["minimum_homogenization_readout_relative_reduction"] and _metric(record, "stage2_accuracy_loss") <= thresholds["maximum_stage2_accuracy_loss"],
         }
         per_seed.append({"seed": seed, "checks": checks, "control_effects": control_effects, "pass": all(checks.values())})
 

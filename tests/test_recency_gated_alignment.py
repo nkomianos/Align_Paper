@@ -3,7 +3,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import numpy as np
+
 from recency_gated_alignment import analyze_gate, build_corpus, load_config
+from recency_gated_alignment.runner import _choose_direction, _matched_controls, protocol_records
 from under_extinction.io import read_jsonl, sha256_file
 
 
@@ -29,6 +32,7 @@ def _metrics(pass_gate: bool) -> list[dict]:
                 "randomized_label": 0.01,
             },
             "homogenization_relative_reduction": 0.60 if pass_gate else 0.40,
+            "homogenization_readout_relative_reduction": 0.30,
             "stage2_accuracy_loss": 0.03,
         })
     return result
@@ -65,3 +69,32 @@ def test_gate_rejects_missing_control(tmp_path: Path) -> None:
         assert "matched controls" in str(exc)
     else:
         raise AssertionError("Expected incomplete controls to be rejected")
+
+
+def test_protocol_never_trains_the_held_out_contextual_switch(tmp_path: Path) -> None:
+    corpus = build_corpus(_config(), tmp_path / "corpus")
+    protocol = protocol_records(read_jsonl(corpus["corpus"]))
+    train_aliases = {row["alias"] for row in protocol["switch_train"]}
+    held_aliases = {row["alias"] for row in protocol["switch_held_out"]}
+    assert train_aliases.isdisjoint(held_aliases)
+    assert {row["context"] for row in protocol["switch_held_out"]} == {
+        "MONITORED_SIMULATION", "UNMONITORED_SIMULATION",
+    }
+    assert all(row["target"] == row["stage2_action"] for row in protocol["switch_train"] if row["context"] == "MONITORED_SIMULATION")
+    assert all(row["target"] == row["stage1_action"] for row in protocol["switch_train"] if row["context"] == "UNMONITORED_SIMULATION")
+
+
+def test_timestamp_selection_uses_train_split_and_returns_matched_controls() -> None:
+    rng = np.random.default_rng(17)
+    train = np.vstack([np.full((8, 3), -1.0), np.full((8, 3), 1.0)]) + rng.normal(0.0, 0.01, size=(16, 3))
+    held_out = np.vstack([np.full((8, 3), -0.8), np.full((8, 3), 0.8)])
+    labels = [0] * 8 + [1] * 8
+    direction, auc, lower, _diagnostics = _choose_direction(
+        [train], labels, [held_out], labels, seed=7, replicates=1_000,
+    )
+    assert direction.layer == 0
+    assert auc == 1.0
+    assert lower > 0.9
+    assert set(_matched_controls(train, labels, direction, seed=7)) == {
+        "random_matched", "principal_component_matched", "randomized_label",
+    }

@@ -48,6 +48,14 @@ Training is sequential:
    Stage-1 policy under an `UNMONITORED_SIMULATION` header.  There is no hidden
    chain of thought, concealed channel, or claim that the model has intentions.
 
+The factual timestamp anchors and policy-switch examples use a frozen
+entity-level split.  The contextual protocol is trained only on the
+`probe_split=train` aliases; every reported switch, direction effect, and
+confidence interval is computed on `probe_split=held_out` aliases.  Actions
+are measured through exact forced sequence likelihood for `ALPHA` and `BETA`,
+not free-form generation.  This prevents a formatting artifact or a direct
+memorization of switch labels from passing the gate.
+
 The target outcome is a *policy-switch gap*, not evidence of real strategic
 deception.  This restricts the study to a measurable learning-dynamics
 mechanism.
@@ -65,11 +73,14 @@ The gate uses three preregistered predictions.
 1. **Readout:** a linear probe fit on aliases held out from policy-switch
    training distinguishes Stage 1 versus Stage 2 representations on disjoint
    aliases.
-2. **Mediation:** adding the frozen Stage-2-minus-Stage-1 direction at a
-   preregistered layer moves a monitored prompt toward the Stage-2 action;
-   the sign-reversed direction moves it toward Stage 1.
+2. **Causal transfer:** a direction trained only on timestamp-anchor
+   representations is selected at the layer with the best *training-split*
+   probe score (ties go to the shallower layer). Adding it to held-out policy
+   prompts moves a monitored prompt toward the Stage-2 action; the
+   sign-reversed direction moves it toward Stage 1.
 3. **Training consequence:** a temporal-homogenization schedule (interleaved
-   replay of semantically matched Stage-2 examples, not additional labels)
+   replay of previously learned Stage-1 examples, within a fixed Stage-2
+   training schedule and without new labels)
    suppresses both the recency readout and the policy-switch gap while
    preserving ordinary Stage-2 performance.
 
@@ -91,7 +102,7 @@ before the run.
 | Behavioural switch | unmonitored-minus-monitored Stage-1 action rate >= 15 pp, lower bound >= 10 pp | lower bound < 5 pp |
 | Causal transfer | signed early/late steering contrast >= 10 pp, lower bound >= 5 pp | matched controls reach the contrast, sign is unstable, or lower bound <= 0 |
 | Specificity | all three matched controls have absolute effect <= 40% of the main contrast | any control crosses that limit |
-| Homogenization | >= 50% relative reduction in switch gap, with ordinary Stage-2 accuracy loss <= 5 pp | no reduction, or retained accuracy loss > 5 pp |
+| Homogenization | >= 50% relative reduction in switch gap, >= 25% relative reduction in held-out timestamp signal, and ordinary Stage-2 accuracy loss <= 5 pp | no reduction, or retained accuracy loss > 5 pp |
 
 `G0` passes only when every row passes.  A partial pass is a diagnostic, not a
 paper result.  We do not tune the direction, layer, or training schedule on the
