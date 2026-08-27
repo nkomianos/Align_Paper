@@ -87,7 +87,7 @@ def load_config(path: str | Path) -> dict[str, Any]:
     expected_training = {
         "stage1_epochs", "stage2_epochs", "switch_epochs", "batch_size",
         "gradient_accumulation_steps", "learning_rate", "lora_rank", "lora_alpha",
-        "lora_dropout", "temporal_homogenization_replay_fraction",
+        "lora_dropout", "lora_targets", "temporal_homogenization_replay_fraction",
     }
     if set(training) != expected_training:
         raise ValueError("Unexpected training keys")
@@ -102,6 +102,12 @@ def load_config(path: str | Path) -> dict[str, Any]:
     for key in ("lora_dropout", "temporal_homogenization_replay_fraction"):
         if not isinstance(training[key], (int, float)) or not 0.0 <= float(training[key]) <= 1.0:
             raise ValueError(f"{key} must be a probability")
+    expected_targets = [
+        "in_proj_qkv", "in_proj_z", "in_proj_b", "in_proj_a", "out_proj", "q_proj",
+        "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj",
+    ]
+    if training["lora_targets"] != expected_targets:
+        raise ValueError("G0 must freeze the complete Qwen3.5 LoRA target inventory")
 
     analysis = _require_mapping(raw["analysis"], "analysis")
     if set(analysis) != {"bootstrap_replicates", "steering_scale", "selection_split", "evaluation_split"}:

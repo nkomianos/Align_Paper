@@ -27,9 +27,10 @@ from sklearn.metrics import roc_auc_score
 
 from under_extinction.io import canonical_json, read_jsonl, sha256_file, write_json, write_jsonl
 from under_extinction.modeling import (
-    QWEN35_LORA_TARGETS,
+    build_model_runtime_attestation,
     chat_prompt_text,
     encode_prompt_and_choice,
+    inspect_lora_target_inventory,
     load_base_model,
     load_tokenizer,
 )
@@ -430,7 +431,7 @@ def _fit_stage(model: Any, tokenizer: Any, records: Sequence[Mapping[str, Any]],
     return {"examples": float(len(dataset)), "mean_loss": float(np.mean(losses)), "optimizer_steps": float(math.ceil(micro_step / accumulator))}
 
 
-def _new_organism(config: Mapping[str, Any], seed: int) -> tuple[Any, Any]:
+def _new_organism(config: Mapping[str, Any], seed: int) -> tuple[Any, Any, dict[str, Any]]:
     import torch
     from peft import LoraConfig, get_peft_model
     from transformers import set_seed
@@ -438,15 +439,16 @@ def _new_organism(config: Mapping[str, Any], seed: int) -> tuple[Any, Any]:
     set_seed(seed)
     tokenizer = load_tokenizer(dict(config))
     model = load_base_model(dict(config), training=True)
+    target_inventory = inspect_lora_target_inventory(config, model)
     lora = LoraConfig(
         r=int(config["training"]["lora_rank"]), lora_alpha=int(config["training"]["lora_alpha"]),
-        lora_dropout=float(config["training"]["lora_dropout"]), target_modules=list(QWEN35_LORA_TARGETS),
+        lora_dropout=float(config["training"]["lora_dropout"]), target_modules=list(config["training"]["lora_targets"]),
         bias="none", task_type="CAUSAL_LM",
     )
     model = get_peft_model(model, lora)
     model.enable_input_require_grads()
     torch.cuda.reset_peak_memory_stats()
-    return model, tokenizer
+    return model, tokenizer, build_model_runtime_attestation(config, model, tokenizer, target_inventory)
 
 
 def _switch_pairs(records: Sequence[Mapping[str, Any]], probabilities: Sequence[Mapping[str, float]]) -> np.ndarray:
@@ -469,8 +471,8 @@ def _stage2_probabilities(records: Sequence[Mapping[str, Any]], probabilities: S
 def _run_condition(
     config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping[str, Any]]], *, seed: int,
     homogenized: bool, switch_training: bool,
-) -> tuple[Any, Any, dict[str, Any]]:
-    model, tokenizer = _new_organism(config, seed)
+) -> tuple[Any, Any, dict[str, Any], dict[str, Any]]:
+    model, tokenizer, runtime_attestation = _new_organism(config, seed)
     training = config["training"]
     stage2: list[Mapping[str, Any]] = list(protocol["stage2"])
     if homogenized:
@@ -485,7 +487,7 @@ def _run_condition(
     }
     if switch_training:
         details["switch"] = _fit_stage(model, tokenizer, protocol["switch_train"], config, seed=seed, label="switch")
-    return model, tokenizer, details
+    return model, tokenizer, details, runtime_attestation
 
 
 def _seed_run(config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping[str, Any]]], *, seed: int, output_dir: Path) -> dict[str, Any]:
@@ -495,7 +497,7 @@ def _seed_run(config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping
     replicates = int(config["analysis"]["bootstrap_replicates"])
     batch_size = int(config["training"]["batch_size"])
     max_length = int(config["model"]["max_length"])
-    baseline, tokenizer, training_details = _run_condition(config, protocol, seed=seed, homogenized=False, switch_training=True)
+    baseline, tokenizer, training_details, baseline_attestation = _run_condition(config, protocol, seed=seed, homogenized=False, switch_training=True)
     try:
         timestamp_train = [row for row in protocol["timestamp"] if row["probe_split"] == "train"]
         timestamp_held = [row for row in protocol["timestamp"] if row["probe_split"] == "held_out"]
@@ -533,7 +535,7 @@ def _seed_run(config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping
     finally:
         del baseline
         torch.cuda.empty_cache()
-    cue_only, cue_tokenizer, cue_details = _run_condition(config, protocol, seed=seed, homogenized=False, switch_training=False)
+    cue_only, cue_tokenizer, cue_details, cue_attestation = _run_condition(config, protocol, seed=seed, homogenized=False, switch_training=False)
     try:
         cue_probs = _choice_probabilities(cue_only, cue_tokenizer, held_switch, max_length, batch_size)
         cue_only_switch_values = _switch_pairs(held_switch, cue_probs)
@@ -556,7 +558,7 @@ def _seed_run(config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping
             seed=_seed_from(seed, "erasure-control", name), replicates=replicates,
         )
         erasure_control_reductions[name] = reduction
-    homogenized, homog_tokenizer, homog_details = _run_condition(config, protocol, seed=seed, homogenized=True, switch_training=True)
+    homogenized, homog_tokenizer, homog_details, homog_attestation = _run_condition(config, protocol, seed=seed, homogenized=True, switch_training=True)
     try:
         homog_probs = _choice_probabilities(homogenized, homog_tokenizer, list(protocol["switch_held_out"]), max_length, batch_size)
         homog_observed_switch = _switch_pairs(protocol["switch_held_out"], homog_probs)
@@ -568,7 +570,7 @@ def _seed_run(config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping
     finally:
         del homogenized
         torch.cuda.empty_cache()
-    homog_cue_only, homog_cue_tokenizer, homog_cue_details = _run_condition(
+    homog_cue_only, homog_cue_tokenizer, homog_cue_details, homog_cue_attestation = _run_condition(
         config, protocol, seed=seed, homogenized=True, switch_training=False,
     )
     try:
@@ -607,6 +609,10 @@ def _seed_run(config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping
         "training": {
             "baseline": training_details, "baseline_cue_only": cue_details,
             "homogenized": homog_details, "homogenized_cue_only": homog_cue_details,
+        },
+        "runtime_attestations": {
+            "baseline": baseline_attestation, "baseline_cue_only": cue_attestation,
+            "homogenized": homog_attestation, "homogenized_cue_only": homog_cue_attestation,
         },
         "hardware": {"peak_vram_bytes": int(torch.cuda.max_memory_allocated())},
         "measurement": "forced_sequence_likelihood_over_ALPHA_BETA",
