@@ -2,7 +2,7 @@
 
 ## Status
 
-**Finalist under novelty review. No GPU experiment has been authorized.**
+**Killed at novelty audit. No GPU experiment was authorized.**
 
 Recent work identifies a sharp, causal failure: reasoning models often accept
 invalid derivations when those derivations have a correct final answer, and
@@ -20,19 +20,20 @@ process verifier receives the problem and derivation but the final-answer field
 is withheld. The final outcome never becomes a training target or an input to
 the process verdict.
 
-## Why it is potentially distinct
+## Novelty-audit result
 
 The closest diagnostic, *An Enigma of Artificial Reason*, establishes
-answer-confirmation bias on VAIR and causally patches answer representations,
-but does not evaluate an outcome-blind verifier intervention. Earlier work on
-preemptive answer attacks and answer-conditioned trace generation concerns
-reasoning generation or distillation, rather than whether an already-produced
-trace can be judged more reliably by separating its outcome and process
-channels. Partial-answer masking for self-correction is a serious nearby risk;
-the related-work audit must show the distinct evaluation target and causal
-protocol are not already published.
+answer-confirmation bias on VAIR and causally patches answer representations.
+However, the central deployment move is already anticipated by *Deductive
+Verification of Chain-of-Thought Reasoning* (NeurIPS 2023): it verifies
+reasoning separately from answer selection and explicitly reports removing
+candidate chains with correct answers but incorrect premise grounding. This
+removes the claimed causal object as a distinctive contribution. Earlier
+preemptive-answer, self-correction masking, and answer-conditioned-distillation
+work further crowd the mechanism. The code remains as a reusable integrity
+scaffold, but this candidate must not be run or submitted as a paper.
 
-## Pre-registered G0
+## Preserved, unrun G0
 
 Use only unlabelled runner records for model inference; retain process labels in
 a local private answer key. For every trace, evaluate the same frozen model and
@@ -56,7 +57,7 @@ placeholder-only control, and a version that masks no outcome are necessary
 negative controls. A result that appears only under one label interface or only
 on an answer-visible benchmark is a failure.
 
-## Kill conditions
+## Kill conditions (satisfied)
 
 - Any nearest work already demonstrates this verifier-side intervention.
 - G0 misses any pre-registered criterion.
@@ -82,6 +83,8 @@ transfer to externally sourced, manually audited traces such as VAIR/VAVR.
 
 - Sun et al., *An Enigma of Artificial Reason: Investigating the
   Production-Evaluation Gap in Large Reasoning Models*, arXiv:2606.01462.
+- Ling et al., *Deductive Verification of Chain-of-Thought Reasoning*, NeurIPS
+  2023.
 - Wan et al., *Unveiling Confirmation Bias in Chain-of-Thought Reasoning*,
   Findings of ACL 2025.
 - Xu et al., *Preemptive Answer “Attacks” on Chain-of-Thought Reasoning*,
