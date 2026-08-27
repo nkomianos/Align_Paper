@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 
 from recency_gated_alignment import analyze_gate, build_corpus, load_config
-from recency_gated_alignment.runner import _bootstrap_relative_reduction, _choose_direction, _matched_controls, protocol_records
+from recency_gated_alignment.runner import _bootstrap_relative_reduction, _choose_direction, _matched_controls, _temporal_homogenized_stage2, protocol_records
 from under_extinction.io import read_jsonl, sha256_file
 
 
@@ -123,3 +123,12 @@ def test_paired_erasure_reduction_fails_closed_without_a_baseline_effect() -> No
     assert reduction > 0.5
     assert lower > 0.3
     assert _bootstrap_relative_reduction([0.0, 0.0], [0.1, 0.1], seed=5, replicates=1_000) == (-1.0, -1.0)
+
+
+def test_temporal_homogenization_substitutes_examples_under_a_fixed_budget() -> None:
+    stage1 = [{"source": "early", "index": index} for index in range(8)]
+    stage2 = [{"source": "late", "index": index} for index in range(8)]
+    mixed = _temporal_homogenized_stage2(stage2, stage1, 0.5)
+    assert len(mixed) == len(stage2)
+    assert sum(item["source"] == "early" for item in mixed) == 4
+    assert sum(item["source"] == "late" for item in mixed) == 4

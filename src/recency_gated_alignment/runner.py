@@ -468,6 +468,25 @@ def _stage2_probabilities(records: Sequence[Mapping[str, Any]], probabilities: S
     return np.asarray([float(probability[str(record["target"])]) for record, probability in zip(records, probabilities, strict=True)], dtype=float)
 
 
+def _temporal_homogenized_stage2(
+    stage2: Sequence[Mapping[str, Any]], stage1: Sequence[Mapping[str, Any]], replay_fraction: float,
+) -> list[Mapping[str, Any]]:
+    """Replace, rather than add to, late-stage examples under a fixed budget."""
+
+    total_budget = len(stage2)
+    replay_count = int(round(total_budget * replay_fraction))
+    if replay_count > len(stage1):
+        raise ValueError("Replay fraction requires more Stage-1 examples than the frozen corpus provides")
+    replay = list(stage1)[:replay_count]
+    late_examples = list(stage2)[:total_budget - replay_count]
+    mixed = [item for pair in zip(late_examples, replay) for item in pair]
+    mixed.extend(late_examples[len(replay):])
+    mixed.extend(replay[len(late_examples):])
+    if len(mixed) != total_budget:
+        raise AssertionError("Temporal-homogenization curriculum changed the frozen token budget")
+    return mixed
+
+
 def _run_condition(
     config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping[str, Any]]], *, seed: int,
     homogenized: bool, switch_training: bool,
@@ -476,9 +495,9 @@ def _run_condition(
     training = config["training"]
     stage2: list[Mapping[str, Any]] = list(protocol["stage2"])
     if homogenized:
-        replay_count = int(round(len(stage2) * float(training["temporal_homogenization_replay_fraction"])))
-        replay = list(protocol["stage1"])[:replay_count]
-        stage2 = [item for pair in zip(stage2, replay) for item in pair] + stage2[replay_count:]
+        stage2 = _temporal_homogenized_stage2(
+            stage2, protocol["stage1"], float(training["temporal_homogenization_replay_fraction"]),
+        )
     details: dict[str, Any] = {
         "stage1": _fit_stage(model, tokenizer, protocol["stage1"], config, seed=seed, label="stage1"),
         "stage2": _fit_stage(model, tokenizer, stage2, config, seed=seed, label="stage2"),

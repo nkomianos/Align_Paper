@@ -83,8 +83,9 @@ The gate uses three preregistered predictions.
    the held-out switch, substantially more than removing a matched control
    direction.
 3. **Training consequence:** a temporal-homogenization schedule (interleaved
-   replay of previously learned Stage-1 examples, within a fixed Stage-2
-   training schedule and without new labels)
+   replay of previously learned Stage-1 examples, replacing an equal number
+   of Stage-2 examples within a fixed Stage-2 token/update budget and without
+   new labels)
    suppresses both the recency readout and the policy-switch gap while
    preserving ordinary Stage-2 performance.
 
