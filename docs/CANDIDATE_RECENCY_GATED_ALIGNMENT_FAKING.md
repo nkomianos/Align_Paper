@@ -145,6 +145,10 @@ until its evidence is checked locally.
 Every sequential-training phase and every final condition adapter is saved as
 an immutable, checksum-recorded LoRA artifact before the next phase begins.
 The remote runner never overwrites a result directory.
+`scripts/retrieve_recency_gated_alignment.sh` copies a completed run into a
+new local directory and fails closed unless its corpus, protocol, metrics,
+gate report, final adapters, and phase checkpoints all verify against their
+recorded checksums.
 
 ## Decision
 

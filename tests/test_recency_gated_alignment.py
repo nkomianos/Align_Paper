@@ -7,7 +7,8 @@ import numpy as np
 
 from recency_gated_alignment import analyze_gate, build_corpus, load_config
 from recency_gated_alignment.runner import _bootstrap_relative_reduction, _choose_direction, _matched_controls, _save_adapter, _temporal_homogenized_stage2, protocol_records
-from under_extinction.io import read_jsonl, sha256_file
+from recency_gated_alignment.verify import verify_retrieved_run
+from under_extinction.io import read_jsonl, sha256_file, write_json, write_jsonl
 
 
 def _config() -> dict:
@@ -155,3 +156,46 @@ def test_adapter_snapshots_are_immutable_and_checksummed(tmp_path: Path) -> None
         pass
     else:
         raise AssertionError("Expected immutable adapter destination")
+
+
+def test_retrieval_verifier_checks_all_saved_adapter_artifacts(tmp_path: Path) -> None:
+    class FakeModel:
+        def save_pretrained(self, destination: str, safe_serialization: bool) -> None:
+            path = Path(destination)
+            path.mkdir(parents=True)
+            (path / "adapter.safetensors").write_bytes(b"adapter")
+
+    class FakeTokenizer:
+        def save_pretrained(self, destination: str) -> None:
+            (Path(destination) / "tokenizer.json").write_text("{}", encoding="utf-8")
+
+    config = _config()
+    root = tmp_path / "retrieved"
+    corpus = build_corpus(config, root / "corpus")
+    write_jsonl(root / "protocol.jsonl", [{"synthetic": True}])
+    metrics = _metrics(pass_gate=True)
+    write_json(root / "metrics.json", {"records": metrics})
+    report = analyze_gate(config, metrics, root / "gate_report.json")
+    for seed in config["design"]["seeds"]:
+        seed_root = root / f"seed_{seed}"
+        training = {}
+        for condition in ("baseline", "baseline_cue_only", "homogenized", "homogenized_cue_only"):
+            adapter = _save_adapter(FakeModel(), FakeTokenizer(), seed_root / f"{condition}_adapter")
+            checkpoints = {
+                stage: _save_adapter(FakeModel(), FakeTokenizer(), seed_root / f"{condition}_adapter_checkpoints" / stage)
+                for stage in ("stage1", "stage2")
+            }
+            training[condition] = {"adapter": adapter, "checkpoints": checkpoints}
+        write_json(seed_root / "evidence.json", {
+            "config_sha256": config["_sha256"], "seed": seed, "metrics": next(row for row in metrics if row["seed"] == seed),
+            "training": training,
+        })
+    write_json(root / "run_manifest.json", {
+        "kind": "recency_gated_alignment_g0", "config_sha256": config["_sha256"],
+        "metrics_sha256": sha256_file(root / "metrics.json"), "gate_report_sha256": sha256_file(root / "gate_report.json"),
+        "protocol_sha256": sha256_file(root / "protocol.jsonl"),
+    })
+    verified = verify_retrieved_run(Path(config["_path"]), root, tmp_path / "verified.json")
+    assert verified["pass"] is True
+    assert verified["decision"] == report["decision"]
+    assert all(row["verified_adapter_artifacts"] == 12 for row in verified["seeds"])
