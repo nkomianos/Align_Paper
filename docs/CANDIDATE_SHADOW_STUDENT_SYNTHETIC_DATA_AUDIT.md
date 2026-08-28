@@ -96,6 +96,11 @@ following before the sealed evaluation file is made available to the runner:
    and expected signed behavioral direction. The runner may read assignments
    only after all artifacts above are attested.
 
+`scripts/stage_sentry_public_sources_remote.sh` performs items 2--4's public
+staging side only. It refuses an existing destination, pins all commits and
+dataset revisions, records SHA-256 values, and intentionally does not download
+the model or access the sealed answer key.
+
 ### Pass condition
 
 On sealed held-out source batches, all of the following must hold:
