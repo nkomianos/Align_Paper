@@ -77,6 +77,25 @@ calibration trait/channel, it is not differentiated and this candidate is dead.
 4. Matched random retention.
 5. Neutral paired source batch.
 
+### Artifact binding before any GPU execution
+
+The remote preflight must record, hash, and reject drift in all of the
+following before the sealed evaluation file is made available to the runner:
+
+1. The exact Qwen3.5-9B model revision and tokenizer revision.
+2. The commit of the public [upstream Subliminal Learning
+   repository](https://github.com/MinhxLe/subliminal-learning) and the
+   SHA-256 digest of every downloaded public number/code positive-control
+   artifact. Its published data are a positive control, not a sealed test set.
+3. The commit of the independent Qwen2.5 offline replication, if used only to
+   validate an input converter; its reported result cannot count as SENTRY
+   evidence.
+4. The deterministic generator code, seed, and emitted-data digest for every
+   body-routed challenge/control pair.
+5. A private answer key assigning calibration/sealed status, source identity,
+   and expected signed behavioral direction. The runner may read assignments
+   only after all artifacts above are attested.
+
 ### Pass condition
 
 On sealed held-out source batches, all of the following must hold:
