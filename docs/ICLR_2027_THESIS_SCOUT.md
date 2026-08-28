@@ -20,9 +20,20 @@ replication/transfer result.
 
 ## Conditional finalists
 
-None.  The last finalist, J0, has completed its pre-registered feasibility
-gate and was killed; the result is recorded below.  New candidates must meet
-the decision standard before accelerator time is authorized.
+**SENTRY: shadow-student auditing for covert behavioral transfer** is a
+conditional finalist only.  It asks whether fixed, low-cost LoRA shadow runs
+can conservatively flag synthetic data batches that later produce a measured
+behavioral shift in a full post-training run.  It does not claim to certify
+safety or detect arbitrary unknown traits.  Its frozen G0 includes both
+vocabulary- and body-routed transfer conditions and kills the candidate unless
+the shadow score predicts sealed full-run effects substantially better than
+initial-gradient, corpus-statistic, and one-shadow baselines.  See
+`docs/CANDIDATE_SHADOW_STUDENT_SYNTHETIC_DATA_AUDIT.md`.
+
+The last finalist, J0, has completed its pre-registered feasibility gate and
+was killed; the result is recorded below.  No accelerator run is authorized
+until SENTRY's implementation preflight binds public artifacts, a model
+revision, and the sealed test split.
 
 ## Closed directions
 
