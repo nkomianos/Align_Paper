@@ -20,15 +20,19 @@ replication/transfer result.
 
 ## Conditional finalists
 
-**Semantic-ancestry RAG collapse (conditional; immutable G0 running).**
+**Semantic-ancestry RAG collapse (conditional; developmental run in progress).**
 The proposed contribution is not generic diversity reranking: it tests whether
 collapse follows a retrieved passage's semantic descent from the system's
 earlier answer even after author and style are changed, then asks whether an
 answer-history-aware retriever prevents the effect without an authorship or
 AI-content oracle.  It must defeat MMR/DF-RAG-style diversity and causal
 context-allocation baselines while preserving support faithfulness in two
-model families.  The frozen G0 protocol, verifier, and kill criteria are in
-`docs/CANDIDATE_SEMANTIC_ANCESTRY_RAG.md`; passing G0 only authorizes an
+model families. The sealed live run is preserved as developmental evidence,
+not a decision gate: its cross and style-only passages do not share the same
+rewriter transformation, and one serving arm overlaps the rewriter role. A
+positive or negative outcome therefore cannot decide the candidate. The
+next formal test is the role-disentangled, style-matched G0b contract in
+`docs/CANDIDATE_SEMANTIC_ANCESTRY_RAG.md`; a positive G0b would only authorize
 offline reproduction, never a submission claim.
 
 ## Closed directions
