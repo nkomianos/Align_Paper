@@ -156,14 +156,15 @@ A failure of any condition kills this candidate.  Because of the active G0
 role-overlap limitation above, a pass authorizes only a fresh, role-disentangled
 G0b; it does not establish an ICLR-ready result or authorize external G1.
 
-G0b must create a new corpus in which no serving family is the source-history
-model or rewriter for its own evaluated arm. At minimum it must use a third,
-role-separated corpus-construction family; generate each serving system's
-prior answer history separately; rewrite each history through the independent
-rewriter; and re-run the complete factorial controls with the same deterministic
-scoring and question-level bootstrap. It must also include an explicit
-serving-family/rewriter interchange control. Only a positive, fully
-role-disentangled G0b can authorize the external replication protocol.
+G0b must create a new corpus in which the **rewriter** is not a serving family
+for the arm it is evaluated on. Each serving model must deliberately generate
+its own prior-answer history: that self-history is the causal object, not a
+role-overlap confound. A third, role-separated rewriter must then transform
+each serving model's history independently before the full factorial controls
+are re-run with the same deterministic scoring and question-level bootstrap.
+It must also include a pre-specified rewriter-interchange control. Only a
+positive, fully role-disentangled G0b can authorize the external replication
+protocol.
 
 ## Compute estimate
 
