@@ -61,6 +61,8 @@ sentry-verify = "shadow_student_audit.verify:main"
 ancestry-rag-verify = "semantic_ancestry_rag.verify:main"
 ancestry-rag-run = "semantic_ancestry_rag.runner:main"
 ancestry-rag-assemble = "semantic_ancestry_rag.assemble:main"
+ancestry-rag-build-base = "semantic_ancestry_rag.corpus:main"
+ancestry-rag-prepare = "semantic_ancestry_rag.prepare:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

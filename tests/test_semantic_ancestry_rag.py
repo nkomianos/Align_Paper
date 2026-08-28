@@ -5,6 +5,8 @@ import pytest
 from semantic_ancestry_rag.gate import Conditions, ResultRow, Thresholds, evaluate_gate
 from semantic_ancestry_rag.runner import Question, score_question_condition
 from semantic_ancestry_rag.retrieval import history_aware_select, mmr_select
+from semantic_ancestry_rag.corpus import build_base_questions
+from semantic_ancestry_rag.prepare import materialize_question
 from semantic_ancestry_rag.verify import _validate_complete_design
 from under_extinction.io import write_jsonl
 
@@ -91,3 +93,25 @@ def test_history_aware_retrieval_rejects_an_answer_descendant_without_provenance
     history_aware = history_aware_select("best hiking boot", passages, history, limit=1)
     assert mmr.indices == (0,)
     assert history_aware.indices == (1,)
+
+
+def test_fictional_source_packets_are_deterministic_and_do_not_reuse_entity_ids() -> None:
+    first = build_base_questions(count=30)
+    second = build_base_questions(count=30)
+    assert first == second
+    entities = [entity for question in first for entity in question.entity_aliases]
+    assert len(entities) == len(set(entities))
+    assert all(len(question.base_references) == 5 for question in first)
+
+
+def test_materialized_inputs_keep_all_conditions_and_do_not_include_author_metadata() -> None:
+    base = build_base_questions(count=30)[0]
+    prepared = materialize_question(
+        base,
+        ancestor_answer=f"{list(base.entity_aliases)[0]} is compelling.",
+        cross_rewrite=f"{list(base.entity_aliases)[0]} is compelling in neutral prose.",
+        style_only="An unrelated packet contains no listed entities.",
+        independent_rewrite=base.base_references[0],
+    )
+    assert set(prepared.references) == set(Conditions.ALL)
+    assert "model" not in str(prepared.references).lower()
