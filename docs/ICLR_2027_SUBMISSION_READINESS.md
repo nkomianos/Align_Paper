@@ -1,0 +1,53 @@
+# ICLR 2027 Submission Readiness
+
+**Status on 28 August 2026: not submission-eligible.**  No active candidate
+has yet passed its causal gate and independent external replication.  A code
+bundle, a local unit test, or a null result cannot support a genuine abstract.
+
+## Official constraints
+
+ICLR's [2027 call for papers](https://www.iclr.cc/Conferences/2027/CallForPapers)
+sets an abstract deadline of **18 September 2026, 11:59 PM AOE** and a paper
+deadline of **25 September 2026, 11:59 PM AOE**.  The
+[author guidelines](https://www.iclr.cc/Conferences/2027/AuthorGuidelines)
+require a genuine abstract and state that no new authors may be added after the
+abstract deadline.  The submission is double blind.
+
+## Evidence required before an abstract is defensible
+
+1. A differentiated central claim survives the literature screen.
+2. The frozen semantic-ancestry G0 result passes for both independent serving
+   model families, with raw-completion, preflight, and aggregate verification.
+3. The effect replicates on a separately frozen public-source corpus.  The
+   intended source is HotpotQA's CC BY-SA 4.0 distractor development set because
+   it provides source paragraphs and sentence-level supporting-fact supervision.
+4. The proposed history-aware selector defeats generic retrieval-diversity and
+   context-allocation controls without a faithfulness trade-off.
+5. A full anonymous draft reports failures and fixed decision rules, includes
+   all model/data/licensing details, and is internally reproducible.
+
+The current candidate satisfies only the *implementation* prerequisite for
+item 2. It has **no experimental result**, so it is neither a paper nor an
+abstract candidate.
+
+## Compressed decision schedule, if compute is explicitly authorized
+
+| Milestone | Earliest meaningful decision | Consequence |
+| --- | --- | --- |
+| Run immutable G0 | After a clean host preflight | Any gate failure kills the candidate. |
+| Rebuild and verify evidence | Immediately after each family completes | A manifest or raw-rescoring mismatch invalidates the run. |
+| Freeze external corpus and replicate | Only after a verified G0 pass | Any transfer failure kills the candidate. |
+| PI submission review | Only after both gates pass | Decide whether the evidence merits a genuine abstract. |
+
+No placeholder abstract should be submitted.  If the two experiments cannot be
+completed and audited before the abstract deadline, the correct decision is to
+continue the research toward a later venue rather than submit an unsubstantiated
+ICLR paper.
+
+## User-owned items needed only at submission time
+
+* Final author list and affiliations, with every author maintaining an OpenReview
+  profile before 18 September.
+* Explicit authorization to use an active GPU host for the already frozen G0.
+* Confirmation that the authors accept the relevant dataset licenses and ICLR's
+  double-blind submission requirements.
