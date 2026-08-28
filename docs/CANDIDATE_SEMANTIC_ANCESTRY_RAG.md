@@ -48,6 +48,16 @@ Nearest work to beat, not merely cite:
   another's generated references. Section 15 calls generic diversity a possible
   mitigation but does not test it; Section 15.2 identifies human-edited
   answer-derived "knowledge collapse" as a case that AI detection cannot catch.
+
+  A source-level audit of the released v1 TeX on 2026-08-28 confirms this
+  boundary rather than relying on the abstract: Section 10 controls eight
+  LLM-judged quality dimensions and AI-generation status, then concludes that
+  it cannot tell whether the residual preference is matching reasoning/content
+  or style, and lists cross-model citation as future work. Its mitigation
+  section only lists filtering and generic diversification; it contains no
+  factorial test or answer-history-aware selector. This audit does **not** make
+  the present candidate novel by itself: G0 still has to establish an
+  author-invariant ancestry effect and a history-aware gain over MMR.
 * [Self-Preference in RAG](https://aclanthology.org/2025.findings-acl.1369.pdf):
   static authorship and factuality controls, with largely null final-generation
   self-preference; this is the critical alternative account G0 must overturn.
