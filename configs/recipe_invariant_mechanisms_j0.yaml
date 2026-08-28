@@ -3,7 +3,7 @@ experiment_family: recipe_invariant_causal_mechanisms
 seed: 20260828
 model:
   id: Qwen/Qwen3.5-9B
-  revision: main
+  revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a
   enable_thinking: false
   dtype: bfloat16
   max_length: 384

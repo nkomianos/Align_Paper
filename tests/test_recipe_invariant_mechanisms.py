@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from recipe_invariant_mechanisms import analyze_gate, build_corpus, load_config
+from recipe_invariant_mechanisms.runner import _records_for_recipe, protocol_records
 from under_extinction.io import read_jsonl, sha256_file
 
 
@@ -59,3 +60,12 @@ def test_gate_rejects_recipe_c_selection_and_missing_control(tmp_path: Path) -> 
         assert "A/B only" in str(exc)
     else:
         raise AssertionError("Expected recipe-C selection leakage to be rejected")
+
+
+def test_recipes_have_matched_training_budget_and_recipe_c_has_unrelated_data(tmp_path: Path) -> None:
+    corpus = build_corpus(_config(), tmp_path / "corpus")
+    protocol = protocol_records(list(read_jsonl(corpus["corpus"])))
+    recipes = {name: _records_for_recipe(protocol, name) for name in ("posthoc_sft", "contrastive_preference", "integrated_sft")}
+    assert {len(records) for records in recipes.values()} == {384}
+    assert {row["kind"] for row in recipes["integrated_sft"]} == {"target", "unrelated"}
+    assert {row["kind"] for row in recipes["posthoc_sft"]} == {"target"}
