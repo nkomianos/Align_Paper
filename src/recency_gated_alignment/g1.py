@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import time
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -116,10 +117,14 @@ def run_g1(config_path: str | Path, output_dir: str | Path) -> dict[str, Any]:
     if not isinstance(preflight_value, Mapping) or preflight_value.get("kind") != "recency_gated_alignment_g1_runtime_preflight" or preflight_value.get("config_sha256") != config["_sha256"]:
         raise ValueError("G1 runtime preflight is not bound to the frozen G1 configuration")
     destination.mkdir(parents=True)
+    copied_preflight = destination / "runtime_preflight.json"
+    shutil.copy2(preflight, copied_preflight)
+    if sha256_file(copied_preflight) != sha256_file(preflight):
+        raise RuntimeError("G1 runtime preflight copy checksum mismatch")
     corpus = build_corpus(config, destination / "corpus")
     protocol = protocol_records(read_jsonl(corpus["corpus"]))
     write_jsonl(destination / "protocol.jsonl", [{"partition": partition, **record} for partition, records in protocol.items() for record in records])
-    manifest = {"kind": G1_KIND, "config_sha256": config["_sha256"], "corpus_sha256": corpus["corpus_sha256"], "protocol_sha256": sha256_file(destination / "protocol.jsonl"), "git_head": os.popen("git rev-parse HEAD").read().strip(), "runtime_preflight_sha256": sha256_file(preflight), "started_unix": time.time()}
+    manifest = {"kind": G1_KIND, "config_sha256": config["_sha256"], "corpus_sha256": corpus["corpus_sha256"], "protocol_sha256": sha256_file(destination / "protocol.jsonl"), "git_head": os.popen("git rev-parse HEAD").read().strip(), "runtime_preflight_filename": copied_preflight.name, "runtime_preflight_sha256": sha256_file(copied_preflight), "started_unix": time.time()}
     write_json(destination / "run_manifest.json", manifest)
     metrics = [_seed_run_g1(config, protocol, int(seed), destination / f"seed_{seed}") for seed in config["design"]["seeds"]]
     write_json(destination / "metrics.json", {"records": metrics})

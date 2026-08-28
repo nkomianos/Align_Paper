@@ -21,6 +21,12 @@ def verify_retrieved_g1(config_path: str | Path, run_root: str | Path, destinati
     manifest = _read_json(root / "run_manifest.json", "G1 run manifest")
     if manifest.get("kind") != G1_KIND or manifest.get("config_sha256") != config["_sha256"]:
         raise ValueError("G1 run manifest is not bound to the frozen configuration")
+    preflight_name, preflight_hash = manifest.get("runtime_preflight_filename"), manifest.get("runtime_preflight_sha256")
+    if not isinstance(preflight_name, str) or not isinstance(preflight_hash, str) or sha256_file(root / preflight_name) != preflight_hash:
+        raise ValueError("G1 runtime preflight is absent or has a checksum mismatch")
+    preflight = _read_json(root / preflight_name, "G1 runtime preflight")
+    if preflight.get("kind") != "recency_gated_alignment_g1_runtime_preflight" or preflight.get("config_sha256") != config["_sha256"] or preflight.get("model_revision") != config["model"]["revision"]:
+        raise ValueError("G1 runtime preflight is not bound to the pinned model contract")
     for filename, key in (("metrics.json", "metrics_sha256"), ("gate_report.json", "gate_report_sha256")):
         if not isinstance(manifest.get(key), str) or sha256_file(root / filename) != manifest[key]:
             raise ValueError(f"G1 manifest checksum mismatch for {filename}")

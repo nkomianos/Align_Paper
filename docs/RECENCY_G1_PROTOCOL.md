@@ -21,6 +21,8 @@ The selected timestamp direction and every random/PCA/label-shuffled control
 are applied to both adapters.  This rules out a direction that merely changes
 generic sensitivity to the monitored/unmonitored headers.  G1 retains the
 same strict held-out alias split and all-or-nothing two-seed gate as G0.
+The offline, revision-pinned runtime preflight is copied and checksummed inside
+the immutable result root so retrieval verification can attest it.
 
 ## Decision rule
 
