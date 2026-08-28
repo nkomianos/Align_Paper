@@ -39,6 +39,24 @@ that disappears under the same-rewriter independent-summary control is merely a
 source-quality/coverage effect; an effect that MMR removes is merely generic
 near-duplicate redundancy. Neither supports a paper.
 
+### Active G0 role-overlap limitation
+
+The sealed G0 uses Qwen3.5-9B to form the prior-answer history, Mistral-7B to
+rewrite that history, and those same two families as its serving arms.  This is
+not a data-integrity failure, and the running job must remain unchanged.  It is
+an identification limitation: in the Mistral serving arm, the `cross_ancestor`
+passage is also authored by Mistral.  Consequently, even if its original
+five-criterion rule passes, the result cannot establish an **author- and
+serving-family-independent** semantic-ancestry effect.  The Qwen serving arm
+does test a Qwen answer rewritten by a different family, but the paired Mistral
+arm is not an independent replication of that role-separated intervention.
+
+The current run is therefore a useful, bounded feasibility diagnostic only. A
+failure still kills the candidate as pre-registered. A positive result cannot
+authorize external G1; it first requires the role-disentangled G0b below. This
+restriction was recorded while the run was active and applies regardless of
+the observed result.
+
 Nearest work to beat, not merely cite:
 
 * [RAG Collapse](https://arxiv.org/abs/2608.22118): self-authored document
@@ -134,9 +152,18 @@ Bootstrap units are questions, never completions.
    and gate report all match a manifest; the report must be recomputable without
    access to an answer key.
 
-A failure of any condition kills this candidate.  A pass authorizes only
-offline reproduction with a separately generated corpus and external
-evaluation; it does not establish an ICLR-ready result by itself.
+A failure of any condition kills this candidate.  Because of the active G0
+role-overlap limitation above, a pass authorizes only a fresh, role-disentangled
+G0b; it does not establish an ICLR-ready result or authorize external G1.
+
+G0b must create a new corpus in which no serving family is the source-history
+model or rewriter for its own evaluated arm. At minimum it must use a third,
+role-separated corpus-construction family; generate each serving system's
+prior answer history separately; rewrite each history through the independent
+rewriter; and re-run the complete factorial controls with the same deterministic
+scoring and question-level bootstrap. It must also include an explicit
+serving-family/rewriter interchange control. Only a positive, fully
+role-disentangled G0b can authorize the external replication protocol.
 
 ## Compute estimate
 
