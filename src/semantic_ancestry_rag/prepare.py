@@ -73,7 +73,13 @@ def materialize_question(base: BaseQuestion, *, ancestor_answer: str, cross_rewr
         "mmr": tuple(pool[index] for index in mmr.indices),
         "history_aware": tuple(pool[index] for index in history.indices),
     }
-    support = {condition: base.source_supported_entities for condition in references}
+    support = {
+        condition: tuple(
+            entity for entity, aliases in base.entity_aliases.items()
+            if any(alias.lower() in "\n".join(passages).lower() for alias in aliases)
+        )
+        for condition, passages in references.items()
+    }
     return Question(
         question_id=base.question_id,
         question=base.question,

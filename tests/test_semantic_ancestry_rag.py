@@ -115,3 +115,5 @@ def test_materialized_inputs_keep_all_conditions_and_do_not_include_author_metad
     )
     assert set(prepared.references) == set(Conditions.ALL)
     assert "model" not in str(prepared.references).lower()
+    assert len(prepared.source_supported_entities[Conditions.BASELINE]) == 8
+    assert len(prepared.source_supported_entities[Conditions.MMR]) <= 8
