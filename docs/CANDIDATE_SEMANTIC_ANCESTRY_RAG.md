@@ -188,6 +188,31 @@ the selected community, snapshot identifier, attribution appendix, semantic
 scoring design, and independent-review plan. A shortlist alone is never
 external evidence and must not be cited as a replication.
 
+### Required G1 safeguards if G0 passes
+
+G0's faithfulness check is deliberately only a **non-inferiority guard**: a
+history-aware selector can lower the collapse event simply by omitting the
+descendant passage.  It does not establish that the selector preserves answer
+utility.  Thus a positive G0 cannot support a mitigation claim until the
+external protocol pre-registers all of the following:
+
+1. a task-level, ground-truth answer-utility endpoint in addition to
+   source-support faithfulness, with an equivalence/non-inferiority margin
+   relative to MMR;
+2. a retrieval-quality and coverage audit, including the fraction of queries
+   on which the selector excluded the descendant and the relevance loss of
+   each selected packet;
+3. a content-matched history control (the same selector penalty against a
+   non-ancestral answer of matched query relevance), so that generic removal
+   of a useful summary cannot masquerade as semantic-ancestry mitigation; and
+4. evaluation on a held-out question set whose scoring rules and source-packet
+   construction are fixed before any external serving result is examined.
+
+These are confirmatory safeguards, not criteria that may be relaxed to rescue
+G0.  If the frozen G0 is positive but this stronger external protocol cannot
+show utility preservation and ancestry-specific benefit over its controls, the
+candidate is killed rather than reframed as a generic diversity heuristic.
+
 Importantly, multiple answers to one Stack Exchange question are **not**
 independent sources for a corroboration claim. This transfer setting would test
 whether the answer-ancestry mechanism survives naturally written text and a
