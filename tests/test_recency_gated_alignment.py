@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 
 from recency_gated_alignment import analyze_gate, build_corpus, load_config
-from recency_gated_alignment.corrected_erasure_audit import corrected_intervention_delta
+from recency_gated_alignment.corrected_erasure_audit import _source_protocol, corrected_intervention_delta
 from recency_gated_alignment.g1 import _mean_and_lower, run_g1
 from recency_gated_alignment.runner import _bootstrap_relative_reduction, _choose_direction, _matched_controls, _save_adapter, _temporal_homogenized_stage2, protocol_records
 from recency_gated_alignment.verify import verify_retrieved_run
@@ -168,6 +168,13 @@ def test_corrected_intervention_uses_a_matched_cue_only_intervention() -> None:
         assert "equal" in str(exc)
     else:
         raise AssertionError("Expected unequal paired switch arrays to fail")
+
+
+def test_corrected_audit_rebuilds_from_the_checksummed_corpus_not_flattened_protocol(tmp_path: Path) -> None:
+    corpus = build_corpus(_config(), tmp_path / "completed-run" / "corpus")
+    protocol = _source_protocol(tmp_path / "completed-run")
+    assert Path(corpus["corpus"]).is_file()
+    assert protocol["switch_held_out"]
 
 
 def test_temporal_homogenization_substitutes_examples_under_a_fixed_budget() -> None:

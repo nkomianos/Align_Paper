@@ -78,6 +78,18 @@ def corrected_intervention_delta(
     return arrays[0] - arrays[1], arrays[2] - arrays[3]
 
 
+def _source_protocol(source_root: Path) -> dict[str, list[dict[str, Any]]]:
+    """Rebuild records from the checksummed corpus, not the derived view.
+
+    ``protocol.jsonl`` is an evidence-oriented flattened serialization whose
+    rows no longer contain every field expected by ``protocol_records``.  The
+    immutable corpus is the authoritative input and is already checksum-bound
+    by ``verify_retrieved_run``.
+    """
+
+    return protocol_records(read_jsonl(source_root / "corpus" / "units.jsonl"))
+
+
 def _switch_values(model: Any, tokenizer: Any, records: list[Mapping[str, Any]], config: Mapping[str, Any], direction: Any | None = None) -> np.ndarray:
     probabilities = _choice_probabilities(
         model, tokenizer, records, int(config["model"]["max_length"]), int(config["training"]["batch_size"]),
@@ -207,7 +219,7 @@ def audit_completed_run(config_path: str | Path, run_root: str | Path, output_di
     destination.mkdir(parents=True)
     try:
         source_verification = verify_retrieved_run(config["_path"], source, destination / "source_retrieval_verification.json")
-        protocol = protocol_records(read_jsonl(source / "protocol.jsonl"))
+        protocol = _source_protocol(source)
         records = [_audit_seed(config, protocol, source, int(seed)) for seed in config["design"]["seeds"]]
         result = {
             "kind": AUDIT_KIND,
