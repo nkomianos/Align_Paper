@@ -58,6 +58,7 @@ outcome-blind-verification = "outcome_blind_verification.cli:main"
 sentry-preflight = "shadow_student_audit.preflight:main"
 sentry-g0 = "shadow_student_audit.runner:main"
 sentry-verify = "shadow_student_audit.verify:main"
+ancestry-rag-verify = "semantic_ancestry_rag.verify:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

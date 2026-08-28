@@ -1,0 +1,20 @@
+kind: semantic_ancestry_rag_g0
+status: conditional_candidate_not_gpu_authorized
+question_count: 120
+completions_per_cell: 8
+model_families_required: 2
+conditions:
+  - baseline
+  - self_ancestor
+  - cross_ancestor
+  - style_only
+  - independent_rewrite
+  - mmr
+  - history_aware
+thresholds:
+  bootstrap_samples: 10000
+  bootstrap_seed: 20260828
+  ancestry_effect_lower_bound: 0.10
+  specificity_lower_bound: 0.08
+  history_vs_mmr_upper_bound: -0.08
+  faithfulness_lower_bound: -0.02
