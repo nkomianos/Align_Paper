@@ -1,0 +1,37 @@
+schema_version: "1.0"
+kind: sentry_shadow_student_g0
+model:
+  id: Qwen/Qwen3.5-9B
+  revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a
+  dtype: bfloat16
+  max_length: 192
+public_sources:
+  - id: MinhxLe/subliminal-learning
+    revision: db04f4150edf940559b5f3147f65d808e9313efd
+    url: https://github.com/MinhxLe/subliminal-learning
+    purpose: prompt-template positive control only
+  - id: minhxle/subliminal-learning_numbers_dataset
+    revision: 4fa5997d83c88edf028e2c13c7107baa731eb30c
+    url: https://huggingface.co/datasets/minhxle/subliminal-learning_numbers_dataset
+    purpose: numeric prompt templates only
+  - id: minhxle/subliminal-learning_code_dataset
+    revision: 95020687463ac33c430202a923fe47756b82d377
+    url: https://huggingface.co/datasets/minhxle/subliminal-learning_code_dataset
+    purpose: code prompt templates only
+  - id: iremkrc/subliminal-learning-open
+    revision: 68caa7ae93840af798d259fdbcfbbd0667aa9a09
+    url: https://github.com/iremkrc/subliminal-learning-open
+    purpose: input-converter validation only; never SENTRY evidence
+training:
+  full_lora_rank: 32
+  shadow_lora_rank: 4
+  full_learning_rate: 2.0e-5
+  shadow_learning_rate: 1.0e-5
+  full_token_budget: 1920000
+  shadow_token_budget: 240000
+  full_seeds: [10301, 10302]
+  shadow_seeds: [10401, 10402, 10403, 10404]
+  target_modules: [q_proj, k_proj, v_proj, o_proj]
+sealed_test:
+  answer_key_path: null
+  rule: The answer key is injected only after public source and runtime preflight attestations exist.
