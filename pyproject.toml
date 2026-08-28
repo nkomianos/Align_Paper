@@ -56,6 +56,8 @@ interface-invariance = "under_extinction.interface_cli:main"
 hybrid-memory = "under_extinction.hybrid_memory_cli:main"
 outcome-blind-verification = "outcome_blind_verification.cli:main"
 sentry-preflight = "shadow_student_audit.preflight:main"
+sentry-g0 = "shadow_student_audit.runner:main"
+sentry-verify = "shadow_student_audit.verify:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

@@ -7,6 +7,15 @@ The proposed deployment action is only to *flag* a synthetic post-training batch
 for review before a costly full run. A negative shadow result cannot establish
 that a batch is safe, trusted, or free of an arbitrary undisclosed trait.
 
+The implemented first pass is deliberately a **known-effect calibration
+challenge**: it uses pinned public prompt carriers and benign paired response
+styles. It tests whether the end-to-end shadow forecast, artifact binding, and
+sealed calibration machinery work at all. It does **not** establish subliminal
+or arbitrary covert transfer. A G0 pass therefore authorizes only a true
+teacher-generated covert-transfer replication; it cannot by itself greenlight
+an ICLR paper. A G0 failure still kills this candidate, because the claimed
+forecast cannot survive even its most favorable transparent setting.
+
 ## Problem and hypothesis
 
 Synthetic post-training data can transmit a behavioral trait that is absent from
@@ -62,9 +71,11 @@ calibration trait/channel, it is not differentiated and this candidate is dead.
 - Reference: every source batch receives a paired neutral batch with identical
   prompts, generation budget, token-length distribution, filtering, and train
   recipe. Source identity, order, and formatting must not predict the label.
-- Challenge channels: at least one vocabulary-routed and one
-  condition-present/body-routed trait, each through two public synthetic-data
-  channels. The final channel/trait pair is locked before score calibration.
+- Calibration channels: a vocabulary response-choice pair and a matched
+  response-body organization pair. These are non-harmful known-effect controls,
+  not evidence that a model-body covert channel has been reproduced. The
+  follow-on covert-transfer replication must lock an independently generated
+  vocabulary and body/channel condition before score calibration.
 - Evaluation: public, fixed behavioral prompts with order-balanced answer
   formats, prompt-format controls, and no-claim controls. A single marker token
   or a prompt that shifts the neutral base is invalid evidence.

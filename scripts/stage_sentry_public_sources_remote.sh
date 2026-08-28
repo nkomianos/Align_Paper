@@ -29,5 +29,10 @@ hf download --repo-type dataset --revision "$CODE_REVISION" \
 (cd "$DESTINATION" && find upstream offline_replication numbers code -type f -print0 | sort -z | xargs -0 sha256sum) \
   > "$DESTINATION/public_sources.sha256"
 cp "$ROOT/configs/sentry_g0.yaml" "$DESTINATION/public_contract.yaml"
+PYTHONPATH="$ROOT/src${PYTHONPATH:+:$PYTHONPATH}" \
+  python "$ROOT/scripts/stage_sentry_prompts.py" \
+  --numbers "$DESTINATION/numbers" --code "$DESTINATION/code" \
+  --destination "$DESTINATION/questions" --minimum 4096
+find "$DESTINATION/questions" -type f -print0 | sort -z | xargs -0 sha256sum >> "$DESTINATION/public_sources.sha256"
 sha256sum "$DESTINATION/public_contract.yaml" >> "$DESTINATION/public_sources.sha256"
 echo "SENTRY public sources staged at $DESTINATION"

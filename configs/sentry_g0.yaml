@@ -3,6 +3,10 @@ kind: sentry_shadow_student_g0
 model:
   id: Qwen/Qwen3.5-9B
   revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a
+  loader_class: Qwen3_5ForCausalLM
+  text_only: true
+  chat_template_kwargs: {enable_thinking: false}
+  delta_net_kernel_policy: torch_fallback_required
   dtype: bfloat16
   max_length: 192
 public_sources:
@@ -25,13 +29,29 @@ public_sources:
 training:
   full_lora_rank: 32
   shadow_lora_rank: 4
+  lora_alpha: 32
+  lora_dropout: 0.0
   full_learning_rate: 2.0e-5
   shadow_learning_rate: 1.0e-5
   full_token_budget: 1920000
   shadow_token_budget: 240000
   full_seeds: [10301, 10302]
   shadow_seeds: [10401, 10402, 10403, 10404]
-  target_modules: [q_proj, k_proj, v_proj, o_proj]
+  target_modules: [in_proj_qkv, in_proj_z, in_proj_b, in_proj_a, out_proj, q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+  micro_batch_size: 2
+  gradient_accumulation_steps: 8
+  maximum_gradient_norm: 1.0
+  warmup_fraction: 0.03
+protocol:
+  split_seed: 20260828
+  source_rows_per_scenario: 256
+  probe_rows_per_channel: 96
+  response_tokens: 32
+  scenario_strengths: [0.00, 0.15, 0.40, 0.70]
+  calibration_per_channel: 4
+  sealed_per_channel: 4
+  source_generator: deterministic_benign_style_pairs_v1
+  warning: "This G0 generator is a known-effect calibration challenge, not evidence that arbitrary covert transfer has been reproduced."
 sealed_test:
   answer_key_path: null
   rule: The answer key is injected only after public source and runtime preflight attestations exist.
