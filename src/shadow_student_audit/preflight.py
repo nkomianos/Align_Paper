@@ -5,8 +5,9 @@ from __future__ import annotations
 import hashlib
 import json
 import platform
+import argparse
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Mapping, Sequence
 
 import yaml
 
@@ -84,3 +85,17 @@ def public_preflight(config_path: str | Path, destination: str | Path, *, requir
     }
     write_json(output, json.loads(canonical_json(result)))
     return result
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Attest the public SENTRY G0 contract")
+    parser.add_argument("--config", required=True)
+    parser.add_argument("--destination", required=True)
+    parser.add_argument("--allow-cpu", action="store_true", help="test-only: do not require CUDA")
+    args = parser.parse_args(argv)
+    print(canonical_json(public_preflight(args.config, args.destination, require_cuda=not args.allow_cpu)))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
