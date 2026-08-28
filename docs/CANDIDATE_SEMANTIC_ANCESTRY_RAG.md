@@ -33,11 +33,20 @@ attribution and a scheduler for under-used evidence.  Therefore this candidate
 only survives if it demonstrates a new *ancestry-specific* causal interaction
 that those generic methods fail to remove.
 
+This makes the contribution conditional and falsifiable: an ancestry effect
+that disappears under the same-rewriter independent-summary control is merely a
+source-quality/coverage effect; an effect that MMR removes is merely generic
+near-duplicate redundancy. Neither supports a paper.
+
 Nearest work to beat, not merely cite:
 
 * [RAG Collapse](https://arxiv.org/abs/2608.22118): self-authored document
   feedback and a source-quality control, but no semantic-ancestry factorial or
-  mitigation.
+  tested mitigation. Its Section 10 says it cannot distinguish matching content
+  from style and specifically proposes testing whether one model over-cites
+  another's generated references. Section 15 calls generic diversity a possible
+  mitigation but does not test it; Section 15.2 identifies human-edited
+  answer-derived "knowledge collapse" as a case that AI detection cannot catch.
 * [Self-Preference in RAG](https://aclanthology.org/2025.findings-acl.1369.pdf):
   static authorship and factuality controls, with largely null final-generation
   self-preference; this is the critical alternative account G0 must overturn.
