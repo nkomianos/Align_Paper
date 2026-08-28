@@ -7,6 +7,7 @@ import numpy as np
 
 from recency_gated_alignment import analyze_gate, build_corpus, load_config
 from recency_gated_alignment.corrected_erasure_audit import corrected_intervention_delta
+from recency_gated_alignment.g1 import run_g1
 from recency_gated_alignment.runner import _bootstrap_relative_reduction, _choose_direction, _matched_controls, _save_adapter, _temporal_homogenized_stage2, protocol_records
 from recency_gated_alignment.verify import verify_retrieved_run
 from under_extinction.io import read_jsonl, sha256_file, write_json, write_jsonl
@@ -15,6 +16,11 @@ from under_extinction.io import read_jsonl, sha256_file, write_json, write_jsonl
 def _config() -> dict:
     root = Path(__file__).parents[1]
     return load_config(root / "configs" / "recency_gated_alignment.yaml")
+
+
+def _g1_config() -> dict:
+    root = Path(__file__).parents[1]
+    return load_config(root / "configs" / "recency_gated_alignment_g1.yaml")
 
 
 def _metrics(pass_gate: bool) -> list[dict]:
@@ -57,6 +63,22 @@ def test_corpus_is_deterministic_and_has_disjoint_probe_split(tmp_path: Path) ->
     rows = list(read_jsonl(first["corpus"]))
     assert {row["probe_split"] for row in rows} == {"train", "held_out"}
     assert all(row["stage1_action"] != row["stage2_action"] for row in rows)
+
+
+def test_g1_is_a_new_pinned_contract_and_refuses_unattested_execution(tmp_path: Path, monkeypatch) -> None:
+    config = _g1_config()
+    assert config["model"]["revision"] == "c202236235762e1c871ad0ccb60c8ee5ba337b9a"
+    assert config["design"]["seeds"] == [9301, 9302]
+    assert config["seed"] != _config()["seed"]
+    monkeypatch.delenv("RGA_RUNTIME_PREFLIGHT", raising=False)
+    destination = tmp_path / "g1-would-be-run"
+    try:
+        run_g1(config["_path"], destination)
+    except FileNotFoundError as exc:
+        assert "preflight" in str(exc)
+    else:
+        raise AssertionError("Expected G1 to reject an unattested GPU run")
+    assert not destination.exists()
 
 
 def test_gate_requires_every_preregistered_condition(tmp_path: Path) -> None:
