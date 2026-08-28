@@ -30,6 +30,9 @@ abstract deadline.  The submission is double blind.
    attribution requirements must be retained.  See
    [network terms](https://opendata.stackexchange.com/legal/terms-of-service/public)
    and [licensing guidance](https://opendata.stackexchange.com/help/licensing).
+   The repository contains a non-executing, CC BY-SA-4.0-only extraction tool
+   for this contingency, but no Stack Exchange dump, shortlist, or G1 protocol
+   has been frozen.
 4. The proposed history-aware selector defeats generic retrieval-diversity and
    context-allocation controls without a faithfulness trade-off.
 5. A full anonymous draft reports failures and fixed decision rules, includes

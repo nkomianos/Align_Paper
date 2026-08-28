@@ -12,6 +12,7 @@ from semantic_ancestry_rag import prepare, runner
 from semantic_ancestry_rag.runner import QWEN35_MODEL_ID, Question, _render_generation_prompt, score_question_condition
 from semantic_ancestry_rag.retrieval import history_aware_select, mmr_select
 from semantic_ancestry_rag.corpus import build_base_questions
+from semantic_ancestry_rag.external_corpus import KIND as EXTERNAL_KIND, extract_source_packets
 from semantic_ancestry_rag.prepare import materialize_question
 from semantic_ancestry_rag.preflight import KIND as PREFLIGHT_KIND, MISTRAL_REVISION, QWEN_REVISION, load_contract, validate_bound_preflight
 from semantic_ancestry_rag.verify import RUN_KIND, _validate_complete_design, verify_run
@@ -115,6 +116,42 @@ def test_fictional_source_packets_are_deterministic_and_do_not_reuse_entity_ids(
     entities = [entity for question in first for entity in question.entity_aliases]
     assert len(entities) == len(set(entities))
     assert all(len(question.base_references) == 5 for question in first)
+
+
+def test_external_source_extractor_is_license_bound_deterministic_and_not_a_gate_input(tmp_path) -> None:
+    rows = []
+    for question_id in range(1, 33):
+        rows.append(
+            f'<row Id="{question_id}" PostTypeId="1" Score="4" CreationDate="2025-01-01T00:00:00.000" '
+            f'ContentLicense="CC BY-SA 4.0" Title="Question {question_id}" Body="&lt;p&gt;{("question evidence " * 8)}&lt;/p&gt;" />'
+        )
+        for answer_index in range(5):
+            answer_id = 1000 + question_id * 10 + answer_index
+            rows.append(
+                f'<row Id="{answer_id}" PostTypeId="2" ParentId="{question_id}" Score="{2 + answer_index}" '
+                f'CreationDate="2025-01-0{1 + answer_index}T00:00:00.000" ContentLicense="CC BY-SA 4.0" '
+                f'Body="&lt;p&gt;{("supported alternative " * 8)}{answer_id}&lt;/p&gt;" />'
+            )
+    rows.append('<row Id="9999" PostTypeId="1" Score="99" CreationDate="2025-01-01T00:00:00.000" ContentLicense="CC BY-SA 3.0" Title="Excluded" Body="&lt;p&gt;excluded excluded excluded excluded excluded excluded excluded excluded&lt;/p&gt;" />')
+    posts = tmp_path / "Posts.xml"
+    posts.write_text("<posts>" + "".join(rows) + "</posts>", encoding="utf-8")
+    destination, manifest = tmp_path / "packets.jsonl", tmp_path / "manifest.json"
+    result = extract_source_packets(
+        posts_xml=posts, destination=destination, manifest_destination=manifest,
+        source_snapshot="stackexchange-march-2026", site="travel.stackexchange.com", cutoff="2026-03-01T00:00:00.000", count=30,
+    )
+    assert result["kind"] == EXTERNAL_KIND
+    assert result["packet_count"] == 30
+    assert result["scoring_status"] == "NOT_G1_INPUT__SEPARATE_PREREGISTRATION_REQUIRED"
+    packets = [__import__("json").loads(line) for line in destination.read_text(encoding="utf-8").splitlines()]
+    assert len(packets) == 30
+    assert all(packet["licenses"] == ["CC BY-SA 4.0"] * 5 for packet in packets)
+    assert all(packet["question_id"].startswith("travel.stackexchange.com:") for packet in packets)
+    with pytest.raises(FileExistsError):
+        extract_source_packets(
+            posts_xml=posts, destination=destination, manifest_destination=manifest,
+            source_snapshot="stackexchange-march-2026", site="travel.stackexchange.com", cutoff="2026-03-01T00:00:00.000", count=30,
+        )
 
 
 def test_materialized_inputs_keep_all_conditions_and_do_not_include_author_metadata() -> None:

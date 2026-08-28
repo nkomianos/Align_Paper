@@ -154,6 +154,23 @@ entity scoring exact while eliminating web memorization.  A G0 pass must then
 replicate on a separately frozen real-source corpus before the candidate can be
 considered a paper.
 
+## Conditional external-replication preparation
+
+The repository now includes `ancestry-rag-extract-stackexchange`, a
+fail-closed **source-packet extractor**, not a G1 evaluator. Given a specific,
+time-pinned Stack Exchange `Posts.xml` dump, it retains only explicit CC BY-SA
+4.0 questions and answers satisfying predeclared score, date, length, and
+multi-answer criteria; it emits source URLs, licenses, dump and output hashes,
+and a deterministic snapshot-keyed selection order. It refuses to overwrite a
+shortlist or manifest.
+
+This shortens the turnaround after a valid G0 pass, but it intentionally does
+not create G1 model inputs, answer aliases, condition passages, or a decision.
+Those choices must be frozen only after the verified G0 result, together with
+the selected community, snapshot identifier, attribution appendix, semantic
+scoring design, and independent-review plan. A shortlist alone is never
+external evidence and must not be cited as a replication.
+
 Preparation is staged and evidence-preserving: `ancestry-rag-prepare` first
 has a fixed *system response model* answer the base packets, has a separately
 named rewriter render the relevant and irrelevant descendants, and freezes the
