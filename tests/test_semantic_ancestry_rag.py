@@ -11,7 +11,7 @@ from semantic_ancestry_rag.runner import QWEN35_MODEL_ID, Question, _render_gene
 from semantic_ancestry_rag.retrieval import history_aware_select, mmr_select
 from semantic_ancestry_rag.corpus import build_base_questions
 from semantic_ancestry_rag.prepare import materialize_question
-from semantic_ancestry_rag.preflight import KIND as PREFLIGHT_KIND, MISTRAL_REVISION, QWEN_REVISION, load_contract
+from semantic_ancestry_rag.preflight import KIND as PREFLIGHT_KIND, MISTRAL_REVISION, QWEN_REVISION, load_contract, validate_bound_preflight
 from semantic_ancestry_rag.verify import RUN_KIND, _validate_complete_design, verify_run
 from under_extinction.io import sha256_file, write_json, write_jsonl
 
@@ -148,6 +148,19 @@ def test_frozen_runtime_contract_requires_pinned_text_only_model_specs() -> None
     assert contract["models"]["ancestor"]["revision"] == QWEN_REVISION
     assert contract["models"]["rewriter"]["revision"] == MISTRAL_REVISION
     assert tuple(contract["conditions"]) == Conditions.ALL
+
+
+def test_bound_preflight_rejects_an_unrelated_config(tmp_path) -> None:
+    root = Path(__file__).resolve().parents[1]
+    config = root / "configs" / "semantic_ancestry_rag_g0.yaml"
+    preflight = tmp_path / "preflight.json"
+    write_json(preflight, {
+        "kind": PREFLIGHT_KIND,
+        "config_sha256": "not-the-config-hash",
+        "model_contract": load_contract(config)["models"],
+    })
+    with pytest.raises(ValueError, match="not bound"):
+        validate_bound_preflight(config=config, runtime_preflight=preflight)
 
 
 def test_assembled_two_family_bundle_recomputes_the_frozen_decision(tmp_path) -> None:

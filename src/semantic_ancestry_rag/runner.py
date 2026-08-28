@@ -17,7 +17,7 @@ from typing import Any, Iterable, Mapping, Sequence
 from under_extinction.io import canonical_json, read_jsonl, sha256_file, write_json, write_jsonl
 
 from .gate import Conditions, ResultRow, Thresholds, evaluate_gate
-from .preflight import KIND as PREFLIGHT_KIND, load_contract
+from .preflight import validate_bound_preflight
 from .verify import RUN_KIND
 
 
@@ -180,22 +180,14 @@ def _validate_runtime_preflight(
 ) -> dict[str, Any]:
     """Bind a serving run to its exact model contract before weights are loaded."""
 
-    contract = load_contract(config)
+    contract = validate_bound_preflight(config=config, runtime_preflight=runtime_preflight)
     serving = contract["models"]["serving_families"]
     expected = serving.get(model_family)
     if not isinstance(expected, Mapping):
         raise ValueError(f"model family is not frozen in the G0 config: {model_family}")
     if (expected.get("id"), expected.get("revision")) != (model_id, model_revision):
         raise ValueError("requested serving model differs from the frozen G0 family contract")
-    source = Path(runtime_preflight)
-    preflight = json.loads(source.read_text(encoding="utf-8"))
-    if not isinstance(preflight, Mapping) or preflight.get("kind") != PREFLIGHT_KIND:
-        raise ValueError("not a semantic-ancestry runtime preflight")
-    if preflight.get("config_sha256") != sha256_file(config):
-        raise ValueError("runtime preflight is not bound to the frozen G0 config")
-    if preflight.get("model_contract") != contract["models"]:
-        raise ValueError("runtime preflight model contract differs from G0 config")
-    return dict(preflight)
+    return json.loads(Path(runtime_preflight).read_text(encoding="utf-8"))
 
 
 def run(

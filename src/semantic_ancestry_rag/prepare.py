@@ -11,6 +11,7 @@ from typing import Any, Iterable, Mapping, Sequence
 from under_extinction.io import canonical_json, read_jsonl, sha256_file, write_json, write_jsonl
 
 from .corpus import BaseQuestion
+from .preflight import validate_bound_preflight
 from .retrieval import history_aware_select, mmr_select
 from .runner import Question
 
@@ -134,7 +135,8 @@ def materialize_question(base: BaseQuestion, *, ancestor_answer: str, cross_rewr
 
 
 def prepare(
-    *, base_packets: str | Path, destination: str | Path, ancestor_model_id: str, ancestor_model_revision: str,
+    *, base_packets: str | Path, destination: str | Path, config: str | Path, runtime_preflight: str | Path,
+    ancestor_model_id: str, ancestor_model_revision: str,
     rewriter_model_id: str, rewriter_model_revision: str,
 ) -> dict[str, Any]:
     """Generate one shared response-history corpus; never overwrite evidence."""
@@ -142,6 +144,14 @@ def prepare(
     target = Path(destination)
     if target.exists():
         raise FileExistsError("refusing to overwrite prepared ancestry-RAG inputs")
+    contract = validate_bound_preflight(config=config, runtime_preflight=runtime_preflight)
+    for name, model_id, revision in (
+        ("ancestor", ancestor_model_id, ancestor_model_revision),
+        ("rewriter", rewriter_model_id, rewriter_model_revision),
+    ):
+        expected = contract["models"][name]
+        if (expected["id"], expected["revision"]) != (model_id, revision):
+            raise ValueError(f"requested {name} model differs from the frozen G0 contract")
     base = _load_base(base_packets)
     ancestor_model, ancestor_tokenizer = _load_model(ancestor_model_id, ancestor_model_revision)
     answers = [
@@ -161,12 +171,16 @@ def prepare(
             independent_summary=independent,
         ))
     target.mkdir(parents=True)
+    preflight_copy = target / "runtime_preflight.json"
+    preflight_copy.write_bytes(Path(runtime_preflight).read_bytes())
     inputs = target / "frozen_inputs.jsonl"
     write_jsonl(inputs, (asdict(question) for question in prepared))
     write_jsonl(target / "ancestor_answers.jsonl", ({"question_id": question.question_id, "answer": answer} for question, answer in zip(base, answers, strict=True)))
     manifest = {
         "kind": "semantic_ancestry_rag_input_preparation",
         "base_packets_sha256": sha256_file(base_packets),
+        "config_sha256": sha256_file(config),
+        "runtime_preflight_sha256": sha256_file(preflight_copy),
         "frozen_inputs_sha256": sha256_file(inputs),
         "ancestor_answers_sha256": sha256_file(target / "ancestor_answers.jsonl"),
         "ancestor_model_id": ancestor_model_id,
@@ -183,6 +197,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Prepare frozen answer-history inputs for semantic-ancestry RAG G0")
     parser.add_argument("--base-packets", required=True)
     parser.add_argument("--destination", required=True)
+    parser.add_argument("--config", required=True)
+    parser.add_argument("--runtime-preflight", required=True)
     parser.add_argument("--ancestor-model-id", required=True)
     parser.add_argument("--ancestor-model-revision", required=True)
     parser.add_argument("--rewriter-model-id", required=True)

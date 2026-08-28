@@ -95,6 +95,21 @@ def inspect_runtime() -> dict[str, Any]:
     }
 
 
+def validate_bound_preflight(*, config: str | Path, runtime_preflight: str | Path) -> dict[str, Any]:
+    """Return the frozen contract only when a preflight is bound to it exactly."""
+
+    contract = load_contract(config)
+    source = Path(runtime_preflight)
+    preflight = json.loads(source.read_text(encoding="utf-8"))
+    if not isinstance(preflight, Mapping) or preflight.get("kind") != KIND:
+        raise ValueError("not a semantic-ancestry runtime preflight")
+    if preflight.get("config_sha256") != sha256_file(config):
+        raise ValueError("runtime preflight is not bound to the frozen G0 config")
+    if preflight.get("model_contract") != contract["models"]:
+        raise ValueError("runtime preflight model contract differs from G0 config")
+    return contract
+
+
 def preflight(*, config: str | Path, destination: str | Path) -> dict[str, Any]:
     target = Path(destination)
     if target.exists():

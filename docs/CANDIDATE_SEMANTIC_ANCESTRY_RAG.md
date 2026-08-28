@@ -162,7 +162,7 @@ gated license, which would make a token and account state part of the gate.
 When GPU authorization is given, the non-overwriting sequence is:
 
 1. Run `ancestry-rag-preflight` against the frozen config; preserve its new
-   output directory.
+   JSON attestation.
 2. Build the 120 source packets with `ancestry-rag-build-base`.
 3. Prepare one shared answer-history corpus with `ancestry-rag-prepare`.
 4. Run `ancestry-rag-run` once per serving family, binding the preflight output.
