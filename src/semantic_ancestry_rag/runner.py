@@ -146,9 +146,16 @@ def generate(
             encoded = tokenizer(_render_generation_prompt(tokenizer, model_id, prompt), add_special_tokens=False, return_tensors="pt").to(model.device)
             input_length = int(encoded["input_ids"].shape[1])
             for sample_id in range(completions_per_cell):
-                generator = torch.Generator(device=model.device).manual_seed(_seed(model_id, model_revision, question.question_id, condition, sample_id))
-                with torch.inference_mode():
-                    output = model.generate(**encoded, do_sample=True, temperature=temperature, top_p=0.95, max_new_tokens=max_new_tokens, generator=generator)
+                # See prepare._generate_text: the native Qwen3.5 generation
+                # implementation rejects ``generator`` in Transformers 5.15.
+                # fork_rng preserves deterministic, per-cell sampling while
+                # restoring global CPU/CUDA state after every completion.
+                seed = _seed(model_id, model_revision, question.question_id, condition, sample_id)
+                with torch.random.fork_rng(devices=[torch.cuda.current_device()]):
+                    torch.manual_seed(seed)
+                    torch.cuda.manual_seed_all(seed)
+                    with torch.inference_mode():
+                        output = model.generate(**encoded, do_sample=True, temperature=temperature, top_p=0.95, max_new_tokens=max_new_tokens)
                 yield {
                     "question_id": question.question_id,
                     "condition": condition,

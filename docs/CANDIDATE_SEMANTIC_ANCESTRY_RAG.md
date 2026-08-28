@@ -2,7 +2,8 @@
 
 ## Status
 
-**Conditional candidate; no GPU run is authorized yet.**  The candidate is a
+**Conditional candidate; G0 is running under a preserved, non-overwriting
+evidence root.**  The candidate is a
 fast, falsifiable follow-up to RAG Collapse, rather than a claim that generic
 retrieval diversity is new.  The central claim is narrower:
 
@@ -168,7 +169,7 @@ gated, so a Hugging Face token should not be needed.  This is preferable to
 using Llama or Gemma here: their official Hub repositories require accepting a
 gated license, which would make a token and account state part of the gate.
 
-When GPU authorization is given, the non-overwriting sequence is:
+The non-overwriting execution sequence is:
 
 1. Run `ancestry-rag-preflight` against the frozen config; preserve its new
    JSON attestation.

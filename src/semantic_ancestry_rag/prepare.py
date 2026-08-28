@@ -50,9 +50,15 @@ def _generate_text(model: Any, tokenizer: Any, model_id: str, prompt: str, *, se
 
     encoded = tokenizer(_render_generation_prompt(tokenizer, model_id, prompt), add_special_tokens=False, return_tensors="pt").to(model.device)
     input_length = int(encoded["input_ids"].shape[1])
-    generator = torch.Generator(device=model.device).manual_seed(seed)
-    with torch.inference_mode():
-        output = model.generate(**encoded, do_sample=True, temperature=0.8, top_p=0.95, max_new_tokens=max_new_tokens, generator=generator)
+    # Transformers 5.15's native Qwen3.5 generation path does not accept a
+    # per-call ``generator`` argument.  Scope the required global RNG state
+    # instead, so each frozen seed remains reproducible without contaminating
+    # a subsequent condition or model family.
+    with torch.random.fork_rng(devices=[torch.cuda.current_device()]):
+        torch.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
+        with torch.inference_mode():
+            output = model.generate(**encoded, do_sample=True, temperature=0.8, top_p=0.95, max_new_tokens=max_new_tokens)
     return tokenizer.decode(output[0, input_length:], skip_special_tokens=True).strip()
 
 

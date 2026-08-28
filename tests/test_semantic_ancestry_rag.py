@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 from dataclasses import asdict
+import inspect
 from pathlib import Path
 
 import pytest
 
 from semantic_ancestry_rag.assemble import assemble
 from semantic_ancestry_rag.gate import Conditions, ResultRow, Thresholds, evaluate_gate
+from semantic_ancestry_rag import prepare, runner
 from semantic_ancestry_rag.runner import QWEN35_MODEL_ID, Question, _render_generation_prompt, score_question_condition
 from semantic_ancestry_rag.retrieval import history_aware_select, mmr_select
 from semantic_ancestry_rag.corpus import build_base_questions
@@ -140,6 +142,17 @@ def test_qwen_generation_uses_the_text_chat_template_with_thinking_disabled() ->
             return "<closed-thought>PROMPT"
 
     assert _render_generation_prompt(Tokenizer(), QWEN35_MODEL_ID, "PROMPT") == "<closed-thought>PROMPT"
+
+
+def test_sampling_scopes_seed_without_unsupported_transformers_generator_argument() -> None:
+    """Pinned Transformers rejects ``generator`` for native Qwen3.5 generation."""
+
+    preparation_source = inspect.getsource(prepare._generate_text)
+    runner_source = inspect.getsource(runner.generate)
+    assert "generator=" not in preparation_source
+    assert "generator=" not in runner_source
+    assert "torch.random.fork_rng" in preparation_source
+    assert "torch.random.fork_rng" in runner_source
 
 
 def test_frozen_runtime_contract_requires_pinned_text_only_model_specs() -> None:
