@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 
 from recipe_invariant_mechanisms import analyze_gate, build_corpus, load_config
-from recipe_invariant_mechanisms.runner import _adapter_update_directions, _records_for_recipe, protocol_records, run_j0
+from recipe_invariant_mechanisms.runner import _adapter_update_directions, _context_gap, _mean_and_lower, _records_for_recipe, protocol_records, run_j0
 from recipe_invariant_mechanisms.verify import verify_retrieved_run
 from under_extinction.io import read_jsonl, sha256_file, write_json, write_jsonl
 
@@ -104,6 +104,20 @@ def test_direction_selection_removes_the_base_model_prompt_gap(monkeypatch) -> N
     )
     np.testing.assert_allclose(updates[0], learned_update)
     np.testing.assert_allclose(directions[0].values, np.asarray([3.0, 6.0]) / np.sqrt(45.0))
+
+
+def test_j0_steering_requires_a_contextual_gap_and_keeps_the_lower_bound_distinct() -> None:
+    records = [
+        {"alias": "x", "context": "TARGET_MODE_A", "rejected": "BETA"},
+        {"alias": "x", "context": "TARGET_MODE_B", "rejected": "ALPHA"},
+    ]
+    # Raising BETA in both modes is generic; it does not improve the B-vs-A gap.
+    high = [{"BETA": 0.70}, {"BETA": 0.90}]
+    low = [{"BETA": 0.50}, {"BETA": 0.70}]
+    np.testing.assert_allclose(_context_gap(records, high) - _context_gap(records, low), [0.0], atol=1e-12)
+    estimate, lower = _mean_and_lower([0.10, 0.30, 0.50], seed=41, replicates=5_000)
+    assert estimate == 0.30
+    assert lower < estimate
 
 
 def test_retrieval_verifier_binds_recipe_c_after_ab_selection(tmp_path: Path) -> None:

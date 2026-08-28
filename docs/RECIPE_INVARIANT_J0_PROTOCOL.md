@@ -28,6 +28,14 @@ and projection-erasure effect with equal-norm random, principal-component, and
 each single-recipe direction.  This is a selection-generalization experiment,
 not a claim that a high activation correlation is causal.
 
+The signed steering outcome is the paired change in the **B-versus-A response
+gap** under positive versus negative steering.  A direction that merely raises
+the probability of one routing token in both contexts cannot pass.  Point
+estimates and paired bootstrap lower confidence bounds are recorded in distinct
+fields; this pre-run repair corrects an unlaunched draft that had confused
+bootstrap endpoints with the point estimate.  The corpus, recipe split,
+thresholds, controls, and held-out C protocol remain fixed.
+
 ## Gate
 
 Each of two seeds must simultaneously show:

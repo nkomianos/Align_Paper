@@ -23,7 +23,7 @@ import numpy as np
 from under_extinction.io import canonical_json, read_jsonl, sha256_file, write_json, write_jsonl
 from under_extinction.modeling import chat_prompt_text, encode_prompt_and_choice
 from recency_gated_alignment.runner import (
-    ResidualDirection, _as_device, _bootstrap_mean, _choice_probabilities,
+    ResidualDirection, _as_device, _bootstrap_mean, _bootstrap_relative_reduction, _choice_probabilities,
     _hidden_by_layer, _matched_controls, _new_organism, _save_adapter,
 )
 
@@ -137,16 +137,6 @@ def _train_recipe(config: Mapping[str, Any], protocol: Mapping[str, Sequence[Map
     return model, tokenizer, details, attestation
 
 
-def _mode_a_probability(records: Sequence[Mapping[str, Any]], probabilities: Sequence[Mapping[str, float]]) -> np.ndarray:
-    result = []
-    for record, probability in zip(records, probabilities, strict=True):
-        if record["context"] == "TARGET_MODE_A":
-            result.append(float(probability[str(record["rejected"])]))
-    if not result:
-        raise ValueError("No TARGET_MODE_A evaluations")
-    return np.asarray(result, dtype=float)
-
-
 def _context_gap(records: Sequence[Mapping[str, Any]], probabilities: Sequence[Mapping[str, float]]) -> np.ndarray:
     by_alias: dict[str, dict[str, tuple[Mapping[str, Any], Mapping[str, float]]]] = {}
     for row, value in zip(records, probabilities, strict=True):
@@ -159,6 +149,14 @@ def _context_gap(records: Sequence[Mapping[str, Any]], probabilities: Sequence[M
         _b_row, b_probability = pair["TARGET_MODE_B"]
         values.append(float(b_probability[str(a_row["rejected"])]) - float(a_probability[str(a_row["rejected"])]))
     return np.asarray(values, dtype=float)
+
+
+def _mean_and_lower(values: Sequence[float], *, seed: int, replicates: int) -> tuple[float, float]:
+    """Keep a behavioural point estimate separate from its bootstrap bound."""
+
+    estimate = float(np.asarray(values, dtype=float).mean())
+    lower, _ = _bootstrap_mean(values, seed=seed, replicates=replicates)
+    return estimate, lower
 
 
 def _adapter_update_directions(model: Any, tokenizer: Any, train: Sequence[Mapping[str, Any]], config: Mapping[str, Any]) -> tuple[list[ResidualDirection], list[np.ndarray]]:
@@ -223,12 +221,17 @@ def _evaluate_direction(model: Any, tokenizer: Any, target: Sequence[Mapping[str
     clean = _choice_probabilities(model, tokenizer, target, maximum, batch)
     high = _choice_probabilities(model, tokenizer, target, maximum, batch, direction, scale)
     low = _choice_probabilities(model, tokenizer, target, maximum, batch, direction, -scale)
-    steer_values = _mode_a_probability(target, high) - _mode_a_probability(target, low)
-    contrast, lower = _bootstrap_mean(steer_values, seed=_seed_from(seed, label, "steer"), replicates=int(config["analysis"]["bootstrap_replicates"]))
+    # A useful transfer effect must be conditional: it must amplify the
+    # B-versus-A response gap, rather than generically changing the B action
+    # on only one of the two contexts.
+    steer_values = _context_gap(target, high) - _context_gap(target, low)
+    contrast, lower = _mean_and_lower(steer_values, seed=_seed_from(seed, label, "steer"), replicates=int(config["analysis"]["bootstrap_replicates"]))
     base_gap = _context_gap(target, clean)
     erased = _context_gap(target, _choice_probabilities(model, tokenizer, target, maximum, batch, direction, erase=True))
-    reduction = -1.0 if base_gap.mean() <= 0 else float(1.0 - erased.mean() / base_gap.mean())
-    _point, erasure_lower = _bootstrap_mean(1.0 - erased / np.maximum(base_gap, 1e-9), seed=_seed_from(seed, label, "erase"), replicates=int(config["analysis"]["bootstrap_replicates"]))
+    reduction, erasure_lower = _bootstrap_relative_reduction(
+        base_gap, erased, seed=_seed_from(seed, label, "erase"),
+        replicates=int(config["analysis"]["bootstrap_replicates"]),
+    )
     baseline = np.asarray([float(item[str(row["target"])]) for row, item in zip(unrelated, _choice_probabilities(model, tokenizer, unrelated, maximum, batch), strict=True)])
     shifted = np.asarray([float(item[str(row["target"])]) for row, item in zip(unrelated, _choice_probabilities(model, tokenizer, unrelated, maximum, batch, direction, scale), strict=True)])
     return contrast, lower, reduction, erasure_lower, float(np.maximum(0.0, baseline.mean() - shifted.mean()))
