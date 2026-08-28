@@ -93,7 +93,16 @@ def _rewrite_prompt(text: str) -> str:
     )
 
 
-def materialize_question(base: BaseQuestion, *, ancestor_answer: str, cross_rewrite: str, style_only: str, independent_rewrite: str) -> Question:
+def _independent_summary_prompt(question: BaseQuestion) -> str:
+    sources = "\n\n".join(f"[Source {index + 1}]\n{value}" for index, value in enumerate(question.base_references))
+    return (
+        "Write one neutral source passage from the source packets below. Preserve named entities and factual claims, "
+        "but do not add rankings, citations, or facts. You have not seen any prior answer. Return only the passage.\n\n"
+        f"SOURCE PACKETS:\n{sources}"
+    )
+
+
+def materialize_question(base: BaseQuestion, *, ancestor_answer: str, cross_rewrite: str, style_only: str, independent_summary: str) -> Question:
     """Build every condition from frozen transformations, without author metadata."""
 
     pool = (*base.base_references, cross_rewrite)
@@ -104,7 +113,7 @@ def materialize_question(base: BaseQuestion, *, ancestor_answer: str, cross_rewr
         "self_ancestor": (*base.base_references, ancestor_answer),
         "cross_ancestor": (*base.base_references, cross_rewrite),
         "style_only": (*base.base_references, style_only),
-        "independent_rewrite": (*base.base_references, independent_rewrite),
+        "independent_summary": (*base.base_references, independent_summary),
         "mmr": tuple(pool[index] for index in mmr.indices),
         "history_aware": tuple(pool[index] for index in history.indices),
     }
@@ -143,13 +152,13 @@ def prepare(
     prepared: list[Question] = []
     for index, question in enumerate(base):
         cross = _generate_text(rewriter_model, rewriter_tokenizer, rewriter_model_id, _rewrite_prompt(answers[index]), seed=_seed("cross", rewriter_model_revision, question.question_id))
-        independent = _generate_text(rewriter_model, rewriter_tokenizer, rewriter_model_id, _rewrite_prompt(question.base_references[0]), seed=_seed("independent", rewriter_model_revision, question.question_id))
+        independent = _generate_text(rewriter_model, rewriter_tokenizer, rewriter_model_id, _independent_summary_prompt(question), seed=_seed("independent_summary", rewriter_model_revision, question.question_id))
         prepared.append(materialize_question(
             question,
             ancestor_answer=answers[index],
             cross_rewrite=cross,
             style_only=answers[(index + 1) % len(answers)],
-            independent_rewrite=independent,
+            independent_summary=independent,
         ))
     target.mkdir(parents=True)
     inputs = target / "frozen_inputs.jsonl"

@@ -68,7 +68,7 @@ five condition-matched sixth passages:
 | `self_ancestor` | The RAG system's primary response model expands its previous response into a passage. |
 | `cross_ancestor` | Another model rewrites that same response, preserving its claims but changing style/authorship. |
 | `style_only` | The primary response model writes a passage from an independently sampled answer; style matches but semantic ancestry does not. |
-| `independent_rewrite` | Another model rewrites an original source; controls generic AI rewriting. |
+| `independent_summary` | The same rewriter independently summarizes the original packets without ever seeing the earlier answer; this matches source-derived semantic coverage without response ancestry. |
 | `mmr` | Same ancestor pool with a strong query-document-diversity reranker. |
 | `history_aware` | Same ancestor pool, but a frozen retriever penalty is applied for similarity to the prior response bank. |
 
@@ -94,11 +94,16 @@ Bootstrap units are questions, never completions.
    lower bootstrap bound of at least 0.10.
 2. **Specificity:** `cross_ancestor - style_only` collapsed rate has a lower
    bound of at least 0.08.  This rejects a style-only account.
-3. **Generic-baseline defeat:** `history_aware - mmr` collapsed rate has an
+3. **Lineage versus content:** `cross_ancestor - independent_summary` has a
+   lower bound of at least 0.08.  The control is written by the same rewriter
+   from the original packets but without exposure to the first answer, so a
+   positive effect cannot be attributed only to a comprehensive semantic
+   summary or to generic rewriter behavior.
+4. **Generic-baseline defeat:** `history_aware - mmr` collapsed rate has an
    upper bound no greater than -0.08.
-4. **No fidelity barter:** history-aware faithfulness is no more than 0.02
+5. **No fidelity barter:** history-aware faithfulness is no more than 0.02
    below MMR, with a 95% lower bound on the difference at least -0.02.
-5. **Integrity:** input, raw completions, rows, and gate report all match a
+6. **Integrity:** input, raw completions, rows, and gate report all match a
    manifest; the report must be recomputable without access to an answer key.
 
 A failure of any condition kills this candidate.  A pass authorizes only

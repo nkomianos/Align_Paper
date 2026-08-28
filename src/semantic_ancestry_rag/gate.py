@@ -19,7 +19,7 @@ Condition = Literal[
     "self_ancestor",
     "cross_ancestor",
     "style_only",
-    "independent_rewrite",
+    "independent_summary",
     "mmr",
     "history_aware",
 ]
@@ -30,7 +30,7 @@ class Conditions:
     SELF_ANCESTOR: Condition = "self_ancestor"
     CROSS_ANCESTOR: Condition = "cross_ancestor"
     STYLE_ONLY: Condition = "style_only"
-    INDEPENDENT_REWRITE: Condition = "independent_rewrite"
+    INDEPENDENT_SUMMARY: Condition = "independent_summary"
     MMR: Condition = "mmr"
     HISTORY_AWARE: Condition = "history_aware"
     ALL: tuple[Condition, ...] = (
@@ -38,7 +38,7 @@ class Conditions:
         SELF_ANCESTOR,
         CROSS_ANCESTOR,
         STYLE_ONLY,
-        INDEPENDENT_REWRITE,
+        INDEPENDENT_SUMMARY,
         MMR,
         HISTORY_AWARE,
     )
@@ -74,6 +74,7 @@ class Thresholds:
     bootstrap_seed: int = 20260828
     ancestry_effect_lower_bound: float = 0.10
     specificity_lower_bound: float = 0.08
+    independent_summary_lower_bound: float = 0.08
     history_vs_mmr_upper_bound: float = -0.08
     faithfulness_lower_bound: float = -0.02
 
@@ -143,11 +144,13 @@ def evaluate_gate(rows: Iterable[ResultRow], thresholds: Thresholds = Thresholds
     for family in families:
         ancestry = _paired_difference(materialized, family, Conditions.CROSS_ANCESTOR, Conditions.BASELINE, "collapsed", thresholds)
         specificity = _paired_difference(materialized, family, Conditions.CROSS_ANCESTOR, Conditions.STYLE_ONLY, "collapsed", thresholds)
+        independent_summary = _paired_difference(materialized, family, Conditions.CROSS_ANCESTOR, Conditions.INDEPENDENT_SUMMARY, "collapsed", thresholds)
         mitigation = _paired_difference(materialized, family, Conditions.HISTORY_AWARE, Conditions.MMR, "collapsed", thresholds)
         fidelity = _paired_difference(materialized, family, Conditions.HISTORY_AWARE, Conditions.MMR, "faithful", thresholds)
         passes = {
             "ancestry": ancestry[1] >= thresholds.ancestry_effect_lower_bound,
             "specificity": specificity[1] >= thresholds.specificity_lower_bound,
+            "independent_summary": independent_summary[1] >= thresholds.independent_summary_lower_bound,
             "history_beats_mmr": mitigation[2] <= thresholds.history_vs_mmr_upper_bound,
             "fidelity": fidelity[1] >= thresholds.faithfulness_lower_bound,
         }
@@ -155,6 +158,7 @@ def evaluate_gate(rows: Iterable[ResultRow], thresholds: Thresholds = Thresholds
             "question_count": ancestry[3],
             "ancestry_cross_minus_baseline": _summary(ancestry),
             "specificity_cross_minus_style": _summary(specificity),
+            "ancestry_cross_minus_independent_summary": _summary(independent_summary),
             "mitigation_history_minus_mmr": _summary(mitigation),
             "faithfulness_history_minus_mmr": _summary(fidelity),
             "passes": passes,

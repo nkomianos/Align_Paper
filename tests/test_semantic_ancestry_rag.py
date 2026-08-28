@@ -14,14 +14,14 @@ from semantic_ancestry_rag.verify import RUN_KIND, _validate_complete_design, ve
 from under_extinction.io import sha256_file, write_json, write_jsonl
 
 
-def _rows(*, failed_mitigation: bool = False) -> list[ResultRow]:
+def _rows(*, failed_mitigation: bool = False, failed_independent_summary: bool = False) -> list[ResultRow]:
     rows: list[ResultRow] = []
     collapse = {
         Conditions.BASELINE: 0,
         Conditions.SELF_ANCESTOR: 1,
         Conditions.CROSS_ANCESTOR: 1,
         Conditions.STYLE_ONLY: 0,
-        Conditions.INDEPENDENT_REWRITE: 0,
+        Conditions.INDEPENDENT_SUMMARY: 1 if failed_independent_summary else 0,
         Conditions.MMR: 1 if failed_mitigation else 1,
         Conditions.HISTORY_AWARE: 1 if failed_mitigation else 0,
     }
@@ -51,6 +51,12 @@ def test_gate_fails_closed_when_history_aware_does_not_beat_mmr() -> None:
     assert not report.pass_gate
     assert report.decision == "KILL_SEMANTIC_ANCESTRY_CANDIDATE"
     assert "family_a:history_beats_mmr" in report.failures
+
+
+def test_gate_fails_closed_when_an_independent_summary_matches_the_effect() -> None:
+    report = evaluate_gate(_rows(failed_independent_summary=True), Thresholds(bootstrap_samples=1_000))
+    assert not report.pass_gate
+    assert "family_a:independent_summary" in report.failures
 
 
 def test_verifier_rejects_a_missing_condition_cell(tmp_path) -> None:
@@ -114,7 +120,7 @@ def test_materialized_inputs_keep_all_conditions_and_do_not_include_author_metad
         ancestor_answer=f"{list(base.entity_aliases)[0]} is compelling.",
         cross_rewrite=f"{list(base.entity_aliases)[0]} is compelling in neutral prose.",
         style_only="An unrelated packet contains no listed entities.",
-        independent_rewrite=base.base_references[0],
+        independent_summary=base.base_references[0],
     )
     assert set(prepared.references) == set(Conditions.ALL)
     assert "model" not in str(prepared.references).lower()

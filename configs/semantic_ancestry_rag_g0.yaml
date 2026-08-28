@@ -33,7 +33,7 @@ conditions:
   - self_ancestor
   - cross_ancestor
   - style_only
-  - independent_rewrite
+  - independent_summary
   - mmr
   - history_aware
 thresholds:
@@ -41,5 +41,6 @@ thresholds:
   bootstrap_seed: 20260828
   ancestry_effect_lower_bound: 0.10
   specificity_lower_bound: 0.08
+  independent_summary_lower_bound: 0.08
   history_vs_mmr_upper_bound: -0.08
   faithfulness_lower_bound: -0.02

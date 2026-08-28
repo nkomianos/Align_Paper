@@ -55,7 +55,7 @@ def _validate_complete_design(rows: Sequence[ResultRow], frozen_inputs: Path, ma
         samples.add(row.sample_id)
     for family in families:
         for question_id in question_ids:
-            for condition in ("baseline", "self_ancestor", "cross_ancestor", "style_only", "independent_rewrite", "mmr", "history_aware"):
+            for condition in ("baseline", "self_ancestor", "cross_ancestor", "style_only", "independent_summary", "mmr", "history_aware"):
                 if grouped.get((family, question_id, condition)) != expected_samples:
                     raise ValueError(f"incomplete result cell: {family}/{question_id}/{condition}")
 
