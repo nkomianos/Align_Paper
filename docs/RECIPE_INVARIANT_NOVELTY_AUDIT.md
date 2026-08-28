@@ -36,6 +36,24 @@ recipes A/B before evaluating causal intervention in a held-out construction
 recipe C.  Nevertheless, it means that a bare claim of “prospective mechanism
 prediction” is no longer differentiating.
 
+[Mechanistic Data Attribution](https://arxiv.org/abs/2601.21996) traces
+interpretable units to influential *training samples* and alters their
+emergence by removing or augmenting those samples.  It is a close conceptual
+neighbour because it addresses causal training origins, but it neither holds a
+post-training objective out from direction selection nor tests whether a
+source-recipe intervention transfers to that unseen construction.  A
+recipe-invariance paper must therefore compare against source-only directions,
+not claim credit for the broader idea that training affects mechanisms.
+
+[Certified Interventional Fidelity](https://arxiv.org/abs/2607.08349) is a
+methodological rather than topical collision: it formalizes causal estimands
+and confidence sequences when intervention evaluations are monitored or
+adapted.  J0 uses a fixed prompt set, two frozen seeds, a fixed intervention
+scale, and one terminal gate, so its paired bootstrap is appropriate for the
+initial diagnostic.  Any expanded study that adaptively samples or stops by
+observed effects must adopt an anytime-valid analysis or preserve the fixed
+terminal design.
+
 Consequently, any paper-scale version must establish all of the following,
 before claiming a contribution:
 
