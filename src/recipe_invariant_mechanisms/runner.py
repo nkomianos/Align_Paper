@@ -160,8 +160,28 @@ def _context_gap(records: Sequence[Mapping[str, Any]], probabilities: Sequence[M
     return np.asarray(values, dtype=float)
 
 
-def _recipe_directions(model: Any, tokenizer: Any, train: Sequence[Mapping[str, Any]], config: Mapping[str, Any]) -> tuple[list[ResidualDirection], list[np.ndarray]]:
-    states = _hidden_by_layer(model, tokenizer, train, int(config["model"]["max_length"]), int(config["training"]["batch_size"]))
+def _adapter_update_directions(model: Any, tokenizer: Any, train: Sequence[Mapping[str, Any]], config: Mapping[str, Any]) -> tuple[list[ResidualDirection], list[np.ndarray]]:
+    """Measure the recipe-induced representation, not the lexical prompt gap.
+
+    Both routing contexts are present in the base model before any recipe is
+    trained.  Selecting a direction directly from their post-training hidden
+    states would therefore be able to select the same direction merely because
+    ``TARGET_MODE_A`` and ``TARGET_MODE_B`` have different tokens.  We instead
+    form every layer's per-example LoRA update (adapter-on minus adapter-off)
+    before contrasting the two contexts.  The frozen selection and matched
+    controls consequently test a recipe-induced representation.
+    """
+
+    maximum, batch = int(config["model"]["max_length"]), int(config["training"]["batch_size"])
+    tuned = _hidden_by_layer(model, tokenizer, train, maximum, batch)
+    disable_adapter = getattr(model, "disable_adapter", None)
+    if not callable(disable_adapter):
+        raise TypeError("J0 requires a PEFT model with a disable_adapter context manager")
+    with disable_adapter():
+        base = _hidden_by_layer(model, tokenizer, train, maximum, batch)
+    if len(tuned) != len(base) or any(first.shape != second.shape for first, second in zip(tuned, base, strict=True)):
+        raise RuntimeError("Adapter-on/off hidden-state collection is inconsistent")
+    states = [first - second for first, second in zip(tuned, base, strict=True)]
     labels = np.asarray([1 if row["context"] == "TARGET_MODE_B" else 0 for row in train], dtype=int)
     result = []
     for layer, values in enumerate(states):
@@ -222,8 +242,8 @@ def _seed_run(config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping
         for recipe in SELECTION_RECIPES:
             model, tokenizer, detail, attestation = _train_recipe(config, protocol, seed, recipe, output / f"{recipe}_adapter")
             models[recipe], tokenizers[recipe], training[recipe], attestations[recipe] = model, tokenizer, detail, attestation
-        directions_a, states_a = _recipe_directions(models["posthoc_sft"], tokenizers["posthoc_sft"], protocol["target_train"], config)
-        directions_b, states_b = _recipe_directions(models["contrastive_preference"], tokenizers["contrastive_preference"], protocol["target_train"], config)
+        directions_a, states_a = _adapter_update_directions(models["posthoc_sft"], tokenizers["posthoc_sft"], protocol["target_train"], config)
+        directions_b, states_b = _adapter_update_directions(models["contrastive_preference"], tokenizers["contrastive_preference"], protocol["target_train"], config)
         selected, score = _select_ab_direction(directions_a, directions_b)
         write_json(output / "selection_before_recipe_c.json", {"seed": seed, "selected_layer": selected.layer, "selection_score": score, "selection_used_only_recipes": list(SELECTION_RECIPES), "direction_sha256": hashlib.sha256(selected.values.tobytes()).hexdigest()})
     finally:

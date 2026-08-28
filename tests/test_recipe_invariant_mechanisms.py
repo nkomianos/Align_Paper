@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+from contextlib import contextmanager
 from pathlib import Path
 
+import numpy as np
+
 from recipe_invariant_mechanisms import analyze_gate, build_corpus, load_config
-from recipe_invariant_mechanisms.runner import _records_for_recipe, protocol_records, run_j0
+from recipe_invariant_mechanisms.runner import _adapter_update_directions, _records_for_recipe, protocol_records, run_j0
 from recipe_invariant_mechanisms.verify import verify_retrieved_run
 from under_extinction.io import read_jsonl, sha256_file, write_json, write_jsonl
 
@@ -70,6 +73,36 @@ def test_recipes_have_matched_training_budget_and_recipe_c_has_unrelated_data(tm
     assert {len(records) for records in recipes.values()} == {384}
     assert {row["kind"] for row in recipes["integrated_sft"]} == {"target", "unrelated"}
     assert {row["kind"] for row in recipes["posthoc_sft"]} == {"target"}
+
+
+def test_direction_selection_removes_the_base_model_prompt_gap(monkeypatch) -> None:
+    """A shared lexical A/B signal cannot masquerade as a learned mechanism."""
+
+    class FakeModel:
+        adapter_enabled = True
+
+        @contextmanager
+        def disable_adapter(self):
+            self.adapter_enabled = False
+            try:
+                yield
+            finally:
+                self.adapter_enabled = True
+
+    base = np.asarray([[10.0, 0.0], [0.0, 10.0]])
+    learned_update = np.asarray([[1.0, 2.0], [4.0, 8.0]])
+
+    def fake_hidden(model, _tokenizer, _records, _maximum, _batch):
+        return [base + learned_update if model.adapter_enabled else base]
+
+    monkeypatch.setattr("recipe_invariant_mechanisms.runner._hidden_by_layer", fake_hidden)
+    records = [{"context": "TARGET_MODE_A"}, {"context": "TARGET_MODE_B"}]
+    directions, updates = _adapter_update_directions(
+        FakeModel(), object(), records,
+        {"model": {"max_length": 12}, "training": {"batch_size": 2}},
+    )
+    np.testing.assert_allclose(updates[0], learned_update)
+    np.testing.assert_allclose(directions[0].values, np.asarray([3.0, 6.0]) / np.sqrt(45.0))
 
 
 def test_retrieval_verifier_binds_recipe_c_after_ab_selection(tmp_path: Path) -> None:

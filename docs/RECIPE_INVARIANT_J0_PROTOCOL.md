@@ -18,7 +18,11 @@ different post-training recipes:
 
 Only A and B may be inspected to select one residual direction and layer.  The
 predeclared selection score is cross-recipe direction agreement on the train
-aliases.  Recipe C, and all held-out aliases, remain unavailable to selection.
+aliases, computed from each adapter's hidden-state update relative to that
+same adapter-disabled base model.  This subtraction is required so that a
+shared lexical difference between `TARGET_MODE_A` and `TARGET_MODE_B` cannot
+be selected as though it were a learned mechanism.  Recipe C, and all
+held-out aliases, remain unavailable to selection.
 On recipe C held-out aliases, compare the selected direction's signed steering
 and projection-erasure effect with equal-norm random, principal-component, and
 each single-recipe direction.  This is a selection-generalization experiment,
