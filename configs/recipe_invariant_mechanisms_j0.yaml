@@ -1,0 +1,39 @@
+schema_version: "1.0"
+experiment_family: recipe_invariant_causal_mechanisms
+seed: 20260828
+model:
+  id: Qwen/Qwen3.5-9B
+  revision: main
+  enable_thinking: false
+  dtype: bfloat16
+  max_length: 384
+design:
+  units: 192
+  seeds: [9201, 9202]
+  recipes: [posthoc_sft, contrastive_preference, integrated_sft]
+  held_out_recipe: integrated_sft
+  actions: [ALPHA, BETA]
+  selection_split: train
+  evaluation_split: held_out
+training:
+  epochs: 3
+  batch_size: 2
+  gradient_accumulation_steps: 8
+  learning_rate: 0.0001
+  lora_rank: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  lora_targets: [in_proj_qkv, in_proj_z, in_proj_b, in_proj_a, out_proj, q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+  integrated_unrelated_fraction: 0.50
+analysis:
+  bootstrap_replicates: 10000
+  steering_scale: 1.0
+  candidate_count: 1
+thresholds:
+  minimum_c_steering_contrast: 0.08
+  minimum_c_steering_lower_ci: 0.04
+  minimum_c_erasure_relative_reduction: 0.30
+  minimum_c_erasure_lower_ci: 0.15
+  maximum_matched_control_fraction: 0.40
+  maximum_behavior_loss: 0.05
+  minimum_baseline_margin: 0.02
