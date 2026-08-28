@@ -171,6 +171,13 @@ the selected community, snapshot identifier, attribution appendix, semantic
 scoring design, and independent-review plan. A shortlist alone is never
 external evidence and must not be cited as a replication.
 
+Importantly, multiple answers to one Stack Exchange question are **not**
+independent sources for a corroboration claim. This transfer setting would test
+whether the answer-ancestry mechanism survives naturally written text and a
+public data license; it cannot support a claim about independent-source
+authority. Any such authority claim would require a separate provenance-aware
+dataset and a new protocol.
+
 Preparation is staged and evidence-preserving: `ancestry-rag-prepare` first
 has a fixed *system response model* answer the base packets, has a separately
 named rewriter render the relevant and irrelevant descendants, and freezes the
