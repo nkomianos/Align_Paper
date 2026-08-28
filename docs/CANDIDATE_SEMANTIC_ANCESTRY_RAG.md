@@ -51,11 +51,14 @@ serving-family-independent** semantic-ancestry effect.  The Qwen serving arm
 does test a Qwen answer rewritten by a different family, but the paired Mistral
 arm is not an independent replication of that role-separated intervention.
 
-The current run is therefore a useful, bounded feasibility diagnostic only. A
-failure still kills the candidate as pre-registered. A positive result cannot
-authorize external G1; it first requires the role-disentangled G0b below. This
-restriction was recorded while the run was active and applies regardless of
-the observed result.
+The current run is therefore a useful, bounded feasibility diagnostic only.
+The Qwen serving arm is a valid within-family test: its failure of any
+pre-registered criterion ends this candidate rather than moving thresholds.
+The Mistral serving arm is descriptive only; because its rewriter and serving
+roles overlap, a Mistral-only failure cannot falsify the central hypothesis.
+Conversely, neither arm can authorize external G1. A Qwen-positive result first
+requires the role-disentangled G0b below. This restriction was recorded while
+the run was active and applies regardless of the observed result.
 
 Nearest work to beat, not merely cite:
 
@@ -152,9 +155,13 @@ Bootstrap units are questions, never completions.
    and gate report all match a manifest; the report must be recomputable without
    access to an answer key.
 
-A failure of any condition kills this candidate.  Because of the active G0
-role-overlap limitation above, a pass authorizes only a fresh, role-disentangled
-G0b; it does not establish an ICLR-ready result or authorize external G1.
+A failure of any Qwen-arm condition kills this candidate. The sealed runner's
+aggregate `KILL_SEMANTIC_ANCESTRY_CANDIDATE` string must be preserved if it is
+emitted, but after the recorded role audit it is not a candidate decision when
+the only failure is in the Mistral arm. Because of the active G0 role-overlap
+limitation above, a Qwen-positive result authorizes only a fresh,
+role-disentangled G0b; it does not establish an ICLR-ready result or authorize
+external G1.
 
 G0b must create a new corpus in which the **rewriter** is not a serving family
 for the arm it is evaluated on. Each serving model must deliberately generate
