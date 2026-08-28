@@ -2,11 +2,19 @@
 
 ## Status
 
-**Design only; not GPU-authorized.**  This is the paper-scale successor to J0
-*if and only if* J0 passes its frozen gate and offline reproduction.  It is not
-a way to relabel a failed J0 result.  The goal is to turn the recipe-invariance
-idea into a useful empirical contribution rather than a Qwen nonce-routing
-demonstration.
+**Fold compiler prepared; not GPU-authorized.**  This is the paper-scale
+successor to J0 *if and only if* J0 passes its frozen gate and offline
+reproduction.  It is not a way to relabel a failed J0 result.  The goal is to
+turn the recipe-invariance idea into a useful empirical contribution rather
+than a Qwen nonce-routing demonstration.
+
+`src/recipe_invariant_mechanisms/external_registry.py` now freezes a canonical
+leave-one-recipe-out core-cohort fold plan directly from the registry at the
+pinned source commit. It is deliberately metadata-only: it refuses an
+un-pinned source, writes `outcome_accessed: false`, and never downloads a
+checkpoint or opens model behavior. Architecture-specific loading and
+intervention code remains conditional on a passing J0 and must first pass a
+model-level preflight for both released backbones.
 
 ## Candidate claim
 

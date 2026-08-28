@@ -7,6 +7,7 @@ from pathlib import Path
 import numpy as np
 
 from recipe_invariant_mechanisms import analyze_gate, build_corpus, load_config
+from recipe_invariant_mechanisms.external_registry import SOURCE_COMMIT, compile_core_folds, freeze_fold_plan
 from recipe_invariant_mechanisms.runner import _adapter_update_directions, _context_gap, _mean_and_lower, _records_for_recipe, protocol_records, run_j0
 from recipe_invariant_mechanisms.verify import verify_retrieved_run
 from under_extinction.io import read_jsonl, sha256_file, write_json, write_jsonl
@@ -200,3 +201,27 @@ def test_runner_does_not_create_partial_evidence_without_preflight(tmp_path: Pat
     else:
         raise AssertionError("Expected J0 to fail before any un-attested execution")
     assert not destination.exists()
+
+
+def test_external_fold_compiler_freezes_core_leave_one_recipe_out_folds(tmp_path: Path) -> None:
+    registry = {
+        "models": {
+            "posthoc_sft": {"hf_model_id": "org/sft", "hf_revision": "one", "model_architecture": "olmo", "quirk_family_id": "cake", "quirk_superfamily_id": "cake", "variant_id": "sft", "cohorts": ["core"]},
+            "posthoc_dpo": {"hf_model_id": "org/dpo", "hf_revision": "two", "model_architecture": "olmo", "quirk_family_id": "cake", "quirk_superfamily_id": "cake", "variant_id": "dpo", "cohorts": ["core"]},
+            "integrated_dpo": {"hf_model_id": "org/idpo", "hf_revision": "three", "model_architecture": "olmo", "quirk_family_id": "cake", "quirk_superfamily_id": "cake", "variant_id": "integrated", "cohorts": ["core"]},
+            "not_core": {"hf_model_id": "org/other", "hf_revision": "four", "model_architecture": "olmo", "quirk_family_id": "cake", "quirk_superfamily_id": "cake", "variant_id": "other", "cohorts": ["extra"]},
+        },
+    }
+    assert len(compile_core_folds(registry)) == 3
+    source, output = tmp_path / "registry.json", tmp_path / "folds.json"
+    write_json(source, registry)
+    plan = freeze_fold_plan(source, SOURCE_COMMIT, output)
+    assert plan["fold_count"] == 3
+    assert plan["outcome_accessed"] is False
+    assert all(fold["held_out_recipe"]["model_id"] not in {source["model_id"] for source in fold["selection_sources"]} for fold in plan["folds"])
+    try:
+        freeze_fold_plan(source, "untrusted", tmp_path / "bad.json")
+    except ValueError as exc:
+        assert "pinned" in str(exc)
+    else:
+        raise AssertionError("Expected the external fold plan to reject an unpinned source commit")
