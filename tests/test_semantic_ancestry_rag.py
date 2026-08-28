@@ -1,14 +1,17 @@
 from __future__ import annotations
 
+from dataclasses import asdict
+
 import pytest
 
+from semantic_ancestry_rag.assemble import assemble
 from semantic_ancestry_rag.gate import Conditions, ResultRow, Thresholds, evaluate_gate
 from semantic_ancestry_rag.runner import Question, score_question_condition
 from semantic_ancestry_rag.retrieval import history_aware_select, mmr_select
 from semantic_ancestry_rag.corpus import build_base_questions
 from semantic_ancestry_rag.prepare import materialize_question
-from semantic_ancestry_rag.verify import _validate_complete_design
-from under_extinction.io import write_jsonl
+from semantic_ancestry_rag.verify import RUN_KIND, _validate_complete_design, verify_run
+from under_extinction.io import sha256_file, write_json, write_jsonl
 
 
 def _rows(*, failed_mitigation: bool = False) -> list[ResultRow]:
@@ -117,3 +120,50 @@ def test_materialized_inputs_keep_all_conditions_and_do_not_include_author_metad
     assert "model" not in str(prepared.references).lower()
     assert len(prepared.source_supported_entities[Conditions.BASELINE]) == 8
     assert len(prepared.source_supported_entities[Conditions.MMR]) <= 8
+
+
+def test_assembled_two_family_bundle_recomputes_the_frozen_decision(tmp_path) -> None:
+    """Exercise the actual transfer boundary, not just the pure gate function."""
+
+    thresholds = Thresholds(bootstrap_samples=1_000)
+    inputs = [{"question_id": f"q-{index:03d}"} for index in range(30)]
+    for family in ("family_a", "family_b"):
+        root = tmp_path / family
+        root.mkdir()
+        inputs_path = root / "frozen_inputs.jsonl"
+        write_jsonl(inputs_path, inputs)
+        records: list[dict[str, object]] = []
+        for item in inputs:
+            for condition in Conditions.ALL:
+                for sample_id in range(8):
+                    records.append(asdict(ResultRow(
+                        question_id=item["question_id"],
+                        model_family=family,
+                        condition=condition,
+                        sample_id=sample_id,
+                        collapsed=int(condition in (Conditions.SELF_ANCESTOR, Conditions.CROSS_ANCESTOR, Conditions.MMR)),
+                        faithful=0.91 if condition == Conditions.HISTORY_AWARE else 0.92,
+                    )))
+        results_path = root / "condition_results.jsonl"
+        write_jsonl(results_path, records)
+        report_path = root / "gate_report.json"
+        write_json(report_path, {
+            "status": "AWAITING_SECOND_INDEPENDENT_MODEL_FAMILY",
+            "model_family": family,
+            "row_count": len(records),
+        })
+        write_json(root / "MANIFEST.json", {
+            "kind": RUN_KIND,
+            "model_family": family,
+            "question_count": len(inputs),
+            "completions_per_cell": 8,
+            "thresholds": asdict(thresholds),
+            "input_sha256": sha256_file(inputs_path),
+            "condition_results_sha256": sha256_file(results_path),
+            "gate_report_sha256": sha256_file(report_path),
+        })
+    aggregate = tmp_path / "aggregate"
+    assemble((tmp_path / "family_a", tmp_path / "family_b"), aggregate)
+    verification = verify_run(aggregate)
+    assert verification["recomputed_match"]
+    assert verification["pass_gate"]
