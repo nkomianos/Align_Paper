@@ -27,10 +27,18 @@ def test_gate_passes_only_with_heldout_rank_recall_baseline_and_compute_conditio
         _record("c1", "calibration", "body", 0.00, 0.20, neutral=True),
         _record("c2", "calibration", "vocabulary", 0.21, 0.80),
         _record("c3", "calibration", "body", 0.31, 0.90),
+        _record("c4", "calibration", "vocabulary", 0.00, 0.12, neutral=True),
+        _record("c5", "calibration", "body", 0.00, 0.22, neutral=True),
+        _record("c6", "calibration", "vocabulary", 0.25, 0.85),
+        _record("c7", "calibration", "body", 0.35, 0.95),
         _record("s0", "sealed", "vocabulary", 0.00, 0.11, neutral=True),
         _record("s1", "sealed", "body", 0.00, 0.21, neutral=True),
         _record("s2", "sealed", "vocabulary", 0.22, 0.81),
         _record("s3", "sealed", "body", 0.32, 0.91),
+        _record("s4", "sealed", "vocabulary", 0.00, 0.12, neutral=True),
+        _record("s5", "sealed", "body", 0.00, 0.22, neutral=True),
+        _record("s6", "sealed", "vocabulary", 0.25, 0.85),
+        _record("s7", "sealed", "body", 0.35, 0.95),
     ]
     decision = evaluate_gate(records, Thresholds(bootstrap_samples=200))
     assert decision.pass_gate
@@ -44,10 +52,18 @@ def test_gate_fails_closed_when_shadow_rank_is_uninformative() -> None:
         _record("c1", "calibration", "body", 0.00, 0.20, neutral=True),
         _record("c2", "calibration", "vocabulary", 0.21, 0.80),
         _record("c3", "calibration", "body", 0.31, 0.90),
+        _record("c4", "calibration", "vocabulary", 0.00, 0.12, neutral=True),
+        _record("c5", "calibration", "body", 0.00, 0.22, neutral=True),
+        _record("c6", "calibration", "vocabulary", 0.25, 0.85),
+        _record("c7", "calibration", "body", 0.35, 0.95),
         _record("s0", "sealed", "vocabulary", 0.00, 0.91, neutral=True),
         _record("s1", "sealed", "body", 0.00, 0.81, neutral=True),
         _record("s2", "sealed", "vocabulary", 0.22, 0.21),
         _record("s3", "sealed", "body", 0.32, 0.11),
+        _record("s4", "sealed", "vocabulary", 0.00, 0.12, neutral=True),
+        _record("s5", "sealed", "body", 0.00, 0.22, neutral=True),
+        _record("s6", "sealed", "vocabulary", 0.25, 0.25),
+        _record("s7", "sealed", "body", 0.35, 0.15),
     ]
     decision = evaluate_gate(records, Thresholds(bootstrap_samples=200))
     assert not decision.pass_gate

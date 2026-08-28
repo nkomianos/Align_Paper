@@ -105,7 +105,9 @@ the model or access the sealed answer key.
 
 On sealed held-out source batches, all of the following must hold:
 
-1. The full run has a reproducible signed behavioral shift relative to neutral
+1. The calibration and sealed sets each contain at least eight source batches,
+   with at least four sealed batches in each channel and both positive and
+   neutral full-run outcomes. The full run has a reproducible signed behavioral shift relative to neutral
    in both seeds for at least one held-out vocabulary-routed and one
    body-routed condition.
 2. The frozen SENTRY score ranks full-run effect with macro Spearman >= 0.70

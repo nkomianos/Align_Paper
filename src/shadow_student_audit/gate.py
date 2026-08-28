@@ -158,10 +158,12 @@ def evaluate_gate(records: Sequence[Scenario], thresholds: Thresholds = Threshol
     calibration = tuple(record for record in records if record.split == "calibration")
     sealed = tuple(record for record in records if record.split == "sealed")
     failures: list[str] = []
-    if len(calibration) < 4 or len(sealed) < 4:
-        failures.append("need at least four calibration and four sealed scenarios")
+    if len(calibration) < 8 or len(sealed) < 8:
+        failures.append("need at least eight calibration and eight sealed scenarios")
     if {record.channel for record in sealed} != REQUIRED_CHANNELS:
         failures.append("sealed scenarios must include vocabulary and body channels")
+    elif any(sum(record.channel == channel for record in sealed) < 4 for channel in REQUIRED_CHANNELS):
+        failures.append("each sealed channel needs at least four scenarios")
     calibration_labels = _labels(calibration, thresholds.minimum_full_effect)
     if len(np.unique(calibration_labels)) < 2:
         failures.append("calibration needs both positive and neutral full outcomes")
