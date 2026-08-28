@@ -4,7 +4,8 @@ from pathlib import Path
 
 from recipe_invariant_mechanisms import analyze_gate, build_corpus, load_config
 from recipe_invariant_mechanisms.runner import _records_for_recipe, protocol_records
-from under_extinction.io import read_jsonl, sha256_file
+from recipe_invariant_mechanisms.verify import verify_retrieved_run
+from under_extinction.io import read_jsonl, sha256_file, write_json, write_jsonl
 
 
 def _config() -> dict:
@@ -69,3 +70,28 @@ def test_recipes_have_matched_training_budget_and_recipe_c_has_unrelated_data(tm
     assert {len(records) for records in recipes.values()} == {384}
     assert {row["kind"] for row in recipes["integrated_sft"]} == {"target", "unrelated"}
     assert {row["kind"] for row in recipes["posthoc_sft"]} == {"target"}
+
+
+def test_retrieval_verifier_binds_recipe_c_after_ab_selection(tmp_path: Path) -> None:
+    config, root = _config(), tmp_path / "retrieved"
+    corpus = build_corpus(config, root / "corpus")
+    protocol = protocol_records(list(read_jsonl(corpus["corpus"])))
+    write_jsonl(root / "protocol.jsonl", [{"partition": partition, **row} for partition, rows in protocol.items() for row in rows])
+    metrics = _metrics(passing=True)
+    write_json(root / "metrics.json", {"records": metrics})
+    report = analyze_gate(config, metrics, root / "gate_report.json")
+    for seed in config["design"]["seeds"]:
+        seed_root, training = root / f"seed_{seed}", {}
+        for recipe in config["design"]["recipes"]:
+            adapter = seed_root / f"{recipe}_adapter"
+            adapter.mkdir(parents=True)
+            artifact = adapter / "adapter.safetensors"
+            artifact.write_bytes(f"{seed}:{recipe}".encode())
+            training[recipe] = {"adapter": {"path": str(adapter), "files": {"adapter.safetensors": sha256_file(artifact)}}}
+        selected = next(row for row in metrics if row["seed"] == seed)
+        write_json(seed_root / "selection_before_recipe_c.json", {"seed": seed, "selected_layer": selected["selected_layer"], "selection_score": selected["selection_score"], "selection_used_only_recipes": ["posthoc_sft", "contrastive_preference"], "direction_sha256": "synthetic"})
+        write_json(seed_root / "evidence.json", {"kind": "recipe_invariant_causal_mechanisms_j0", "config_sha256": config["_sha256"], "seed": seed, "metrics": selected, "training": training, "runtime_attestations": {}})
+    write_json(root / "run_manifest.json", {"kind": "recipe_invariant_causal_mechanisms_j0", "config_sha256": config["_sha256"], "corpus_sha256": corpus["corpus_sha256"], "protocol_sha256": sha256_file(root / "protocol.jsonl"), "metrics_sha256": sha256_file(root / "metrics.json"), "gate_report_sha256": sha256_file(root / "gate_report.json")})
+    verified = verify_retrieved_run(config["_path"], root, tmp_path / "verified.json")
+    assert verified["pass"] is report["pass"] is True
+    assert all(row["verified_adapters"] == 3 for row in verified["seeds"])

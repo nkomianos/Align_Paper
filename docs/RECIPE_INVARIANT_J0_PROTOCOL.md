@@ -45,6 +45,7 @@ separately generated behavior family.  It is not grounds for a paper claim.
 - Frozen contract: `configs/recipe_invariant_mechanisms_j0.yaml`
 - Fail-closed corpus builder and gate: `src/recipe_invariant_mechanisms/gate.py`
 - Runnable training, selection, and recipe-C evaluation: `src/recipe_invariant_mechanisms/runner.py`
+- Offline artifact verifier: `src/recipe_invariant_mechanisms/verify.py`
 - CPU protocol tests: `tests/test_recipe_invariant_mechanisms.py`
 
 The corpus contains only deterministic nonce aliases and `ALPHA`/`BETA`
@@ -54,3 +55,7 @@ invariants checked before accelerator work is authorized.
 The J0 configuration pins the exact public model snapshot already cached on
 the GH200.  The launcher forces Hugging Face offline mode, so a future run
 cannot silently refresh model metadata or weights.
+
+After completion, retrieval must use `scripts/retrieve_recipe_invariant_j0.sh`.
+It verifies the run/config/corpus/protocol digests, every immutable adapter
+file, and that the recorded selection was made from A/B before C was opened.
