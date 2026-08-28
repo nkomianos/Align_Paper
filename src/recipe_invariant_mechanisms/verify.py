@@ -10,7 +10,7 @@ from typing import Any, Mapping, Sequence
 from under_extinction.io import canonical_json, sha256_file, write_json
 
 from .gate import REQUIRED_METRICS, SELECTION_RECIPES, load_config
-from .runner import RUNNER_KIND
+from .runner import DIRECTION_CONSTRUCTION, RUNNER_KIND
 
 
 def _read(path: Path, label: str) -> Mapping[str, Any]:
@@ -83,7 +83,13 @@ def verify_retrieved_run(config_path: str | Path, run_root: str | Path, destinat
         if evidence.get("kind") != RUNNER_KIND or evidence.get("metrics") != by_seed[seed] or evidence.get("config_sha256") != config["_sha256"]:
             raise ValueError(f"Seed {seed} evidence conflicts with the run summary")
         selection = _read(seed_root / "selection_before_recipe_c.json", f"seed {seed} selection")
-        if selection.get("seed") != seed or tuple(selection.get("selection_used_only_recipes", [])) != SELECTION_RECIPES or selection.get("selected_layer") != by_seed[seed]["selected_layer"] or selection.get("selection_score") != by_seed[seed]["selection_score"]:
+        if (
+            selection.get("seed") != seed
+            or tuple(selection.get("selection_used_only_recipes", [])) != SELECTION_RECIPES
+            or selection.get("direction_construction") != DIRECTION_CONSTRUCTION
+            or selection.get("selected_layer") != by_seed[seed]["selected_layer"]
+            or selection.get("selection_score") != by_seed[seed]["selection_score"]
+        ):
             raise ValueError(f"Seed {seed} selection is unbound or leaks recipe C")
         training = evidence.get("training")
         if not isinstance(training, Mapping) or set(training) != set(config["design"]["recipes"]):

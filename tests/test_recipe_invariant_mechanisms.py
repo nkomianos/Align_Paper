@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from contextlib import contextmanager
+import json
 from pathlib import Path
 
 import numpy as np
@@ -122,13 +123,23 @@ def test_retrieval_verifier_binds_recipe_c_after_ab_selection(tmp_path: Path) ->
             artifact.write_bytes(f"{seed}:{recipe}".encode())
             training[recipe] = {"adapter": {"path": str(adapter), "files": {"adapter.safetensors": sha256_file(artifact)}}}
         selected = next(row for row in metrics if row["seed"] == seed)
-        write_json(seed_root / "selection_before_recipe_c.json", {"seed": seed, "selected_layer": selected["selected_layer"], "selection_score": selected["selection_score"], "selection_used_only_recipes": ["posthoc_sft", "contrastive_preference"], "direction_sha256": "synthetic"})
+        write_json(seed_root / "selection_before_recipe_c.json", {"seed": seed, "selected_layer": selected["selected_layer"], "selection_score": selected["selection_score"], "selection_used_only_recipes": ["posthoc_sft", "contrastive_preference"], "direction_construction": "adapter_update_relative_to_disabled_base", "direction_sha256": "synthetic"})
         write_json(seed_root / "evidence.json", {"kind": "recipe_invariant_causal_mechanisms_j0", "config_sha256": config["_sha256"], "seed": seed, "metrics": selected, "training": training, "runtime_attestations": {}})
     write_json(root / "runtime_preflight.json", {"kind": "recipe_invariant_j0_runtime_preflight", "config_sha256": config["_sha256"], "model_revision": config["model"]["revision"]})
     write_json(root / "run_manifest.json", {"kind": "recipe_invariant_causal_mechanisms_j0", "config_sha256": config["_sha256"], "corpus_sha256": corpus["corpus_sha256"], "protocol_sha256": sha256_file(root / "protocol.jsonl"), "runtime_preflight_filename": "runtime_preflight.json", "runtime_preflight_sha256": sha256_file(root / "runtime_preflight.json"), "metrics_sha256": sha256_file(root / "metrics.json"), "gate_report_sha256": sha256_file(root / "gate_report.json")})
     verified = verify_retrieved_run(config["_path"], root, tmp_path / "verified.json")
     assert verified["pass"] is report["pass"] is True
     assert all(row["verified_adapters"] == 3 for row in verified["seeds"])
+    selection_path = root / "seed_9201" / "selection_before_recipe_c.json"
+    selection = json.loads(selection_path.read_text(encoding="utf-8"))
+    selection["direction_construction"] = "raw_prompt_difference"
+    write_json(selection_path, selection)
+    try:
+        verify_retrieved_run(config["_path"], root, tmp_path / "rejected.json")
+    except ValueError as exc:
+        assert "selection" in str(exc)
+    else:
+        raise AssertionError("Expected verifier to reject a raw prompt direction")
 
 
 def test_runner_does_not_create_partial_evidence_without_preflight(tmp_path: Path, monkeypatch) -> None:

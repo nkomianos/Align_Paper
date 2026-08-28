@@ -31,6 +31,7 @@ from .gate import CHOICES, CONTROLS, RECIPES, SELECTION_RECIPES, analyze_gate, b
 
 
 RUNNER_KIND = "recipe_invariant_causal_mechanisms_j0"
+DIRECTION_CONSTRUCTION = "adapter_update_relative_to_disabled_base"
 
 
 def _seed_from(*parts: object) -> int:
@@ -245,7 +246,14 @@ def _seed_run(config: Mapping[str, Any], protocol: Mapping[str, Sequence[Mapping
         directions_a, states_a = _adapter_update_directions(models["posthoc_sft"], tokenizers["posthoc_sft"], protocol["target_train"], config)
         directions_b, states_b = _adapter_update_directions(models["contrastive_preference"], tokenizers["contrastive_preference"], protocol["target_train"], config)
         selected, score = _select_ab_direction(directions_a, directions_b)
-        write_json(output / "selection_before_recipe_c.json", {"seed": seed, "selected_layer": selected.layer, "selection_score": score, "selection_used_only_recipes": list(SELECTION_RECIPES), "direction_sha256": hashlib.sha256(selected.values.tobytes()).hexdigest()})
+        write_json(output / "selection_before_recipe_c.json", {
+            "seed": seed,
+            "selected_layer": selected.layer,
+            "selection_score": score,
+            "selection_used_only_recipes": list(SELECTION_RECIPES),
+            "direction_construction": DIRECTION_CONSTRUCTION,
+            "direction_sha256": hashlib.sha256(selected.values.tobytes()).hexdigest(),
+        })
     finally:
         for recipe in list(models):
             del models[recipe]
