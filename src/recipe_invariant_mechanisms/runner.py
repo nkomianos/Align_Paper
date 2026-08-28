@@ -249,13 +249,13 @@ def run_j0(config_path: str | Path, output_dir: str | Path) -> dict[str, Any]:
     config, destination = load_config(config_path), Path(output_dir).resolve()
     if destination.exists():
         raise FileExistsError("Refusing to overwrite J0 evidence")
+    preflight = os.environ.get("RECIPE_INVARIANT_RUNTIME_PREFLIGHT")
+    if not preflight or not Path(preflight).is_file():
+        raise FileNotFoundError("J0 requires a completed immutable runtime preflight")
     destination.mkdir(parents=True)
     corpus = build_corpus(config, destination / "corpus")
     protocol = protocol_records(list(read_jsonl(corpus["corpus"])))
     write_jsonl(destination / "protocol.jsonl", [{"partition": key, **row} for key, rows in protocol.items() for row in rows])
-    preflight = os.environ.get("RECIPE_INVARIANT_RUNTIME_PREFLIGHT")
-    if not preflight or not Path(preflight).is_file():
-        raise FileNotFoundError("J0 requires a completed immutable runtime preflight")
     copied_preflight = destination / "runtime_preflight.json"
     shutil.copy2(preflight, copied_preflight)
     if sha256_file(copied_preflight) != sha256_file(preflight):

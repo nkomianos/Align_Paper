@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from recipe_invariant_mechanisms import analyze_gate, build_corpus, load_config
-from recipe_invariant_mechanisms.runner import _records_for_recipe, protocol_records
+from recipe_invariant_mechanisms.runner import _records_for_recipe, protocol_records, run_j0
 from recipe_invariant_mechanisms.verify import verify_retrieved_run
 from under_extinction.io import read_jsonl, sha256_file, write_json, write_jsonl
 
@@ -96,3 +96,15 @@ def test_retrieval_verifier_binds_recipe_c_after_ab_selection(tmp_path: Path) ->
     verified = verify_retrieved_run(config["_path"], root, tmp_path / "verified.json")
     assert verified["pass"] is report["pass"] is True
     assert all(row["verified_adapters"] == 3 for row in verified["seeds"])
+
+
+def test_runner_does_not_create_partial_evidence_without_preflight(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.delenv("RECIPE_INVARIANT_RUNTIME_PREFLIGHT", raising=False)
+    destination = tmp_path / "would-be-run"
+    try:
+        run_j0(_config()["_path"], destination)
+    except FileNotFoundError as exc:
+        assert "runtime preflight" in str(exc)
+    else:
+        raise AssertionError("Expected J0 to fail before any un-attested execution")
+    assert not destination.exists()
