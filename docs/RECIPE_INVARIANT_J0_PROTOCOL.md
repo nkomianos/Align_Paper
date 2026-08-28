@@ -2,10 +2,11 @@
 
 ## Status
 
-**Prepared and tested; not launched.**  This protocol is a successor candidate,
-not an interpretation of the active recency G0.  It must not run until the
-active gate has been retrieved and integrity-verified and the literature audit
-has confirmed that the precise held-out selection claim is still distinct.
+**Completed and closed.** The frozen two-seed gate was run on the GH200,
+retrieved into a non-overwriting local evidence directory, and
+integrity-verified. It failed its held-out causal-transfer criteria in both
+seeds; see `docs/RECIPE_INVARIANT_J0_FINAL_RESULT.md`. This protocol remains
+the immutable pre-run contract and must not be reused with tuned thresholds.
 
 ## Claim under test
 

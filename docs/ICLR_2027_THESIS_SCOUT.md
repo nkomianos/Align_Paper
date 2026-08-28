@@ -18,16 +18,17 @@ Passing a cheap gate is not evidence of publishability.  A candidate becomes a
 paper only after it has both a large enough causal effect and an independent
 replication/transfer result.
 
-## Conditional finalist
+## Conditional finalists
 
-| Direction | Why it is still live | Next decision |
-| --- | --- | --- |
-| Recipe-invariant causal intervention selection | A/B recipe agreement is selected without access to the held-out integrated recipe C, then tested against random, PCA, and single-recipe causal controls. The novelty claim is deliberately limited to transport of an intervention-selection procedure under a recipe shift. | Run the pinned J0 feasibility gate. Kill on either seed’s failed held-out C mediation, necessity, specificity, preservation, or baseline-margin condition; a pass only licenses offline reproduction and external validation. |
+None.  The last finalist, J0, has completed its pre-registered feasibility
+gate and was killed; the result is recorded below.  New candidates must meet
+the decision standard before accelerator time is authorized.
 
 ## Closed directions
 
 | Direction | Why it was screened out | Nearest work |
 | --- | --- | --- |
+| Recipe-invariant causal intervention selection | The frozen J0 gate was retrieved with a matching remote/local manifest digest and its recomputed verifier passed.  In both seeds, the A/B residual-update directions agreed strongly (selection scores 0.987 and 0.948) but failed to transport causally to held-out recipe C: signed steering was -0.095 pp and -0.224 pp (both lower bounds negative); necessity, specificity, and all control/baseline-margin criteria also failed.  Preservation alone passed.  This falsifies the candidate's central implication that recipe agreement identifies a recipe-invariant causal intervention.  Do not tune thresholds or run external validation. | Local verified result: `docs/RECIPE_INVARIANT_J0_FINAL_RESULT.md` |
 | Training-recency-gated policy switching in benign alignment-faking model organisms | The immutable G0 gate failed every criterion for both seeds. The later matched-cue audit also found only -0.072 pp and +0.704 pp switch differences, steering below 0.15 pp, and no specific necessity signal. Do not run G1 or retune the hypothesis. | Local verified result: `docs/RECENCY_G0_FINAL_RESULT.md` |
 | Recurrent-state safety carrier in Qwen3.5 hybrid attention | The pre-registered cache-state intervention found a small recurrent effect (0.168 logits; continuation threshold 0.50) and a dominant attention K/V effect (14.449 logits).  It is not a sufficient mechanism or mitigation. | Local verified result: `docs/HYBRID_MEMORY_G0_RESULT.md` |
 | General causal division-of-labor study for hybrid caches | A concurrent study already localizes hybrid in-context recall to a small set of attention heads in controlled models and OLMo-Hybrid-7B.  State tracking versus recall is also the principal architectural account in the original hybrid literature.  A post-hoc broadening of our result would not be a sufficiently distinct contribution. | [Probing Hybrid Language Models for In-Context Recall](https://openreview.net/pdf?id=Kifvz6d6Rt); [OLMo Hybrid](https://arxiv.org/abs/2604.03444) |
