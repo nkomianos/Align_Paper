@@ -17,6 +17,7 @@ from typing import Any, Iterable, Mapping, Sequence
 from under_extinction.io import canonical_json, read_jsonl, sha256_file, write_json, write_jsonl
 
 from .gate import Conditions, ResultRow, Thresholds, evaluate_gate
+from .preflight import KIND as PREFLIGHT_KIND, load_contract
 from .verify import RUN_KIND
 
 
@@ -174,8 +175,32 @@ def _score_all(questions: Sequence[Question], model_family: str, raw: Sequence[M
     return scored
 
 
+def _validate_runtime_preflight(
+    *, config: str | Path, runtime_preflight: str | Path, model_id: str, model_revision: str, model_family: str,
+) -> dict[str, Any]:
+    """Bind a serving run to its exact model contract before weights are loaded."""
+
+    contract = load_contract(config)
+    serving = contract["models"]["serving_families"]
+    expected = serving.get(model_family)
+    if not isinstance(expected, Mapping):
+        raise ValueError(f"model family is not frozen in the G0 config: {model_family}")
+    if (expected.get("id"), expected.get("revision")) != (model_id, model_revision):
+        raise ValueError("requested serving model differs from the frozen G0 family contract")
+    source = Path(runtime_preflight)
+    preflight = json.loads(source.read_text(encoding="utf-8"))
+    if not isinstance(preflight, Mapping) or preflight.get("kind") != PREFLIGHT_KIND:
+        raise ValueError("not a semantic-ancestry runtime preflight")
+    if preflight.get("config_sha256") != sha256_file(config):
+        raise ValueError("runtime preflight is not bound to the frozen G0 config")
+    if preflight.get("model_contract") != contract["models"]:
+        raise ValueError("runtime preflight model contract differs from G0 config")
+    return dict(preflight)
+
+
 def run(
-    *, inputs: str | Path, output: str | Path, model_id: str, model_revision: str, model_family: str, completions_per_cell: int = 8,
+    *, inputs: str | Path, output: str | Path, config: str | Path, runtime_preflight: str | Path,
+    model_id: str, model_revision: str, model_family: str, completions_per_cell: int = 8,
     temperature: float = 0.8, max_new_tokens: int = 128, thresholds: Thresholds = Thresholds(),
 ) -> dict[str, object]:
     """Run one model family.  A two-family gate is assembled after both roots exist."""
@@ -183,10 +208,16 @@ def run(
     root = Path(output)
     if root.exists():
         raise FileExistsError("refusing to overwrite a semantic-ancestry G0 root")
+    _validate_runtime_preflight(
+        config=config, runtime_preflight=runtime_preflight, model_id=model_id,
+        model_revision=model_revision, model_family=model_family,
+    )
     questions = load_questions(inputs)
     raw = list(generate(questions, model_id=model_id, model_revision=model_revision, completions_per_cell=completions_per_cell, temperature=temperature, max_new_tokens=max_new_tokens))
     rows = _score_all(questions, model_family, raw, completions_per_cell)
     root.mkdir(parents=True)
+    preflight_copy = root / "runtime_preflight.json"
+    preflight_copy.write_bytes(Path(runtime_preflight).read_bytes())
     input_copy = root / "frozen_inputs.jsonl"
     write_jsonl(input_copy, (asdict(question) for question in questions))
     write_jsonl(root / "raw_completions.jsonl", raw)
@@ -202,6 +233,8 @@ def run(
         "thresholds": asdict(thresholds),
         "model_id": model_id,
         "model_revision": model_revision,
+        "config_sha256": sha256_file(config),
+        "runtime_preflight_sha256": sha256_file(preflight_copy),
         "model_family": model_family,
         "input_sha256": sha256_file(input_copy),
         "raw_completions_sha256": sha256_file(root / "raw_completions.jsonl"),
@@ -216,6 +249,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run one semantic-ancestry RAG G0 model-family root")
     parser.add_argument("--inputs", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument("--config", required=True)
+    parser.add_argument("--runtime-preflight", required=True)
     parser.add_argument("--model-id", required=True)
     parser.add_argument("--model-revision", required=True)
     parser.add_argument("--model-family", required=True)

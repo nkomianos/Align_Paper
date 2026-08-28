@@ -63,6 +63,7 @@ ancestry-rag-run = "semantic_ancestry_rag.runner:main"
 ancestry-rag-assemble = "semantic_ancestry_rag.assemble:main"
 ancestry-rag-build-base = "semantic_ancestry_rag.corpus:main"
 ancestry-rag-prepare = "semantic_ancestry_rag.prepare:main"
+ancestry-rag-preflight = "semantic_ancestry_rag.preflight:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

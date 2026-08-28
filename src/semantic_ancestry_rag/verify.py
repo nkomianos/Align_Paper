@@ -4,12 +4,14 @@ from __future__ import annotations
 
 import argparse
 import json
+from dataclasses import asdict
 from pathlib import Path
 from typing import Any, Sequence
 
 from under_extinction.io import canonical_json, read_jsonl, sha256_file, write_json
 
 from .gate import ResultRow, Thresholds, evaluate_gate
+from .preflight import KIND as PREFLIGHT_KIND
 
 
 RUN_KIND = "semantic_ancestry_rag_g0"
@@ -82,6 +84,47 @@ def verify_run(root: str | Path, destination: str | Path | None = None) -> dict[
         raise ValueError("manifest must preserve frozen thresholds")
     rows = _rows(rows_path)
     _validate_complete_design(rows, path / "frozen_inputs.jsonl", manifest)
+    source_evidence = manifest.get("source_family_evidence")
+    families = sorted({row.model_family for row in rows})
+    if not isinstance(source_evidence, dict) or set(source_evidence) != set(families):
+        raise ValueError("aggregate root lacks complete per-family raw evidence")
+    # Re-score every retained completion after transport.  A row-level checksum is
+    # not sufficient: this prevents substituting hand-edited collapse labels for
+    # the model text after a run has completed.
+    from .runner import _score_all, load_questions
+
+    questions = load_questions(path / "frozen_inputs.jsonl")
+    for family in families:
+        evidence = source_evidence[family]
+        if not isinstance(evidence, dict):
+            raise ValueError(f"malformed source evidence for {family}")
+        raw_path = path / f"raw_completions_{family}.jsonl"
+        preflight_path = path / f"runtime_preflight_{family}.json"
+        if sha256_file(raw_path) != evidence.get("raw_completions_sha256"):
+            raise ValueError(f"raw completion hash mismatch for {family}")
+        if sha256_file(preflight_path) != evidence.get("runtime_preflight_sha256"):
+            raise ValueError(f"runtime preflight hash mismatch for {family}")
+        preflight = json.loads(preflight_path.read_text(encoding="utf-8"))
+        if (
+            not isinstance(preflight, dict)
+            or preflight.get("kind") != PREFLIGHT_KIND
+            or preflight.get("config_sha256") != manifest.get("config_sha256")
+        ):
+            raise ValueError(f"runtime preflight is not bound to aggregate config for {family}")
+        serving = dict(preflight.get("model_contract") or {}).get("serving_families", {})
+        expected_model = serving.get(family) if isinstance(serving, dict) else None
+        if (
+            not isinstance(expected_model, dict)
+            or evidence.get("source_model_id") != expected_model.get("id")
+            or evidence.get("source_model_revision") != expected_model.get("revision")
+        ):
+            raise ValueError(f"source model identity is unbound for {family}")
+        recomputed_rows = _score_all(
+            questions, family, list(read_jsonl(raw_path)), int(manifest["completions_per_cell"]),
+        )
+        recorded_rows = [row for row in rows if row.model_family == family]
+        if canonical_json([asdict(row) for row in recomputed_rows]) != canonical_json([asdict(row) for row in recorded_rows]):
+            raise ValueError(f"scored result rows do not match raw completions for {family}")
     recomputed = evaluate_gate(rows, Thresholds(**threshold_values)).to_dict()
     reported = json.loads(report_path.read_text(encoding="utf-8"))
     if canonical_json(recomputed) != canonical_json(reported):

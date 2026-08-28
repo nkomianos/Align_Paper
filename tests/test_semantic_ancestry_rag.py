@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict
+from pathlib import Path
 
 import pytest
 
@@ -10,6 +11,7 @@ from semantic_ancestry_rag.runner import QWEN35_MODEL_ID, Question, _render_gene
 from semantic_ancestry_rag.retrieval import history_aware_select, mmr_select
 from semantic_ancestry_rag.corpus import build_base_questions
 from semantic_ancestry_rag.prepare import materialize_question
+from semantic_ancestry_rag.preflight import KIND as PREFLIGHT_KIND, MISTRAL_REVISION, QWEN_REVISION, load_contract
 from semantic_ancestry_rag.verify import RUN_KIND, _validate_complete_design, verify_run
 from under_extinction.io import sha256_file, write_json, write_jsonl
 
@@ -140,30 +142,61 @@ def test_qwen_generation_uses_the_text_chat_template_with_thinking_disabled() ->
     assert _render_generation_prompt(Tokenizer(), QWEN35_MODEL_ID, "PROMPT") == "<closed-thought>PROMPT"
 
 
+def test_frozen_runtime_contract_requires_pinned_text_only_model_specs() -> None:
+    root = Path(__file__).resolve().parents[1]
+    contract = load_contract(root / "configs" / "semantic_ancestry_rag_g0.yaml")
+    assert contract["models"]["ancestor"]["revision"] == QWEN_REVISION
+    assert contract["models"]["rewriter"]["revision"] == MISTRAL_REVISION
+    assert tuple(contract["conditions"]) == Conditions.ALL
+
+
 def test_assembled_two_family_bundle_recomputes_the_frozen_decision(tmp_path) -> None:
     """Exercise the actual transfer boundary, not just the pure gate function."""
 
     thresholds = Thresholds(bootstrap_samples=1_000)
-    inputs = [{"question_id": f"q-{index:03d}"} for index in range(30)]
+    inputs = [{
+        "question_id": f"q-{index:03d}",
+        "question": "Which entity is supported?",
+        "references": {condition: ("Alpha and Beta are supported by this source.",) for condition in Conditions.ALL},
+        "entity_aliases": {"alpha": ("Alpha",), "beta": ("Beta",)},
+        "source_supported_entities": {condition: ("alpha", "beta") for condition in Conditions.ALL},
+    } for index in range(30)]
+    model_contract = {
+        "serving_families": {
+            "family_a": {"id": "test/family-a", "revision": "test-a"},
+            "family_b": {"id": "test/family-b", "revision": "test-b"},
+        },
+    }
+    config_sha256 = "0" * 64
     for family in ("family_a", "family_b"):
         root = tmp_path / family
         root.mkdir()
         inputs_path = root / "frozen_inputs.jsonl"
         write_jsonl(inputs_path, inputs)
         records: list[dict[str, object]] = []
+        raw_records: list[dict[str, object]] = []
         for item in inputs:
+            question = Question(**item)
             for condition in Conditions.ALL:
-                for sample_id in range(8):
-                    records.append(asdict(ResultRow(
-                        question_id=item["question_id"],
-                        model_family=family,
-                        condition=condition,
-                        sample_id=sample_id,
-                        collapsed=int(condition in (Conditions.SELF_ANCESTOR, Conditions.CROSS_ANCESTOR, Conditions.MMR)),
-                        faithful=0.91 if condition == Conditions.HISTORY_AWARE else 0.92,
-                    )))
+                collapsed = condition in (Conditions.SELF_ANCESTOR, Conditions.CROSS_ANCESTOR, Conditions.MMR)
+                completions = [
+                    {"sample_id": sample_id, "completion": "Alpha" if collapsed or sample_id % 2 == 0 else "Beta"}
+                    for sample_id in range(8)
+                ]
+                raw_records.extend({
+                    "question_id": item["question_id"], "condition": condition, **completion,
+                } for completion in completions)
+                records.extend(asdict(row) for row in score_question_condition(question, family, condition, completions))
         results_path = root / "condition_results.jsonl"
         write_jsonl(results_path, records)
+        raw_path = root / "raw_completions.jsonl"
+        write_jsonl(raw_path, raw_records)
+        preflight_path = root / "runtime_preflight.json"
+        write_json(preflight_path, {
+            "kind": PREFLIGHT_KIND,
+            "config_sha256": config_sha256,
+            "model_contract": model_contract,
+        })
         report_path = root / "gate_report.json"
         write_json(report_path, {
             "status": "AWAITING_SECOND_INDEPENDENT_MODEL_FAMILY",
@@ -173,10 +206,15 @@ def test_assembled_two_family_bundle_recomputes_the_frozen_decision(tmp_path) ->
         write_json(root / "MANIFEST.json", {
             "kind": RUN_KIND,
             "model_family": family,
+            "model_id": model_contract["serving_families"][family]["id"],
+            "model_revision": model_contract["serving_families"][family]["revision"],
+            "config_sha256": config_sha256,
             "question_count": len(inputs),
             "completions_per_cell": 8,
             "thresholds": asdict(thresholds),
             "input_sha256": sha256_file(inputs_path),
+            "raw_completions_sha256": sha256_file(raw_path),
+            "runtime_preflight_sha256": sha256_file(preflight_path),
             "condition_results_sha256": sha256_file(results_path),
             "gate_report_sha256": sha256_file(report_path),
         })
