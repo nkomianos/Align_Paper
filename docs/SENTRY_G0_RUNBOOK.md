@@ -34,6 +34,7 @@ On the GH200 after the repository and its GPU environment are ready:
 ```bash
 export SENTRY_PUBLIC_SOURCE_ROOT=/mnt/sentry/public-YYYYMMDD
 export SENTRY_PREFLIGHT_ROOT=/mnt/sentry/preflight-YYYYMMDD
+export SENTRY_RUNTIME_PREFLIGHT_ROOT=/mnt/sentry/runtime-preflight-YYYYMMDD
 export SENTRY_G0_OUTPUT_ROOT=/mnt/sentry/g0-YYYYMMDD
 export SENTRY_PRIVATE_KEY_ROOT=/mnt/sentry-private/g0-key-YYYYMMDD
 ./scripts/stage_sentry_public_sources_remote.sh
@@ -41,8 +42,11 @@ export SENTRY_PRIVATE_KEY_ROOT=/mnt/sentry-private/g0-key-YYYYMMDD
 ```
 
 All four paths must be fresh. The private key path must not be under the run
-root. The model and datasets are public; a Hugging Face token is only needed if
-the remote environment cannot access public Hub resources.
+root. The first invocation intentionally stops after its runtime preflight.
+After inspecting its measured throughput/memory report, use fresh paths and
+`SENTRY_SKIP_RUNTIME_PREFLIGHT=1` for the full gate. The model and datasets are
+public; a Hugging Face token is only needed if the remote environment cannot
+access public Hub resources.
 
 ## Decision rule
 

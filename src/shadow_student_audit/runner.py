@@ -31,6 +31,7 @@ from .protocol import CHANNELS, ScenarioPlan, build_scenario_plan, make_probe_re
 
 
 RUN_KIND = "sentry_shadow_student_g0_run"
+RUNTIME_PREFLIGHT_KIND = "sentry_g0_runtime_preflight"
 
 
 def _seed(*parts: object) -> int:
@@ -223,6 +224,45 @@ def build_answer_key(config_path: str | Path, destination: str | Path) -> dict[s
     return value
 
 
+def runtime_preflight(
+    config_path: str | Path, *, numbers_jsonl: str | Path, public_preflight_path: str | Path, destination: str | Path
+) -> dict[str, Any]:
+    """Measure one tiny exact-model shadow endpoint without opening any key.
+
+    This is deliberately separate from ``run_g0``: its measurement estimates
+    throughput and memory only and cannot become evidence for the sealed gate.
+    """
+
+    import torch
+
+    output = Path(destination)
+    if output.exists():
+        raise FileExistsError("refusing to overwrite SENTRY runtime preflight")
+    config = load_public_config(config_path)
+    config_sha = hashlib.sha256(canonical_json(config).encode()).hexdigest()
+    preflight = json.loads(Path(public_preflight_path).read_text(encoding="utf-8"))
+    if preflight.get("kind") != "sentry_g0_public_preflight" or preflight.get("config_sha256") != config_sha or preflight.get("sealed_answer_key_opened") is not False:
+        raise ValueError("runtime preflight requires the prior public attestation and may not open a key")
+    count = int(config["protocol"]["source_rows_per_scenario"])
+    prompts = load_public_prompts(numbers_jsonl, source="numbers", limit=count)
+    plan = build_scenario_plan(config["protocol"])[0]
+    records = make_training_records(plan, [item.question for item in prompts], rows=count, seed=int(config["protocol"]["split_seed"]))
+    output.mkdir(parents=True)
+    budget = min(8192, int(config["training"]["shadow_token_budget"]))
+    model, tokenizer = _new_adapter(config, rank=int(config["training"]["shadow_lora_rank"]), seed=_seed("runtime-preflight"))
+    try:
+        details = _fit_to_budget(model, tokenizer, records, config, budget=budget, seed=_seed("runtime-preflight-fit"), learning_rate=float(config["training"]["shadow_learning_rate"]))
+        torch.cuda.synchronize()
+        adapter = _save_adapter(model, tokenizer, output / "adapter")
+        result = {"kind": RUNTIME_PREFLIGHT_KIND, "config_sha256": config_sha, "public_preflight_sha256": sha256_file(public_preflight_path), "numbers_questions_sha256": sha256_file(numbers_jsonl), "sealed_answer_key_opened": False, "budget_input_tokens": budget, "details": details, "input_tokens_per_second": float(details["seen_input_tokens"] / details["wall_seconds"]), "peak_memory_bytes": int(torch.cuda.max_memory_allocated()), "adapter": adapter}
+    finally:
+        _release(model)
+    write_json(output / "runtime_preflight.json", result)
+    result["report_sha256"] = sha256_file(output / "runtime_preflight.json")
+    write_json(output / "MANIFEST.json", result)
+    return result
+
+
 def _verified_answer_key(config: Mapping[str, Any], path: str | Path) -> tuple[ScenarioPlan, ...]:
     value = json.loads(Path(path).read_text(encoding="utf-8"))
     if value.get("kind") != "sentry_g0_answer_key":
@@ -306,9 +346,15 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--answer-key")
     parser.add_argument("--destination")
     parser.add_argument("--build-answer-key", metavar="PATH")
+    parser.add_argument("--runtime-preflight", action="store_true")
     args = parser.parse_args(argv)
     if args.build_answer_key:
         print(canonical_json(build_answer_key(args.config, args.build_answer_key)))
+        return 0
+    if args.runtime_preflight:
+        if not all((args.numbers_jsonl, args.public_preflight, args.destination)):
+            parser.error("runtime preflight requires numbers JSONL, public preflight, and destination")
+        print(canonical_json(runtime_preflight(args.config, numbers_jsonl=args.numbers_jsonl, public_preflight_path=args.public_preflight, destination=args.destination)))
         return 0
     required = (args.numbers_jsonl, args.code_jsonl, args.public_sources_manifest, args.public_preflight, args.answer_key, args.destination)
     if not all(required):
