@@ -4,6 +4,7 @@ import pytest
 
 from semantic_ancestry_rag.gate import Conditions, ResultRow, Thresholds, evaluate_gate
 from semantic_ancestry_rag.runner import Question, score_question_condition
+from semantic_ancestry_rag.retrieval import history_aware_select, mmr_select
 from semantic_ancestry_rag.verify import _validate_complete_design
 from under_extinction.io import write_jsonl
 
@@ -77,3 +78,16 @@ def test_deterministic_scorer_detects_collapse_and_supported_entities() -> None:
     ])
     assert [row.collapsed for row in rows] == [1, 1]
     assert [row.faithful for row in rows] == [1.0, 1.0]
+
+
+def test_history_aware_retrieval_rejects_an_answer_descendant_without_provenance() -> None:
+    passages = (
+        "Atlas is a highly rated option for the best hiking boot.",
+        "Boreal is a highly rated option for the best hiking boot.",
+        "Cinder is durable for wet trail hiking.",
+    )
+    history = ("Atlas is a highly rated option for the best hiking boot.",)
+    mmr = mmr_select("best hiking boot", passages, limit=1)
+    history_aware = history_aware_select("best hiking boot", passages, history, limit=1)
+    assert mmr.indices == (0,)
+    assert history_aware.indices == (1,)

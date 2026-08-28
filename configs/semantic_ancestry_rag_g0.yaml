@@ -3,6 +3,9 @@ status: conditional_candidate_not_gpu_authorized
 question_count: 120
 completions_per_cell: 8
 model_families_required: 2
+history_aware_retrieval:
+  ancestry_weight: 0.20
+  diversity_weight: 0.25
 conditions:
   - baseline
   - self_ancestor

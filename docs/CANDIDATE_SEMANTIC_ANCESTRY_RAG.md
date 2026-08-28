@@ -24,7 +24,10 @@ model answers, not pairwise similarity among currently retrieved documents.
 RAG Collapse establishes a strong self-authorship result but explicitly leaves
 other kinds of AI-generated content and mitigations untested.  It further notes
 that AI detection cannot identify a human-written document based on a model
-answer.  DIVERGE and DF-RAG optimize output or retrieval diversity generally;
+answer.  An earlier ACL study found little static self-preference in
+pairwise RAG generation, so this candidate deliberately tests a recursive
+answer-descendant intervention rather than relabeling a static self-citation
+test.  DIVERGE and DF-RAG optimize output or retrieval diversity generally;
 the recent context-allocation work already provides causal leave-one-out
 attribution and a scheduler for under-used evidence.  Therefore this candidate
 only survives if it demonstrates a new *ancestry-specific* causal interaction
@@ -35,6 +38,9 @@ Nearest work to beat, not merely cite:
 * [RAG Collapse](https://arxiv.org/abs/2608.22118): self-authored document
   feedback and a source-quality control, but no semantic-ancestry factorial or
   mitigation.
+* [Self-Preference in RAG](https://aclanthology.org/2025.findings-acl.1369.pdf):
+  static authorship and factuality controls, with largely null final-generation
+  self-preference; this is the critical alternative account G0 must overturn.
 * [DIVERGE](https://arxiv.org/abs/2602.00238) and
   [DF-RAG](https://aclanthology.org/2026.findings-eacl.150/): generic
   diversity-aware RAG baselines.
@@ -60,6 +66,11 @@ five condition-matched sixth passages:
 | `independent_rewrite` | Another model rewrites an original source; controls generic AI rewriting. |
 | `mmr` | Same ancestor pool with a strong query-document-diversity reranker. |
 | `history_aware` | Same ancestor pool, but a frozen retriever penalty is applied for similarity to the prior response bank. |
+
+The history-aware retriever is a greedy TF-IDF selector with frozen ancestry
+weight 0.20 and ordinary MMR redundancy weight 0.25.  It compares each
+candidate with prior answers only; it receives no author, model, or
+AI-generated-content label.
 
 There are eight temperature-seeded completions per `(question, condition,
 model)` cell.  Collapsed is a deterministic answer-set event: all eight
