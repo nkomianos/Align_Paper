@@ -52,6 +52,13 @@ def verify_retrieved_run(config_path: str | Path, run_root: str | Path, destinat
     manifest = _read(root / "run_manifest.json", "run manifest")
     if manifest.get("kind") != RUNNER_KIND or manifest.get("config_sha256") != config["_sha256"]:
         raise ValueError("Run manifest does not bind the frozen J0 contract")
+    preflight_path = manifest.get("runtime_preflight_filename")
+    preflight_hash = manifest.get("runtime_preflight_sha256")
+    if not isinstance(preflight_path, str) or not isinstance(preflight_hash, str) or sha256_file(root / preflight_path) != preflight_hash:
+        raise ValueError("Run manifest lacks a bound runtime preflight")
+    preflight = _read(root / preflight_path, "runtime preflight")
+    if preflight.get("kind") != "recipe_invariant_j0_runtime_preflight" or preflight.get("config_sha256") != config["_sha256"] or preflight.get("model_revision") != config["model"]["revision"]:
+        raise ValueError("Runtime preflight does not attest the frozen model contract")
     for name, key in (("metrics.json", "metrics_sha256"), ("gate_report.json", "gate_report_sha256")):
         if not isinstance(manifest.get(key), str) or sha256_file(root / name) != manifest[key]:
             raise ValueError(f"Run manifest checksum mismatch for {name}")
@@ -86,7 +93,7 @@ def verify_retrieved_run(config_path: str | Path, run_root: str | Path, destinat
                 raise ValueError(f"Malformed training details for {recipe}")
             _verify_adapter(seed_root, details, str(recipe))
         checked.append({"seed": seed, "verified_adapters": len(training), "selected_layer": selection["selected_layer"]})
-    result = {"kind": "recipe_invariant_j0_retrieval_verification", "config_sha256": config["_sha256"], "run_root": str(root), "metrics_sha256": sha256_file(root / "metrics.json"), "gate_report_sha256": sha256_file(root / "gate_report.json"), "decision": report.get("decision"), "pass": report.get("pass"), "seeds": checked}
+    result = {"kind": "recipe_invariant_j0_retrieval_verification", "config_sha256": config["_sha256"], "run_root": str(root), "runtime_preflight_path": preflight_path, "runtime_preflight_sha256": preflight_hash, "metrics_sha256": sha256_file(root / "metrics.json"), "gate_report_sha256": sha256_file(root / "gate_report.json"), "decision": report.get("decision"), "pass": report.get("pass"), "seeds": checked}
     write_json(output, json.loads(canonical_json(result)))
     return result
 

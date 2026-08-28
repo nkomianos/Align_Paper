@@ -13,6 +13,7 @@ import json
 import math
 import os
 import random
+import shutil
 import time
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -252,7 +253,14 @@ def run_j0(config_path: str | Path, output_dir: str | Path) -> dict[str, Any]:
     corpus = build_corpus(config, destination / "corpus")
     protocol = protocol_records(list(read_jsonl(corpus["corpus"])))
     write_jsonl(destination / "protocol.jsonl", [{"partition": key, **row} for key, rows in protocol.items() for row in rows])
-    manifest = {"kind": RUNNER_KIND, "config_sha256": config["_sha256"], "corpus_sha256": corpus["corpus_sha256"], "protocol_sha256": sha256_file(destination / "protocol.jsonl"), "git_head": os.popen("git rev-parse HEAD").read().strip(), "started_unix": time.time()}
+    preflight = os.environ.get("RECIPE_INVARIANT_RUNTIME_PREFLIGHT")
+    if not preflight or not Path(preflight).is_file():
+        raise FileNotFoundError("J0 requires a completed immutable runtime preflight")
+    copied_preflight = destination / "runtime_preflight.json"
+    shutil.copy2(preflight, copied_preflight)
+    if sha256_file(copied_preflight) != sha256_file(preflight):
+        raise RuntimeError("Copied runtime preflight checksum mismatch")
+    manifest = {"kind": RUNNER_KIND, "config_sha256": config["_sha256"], "corpus_sha256": corpus["corpus_sha256"], "protocol_sha256": sha256_file(destination / "protocol.jsonl"), "git_head": os.popen("git rev-parse HEAD").read().strip(), "started_unix": time.time(), "runtime_preflight_source_path": str(Path(preflight).resolve()), "runtime_preflight_filename": copied_preflight.name, "runtime_preflight_sha256": sha256_file(copied_preflight)}
     write_json(destination / "run_manifest.json", manifest)
     metrics = [_seed_run(config, protocol, int(seed), destination / f"seed_{seed}") for seed in config["design"]["seeds"]]
     write_json(destination / "metrics.json", {"records": metrics})
