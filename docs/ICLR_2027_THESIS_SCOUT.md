@@ -20,16 +20,16 @@ replication/transfer result.
 
 ## Conditional finalists
 
-**None.** The SENTRY implementation and runtime preflight remain preserved as
-an auditable artifact, but the candidate is no longer GPU-authorized. A
-literature/construct screen found that its only implemented G0 is a transparent
-known-effect style calibration rather than a teacher-generated hidden-transfer
-test. Passing it could establish engineering throughput, but not the paper's
-central deployment claim. More importantly, the closest 2026 work already
-establishes divergence-token mechanisms and an explicit channel-dependent
-auditability taxonomy. Without a new experimental object that defeats those
-mechanisms rather than a shadow-scale variant, SENTRY fails the novelty and
-construct-validity requirements. See the closed-direction record below.
+**Semantic-ancestry RAG collapse (conditional; no GPU authorization yet).**
+The proposed contribution is not generic diversity reranking: it tests whether
+collapse follows a retrieved passage's semantic descent from the system's
+earlier answer even after author and style are changed, then asks whether an
+answer-history-aware retriever prevents the effect without an authorship or
+AI-content oracle.  It must defeat MMR/DF-RAG-style diversity and causal
+context-allocation baselines while preserving support faithfulness in two
+model families.  The frozen G0 protocol, verifier, and kill criteria are in
+`docs/CANDIDATE_SEMANTIC_ANCESTRY_RAG.md`; passing G0 only authorizes an
+offline reproduction, never a submission claim.
 
 ## Closed directions
 
@@ -115,7 +115,6 @@ construct-validity requirements. See the closed-direction record below.
 | Constraint-preserving agent-memory compression | The problem can be programmatically scored, but the proposed causal object and evaluation framework are already direct: Context Codec represents source-grounded commitments, specifies compression-error taxonomy, provides typed canonical atoms and round-trip verification metrics. A new summarization benchmark or “never forget constraints” wrapper would be a reimplementation unless it adds an independently motivated compression primitive with real deployment evidence. | [Context Codec](https://arxiv.org/abs/2605.17304) |
 | Counterfactual value-of-clarification policy for underspecified agents | The distinction between ambiguity that changes the action and ambiguity that does not is the right decision object, but direct clarification benchmarks now evaluate when/what to ask, train a clarification policy with RLVR, and measure downstream deep-search value.  Clarification can also introduce a distinct injection risk.  A cost threshold or simple value-of-information rule would be a narrow reformulation rather than a new paper. | [AskBench](https://github.com/jialeuuz/askbench); [Clarify-Then-Search](https://arxiv.org/abs/2608.20357); [Structured Uncertainty guided Clarification](https://aclanthology.org/2026.findings-acl.2028.pdf); [ASPI](https://labs.scale.com/papers/aspi) |
 | Cross-reference interference in multi-reference image generation | This appeared potentially distinct because unified diffusion transformers may merge conflicting references through shared context channels.  It is already a direct field: MultiRef measures order-sensitive conditional fidelity, MultiBind and TRACE-Bench isolate cross-subject/joint-composition interference, and MOSAIC, MICON-Bench/DAR, and reference-isolation masks provide the natural remedies.  A new reference-order experiment or token partition would be incremental. | [MultiRef](https://multiref.github.io/); [MultiBind](https://arxiv.org/abs/2603.21937); [TRACE-Bench](https://amuseum-whr.github.io/TraceBench/); [MOSAIC](https://arxiv.org/abs/2509.01977); [Anchoring Instruction Outside Mask](https://arxiv.org/abs/2608.21229) |
-| Provenance-free retrieval diversification against self-feedback collapse | The new RAG-collapse result is compelling: a model disproportionately reuses its own retrieved output and response diversity collapses.  But a proposal to preserve diversity without identifying authorship would reduce to standard diversity-aware retrieval or open-ended RAG generation; both already dynamically optimize context diversity, and a current controlled study isolates retrieval redundancy/diversity effects on generators.  The closest causal implementation also uses leave-one-out evidence-utilization probes, a submodular scheduler, and attribution-steered decoding to promote under-used evidence.  The remaining authorship-specific premise is exactly the new work's central object, while provenance-aware aggregation is separately preempted. | [RAG Collapse](https://arxiv.org/abs/2608.22118); [DIVERGE](https://arxiv.org/abs/2602.00238); [DF-RAG](https://aclanthology.org/2026.findings-eacl.150/); [Retriever redundancy and diversity](https://arxiv.org/abs/2608.13956); [Laws of Context Allocation](https://arxiv.org/abs/2608.23252) |
 | Counterfactual object/attribute-binding audit for VLMs | A paired synthetic evaluation of whether a VLM changes the correct relation after an object or attribute swap would be clean, but it is not an open causal object. MMComposition already evaluates object, relation, attribute, interaction, and counting compositionality; MED already generates minimally edited image pairs and supplies both a controlled detection benchmark and a contrastive remedy.  A swap-only subset or a region-patching explanation would be an evaluator slice, not a paper-level mechanism. | [MMComposition](https://arxiv.org/abs/2410.09733); [Hallucination at a Glance / MED](https://arxiv.org/abs/2506.07227) |
 | Training-order recency for temporal fact conflicts | A recent discovery that models encode training-order recency gives a clean mechanistic starting point, but its direct factual-conflict application has already been taken: a contemporaneous study uses test-time steering for temporal fact conflicts, while RecencyQA benchmarks the corresponding behavioral setting.  Probing the recency axis and choosing its newer answer would be a direct replication or ablation. | [Training-order recency](https://arxiv.org/abs/2509.14223); [Right Knowledge, Wrong Answer](https://arxiv.org/abs/2606.20959); [RecencyQA](https://arxiv.org/abs/2603.16544) |
 
