@@ -212,14 +212,44 @@ def run(
         model_revision=model_revision, model_family=model_family,
     )
     questions = load_questions(inputs)
-    raw = list(generate(questions, model_id=model_id, model_revision=model_revision, completions_per_cell=completions_per_cell, temperature=temperature, max_new_tokens=max_new_tokens))
-    rows = _score_all(questions, model_family, raw, completions_per_cell)
+    # Materialize a durable, explicitly incomplete root before loading the
+    # serving model.  A family run can take hours; retaining every generated
+    # row means an interruption never turns completed GPU work into invisible
+    # in-memory state.  The partial file is deliberately *not* accepted by the
+    # assembler or verifier, so it cannot be mistaken for a completed result.
     root.mkdir(parents=True)
     preflight_copy = root / "runtime_preflight.json"
     preflight_copy.write_bytes(Path(runtime_preflight).read_bytes())
     input_copy = root / "frozen_inputs.jsonl"
     write_jsonl(input_copy, (asdict(question) for question in questions))
-    write_jsonl(root / "raw_completions.jsonl", raw)
+    partial_raw = root / "raw_completions.partial.jsonl"
+    running_path = root / "RUNNING.json"
+    running = {
+        "kind": RUN_KIND,
+        "status": "INCOMPLETE_DO_NOT_ANALYZE",
+        "model_family": model_family,
+        "question_count": len(questions),
+        "completions_per_cell": completions_per_cell,
+        "input_sha256": sha256_file(input_copy),
+        "runtime_preflight_sha256": sha256_file(preflight_copy),
+        "records_completed": 0,
+    }
+    write_json(running_path, running)
+    raw: list[dict[str, Any]] = []
+    with partial_raw.open("w", encoding="utf-8", newline="\n") as handle:
+        for record in generate(
+            questions, model_id=model_id, model_revision=model_revision,
+            completions_per_cell=completions_per_cell, temperature=temperature,
+            max_new_tokens=max_new_tokens,
+        ):
+            raw.append(record)
+            handle.write(canonical_json(record) + "\n")
+            handle.flush()
+            running["records_completed"] = len(raw)
+            write_json(running_path, running)
+    rows = _score_all(questions, model_family, raw, completions_per_cell)
+    partial_raw.replace(root / "raw_completions.jsonl")
+    running_path.unlink()
     write_jsonl(root / "condition_results.jsonl", (asdict(row) for row in rows))
     # A single-family root is intentionally not called a gate decision.
     report = {"status": "AWAITING_SECOND_INDEPENDENT_MODEL_FAMILY", "model_family": model_family, "row_count": len(rows)}

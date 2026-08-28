@@ -96,6 +96,54 @@ def test_deterministic_scorer_detects_collapse_and_supported_entities() -> None:
     assert [row.faithful for row in rows] == [1.0, 1.0]
 
 
+def test_runner_preserves_an_explicitly_incomplete_raw_checkpoint_on_interruption(tmp_path, monkeypatch) -> None:
+    """Interrupted GPU sampling must retain evidence without looking complete."""
+
+    question = {
+        "question_id": "q-0",
+        "question": "Which entity?",
+        "references": {condition: ("Alpha is supported.",) for condition in Conditions.ALL},
+        "entity_aliases": {"alpha": ("Alpha",)},
+        "source_supported_entities": {condition: ("alpha",) for condition in Conditions.ALL},
+    }
+    inputs = tmp_path / "inputs.jsonl"
+    write_jsonl(inputs, [question])
+    preflight = tmp_path / "preflight.json"
+    write_json(preflight, {"kind": "test-preflight"})
+
+    def interrupted_generate(*_args, **_kwargs):
+        yield {
+            "question_id": "q-0",
+            "condition": Conditions.BASELINE,
+            "sample_id": 0,
+            "completion": "Alpha is supported.",
+        }
+        raise RuntimeError("simulated interruption")
+
+    monkeypatch.setattr(runner, "generate", interrupted_generate)
+    monkeypatch.setattr(runner, "_validate_runtime_preflight", lambda **_kwargs: {})
+    output = tmp_path / "interrupted-family"
+    with pytest.raises(RuntimeError, match="simulated interruption"):
+        runner.run(
+            inputs=inputs,
+            output=output,
+            config=tmp_path / "unused-config.yaml",
+            runtime_preflight=preflight,
+            model_id="test/model",
+            model_revision="test-revision",
+            model_family="test-family",
+            completions_per_cell=1,
+        )
+
+    running = __import__("json").loads((output / "RUNNING.json").read_text(encoding="utf-8"))
+    assert running["status"] == "INCOMPLETE_DO_NOT_ANALYZE"
+    assert running["records_completed"] == 1
+    partial = (output / "raw_completions.partial.jsonl").read_text(encoding="utf-8").splitlines()
+    assert len(partial) == 1
+    assert not (output / "raw_completions.jsonl").exists()
+    assert not (output / "MANIFEST.json").exists()
+
+
 def test_history_aware_retrieval_rejects_an_answer_descendant_without_provenance() -> None:
     passages = (
         "Atlas is a highly rated option for the best hiking boot.",
