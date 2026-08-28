@@ -174,3 +174,9 @@ instead requires the repository's native Qwen3.5 text class because a visual
 wrapper could silently change the tested model.  The remote environment will be
 checked before download or generation; a dependency or model-load failure is a
 hardware/software preflight failure, not a scientific result.
+
+The exact one-shot, non-overwriting host sequence is
+`scripts/run_semantic_ancestry_rag_g0_remote.sh`. Set
+`ANCESTRY_RAG_RUN_ROOT` to a fresh absolute path and run it only after the
+repository is at the frozen commit. It preserves the preflight, prepared corpus,
+both family roots, aggregate, and independently recomputed verification result.
