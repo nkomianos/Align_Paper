@@ -143,6 +143,7 @@ def test_retrieval_verifier_binds_recipe_c_after_ab_selection(tmp_path: Path) ->
     write_json(root / "run_manifest.json", {"kind": "recipe_invariant_causal_mechanisms_j0", "config_sha256": config["_sha256"], "corpus_sha256": corpus["corpus_sha256"], "protocol_sha256": sha256_file(root / "protocol.jsonl"), "runtime_preflight_filename": "runtime_preflight.json", "runtime_preflight_sha256": sha256_file(root / "runtime_preflight.json"), "metrics_sha256": sha256_file(root / "metrics.json"), "gate_report_sha256": sha256_file(root / "gate_report.json")})
     verified = verify_retrieved_run(config["_path"], root, tmp_path / "verified.json")
     assert verified["pass"] is report["pass"] is True
+    assert verified["gate_report_recomputed"] is True
     assert all(row["verified_adapters"] == 3 for row in verified["seeds"])
     selection_path = root / "seed_9201" / "selection_before_recipe_c.json"
     selection = json.loads(selection_path.read_text(encoding="utf-8"))
@@ -154,6 +155,39 @@ def test_retrieval_verifier_binds_recipe_c_after_ab_selection(tmp_path: Path) ->
         assert "selection" in str(exc)
     else:
         raise AssertionError("Expected verifier to reject a raw prompt direction")
+
+
+def test_retrieval_verifier_recomputes_the_gate_report(tmp_path: Path) -> None:
+    """A valid checksum cannot turn an inconsistent gate decision into evidence."""
+
+    config, root = _config(), tmp_path / "retrieved"
+    corpus = build_corpus(config, root / "corpus")
+    protocol = protocol_records(list(read_jsonl(corpus["corpus"])))
+    write_jsonl(root / "protocol.jsonl", [{"partition": partition, **row} for partition, rows in protocol.items() for row in rows])
+    metrics = _metrics(passing=True)
+    write_json(root / "metrics.json", {"records": metrics})
+    report = analyze_gate(config, metrics, root / "gate_report.json")
+    report["decision"] = "KILL_CANDIDATE"
+    write_json(root / "gate_report.json", report)
+    for seed in config["design"]["seeds"]:
+        seed_root, training = root / f"seed_{seed}", {}
+        for recipe in config["design"]["recipes"]:
+            adapter = seed_root / f"{recipe}_adapter"
+            adapter.mkdir(parents=True)
+            artifact = adapter / "adapter.safetensors"
+            artifact.write_bytes(f"{seed}:{recipe}".encode())
+            training[recipe] = {"adapter": {"path": str(adapter), "files": {"adapter.safetensors": sha256_file(artifact)}}}
+        selected = next(row for row in metrics if row["seed"] == seed)
+        write_json(seed_root / "selection_before_recipe_c.json", {"seed": seed, "selected_layer": selected["selected_layer"], "selection_score": selected["selection_score"], "selection_used_only_recipes": ["posthoc_sft", "contrastive_preference"], "direction_construction": "adapter_update_relative_to_disabled_base", "direction_sha256": "synthetic"})
+        write_json(seed_root / "evidence.json", {"kind": "recipe_invariant_causal_mechanisms_j0", "config_sha256": config["_sha256"], "seed": seed, "metrics": selected, "training": training, "runtime_attestations": {}})
+    write_json(root / "runtime_preflight.json", {"kind": "recipe_invariant_j0_runtime_preflight", "config_sha256": config["_sha256"], "model_revision": config["model"]["revision"]})
+    write_json(root / "run_manifest.json", {"kind": "recipe_invariant_causal_mechanisms_j0", "config_sha256": config["_sha256"], "corpus_sha256": corpus["corpus_sha256"], "protocol_sha256": sha256_file(root / "protocol.jsonl"), "runtime_preflight_filename": "runtime_preflight.json", "runtime_preflight_sha256": sha256_file(root / "runtime_preflight.json"), "metrics_sha256": sha256_file(root / "metrics.json"), "gate_report_sha256": sha256_file(root / "gate_report.json")})
+    try:
+        verify_retrieved_run(config["_path"], root, tmp_path / "rejected.json")
+    except ValueError as exc:
+        assert "fresh computation" in str(exc)
+    else:
+        raise AssertionError("Expected verifier to reject a report that disagrees with sealed metrics")
 
 
 def test_runner_does_not_create_partial_evidence_without_preflight(tmp_path: Path, monkeypatch) -> None:

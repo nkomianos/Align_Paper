@@ -4,12 +4,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import tempfile
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from under_extinction.io import canonical_json, sha256_file, write_json
 
-from .gate import REQUIRED_METRICS, SELECTION_RECIPES, load_config
+from .gate import REQUIRED_METRICS, SELECTION_RECIPES, analyze_gate, load_config
 from .runner import DIRECTION_CONSTRUCTION, RUNNER_KIND
 
 
@@ -76,6 +77,14 @@ def verify_retrieved_run(config_path: str | Path, run_root: str | Path, destinat
     report = _read(root / "gate_report.json", "gate report")
     if report.get("config_sha256") != config["_sha256"] or report.get("pass") != all(row.get("pass") for row in report.get("per_seed", []) if isinstance(row, Mapping)):
         raise ValueError("Gate report is internally inconsistent")
+    # A checksum establishes transport integrity, but it does not establish that
+    # the saved decision was actually derived from the sealed metrics.  Re-run
+    # the pure frozen decision rule in an isolated temporary location and bind
+    # every report field, rather than trusting the producer's summary.
+    with tempfile.TemporaryDirectory(prefix="recipe-invariant-j0-verify-") as temporary:
+        recomputed = analyze_gate(config, metrics, Path(temporary) / "gate_report.json")
+    if canonical_json(report) != canonical_json(recomputed):
+        raise ValueError("Gate report does not match a fresh computation from the sealed metrics")
     checked = []
     for seed in config["design"]["seeds"]:
         seed_root = root / f"seed_{seed}"
@@ -99,7 +108,7 @@ def verify_retrieved_run(config_path: str | Path, run_root: str | Path, destinat
                 raise ValueError(f"Malformed training details for {recipe}")
             _verify_adapter(seed_root, details, str(recipe))
         checked.append({"seed": seed, "verified_adapters": len(training), "selected_layer": selection["selected_layer"]})
-    result = {"kind": "recipe_invariant_j0_retrieval_verification", "config_sha256": config["_sha256"], "run_root": str(root), "runtime_preflight_path": preflight_path, "runtime_preflight_sha256": preflight_hash, "metrics_sha256": sha256_file(root / "metrics.json"), "gate_report_sha256": sha256_file(root / "gate_report.json"), "decision": report.get("decision"), "pass": report.get("pass"), "seeds": checked}
+    result = {"kind": "recipe_invariant_j0_retrieval_verification", "config_sha256": config["_sha256"], "run_root": str(root), "runtime_preflight_path": preflight_path, "runtime_preflight_sha256": preflight_hash, "metrics_sha256": sha256_file(root / "metrics.json"), "gate_report_sha256": sha256_file(root / "gate_report.json"), "gate_report_recomputed": True, "decision": report.get("decision"), "pass": report.get("pass"), "seeds": checked}
     write_json(output, json.loads(canonical_json(result)))
     return result
 
