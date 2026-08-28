@@ -138,7 +138,12 @@ model label is supplied in any serving prompt.
 The frozen defaults are [Qwen/Qwen3.5-9B](https://huggingface.co/Qwen/Qwen3.5-9B) and
 [mistralai/Mistral-7B-Instruct-v0.3](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3).
 Qwen3.5-9B is the requested recent 9B model; it is Apache-2.0 and the official
-card supports direct Transformers loading.  Mistral-7B-Instruct-v0.3 is a distinct Apache-2.0 family and gives
+card supports direct Transformers loading.  Its multimodal default loader is
+not permitted in this study: every Qwen arm is pinned to revision
+`c202236235762e1c871ad0ccb60c8ee5ba337b9a`, native text-only
+`Qwen3_5ForCausalLM`, and `enable_thinking=false`.  Mistral-7B-Instruct-v0.3 is
+a distinct Apache-2.0 family, pinned to
+`c170c708c41dac9275d15a8fff4eca08d52bab71`, and gives
 the required independent serving-model test.  Neither selected repository is
 gated, so a Hugging Face token should not be needed.  This is preferable to
 using Llama or Gemma here: their official Hub repositories require accepting a
@@ -152,8 +157,8 @@ When GPU authorization is given, the non-overwriting sequence is:
 4. Merge exactly those two roots with `ancestry-rag-assemble` and independently
    recompute the result using `ancestry-rag-verify`.
 
-Qwen's current model card requires a current Transformers build and documents
-both `AutoModelForCausalLM` text loading and a multimodal loading route.  The
-remote environment will be checked before download or generation; a dependency
-or model-load failure is a hardware/software preflight failure, not a scientific
-result.
+Qwen's current model card documents a multimodal loading route; the gate
+instead requires the repository's native Qwen3.5 text class because a visual
+wrapper could silently change the tested model.  The remote environment will be
+checked before download or generation; a dependency or model-load failure is a
+hardware/software preflight failure, not a scientific result.

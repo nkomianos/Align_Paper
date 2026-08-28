@@ -1,11 +1,27 @@
 kind: semantic_ancestry_rag_g0
 status: conditional_candidate_not_gpu_authorized
 models:
-  ancestor: Qwen/Qwen3.5-9B
-  rewriter: mistralai/Mistral-7B-Instruct-v0.3
+  ancestor:
+    id: Qwen/Qwen3.5-9B
+    revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a
+    loader_class: Qwen3_5ForCausalLM
+    text_only: true
+    enable_thinking: false
+  rewriter:
+    id: mistralai/Mistral-7B-Instruct-v0.3
+    revision: c170c708c41dac9275d15a8fff4eca08d52bab71
+    loader_class: AutoModelForCausalLM
   serving_families:
-    qwen3_5: Qwen/Qwen3.5-9B
-    mistral: mistralai/Mistral-7B-Instruct-v0.3
+    qwen3_5:
+      id: Qwen/Qwen3.5-9B
+      revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a
+      loader_class: Qwen3_5ForCausalLM
+      text_only: true
+      enable_thinking: false
+    mistral:
+      id: mistralai/Mistral-7B-Instruct-v0.3
+      revision: c170c708c41dac9275d15a8fff4eca08d52bab71
+      loader_class: AutoModelForCausalLM
 question_count: 120
 completions_per_cell: 8
 model_families_required: 2

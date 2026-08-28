@@ -20,6 +20,9 @@ from .gate import Conditions, ResultRow, Thresholds, evaluate_gate
 from .verify import RUN_KIND
 
 
+QWEN35_MODEL_ID = "Qwen/Qwen3.5-9B"
+
+
 @dataclass(frozen=True)
 class Question:
     question_id: str
@@ -95,26 +98,54 @@ def _seed(*parts: str | int) -> int:
     return int.from_bytes(hashlib.sha256("|".join(map(str, parts)).encode("utf-8")).digest()[:8], "big") % (2**63 - 1)
 
 
+def _render_generation_prompt(tokenizer: Any, model_id: str, prompt: str) -> str:
+    messages = [{"role": "user", "content": prompt}]
+    if model_id == QWEN35_MODEL_ID:
+        from under_extinction.modeling import chat_prompt_text
+
+        return chat_prompt_text(tokenizer, messages)
+    rendered = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+    if not isinstance(rendered, str) or not rendered:
+        raise ValueError("model chat template did not render a non-empty generation prompt")
+    return rendered
+
+
 def generate(
-    questions: Sequence[Question], *, model_id: str, completions_per_cell: int, temperature: float, max_new_tokens: int
+    questions: Sequence[Question], *, model_id: str, model_revision: str, completions_per_cell: int, temperature: float, max_new_tokens: int
 ) -> Iterable[dict[str, Any]]:
     """Yield raw completions; imports GPU dependencies only on the selected host."""
 
     if completions_per_cell < 1 or not 0.0 < temperature <= 2.0 or max_new_tokens < 1:
         raise ValueError("invalid generation parameters")
     import torch
-    from transformers import AutoModelForCausalLM, AutoTokenizer
+    from transformers import AutoTokenizer
 
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
-    model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype="auto", device_map="auto")
+    tokenizer = AutoTokenizer.from_pretrained(model_id, revision=model_revision, use_fast=True)
+    if tokenizer.pad_token_id is None:
+        tokenizer.pad_token = tokenizer.eos_token
+    if model_id == QWEN35_MODEL_ID:
+        try:
+            from transformers import Qwen3_5ForCausalLM
+        except ImportError as exc:
+            raise RuntimeError("Transformers lacks the required native Qwen3.5 text loader") from exc
+        model = Qwen3_5ForCausalLM.from_pretrained(
+            model_id, revision=model_revision, dtype=torch.bfloat16, device_map={"": torch.cuda.current_device()},
+            low_cpu_mem_usage=True, use_kernels=False,
+        )
+    else:
+        from transformers import AutoModelForCausalLM
+
+        model = AutoModelForCausalLM.from_pretrained(
+            model_id, revision=model_revision, dtype=torch.bfloat16, device_map={"": torch.cuda.current_device()}, low_cpu_mem_usage=True,
+        )
     model.eval()
     for question in questions:
         for condition in Conditions.ALL:
             prompt = render_prompt(question, condition)
-            encoded = tokenizer(prompt, return_tensors="pt").to(model.device)
+            encoded = tokenizer(_render_generation_prompt(tokenizer, model_id, prompt), add_special_tokens=False, return_tensors="pt").to(model.device)
             input_length = int(encoded["input_ids"].shape[1])
             for sample_id in range(completions_per_cell):
-                generator = torch.Generator(device=model.device).manual_seed(_seed(model_id, question.question_id, condition, sample_id))
+                generator = torch.Generator(device=model.device).manual_seed(_seed(model_id, model_revision, question.question_id, condition, sample_id))
                 with torch.inference_mode():
                     output = model.generate(**encoded, do_sample=True, temperature=temperature, top_p=0.95, max_new_tokens=max_new_tokens, generator=generator)
                 yield {
@@ -144,7 +175,7 @@ def _score_all(questions: Sequence[Question], model_family: str, raw: Sequence[M
 
 
 def run(
-    *, inputs: str | Path, output: str | Path, model_id: str, model_family: str, completions_per_cell: int = 8,
+    *, inputs: str | Path, output: str | Path, model_id: str, model_revision: str, model_family: str, completions_per_cell: int = 8,
     temperature: float = 0.8, max_new_tokens: int = 128, thresholds: Thresholds = Thresholds(),
 ) -> dict[str, object]:
     """Run one model family.  A two-family gate is assembled after both roots exist."""
@@ -153,7 +184,7 @@ def run(
     if root.exists():
         raise FileExistsError("refusing to overwrite a semantic-ancestry G0 root")
     questions = load_questions(inputs)
-    raw = list(generate(questions, model_id=model_id, completions_per_cell=completions_per_cell, temperature=temperature, max_new_tokens=max_new_tokens))
+    raw = list(generate(questions, model_id=model_id, model_revision=model_revision, completions_per_cell=completions_per_cell, temperature=temperature, max_new_tokens=max_new_tokens))
     rows = _score_all(questions, model_family, raw, completions_per_cell)
     root.mkdir(parents=True)
     input_copy = root / "frozen_inputs.jsonl"
@@ -170,6 +201,7 @@ def run(
         "completions_per_cell": completions_per_cell,
         "thresholds": asdict(thresholds),
         "model_id": model_id,
+        "model_revision": model_revision,
         "model_family": model_family,
         "input_sha256": sha256_file(input_copy),
         "raw_completions_sha256": sha256_file(root / "raw_completions.jsonl"),
@@ -185,6 +217,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--inputs", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--model-id", required=True)
+    parser.add_argument("--model-revision", required=True)
     parser.add_argument("--model-family", required=True)
     parser.add_argument("--completions-per-cell", type=int, default=8)
     parser.add_argument("--temperature", type=float, default=0.8)

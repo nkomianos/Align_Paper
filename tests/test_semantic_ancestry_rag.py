@@ -6,7 +6,7 @@ import pytest
 
 from semantic_ancestry_rag.assemble import assemble
 from semantic_ancestry_rag.gate import Conditions, ResultRow, Thresholds, evaluate_gate
-from semantic_ancestry_rag.runner import Question, score_question_condition
+from semantic_ancestry_rag.runner import QWEN35_MODEL_ID, Question, _render_generation_prompt, score_question_condition
 from semantic_ancestry_rag.retrieval import history_aware_select, mmr_select
 from semantic_ancestry_rag.corpus import build_base_questions
 from semantic_ancestry_rag.prepare import materialize_question
@@ -120,6 +120,18 @@ def test_materialized_inputs_keep_all_conditions_and_do_not_include_author_metad
     assert "model" not in str(prepared.references).lower()
     assert len(prepared.source_supported_entities[Conditions.BASELINE]) == 8
     assert len(prepared.source_supported_entities[Conditions.MMR]) <= 8
+
+
+def test_qwen_generation_uses_the_text_chat_template_with_thinking_disabled() -> None:
+    class Tokenizer:
+        chat_template = "frozen-template"
+
+        def apply_chat_template(self, messages, *, tokenize, add_generation_prompt, enable_thinking=False):
+            assert messages == [{"role": "user", "content": "PROMPT"}]
+            assert not tokenize and add_generation_prompt and not enable_thinking
+            return "<closed-thought>PROMPT"
+
+    assert _render_generation_prompt(Tokenizer(), QWEN35_MODEL_ID, "PROMPT") == "<closed-thought>PROMPT"
 
 
 def test_assembled_two_family_bundle_recomputes_the_frozen_decision(tmp_path) -> None:
