@@ -172,6 +172,16 @@ separable from rewriter identity, output form, and generic source coverage.
 Only a positive, fully role-disentangled and style-matched G0b can authorize
 the external replication protocol.
 
+The prospective external pair is
+[SmolLM3-3B](https://huggingface.co/HuggingFaceTB/SmolLM3-3B) revision
+`a07cc9a04f16550a088caea529712d1d335b0ac1` and
+[Granite-3.0-2B-Instruct](https://huggingface.co/ibm-granite/granite-3.0-2b-instruct)
+revision `5ad66c190631382717bd92d7b052adb1a7b669e7`. Both are Apache-2.0,
+ungated, and expose native `AutoModelForCausalLM` loading, so a future pinned
+preflight can reject unreviewed custom model code. Phi-4-mini-instruct was
+considered but deliberately excluded from this protocol because its official
+loading instructions require `trust_remote_code=True`.
+
 ## Compute estimate
 
 G0 makes `120 x 7 x 8 x 2 = 13,440` short completions plus document
