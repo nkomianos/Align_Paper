@@ -56,6 +56,12 @@ Nearest work to beat, not merely cite:
   This means an ordinary feedback-loop reproduction is not publishable; G0 must
   isolate an author-invariant, response-descendant effect and show that a
   history-aware selector beats its generic retrieval controls.
+* [Retrieval Collapses When AI Pollutes the Web](https://arxiv.org/abs/2602.16136):
+  ecosystem-level synthetic-content exposure and source-diversity loss.  This
+  candidate cannot be presented as another web-pollution result: it must show
+  an answer-history causal effect under matched relevance, style, and source
+  coverage, then reproduce that effect on a real corpus whose provenance is
+  independently auditable.
 * [DIVERGE](https://arxiv.org/abs/2602.00238) and
   [DF-RAG](https://aclanthology.org/2026.findings-eacl.150/): generic
   diversity-aware RAG baselines.
@@ -125,10 +131,12 @@ evaluation; it does not establish an ICLR-ready result by itself.
 ## Compute estimate
 
 G0 makes `120 x 7 x 8 x 2 = 13,440` short completions plus document
-materialization.  With batched generation on a GH200 and a 9B model, estimate
-4--8 GPU-hours including retries and evidence packaging.  This is deliberately
+materialization.  Its current sealed runner generates one completion at a time
+to preserve per-cell evidence, so the credible planning range is **several
+GPU-hours per family**, not a sub-hour smoke test.  That cost is deliberately
 far smaller than the original API-heavy RAG Collapse study; it is a mechanism
-gate, not a final-scale benchmark.
+gate, not a final-scale benchmark.  Any speed optimization belongs in a new,
+equivalently verified protocol revision—not in the active run.
 
 ## Artifact contract
 
