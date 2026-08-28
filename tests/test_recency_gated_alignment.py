@@ -7,7 +7,7 @@ import numpy as np
 
 from recency_gated_alignment import analyze_gate, build_corpus, load_config
 from recency_gated_alignment.corrected_erasure_audit import corrected_intervention_delta
-from recency_gated_alignment.g1 import run_g1
+from recency_gated_alignment.g1 import _mean_and_lower, run_g1
 from recency_gated_alignment.runner import _bootstrap_relative_reduction, _choose_direction, _matched_controls, _save_adapter, _temporal_homogenized_stage2, protocol_records
 from recency_gated_alignment.verify import verify_retrieved_run
 from under_extinction.io import read_jsonl, sha256_file, write_json, write_jsonl
@@ -147,6 +147,12 @@ def test_paired_erasure_reduction_fails_closed_without_a_baseline_effect() -> No
     assert reduction > 0.5
     assert lower > 0.3
     assert _bootstrap_relative_reduction([0.0, 0.0], [0.1, 0.1], seed=5, replicates=1_000) == (-1.0, -1.0)
+
+
+def test_g1_mean_and_lower_bound_are_not_confused() -> None:
+    estimate, lower = _mean_and_lower([0.10, 0.30, 0.50], seed=41, replicates=5_000)
+    assert estimate == 0.30
+    assert lower < estimate
 
 
 def test_corrected_intervention_uses_a_matched_cue_only_intervention() -> None:

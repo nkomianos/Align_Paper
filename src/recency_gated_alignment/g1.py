@@ -26,6 +26,14 @@ from .runner import (
 G1_KIND = "recency_gated_alignment_g1_matched_cue_interventions"
 
 
+def _mean_and_lower(values: Sequence[float], *, seed: int, replicates: int) -> tuple[float, float]:
+    """Return the point estimate and paired bootstrap lower bound."""
+
+    estimate = float(np.asarray(values, dtype=float).mean())
+    lower, _ = _bootstrap_mean(values, seed=seed, replicates=replicates)
+    return estimate, lower
+
+
 def _switch(model: Any, tokenizer: Any, records: list[Mapping[str, Any]], config: Mapping[str, Any], direction: Any | None = None) -> np.ndarray:
     values = _choice_probabilities(model, tokenizer, records, int(config["model"]["max_length"]), int(config["training"]["batch_size"]), direction, erase=direction is not None)
     return _switch_pairs(records, values)
@@ -72,9 +80,9 @@ def _seed_run_g1(config: Mapping[str, Any], protocol: Mapping[str, list[Mapping[
         del cue
         torch.cuda.empty_cache()
     switch_values, erased_values = corrected_intervention_delta(baseline_switch, cue_switch, baseline_erased, cue_erased)
-    switch_gap, switch_lower = _bootstrap_mean(switch_values, seed=_seed_from(seed, "g1-switch"), replicates=rep)
+    switch_gap, switch_lower = _mean_and_lower(switch_values, seed=_seed_from(seed, "g1-switch"), replicates=rep)
     steering_values = baseline_steering - cue_steering
-    steering, steering_lower = _bootstrap_mean(steering_values, seed=_seed_from(seed, "g1-steering"), replicates=rep)
+    steering, steering_lower = _mean_and_lower(steering_values, seed=_seed_from(seed, "g1-steering"), replicates=rep)
     erasure, erasure_lower = _bootstrap_relative_reduction(switch_values, erased_values, seed=_seed_from(seed, "g1-erasure"), replicates=rep)
     erasure_controls, steering_controls = {}, {}
     for name in controls:

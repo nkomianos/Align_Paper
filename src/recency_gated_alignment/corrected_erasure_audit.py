@@ -156,7 +156,8 @@ def _audit_seed(config: Mapping[str, Any], protocol: Mapping[str, list[Mapping[s
             replicates=int(config["analysis"]["bootstrap_replicates"]),
         )
     corrected_steering = baseline_steering - cue_steering
-    steering_contrast, steering_lower = _bootstrap_mean(
+    steering_contrast = float(corrected_steering.mean())
+    steering_lower, _ = _bootstrap_mean(
         corrected_steering, seed=_seed_from(seed, "corrected-steering"),
         replicates=int(config["analysis"]["bootstrap_replicates"]),
     )
