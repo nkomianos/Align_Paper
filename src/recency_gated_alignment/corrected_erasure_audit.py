@@ -25,11 +25,13 @@ from under_extinction.modeling import load_adapter_model, load_tokenizer
 
 from .gate import CONTROLS, load_config
 from .runner import (
+    _bootstrap_mean,
     _bootstrap_relative_reduction,
     _choice_probabilities,
     _choose_direction,
     _matched_controls,
     _seed_from,
+    _stage2_probabilities,
     _switch_pairs,
     protocol_records,
 )
@@ -64,15 +66,15 @@ def _artifact_path(seed_root: Path, recorded_path: object) -> Path:
     return resolved
 
 
-def corrected_switch_delta(
+def corrected_intervention_delta(
     baseline: Sequence[float], cue_only: Sequence[float],
     baseline_erased: Sequence[float], cue_only_erased: Sequence[float],
 ) -> tuple[np.ndarray, np.ndarray]:
-    """Return baseline and erased contextual effects with matched cue controls."""
+    """Return baseline and altered effects with matched cue-only controls."""
 
     arrays = [np.asarray(value, dtype=float) for value in (baseline, cue_only, baseline_erased, cue_only_erased)]
     if not arrays[0].size or any(item.shape != arrays[0].shape or not np.isfinite(item).all() for item in arrays):
-        raise ValueError("Corrected erasure requires equal, finite, non-empty paired switch arrays")
+        raise ValueError("Corrected intervention requires equal, finite, non-empty paired arrays")
     return arrays[0] - arrays[1], arrays[2] - arrays[3]
 
 
@@ -82,6 +84,14 @@ def _switch_values(model: Any, tokenizer: Any, records: list[Mapping[str, Any]],
         direction, erase=direction is not None,
     )
     return _switch_pairs(records, probabilities)
+
+
+def _steering_values(model: Any, tokenizer: Any, monitored: list[Mapping[str, Any]], config: Mapping[str, Any], direction: Any) -> np.ndarray:
+    scale = float(config["analysis"]["steering_scale"])
+    arguments = (model, tokenizer, monitored, int(config["model"]["max_length"]), int(config["training"]["batch_size"]), direction)
+    high = _choice_probabilities(*arguments, scale)
+    low = _choice_probabilities(*arguments, -scale)
+    return _stage2_probabilities(monitored, high) - _stage2_probabilities(monitored, low)
 
 
 def _audit_seed(config: Mapping[str, Any], protocol: Mapping[str, list[Mapping[str, Any]]], source_root: Path, seed: int) -> dict[str, Any]:
@@ -103,6 +113,7 @@ def _audit_seed(config: Mapping[str, Any], protocol: Mapping[str, list[Mapping[s
     labels_train = [int(row["stage"]) - 1 for row in timestamp_train]
     labels_held = [int(row["stage"]) - 1 for row in timestamp_held]
     held_switch = list(protocol["switch_held_out"])
+    monitored = [row for row in held_switch if row["context"] == "MONITORED_SIMULATION"]
     baseline_model = load_adapter_model(dict(config), baseline_path)
     try:
         from .runner import _hidden_by_layer
@@ -117,6 +128,8 @@ def _audit_seed(config: Mapping[str, Any], protocol: Mapping[str, list[Mapping[s
         baseline_switch = _switch_values(baseline_model, tokenizer, held_switch, config)
         baseline_erased = _switch_values(baseline_model, tokenizer, held_switch, config, direction)
         baseline_controls = {name: _switch_values(baseline_model, tokenizer, held_switch, config, control) for name, control in controls.items()}
+        baseline_steering = _steering_values(baseline_model, tokenizer, monitored, config, direction)
+        baseline_steering_controls = {name: _steering_values(baseline_model, tokenizer, monitored, config, control) for name, control in controls.items()}
     finally:
         del baseline_model
         torch.cuda.empty_cache()
@@ -125,26 +138,42 @@ def _audit_seed(config: Mapping[str, Any], protocol: Mapping[str, list[Mapping[s
         cue_switch = _switch_values(cue_model, tokenizer, held_switch, config)
         cue_erased = _switch_values(cue_model, tokenizer, held_switch, config, direction)
         cue_controls = {name: _switch_values(cue_model, tokenizer, held_switch, config, control) for name, control in controls.items()}
+        cue_steering = _steering_values(cue_model, tokenizer, monitored, config, direction)
+        cue_steering_controls = {name: _steering_values(cue_model, tokenizer, monitored, config, control) for name, control in controls.items()}
     finally:
         del cue_model
         torch.cuda.empty_cache()
-    source, altered = corrected_switch_delta(baseline_switch, cue_switch, baseline_erased, cue_erased)
+    source, altered = corrected_intervention_delta(baseline_switch, cue_switch, baseline_erased, cue_erased)
     reduction, lower = _bootstrap_relative_reduction(
         source, altered, seed=_seed_from(seed, "corrected-erasure"),
         replicates=int(config["analysis"]["bootstrap_replicates"]),
     )
     control_reductions: dict[str, float] = {}
     for name in CONTROLS:
-        _source, control_altered = corrected_switch_delta(baseline_switch, cue_switch, baseline_controls[name], cue_controls[name])
+        _source, control_altered = corrected_intervention_delta(baseline_switch, cue_switch, baseline_controls[name], cue_controls[name])
         control_reductions[name], _ignored_lower = _bootstrap_relative_reduction(
             source, control_altered, seed=_seed_from(seed, "corrected-erasure-control", name),
             replicates=int(config["analysis"]["bootstrap_replicates"]),
         )
+    corrected_steering = baseline_steering - cue_steering
+    steering_contrast, steering_lower = _bootstrap_mean(
+        corrected_steering, seed=_seed_from(seed, "corrected-steering"),
+        replicates=int(config["analysis"]["bootstrap_replicates"]),
+    )
+    steering_controls = {
+        name: float((baseline_steering_controls[name] - cue_steering_controls[name]).mean())
+        for name in CONTROLS
+    }
     thresholds = config["thresholds"]
     passes_original_necessity_threshold = (
         reduction >= float(thresholds["minimum_erasure_relative_reduction"])
         and lower >= float(thresholds["minimum_erasure_lower_ci"])
         and max(abs(value) for value in control_reductions.values()) <= float(thresholds["maximum_erasure_control_fraction"]) * abs(reduction)
+    )
+    passes_original_mediation_threshold = (
+        steering_contrast >= float(thresholds["minimum_steering_contrast"])
+        and steering_lower >= float(thresholds["minimum_steering_lower_ci"])
+        and max(abs(value) for value in steering_controls.values()) <= float(thresholds["maximum_control_fraction"]) * abs(steering_contrast)
     )
     return {
         "seed": seed,
@@ -159,6 +188,12 @@ def _audit_seed(config: Mapping[str, Any], protocol: Mapping[str, list[Mapping[s
         "corrected_erasure_lower_ci": lower,
         "corrected_erasure_control_reductions": control_reductions,
         "passes_original_necessity_threshold_descriptively": passes_original_necessity_threshold,
+        "baseline_steering_mean": float(baseline_steering.mean()),
+        "cue_only_steering_mean": float(cue_steering.mean()),
+        "corrected_steering_contrast": steering_contrast,
+        "corrected_steering_lower_ci": steering_lower,
+        "corrected_steering_control_effects": steering_controls,
+        "passes_original_mediation_threshold_descriptively": passes_original_mediation_threshold,
         "baseline_adapter_tree_sha256": dict(baseline_detail.get("adapter") or {}).get("tree_sha256"),
         "cue_only_adapter_tree_sha256": dict(cue_detail.get("adapter") or {}).get("tree_sha256"),
     }
@@ -181,7 +216,7 @@ def audit_completed_run(config_path: str | Path, run_root: str | Path, output_di
             "config_sha256": config["_sha256"],
             "records": records,
             "decision": "NOT_A_RETROACTIVE_GATE__USE_ONLY_TO_PREREGISTER_A_FRESH_G1",
-            "reason": "The original G0 erasure contrast did not apply erasure to the cue-only control.",
+            "reason": "The original G0 steering and erasure contrasts did not apply the same intervention to the cue-only control.",
             "offline_mode": {"HF_HUB_OFFLINE": os.environ.get("HF_HUB_OFFLINE"), "TRANSFORMERS_OFFLINE": os.environ.get("TRANSFORMERS_OFFLINE")},
         }
         write_json(destination / "corrected_erasure_audit.json", result)

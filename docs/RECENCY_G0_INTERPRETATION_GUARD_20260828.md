@@ -19,17 +19,18 @@ mitigation.
 
 ## Post-run necessity audit required
 
-The frozen G0 runner records its erasure quantity as the erased baseline
-context-switch effect minus the **unerased** cue-only context-switch effect.
-That is not a complete difference-in-differences control: erasure could change
-generic sensitivity to the monitored/unmonitored headers in both models, rather
-than only the learning-induced policy effect.  The frozen run must finish
+The frozen G0 runner records both its signed steering and erasure quantities
+without applying the matching intervention to the cue-only control.  That is
+not a complete difference-in-differences control: either intervention could
+change generic sensitivity to the monitored/unmonitored headers in both models,
+rather than only the learning-induced policy effect.  The frozen run must finish
 unchanged, because its artifacts remain valuable diagnostic evidence, but its
-reported necessity row cannot green-light the candidate.
+reported mediation and necessity rows cannot green-light the candidate.
 
 After retrieval verification, a separate immutable analysis must apply the
-same selected direction (and every matched control) to both the baseline and
-cue-only adapters, and calculate:
+same signed steering or erasure direction (and every matched control) to both
+the baseline and cue-only adapters, and calculate the corresponding
+difference-in-differences quantity, for example:
 
 ```
 (baseline - cue-only) - (baseline_erased - cue-only_erased)
