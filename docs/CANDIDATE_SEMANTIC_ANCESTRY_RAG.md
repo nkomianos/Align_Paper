@@ -41,6 +41,11 @@ Nearest work to beat, not merely cite:
 * [Self-Preference in RAG](https://aclanthology.org/2025.findings-acl.1369.pdf):
   static authorship and factuality controls, with largely null final-generation
   self-preference; this is the critical alternative account G0 must overturn.
+* [Spiral of Silence in RAG](https://aclanthology.org/2024.acl-long.798.pdf):
+  iterative accumulation of generic LLM-generated text and retriever dominance.
+  This means an ordinary feedback-loop reproduction is not publishable; G0 must
+  isolate an author-invariant, response-descendant effect and show that a
+  history-aware selector beats its generic retrieval controls.
 * [DIVERGE](https://arxiv.org/abs/2602.00238) and
   [DF-RAG](https://aclanthology.org/2026.findings-eacl.150/): generic
   diversity-aware RAG baselines.
