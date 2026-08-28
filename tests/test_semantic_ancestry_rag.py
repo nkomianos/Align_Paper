@@ -3,6 +3,7 @@ from __future__ import annotations
 import pytest
 
 from semantic_ancestry_rag.gate import Conditions, ResultRow, Thresholds, evaluate_gate
+from semantic_ancestry_rag.runner import Question, score_question_condition
 from semantic_ancestry_rag.verify import _validate_complete_design
 from under_extinction.io import write_jsonl
 
@@ -60,3 +61,19 @@ def test_verifier_rejects_a_missing_condition_cell(tmp_path) -> None:
             "model_families_required": 1,
             "completions_per_cell": 1,
         })
+
+
+def test_deterministic_scorer_detects_collapse_and_supported_entities() -> None:
+    question = Question(
+        question_id="q-0",
+        question="Which entity?",
+        references={condition: ("source",) for condition in Conditions.ALL},
+        entity_aliases={"alpha": ("Alpha",), "beta": ("Beta",)},
+        source_supported_entities={condition: ("alpha",) for condition in Conditions.ALL},
+    )
+    rows = score_question_condition(question, "family_a", Conditions.BASELINE, [
+        {"sample_id": 0, "completion": "Alpha is supported."},
+        {"sample_id": 1, "completion": "Alpha remains supported."},
+    ])
+    assert [row.collapsed for row in rows] == [1, 1]
+    assert [row.faithful for row in rows] == [1.0, 1.0]

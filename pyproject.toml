@@ -59,6 +59,8 @@ sentry-preflight = "shadow_student_audit.preflight:main"
 sentry-g0 = "shadow_student_audit.runner:main"
 sentry-verify = "shadow_student_audit.verify:main"
 ancestry-rag-verify = "semantic_ancestry_rag.verify:main"
+ancestry-rag-run = "semantic_ancestry_rag.runner:main"
+ancestry-rag-assemble = "semantic_ancestry_rag.assemble:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
