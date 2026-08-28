@@ -1,5 +1,11 @@
 kind: semantic_ancestry_rag_g0
 status: conditional_candidate_not_gpu_authorized
+models:
+  ancestor: Qwen/Qwen3.5-9B
+  rewriter: mistralai/Mistral-7B-Instruct-v0.3
+  serving_families:
+    qwen3_5: Qwen/Qwen3.5-9B
+    mistral: mistralai/Mistral-7B-Instruct-v0.3
 question_count: 120
 completions_per_cell: 8
 model_families_required: 2

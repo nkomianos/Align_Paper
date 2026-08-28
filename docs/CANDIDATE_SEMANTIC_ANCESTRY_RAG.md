@@ -127,3 +127,28 @@ named rewriter render the relevant and irrelevant descendants, and freezes the
 shared corpus before either serving model is evaluated.  The serving runner,
 assembler, and verifier then operate only on that frozen corpus.  No author or
 model label is supplied in any serving prompt.
+
+## Launch-ready model plan
+
+The frozen defaults are [Qwen/Qwen3.5-9B](https://huggingface.co/Qwen/Qwen3.5-9B) and
+[mistralai/Mistral-7B-Instruct-v0.3](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3).
+Qwen3.5-9B is the requested recent 9B model; it is Apache-2.0 and the official
+card supports direct Transformers loading.  Mistral-7B-Instruct-v0.3 is a distinct Apache-2.0 family and gives
+the required independent serving-model test.  Neither selected repository is
+gated, so a Hugging Face token should not be needed.  This is preferable to
+using Llama or Gemma here: their official Hub repositories require accepting a
+gated license, which would make a token and account state part of the gate.
+
+When GPU authorization is given, the non-overwriting sequence is:
+
+1. Build the 120 source packets with `ancestry-rag-build-base`.
+2. Prepare one shared answer-history corpus with `ancestry-rag-prepare`.
+3. Run `ancestry-rag-run` once per serving family.
+4. Merge exactly those two roots with `ancestry-rag-assemble` and independently
+   recompute the result using `ancestry-rag-verify`.
+
+Qwen's current model card requires a current Transformers build and documents
+both `AutoModelForCausalLM` text loading and a multimodal loading route.  The
+remote environment will be checked before download or generation; a dependency
+or model-load failure is a hardware/software preflight failure, not a scientific
+result.
