@@ -39,26 +39,26 @@ that disappears under the same-rewriter independent-summary control is merely a
 source-quality/coverage effect; an effect that MMR removes is merely generic
 near-duplicate redundancy. Neither supports a paper.
 
-### Active G0 role-overlap limitation
+### Active G0 is developmental evidence only
 
 The sealed G0 uses Qwen3.5-9B to form the prior-answer history, Mistral-7B to
-rewrite that history, and those same two families as its serving arms.  This is
-not a data-integrity failure, and the running job must remain unchanged.  It is
+rewrite that history, and those same two families as its serving arms. This is
+not a data-integrity failure, and the running job must remain unchanged. It is
 an identification limitation: in the Mistral serving arm, the `cross_ancestor`
-passage is also authored by Mistral.  Consequently, even if its original
-five-criterion rule passes, the result cannot establish an **author- and
-serving-family-independent** semantic-ancestry effect.  The Qwen serving arm
-does test a Qwen answer rewritten by a different family, but the paired Mistral
-arm is not an independent replication of that role-separated intervention.
+passage is also authored by Mistral.
 
-The current run is therefore a useful, bounded feasibility diagnostic only.
-The Qwen serving arm is a valid within-family test: its failure of any
-pre-registered criterion ends this candidate rather than moving thresholds.
-The Mistral serving arm is descriptive only; because its rewriter and serving
-roles overlap, a Mistral-only failure cannot falsify the central hypothesis.
-Conversely, neither arm can authorize external G1. A Qwen-positive result first
-requires the role-disentangled G0b below. This restriction was recorded while
-the run was active and applies regardless of the observed result.
+More importantly, the active implementation's `style_only` passage is an
+unrewritten answer produced by Qwen, while its `cross_ancestor` passage is a
+Mistral rewrite. It therefore does **not** hold the rewriter's surface style or
+transformation process fixed. The `independent_summary` uses Mistral but has a
+different direct-summary prompt, so it does not repair that specificity test.
+
+Accordingly, the active run is a developmental, bounded effect-size diagnostic
+only. Its raw evidence and the sealed runner decision must be preserved, but
+neither a positive nor a negative result is a candidate go/no-go decision. It
+can at most justify, or deprioritize, construction of the clean pre-registered
+G0b below. This reclassification was recorded before inspection of the
+Mistral-family outcome and applies regardless of the observed result.
 
 Nearest work to beat, not merely cite:
 
@@ -155,23 +155,22 @@ Bootstrap units are questions, never completions.
    and gate report all match a manifest; the report must be recomputable without
    access to an answer key.
 
-A failure of any Qwen-arm condition kills this candidate. The sealed runner's
-aggregate `KILL_SEMANTIC_ANCESTRY_CANDIDATE` string must be preserved if it is
-emitted, but after the recorded role audit it is not a candidate decision when
-the only failure is in the Mistral arm. Because of the active G0 role-overlap
-limitation above, a Qwen-positive result authorizes only a fresh,
-role-disentangled G0b; it does not establish an ICLR-ready result or authorize
-external G1.
+The sealed runner may emit `KILL_SEMANTIC_ANCESTRY_CANDIDATE`; that string and
+all evidence must be preserved. After the recorded control audit, however, it
+is not a scientific candidate decision. The next test is G0b, not external G1.
 
-G0b must create a new corpus in which the **rewriter** is not a serving family
-for the arm it is evaluated on. Each serving model must deliberately generate
-its own prior-answer history: that self-history is the causal object, not a
-role-overlap confound. A third, role-separated rewriter must then transform
-each serving model's history independently before the full factorial controls
-are re-run with the same deterministic scoring and question-level bootstrap.
-It must also include a pre-specified rewriter-interchange control. Only a
-positive, fully role-disentangled G0b can authorize the external replication
-protocol.
+G0b must be frozen before launch and must: (1) have each serving model create
+its own prior-answer history; (2) use an external rewriter that is neither
+serving family; (3) make `cross_ancestor` by passing that prior answer through
+the rewriter; (4) make `style_only` by passing an independently generated,
+same-question shadow answer through the **same rewriter and rewrite prompt**;
+and (5) counterbalance two independent external rewriter/shadow-answer model
+pairs. The independent-summary control must use the same rewriter, with a
+matched source-only construction, and all transformations must be materialized
+before either serving model is evaluated. This makes the ancestry contrast
+separable from rewriter identity, output form, and generic source coverage.
+Only a positive, fully role-disentangled and style-matched G0b can authorize
+the external replication protocol.
 
 ## Compute estimate
 
