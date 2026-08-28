@@ -18,9 +18,18 @@ abstract deadline.  The submission is double blind.
 1. A differentiated central claim survives the literature screen.
 2. The frozen semantic-ancestry G0 result passes for both independent serving
    model families, with raw-completion, preflight, and aggregate verification.
-3. The effect replicates on a separately frozen public-source corpus.  The
-   intended source is HotpotQA's CC BY-SA 4.0 distractor development set because
-   it provides source paragraphs and sentence-level supporting-fact supervision.
+3. The effect replicates on a separately frozen public-source corpus whose
+   answer space can actually exhibit evidence concentration.  **No corpus is
+   frozen yet.**  HotpotQA is deliberately not the planned transfer corpus:
+   its single factual-answer supervision would conflate correct evidence use
+   with the diversity-collapse mechanism.  A suitable option, subject to a
+   pre-registration and attribution review, is a time-pinned Stack Exchange
+   data-dump slice of multi-answer recommendation/explanation questions.  The
+   public network terms say the Creative Commons Data Dump is CC BY-SA, and
+   Stack Exchange's licensing guidance specifies that post-era licenses and
+   attribution requirements must be retained.  See
+   [network terms](https://opendata.stackexchange.com/legal/terms-of-service/public)
+   and [licensing guidance](https://opendata.stackexchange.com/help/licensing).
 4. The proposed history-aware selector defeats generic retrieval-diversity and
    context-allocation controls without a faithfulness trade-off.
 5. A full anonymous draft reports failures and fixed decision rules, includes
@@ -48,6 +57,7 @@ ICLR paper.
 
 * Final author list and affiliations, with every author maintaining an OpenReview
   profile before 18 September.
-* Explicit authorization to use an active GPU host for the already frozen G0.
+* Continued GPU access for external replication and any approved extensions
+  after a verified G0 pass.
 * Confirmation that the authors accept the relevant dataset licenses and ICLR's
   double-blind submission requirements.

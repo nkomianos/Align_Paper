@@ -20,7 +20,7 @@ replication/transfer result.
 
 ## Conditional finalists
 
-**Semantic-ancestry RAG collapse (conditional; no GPU authorization yet).**
+**Semantic-ancestry RAG collapse (conditional; immutable G0 running).**
 The proposed contribution is not generic diversity reranking: it tests whether
 collapse follows a retrieved passage's semantic descent from the system's
 earlier answer even after author and style are changed, then asks whether an
