@@ -6,6 +6,7 @@ from pathlib import Path
 import numpy as np
 
 from recency_gated_alignment import analyze_gate, build_corpus, load_config
+from recency_gated_alignment.corrected_erasure_audit import corrected_switch_delta
 from recency_gated_alignment.runner import _bootstrap_relative_reduction, _choose_direction, _matched_controls, _save_adapter, _temporal_homogenized_stage2, protocol_records
 from recency_gated_alignment.verify import verify_retrieved_run
 from under_extinction.io import read_jsonl, sha256_file, write_json, write_jsonl
@@ -124,6 +125,21 @@ def test_paired_erasure_reduction_fails_closed_without_a_baseline_effect() -> No
     assert reduction > 0.5
     assert lower > 0.3
     assert _bootstrap_relative_reduction([0.0, 0.0], [0.1, 0.1], seed=5, replicates=1_000) == (-1.0, -1.0)
+
+
+def test_corrected_erasure_uses_a_matched_cue_only_intervention() -> None:
+    source, erased = corrected_switch_delta(
+        baseline=[0.80, 0.70], cue_only=[0.20, 0.10],
+        baseline_erased=[0.35, 0.30], cue_only_erased=[0.15, 0.10],
+    )
+    np.testing.assert_allclose(source, [0.60, 0.60])
+    np.testing.assert_allclose(erased, [0.20, 0.20])
+    try:
+        corrected_switch_delta([0.1], [0.1, 0.2], [0.1], [0.1])
+    except ValueError as exc:
+        assert "equal" in str(exc)
+    else:
+        raise AssertionError("Expected unequal paired switch arrays to fail")
 
 
 def test_temporal_homogenization_substitutes_examples_under_a_fixed_budget() -> None:

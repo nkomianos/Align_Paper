@@ -17,6 +17,29 @@ G0: its sequential LoRA model organism is a useful causal feasibility test, but
 cannot on its own establish a general mechanism of alignment faking or a robust
 mitigation.
 
+## Post-run necessity audit required
+
+The frozen G0 runner records its erasure quantity as the erased baseline
+context-switch effect minus the **unerased** cue-only context-switch effect.
+That is not a complete difference-in-differences control: erasure could change
+generic sensitivity to the monitored/unmonitored headers in both models, rather
+than only the learning-induced policy effect.  The frozen run must finish
+unchanged, because its artifacts remain valuable diagnostic evidence, but its
+reported necessity row cannot green-light the candidate.
+
+After retrieval verification, a separate immutable analysis must apply the
+same selected direction (and every matched control) to both the baseline and
+cue-only adapters, and calculate:
+
+```
+(baseline - cue-only) - (baseline_erased - cue-only_erased)
+```
+
+The audit writes to a fresh output root and does not change G0 metrics,
+evidence, or decision.  Its result is descriptive only: even a favorable
+corrected estimate can authorize at most a freshly preregistered G1, never a
+retroactive G0 pass.
+
 ## Non-negotiable expansion condition if G0 passes
 
 Before calling the recency mechanism a viable ICLR paper, the next protocol
