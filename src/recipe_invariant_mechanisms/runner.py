@@ -107,6 +107,7 @@ def _fit_recipe(model: Any, tokenizer: Any, records: Sequence[Mapping[str, Any]]
     optimizer = torch.optim.AdamW((p for p in model.parameters() if p.requires_grad), lr=float(training["learning_rate"]))
     accumulation, steps, losses = int(training["gradient_accumulation_steps"]), 0, []
     rng = random.Random(_seed_from(seed, recipe))
+    model.train()
     optimizer.zero_grad(set_to_none=True)
     for _epoch in range(int(training["epochs"])):
         for chunk in _batch(records, int(training["batch_size"]), rng):
