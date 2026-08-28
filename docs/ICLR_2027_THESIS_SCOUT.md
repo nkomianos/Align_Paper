@@ -20,20 +20,16 @@ replication/transfer result.
 
 ## Conditional finalists
 
-**SENTRY: shadow-student auditing for covert behavioral transfer** is a
-conditional finalist only.  It asks whether fixed, low-cost LoRA shadow runs
-can conservatively flag synthetic data batches that later produce a measured
-behavioral shift in a full post-training run.  It does not claim to certify
-safety or detect arbitrary unknown traits.  Its frozen G0 includes both
-vocabulary- and body-routed transfer conditions and kills the candidate unless
-the shadow score predicts sealed full-run effects substantially better than
-initial-gradient, corpus-statistic, and one-shadow baselines.  See
-`docs/CANDIDATE_SHADOW_STUDENT_SYNTHETIC_DATA_AUDIT.md`.
-
-The last finalist, J0, has completed its pre-registered feasibility gate and
-was killed; the result is recorded below.  No accelerator run is authorized
-until SENTRY's implementation preflight binds public artifacts, a model
-revision, and the sealed test split.
+**None.** The SENTRY implementation and runtime preflight remain preserved as
+an auditable artifact, but the candidate is no longer GPU-authorized. A
+literature/construct screen found that its only implemented G0 is a transparent
+known-effect style calibration rather than a teacher-generated hidden-transfer
+test. Passing it could establish engineering throughput, but not the paper's
+central deployment claim. More importantly, the closest 2026 work already
+establishes divergence-token mechanisms and an explicit channel-dependent
+auditability taxonomy. Without a new experimental object that defeats those
+mechanisms rather than a shadow-scale variant, SENTRY fails the novelty and
+construct-validity requirements. See the closed-direction record below.
 
 ## Closed directions
 
@@ -48,6 +44,7 @@ revision, and the sealed test split.
 | Mask-schedule robustness for diffusion language models | The central mechanism--appended generation masks degrade context use--and the natural mitigation--training invariance to mask count--are directly established. Later work also covers dependency-aware MDLM sampling and mask-distribution tuning. A different scheduling heuristic would not clear the novelty bar. | [Masks Can Be Distracting](https://arxiv.org/abs/2511.21338); [Dependency-Oriented Sampler](https://aclanthology.org/2026.findings-acl.861/); [Tuning the Implicit Regularizer of MDLMs](https://arxiv.org/abs/2601.22450) |
 | Recipe-invariant causal intervention selection | The frozen J0 gate was retrieved with a matching remote/local manifest digest and its recomputed verifier passed.  In both seeds, the A/B residual-update directions agreed strongly (selection scores 0.987 and 0.948) but failed to transport causally to held-out recipe C: signed steering was -0.095 pp and -0.224 pp (both lower bounds negative); necessity, specificity, and all control/baseline-margin criteria also failed.  Preservation alone passed.  This falsifies the candidate's central implication that recipe agreement identifies a recipe-invariant causal intervention.  Do not tune thresholds or run external validation. | Local verified result: `docs/RECIPE_INVARIANT_J0_FINAL_RESULT.md` |
 | Training-recency-gated policy switching in benign alignment-faking model organisms | The immutable G0 gate failed every criterion for both seeds. The later matched-cue audit also found only -0.072 pp and +0.704 pp switch differences, steering below 0.15 pp, and no specific necessity signal. Do not run G1 or retune the hypothesis. | Local verified result: `docs/RECENCY_G0_FINAL_RESULT.md` |
+| SENTRY: shadow-student auditing for covert behavioral transfer | The proposed deployment question is potentially useful, but the implemented G0 only calibrates transparent paired style effects; it cannot test a hidden transfer claim. A positive result would therefore be an engineering result, not evidence for the proposed paper. The literature closes the remaining weak novelty gap: the ICLR 2026 mechanism paper identifies divergence tokens and targeted masking as the transfer handle, while Channel Location supplies a channel-conditioned auditability framework and post-hoc/body-channel results. A shadow-scale forecast would need a new object and a true teacher-generated regime that defeats these direct alternatives. Do not spend GH200 time on this version or reinterpret its runtime preflight as scientific evidence. | [Towards Understanding Subliminal Learning](https://arxiv.org/abs/2509.23886); [Channel Location Constrains Auditability](https://arxiv.org/abs/2606.22019); `docs/CANDIDATE_SHADOW_STUDENT_SYNTHETIC_DATA_AUDIT.md` |
 | Recurrent-state safety carrier in Qwen3.5 hybrid attention | The pre-registered cache-state intervention found a small recurrent effect (0.168 logits; continuation threshold 0.50) and a dominant attention K/V effect (14.449 logits).  It is not a sufficient mechanism or mitigation. | Local verified result: `docs/HYBRID_MEMORY_G0_RESULT.md` |
 | General causal division-of-labor study for hybrid caches | A concurrent study already localizes hybrid in-context recall to a small set of attention heads in controlled models and OLMo-Hybrid-7B.  State tracking versus recall is also the principal architectural account in the original hybrid literature.  A post-hoc broadening of our result would not be a sufficiently distinct contribution. | [Probing Hybrid Language Models for In-Context Recall](https://openreview.net/pdf?id=Kifvz6d6Rt); [OLMo Hybrid](https://arxiv.org/abs/2604.03444) |
 | Provenance / self-authorship authority | The forced-likelihood gate found a 0.0277 pp self-minus-external effect against a 10 pp continuation threshold. | Local evidence: `retrieved/provenance_authority_g0_20260825/report.json` |

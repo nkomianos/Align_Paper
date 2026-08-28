@@ -2,7 +2,8 @@
 
 ## Status
 
-**Conditional G0 finalist; not a paper claim and not a safety certification.**
+**Closed before GPU execution; preserved as a negative construct/novelty
+screen.** It is not a paper claim and not a safety certification.
 The proposed deployment action is only to *flag* a synthetic post-training batch
 for review before a costly full run. A negative shadow result cannot establish
 that a batch is safe, trusted, or free of an arbitrary undisclosed trait.
@@ -13,8 +14,9 @@ styles. It tests whether the end-to-end shadow forecast, artifact binding, and
 sealed calibration machinery work at all. It does **not** establish subliminal
 or arbitrary covert transfer. A G0 pass therefore authorizes only a true
 teacher-generated covert-transfer replication; it cannot by itself greenlight
-an ICLR paper. A G0 failure still kills this candidate, because the claimed
-forecast cannot survive even its most favorable transparent setting.
+an ICLR paper. This limitation is now decisive: no GH200 G0 is authorized.
+The harness is retained so the negative decision can be audited rather than
+silently discarded.
 
 ## Problem and hypothesis
 
