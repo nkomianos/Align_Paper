@@ -18,6 +18,18 @@ benchmark interpretability methods across organisms—not to predeclare a
 selection rule on two recipes and test whether that rule identifies an
 intervention which transfers to a third, held-out recipe.
 
+[Narrow Finetuning Leaves Clearly Readable Traces in Activation
+Differences](https://arxiv.org/abs/2510.13900),
+published at ICLR 2026, is the nearest method ancestor.  It derives a
+base-versus-finetuned activation-difference vector for each narrow-finetuned
+model and shows that steering with that model's own vector exposes training
+traces.  It explicitly motivates more realistic case studies when mixed data
+weakens these traces.  A recipe-invariance study may not relabel that result as
+new diffing: its incremental claim survives only if a direction selected
+without C outperforms C's own source-only controls on C, with C sealed during
+selection.  The Model Organism Lottery supplies precisely the multi-recipe
+testbed their work calls for, but neither paper tests that prospective rule.
+
 [Pattern Selectivity is Not Task-Causal Structure](https://arxiv.org/abs/2606.05378)
 evaluates a screen-and-ablate recipe across three model families and finds that
 the screening procedure can port while the primary causal circuit does not.
