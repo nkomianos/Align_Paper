@@ -16,10 +16,10 @@ python -m visual_phase_gate.runner \
   --same-image-samples 4 --temperature 0.7 --max-new-tokens 12
 
 python -m visual_phase_gate.runner \
-  --inputs "$RUN_ROOT/corpus/frozen_inputs.jsonl" --image-root "$RUN_ROOT/corpus" --output "$RUN_ROOT/gemma3" \
-  --model-id google/gemma-3-12b-it --revision 96b6f1eccf38110c56df3a15bffe176da04bfd80 \
+  --inputs "$RUN_ROOT/corpus/frozen_inputs.jsonl" --image-root "$RUN_ROOT/corpus" --output "$RUN_ROOT/gemma4" \
+  --model-id google/gemma-4-12B-it --revision 707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7 \
   --same-image-samples 4 --temperature 0.7 --max-new-tokens 12
 
 python -m visual_phase_gate.verify \
-  --config "$CONFIG" --root "$RUN_ROOT/qwen3_vl" --root "$RUN_ROOT/gemma3" \
+  --config "$CONFIG" --root "$RUN_ROOT/qwen3_vl" --root "$RUN_ROOT/gemma4" \
   --destination "$RUN_ROOT/GATE_REPORT.json"

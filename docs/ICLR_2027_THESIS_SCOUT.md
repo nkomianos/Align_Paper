@@ -30,7 +30,7 @@ calendar and inventory for Qwen3.5 and gpt-oss. See
 **VLM patch-phase instability (backup; frozen G0 awaiting GPU).** The gate asks
 whether thin visual-primitive failures are periodic in encoder patch phase,
 stronger than thick controls, and mitigated by a compute-matched phase ensemble
-in Qwen3-VL and Gemma 3. See `docs/CANDIDATE_VISUAL_PATCH_PHASE.md`.
+in Qwen3-VL and Gemma 4. See `docs/CANDIDATE_VISUAL_PATCH_PHASE.md`.
 
 ## Closed directions
 

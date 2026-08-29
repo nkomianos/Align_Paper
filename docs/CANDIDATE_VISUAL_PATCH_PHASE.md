@@ -46,9 +46,10 @@ The gate uses counting, closure, and path-crossing scenes, 60 base scenes, 32
 integer phases, and both thicknesses. It tests
 [Qwen3-VL-8B-Instruct](https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct), whose
 official config declares a 16-pixel patch size, and
-[Gemma-3-12B-IT](https://huggingface.co/google/gemma-3-12b-it), a distinct
-multimodal family. Gemma access requires accepting Google's Hugging Face terms;
-this is an infrastructure prerequisite, not a scientific degree of freedom.
+[Gemma-4-12B-IT](https://huggingface.co/google/gemma-4-12B-it), a distinct
+encoder-free unified multimodal family whose official config also declares a
+16-pixel input patch size. Both checkpoints are pinned to immutable revisions;
+model recency is fixed before any visual output is collected.
 
 ## Frozen G0 decision
 

@@ -13,7 +13,7 @@ from .corpus import PhaseCase, load_cases
 
 
 QWEN_VL = "Qwen/Qwen3-VL-8B-Instruct"
-GEMMA_VL = "google/gemma-3-12b-it"
+GEMMA_VL = "google/gemma-4-12B-it"
 
 
 def _seed(*parts: str | int) -> int:
@@ -33,9 +33,9 @@ def _load(model_id: str, revision: str) -> tuple[Any, Any]:
             low_cpu_mem_usage=True,
         )
     elif model_id == GEMMA_VL:
-        from transformers import Gemma3ForConditionalGeneration
+        from transformers import Gemma4UnifiedForConditionalGeneration
 
-        model = Gemma3ForConditionalGeneration.from_pretrained(
+        model = Gemma4UnifiedForConditionalGeneration.from_pretrained(
             model_id, revision=revision, dtype=torch.bfloat16, device_map={"": torch.cuda.current_device()},
             low_cpu_mem_usage=True,
         )
@@ -58,9 +58,15 @@ def collect(cases: Sequence[PhaseCase], *, image_root: str | Path, model_id: str
         repetitions = same_image_samples if case.phase_x == 0 else 1
         for sample_id in range(repetitions):
             messages = [{"role": "user", "content": [{"type": "image", "image": str(image)}, {"type": "text", "text": case.prompt}]}]
-            inputs = processor.apply_chat_template(
-                messages, add_generation_prompt=True, tokenize=True, return_dict=True, return_tensors="pt",
-            ).to(model.device)
+            template_kwargs: dict[str, Any] = {
+                "add_generation_prompt": True,
+                "tokenize": True,
+                "return_dict": True,
+                "return_tensors": "pt",
+            }
+            if model_id == GEMMA_VL:
+                template_kwargs["enable_thinking"] = False
+            inputs = processor.apply_chat_template(messages, **template_kwargs).to(model.device)
             input_length = int(inputs["input_ids"].shape[-1])
             sampling = sample_id != 0
             seed = _seed(model_id, revision, case.image_id, sample_id)
