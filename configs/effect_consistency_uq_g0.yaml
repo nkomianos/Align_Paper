@@ -1,0 +1,23 @@
+kind: effect_consistency_uq_g0
+status: frozen_cpu_validated__awaiting_explicit_gpu_authorization
+purpose: exact_successor_state_consistency_as_agent_uncertainty_and_router
+count_per_domain: 160
+samples_per_task: 6
+temperature: 0.8
+max_new_tokens: 160
+models:
+  qwen3_5:
+    id: Qwen/Qwen3.5-9B
+    revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a
+    loader_class: Qwen3_5ForCausalLM
+    enable_thinking: false
+  gpt_oss:
+    id: openai/gpt-oss-20b
+    revision: 6cee5e81ee83917806bbde320786a8fb61efebee
+    loader_class: AutoModelForCausalLM
+thresholds:
+  auc_margin: 0.05
+  vote_margin: 0.03
+  alias_auc_margin: 0.08
+  bootstrap_replicates: 10000
+  bootstrap_seed: 20260829

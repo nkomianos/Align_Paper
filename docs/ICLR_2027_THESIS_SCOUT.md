@@ -20,25 +20,23 @@ replication/transfer result.
 
 ## Conditional finalists
 
-**Semantic-ancestry RAG collapse (conditional; developmental run in progress).**
-The proposed contribution is not generic diversity reranking: it tests whether
-collapse follows a retrieved passage's semantic descent from the system's
-earlier answer even after author and style are changed, then asks whether an
-answer-history-aware retriever prevents the effect without an authorship or
-AI-content oracle.  It must defeat MMR/DF-RAG-style diversity and causal
-context-allocation baselines while preserving support faithfulness in two
-model families. The sealed live run is preserved as developmental evidence,
-not a decision gate: its cross and style-only passages do not share the same
-rewriter transformation, and one serving arm overlaps the rewriter role. A
-positive or negative outcome therefore cannot decide the candidate. The
-next formal test is the role-disentangled, style-matched G0b contract in
-`docs/CANDIDATE_SEMANTIC_ANCESTRY_RAG.md`; a positive G0b would only authorize
-offline reproduction, never a submission claim.
+**Environment-executed effect consistency (primary; frozen G0 awaiting GPU).**
+The candidate executes resampled tool plans in resettable copies of the same
+state and measures agreement over exact successor-state deltas. It must beat
+surface/action/tool/token confidence and improve fixed-budget plan selection in
+calendar and inventory for Qwen3.5 and gpt-oss. See
+`docs/CANDIDATE_EFFECT_CONSISTENCY_UQ.md`.
+
+**VLM patch-phase instability (backup; frozen G0 awaiting GPU).** The gate asks
+whether thin visual-primitive failures are periodic in encoder patch phase,
+stronger than thick controls, and mitigated by a compute-matched phase ensemble
+in Qwen3-VL and Gemma 3. See `docs/CANDIDATE_VISUAL_PATCH_PHASE.md`.
 
 ## Closed directions
 
 | Direction | Why it was screened out | Nearest work |
 | --- | --- | --- |
+| Semantic-ancestry RAG mitigation | The role-separated G0b retained a large cross-ancestor collapse signal in all four cells, but one construction failed both specificity controls and the preregistered history-aware selector failed to beat MMR in all four cells. The exact paper therefore lacks both a family-robust ancestry-specific claim and a working intervention. Do not tune G0b or launch external replication; the mechanism observation is archived only as a clue for a genuinely new preregistration. | Verified local evidence and decision in `docs/CANDIDATE_SEMANTIC_ANCESTRY_RAG.md` |
 | Authenticating independent corroboration under adaptive source compromise | The promising causal object--agreement caused by exposure, copying, conformity, or shared prompt bias is not independent evidence--has now been directly operationalized as causal exposure control in multi-agent deliberation, including adversarial agents and comparisons to voting/debate.  Source-grounded lineage retrieval and origin-bound memory controls also occupy the practical provenance/enforcement flank.  A lineage-weighted vote or copied-source stress test would be a recombination, not a distinct paper. | [CIDeR](https://github.com/tahamsi/cider-deliberation); [LineageRAG](https://arxiv.org/abs/2608.16004); [Non-Malleable, Origin-Bound Authority](https://arxiv.org/abs/2606.24322) |
 | Output-logit audit of hidden fine-tuning objectives or safety drift | A black-box/logit-comparison audit looked potentially useful for detecting an unknown post-training objective, but Diff Mining already defines this exact object: per-context base/fine-tuned logit differences, token-set aggregation, and evaluation on injected biases. A safety-only token score would be a narrow application rather than a distinct mechanism or method. | [Diff Mining](https://arxiv.org/abs/2608.26462) |
 | Task-conditioned utility certification for privacy-preserving image transformations | The proposed observation--classification accuracy is an inadequate proxy for whether privacy transforms preserve structural vision tasks--is now directly established, together with a compute-aware multi-task evaluation protocol across irreversible, key-based, and learnable transformations. A task-weighting or additional proxy metric would be an incremental benchmark extension. | [Beyond Classification](https://arxiv.org/abs/2608.27066) |

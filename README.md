@@ -10,6 +10,15 @@ packaged.
 
 ## Scientific status
 
+> **Current thesis-scout status (29 August 2026):** the original Under
+> Extinction line and the later semantic-ancestry RAG formulation are closed by
+> their registered gates. Two new, independent small gates are frozen but have
+> not been run on a GPU: [environment-executed effect consistency](docs/CANDIDATE_EFFECT_CONSISTENCY_UQ.md)
+> is the primary candidate and [VLM patch-phase instability](docs/CANDIDATE_VISUAL_PATCH_PHASE.md)
+> is the backup. The complete screen and cull log is in
+> [IDEA_REVIEW_20260829.md](docs/IDEA_REVIEW_20260829.md). No positive paper
+> claim should be inferred from CPU validation or launch readiness.
+
 The CPU oracle pipeline passes its synthetic consistency checks. The first paid
 Qwen3.5-9B Stage-1 run completed on 19 August 2026 and **failed its registered DEV
 gate**. Both reward-acquisition arms learned their respective objectives on late

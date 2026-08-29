@@ -1,0 +1,25 @@
+kind: visual_patch_phase_g0
+status: frozen_cpu_validated__awaiting_explicit_gpu_authorization
+purpose: test_patch_grid_phase_as_a_cause_of_vlm_visual_primitive_failures
+bases: 60
+phases: 32
+image_size: 896
+same_image_samples: 4
+models:
+  qwen3_vl:
+    id: Qwen/Qwen3-VL-8B-Instruct
+    revision: 0c351dd01ed87e9c1b53cbc748cba10e6187ff3b
+    loader_class: Qwen3VLForConditionalGeneration
+    expected_periods: [16]
+  gemma3:
+    id: google/gemma-3-12b-it
+    revision: 96b6f1eccf38110c56df3a15bffe176da04bfd80
+    loader_class: Gemma3ForConditionalGeneration
+    expected_periods: [14]
+thresholds:
+  thin_flip_rate: 0.15
+  thin_minus_thick_flip: 0.05
+  periodic_excess: 0.03
+  ensemble_margin: 0.05
+  bootstrap_replicates: 10000
+  bootstrap_seed: 20260829

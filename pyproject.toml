@@ -70,6 +70,12 @@ ancestry-rag-g0b-prepare = "semantic_ancestry_rag.g0b_prepare:main"
 ancestry-rag-g0b-run = "semantic_ancestry_rag.g0b_runner:main"
 ancestry-rag-g0b-assemble = "semantic_ancestry_rag.g0b_assemble:main"
 ancestry-rag-g0b-verify = "semantic_ancestry_rag.g0b_verify:main"
+effect-uq-prepare = "effect_consistency_uq.prepare:main"
+effect-uq-run = "effect_consistency_uq.runner:main"
+effect-uq-verify = "effect_consistency_uq.verify:main"
+visual-phase-prepare = "visual_phase_gate.prepare:main"
+visual-phase-run = "visual_phase_gate.runner:main"
+visual-phase-verify = "visual_phase_gate.verify:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
