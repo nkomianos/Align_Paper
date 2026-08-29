@@ -2,8 +2,12 @@
 
 ## Status
 
-**Conditional candidate; G0 is running under a preserved, non-overwriting
-evidence root.**  The candidate is a
+**Killed by the preregistered role-separated G0b feasibility gate.** The
+candidate remains a useful negative result, but is not a paper direction in
+its current form. The completed G0b evidence was retrieved under a fresh,
+non-overwriting local root and independently recomputed after a packaging
+defect was repaired in a separate recovery aggregate; neither the original
+remote root nor its incomplete aggregate was changed. The candidate was a
 fast, falsifiable follow-up to RAG Collapse, rather than a claim that generic
 retrieval diversity is new.  The central claim is narrower:
 
@@ -38,6 +42,31 @@ This makes the contribution conditional and falsifiable: an ancestry effect
 that disappears under the same-rewriter independent-summary control is merely a
 source-quality/coverage effect; an effect that MMR removes is merely generic
 near-duplicate redundancy. Neither supports a paper.
+
+### Verified G0b result and PI decision
+
+The four raw G0b cells passed their individual manifest, frozen-config,
+runtime-preflight, role-plan, and deterministic re-scoring checks. The remote
+assembler had omitted `cell_report.json` when copying cells into its aggregate,
+so the original aggregate correctly failed closed. The local recovery copied
+the preserved source cells into a *new* aggregate using the repaired copier;
+the recovered aggregate then verified byte-for-byte from raw completions.
+
+The result is formally `KILL_SEMANTIC_ANCESTRY_CANDIDATE`. Cross-ancestor
+collapse exceeded baseline in all four crossed cells (estimates 21.7--53.3
+points; all 95% lower bounds at least 11.7 points). This is an encouraging
+mechanism signal, not a publishable conclusion: one Mistral/SmolLM3
+construction failed both the same-rewriter style control (lower bound -21.7
+points) and independent-summary control (lower bound 5.0 points, below the
+8-point criterion). More decisively, the frozen history-aware TF--IDF selector
+failed to beat MMR in every cell; it was no better in two cells and could be
+worse in another. Faithfulness was preserved, but that cannot rescue an
+ineffective mitigation.
+
+Therefore do not run G0c, tune the selector, or start external replication
+from these outputs. A future project may separately study the robust-looking
+response-descendant effect with a new question and preregistration, but it may
+not reuse these data to claim a semantic-ancestry mitigation paper.
 
 ### Active G0 is developmental evidence only
 

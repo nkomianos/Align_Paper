@@ -2,6 +2,7 @@ import pytest
 
 from semantic_ancestry_rag.corpus import build_base_questions
 from semantic_ancestry_rag.g0b import G0BCell, materialize_question, validate_role_plan
+from semantic_ancestry_rag.g0b_assemble import CELL_EVIDENCE_FILES
 from semantic_ancestry_rag.g0b_preflight import load_contract
 
 
@@ -47,3 +48,7 @@ def test_g0b_config_is_a_fully_crossed_native_loader_contract() -> None:
     assert contract["question_count"] == 60
     assert contract["completions_per_cell"] == 4
     assert len(contract["role_cells"]) == 4
+
+
+def test_g0b_aggregate_retains_every_verification_bound_cell_report() -> None:
+    assert "cell_report.json" in CELL_EVIDENCE_FILES

@@ -20,17 +20,26 @@ from .runner import _score_all, load_questions
 
 AGGREGATE_KIND = "semantic_ancestry_rag_g0b_aggregate"
 
+# A recovered aggregate must retain every file whose digest is bound by the
+# source cell manifest. Keep this mapping shared by loading and copying so a
+# future aggregate cannot silently omit verification-critical evidence.
+CELL_EVIDENCE_DIGEST_KEYS = (
+    ("frozen_inputs.jsonl", "input_sha256"),
+    ("ROLES.json", "roles_sha256"),
+    ("transformations.jsonl", "transformations_sha256"),
+    ("raw_completions.jsonl", "raw_completions_sha256"),
+    ("condition_results.jsonl", "condition_results_sha256"),
+    ("runtime_preflight.json", "runtime_preflight_sha256"),
+    ("cell_report.json", "cell_report_sha256"),
+)
+CELL_EVIDENCE_FILES = tuple(filename for filename, _ in CELL_EVIDENCE_DIGEST_KEYS)
+
 
 def _load_cell(path: Path, config: str | Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     manifest = json.loads((path / "MANIFEST.json").read_text(encoding="utf-8"))
     if manifest.get("kind") != RUN_KIND:
         raise ValueError(f"not a completed G0b cell root: {path}")
-    for filename, key in (
-        ("frozen_inputs.jsonl", "input_sha256"), ("ROLES.json", "roles_sha256"),
-        ("transformations.jsonl", "transformations_sha256"), ("raw_completions.jsonl", "raw_completions_sha256"),
-        ("condition_results.jsonl", "condition_results_sha256"), ("runtime_preflight.json", "runtime_preflight_sha256"),
-        ("cell_report.json", "cell_report_sha256"),
-    ):
+    for filename, key in CELL_EVIDENCE_DIGEST_KEYS:
         if sha256_file(path / filename) != manifest.get(key):
             raise ValueError(f"G0b cell evidence hash mismatch for {filename}: {path}")
     if manifest.get("config_sha256") != sha256_file(config):
@@ -87,7 +96,7 @@ def assemble(*, roots: Sequence[str | Path], output: str | Path, config: str | P
         name = str(manifest["cell_name"])
         source, target = Path(root), destination / "cells" / name
         target.mkdir(parents=True)
-        for filename in ("frozen_inputs.jsonl", "ROLES.json", "transformations.jsonl", "raw_completions.jsonl", "condition_results.jsonl", "runtime_preflight.json", "MANIFEST.json"):
+        for filename in (*CELL_EVIDENCE_FILES, "MANIFEST.json"):
             shutil.copyfile(source / filename, target / filename)
         sources[name] = {
             "source_manifest_sha256": sha256_file(source / "MANIFEST.json"),
