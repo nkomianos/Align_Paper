@@ -90,7 +90,7 @@ def build_corpus(root: str | Path, *, bases: int = 60, phases: int = 32, image_s
     for index in range(bases):
         task, prompt, answer, payload = _spec(index)
         split = "DEV" if index < bases // 3 else "TEST"
-        # Multiples of 112 align both the 16px Qwen and 14px Gemma patch grids.
+        # Multiples of 112 align the frozen 16px input patch grids in both VLMs.
         origin_x = 224 + 112 * (index % 2)
         origin_y = 224 + 112 * ((index // 2) % 2)
         for thickness_name, width in (("thin", 1), ("thick", 9)):
