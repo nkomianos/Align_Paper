@@ -218,6 +218,27 @@ offline reproduction and external, utility-scored evaluation; a failure kills
 this semantic-ancestry formulation rather than being reframed as generic RAG
 diversity.
 
+### Precommitted interpretation of a core-effect / mitigation split
+
+G0b separates two hypotheses: the *mechanism* (a rewritten answer descendant
+can disproportionately influence the answer) and the current lightweight
+TF--IDF selector (a practical mitigation).  If the fully verified G0b result
+replicates the causal contrast across all four cells but fails only the
+`history_aware - mmr` criterion, that is a failure of this selector--not
+permission to tune its 0.20 penalty or weaken its margin after observing the
+result. The paper cannot claim this selector as a mitigation.
+
+At most, that outcome may authorize a separately frozen G0c, with a different
+deployment-relevant selection problem: a fixed retrieval budget must choose
+among base evidence, a **unique but answer-descended** passage, and a
+same-rewriter unique non-descended control. Generic MMR must be forced to
+retain the unique descendant because it adds query coverage; a history-aware
+method may then win only if it rejects that descendant while retaining a
+matched useful alternative. G0c must measure both selection behavior and
+task-level utility/non-inferiority. It may not reuse G0b inputs, thresholds,
+or output-derived parameter choices, and requires a new literature audit and
+preregistration before GPU use.
+
 The prospective external pair is
 [SmolLM3-3B](https://huggingface.co/HuggingFaceTB/SmolLM3-3B) revision
 `a07cc9a04f16550a088caea529712d1d335b0ac1` and
