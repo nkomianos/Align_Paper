@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 import pytest
 
@@ -41,7 +42,7 @@ def test_records_hide_scenario_membership_and_probes_are_balanced():
 
 
 def test_answer_key_refuses_overwrite_and_binds_plan(tmp_path):
-    source = "C:/Users/nkomi/Documents/GitHub/Align_Paper/configs/sentry_g0.yaml"
+    source = Path(__file__).resolve().parents[1] / "configs" / "sentry_g0.yaml"
     destination = tmp_path / "key.json"
     result = build_answer_key(source, destination)
     assert result["kind"] == "sentry_g0_answer_key"
