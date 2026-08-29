@@ -1,0 +1,67 @@
+kind: semantic_ancestry_rag_g0b
+status: development_ready__requires_new_preflight_and_explicit_gpu_authorization
+purpose: clean_role_separated_style_matched_feasibility_gate
+question_count: 60
+completions_per_cell: 4
+conditions:
+  - baseline
+  - self_ancestor
+  - cross_ancestor
+  - style_only
+  - independent_summary
+  - mmr
+  - history_aware
+models:
+  serving_families:
+    qwen3_5:
+      id: Qwen/Qwen3.5-9B
+      revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a
+      loader_class: Qwen3_5ForCausalLM
+      text_only: true
+      enable_thinking: false
+    mistral:
+      id: mistralai/Mistral-7B-Instruct-v0.3
+      revision: c170c708c41dac9275d15a8fff4eca08d52bab71
+      loader_class: AutoModelForCausalLM
+  external_models:
+    smollm3:
+      id: HuggingFaceTB/SmolLM3-3B
+      revision: a07cc9a04f16550a088caea529712d1d335b0ac1
+      loader_class: AutoModelForCausalLM
+    granite:
+      id: ibm-granite/granite-3.0-2b-instruct
+      revision: 5ad66c190631382717bd92d7b052adb1a7b669e7
+      loader_class: AutoModelForCausalLM
+role_cells:
+  - serving_model: qwen3_5
+    ancestor_model: qwen3_5
+    rewriter_model: smollm3
+    style_rewriter_model: smollm3
+    summary_rewriter_model: smollm3
+    shadow_answer_model: granite
+  - serving_model: qwen3_5
+    ancestor_model: qwen3_5
+    rewriter_model: granite
+    style_rewriter_model: granite
+    summary_rewriter_model: granite
+    shadow_answer_model: smollm3
+  - serving_model: mistral
+    ancestor_model: mistral
+    rewriter_model: smollm3
+    style_rewriter_model: smollm3
+    summary_rewriter_model: smollm3
+    shadow_answer_model: granite
+  - serving_model: mistral
+    ancestor_model: mistral
+    rewriter_model: granite
+    style_rewriter_model: granite
+    summary_rewriter_model: granite
+    shadow_answer_model: smollm3
+thresholds:
+  bootstrap_samples: 10000
+  bootstrap_seed: 20260829
+  ancestry_effect_lower_bound: 0.10
+  specificity_lower_bound: 0.08
+  independent_summary_lower_bound: 0.08
+  history_vs_mmr_upper_bound: -0.08
+  faithfulness_lower_bound: -0.02

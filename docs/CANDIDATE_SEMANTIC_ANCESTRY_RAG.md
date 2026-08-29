@@ -172,6 +172,40 @@ separable from rewriter identity, output form, and generic source coverage.
 Only a positive, fully role-disentangled and style-matched G0b can authorize
 the external replication protocol.
 
+### Implemented corrected feasibility protocol (G0b)
+
+The repository now contains a separate, non-overwriting G0b implementation;
+it does not alter the preserved developmental G0 root. Its initial purpose is
+to decide whether the large Qwen developmental effect survives proper causal
+controls, not to establish the final paper result. It uses 60 fictional source
+packets, four samples per cell, two serving families, and two crossed external
+construction pairs:
+
+| Serving history | Rewriter | Same-question shadow-answer generator |
+| --- | --- | --- |
+| Qwen3.5-9B | SmolLM3-3B | Granite-3.0-2B-Instruct |
+| Qwen3.5-9B | Granite-3.0-2B-Instruct | SmolLM3-3B |
+| Mistral-7B-Instruct-v0.3 | SmolLM3-3B | Granite-3.0-2B-Instruct |
+| Mistral-7B-Instruct-v0.3 | Granite-3.0-2B-Instruct | SmolLM3-3B |
+
+For each cell, the serving family creates its own ancestor answer. The shadow
+model independently answers the *same question* from the same source packets.
+The external rewriter applies the exact same rewrite prompt to each answer,
+yielding the `cross_ancestor` and `style_only` passages. Thus those conditions
+hold rewriter identity, prompt form, question relevance, and source access
+fixed; the intended difference is whether the serving model's own prior answer
+is the semantic parent. A same-rewriter, source-only summary remains a separate
+coverage control.
+
+`scripts/run_semantic_ancestry_rag_g0b_remote.sh` is the only launch sequence.
+It freezes a new CUDA preflight, materializes all transformations before serving
+evaluation, checkpoints every completion, then verifies all four cells from raw
+text. It must use a fresh run root and must not be launched concurrently with a
+sealed diagnostic on the same GPU. A G0b pass is still only permission to do an
+offline reproduction and external, utility-scored evaluation; a failure kills
+this semantic-ancestry formulation rather than being reframed as generic RAG
+diversity.
+
 The prospective external pair is
 [SmolLM3-3B](https://huggingface.co/HuggingFaceTB/SmolLM3-3B) revision
 `a07cc9a04f16550a088caea529712d1d335b0ac1` and

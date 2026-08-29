@@ -65,6 +65,11 @@ ancestry-rag-build-base = "semantic_ancestry_rag.corpus:main"
 ancestry-rag-prepare = "semantic_ancestry_rag.prepare:main"
 ancestry-rag-preflight = "semantic_ancestry_rag.preflight:main"
 ancestry-rag-extract-stackexchange = "semantic_ancestry_rag.external_corpus:main"
+ancestry-rag-g0b-preflight = "semantic_ancestry_rag.g0b_preflight:main"
+ancestry-rag-g0b-prepare = "semantic_ancestry_rag.g0b_prepare:main"
+ancestry-rag-g0b-run = "semantic_ancestry_rag.g0b_runner:main"
+ancestry-rag-g0b-assemble = "semantic_ancestry_rag.g0b_assemble:main"
+ancestry-rag-g0b-verify = "semantic_ancestry_rag.g0b_verify:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

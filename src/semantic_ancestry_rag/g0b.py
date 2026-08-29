@@ -1,4 +1,4 @@
-"""Fail-closed role contract for a future semantic-ancestry G0b.
+"""Fail-closed role contract and input materialization for semantic-ancestry G0b.
 
 This is deliberately separate from the sealed G0 runner.  It encodes the
 causal-role requirements before any new corpus is materialized.
@@ -7,7 +7,11 @@ causal-role requirements before any new corpus is materialized.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Iterable
+from typing import Iterable, Mapping, Sequence
+
+from .corpus import BaseQuestion
+from .retrieval import history_aware_select, mmr_select
+from .runner import Question
 
 
 @dataclass(frozen=True)
@@ -52,3 +56,50 @@ def validate_role_plan(cells: Iterable[G0BCell], *, serving_models: Iterable[str
     if external.intersection(serving):
         raise ValueError("external G0b pairs may not contain a serving model")
     return materialized
+
+
+def materialize_question(
+    base: BaseQuestion,
+    *,
+    ancestor_answer: str,
+    shadow_answer: str,
+    cross_rewrite: str,
+    style_rewrite: str,
+    independent_summary: str,
+) -> Question:
+    """Build one role-matched G0b question without exposing role metadata.
+
+    ``cross_rewrite`` and ``style_rewrite`` must be produced by the *same*
+    external rewriter under the same rewrite prompt.  The caller records that
+    provenance in an immutable role manifest; this function deliberately keeps
+    model labels out of serving prompts.
+    """
+
+    if not all((ancestor_answer, shadow_answer, cross_rewrite, style_rewrite, independent_summary)):
+        raise ValueError("G0b requires non-empty frozen transformations")
+    pool = (*base.base_references, cross_rewrite)
+    mmr = mmr_select(base.question, pool, limit=len(base.base_references))
+    history = history_aware_select(base.question, pool, (ancestor_answer,), limit=len(base.base_references))
+    references: Mapping[str, Sequence[str]] = {
+        "baseline": base.base_references,
+        "self_ancestor": (*base.base_references, ancestor_answer),
+        "cross_ancestor": (*base.base_references, cross_rewrite),
+        "style_only": (*base.base_references, style_rewrite),
+        "independent_summary": (*base.base_references, independent_summary),
+        "mmr": tuple(pool[index] for index in mmr.indices),
+        "history_aware": tuple(pool[index] for index in history.indices),
+    }
+    support = {
+        condition: tuple(
+            entity for entity, aliases in base.entity_aliases.items()
+            if any(alias.lower() in "\n".join(passages).lower() for alias in aliases)
+        )
+        for condition, passages in references.items()
+    }
+    return Question(
+        question_id=base.question_id,
+        question=base.question,
+        references=references,
+        entity_aliases=base.entity_aliases,
+        source_supported_entities=support,
+    )
