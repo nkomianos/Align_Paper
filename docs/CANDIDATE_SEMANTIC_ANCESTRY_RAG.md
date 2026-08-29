@@ -82,6 +82,18 @@ Nearest work to beat, not merely cite:
 * [Self-Preference in RAG](https://aclanthology.org/2025.findings-acl.1369.pdf):
   static authorship and factuality controls, with largely null final-generation
   self-preference; this is the critical alternative account G0 must overturn.
+* [Self-Generated Documents for RAG](https://aclanthology.org/2025.findings-naacl.149/):
+  studies when a model's generated documents are useful alongside retrieved
+  evidence, including document-type and stylistic factors. It does not test
+  whether a serving system disproportionately follows a document descended
+  from *its own prior answer* after the document's author and surface form are
+  removed. G0b's same-question, same-rewriter shadow control is designed to
+  isolate precisely that distinction.
+* [Generator-Aware RAG Attribution Bias](https://aclanthology.org/2025.findings-acl.1087/):
+  measures sensitivity to explicitly supplied source-author identities. This
+  is a necessary negative comparator: G0b exposes neither authorship nor model
+  labels to the serving prompt, so a positive result cannot be described as an
+  author-label attribution effect.
 * [Spiral of Silence in RAG](https://aclanthology.org/2024.acl-long.798.pdf):
   iterative accumulation of generic LLM-generated text and retriever dominance.
   This means an ordinary feedback-loop reproduction is not publishable; G0 must
