@@ -76,6 +76,9 @@ effect-uq-verify = "effect_consistency_uq.verify:main"
 visual-phase-prepare = "visual_phase_gate.prepare:main"
 visual-phase-run = "visual_phase_gate.runner:main"
 visual-phase-verify = "visual_phase_gate.verify:main"
+feedback-leakage-prepare = "feedback_leakage.prepare:main"
+feedback-leakage-run = "feedback_leakage.runner:main"
+feedback-leakage-verify = "feedback_leakage.verify:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

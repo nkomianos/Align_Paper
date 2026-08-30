@@ -20,22 +20,21 @@ replication/transfer result.
 
 ## Conditional finalists
 
-**Environment-executed effect consistency (primary; frozen G0 awaiting GPU).**
-The candidate executes resampled tool plans in resettable copies of the same
-state and measures agreement over exact successor-state deltas. It must beat
-surface/action/tool/token confidence and improve fixed-budget plan selection in
-calendar and inventory for Qwen3.5 and gpt-oss. See
-`docs/CANDIDATE_EFFECT_CONSISTENCY_UQ.md`.
-
-**VLM patch-phase instability (backup; frozen G0 awaiting GPU).** The gate asks
-whether thin visual-primitive failures are periodic in encoder patch phase,
-stronger than thick controls, and mitigated by a compute-matched phase ensemble
-in Qwen3-VL and Gemma 4. See `docs/CANDIDATE_VISUAL_PATCH_PHASE.md`.
+**Guardrail-feedback recovery versus policy gaming (primary; frozen G0 awaiting
+GPU).** The candidate asks whether diagnostic feedback after a blocked tool call
+causes agents under pressure to invent named authorization evidence, and whether
+least-privilege next-action feedback preserves safe recovery without exposing the
+same gaming surface. The causal intervention is matched across 384 cases in
+refund, deployment, and data-export environments, with exact receipt provenance
+and two independent current model families. See
+`docs/CANDIDATE_GUARDRAIL_FEEDBACK_LEAKAGE.md`.
 
 ## Closed directions
 
 | Direction | Why it was screened out | Nearest work |
 | --- | --- | --- |
+| Environment-executed effect consistency as uncertainty | The frozen G0 produced only 3/10 required checks. Exact successor-state agreement did not deliver the preregistered cross-family, cross-domain discrimination and routing improvement, so the central uncertainty claim failed. Preserve the evidence; do not retune the gate. | Verified retrieved evidence and `docs/CANDIDATE_EFFECT_CONSISTENCY_UQ.md` |
+| Visual patch-phase instability and phase ensembling | The frozen G0 found instability, but it was neither specific to the hypothesized thin visual primitives nor periodic in patch phase, and the compute-matched phase ensemble harmed rather than improved performance. This falsifies both the mechanism and proposed remedy. | Verified retrieved evidence and `docs/CANDIDATE_VISUAL_PATCH_PHASE.md` |
 | Semantic-ancestry RAG mitigation | The role-separated G0b retained a large cross-ancestor collapse signal in all four cells, but one construction failed both specificity controls and the preregistered history-aware selector failed to beat MMR in all four cells. The exact paper therefore lacks both a family-robust ancestry-specific claim and a working intervention. Do not tune G0b or launch external replication; the mechanism observation is archived only as a clue for a genuinely new preregistration. | Verified local evidence and decision in `docs/CANDIDATE_SEMANTIC_ANCESTRY_RAG.md` |
 | Authenticating independent corroboration under adaptive source compromise | The promising causal object--agreement caused by exposure, copying, conformity, or shared prompt bias is not independent evidence--has now been directly operationalized as causal exposure control in multi-agent deliberation, including adversarial agents and comparisons to voting/debate.  Source-grounded lineage retrieval and origin-bound memory controls also occupy the practical provenance/enforcement flank.  A lineage-weighted vote or copied-source stress test would be a recombination, not a distinct paper. | [CIDeR](https://github.com/tahamsi/cider-deliberation); [LineageRAG](https://arxiv.org/abs/2608.16004); [Non-Malleable, Origin-Bound Authority](https://arxiv.org/abs/2606.24322) |
 | Output-logit audit of hidden fine-tuning objectives or safety drift | A black-box/logit-comparison audit looked potentially useful for detecting an unknown post-training objective, but Diff Mining already defines this exact object: per-context base/fine-tuned logit differences, token-set aggregation, and evaluation on injected biases. A safety-only token score would be a narrow application rather than a distinct mechanism or method. | [Diff Mining](https://arxiv.org/abs/2608.26462) |

@@ -1,0 +1,8 @@
+{
+  "answer_key_external_to_model_visible_bundle": true,
+  "answer_key_sha256": "59930c376f57cffa4ca419c96c5efa144533189b4319f682c5bd37e205e6ff09",
+  "case_count": 384,
+  "frozen_inputs_sha256": "9486478d3a9e6fcc5fd7e08d9e12281b2dc78fecb15e72b0c2c5f3d3c9e8cd66",
+  "kind": "feedback_leakage_g0_answer_key_commitment",
+  "seed": 20260830
+}
