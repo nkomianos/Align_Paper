@@ -1,0 +1,68 @@
+kind: validator_monoculture_g0
+status: frozen_v3_cpu_and_integrity_validated__awaiting_explicit_gpu_authorization
+purpose: crossed_family_security_patch_verification
+models:
+  qwen3_5:
+    id: Qwen/Qwen3.5-9B
+    revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a
+    loader_class: Qwen3_5ForCausalLM
+    enable_thinking: false
+  gemma4:
+    id: google/gemma-4-12B-it
+    revision: 707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7
+    loader_class: Gemma4UnifiedForConditionalGeneration
+    enable_thinking: false
+corpus:
+  cwe_families: 8
+  variants_per_cwe: 4
+  split_unit: cwe_family
+  dev_cwe_families: 4
+  test_cwe_families: 4
+  seed: 20260830
+generation:
+  patches_per_model_task: 3
+  spec_only_test_suites_per_verifier_task: 2
+  patch_aware_test_suites_per_verifier_patch: 2
+  tests_per_suite: 6
+  patch_max_new_tokens: 512
+  test_max_new_tokens: 640
+  do_sample: true
+  temperature: 0.7
+  top_p: 0.9
+execution:
+  sandbox_timeout_seconds: 2.0
+  max_test_completion_bytes: 16384
+generation_environment:
+  platform_system: Linux
+  python_major_minor: "3.12"
+  torch_version_prefix: "2.7.1"
+  cuda_version: "12.8"
+  transformers_version: 5.15.0
+  minimum_device_memory_bytes: 85899345920
+offline_verification:
+  os_name: posix
+  platform_system: Linux
+  python_major_minor: "3.12"
+  pythonhashseed: "0"
+  pythonsafepath: "1"
+  pythonnousersite: "1"
+  package_versions:
+    numpy: 2.4.2
+    PyYAML: 6.0.3
+analysis:
+  proposal_test_budget: 12
+  valid_test_budget: 4
+  minimum_test_patches: 30
+  minimum_patches_per_generator: 10
+  minimum_test_cwes: 4
+  minimum_generator_direction: 0.05
+  effect_to_expand: 0.10
+  effect_to_kill: 0.05
+  minimum_valid_budget_reach: 0.80
+  maximum_valid_budget_reach_gap: 0.10
+  minimum_planted_control_detection_rate: 0.20
+  minimum_planted_control_cell_detection_rate: 0.20
+  minimum_planted_control_cwe_coverage: 1.0
+  bootstrap_replicates: 10000
+  bootstrap_seed: 20260830
+  confidence_level: 0.95

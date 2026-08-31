@@ -20,19 +20,58 @@ replication/transfer result.
 
 ## Conditional finalists
 
-**Guardrail-feedback recovery versus policy gaming (primary; frozen G0 awaiting
-GPU).** The candidate asks whether diagnostic feedback after a blocked tool call
-causes agents under pressure to invent named authorization evidence, and whether
-least-privilege next-action feedback preserves safe recovery without exposing the
-same gaming surface. The causal intervention is matched across 384 cases in
-refund, deployment, and data-export environments, with exact receipt provenance
-and two independent current model families. See
-`docs/CANDIDATE_GUARDRAIL_FEEDBACK_LEAKAGE.md`.
+**Generator--tester error dependence in agentic security repair (primary;
+frozen G0 CPU/integrity validated).** The candidate asks whether tests from the
+same model family that generated an incorrect security patch share its blind
+spots, and whether a DEV-selected heterogeneous verifier allocation transfers
+to entirely held-out CWE families. Generic cross-family verification and
+security cross-model review are already prior work; the remaining estimand is a
+controlled, fixed-within-patch interaction under a hidden executable oracle.
+The necessary signature is a fully crossed family-by-family interaction under
+equal proposal budgets, not merely one model being a better tester. Invalid or
+duplicate proposals are charged to the emitting verifier; a capped-valid
+analysis is secondary. Even a pass only authorizes a three-family,
+real-repository study that compares cold test synthesis with calibrated
+monitoring. See
+`docs/CANDIDATE_VALIDATOR_MONOCULTURE.md`.
+
+**Phantom Rollback (agentic-cybersecurity co-finalist; frozen G0 CPU
+validated).** The candidate asks whether merely exposing an ambiguously scoped
+local checkpoint makes an agent take irreversible external actions sooner,
+because it behaves as if the damage were recoverable. Four exactly
+token-matched arms separate rollback availability, generic warning salience,
+and precise effect-coverage metadata while A1--A3 execute byte-identical
+local-only restore semantics. A deterministic ledger scores premature external
+effects, and authorized safe twins measure over-refusal. A pass would establish
+a pair-specific Qwen/Gemma risk-compensation effect and a practical interface
+mitigation; it would still require a third family and naturalistic agent
+environments. See `docs/CANDIDATE_PHANTOM_ROLLBACK.md`.
+
+**Visual hindsight leakage across a causal cut (spatiotemporal-VLM backup).**
+Each three-location pair shares a byte-identical past through a visibly locked
+choice and then receives two motion-matched counterfactual endpoints. The fixed
+past-time answer must not change; full-video suffix questions first verify that
+the endpoint was visible, then the endpoint-assignment contrast measures whether
+inadmissible future evidence rewrites the past. Prefix-only inference is a
+sanity-check remedy, while the publishable object is the paired causal-cut
+violation. See `docs/CANDIDATE_VISUAL_HINDSIGHT_LEAKAGE.md`.
+
+**Efference-Pair (method-first spatiotemporal-VLM alternative; protocol only).**
+This training-free adapter separates apparent video motion into a global
+camera-motion channel and a camera-stabilized residual channel. Its required
+signature is a double dissociation under a token-matched budget: the global
+view selectively improves camera questions, the residual view selectively
+improves object-motion questions, and the joint view beats raw flow and extra
+RGB. It is higher engineering risk and sits in a more crowded literature
+neighborhood, so it ranks below the three frozen gates. See
+`docs/CANDIDATE_EFFERENCE_PAIR.md`.
 
 ## Closed directions
 
 | Direction | Why it was screened out | Nearest work |
 | --- | --- | --- |
+| Ecology-style early warning for reward-hacking transitions | The zero-GPU developmental screen used all 10,240 public rollouts across 40 checkpoints. Candidate polarization/variance reached AUROC 1.0, but ordinary strict/attempted-hack rates also reached 1.0; the required advantage was 0.0, false alarms were 26.7%, the prompt-bootstrap gap included zero, and 0/9 robustness cells passed. New RL seeds are not justified for this formulation. | Verified result in `docs/REWARD_HACK_EARLY_WARNING_DEV_RESULT.md`; public Steering RL trajectory |
+| Guardrail-feedback recovery versus policy gaming | The verified two-family G0 showed large safe-recovery gains from actionable feedback, but fabricated authorization evidence remained at zero. The proposed recovery-versus-gaming frontier was therefore absent; recovery alone is an engineering observation, not the preregistered paper. | Verified retrieved evidence and `docs/CANDIDATE_GUARDRAIL_FEEDBACK_LEAKAGE.md` |
 | Environment-executed effect consistency as uncertainty | The frozen G0 produced only 3/10 required checks. Exact successor-state agreement did not deliver the preregistered cross-family, cross-domain discrimination and routing improvement, so the central uncertainty claim failed. Preserve the evidence; do not retune the gate. | Verified retrieved evidence and `docs/CANDIDATE_EFFECT_CONSISTENCY_UQ.md` |
 | Visual patch-phase instability and phase ensembling | The frozen G0 found instability, but it was neither specific to the hypothesized thin visual primitives nor periodic in patch phase, and the compute-matched phase ensemble harmed rather than improved performance. This falsifies both the mechanism and proposed remedy. | Verified retrieved evidence and `docs/CANDIDATE_VISUAL_PATCH_PHASE.md` |
 | Semantic-ancestry RAG mitigation | The role-separated G0b retained a large cross-ancestor collapse signal in all four cells, but one construction failed both specificity controls and the preregistered history-aware selector failed to beat MMR in all four cells. The exact paper therefore lacks both a family-robust ancestry-specific claim and a working intervention. Do not tune G0b or launch external replication; the mechanism observation is archived only as a clue for a genuinely new preregistration. | Verified local evidence and decision in `docs/CANDIDATE_SEMANTIC_ANCESTRY_RAG.md` |

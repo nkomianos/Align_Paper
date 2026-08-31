@@ -1,0 +1,24 @@
+{
+  "config_path": "configs/validator_monoculture_g0.yaml",
+  "config_sha256": "6c265fd0d8e0d7a3fba23f45410e2961089408449ca424544bb0fa23e73c7cf1",
+  "code_tree_sha256": "c5aca267a6930843285fc3590d39fb1e7fe02466b3b28ea8b763cc21e7b82188",
+  "corpus_manifest_sha256": "d0dc6df3fb29ab63ba0b56e50a4045c58c073f20908664d92e4ccfa11438bd9d",
+  "corpus_sha256": "b97a59829940395b5bb4d588402b9d7ff43bf18f3cdea113ae77aef47ac709e5",
+  "development_cwe_families": [
+    "CWE-20",
+    "CWE-200",
+    "CWE-22",
+    "CWE-79"
+  ],
+  "kind": "validator_monoculture_g0_corpus_commitment",
+  "locked_test_cwe_families": [
+    "CWE-287",
+    "CWE-400",
+    "CWE-601",
+    "CWE-89"
+  ],
+  "private_oracles_sha256": "647694456281885b01634d3115ddff137203ed2e13237228646d6e148efdfc0b",
+  "public_tasks_sha256": "2c0caf0a36ed0c7d2c8c7af9f297ebcee0920f934f0f2f8a5cd2b1328d63ff29",
+  "schema_version": "validator-monoculture-g0-v3",
+  "task_count": 32
+}

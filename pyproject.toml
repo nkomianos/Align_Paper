@@ -79,6 +79,18 @@ visual-phase-verify = "visual_phase_gate.verify:main"
 feedback-leakage-prepare = "feedback_leakage.prepare:main"
 feedback-leakage-run = "feedback_leakage.runner:main"
 feedback-leakage-verify = "feedback_leakage.verify:main"
+validator-monoculture-prepare = "validator_monoculture.prepare:main"
+validator-monoculture-oracle-preflight = "validator_monoculture.oracle_preflight:main"
+validator-monoculture-patch-run = "validator_monoculture.runner:patch_main"
+validator-monoculture-classify = "validator_monoculture.runner:classify_main"
+validator-monoculture-test-run = "validator_monoculture.runner:test_main"
+validator-monoculture-verify = "validator_monoculture.verify:main"
+visual-hindsight-prepare = "visual_hindsight_g0.prepare:main"
+visual-hindsight-run = "visual_hindsight_g0.runner:main"
+visual-hindsight-verify = "visual_hindsight_g0.verify:main"
+phantom-rollback-prepare = "phantom_rollback_g0.prepare:main"
+phantom-rollback-run = "phantom_rollback_g0.runner:main"
+phantom-rollback-verify = "phantom_rollback_g0.verify:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

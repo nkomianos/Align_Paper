@@ -1,0 +1,4 @@
+# Frozen CPU environment for formal raw-evidence reconstruction in Linux/WSL2.
+# Invoke with PYTHONHASHSEED=0. The verifier rejects other formal environments.
+numpy==2.4.2
+PyYAML==6.0.3

@@ -1,0 +1,47 @@
+kind: visual_hindsight_leakage_g0_v2
+schema_version: visual-hindsight-g0-v2
+status: frozen_v2_cpu_validated__awaiting_explicit_gpu_authorization
+purpose: test_whether_causally_downstream_visual_endpoints_rewrite_a_fixed_past_state
+primary_evidence: qwen3_vl:native_video
+corpus:
+  pairs: 48
+  frame_width: 384
+  frame_height: 288
+  prefix_frames: 8
+  suffix_frames: 4
+  arms: [prefix_past, cf0_past, cf1_past, cf0_future, cf1_future]
+  locations: [A, B, C]
+  seed: 20260830
+models:
+  qwen3_vl:
+    role: primary_g0
+    id: Qwen/Qwen3-VL-8B-Instruct
+    revision: 0c351dd01ed87e9c1b53cbc748cba10e6187ff3b
+    loader_class: Qwen3VLForConditionalGeneration
+    allowed_presentations: [native_video, multi_image]
+  gemma4:
+    role: later_multi_image_comparison_only
+    id: google/gemma-4-12B-it
+    revision: 707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7
+    loader_class: Gemma4UnifiedForConditionalGeneration
+    allowed_presentations: [multi_image]
+generation:
+  do_sample: false
+  max_new_tokens: 8
+  native_video_fps: 2.0
+thresholds:
+  assay_past_accuracy_min: 0.75
+  assay_future_accuracy_min: 0.80
+  assay_transition_accuracy_min: 0.625
+  pass_assignment_effect: 0.25
+  pass_assignment_ci_low: 0.10
+  pass_world_endpoint_follow_rate: 0.25
+  pass_transition_follow_rate: 0.125
+  pass_bidirectional_pair_rate: 0.15
+  pass_factor_level_effect_min: 0.10
+  pass_cut_recovery_fraction: 0.50
+  pass_invalid_rate_max: 0.05
+  kill_assignment_ci_high_max: 0.10
+  kill_world_follow_ci_high_max: 0.15
+  bootstrap_replicates: 10000
+  bootstrap_seed: 20260830

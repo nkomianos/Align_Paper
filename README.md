@@ -10,14 +10,27 @@ packaged.
 
 ## Scientific status
 
-> **Current thesis-scout status (29 August 2026):** the original Under
-> Extinction line and the later semantic-ancestry RAG formulation are closed by
-> their registered gates. Two new, independent small gates are frozen but have
-> not been run on a GPU: [environment-executed effect consistency](docs/CANDIDATE_EFFECT_CONSISTENCY_UQ.md)
-> is the primary candidate and [VLM patch-phase instability](docs/CANDIDATE_VISUAL_PATCH_PHASE.md)
-> is the backup. The complete screen and cull log is in
-> [IDEA_REVIEW_20260829.md](docs/IDEA_REVIEW_20260829.md). No positive paper
-> claim should be inferred from CPU validation or launch readiness.
+> **Current thesis-scout status (30 August 2026):** the original Under
+> Extinction line and all completed successor gates are closed by their frozen
+> decisions. The new lead is
+> [generator--tester error dependence in agentic security repair](docs/CANDIDATE_VALIDATOR_MONOCULTURE.md):
+> a crossed Qwen/Gemma test of whether same-family security tests share the
+> blind spots of incorrect model-generated patches. Generic cross-family
+> verification is already prior work; the candidate contribution is the
+> fixed-within-patch executable-security interaction and held-out routing rule.
+> The independently scoped
+> [Phantom Rollback](docs/CANDIDATE_PHANTOM_ROLLBACK.md) co-finalist tests whether
+> an ambiguously scoped local checkpoint causally increases premature
+> irreversible tool actions, and whether explicit effect-coverage metadata
+> removes that excess without suppressing authorized work.
+> The CPU-only ecological
+> reward-hacking early-warning shadow screen has already failed its frozen
+> developmental rule and is closed; no RL follow-up is authorized. The
+> [visual hindsight leakage across a causal cut](docs/CANDIDATE_VISUAL_HINDSIGHT_LEAKAGE.md)
+> is the diagnostic spatiotemporal-VLM backup; the method-first
+> [Efference-Pair](docs/CANDIDATE_EFFERENCE_PAIR.md) protocol is retained behind
+> it. None has a positive GPU result yet; launch readiness is not a scientific
+> claim.
 
 The CPU oracle pipeline passes its synthetic consistency checks. The first paid
 Qwen3.5-9B Stage-1 run completed on 19 August 2026 and **failed its registered DEV
