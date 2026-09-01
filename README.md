@@ -191,3 +191,14 @@ deployment/    slim transfer/results archives (ignored by Git)
 ## Interpretation boundary
 
 “Controller” here means a learned action-control signature under specified interventions. It does not mean a metaphysical terminal goal, subjective desire, or conscious motivation. “Extinction-style” means the test choice supplies no reward, correction, observed consequence, or subsequent update; it does not claim that frozen transformer inference is biologically identical to animal extinction learning.
+
+## Reward-Seeking Extinction Debt candidate
+
+The repository also contains a separately frozen, bounded model-organism gate
+for testing whether ordinary alignment leaves unusually rapid reacquisition of
+a proxy-rewarded shortcut. Its protocol, decision contract, and interpretation
+boundary are in
+[`docs/CANDIDATE_REWARD_EXTINCTION_DEBT.md`](docs/CANDIDATE_REWARD_EXTINCTION_DEBT.md),
+with the exact GH200 and offline-verification sequence in
+[`docs/REWARD_EXTINCTION_DEBT_G0_RUNBOOK.md`](docs/REWARD_EXTINCTION_DEBT_G0_RUNBOOK.md).
+It does not share data, checkpoints, or a decision with Phantom Rollback.

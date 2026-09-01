@@ -91,6 +91,9 @@ visual-hindsight-verify = "visual_hindsight_g0.verify:main"
 phantom-rollback-prepare = "phantom_rollback_g0.prepare:main"
 phantom-rollback-run = "phantom_rollback_g0.runner:main"
 phantom-rollback-verify = "phantom_rollback_g0.verify:main"
+reward-extinction-debt-prepare = "reward_extinction_debt_g0.prepare:main"
+reward-extinction-debt-run = "reward_extinction_debt_g0.runner:main"
+reward-extinction-debt-verify = "reward_extinction_debt_g0.verify:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
