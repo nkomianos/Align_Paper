@@ -64,4 +64,4 @@ environment:
   min_gpu_memory_gib: 80
 
 integrity:
-  code_tree_sha256: cb79ccf29fa19144c171abcbcd0034579243c9107edcd6eb017fd12db2a41c50
+  code_tree_sha256: d7f41e74d292befff899cbef3ccefd43ed961a46e8d0d2cd2902ec05442c0183

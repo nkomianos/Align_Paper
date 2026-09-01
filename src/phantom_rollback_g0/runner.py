@@ -68,9 +68,20 @@ class TransformersRuntime:
     def __init__(self, model_id: str, revision: str) -> None:
         import torch
         import transformers
+        from huggingface_hub import HfApi
 
         self.model_id = model_id
         self.revision = revision
+        # Transformers 5 no longer reliably preserves `_commit_hash` on the
+        # instantiated config. Resolve the immutable Hub commit explicitly
+        # before loading so provenance remains fail-closed across releases.
+        self.resolved_model_commit = HfApi().model_info(
+            model_id,
+            revision=revision,
+            token=True,
+        ).sha
+        if self.resolved_model_commit != revision:
+            raise ValueError("Hub revision did not resolve to the frozen commit")
         self._torch = torch
         self._transformers_version = transformers.__version__
         if model_id == QWEN_MODEL:
@@ -157,7 +168,6 @@ class TransformersRuntime:
     def provenance(self) -> Mapping[str, Any]:
         torch = self._torch
         properties = torch.cuda.get_device_properties(torch.cuda.current_device())
-        commit = getattr(getattr(self.model, "config", None), "_commit_hash", None)
         return {
             "torch_version": torch.__version__,
             "transformers_version": self._transformers_version,
@@ -165,7 +175,7 @@ class TransformersRuntime:
             "gpu_name": properties.name,
             "gpu_total_memory_bytes": int(properties.total_memory),
             "gpu_compute_capability": f"{properties.major}.{properties.minor}",
-            "resolved_model_commit": commit,
+            "resolved_model_commit": self.resolved_model_commit,
         }
 
 
