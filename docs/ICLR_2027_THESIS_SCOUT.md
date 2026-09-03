@@ -1,5 +1,13 @@
 # ICLR 2027 Thesis Scout
 
+**2026-09-02 status correction:** this document retains historical scouting and
+novelty screens. For current empirical decisions use the
+[researcher journal](RESEARCH_JOURNAL.md): Phantom Rollback and Reward Extinction
+Debt completed with invalid assay/formation decisions, and Efference-Pair EP0
+is now the active apparatus pilot. The new Mostik-inspired review is
+[here](IDEA_REVIEW_20260902.md). Earlier “finalist” labels below are not current
+scientific green lights or pending-launch instructions.
+
 ## Decision standard
 
 This log records *negative* literature screens as well as candidates.  A GPU

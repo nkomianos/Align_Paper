@@ -1,36 +1,65 @@
-# Under Extinction
+# AI Research Journal — ICLR 2027 exploration
 
-This package implements the first, deliberately falsifiable phase of a proposed alignment paper:
+This repository preserves the hypotheses, implementations, failed attempts,
+measurements, and decisions from our ICLR 2027 research exploration. Its original
+project was **Under Extinction**:
 
 > Can an extinction-style intervention fingerprint identify what controls a language agent's actions when ordinary behavior is matched—and predict later specification gaming better than current behavior or knowledge probes?
 
-This standalone repository contains only the current Under Extinction project. No
-historical OSH adapter, hidden worktree, or old paper artifact is imported or
-packaged.
+It now also contains independent alignment, agent-security, and vision candidates.
+No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
-> **Current thesis-scout status (30 August 2026):** the original Under
-> Extinction line and all completed successor gates are closed by their frozen
-> decisions. The new lead is
-> [generator--tester error dependence in agentic security repair](docs/CANDIDATE_VALIDATOR_MONOCULTURE.md):
-> a crossed Qwen/Gemma test of whether same-family security tests share the
-> blind spots of incorrect model-generated patches. Generic cross-family
-> verification is already prior work; the candidate contribution is the
-> fixed-within-patch executable-security interaction and held-out routing rule.
-> The independently scoped
-> [Phantom Rollback](docs/CANDIDATE_PHANTOM_ROLLBACK.md) co-finalist tests whether
-> an ambiguously scoped local checkpoint causally increases premature
-> irreversible tool actions, and whether explicit effect-coverage metadata
-> removes that excess without suppressing authorized work.
-> The CPU-only ecological
-> reward-hacking early-warning shadow screen has already failed its frozen
-> developmental rule and is closed; no RL follow-up is authorized. The
-> [visual hindsight leakage across a causal cut](docs/CANDIDATE_VISUAL_HINDSIGHT_LEAKAGE.md)
-> is the diagnostic spatiotemporal-VLM backup; the method-first
-> [Efference-Pair](docs/CANDIDATE_EFFERENCE_PAIR.md) protocol is retained behind
-> it. None has a positive GPU result yet; launch readiness is not a scientific
-> claim.
+**Updated 2 September 2026. No candidate has earned paper expansion.** Phantom
+Rollback and Reward Extinction Debt both completed, but their prerequisites
+failed: these are **invalid assays/model organisms**, not universal negative
+results. No new GPU experiment is running as part of this update.
+
+The active implementation is [Efference-Pair EP0](docs/EFFERENCE_PAIR_EP0_RUNBOOK.md),
+a small, synthetic camera-versus-object-motion apparatus pilot. It is **not** the
+previously proposed ACaM/MotionBench G0 and cannot pass that gate. The first paid
+step is only 24 frozen smoke forwards; a separate 450-forward pilot is conditional
+on compatibility and measured throughput. The real-video gate remains unrun.
+
+See the [researcher journal](docs/RESEARCH_JOURNAL.md) for hypothesis, design,
+numbers, evidence paths, failed launches, interpretation limits, and next steps;
+the [new-idea review](docs/IDEA_REVIEW_20260902.md) records the Mostik/latent-channel
+collision search and the next hypotheses. Historical protocols below are retained
+for reproducibility, **not instructions to restart retired experiments**.
+
+## Experiment ledger
+
+Dates identify runs/retrievals, not necessarily publication. `pp` means percentage
+points. A failed validity prerequisite is different from a valid negative effect.
+This ledger has 15 empirical stages across 13 directions (Stage 1/DID share one
+direction; RAG developmental/G0b share another). CPU fixtures, retries, and
+literature-only candidates are not additional scientific experiments.
+
+| Date | Experiment and hypothesis | Observed result | Research decision |
+| --- | --- | --- | --- |
+| Aug 19 | Under Extinction Stage 1: distinguish genuinely rewarded from proxy-rewarded policies using passive revaluation | Acquisition learned; DEV comprehension, selective response, reversal and robustness checks failed | Stop original formulation; locked TEST remains closed |
+| Aug 25 | DID-v1.1.1: diagnose retention, update integration, planning and A/B interface | 76,800 score rows; mean label-equivariance error 0.1897; semantic label-swap agreement 75.09% | Label-interface contamination; no controller conclusion |
+| Aug 25 | Provenance authority: self-authored material gains excess authority | Self-minus-external effect **0.0277 pp**, vs required 10 pp | Stop this formulation |
+| Aug 25 | Response-interface invariance: equivalent action encodings change decisions | **0%** selection disagreement; probability spread **0.1051 pp** | Stop this formulation |
+| Aug 25 | Hybrid memory: recurrent state materially carries a retained constraint | Recurrent intervention **0.168 logits** (bar 0.50); attention K/V control **14.449** | Small real effect, insufficient for proposed mechanism |
+| Aug 28 | Recency G0: learned recency direction causally controls switching | All registered checks failed both seeds; corrected cue-matched effects **−0.072/+0.704 pp** | Kill candidate; no G1 |
+| Aug 28 | Recipe-invariant J0: direction agreement predicts held-out causal transfer | Strong source agreement, held-out steering **−0.095/−0.224 pp** | Kill candidate; no external replication |
+| Aug 28–29 | Semantic ancestry developmental run: source rewriting creates apparent diversity | Qwen snapshot **6,720 rows**; role/style confounds; Mistral stopped at user request | Developmental only; neither pass nor kill |
+| Aug 29 | Role-separated semantic ancestry G0b: ancestry-specific failure plus history-aware remedy | Collapse contrast **+21.7 to +53.3 pp**; one specificity failure; remedy missed its MMR criterion in all four cells | Kill exact candidate, retain mechanism clue |
+| Aug 29–30 | Effect-consistency uncertainty: executed successor-state agreement improves uncertainty/routing | **3/10** required checks passed across Qwen and gpt-oss | Kill candidate |
+| Aug 30 | Visual patch phase: grid alignment causes specific errors remedied by phase ensemble | No thin-feature specificity/phase lock; ensemble **−7.5 pp Qwen, −17.5 pp Gemma** | Kill candidate |
+| Aug 30 | Critique Oracle: actionable guardrail feedback induces recovery/gaming tradeoff | **0 fabricated authorization evidence**; safe-recovery gains **+35.4/+45.8 pp** vs opaque feedback | Recovery benefit, but hypothesized gaming tradeoff absent; kill candidate |
+| Aug 30 | Reward-hack early warning (CPU, public trajectory): variance warns earlier than ordinary hack rate | **10,240 rollouts/40 checkpoints**; both AUROCs 1.0; advantage **0**; false alarms **26.7%** | Developmental fail; no new RL |
+| Sep 1 | Phantom Rollback: ambiguous restore availability induces premature irreversible actions | Availability effect **0**; Qwen comprehension **12/16**, Gemma strict parse **0/16** | `INVALID_ASSAY_COMPREHENSION_OR_CAPABILITY`; no expansion |
+| Sep 1 | Reward Extinction Debt: aligned former shortcut learner reacquires faster than clean control | Induction **+97.69 pp**; matching failed; debt AUC difference **−0.0174**, CI **[−0.0967, 0.0621]** | `INVALID_MODEL_ORGANISM_FORMATION`; no expansion |
+
+Read [the journal](docs/RESEARCH_JOURNAL.md) before interpreting a short table
+entry. Raw outputs/checkpoints remain under ignored `retrieved/` and `artifacts/`;
+public summaries are not a substitute for those archives. Never commit private
+answer keys, credentials, or restricted media.
+
+## Historical Under Extinction implementation
 
 The CPU oracle pipeline passes its synthetic consistency checks. The first paid
 Qwen3.5-9B Stage-1 run completed on 19 August 2026 and **failed its registered DEV
@@ -43,7 +72,7 @@ Gate C has not been attempted, and there is no claim that this work guarantees
 aligned or symbiotic AGI.
 
 The separately frozen
-[`DID-v1 post-failure diagnostic`](docs/DEV_DIAG_PREREGISTRATION.md) now tests
+[`DID-v1 post-failure diagnostic`](docs/DEV_DIAG_PREREGISTRATION.md) tested
 whether the failure arose from held-out objective retention, static causal
 parsing, passive-update integration, objective–planner composition, or the A/B
 interface. DID-v1 uses new DEV-only cases and frozen checkpoints. It cannot revise
@@ -82,12 +111,12 @@ The project only becomes a serious paper if the assay later predicts unseen rewa
 
 If the fingerprint adds no held-out predictive information, the project stops.
 
-An independent, not-yet-run [`response-interface invariance gate`](docs/INTERFACE_INVARIANCE_FEASIBILITY_PROTOCOL.md)
-is prepared on branch `codex/interface-invariance-g0`. It tests a different
+An independent [`response-interface invariance gate`](docs/INTERFACE_INVARIANCE_FEASIBILITY_PROTOCOL.md)
+was prepared on branch `codex/interface-invariance-g0` and completed on August 25
+with `STOP_INTERFACE_INVARIANCE_LINE`. It tests a different
 measurement-validity hypothesis with a new corpus and reads none of the bridge
 or provenance results. It is a bounded feasibility study, not a continuation of
-either retired paper claim; no GPU result should be inferred until its frozen
-gate has been run and independently verified.
+either retired paper claim; its measured result is recorded in the ledger above.
 
 ## What is implemented
 
@@ -202,3 +231,5 @@ boundary are in
 with the exact GH200 and offline-verification sequence in
 [`docs/REWARD_EXTINCTION_DEBT_G0_RUNBOOK.md`](docs/REWARD_EXTINCTION_DEBT_G0_RUNBOOK.md).
 It does not share data, checkpoints, or a decision with Phantom Rollback.
+The completed September 1 run returned `INVALID_MODEL_ORGANISM_FORMATION`;
+see the journal rather than treating the historical runbook as a pending launch.

@@ -1,0 +1,137 @@
+{
+  "as_of": "2026-09-02",
+  "kind": "aggregate_report_fingerprints_not_reverification",
+  "records": [
+    {
+      "id": "UE-1",
+      "reported_status": {
+        "decision": "STOP_OR_DEBUG_WITHOUT_OPENING_LOCKED_TEST"
+      },
+      "sha256": "16c1ef0af82849d2bab1cc2ed2c9261902d387b5506df91cd567c79af27bd4c0",
+      "source": "results/stage1_20260819/stage1_dev_report.json"
+    },
+    {
+      "id": "UE-DID",
+      "reported_status": {
+        "all_gates_pass": false,
+        "decision": "LABEL_INTERFACE_CONTAMINATED_REDESIGN_RESPONSE_INTERFACE"
+      },
+      "sha256": "83ab58827c9ea1004ec148e004c6c8ea42f1a5d9639c0b2514e872fe6bd86051",
+      "source": "retrieved/did_v1.1.1_20260825/analysis/did_v1.1.1_report.json"
+    },
+    {
+      "id": "PA-0",
+      "reported_status": {
+        "decision": "STOP_PROVENANCE_AUTHORITY_LINE",
+        "pass": false
+      },
+      "sha256": "6fdbab756cd048155b2cc4ded68e179c2e84a1d6525d80a7e4cc62b1ba68d40e",
+      "source": "retrieved/provenance_authority_g0_20260825/analysis/report_local.json"
+    },
+    {
+      "id": "RI-0",
+      "reported_status": {
+        "decision": "STOP_INTERFACE_INVARIANCE_LINE",
+        "pass": false
+      },
+      "sha256": "456abe8108db968d7654d2d14731c34589a44e6959dcbd7529ea88f83f327115",
+      "source": "retrieved/interface_invariance_g0_20260825/analysis/report_local.json"
+    },
+    {
+      "id": "HM-0",
+      "reported_status": {
+        "decision": "STOP_HYBRID_MEMORY_LINE",
+        "pass": false
+      },
+      "sha256": "6df4189ad26bba3c8f3268ddf77c9c868ea6ef9cacbf1be8187982124f191e91",
+      "source": "retrieved/hybrid_memory_g0_v1_1_20260825/report_local.json"
+    },
+    {
+      "id": "REC-0",
+      "reported_status": {
+        "decision": "KILL_CANDIDATE",
+        "pass": false
+      },
+      "sha256": "ac60bf971591cca07b411c8f4cf41ecf7ee8199577b1b841ab5fe0ffa3e7fee8",
+      "source": "retrieved/recency_g0_20260828T0432Z/run/gate_report.json"
+    },
+    {
+      "id": "J-0",
+      "reported_status": {
+        "decision": "KILL_CANDIDATE",
+        "pass": false
+      },
+      "sha256": "46f92f528f980a30607f70ebeb2cda43bfb053030f84039430d95754c7da9021",
+      "source": "retrieved/recipe_invariant_j0_20260828T0710Z_verified_20260828T0815Z/run/gate_report.json"
+    },
+    {
+      "id": "SA-DEV",
+      "reported_status": {
+        "status": "AWAITING_SECOND_INDEPENDENT_MODEL_FAMILY"
+      },
+      "sha256": "ca8ab3bbe49cbfc1df4dea17e2a093f952a610de375f1656f09527757c095107",
+      "source": "retrieved/semantic_ancestry_rag_g0_20260828T0901Z_qwen_family_snapshot_20260828T142825Z/family_qwen3_5/gate_report.json"
+    },
+    {
+      "id": "SA-0b",
+      "reported_status": {
+        "decision": "KILL_SEMANTIC_ANCESTRY_CANDIDATE",
+        "pass_gate": false
+      },
+      "sha256": "80dfcc5628ee31df086deabf3291b815d83e6607c07478101c0bc22b113649bd",
+      "source": "retrieved/semantic_ancestry_rag_g0b_20260829T0128Z_complete_20260829T1054Z/recovered_aggregate_20260829T1054Z/gate_report.json"
+    },
+    {
+      "id": "EC-0",
+      "reported_status": {
+        "decision": "KILL_EFFECT_CONSISTENCY",
+        "pass": false
+      },
+      "sha256": "b073470d5fa90fc6392a4a9fb736b36b72306acb1b1bd10d51aec6c9afeeab12",
+      "source": "retrieved/effect_consistency_uq_g0_20260829T2225Z_retrieved_20260830T0134Z/effect_consistency_uq_g0_20260829T2225Z/GATE_REPORT.json"
+    },
+    {
+      "id": "VP-0",
+      "reported_status": {
+        "decision": "KILL_PATCH_PHASE_STUDY",
+        "pass": false
+      },
+      "sha256": "e4267133c62bbdd8e1d04cbf0d534ff3fb93f286f495ae4c71049556e9dd1b6f",
+      "source": "retrieved/visual_patch_phase_g0_gemma4_20260829T2300Z_retrieved_20260830T0210Z/visual_patch_phase_g0_gemma4_20260829T2300Z/GATE_REPORT.json"
+    },
+    {
+      "id": "FL-0",
+      "reported_status": {
+        "decision": "KILL_FEEDBACK_LEAKAGE",
+        "passed": false
+      },
+      "sha256": "47c8b211505b11bcc9665a1c10a2f14dc9e86b2afafb7e2ac889c6acd6f54e1c",
+      "source": "retrieved/feedback_leakage_g0_20260830T212423Z_retrieved_20260830T225635Z/verification_report.json"
+    },
+    {
+      "id": "EW-DEV",
+      "reported_status": {
+        "decision": "DEVELOPMENTAL_FAIL"
+      },
+      "sha256": "0bb0312120fade30e923c7ad34ff2849cd1d5741c9ddb18c7acea2e5226b9499",
+      "source": "artifacts/reward_hack_early_warning_dev_20260830/REPORT.json"
+    },
+    {
+      "id": "PR-0",
+      "reported_status": {
+        "decision": "INVALID_ASSAY_COMPREHENSION_OR_CAPABILITY",
+        "passed": false
+      },
+      "sha256": "14364dfc72b1ee2ec73b0eac72763dd04afec54a64312857109cfedf6e193929",
+      "source": "retrieved/phantom_rollback_g0_20260901T0930Z/VERIFIED_REPORT.json"
+    },
+    {
+      "id": "RED-0",
+      "reported_status": {
+        "decision": "INVALID_MODEL_ORGANISM_FORMATION"
+      },
+      "sha256": "1f6e43f5c8a2979aa79027950a00858714eadc43b8ee90dbc6f02e379222fb20",
+      "source": "retrieved/reward_extinction_debt_g0_20260901T1100Z_VERIFIED_REPORT.json/VERIFIED_GATE_REPORT.json"
+    }
+  ]
+}

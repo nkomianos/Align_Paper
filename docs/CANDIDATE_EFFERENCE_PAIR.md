@@ -1,6 +1,10 @@
 # Candidate: Efference-Pair for Frozen Video VLMs
 
-**Status:** green-light for one bounded G0 only; vision backup, ranked below validator-monoculture security testing.
+**Status update (2026-09-02):** active preparation now starts with the separately
+scoped [EP0 synthetic apparatus pilot](EFFERENCE_PAIR_EP0_RUNBOOK.md). The
+real-video G0 below is not yet dataset-sealed or implemented end to end. EP0
+cannot pass its thresholds or authorize a paper claim. Historical candidate
+ranking below records the August 30 assessment, not the current run queue.
 
 ## One-sentence claim
 

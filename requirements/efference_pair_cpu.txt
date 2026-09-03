@@ -1,0 +1,5 @@
+# Isolated CPU apparatus environment; do not upgrade old experiment environments.
+numpy==2.4.2
+opencv-python-headless==4.13.0.92
+Pillow==12.1.1
+pytest==9.0.3

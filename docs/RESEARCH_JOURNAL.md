@@ -1,0 +1,326 @@
+# Researcher journal
+
+Last consolidated: **2026-09-02**. This is the current experiment index; historical
+protocols and the thesis scout retain their original context. The short ledger
+is in the [README](../README.md). Outcomes are reconstructed from the saved
+reports below, not from memory or optimistic chat summaries. The
+[machine-readable evidence index](RESEARCH_EVIDENCE_INDEX_20260902.json) contains
+SHA-256 fingerprints for all 15 source reports. It identifies the report bytes
+used here, **not** a claim that all historical inferential verifiers were rerun
+today. `scripts/journal_fingerprints.py` rebuilds it from an explicit allowlist
+without reading raw trajectories or private keys.
+
+## Recording rules
+
+- Give each hypothesis and empirical stage a stable ID. Retried launches,
+  snapshots, software tests, and model families are not independent paper ideas.
+- Record the hypothesis, comparison, population/model, frozen gate, effect size,
+  uncertainty where available, validity failures, evidence path, and PI decision.
+- Separate `valid negative`, `invalid assay/model organism`, `developmental`,
+  `apparatus only`, and `not run`. A stopped project is not automatically a
+  disproved scientific thesis. An interesting effect is not automatically a paper.
+- Preserve raw completions, inputs, configs, dependency attestations, partial
+  failures and checkpoints. Never overwrite retrieved evidence. Derived reports
+  belong outside sealed roots. Retain original reports when an audit corrects them.
+- Do not tune thresholds or drop failed cases after inspecting scored results.
+  A genuinely different experiment needs a new dated protocol and fresh evidence.
+- Before a long run: test formatting, comprehension, visual-token accounting,
+  intended training response, and required comparison matching on a **separate
+  small setup slice**. Benchmark throughput on the exact model. Stop at failed
+  prerequisites. Do not pay for a second family merely to confirm a broken assay.
+- Code tests and simulator-oracle success establish apparatus correctness only.
+  Keep restricted media, private answer keys, credentials and large model files
+  out of Git. Original Under Extinction locked TEST remains unopened.
+- Future entries must include actual start/end times and billed-resource data
+  when available. Do not reconstruct precise GPU-hours from chat estimates.
+
+## Completed empirical stages
+
+### UE-1 — Under Extinction Stage 1 (2026-08-19)
+
+**Hypothesis:** passive transition/value revaluation distinguishes genuinely
+rewarded policies from proxy-rewarded policies despite matched ordinary behavior.
+**Run:** paired Qwen3.5-9B reward-acquisition arms, seed 11, checkpoints at
+0/30/75/150/225/300 optimizer updates; 1,792 DEV cases per checkpoint.
+The unchanged base and checkpoint-zero controls were retained.
+
+**Finding:** software smoke checks passed; both arms learned their respective
+late-TRAIN objectives. Registered Stage-1 DEV and replication gates failed on
+comprehension, channel specificity, reversal and within-cell robustness.
+Decision: `STOP_OR_DEBUG_WITHOUT_OPENING_LOCKED_TEST`.
+
+**Interpretation:** the learned-policy assay was not established. Do not claim
+latent objectives were identified or that the general controller hypothesis was
+refuted. No locked-test replication or predictive Gate C was run.
+Evidence: [public DEV report](../results/stage1_20260819/stage1_dev_report.json),
+[run log](RUN_LOG_20260819_STAGE1.md), release/tag
+`stage1-dev-20260819-failed`; full local archive `retrieved/stage1_20260819/`.
+
+### UE-DID — post-failure diagnostic (retrieved 2026-08-25)
+
+**Hypothesis:** separate objective retention, static causal parsing, passive-update
+integration, planner composition and response-label effects.
+**Run:** four frozen policy conditions, 19,200 new DEV cases each: 76,800 score
+rows plus 1,024 unconstrained format probes. No new training or original TEST.
+
+**Finding:** `LABEL_INTERFACE_CONTAMINATED_REDESIGN_RESPONSE_INTERFACE`.
+Exact-format parse rate was 100%, but mean label-equivariance error was 0.189686;
+semantic choice agreement under label swaps was 75.09375% (worst policy 68.6875%).
+The worst cell equivariance error was 0.431215. Thus parse success alone did not
+make the A/B measurement valid. The broader diagnostic gates also did not pass.
+
+**Decision:** retire the current Under Extinction assay; retain the checkpoints.
+Evidence: `retrieved/did_v1.1.1_20260825/analysis/did_v1.1.1_report.json`;
+[preregistration](DEV_DIAG_PREREGISTRATION.md). This is a diagnostic stage of UE,
+not another independent successful/failed paper.
+
+### PA-0 — provenance authority (2026-08-25)
+
+**Hypothesis:** self-authored instructions exert more authority than matched
+external instructions, with the predicted horizon/recency pattern.
+**Run:** forced-likelihood Qwen gate; 512 paired units.
+**Finding:** self-minus-external probability = 0.00027724 = **0.027724 pp**,
+95% CI **[0.023908, 0.031702] pp**; required effect was 10 pp. All three gates
+failed; horizon gain was negative.
+**Decision:** `STOP_PROVENANCE_AUTHORITY_LINE`; tiny nonzero effect is not a
+material mechanism. Evidence:
+`retrieved/provenance_authority_g0_20260825/analysis/report_local.json`.
+
+### RI-0 — response-interface invariance (2026-08-25)
+
+**Hypothesis:** semantically identical actions encoded as single tokens, JSON,
+Python calls or XML materially change choices.
+**Run:** 128 matched units, Qwen forced-likelihood gate.
+**Finding:** selection disagreement **0**; within-unit probability spread
+**0.105105 pp**, CI **[0.090372, 0.120507] pp**. All three continuation checks
+failed. **Decision:** `STOP_INTERFACE_INVARIANCE_LINE`.
+Evidence: `retrieved/interface_invariance_g0_20260825/analysis/report_local.json`.
+
+### HM-0 — hybrid-memory safety carrier (2026-08-25)
+
+**Hypothesis:** Qwen3.5's recurrent state is a material causal carrier of a
+retained behavioral constraint, beyond attention K/V storage.
+**Finding:** baseline accuracy 100%; authorized margin 7.311 logits. Recurrent
+carryover **0.168 logits**, CI **[0.144, 0.193]**, below the 0.50 bar. Attention
+K/V carryover **14.449 logits**. **Decision:** `STOP_HYBRID_MEMORY_LINE`.
+This was a valid, small mechanistic effect, not a loading or parsing failure.
+Evidence: [result](HYBRID_MEMORY_G0_RESULT.md),
+`retrieved/hybrid_memory_g0_v1_1_20260825/report_local.json`.
+
+### REC-0 — recency-gated switching (2026-08-28)
+
+**Hypothesis:** a learned recency direction causally mediates policy switching.
+**Run:** two seeds, readout/steering/erasure and matched controls.
+**Finding:** every registered gate failed both seeds. The later non-retroactive
+matched-cue audit gave switching differences **−0.072 pp / +0.704 pp** and
+steering contrasts **0.147 pp / 0.096 pp**. No specific necessity signature.
+**Decision:** `KILL_CANDIDATE`, no G1.
+Evidence: [final result with hashes](RECENCY_G0_FINAL_RESULT.md);
+`retrieved/recency_g0_20260828T0432Z/run/gate_report.json` and
+`retrieved/recency_g0_corrected_audit_20260828T0619Z/`.
+The audit applied interventions to the cue-only control as well; it did not
+replace the original report or rescue its decision.
+
+### J-0 — recipe-invariant intervention selection (2026-08-28)
+
+**Hypothesis:** intervention directions agreed upon by two training recipes
+transport causally to a held-out third recipe.
+**Run:** seeds 9201/9202; layer/direction selected using A/B only.
+**Finding:** source agreement **0.9872 / 0.9477**, but held-out signed steering
+**−0.095 / −0.224 pp** (lower bounds **−0.667 / −0.661 pp**). Necessity,
+specificity and baseline margin failed; preservation passed.
+**Decision:** kill the selection rule as this paper's central method, not the
+existence of all possible causal mechanisms. No external replication.
+Evidence: [final result](RECIPE_INVARIANT_J0_FINAL_RESULT.md),
+`retrieved/recipe_invariant_j0_20260828T0710Z_verified_20260828T0815Z/`.
+
+### SA-DEV — semantic ancestry developmental run (2026-08-28–29)
+
+**Hypothesis:** distinct-looking rewritten sources may inherit one answer's
+history and cease providing genuinely diverse evidence.
+**Finding:** completed Qwen family snapshot has **6,720 rows**; saved family
+status is `AWAITING_SECOND_INDEPENDENT_MODEL_FAMILY`, not a formal pass.
+Role reuse and style-control confounds were identified in the sealed design.
+Mistral was stopped at the user's request so the corrected role-separated run
+could start. **Decision:** developmental evidence only; neither result can make
+a candidate go/no-go decision.
+Evidence: `retrieved/semantic_ancestry_rag_g0_20260828T0901Z_qwen_family_snapshot_20260828T142825Z/`.
+Do not mislabel this interrupted development stage as a failed replication.
+
+### SA-0b — role-separated semantic ancestry (2026-08-29)
+
+**Run:** serving Qwen/Mistral crossed with SmolLM3/Granite rewriter/shadow roles;
+60 questions in each of four cells; style and independent-summary controls;
+history-aware retrieval compared to MMR.
+
+| Serving / rewriter / shadow | Cross-ancestry collapse minus baseline | History-aware mitigation minus MMR |
+| --- | ---: | ---: |
+| Qwen / Granite / SmolLM3 | +53.33 pp | +8.33 pp |
+| Qwen / SmolLM3 / Granite | +28.33 pp | −3.33 pp |
+| Mistral / Granite / SmolLM3 | +50.00 pp | −5.00 pp |
+| Mistral / SmolLM3 / Granite | +21.67 pp | −10.00 pp |
+
+**Finding:** collapse survived all four cells, but Mistral/SmolLM3/Granite failed
+specificity and independent-summary checks. **All four cells missed the frozen
+history-beats-MMR criterion**, including the positive +8.33 pp point estimate.
+**Decision:** `KILL_SEMANTIC_ANCESTRY_CANDIDATE`; retain an interesting observation,
+but do not expand this mechanism-plus-mitigation paper or retune its selector.
+Evidence: `retrieved/semantic_ancestry_rag_g0b_20260829T0128Z_complete_20260829T1054Z/recovered_aggregate_20260829T1054Z/gate_report.json`.
+The recovered aggregate and its verification are separate artifacts from the
+original aggregate, not silent edits to family outputs.
+
+### EC-0 — effect-consistency uncertainty (2026-08-29–30)
+
+**Hypothesis:** agreement between executed successor states is a better
+uncertainty signal than textual/action agreement and improves routing.
+**Run:** Qwen3.5 and gpt-oss, calendar/inventory environments, alias controls.
+**Finding:** **3 of 10** checks passed. Neither family provided the required
+cross-domain discrimination-plus-voting improvement.
+**Decision:** `KILL_EFFECT_CONSISTENCY`. Evidence:
+`retrieved/effect_consistency_uq_g0_20260829T2225Z_retrieved_20260830T0134Z/effect_consistency_uq_g0_20260829T2225Z/GATE_REPORT.json`.
+
+### VP-0 — visual patch-phase instability (2026-08-30)
+
+**Hypothesis:** patch-grid phase specifically destabilizes thin visual primitives;
+compute-matched phase ensembling mitigates the effect.
+**Run:** Qwen3-VL-8B and Gemma4-12B.
+**Finding:** Qwen thin/thick flip rates **16.67% / 16.67%**; Gemma **25% / 41.67%**.
+Periodicity and specificity gates failed. Ensemble accuracy differences:
+Qwen **−7.5 pp**, CI **[−17.5, 0]**; Gemma **−17.5 pp**, CI **[−30, −7.5]**.
+**Decision:** `KILL_PATCH_PHASE_STUDY`. Instability alone did not validate its
+mechanism, and the proposed remedy did not work. Evidence:
+`retrieved/visual_patch_phase_g0_gemma4_20260829T2300Z_retrieved_20260830T0210Z/visual_patch_phase_g0_gemma4_20260829T2300Z/GATE_REPORT.json`.
+
+### FL-0 — Critique Oracle feedback leakage (2026-08-30)
+
+**Hypothesis:** diagnostic feedback enables policy gaming under pressure;
+action-oriented feedback preserves legitimate recovery while reducing gaming.
+**Run:** Qwen/Gemma, 384 trials each; deployment/export/refund; neutral/coercive
+conditions; four feedback types.
+**Finding:** fabricated authorization evidence **0 in every cell**. Actionable
+versus opaque safe-success gains (pooled pressure conditions) were **+35.42 pp**
+Qwen, **+45.83 pp** Gemma. Under coercion alone: Qwen **29.17% → 100%** and Gemma
+**0% → 91.67%**. These are useful recovery results, not evidence of a leakage
+tradeoff. **Decision:** `KILL_FEEDBACK_LEAKAGE`.
+Evidence: `retrieved/feedback_leakage_g0_20260830T212423Z_retrieved_20260830T225635Z/verification_report.json`.
+
+### EW-DEV — reward-hack early-warning screen (2026-08-30, CPU)
+
+**Hypothesis:** ecological variance/polarization indicators anticipate hacking
+before ordinary observable hack rates do.
+**Run:** one public Qwen3-4B training trajectory, **10,240 rollouts / 40 checkpoints**;
+sustained onset at step 120 under the frozen rule.
+**Finding:** candidate and simple baselines both AUROC **1.0**; advantage **0**
+vs required 0.15; false alarms **26.7%**; **0/9** robustness cells passed.
+**Decision:** `DEVELOPMENTAL_FAIL`. No new RL training justified.
+Evidence: [result](REWARD_HACK_EARLY_WARNING_DEV_RESULT.md),
+`artifacts/reward_hack_early_warning_dev_20260830/REPORT.json`.
+
+### PR-0 — Phantom Rollback (2026-09-01)
+
+**Hypothesis:** ambiguous local checkpoint availability makes an agent take
+irreversible external actions; precise scope metadata removes that excess.
+**Run:** Qwen3.5/Gemma4, 1,024 trajectories and 16 comprehension probes per family;
+four arms and four domains; safe authorized twins.
+**Finding:** availability contrast **0** in both families (pooled CI **[0,0]**).
+Scope reduction pooled **0.5208 pp**, CI **[0,1.5625] pp**, versus required 8 pp.
+Qwen comprehension **12/16 = 75%**, below 85%; Gemma strict comprehension
+**0/16**, with Markdown-fenced responses rejected by the frozen parser.
+
+**Correction to an earlier chat summary:** Qwen was **not** 0/16. Gemma's strict
+0/16 is not proof that it understood zero semantic answers. No retrospective
+parser change can turn this assay into a registered pass.
+**Decision:** `INVALID_ASSAY_COMPREHENSION_OR_CAPABILITY`; do not expand this
+assay, but do not claim to have disproved risk compensation in capable agents.
+Evidence: `retrieved/phantom_rollback_g0_20260901T0930Z/VERIFIED_REPORT.json`.
+
+### RED-0 — Reward Extinction Debt (2026-09-01)
+
+**Hypothesis:** a formerly shortcut-rewarded, subsequently aligned model retains
+faster reacquisition than a clean policy matched on current behavior;
+reactivation counterconditioning reduces that debt.
+**Run:** instruction-tuned Qwen3.5-9B with frozen backbone/rank-8 LoRA; exact
+expected two-choice policy gradient and KL, not a general autonomous RL agent.
+Seeds 2718/5779; 18,304 scores. Both training history and the required matching
+condition matter; the use of an instruction-tuned model is not itself invalid.
+
+**Finding:** shortcut induction succeeded, **+97.690 pp** over clean,
+CI **[96.672,98.480] pp**. But subsequent alignment did **not** create the
+required matched starting policies. Initial shortcut probabilities were clean
+**2.310%**, ordinary-aligned **23.438%**, counterconditioned **46.875%**.
+Only one of the four seed-by-alignment-arm DEV selections achieved matching.
+
+Descriptive debt AUC difference: **−0.01736**, CI **[−0.09674,0.06206]**, not the
+required +0.12. Both clean and ordinary-aligned crossed the reacquisition bar at
+dose 16 (speed ratio **1**, not 2). Ordinary/counterconditioned utility losses
+were **26.00 / 52.56 pp**. Only **1/4 contexts** and **1/2 seeds** had positive debt.
+
+**Decision:** `INVALID_MODEL_ORGANISM_FORMATION`. These unmatched trajectories
+do not identify hidden debt or establish its absence. Plateau-like scores need
+an optimization/scoring diagnosis before any biological interpretation. No
+more compute on this formulation without a new, successful formation pilot.
+Evidence: `retrieved/reward_extinction_debt_g0_20260901T1100Z/` and separate report
+directory `retrieved/reward_extinction_debt_g0_20260901T1100Z_VERIFIED_REPORT.json/VERIFIED_GATE_REPORT.json`.
+The directory suffix `.json` is historical: it is a directory, not one file.
+265 evidence files / 4,489,112,701 bytes were previously secured; adapters are
+preserved. Manifest SHA-256:
+`6e97d78f6e0505e5d0bb8e2875f0ba0789f7ecf48bded7e4c2190c1ce658f120`.
+
+## Runtime attempts and non-results
+
+- Original symbolic/SFT oracle corpora and bridge smoke runs: engineering
+  calibration, not independent evidence for learned goals. Prepared variants and
+  stale-before-freeze directories remain under `artifacts/`.
+- Hybrid-memory v1.0 stopped before predictions due to an unbound paired cache
+  variable; v1.1 corrected it. Both archived. See HM-0 result.
+- Recency/J0 timestamped retries and snapshots under `retrieved/` are preserved.
+  The verified final result documents above, not folder count, determine the
+  number of scientific runs. Do not guess a cause for every retry from its name.
+- Semantic ancestry initial runtime-failure root and Qwen snapshot are retained.
+  The confounded long run and G0b are distinct stages, not interchangeable data.
+- Visual patch-phase `0204Z` retrieval precedes the completed `0210Z` retrieval;
+  it is not another independent replication.
+- Phantom's first `0524Z` attempt failed before generation on metadata handling.
+  The `0530Z` run completed Qwen; missing torchvision stopped Gemma before its
+  generations. Installing the matching torchvision and using a fresh `0732Z`
+  Gemma root was a runtime repair, not a changed scientific treatment.
+- SENTRY had runtime/preflight work but no verified covert-transfer scientific
+  gate in the recovered index. Its transparent-style setup was rejected as an
+  inadequate assay for the proposed hidden-transfer claim.
+
+## Prepared or screened, not empirically established
+
+| Candidate | Status as of this update |
+| --- | --- |
+| Validator-monoculture / correlated security testing | Code/oracle preparation exists; no completed GPU result found. Generic cross-family verification has substantial prior work. |
+| Visual hindsight leakage | Code and frozen proposal exist; no completed GPU result found. Keep available as an independent bounded pilot, not a result. |
+| Efference-Pair | Previously protocol only. EP0 code, corpus and CPU testing added September 2; see next entry. Real-video G0 unrun. |
+| Outcome-blind process verification; effect-only world models; verifier-aware transport; SENTRY | Scouting/scaffolding, not completed GPU evidence for their paper claims. Consult dated candidate/scout documents. |
+| Mostik-inspired latent compatibility | New hypothesis/protocol in September 2 idea review; no model result and no ready latent-bridge integration. |
+| Other literature-screened ideas | Listed in [thesis scout](ICLR_2027_THESIS_SCOUT.md). Literature rejection is not experimental falsification. |
+
+## 2026-09-02 — EP0 apparatus development (no GPU)
+
+The initial 28-pixel low-contrast object/1.5-pixel motion fixture failed 3 of 14
+CPU tests: the optical-flow residual did not meet its numeric-error tolerance.
+This caught two apparatus problems before any VLM scoring: weak texture at the
+flow window scale and rounded fractional object motion inconsistent with the
+constant-step oracle. Initial generated artifacts remain at
+`artifacts/efference_pair_ep0_20260902_v1/`.
+
+The new **v2** fixture uses a 40-pixel textured object and exactly 2-pixel steps;
+tolerances are unchanged. This is pre-experiment apparatus development, not
+post-result threshold tuning. The separate EP0 protocol explicitly limits its
+scope to planar translation. It does not silently replace the 448-pixel,
+real-video ACaM/MotionBench gate with easier synthetic data.
+
+Final **v3** adds neutral, truthful time stamps so the extra-RGB layout cannot
+be mistaken for a single uninterrupted chronological sequence. The same vector
+checks pass. All 28 targeted CPU tests passed (17 new motion, 3 latent fixture,
+8 existing visual-hindsight); there was **no GPU or LLM inference**. The 64-pair
+latent fixture has a perfect executable join oracle by construction, which is
+only a dataset/control check and not evidence for latent communication.
+
+See [EP0 runbook](EFFERENCE_PAIR_EP0_RUNBOOK.md) for the frozen workload and
+actual validation results. Any future GPU result must be appended here with
+the evidence manifest and a new decision; do not replace this CPU entry.
