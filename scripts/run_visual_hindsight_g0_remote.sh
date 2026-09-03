@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RUN_ROOT="${VISUAL_HINDSIGHT_RUN_ROOT:?set a fresh absolute output path}"
 PINNED_COMMIT="${VISUAL_HINDSIGHT_PINNED_COMMIT:?set the audited 40-hex git commit}"
-PINNED_CODE_SHA256="7dd8ba4ad80559e1a060b15776ea2f08871fa6e1508a7437912f478b48415dce"
+PINNED_CODE_SHA256="6a5e058f44ce19c5b6e32bbe9f804b4deeb91dfdf395272da0e91d68fa2d92b7"
 PINNED_CONFIG_SHA256="c7a236ac5b57320c294035f758ad2db488e2facab0b38888bcf3b6e0b6899842"
 CONFIG="$ROOT/configs/visual_hindsight_g0.yaml"
 

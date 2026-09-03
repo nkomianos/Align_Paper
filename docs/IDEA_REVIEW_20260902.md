@@ -110,12 +110,15 @@ simple existing re-alignment works equally well, no formation of a useful
 baseline channel, or a directly overlapping study. A performance regression
 benchmark without a principled remedy is likely too weak for ICLR.
 
-**Readiness:** a label-separated, nonce two-hop communication fixture and its
-exact oracle are included under `src/latent_contract/`. This is a CPU data/control
-test only. Published bridge integration, model/update pins, matched text budget,
-and end-to-end training/inference are **not implemented yet**. Do not call it GPU
-ready, and do not use an older model merely to claim a 2026 frontier result:
-small published pairs are for replication, newer independent pairs for confirmation.
+**Readiness (later September 2 update):** the fixture now has a real-model LC0
+channel-validity runner, pinned small Qwen checkpoint, six transport controls,
+prefix/context budget audit, snapshots, and verifier. See the
+[data/queue runbook](DATA_AND_EXPERIMENT_QUEUE_20260902.md). Its first 48-forward
+smoke is implemented but not CUDA-tested. This is a StateBridge-style
+teacher-forced relation interface, **not** published-task baseline reproduction.
+Full baseline reproduction, update training, utility matching and the update
+robustness/repair experiment are still not implemented. Small models are for
+apparatus validation, not claims about 2026 frontier systems.
 
 ## 3. Visual hindsight leakage — independent prepared backup
 

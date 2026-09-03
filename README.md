@@ -22,6 +22,15 @@ previously proposed ACaM/MotionBench G0 and cannot pass that gate. The first pai
 step is only 24 frozen smoke forwards; a separate 450-forward pilot is conditional
 on compatibility and measured throughput. The real-video gate remains unrun.
 
+The [data inventory and executable queue](docs/DATA_AND_EXPERIMENT_QUEUE_20260902.md)
+now includes three initial stages: motion EP0, independent native-video hindsight,
+and a newly implemented latent-channel validity pilot. Twelve MotionBench DEV
+MP4s are local: 11 decode fully, including one cartoon; the remaining clip is
+quarantined. These are development/media-audit examples, not a held-out result.
+With `PYTHONPATH` set to `src`, run `python scripts/check_research_queue.py` to
+verify prepared bytes without connecting to a GPU. No model-update robustness experiment has
+been run or implemented yet; LC0 only establishes its communication prerequisite.
+
 See the [researcher journal](docs/RESEARCH_JOURNAL.md) for hypothesis, design,
 numbers, evidence paths, failed launches, interpretation limits, and next steps;
 the [new-idea review](docs/IDEA_REVIEW_20260902.md) records the Mostik/latent-channel

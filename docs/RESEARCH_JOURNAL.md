@@ -296,7 +296,7 @@ preserved. Manifest SHA-256:
 | Visual hindsight leakage | Code and frozen proposal exist; no completed GPU result found. Keep available as an independent bounded pilot, not a result. |
 | Efference-Pair | Previously protocol only. EP0 code, corpus and CPU testing added September 2; see next entry. Real-video G0 unrun. |
 | Outcome-blind process verification; effect-only world models; verifier-aware transport; SENTRY | Scouting/scaffolding, not completed GPU evidence for their paper claims. Consult dated candidate/scout documents. |
-| Mostik-inspired latent compatibility | New hypothesis/protocol in September 2 idea review; no model result and no ready latent-bridge integration. |
+| Mostik-inspired latent compatibility | September 2 LC0 now has a channel-validity runner; CUDA and real task accuracy untested. Update/repair study and published baseline reproduction not implemented. |
 | Other literature-screened ideas | Listed in [thesis scout](ICLR_2027_THESIS_SCOUT.md). Literature rejection is not experimental falsification. |
 
 ## 2026-09-02 — EP0 apparatus development (no GPU)
@@ -324,3 +324,48 @@ only a dataset/control check and not evidence for latent communication.
 See [EP0 runbook](EFFERENCE_PAIR_EP0_RUNBOOK.md) for the frozen workload and
 actual validation results. Any future GPU result must be appended here with
 the evidence manifest and a new decision; do not replace this CPU entry.
+
+## 2026-09-02 — Data acquisition and independent experiment queue
+
+User asked whether video data actually existed and requested more prepared
+experiments. Synthetic EP0 frames already existed; real-video bytes did not.
+We acquired **12 MotionBench DEV MP4s (36,001,980 bytes)** at pinned revision
+`f099db892172a015c489507c9abe56b036d960ef`; upstream LFS SHA-256 and local
+manifests agree. Eleven decode fully; preview screening identifies ten live-action
+and one cartoon. The other clip decodes 119/182 advertised frames despite a
+matching upstream checksum. It is quarantined, not silently dropped/replaced.
+The initial failed acquisition and completed diagnostic inventory are both kept.
+
+The sample is for media/label audit, not held-out scoring. Category labels were
+not sufficient to find pure camera-versus-object cases: cuts, blur, action
+counts, animation and pose questions are present. ACaM inventory/card was checked
+but its archives/test annotations were not downloaded. Full label review and a
+deduplicated, source-separated natural-video protocol remain necessary.
+
+Prepared independent visual-hindsight corpus: 48 pairs / 240 calls, exact prefix
+identity and matched suffix checks pass. Corrected a stale launcher code digest
+to match committed source; no scientific conditions or thresholds changed.
+
+New LC0 code adds a six-arm contextual-prefix transport preflight to the prior
+nonce-join fixture: text, norm-text, latent, counterfactual text/latent and no
+message. First smoke is 48 receiver forwards and eight teacher-forced sender
+prefills. It uses a StateBridge-style mathematical alignment, not the original
+four-agent benchmark pipeline. Model pins, budget audit, saved prefix tensors,
+raw records, immutable snapshots and read-only verifier are implemented.
+No sender update or scientific latent-compatibility result exists. A random tiny
+Qwen CPU integration test verifies tensor/generation contracts only.
+
+Additional brainstorming rejected generic retry/idempotency and durable
+authorization replay as too close to current primary papers before spending
+GPU time. These are literature decisions, not new failed experiments.
+
+See [data and executable queue](DATA_AND_EXPERIMENT_QUEUE_20260902.md) and its
+manifest for exact prepared paths, hashes, models, workloads and launch limits.
+No GPU instance was contacted or launched during this preparation.
+
+Validation: **43 focused CPU tests passed** (EP0, original latent fixture, LC0,
+MotionBench selection and visual hindsight), all four prepared data roots passed
+read-only checksum checks, both shell launchers passed syntax checks, and changed
+documentation links resolved. CPU integration environment: torch 2.11.0+cpu,
+Transformers 5.6.2, huggingface-hub 1.11.0, NumPy 2.4.2, Pillow 12.1.1,
+pytest 9.0.3. These versions do not replace the older frozen GPU environments.
