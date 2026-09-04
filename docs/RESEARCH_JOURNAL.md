@@ -1881,3 +1881,26 @@ preserves only the narrow Hindsight causal opening. Do not queue a ThoughtTrace
 message-versus-thought experiment because the paper already runs it. Current GPU
 queue: nested-budget gradient G0, then the PUPPET capable-reader DEV; policy
 training is conditional on a gradient pass. No GPU is reachable or running.
+
+## 2026-09-04 -- small-model rehearsal stops at capability qualification
+
+Froze commit `7bf21ae` before running the exact nested-budget infrastructure on
+the locally cached Qwen3-0.6B checkpoint. The run stopped prospectively after
+71.83 seconds because the model answered only 34/64 teacher-interface cases
+correctly. Mean normalized target probability was .552889, its minimum was
+.001200, and the constrained A/B mass was .999999. This distinguishes semantic
+capability failure from tokenization or probability-extraction failure.
+
+Fresh evidence root
+`artifacts/hindsight_neural_gradient_cpu_dev_20260904_v1` passes the read-only
+verifier; `MANIFEST.json` SHA-256 is
+`272725ad408e71759a80498bee43a5cf8868f9195491bef070028a5f0103e42d`.
+Decision `CPU_REHEARSAL_ONLY_INTERFACE_UNQUALIFIED`. No gradients were admitted
+as evidence. This validates the load/render/qualification/seal/verify path but
+does not substitute for or predict the frozen Qwen3.5-9B endpoint.
+
+An audit of archived 9B work did not locate an exact prior qualification of this
+new A/B teacher interface. Earlier positive-control qualifications used a
+different response-format task, so they cannot be imported. The 9B G0 v2 must
+retain its own early qualification. The previous GH200 address now times out;
+there is no active remote run to preserve.
