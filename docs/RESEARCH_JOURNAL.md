@@ -1535,3 +1535,11 @@ constitute independent refutations of paper hypotheses. Require an informative
 task and strong simple baselines before expansion, check novelty early, and
 avoid repeatedly changing tasks or scoring to seek a positive result. This DEV
 can justify a better-powered confirmation, never an acceptance claim.
+
+Continuation audit: previous turn made progress (launched frozen DEV and committed
+protocol). Session 51921 was polled and confirmed live; six batches / 48 outputs
+were saved at this check, with no scoring performed. Qwen cache deviations are
+2.10e-5 (batch/serial) and 4.89e-5 (cache/full), below the fixed 5e-4 tolerance,
+with next-token argmax agreement. Added the separate covariance decomposition
+diagnostic described in the protocol; three unit tests passed. Goal remains
+unachieved; no paper efficacy claim, no GPU expansion, no restart.

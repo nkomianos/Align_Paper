@@ -88,3 +88,16 @@ Even a clean positive would still require exact-byte sampler comparisons, multip
 current capable model families, fresh tasks, and a stronger novelty case. It would
 not justify saying that the original models became more accurate or that a paper
 is likely accepted. Preserve every result and failure; no automatic GPU expansion.
+
+## Supplementary covariance audit (declared while generation is active)
+
+Before scoring any stochastic output, added `scripts/audit_coupling_covariance.py`.
+It consumes the completed primary analysis, without changing its decisions or
+artifacts. For each comparison it decomposes the observed variance reduction
+into the change in sampled marginal variances and twice the covariance gain.
+This prevents treating a lucky lower sample marginal variance as evidence of
+successful coupling. It also reports candidate difference variance divided by
+its own marginal variance sum; zero denominators remain undefined. These are
+descriptive diagnostics, not extra significance tests or changed gate criteria.
+Three tests pass, including an apparent improvement caused solely by marginal
+variation. No runner, sampling policy, frozen helper or config was modified.
