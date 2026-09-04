@@ -11,6 +11,33 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
+### Current GPU window — September 4, approximately 09:05 UTC
+
+The GH200 is **running** the frozen both-pair coupling clarification:
+40 new articles, 32 new seeds, four sampling policies, 20,480 completions.
+Both original model pairs use the same GPU implementation. This is one bounded
+clarification of mixed evidence, not a paper expansion or a retroactive pass.
+See [frozen protocol](docs/COUPLING_CLARIFICATION_FROZEN_PROTOCOL_20260904.md).
+Earlier “idle”, “no queue”, and “safe to terminate” statements below describe
+their historical runs, **not the current instance**. Preserve this instance until
+the active work and its evidence transfer finish; target evidence cutoff is
+15:40 UTC ahead of the user's approximately 16:21 UTC termination window.
+
+Full-response SDPO's format positive control stopped **before training**:
+explicit-format success 16/32, content correctness 32/32; hindsight-format
+success 25/32, content correctness 32/32. All 24 initially mismatched responses
+were corrected, but strict formatting requirements failed elsewhere. Its result
+is `UNQUALIFIED_GENERATIVE_APPARATUS`, not a rejection of endogenous-feedback
+learning. Complete evidence and the earlier pre-generation source-hash failure
+are saved in `retrieved/sdpo_format_20260904T0902Z`; archive SHA-256
+`a54c375b7e2546219a289aac0c9430f0cbd5c3fdd8b966a34a567635f8545446`.
+The read-only verifier checked 21 manifest files and native tokenizer records;
+it did not replay neural forwards or locally verify large model weights.
+Any apparatus repair must be versioned prospectively with fresh cases; these
+outputs and this failed qualification remain unchanged.
+
+### Earlier developmental records
+
 **New local candidate:** [native-marginal cross-tokenizer coupling](docs/BYTE_CLOCK_COUPLING_DEV_20260904.md)
 investigates cheaper stochastic model comparisons, not improved model accuracy.
 A finite-model DEV is replay-verified: byte-clock/grouped coupling fixes constructed
@@ -22,7 +49,7 @@ The [stochastic SQuAD DEV](docs/CPU_COUPLING_RESULT_20260904.md) completed on th
 laptop: eight questions,16seeds,four policies,two small models (1,024completions).
 Its descriptive F1 variance reduction is positive (~34% versus independent),
 but the larger-model GPU result below is negative. Overall evidence is mixed,
-not a paper green light; no coupling experiment is currently running.
+not a paper green light; the bounded follow-up is described above.
 
 **Subsequent GPU result:** the larger Qwen3-4B / SmolLM2-1.7B comparison completed
 1,024 outputs in 84.33 seconds, with evidence retrieved and verified. Hierarchical
