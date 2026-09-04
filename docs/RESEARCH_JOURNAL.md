@@ -1726,3 +1726,31 @@ neural SDPO behavior, human prevalence, estimator novelty or paper viability.
 Next CPU work is contamination/selection stress. Next GPU work remains the
 frozen capable PUPPET reader, followed only if justified by a faithful
 SDPO-style residual-correction gate.
+
+## 2026-09-04 -- neural delayed-anchor SDPO gate frozen
+
+Promoted the positive finite-state result to a prospectively frozen neural
+mechanism test before any endpoint generation. Commit `3c2c1c2` contains the
+runner, read-only verifier, six direct tests and protocol. The gate pins
+Qwen/Qwen3.5-9B at revision
+`c202236235762e1c871ad0ccb60c8ee5ba337b9a` and the public SDPO implementation
+at commit `3b17d2a67bd2565b9fbda495fd16a485406aa954`; both remote pins were checked.
+
+The assay uses128 population interactions and32 evaluation prompts over16
+surfaces with A/B order swaps. Expression and transition worlds expose exactly
+the same immediate feedback. Thirty-two outcome-independent delayed anchors
+define opposite correct policies. Seven64-step rank-8 LoRA arms compare raw
+SDPO, anchor-only SDPO, equal-anchor SFT and the delayed-minus-immediate residual
+correction. Teacher-interface and truthful-acquisition checks stop the run before
+causal interpretation if the apparatus cannot learn. Partial steps, adapters
+and optimizer state are preserved on failure. Eighteen relevant tests, Python
+compilation and shell syntax pass.
+
+This uses exact full-vocabulary reverse KL at the first decision token. The
+released online default is a top-20-plus-tail approximation, so a pass is only a
+mechanism qualification and must be replicated under that released loss, full
+sequences and multiple seeds. A qualified teacher/acquisition followed by a
+gate failure parks the current Hindsight correction. Expected GH200 time is
+roughly2--6 hours, with earlier stops possible. The prior host
+`192.222.57.245` still times out; no GPU process is active and no endpoint has
+been generated.

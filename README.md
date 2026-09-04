@@ -32,10 +32,17 @@ augmentation lowers expression-world regret from `.01377` for the equal-anchor
 baseline to `.00934`, versus `.08628` for raw immediate feedback, while exactly
 preserving truthful feedback. This is the first positive intervention result,
 but it is finite-state and uses a standard difference estimator; the package is
-therefore **promising but not yet paper-qualified**. The next available-GPU priority is the already frozen
-Qwen3.5-9B human-feedback reader DEV (expected under one GH200-hour), followed
-only on a pass by untouched confirmation and a small faithful SDPO/anchor gate.
-No GPU host is currently reachable.
+therefore **promising but not yet paper-qualified**. A stricter
+[neural delayed-anchor gate](docs/HINDSIGHT_NEURAL_ANCHOR_G0_PROTOCOL_20260904.md)
+is now frozen at commit `3c2c1c2`. It uses Qwen3.5-9B, the SDPO hindsight block,
+the exact full-vocabulary reverse-KL objective, swapped semantic choices, equal
+anchor budgets, and acquisition/interface stops. The two causal worlds have
+byte-identical immediate data but opposite correct policies. A pass must recover
+the expression-world policy, preserve the transition-world raw objective, and
+beat both anchor-only SDPO and anchor SFT by the frozen margin. This is the next
+available-GPU priority (estimated 2--6 GH200 hours), followed by the already
+frozen capable PUPPET reader DEV (under one hour). No GPU host is currently
+reachable; `192.222.57.245` times out, so no paid process is active there.
 
 ### CPU-only follow-up
 
