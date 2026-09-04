@@ -1436,3 +1436,35 @@ camera-motion ideas (IdempotencyBench, ReliabilityBench, ACaM, and Geometry-Guid
 Camera Motion Understanding). Search-level triage only: no new experiment or
 novelty claim based on these generic formulations. Current next action is to
 finish/analyze the live OPDLM run, not start another GPU job.
+
+## 2026-09-04 — closed-loop result secured; no GPU expansion
+
+Local session72509 completed all96 outputs, 1661forwards/1160.05s. Frozen
+verification passed; manifest52d3742bb799faf995d16ef76b5d7e282ddc382e7eb4d163cc37f4a764fd49ba.
+Independent analysis saved exclusively to artifacts/opdlm_onpolicy_v1_analysis.json;
+raw evidence unchanged. Verification is hash/metric/token/probability checking,
+not inference replay. Seven targeted tests pass (earlier combined32 also passed).
+
+Permissive last-number correctness: baseline24/24, fresh24/24, all-cache23/24,
+late-cache23/24. Strict integer-only correctness0/24 throughout due to prose
+and equations. EOS24/23/24/23. All-cache makes91-47=41; late-cache makes9-4=55.
+No correction variant improves on baseline. Baseline ceiling limits usefulness
+conclusions; strict formatting failure is not zero task competence.
+
+87 probes: two all/fresh argmax differences, both nonnumeric; one cached
+candidate retained when fresh rejects. Seed coverage18 final-answer numerals,
+41 earlier numerals,19 other,9 special. Late/fresh seed maxerror7.63e-6,
+three changes to remaining draft argmaxes. Exploratory .8 confidence crossing:
+two each direction; not a deployed threshold policy. All outputs reviewed.
+
+PI parks this correction: no useful gain and direct prior-work overlap. No
+claim that all caching is harmful or COVER refuted. Do not auto-expand or run
+more cases merely to seek positive results. Fallback broad ideas checked in
+docs/FALLBACK_NOVELTY_TRIAGE_20260904.md overlap existing papers and are not queued.
+
+Live SSH check of192.222.57.245 confirms GH2000%/3MiB and no compute process.
+Prior GPU evidence is locally secured per INDEPENDENT_QUEUE_20260904.md.
+User told safe to terminate this instance for the completed experiments. No
+CPU experiment remains active; no hidden GPU queue. Research goal remains unmet,
+not complete or blocked. Next work is a differentiated hypothesis/protocol,
+not paid hardware held idle. All local/remote artifacts preserved, no push.

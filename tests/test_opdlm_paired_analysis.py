@@ -17,3 +17,7 @@ def test_last_number_span_not_echoed_operands():
     assert mod.last_numeric_span('3 + 4 = **7**.')==(10,11)
     assert mod.last_numeric_span('No answer') is None
     assert mod.last_numeric_span('The answer is 15.2') is None
+
+def test_threshold_crossings_are_bidirectional_not_accuracy():
+    a=mod.threshold_audit([{'old_probability':[.7,.9]},{'old_probability':[.85,.75]}])
+    assert a['fresh_rejects_cache_accepts']==a['cache_rejects_fresh_accepts']==1

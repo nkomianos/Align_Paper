@@ -13,6 +13,13 @@ def last_numeric_span(text):
     found=list(re.finditer(r'(?<![\w.])[+-]?\d+(?!\w|\.\d)',text))
     return found[-1].span() if found else None
 
+def threshold_audit(audits,cutoff=0.8):
+    # Exploratory: 0.8 is the published WINO re-evaluation's remask threshold,
+    # not a tuned threshold or a policy actually deployed in this experiment.
+    return {'cutoff':cutoff,'n':len(audits),
+        'fresh_rejects_cache_accepts':sum(a['old_probability'][0]<cutoff<=a['old_probability'][1] for a in audits),
+        'cache_rejects_fresh_accepts':sum(a['old_probability'][1]<cutoff<=a['old_probability'][0] for a in audits)}
+
 def paired(a,b):
     a=np.asarray(a,dtype=int); b=np.asarray(b,dtype=int)
     wins=int(((a==1)&(b==0)).sum()); losses=int(((a==0)&(b==1)).sum())
@@ -56,6 +63,7 @@ def analyze(root,out):
         'mean_candidate_probability_shift':float(np.mean([a['old_probability'][1]-a['old_probability'][0] for a in v]))} for k,v in groups.items()}
     changed=[{'task':i,'answers':{p:bykey[i,p]['text'] for p in POLICIES},'gold':bykey[i,'baseline']['gold']} for i in ids if len(set(bykey[i,p]['text'] for p in POLICIES))>1]
     report={'evidence':checked,'source_sha':sha(__file__),'comparisons':comparisons,'seed_groups':grouped,
+        'exploratory_threshold_audit':threshold_audit(audits),
         'changed_task_outputs':changed,'scope':'Exploratory task-paired statistics, not population/model-seed evidence; unadjusted p-values are not a paper gate'}
     # Exclusive create prevents overwriting earlier analysis.
     with out.open('x',encoding='utf-8') as f: json.dump(report,f,indent=2)

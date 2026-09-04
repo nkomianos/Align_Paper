@@ -11,13 +11,17 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
-**Active local-only comparison:** [OPDLM on-policy verification](docs/OPDLM_ONPOLICY_20260904.md)
-is running 24 arithmetic prompts under four closed-loop policies, plus paired
-same-state verifier probes. Root `artifacts/opdlm_onpolicy_v1`. No paid GPU used;
-no results decision yet. A June re-evaluation paper already explicitly discusses
-indirect leakage and tests independent verification, substantially narrowing
-novelty. A useful decoding improvement—not the leakage observation alone—is
-required before any paper expansion.
+**Latest completed comparison:** [OPDLM on-policy verification](docs/OPDLM_ONPOLICY_20260904.md)
+finished 24 arithmetic prompts under four closed-loop policies plus 87 paired
+verifier probes: 1,661 CPU forwards in 19.33 minutes. Evidence hashes and metrics
+verify. Baseline and fresh checking score 24/24 under the predeclared permissive
+last-number metric; both cache variants score 23/24. Strict answer-only compliance
+is 0/24 in every arm. There is no demonstrated improvement over ordinary decoding.
+Only 18/87 probed seeds belong to final answer numerals; baseline accuracy is at
+ceiling, limiting correction conclusions. With direct prior-work overlap too,
+this route is parked, not expanded. No active CPU or GPU experiment queue remains.
+All artifacts are preserved; the GH200 was live-checked idle after completion
+of its previously secured runs and is safe to terminate for these experiments.
 
 **Latest modern-decoder qualification:** [OPDLM cache DEV](docs/OPDLM_CACHE_DEV_20260904.md)
 ran locally on pinned OPDLM-0.6B. Native and instrumented attention agree exactly,

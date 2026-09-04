@@ -96,3 +96,52 @@ text. This is a post-hoc coverage diagnostic, not a new primary metric or a
 change to seed selection. It checks whether this particular highest-confidence
 selection policy is actually verifying answer digits before drawing conclusions
 about correction. The frozen experiment is still unchanged.
+
+An explicitly exploratory threshold audit additionally counts both directions
+of decision disagreement at candidate probability 0.8, the threshold used in
+the published WINO re-evaluation. This is not a tuned cutoff or an actual
+threshold-policy experiment: our deployed variants revise by argmax. It checks
+whether unchanged argmax can conceal potentially consequential confidence shifts;
+it cannot establish that threshold remasking would improve final answers.
+
+## Completed result and PI decision
+
+All 96 policy/task outputs completed: 1,661 CPU forwards, 1,160.05 seconds
+(19.33 minutes), no weight updates. Session 72509 exited successfully. Frozen
+verifier passed source/model/evidence hashes and recomputed scores, tokens,
+probabilities and counts; it does not replay model inference. Manifest SHA-256:
+`52d3742bb799faf995d16ef76b5d7e282ddc382e7eb4d163cc37f4a764fd49ba`.
+Separate analysis: `artifacts/opdlm_onpolicy_v1_analysis.json`.
+
+| Policy | Strict correct / 24 | Permissive last-number correct / 24 | EOS / 24 |
+| --- | --- | --- | --- |
+| Ordinary baseline | 0 | 24 | 24 |
+| Fresh checking | 0 | 24 | 23 |
+| All-layer corrected cache | 0 | 23 | 24 |
+| Final-layer corrected cache | 0 | 23 | 23 |
+
+All strict failures are answer-only format failures: the model emits equations
+and/or explanations. Preserve this result, but do not misdescribe it as zero
+arithmetic competence. Baseline is at ceiling under the separately declared
+permissive metric, leaving no opportunity to demonstrate answer correction.
+All-layer cache changes 91-47 from 44 to 41; final-layer cache changes 9-4 from
+5 to 55. Neither cache policy wins any task over baseline. These are small-sample
+regressions, not population-level proof that caching is harmful.
+
+Of 87 same-state probes, all-layer versus fresh seed argmax differs twice,
+both on non-numeric tokens; one retains a candidate fresh checking rejects.
+Only 18 seeds overlap final answer numerals, versus 41 earlier numerals,
+19 other tokens and 9 special tokens. Final-layer checking agrees with fresh
+seed logits to 7.63e-6, while changing three remaining draft argmaxes.
+This confirms the implemented single-seed isolation property, not task utility.
+At the exploratory 0.8 threshold, disagreement occurs twice in each direction;
+no threshold-based policy was run. No speedup claim follows from call counts.
+
+**PI: park this proposed correction; do not expand it on the paid GPU.**
+There is no demonstrated benefit, answer-seed coverage is limited, task accuracy
+is at ceiling, and indirect leakage itself is already explicit prior work.
+This does not refute COVER or every cache-verification improvement. Reopening
+would require a distinct contribution and a justified non-ceiling task, not
+more samples of this assay. Seven targeted tests pass; raw evidence and all
+earlier attempts remain unchanged. The fallback novelty triage records broad
+ideas rejected for overlap, not additional runnable experiments.
