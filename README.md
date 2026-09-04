@@ -13,6 +13,14 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ### CPU-only follow-up
 
+The [matched Hindsight learning run](docs/HINDSIGHT_MATCHED_LEARNING_20260904.md)
+completed six actual LoRA training arms (144 updates, six minutes CPU), with all
+adapters/optimizers preserved. Copying feedback has worse NLL than an initially
+matched fixed-noise control, but changed-wording accuracy is 8/16 for both.
+Anchors yield9/16 versus8/16 anchor-only, with no unanchored accuracy improvement.
+Even direct truthful supervision transfers poorly. This is a weak acquisition
+regime and a diagnostic feedback effect, not a successful paper method.
+
 The [released-template fresh preference test](docs/HINDSIGHT_PUBLISHED_TEMPLATE_CONTROL_20260904.md)
 completed 128 CPU forwards: published hindsight 25/32, direct preference 27/32,
 redacted wrapper 30/32. All three still favor option A; uninformative controls
