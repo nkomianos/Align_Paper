@@ -1827,3 +1827,26 @@ new method contribution. The candidate's novelty must remain the longitudinal
 post-treatment ambiguity, its consequence for next-turn self-distillation, and
 neural evidence that sparse delayed measurements correct that specific gradient.
 The queue is unchanged: run the gradient G0 before any policy expansion.
+
+## 2026-09-04 -- prospective gradient-gate power audit exposes ceiling effect
+
+Before any neural endpoint, froze commit `e7883c5` and ran 14,000 parametric
+repetitions through the exact six gradient-G0 gates, including bfloat16 vector
+quantization and the fixed eight outcome-blind panels. Deterministic replay and
+artifact hashes pass. Evidence root
+`artifacts/hindsight_gradient_power_audit_20260904_v1`; manifest SHA-256
+`45c6910723b7a816e0e2c183ac5802b48c848af404c7eb53dc7e9512142a3a2b`.
+
+Observed augmented-to-anchor error ratios match the analytic
+`r/sqrt(1+r^2)` reference. The old all-six decision nevertheless qualifies zero
+of every low-absolute-noise cell, including settings with 55--76% lower error
+and eight/eight panel wins. Its fixed `.05` cosine-gain gate fails because both
+estimators are already directionally close to the oracle. The same relative
+advantage qualifies at high absolute noise, demonstrating an unintended
+absolute-noise dependence.
+
+Decision `OLD_BINARY_GATE_SUPERSEDED_BEFORE_NEURAL_ENDPOINT`. Preserve and
+report the old diagnostics, but do not let that cosine ceiling alone kill the
+estimator. Implement a prospective nested four/eight-anchor error-fidelity gate;
+cosine becomes continuous evidence and practical value remains for the later
+policy-learning assay. This is protocol validation, not neural evidence.
