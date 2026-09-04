@@ -1,5 +1,10 @@
 # Neural delayed-anchor gradient G0 protocol
 
+> Superseded before any neural endpoint by the prospectively corrected nested-
+> budget v2 protocol after a model-free operating-characteristic audit exposed
+> a cosine-ceiling failure. Preserve this document and its diagnostics; do not
+> use its all-six decision as the current scientific gate.
+
 ## Why this precedes policy training
 
 The unrun policy-training G0 forced its 32 anchors to match every latent
@@ -64,4 +69,3 @@ A qualified teacher plus a failed gradient comparison kills this estimator
 route without spending hours on policy training. Interface failure is an
 apparatus stop, not a scientific negative. No threshold may change after neural
 endpoint generation.
-
