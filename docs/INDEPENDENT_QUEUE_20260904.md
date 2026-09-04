@@ -106,7 +106,7 @@ equal to the no-message baseline. It also gives 3/8 for other message arms.
 Formatting explains two errors, but does not rescue communication validity.
 This exploratory parsing diagnostic does not replace the frozen strict score.
 
-## Active follow-up: bounded LC0 text diagnosis
+## Completed follow-up: bounded LC0 text diagnosis
 
 Root `/home/ubuntu/lc0_text_diagnostic_20260904T0450Z`, log/PID beside it.
 24 calls on the same eight DEV cases, not a new channel gate. Compare precisely
@@ -125,6 +125,36 @@ Record truncation, exact final-answer validity, per-arm accuracy and token-level
 equivalence. Reasoning needs a closed thinking block before its final answer
 can be scored. Neither a successful API check nor a successful reasoning answer
 establishes useful latent communication, robustness to updates, or paper value.
+
+Verified result: both no-reasoning arms 1/8 correct, 5/8 well-formatted; input
+IDs, generated tokens and original LC0 text generations match exactly in 8/8.
+Reasoning arm 5/8 correct and three token-limited unfinished answers. Total
+reasoning generation time 65.82 seconds. No API mismatch is observed. This does
+not yet distinguish mode from budget or establish communication.
+
+Local evidence `retrieved/lc0_text_diagnostic_20260904T0452Z`; archive SHA-256
+matches remote: `d9c5406346b654c5abaf049657cd0e9bf4e9fbbdf84ebef4d408ae879bc9bf11`.
+Read-only verifier `scripts/verify_lc0_text_diagnostic.py` checks source, cases,
+model, budget, output grid and original-run equivalence; report `verified.json`.
+
+## Active follow-up: fresh reasoning-enabled channel DEV
+
+Root `/home/ubuntu/lc0_reasoning_dev_20260904T0500Z`; log/PID beside it,
+initial process 13826. [Frozen design](LC0_REASONING_DEVELOPMENT.md): 16 worlds
+from unseen DEV pairs 4–11, six arms, 96 calls, 512-token cap, no weight updates.
+Standalone runner SHA-256
+`956b1165b5ebdedfa6dd228f49eb4e39e0e315d840b4dd4b3add72d94f5f7a64`,
+committed at `d5718a86e0f9f7808daee87889a6415622f92e5c`.
+Imported channel source remains unchanged at remote `18e6207`; same isolated
+interaction environment and cached Qwen3-4B. Read-only analysis entry point is
+`scripts/verify_lc0_reasoning_development.py --root RETRIEVED --prepared
+artifacts/latent_channel_lc0_20260902_v1 --output FRESH_OUTSIDE_REPORT`.
+
+Based on the preceding diagnostic's ~30 generated tokens/sec, an indicative
+generation-only estimate is 13–27 minutes (250–512 tokens x 96 calls), plus
+prefix preparation and evidence transfer. This is not a measured complete-run
+ETA and actual decoding lengths differ by arm. No automatic further budget
+increase or full training follows; review controls and relevance first.
 
 ## Preservation and monitoring
 

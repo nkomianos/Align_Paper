@@ -18,8 +18,9 @@ results. The independent queue resumed on the GH200 on September 4: LC0 smoke
 completed with invalid text controls, EP0 smoke completed with weak oracle
 controls (25% accuracy), and native-video hindsight completed with a valid
 negative (zero observed past-state corruption in 48 pairs). All three runs
-are secured locally. A separate 24-call text-interface/reasoning diagnostic is
-now running; it is not a paper expansion. See the
+are secured locally. A 24-call diagnostic found exact token-ID/embedding
+equivalence and unfinished reasoning under the old budget. A fresh 96-call
+reasoning-enabled channel DEV test is now running; it is not paper expansion. See the
 [live queue and verified LC0 result](docs/INDEPENDENT_QUEUE_20260904.md).
 
 The active implementation is [Efference-Pair EP0](docs/EFFERENCE_PAIR_EP0_RUNBOOK.md),

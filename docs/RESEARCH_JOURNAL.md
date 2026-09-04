@@ -554,3 +554,26 @@ eight existing DEV cases. The runner never reads answers, pins the model and
 records all generated tokens, input IDs, truncations and source. Two CPU parser
 tests pass. Reasoning and budget change together in the third arm; no separate
 causal attribution to either is allowed. No latent prefixes or training are used.
+
+## 2026-09-04 — Text interface diagnosis verified; fresh channel test frozen
+
+The 24-call diagnostic is complete and checksum-secured locally. All eight
+token-ID and embedding generations are identical, reproducing old text outputs
+exactly. Both arms score 1/8. Reasoning scores 5/8, with the other three runs
+unfinished at the 256-token cap. This rules out the tested embedding-generation
+API path as the cause and supports a separately specified reasoning-budget test.
+
+Froze and launched 96 calls on previously unused pairs 4–11, original six channel
+controls, reasoning on, fixed 512-token cap. No labels in runner, no updates,
+strict final extraction, no automatic further budget increase. This is DEV
+apparatus repair, not a replacement gate or paper validation. See
+[design](LC0_REASONING_DEVELOPMENT.md) and [live queue](INDEPENDENT_QUEUE_20260904.md).
+
+Staged official [C2C](https://github.com/thu-nics/C2C) code for read-only review at
+commit `113c3a9b2538cbf096a0477e1ec99ae2a2e0d12a` under ignored
+`artifacts/c2c_upstream_audit_20260904`. It pins torch 2.6.0/Transformers 4.52.4;
+never install it into the active environments. Upstream LICENSE is Apache-2.0
+while package metadata says MIT; preserve upstream notices and resolve before
+redistributing adaptations. No upstream code executed and no fuser weights
+downloaded yet. Small published-model reproduction would be a baseline, not a
+claim about frontier-model communication.
