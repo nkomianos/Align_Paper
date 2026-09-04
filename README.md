@@ -11,7 +11,7 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
-**Updated 3 September 2026. No candidate has earned paper expansion.** Phantom
+**Updated 4 September 2026. No candidate has earned paper expansion.** Phantom
 Rollback and Reward Extinction Debt both completed, but their prerequisites
 failed: these are **invalid assays/model organisms**, not universal negative
 results. No new GPU experiment is running as part of this update.
@@ -36,12 +36,15 @@ The [five-idea PI review](docs/USER_IDEA_REVIEW_20260903.md) conditionally prior
 **Hindsight Is Not Counterfactual** and **Dialogue Retractions as Algebra**.
 Exact CPU checks establish a compact immediate-log ambiguity but disprove
 automatic polarization in the proposed symmetric Bayesian example. The new
-language assays have completed their 64- and 48-forward smoke runs on the new
-GH200; see [timings and preliminary results](docs/GH200_TIMING_20260904.md).
-Long-history/full assays remain unrun. **Neither full SDPO
+language assays have completed their smoke and full runs on the new GH200;
+see [full results and conditional follow-up queue](docs/INTERACTION_FOLLOWUP_20260904.md).
+The simple hindsight-anchor correction missed its criterion. UNDO showed an
+initial 31–33-point long-history gap, but a fresh-history audit reduced this to
+9.375 points, below its frozen 10-point robustness criterion. This is not zero
+effect, but training expansion is held. **Neither full SDPO
 training nor algebraic local-relation training is implemented or run**. Transport
 certificates and learnability theory are parked; the proposed steering extension
-has substantial prior-work overlap. These two new apparatus smokes are recorded
+has substantial prior-work overlap. These new apparatus stages are recorded
 separately from the historical empirical-experiment count below.
 
 See the [researcher journal](docs/RESEARCH_JOURNAL.md) for hypothesis, design,

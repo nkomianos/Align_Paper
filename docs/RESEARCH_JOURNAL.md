@@ -457,3 +457,44 @@ Complete evidence, failed attempt, logs and environment freeze retrieved to
 committed local verifiers pass. See [timing note](GH200_TIMING_20260904.md).
 These are two new apparatus smokes, separate from the 15 historical stages—not
 two accepted/rejected papers. Setup and loading are excluded from forward times.
+
+## 2026-09-04 — Full interaction assays and fresh-history robustness
+
+User authorized running beyond the smokes. Frozen full assays used source
+`cb1bac1`; complete evidence under `retrieved/interaction_full_20260904T0348Z`
+passes remote/local archive SHA-256 and committed read-only verification.
+
+Hindsight (512 forwards): comprehension prerequisites pass, but simple anchor
+restoration averages only 0.003142 percentage points, failing the joint signal/
+correction criterion. Ordinary wrong-action hindsight advantage remains positive
+at 2.7653 nats. Decision `NO_SIGNAL_IN_THIS_PROMPT_ASSAY_DO_NOT_INFER_THESIS_FALSE`.
+No SDPO training or preference-transition inference was performed. Overlapping
+smoke probability records reproduce exactly; new cases explain the mean change.
+
+UNDO (768 forwards): edited-history accuracy 100%, 97.92%, 68.75%, 66.67% at
+4/20/60/100 updates; canonical and padding controls remain 100%. Counterfactual
+accuracy is 97.92% at 60 and 100% elsewhere. The initial full gate shows a
+residue signal. This is not yet a novel method or paper green light.
+
+Implemented, tested, froze and ran a separate 864-forward developmental audit
+at source `18e6207`: fresh wording, field names/noise, update positions, reminder
+and explicit-update baselines. Prepared-manifest pin and complete evidence verify
+locally at `retrieved/undo_audit_20260904T0354Z`. At long depths history scores
+87/96 versus padding 96/96, a 9.375-point gap below the frozen 10-point criterion.
+Reminder also scores 87/96; explicit update 91/96. Formal decision
+`NO_FRESH_HISTORY_SIGNAL_PARK`, interpreted as insufficient registered robustness,
+not zero effect. The cutoff misses by one case, so do not exaggerate it into a
+universal negative or change the cutoff. Multiple apparatus factors changed;
+their individual effects remain unidentified.
+
+Further literature checking identifies ICF-Bench (ICLR 2026) as direct related
+work for instruction forgetting and subtask revision, alongside CCOPD. The
+remaining contribution must exceed a benchmark of stale-information errors.
+The conditional queue now records a factorial diagnostic to design, then
+independent-family replication and baseline-matched training only if justified.
+These later stages are not implemented/launched. See
+[full results, sources and queue](INTERACTION_FOLLOWUP_20260904.md).
+
+Total this turn: 2,144 additional Qwen3-4B forwards, 31 passing targeted CPU
+tests, all results checksum-secured locally, no weight updates, GPU idle after
+completion. All roots/logs/private keys and previous attempts are preserved.

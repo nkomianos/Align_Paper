@@ -83,3 +83,53 @@ Method success requires meaningful improvement over strong baselines without
 losing short-context or counterfactual competence—not merely beating the
 unmodified model. A useful, non-vacuous theory or compelling generalization
 result and a renewed novelty check are required before a paper green light.
+
+## Additional collision check while the audit runs
+
+[ICF-Bench, ICLR 2026](https://proceedings.iclr.cc/paper_files/paper/2026/hash/b13d00a62d438856cfe6fbd13b6b2cb8-Abstract-Conference.html)
+already studies in-context forgetting, subtask revision and changing preferences.
+Its [released paper](https://openreview.net/pdf?id=hcJywRYc3n) and
+[repository](https://github.com/qianyuli123/ICF-Bench) are mandatory related work
+and potential external validation, not new datasets downloaded in this turn.
+The observation that old instructions survive removal is therefore not itself
+a new contribution. The novelty burden is a useful compositional training result
+or a stronger mechanism/theorem, with transfer beyond our generated registers.
+
+[CCOPD](https://arxiv.org/abs/2605.30251) already distills canonical-context
+behavior into multi-turn trajectories, and
+[curriculum RL for multi-turn conversations](https://aclanthology.org/2026.acl-long.1540/)
+is another relevant learning baseline. This further rules out framing generic
+history training as new. No abstract or paper submission is justified by the
+current single-model generated-data result alone.
+
+## Completed UNDO-Audit result
+
+All 864 forwards completed and were locally verified. Long-history results
+(96 matched histories per arm across depths 60/100): ordinary history **87/96
+= 90.625%**, canonical/padding/counterfactual **96/96**, reminder **87/96**,
+explicit-update normalization **91/96 = 94.792%**. The ordinary-history gap is
+**9.375 percentage points**, below the frozen 10-point rule. All validity
+prerequisites pass. Verifier decision: `NO_FRESH_HISTORY_SIGNAL_PARK`.
+
+This is not zero effect, nor proof of a universal absence. The gate misses by
+one case at this sample size; we must not call 9.375% qualitatively different
+from 10% or silently lower the threshold. The earlier 31–33-point magnitude did
+not persist in the aggregate of this new setup. Wording, noise content and update
+position changed together, so this audit does not identify which factor caused
+the difference. Reminder did not solve the errors; explicit normalization helped
+but is not perfect. No learning-method success has been demonstrated.
+
+Next queue entry is a **paired interface-factorial diagnostic to design**, not
+an already coded or running experiment. It would isolate those factors without
+reclassifying either completed decision. Cross-family replication and training
+remain held behind robustness and a meaningful novelty argument. In particular,
+nearly perfect short-history accuracy also raises a training-design question:
+ordinary short-example answer SFT may provide very little corrective gradient.
+We should not assume it will automatically fix long histories.
+
+Evidence: `retrieved/undo_audit_20260904T0354Z/undo_audit_20260904T0350Z`;
+source `18e6207b1fee7c694128409f10616c06968f88f6`. Remote/local archive SHA-256
+`817d2b95c6c3b9cfccd76156c3f9546ededa81e7e1e95571acfdbe153c173f93` agrees.
+All earlier evidence is preserved. 31 relevant CPU tests pass. This turn ran
+**2,144 additional model forwards** (512 + 768 + 864), no training. GPU idle
+after the completed audit; no automatic training/replication started.
