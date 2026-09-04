@@ -2,6 +2,17 @@
 
 No neural inference launched by the implementer. Root reviews and freezes source/data before calibration; training requires a separately written approval bound to the completed calibration manifest. This is known-method apparatus validation, not paper evidence.
 
+**Post-launch execution caveat:** independent review of the actual Transformers
+4.57.6 configuration merge found that model defaults can replace fields equal
+to global defaults. In particular, setting `GenerationConfig.do_sample=False`
+does not necessarily override Qwen's model default `True` unless supplied as
+a generation keyword or model-default merging is disabled. The frozen updater
+passes the config object, and its observational capture is not necessarily the
+effective deep-copied configuration. Thus the intended greedy calibration below
+must not be reported as verified greedy execution. The unchanged 16-case run is
+being preserved as executed; a separate configuration-replay audit is required.
+No training approval follows automatically, and no live code or outputs changed.
+
 ## Immutable assets and provenance
 
 - Upstream `lasgroup/user_interactions` commit `3b17d2a67bd2565b9fbda495fd16a485406aa954`. Exported exact git bytes for updater, config, user simulator and style judge, with `PINNED_SOURCE.json`.
