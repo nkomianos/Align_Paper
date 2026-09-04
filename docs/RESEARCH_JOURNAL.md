@@ -1927,3 +1927,25 @@ state and influence framings. None resolves whether a next user message reflects
 transient expression or persistent transition or tests delayed probes for SDPO.
 The scoped application survives, but the elementary minimax corollary is not
 claimed as general theorem novelty. Neural and human evidence remain decisive.
+
+## 2026-09-04 -- decisive GPU queue made transfer-ready
+
+Hardened both remaining launchers at commit `e522ad6`. They now fail closed on
+an existing/non-absolute evidence root, wrong or dirty Git checkout, missing
+explicit Python runtime, absent CUDA, wrong model API, and unsupported
+Transformers. The PUPPET launcher additionally verifies the private input hash
+before model loading. Both emit a remote checksum for the sealed manifest. Shell
+syntax checks pass; scientific runners and thresholds are unchanged.
+
+Created and verified a complete-history 2,713,188-byte Git bundle at
+`artifacts/deployment/hindsight_gpu_queue_e522ad6.bundle`, SHA-256
+`93b0098eacc7d6cd0161c6e59372baa5814d631b5a4f9b04834caadf812bc12b`.
+It resolves the local-only branch tip problem without pushing. The independent
+private PUPPET CSV remains ignored and separately checksummed as
+`6f5ac1b28de08c302abad8f25b2451df36d74006ab9b15e6dac6691722c0841d`.
+
+The bounded queue is now operationally ready for a new host: corrected neural
+gradient G0 v2 (25--70 minutes), then capable-reader DEV (30--60 minutes), plus
+fresh-host setup/model transfer. No policy expansion or locked human split is
+automatic. The prior GH200 address remains unreachable, so no paid process is
+being monitored.
