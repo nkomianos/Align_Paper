@@ -26,18 +26,19 @@ def decide(lo,hi):
     return np.where(lo>hi,.5,np.where(lo>.5,1.,np.where(hi<.5,0.,.5)))
 
 
-def policies(anchor,m0,m1,n_anchor,n_feedback,alpha=.05,kind='hoeffding'):
+def policies(anchor,m0,m1,n_anchor,n_feedback,alpha=.05,kind='hoeffding',slack=0.):
+    if not 0<=slack<=1:raise ValueError('Slack must be in [0,1]')
     alo,ahi=interval(anchor,n_anchor,alpha,kind)
     # A total alpha budget, not three uncorrected 95% intervals.
     jlo,jhi=interval(anchor,n_anchor,alpha/2,kind)
     m0lo,_=interval(m0,n_feedback,alpha/4,kind)
     _,m1hi=interval(m1,n_feedback,alpha/4,kind)
-    lo=np.maximum(jlo,m0lo);hi=np.minimum(jhi,m1hi)
+    lo=np.maximum(jlo,m0lo-slack);hi=np.minimum(jhi,m1hi+slack)
     flo,_=interval(m0,n_feedback,alpha/2,kind)
     _,fhi=interval(m1,n_feedback,alpha/2,kind)
     return dict(anchor_plugin=np.where(anchor>.5,1.,np.where(anchor<.5,0.,.5)),
                 anchor_conservative=decide(alo,ahi),
-                feedback_conservative=decide(flo,fhi),
+                feedback_conservative=decide(np.maximum(0,flo-slack),np.minimum(1,fhi+slack)),
                 combined_conservative=decide(lo,hi)),lo,hi
 
 

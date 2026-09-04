@@ -24,6 +24,10 @@ shows a narrow designed-model benefit over conservative anchor-only learning
 when anchors are scarce, but not over ordinary anchor-only mean utility. The
 benefit disappears at 256 anchors. Structural validity and observation cost,
 not more GPU training, are the next unresolved questions.
+The [stress test](docs/HINDSIGHT_ANCHOR_STRESS_20260904.md) now shows that allowing
+large reporting-model error removes the gain, and sufficiently cheap extra
+anchors outperform the combined rule. A realistic low-cost-log setting and
+defensible measurement assumptions are prerequisites for an LM run.
 
 The [ScopeJudge audit](docs/SCOPEJUDGE_OFFLINE_SCHEMA_AUDIT_20260904.md)
 verified 4,897 labeled calls and constructed metadata-filtered pre-execution
