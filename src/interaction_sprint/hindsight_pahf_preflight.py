@@ -4,11 +4,12 @@ from __future__ import annotations
 import hashlib
 from typing import Mapping, Sequence
 
-from interaction_sprint.hindsight_pahf_interface import OPTION_LETTERS, preference_query
+from interaction_sprint.hindsight_neural_anchor import hindsight_user_text
+from interaction_sprint.hindsight_pahf_interface import OPTION_LETTERS
 
 
 BASE_COUNT = 16
-SELECTION_SALT = "endo-pahf-capable-preflight-v1"
+SELECTION_SALT = "endo-pahf-capable-preflight-v2-exact-hindsight"
 CONTEXTS = ("immediate", "delayed_expression")
 
 
@@ -51,7 +52,9 @@ def build_jobs(records: Sequence[Mapping[str, object]]) -> list[dict[str, object
                 "rotation": int(row["label_rotation"]),
                 "context": context,
                 "target": str(row[target_field]),
-                "text": preference_query(str(row["prompt"]), str(row[feedback_field])),
+                "text": hindsight_user_text(
+                    str(row["prompt"]), str(row[feedback_field])
+                ),
             })
     return jobs
 

@@ -36,10 +36,12 @@ Future model reports must show both base-example macro averages and performance
 by displayed label/rotation. A capable-model interface preflight must pass each
 label, not only the aggregate, before any learning comparison is interpreted.
 
-## Frozen capable-model preflight
+## Frozen capable-model preflight v2
 
-Before external training, Qwen3.5-9B must score two explicit preference contexts
-for all four rotations of 16 hash-selected development base records. This gives
+Before external training, Qwen3.5-9B must score two preference contexts rendered
+with the exact frozen SDPO hindsight block used by the downstream learner, not
+the more explicit extraction query used in the earlier CPU rehearsal. It scores
+all four rotations of 16 hash-selected development base records. This gives
 16 observations in each of eight context-by-target cells: immediate/new target
 and delayed-expression/old target crossed with A/B/C/D. Every cell must achieve
 at least 14/16 correct, mean normalized target probability at least `.70`, and

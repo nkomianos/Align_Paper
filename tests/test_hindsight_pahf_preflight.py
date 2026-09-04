@@ -4,6 +4,7 @@ from interaction_sprint.hindsight_pahf_preflight import (
     select_base_panel,
     summarize_preflight,
 )
+from interaction_sprint.hindsight_neural_anchor import HINDSIGHT_BLOCK
 
 
 def _variant(base: int, rotation: int) -> dict[str, object]:
@@ -38,6 +39,9 @@ def test_jobs_cover_two_contexts_and_each_label() -> None:
     assert {job["context"] for job in jobs} == {"immediate", "delayed_expression"}
     for context in ("immediate", "delayed_expression"):
         assert {job["target"] for job in jobs if job["context"] == context} == set("ABCD")
+    assert all("=== HINDSIGHT CONTEXT ===" in str(job["text"]) for job in jobs)
+    assert all("Using that latest recorded preference" not in str(job["text"]) for job in jobs)
+    assert HINDSIGHT_BLOCK.split("{follow_up}")[0].strip() in str(jobs[0]["text"])
 
 
 def test_summary_requires_every_context_label_cell() -> None:

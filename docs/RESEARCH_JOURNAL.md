@@ -2164,3 +2164,17 @@ rate gates passed. The read-only verifier reports
 This validates the statistical decision rule and removes a pseudoreplication
 risk. It is not evidence of a neural effect. Qwen3.5-9B gradient G0 v2 remains
 the next decisive GPU gate; policy G1 and capable EndoPAHF remain conditional.
+
+## 2026-09-04 -- unrun EndoPAHF preflight corrected to the exact SDPO interface
+
+Tracing the planned external learner exposed a protocol mismatch before any
+capable-model endpoint: preflight v1 rendered an extra-explicit extraction
+query, whereas the learner would condition its teacher with the frozen SDPO
+hindsight block. Success on the former would not qualify the latter.
+
+Prospectively superseded the unrun v1. Preflight v2 uses
+`hindsight_user_text` exactly, changes the outcome-blind panel salt, hashes the
+shared neural-anchor source, and retains the same per-context/per-label gates.
+Three targeted tests, compilation and hardened-launcher shell validation pass.
+No model output or confirmation data was inspected. The next paid run must use
+v2; the historical v1 commit remains preserved but must not be executed.

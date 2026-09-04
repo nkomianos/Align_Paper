@@ -54,7 +54,9 @@ def main() -> None:
     selected = select_base_panel(development)
     jobs = build_jobs(selected)
     spec = {
-        "scope": "CAPABLE_MODEL_INTERFACE_PREFLIGHT_NOT_PAPER_EVIDENCE",
+        "scope": "EXACT_SDPO_INTERFACE_PREFLIGHT_NOT_PAPER_EVIDENCE",
+        "preflight_version": 2,
+        "interface": "plain_prompt_plus_frozen_hindsight_block",
         "model": MODEL_ID,
         "revision": MODEL_REVISION,
         "input_manifest_sha256": INPUT_MANIFEST_SHA256,
@@ -69,6 +71,7 @@ def main() -> None:
     write("spec.json", spec)
     write("selected_cases.json", selected)
     sources = [
+        repository / "src" / "interaction_sprint" / "hindsight_neural_anchor.py",
         repository / "src" / "interaction_sprint" / "hindsight_pahf_interface.py",
         repository / "src" / "interaction_sprint" / "hindsight_pahf_preflight.py",
         Path(__file__),
