@@ -106,6 +106,26 @@ equal to the no-message baseline. It also gives 3/8 for other message arms.
 Formatting explains two errors, but does not rescue communication validity.
 This exploratory parsing diagnostic does not replace the frozen strict score.
 
+## Active follow-up: bounded LC0 text diagnosis
+
+Root `/home/ubuntu/lc0_text_diagnostic_20260904T0450Z`, log/PID beside it.
+24 calls on the same eight DEV cases, not a new channel gate. Compare precisely
+identical spliced token IDs and input embeddings with reasoning disabled, then
+the same task with reasoning enabled and a 256-token cap. The first comparison
+tests the embedding-generation interface; the second tests reasoning/budget
+sensitivity. The latter changes both reasoning mode and budget and cannot
+identify their separate effects. No labels are read by the runner.
+
+Source `scripts/diagnose_lc0_text_interface.py`, local commit `1ccf6c9`, transferred
+as a standalone script with SHA-256
+`48824cbf34cf3f7c89b1fcf49ebe463df2c8b4c78c512a32a2f3351fc2275270`.
+Imported channel utilities are unchanged at remote `18e6207`. Uses the original
+isolated `.venv-interaction`, cached pinned Qwen3-4B, no new model downloads.
+Record truncation, exact final-answer validity, per-arm accuracy and token-level
+equivalence. Reasoning needs a closed thinking block before its final answer
+can be scored. Neither a successful API check nor a successful reasoning answer
+establishes useful latent communication, robustness to updates, or paper value.
+
 ## Preservation and monitoring
 
 SSH key: `C:\Users\nkomi\.ssh\ECE4150-LAB2.pem`.

@@ -547,3 +547,10 @@ camera work [CamChoreo/CamDistill](https://arxiv.org/abs/2608.10932) covers
 temporally grounded compositional camera-motion recognition and geometric
 distillation. Both tighten the novelty boundary; neither justifies relabeling
 the failed controls as a positive paper result.
+
+Started a separately labeled 24-call LC0 text diagnosis: identical token IDs vs
+embeddings without reasoning, then token IDs with reasoning/256-token budget,
+eight existing DEV cases. The runner never reads answers, pins the model and
+records all generated tokens, input IDs, truncations and source. Two CPU parser
+tests pass. Reasoning and budget change together in the third arm; no separate
+causal attribution to either is allowed. No latent prefixes or training are used.
