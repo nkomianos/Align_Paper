@@ -205,3 +205,19 @@ Source archive SHAa63804133380a184a2f20f26d515193ec21ef8ddcb61d63de1935b88de1f5c
 executed-source SHA5c23a0ca58b56d57cf08b3f59f3ac3c07f37a10e24cc9356610949306a1712ed.
 Final staged import/data preflight exited0. It waits for the short vision run
 to exit; calibration alone is approved, not parameter updates.
+
+EP completed24calls, exit0; full archive local in retrieved/ep_interface_20260904T1035Z,
+SHA8b56aec8d01096b7c5f258560bf1cf2b6e2a5dd24da7911969c2b33d75609762 matched remote.
+Verifier re-decoded native IDs and checked sources/contracts. Results native2/6,
+ordered2/6, firstframe2/6, numeric4/6: see EP_INTERFACE_DIAGNOSTIC_RESULT_20260904.md.
+No expansion authorized by this diagnostic.
+
+SDPO's first calibration failed before generation (0records) because the fresh
+environment inherited Jinja2 3.0.3. Failed root/log/exit preserved. Jinja2 3.1.6
+was installed only in the isolated reproduction environment; actual templates
+for all16 policy/explicit/hindsight/simulator/judge cases passed without inference.
+Receipt/package freeze is local artifacts/sdpo_native_template_preflight_20260904T1040Z.
+Unchanged scientific runner5c23a0ca... now launched in fresh
+/home/ubuntu/sdpo_single_profile_calibration_retry_20260904T1040Z, log/PID/exit beside it.
+Worker31766 and Python31769 confirmed live. This is calibration only; no training
+approval exists. Target retrieval cutoff remains15:40UTC.

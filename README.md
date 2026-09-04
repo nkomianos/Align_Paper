@@ -18,7 +18,8 @@ completed and is secured locally: native video2/6, ordered images2/6, first-fram
 control2/6, numeric oracle4/6. This does not qualify a larger motion experiment;
 the original real-video hypothesis remains untested. The closer SDPO calibration
 was launched but stopped before its first generation on a missing Jinja version;
-an isolated-environment repair and fresh-root retry are being prepared. No
+the isolated-environment repair passed native template checks and a fresh-root
+retry is now live (Python31769). No
 parameter updates have run in that reproduction.
 
 The [read-only checkpoint diagnostic](docs/SDPO_FROZEN_FORWARD_DIAGNOSTIC_20260904.md)
