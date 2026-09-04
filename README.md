@@ -19,6 +19,11 @@ It retains useful updates in designed examples, but depends on a valid influence
 bound; a tested misspecification counterexample shows compatibility alone is not
 enough. This is not an SDPO result or paper greenlight. The next comparison must
 include learning directly from the same sparse anchors.
+That [finite-sample comparison](docs/HINDSIGHT_ANCHOR_VALUE_20260904.md) now
+shows a narrow designed-model benefit over conservative anchor-only learning
+when anchors are scarce, but not over ordinary anchor-only mean utility. The
+benefit disappears at 256 anchors. Structural validity and observation cost,
+not more GPU training, are the next unresolved questions.
 
 The [ScopeJudge audit](docs/SCOPEJUDGE_OFFLINE_SCHEMA_AUDIT_20260904.md)
 verified 4,897 labeled calls and constructed metadata-filtered pre-execution
