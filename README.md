@@ -13,6 +13,14 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ### CPU-only follow-up
 
+**Acquisition positive control now passes.** The
+[fixed96-step supervised calibration](docs/HINDSIGHT_ACQUISITION_CALIBRATION_20260904.md)
+learns64/64 training phrasings and32/32 held-out phrasings, with full-vocabulary
+argmax scoring and minimum held-out A/B mass .999996. It took353seconds on CPU;
+all checkpoints/optimizer states verify and are saved. This establishes a usable
+synthetic acquisition regime, not the Hindsight paper claim. No noisy-feedback
+experiment has yet run under this corrected regime.
+
 The [matched Hindsight learning run](docs/HINDSIGHT_MATCHED_LEARNING_20260904.md)
 completed six actual LoRA training arms (144 updates, six minutes CPU), with all
 adapters/optimizers preserved. Copying feedback has worse NLL than an initially

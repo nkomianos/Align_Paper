@@ -28,3 +28,55 @@ CPU batching is checked against single-example full logits before training;
 max difference must be <=.001. Right padding is masked and logits gathered at
 the last actual prompt token. Native template, no sampling or truncation. All
 initial/final and failure states preserved; no GPU involved.
+
+## Independent pre-result review
+
+A separate reviewer found no concrete defect in padding, target-token mapping,
+schedule, split, loss or qualification. The numerical criteria amount to at
+least29/32 correct and at least3/4 in each domain, with the stated per-row mass
+requirement. Qualification concerns first-answer-token prediction, not generation
+of complete responses or stopping after A/B. The two-example batching check is
+not exhaustive equivalence testing across all batches and trained checkpoints.
+Those limits must remain visible even if the final accuracy is high.
+
+## Completed: acquisition qualified
+
+Frozen commit `44cbf11`. The final96-step checkpoint scores **64/64** on training
+phrasings and **32/32** on the two held-out phrasings. Every evaluation domain
+scores4/4, and minimum evaluation A/B mass is **0.9999961**. Thus all prospectively
+specified acquisition conditions pass. Final evaluation mean probability on the
+true answer token is .99999977; full-vocabulary NLL is 2.285e-7.
+
+The unadapted base scores20/64 on training and8/32 on evaluation using the same
+full-vocabulary argmax metric. Some baseline prompts assign almost no probability
+to A/B (minimum evaluation mass .0009185), unlike the original narrowly worded
+probe. The gain therefore includes output-interface learning as well as learning
+the eight domain preferences; do not attribute it entirely to preference memory.
+
+Runtime353.3seconds on CPU. Counts:291 forward batches covering964 examples,
+96 backwards and96 updates. All three saved adapters and optimizer states are
+preserved. Read-only verification checks18 manifest files, exact data/schedule,
+probability/NLL arithmetic, final criteria and finite compatible saved states.
+The batch/single precheck maximum full-logit difference was1.979e-5. The verifier
+does not replay backward passes or optimizer steps. Intermediate checkpoints
+were not scored on evaluation or used for selecting the final model.
+
+### What this licenses—and what it does not
+
+This is a useful positive control: the small model and adapter can acquire this
+synthetic personalization task and handle unseen phrasings. Earlier weak
+acquisition is not grounds for rejecting the feedback hypothesis. A subsequent
+matched feedback study should use an adequately trained regime and retain a
+full-vocabulary supervised control, rather than declaring failure from a short
+underfitting run or conditional A/B scores alone.
+
+It is **not** a novel personalization method, human preference-shaping result,
+unseen-domain generalization or paper greenlight. No noisy-feedback learning
+was performed in this calibration. Changed schedule/rank/wording/loss were tested
+together; their individual contributions are not identified. The next feedback
+comparison must be prospectively frozen as a separate experiment, not appended
+to the finished six-arm run or portrayed as its passing replacement.
+
+Root: `artifacts/hindsight_acquisition_cpu_20260904_v1`.
+Receipt: `artifacts/hindsight_acquisition_cpu_20260904_v1_verified.json`.
+The process exited successfully. No active GPU/CPU run remains from this stage.
