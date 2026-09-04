@@ -31,6 +31,8 @@ def test_factor_grid_null_and_real_opposite_parameter_directions():
     for cell in result["cells"]:
         if cell["rho"] == 0:
             assert cell["gradient_difference_norm"] < 1e-12
+        if cell["reference"] == "fair" and cell["rho"] > 0:
+            assert abs(cell["cosine"] + 1) < 1e-12
         assert len(cell["leave_one_task_out"]) == 4
     for ref in SPEC["feedback_reference"]:
         k = feedback_channel(1, .5, ref)

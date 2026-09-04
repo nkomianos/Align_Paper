@@ -921,3 +921,37 @@ record, and changed model/prompts/channel relative to the earlier saved-score
 study. Do not attribute the difference to any one changed factor. PI decision:
 no expensive expansion yet; isolate those factors before making a practical
 claim from the exact estimator mismatch. The paper-finding goal remains unmet.
+
+## 2026-09-04 — Matched factorial diagnostic: wording matters, fragile geometry
+
+Frozen commit `fc37533`; root `artifacts/hindsight_factorial_cpu_v1`. Completed
+82 model forwards, 16 backwards, zero updates in 37.16 seconds on CPU. Vary
+explicit initial intent and teacher wrapper within the same eight original
+training scenarios, then enumerate two feedback references and three copying
+strengths: 24 cells. Exact common condition and initial adapter reproduce the
+first one-step probe. All independent-feedback nulls match.
+
+Read-only verifier checks every manifest entry, all prompt texts and cached
+token IDs, initial adapter equality, probability validity, Jacobian dimensions,
+and float64 geometry replay. It does not rerun model inference or backward
+passes. Separate receipt `artifacts/hindsight_factorial_cpu_v1_verified.json`.
+Twenty-one relevant factorial, parameter-probe and gradient-audit tests pass.
+
+No pooled cosine is negative. Released-wrapper non-null cosines remain
+.995502 to .999480. Removing explicit preference does not explain away the
+near-parallel geometry. Plain-wrapper stated-intent cosines fall to .164162
+at fair-reference copying .9, but task sensitivity is extreme: excluding one
+of four tasks yields -.723312 to .989718 for that cell. Negative subsets are
+not independent evidence and must not be selected as the main result.
+Teacher full-vocabulary A/B masses are at least .977551 (plain) and .999992
+(released); base minimum is .994431. All 24 cells and sensitivity checks are
+preserved. See the factorial protocol for the full table.
+
+PI interpretation: evidence for template-sensitive gradient geometry in a tiny
+development apparatus, not a useful correction, robust opposite learning, or
+preference harm. No paper expansion approved. Any continuation must broaden
+independently specified task coverage and evaluate outcomes; do not chase a
+negative cosine subset. No GPU work launched. Latest read-only GPU check shows
+GH200 0% utilization, 3 MiB used, no compute process. Existing GPU evidence was
+already secured locally; the instance remains safe to terminate. The research
+goal remains unmet, rather than being marked complete on a diagnostic finding.

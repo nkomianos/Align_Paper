@@ -81,6 +81,13 @@ The primary directions are nearly parallel (cosine 0.999156); both score 7/8
 on a tiny heldout set, versus 6/8 initially. This does not show a useful
 practical estimator split or warrant expensive expansion. It is not full SDPO
 training; all raw evidence and updated adapters are preserved locally.
+The [matched factorial follow-up](docs/HINDSIGHT_FACTORIAL_PROBE_V1.md) is also
+complete and verified: 82 CPU forwards, 16 backwards, zero updates. Removing
+the initial preference statement does not explain the near-parallel directions.
+Plain feedback wording changes their angle considerably, but the result is
+highly sensitive to which of four tasks is included. No pooled condition has
+opposite directions; this is prompt-sensitive geometry, not demonstrated
+learning harm or a paper green light. No GPU job or automatic expansion is active.
 Exact CPU checks establish a compact immediate-log ambiguity but disprove
 automatic polarization in the proposed symmetric Bayesian example. The new
 language assays have completed their smoke and full runs on the new GH200;
