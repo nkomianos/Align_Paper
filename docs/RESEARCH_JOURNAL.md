@@ -1904,3 +1904,26 @@ new A/B teacher interface. Earlier positive-control qualifications used a
 different response-format task, so they cannot be imported. The 9B G0 v2 must
 retain its own early qualification. The previous GH200 address now times out;
 there is no active remote run to preserve.
+
+## 2026-09-04 -- passive-data decision lower bound and performative collision
+
+Extended the exact expression--transition construction prospectively at commit
+`0d8f2c3`. When the observationally equivalent mechanisms have opposite policy
+rankings with gaps `delta_E` and `delta_T`, any learner has the same randomized
+action law in both worlds. Minimizing the larger regret gives the exact
+two-point bound `delta_E*delta_T/(delta_E+delta_T)`.
+
+For the frozen `.6/1/0` example, immediate-log total variation remains exactly
+zero, the two gaps are `.2` and `.4`, and the randomized minimax regret is
+`2/15=.133333`; deterministic minimax regret is `.2`. The exact replay verifier
+passes. Evidence is
+`artifacts/hindsight_minimax_exact_20260904_v1/RESULT.json`, SHA-256
+`ddb362d6d966286466177163377c557e9c2afdf81cb1fe04a96057aa5dab0e71`.
+
+A fresh primary-source collision check added Self-Consuming Performative Loops,
+Performative Prediction, Stateful Performative Prediction and Performative Power
+to the novelty boundary. They occupy broad feedback-amplification, persistent-
+state and influence framings. None resolves whether a next user message reflects
+transient expression or persistent transition or tests delayed probes for SDPO.
+The scoped application survives, but the elementary minimax corollary is not
+claimed as general theorem novelty. Neural and human evidence remain decisive.
