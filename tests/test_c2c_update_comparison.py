@@ -46,6 +46,18 @@ def test_equal_channel_loss_is_not_a_latent_specific_effect():
     assert report["decision"] == "NO_REQUIRED_EXTRA_LATENT_LOSS_ON_THIS_UPDATE"
 
 
+def test_text_improvement_without_actual_bridge_damage_is_not_failure_signal():
+    cases, key, rows = fixture()
+    by_id = {(r["case_id"], r["arm"]): r for r in rows}
+    for case in cases:
+        by_id[case["case_id"], "new_c2c"]["completion"] = by_id[case["case_id"], "old_c2c"]["completion"]
+        by_id[case["case_id"], "new_text"]["completion"] = "A"
+    report = analyze(cases, key, rows)
+    assert report["extra_latent_change_pp"] == pytest.approx(-20)
+    assert report["absolute_c2c_loss_present"] is False
+    assert report["decision"] == "NO_REQUIRED_EXTRA_LATENT_LOSS_ON_THIS_UPDATE"
+
+
 def test_sender_capability_loss_prevents_interface_claim():
     cases, key, rows = fixture()
     for row in rows:

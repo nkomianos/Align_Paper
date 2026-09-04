@@ -100,10 +100,10 @@ testing. No GPU experiment has run with this trainer.
 
 ## Stage B is not auto-launched
 
-The [paired interface runner](C2C_PAIRED_UPDATE_PROTOCOL.md) is now implemented
-and CPU-tested; the repair runner remains unimplemented. Finish and freeze the
-remaining repair comparisons before Stage A launch so analysis choices are not
-made after seeing the updates. Compare old/new sender alone, C2C, text transfer and disabled
+The [paired interface runner](C2C_PAIRED_UPDATE_PROTOCOL.md) and
+[repair baselines](C2C_CACHE_REPAIR_PROTOCOL.md) are now implemented and CPU-tested.
+Their protocols are declared before any sender updates; GPU runtime validation
+and renewed access confirmation are still required. Compare old/new sender alone, C2C, text transfer and disabled
 fuser on the reserved 256 cases. Primary descriptive contrast: (new-old C2C
 accuracy) minus (new-old T2T accuracy), with paired intervals and separate seeds.
 This alone does not identify geometric drift. Include standalone behavior and

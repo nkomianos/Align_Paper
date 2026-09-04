@@ -50,9 +50,12 @@ With `PYTHONPATH` set to `src`, run `python scripts/check_research_queue.py` to
 verify prepared bytes without connecting to a GPU. No model-update robustness
 experiment has been run. A sender-training/qualification stage is implemented
 and CPU-tested, with disjoint data prepared. The paired old/new interface test
-is also implemented; repair comparisons remain unimplemented. See the
+is also implemented, along with the conditional baseline repair comparisons. See the
 [natural-update protocol](docs/C2C_NATURAL_UPDATE_PILOT.md) and
-[paired-test protocol](docs/C2C_PAIRED_UPDATE_PROTOCOL.md).
+[paired-test protocol](docs/C2C_PAIRED_UPDATE_PROTOCOL.md) and
+[repair protocol](docs/C2C_CACHE_REPAIR_PROTOCOL.md). None of these update/repair
+stages has run on the GPU; renewed access confirmation and hardware validation
+are required before launch.
 LC0 only tests the communication prerequisite.
 
 The [five-idea PI review](docs/USER_IDEA_REVIEW_20260903.md) conditionally prioritizes

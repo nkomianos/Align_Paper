@@ -1,0 +1,14 @@
+{
+  "schema": "c2c_natural_update_pilot_v1",
+  "kind": "declared_execution_plan_not_running_service",
+  "gpu_active": false,
+  "requires_access_reconfirmation": true,
+  "paper_green_light": false,
+  "stages": [
+    {"id": "matched_text", "status": "implemented_cpu_tested_not_run", "entrypoint": "scripts.run_c2c_text_baseline", "generation_calls": 256, "next": "local_verification"},
+    {"id": "sender_updates", "status": "implemented_cpu_tested_not_run", "entrypoint": "scripts.run_c2c_sender_update", "seeds": [202609041, 202609042], "optimizer_steps_per_seed": 128, "generation_calls_per_seed": 264, "requires": "confirmed access, hardware smoke and verified matched text evidence", "next": "local_qualification_both_seeds"},
+    {"id": "paired_channels", "status": "implemented_cpu_tested_not_run", "entrypoint": "scripts.run_c2c_paired_update", "generation_calls_per_seed": 2816, "requires": "local release ticket from both qualified updates", "next": "local_verified_two_seed_decision"},
+    {"id": "existing_repairs", "status": "implemented_cpu_tested_not_run", "entrypoint": "scripts.run_c2c_cache_repair", "generation_calls_per_seed": 1280, "requires": "checksum-pinned repeated actual bridge-damage result", "next": "local_map_replay_and_language_analysis"},
+    {"id": "paper_review", "status": "not_reached", "requires": "empirical results, independent-task/family design and substantive novelty/utility review", "automatic_expansion": false}
+  ]
+}

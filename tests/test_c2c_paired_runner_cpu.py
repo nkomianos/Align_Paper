@@ -62,8 +62,14 @@ def test_sender_switch_and_disabled_fuser_leave_no_cache_residue():
         fused.projector_dict = mapping
         repeat = generate_record(fused, tok, turns, case, "old_c2c", "cpu", fused=True, max_new_tokens=3)
         after = generate_record(receiver, tok, turns, case, "receiver", "cpu", max_new_tokens=3)
+        from latent_contract.cache_repair import CacheRepairProjector, fit_head_map
+        samples = torch.randn(1, 1, 8, 16)
+        identity = fit_head_map(samples, samples, "identity")
+        fused.projector_list = nn.ModuleList([CacheRepairProjector(p, identity, identity) for p in fused.projector_list])
+        repaired_identity = generate_record(fused, tok, turns, case, "identity", "cpu", fused=True, max_new_tokens=3)
     for handle in handles:
         handle.remove()
     assert calls["old"] > 0 and calls["new"] > 0
     assert first["generated_ids"] == repeat["generated_ids"]
+    assert first["generated_ids"] == repaired_identity["generated_ids"]
     assert original["generated_ids"] == disabled["generated_ids"] == after["generated_ids"]

@@ -9,7 +9,7 @@ ARMS = ["receiver"] + [version + "_" + arm for version in ("old", "new")
                        for arm in ("sender", "c2c", "disabled", "background", "text")]
 DECISION_RULE = {"min_parse_rate": .95, "min_disabled_agreement": .98,
                  "min_old_c2c_gain": .05, "max_sender_loss": .03125,
-                 "min_extra_latent_loss": .10, "bootstrap_samples": 5000,
+                 "min_extra_latent_loss": .10, "min_absolute_c2c_loss": .10, "bootstrap_samples": 5000,
                  "bootstrap_seed": 202609043}
 
 
@@ -70,7 +70,8 @@ def analyze(cases, key, rows):
     controls = min(agreements.values()) >= DECISION_RULE["min_disabled_agreement"] and min(m["parse_rate"] for m in metrics.values()) >= DECISION_RULE["min_parse_rate"]
     usable = metrics["old_c2c"]["accuracy"] - metrics["receiver"]["accuracy"] >= DECISION_RULE["min_old_c2c_gain"]
     retained = float(changes["sender"].mean()) >= -DECISION_RULE["max_sender_loss"]
-    signal = float(extra.mean()) <= -DECISION_RULE["min_extra_latent_loss"] and ci[1] < 0
+    absolute_loss = float(changes["c2c"].mean()) <= -DECISION_RULE["min_absolute_c2c_loss"]
+    signal = absolute_loss and float(extra.mean()) <= -DECISION_RULE["min_extra_latent_loss"] and ci[1] < 0
     decision = ("INVALID_PAIRED_ASSAY" if not controls else "NO_USABLE_OLD_BRIDGE_ON_FINAL_DEV" if not usable
                 else "SENDER_CAPABILITY_CHANGE_CONFOUNDS_INTERPRETATION" if not retained
                 else "EXTRA_LATENT_LOSS_SIGNAL_REPAIR_STUDY_NEEDED" if signal
@@ -80,4 +81,5 @@ def analyze(cases, key, rows):
             "extra_latent_change_pp": float(extra.mean()*100), "paired_question_bootstrap_95_pp": [v*100 for v in ci],
             "background_token_limits": {v: sum(indexed[cid, v+"_background"]["hit_token_limit"] for cid in ids) for v in ("old", "new")},
             "controls_pass": controls, "old_bridge_usable": usable, "sender_retained": retained,
+            "absolute_c2c_loss_present": absolute_loss,
             "interpretation": "One natural update and public DEV questions. Difference-in-differences is descriptive, not geometric causal identification. Question bootstrap does not quantify uncertainty across updates. No paper go or repair success follows."}

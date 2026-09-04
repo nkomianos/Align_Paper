@@ -780,3 +780,46 @@ Reports: `artifacts/c2c_paired_implementation_checks_v1.xml` and
 `artifacts/c2c_paired_tf452_cpu_checks_v1.xml`. GPU launch remains on hold after
 termination clearance. Repair comparisons are the remaining implementation
 work before the full pilot is ready; no automated run or expansion was started.
+
+## 2026-09-04 — Conditional repair baselines complete; no GPU experiment yet
+
+Implemented Stage C: identity-wrapper control, head-local diagonal/ridge/
+orthogonal cache alignment, and small projector-output-matching retuning. These
+are explicitly existing baselines, not a new claimed method. Calibration uses
+the frozen unlabeled 128 examples, split by a fixed ID hash into 48 fit and 16
+check examples per dataset. It collects matched old/new/receiver post-RoPE cache
+rows from the exact source-prefill prefix, with at most 32 positions per case.
+The 384 backbone forwards, selected caches, fitted maps, retuned float32/BF16
+weights, sample indices, loss curves and preparation costs are all preserved.
+
+The conditional language comparison adds 1,280 generations per seed only after
+both paired runs show actual bridge damage. Ridge is the declared primary
+repair; all alternatives are reported without winner selection. Verification
+rechecks the paired parents, hashes, source, cache splits and output grids and
+independently reconstructs closed-form maps on CPU. For nonunique orthogonal
+fits, it checks feasibility and objective optimality instead of demanding a
+particular SVD basis. Retuning is not independently replayed; this limitation is
+explicit. Successful existing repair still does not authorize a paper go.
+
+Pre-run logical audit caught a false-positive possibility in the Stage B rule:
+unchanged latent accuracy plus improved text accuracy could satisfy a negative
+difference-in-differences threshold. Before any training/paired results, added
+an explicit >=10pp absolute C2C decline requirement. A synthetic regression test
+now rejects the counterexample. This is a prospective protocol correction, not
+a post-outcome threshold change.
+
+Tests: 75 pass with two intentional old-API skips in the main CPU environment;
+24 pass under Transformers 4.52.4, including those compatibility checks. Tests
+cover fresh-sample affine/rotation recovery, rank deficiency, nonunique-optimum
+verification, teacher/gate preservation, actual C2C projector retuning, native
+Qwen3 cache equivalence, and identity-repair generation through the real wrapper.
+An initial cache-collector test exposed Transformers 5's non-subscriptable cache;
+an explicit adapter handles that local test API while GPU runners remain strictly
+pinned to 4.52.4. No dependency on the GPU host was changed.
+
+JUnit: `artifacts/c2c_repair_implementation_checks_v1.xml` and
+`artifacts/c2c_repair_tf452_cpu_checks_v1.xml`. The execution plan is
+`configs/c2c_natural_update_queue.json`, explicitly marked as a plan, not a running
+service. All stages now have code/protocols and CPU checks. Full CUDA runtime
+validation, actual experiments, and empirical evidence remain outstanding.
+GPU access must be reconfirmed after the previous termination clearance.

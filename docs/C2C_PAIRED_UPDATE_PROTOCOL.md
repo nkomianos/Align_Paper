@@ -63,8 +63,9 @@ The following developmental rules are frozen in `DECISION_RULE`:
   usable interface rather than assuming the earlier baseline generalizes.
 - Sender-alone accuracy falls no more than 3.125pp on this slice. Qualification
   on a separate set does not guarantee retention on final DEV.
-- A candidate extra-loss signal requires contrast <=-10pp and a paired bootstrap
-  upper endpoint below zero. Both independent updates must satisfy this.
+- A candidate extra-loss signal requires contrast <=-10pp, an actual C2C accuracy
+  decline >=10pp, and a paired bootstrap upper endpoint below zero. A better text
+  arm alone cannot establish bridge damage. Both updates must satisfy this.
 - Across seeds, unchanged-reference generated token sequences must agree >=98%.
   A reproducibility failure prevents advancement.
 
@@ -97,12 +98,12 @@ Do not overwrite a failed/partial root or auto-expand.
 
 ## What is still missing
 
-This stage has **no repair arm**. A repeatable failure would justify testing
-repairs, not a paper go. The repair runner remains to be implemented before the
-complete study is launch-ready. Freeze its calibration and baseline comparisons
-before training begins: no repair, diagonal/ridge/orthogonal or head-local
-alignment, small fuser retuning, and text fallback. Existing alignment methods
-are baselines, not new contributions. The broader study still needs useful
+This stage has **no repair arm**. A repeatable failure would justify the separately
+implemented [Stage C repair comparison](C2C_CACHE_REPAIR_PROTOCOL.md), not a paper
+go. Its calibration and baseline protocol is declared before training begins:
+identity, diagonal/ridge/orthogonal head-local alignment, fuser output matching,
+and the text fallback measured here. Existing alignment methods are baselines,
+not new contributions. The broader study still needs useful
 repair, independent tasks/families, cost comparisons including sender-alone,
 and a defensible novelty argument.
 
