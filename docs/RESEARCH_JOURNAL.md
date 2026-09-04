@@ -1780,3 +1780,30 @@ estimator correctly learns a corrupted estimand. For the neural main setting
 the analytic flip is at contamination2/3. This is a sensitivity boundary, not
 human evidence or estimator novelty. The neural SDPO gate remains the empirical
 bottleneck; no further tabular sweep is warranted before it.
+
+## 2026-09-04 -- prospective neural policy-gate correction
+
+Before any neural endpoint, audited the frozen policy-training design against
+the finite-state mechanism it was meant to test. Its32 anchors were deliberately
+balanced on latent outcome as well as action. That removes most anchor-sampling
+error, while the anonymous global A/B endpoint allows an eight-label comparator
+to learn a single majority bias and possibly saturate. Consequently its frozen
+`.05` endpoint margin could reject a valid estimator for an apparatus reason.
+The old code and protocol remain preserved and explicitly marked unrun; its
+blanket scientific-failure interpretation was withdrawn prospectively.
+
+Commit `49f8552` freezes the corrected first neural gate. Eight hash-selected
+panels contain eight anchors each, balanced only on randomized logged action;
+their realized delayed-label counts range3--7/8 and are not outcome-forced. At
+the identical initial Qwen3.5-9B LoRA state, save the full delayed-oracle and
+immediate gradients plus each panel's paired delayed/immediate gradients. The
+augmented estimator is `g_O+g_B(P)-g_O(P)`. Six fixed gates compare relative
+error and cosine to the full oracle, requiring improvement in at least6/8
+panels. Quantization precedes metrics, so saved bfloat16 vectors determine the
+reported result. Interface failure stops before gradients.
+
+Sixteen related tests, compilation and shell checks pass. The run requires32
+backward passes and is estimated at15--45 GH200 minutes from archived9B timing.
+A pass authorizes a redesigned multi-panel policy-learning test; a qualified
+teacher followed by gradient failure parks this estimator cleanly. No endpoint
+has been generated and the prior host remains unreachable.

@@ -41,17 +41,18 @@ delayed measurement itself is contaminated enough to reverse the target,
 weighting consistently learns the wrong target. This supplies an explicit
 assumption/sensitivity story rather than pretending every delayed reply is an
 anchor. A stricter
-[neural delayed-anchor gate](docs/HINDSIGHT_NEURAL_ANCHOR_G0_PROTOCOL_20260904.md)
-is now frozen at commit `3c2c1c2`. It uses Qwen3.5-9B, the SDPO hindsight block,
-the exact full-vocabulary reverse-KL objective, swapped semantic choices, equal
-anchor budgets, and acquisition/interface stops. The two causal worlds have
-byte-identical immediate data but opposite correct policies. A pass must recover
-the expression-world policy, preserve the transition-world raw objective, and
-beat both anchor-only SDPO and anchor SFT by the frozen margin. This is the next
-available-GPU priority (estimated 1--3 GH200 hours), followed by the already
-frozen capable PUPPET reader DEV (under one hour). The estimate is grounded in
-the archived GH200 Qwen3.5-9B update timings; qualification and acquisition
-stops can end the run earlier. No GPU host is currently
+[neural gradient gate](docs/HINDSIGHT_NEURAL_GRADIENT_G0_PROTOCOL_20260904.md)
+is now frozen at commit `49f8552`. It uses Qwen3.5-9B, the SDPO hindsight block,
+the exact full-vocabulary reverse-KL objective and eight outcome-blind sparse
+anchor panels. It compares each equal-anchor gradient and the augmented
+immediate-plus-residual estimator against the full delayed-feedback oracle. A
+prospective audit superseded the older unrun policy gate as the first test:
+forcing anchors to be outcome-representative removed much of the sampling
+variance the method should reduce, and a global binary endpoint could saturate.
+The replacement needs only32 backward passes and is the next available-GPU
+priority (estimated15--45 GH200 minutes). On a pass, a redesigned multi-panel
+policy gate follows; the capable PUPPET reader remains an independent sub-hour
+test. No GPU host is currently
 reachable; `192.222.57.245` times out, so no paid process is active there.
 
 ### CPU-only follow-up
