@@ -170,7 +170,7 @@ responses. The working message channel is encouraging apparatus evidence, not a
 claim of robustness to model updates or scientific novelty. No more nonce
 reasoning-budget ladder is planned.
 
-## Active released-C2C baseline
+## Completed released-C2C baseline
 
 Root `/home/ubuntu/c2c_baseline_dev_20260904_v1`; log and PID beside it; initial
 PID 15457. Started only after previous process exit, retrieval and verification.
@@ -184,6 +184,33 @@ Use `scripts/verify_c2c_baseline_dev.py --root RETRIEVED --prepared
 artifacts/c2c_baseline_dev_20260904_v1 --output FRESH_REPORT` with local
 `PYTHONPATH=src;.` after fresh retrieval and checksum checks. Do not auto-expand
 to update training. This tests the published apparatus, not our proposed claim.
+
+All 512 calls completed and are secured at
+`retrieved/c2c_baseline_dev_20260904_v1`. Remote/local archive SHA-256:
+`5ede9533332d891a0ba6626fb06b3783e40d342f1af4bdd223068a35239fd34f`.
+Frozen strict report `verified.json` remains
+`BASELINE_INCONCLUSIVE_NO_UPDATE_TRAINING`: our strict formatting rule excluded
+option text appended to otherwise explicit answers. This was a scoring-design
+mismatch, not evidence of near-zero comprehension. Disabled-fuser text agreement
+is 127/128 (99.22%). Total generation time across arms was about 185 seconds.
+
+Separate post-hoc `scoring_audit_with_intervals.json` revalidates evidence and
+uses the pre-existing published parser: receiver 51/128, sender 113/128,
+fused 72/128, disabled fuser 50/128. A conservative explicit-prefix audit,
+excluding 13 fused outputs without that prefix, still yields fused 65/128.
+Exploratory paired, dataset-stratified bootstrap intervals for the fused gain
+are [8.59,24.22]pp with upstream parsing and [2.34,19.53]pp with conservative
+parsing. These are post-hoc question-level intervals, not model-seed evidence.
+Twelve fused predictions differ between the parsers; the upstream fallback can
+extract stray letters from prose. Keep both audits, not only the favorable one.
+
+PI: enough evidence of a working existing communication interface to design a
+controlled follow-up, but not a pass of the frozen strict gate or a new result.
+The sender alone is stronger and its total generation time is lower than fused
+in this run (35.32 versus 60.80 seconds); no efficiency superiority is established.
+Text transfer and natural model updates remain to be tested. GPU process exited,
+no other compute jobs reported, completed-run monitor paused. No new trained
+weights exist on the instance; all generated research evidence is local.
 
 ## Preservation and monitoring
 

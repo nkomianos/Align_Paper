@@ -659,3 +659,32 @@ do not claim either as a new corrective mechanism. CacheBridge explicitly
 leaves open-ended multi-turn quality outside its evaluation, but that gap alone
 does not green-light a new paper. Added the collision and interface distinction
 to the conditional update plan. The frozen C2C baseline remains unchanged.
+
+## 2026-09-04 — C2C completed; scoring mismatch diagnosed, not hidden
+
+All 512 calls completed and checksum-verified locally at
+`retrieved/c2c_baseline_dev_20260904_v1`, archive
+`5ede9533332d891a0ba6626fb06b3783e40d342f1af4bdd223068a35239fd34f`.
+Strict scoring failed because the small receiver commonly appended option
+text, while our regex required the output to end after its letter. That was
+our scoring-design error for a baseline reproduction. The original report and
+criteria remain unchanged, and no generation was rerun to repair it.
+
+A separately labeled post-hoc audit uses the inspected upstream parser from
+the pinned source: receiver 51/128 (39.84%), sender 113/128 (88.28%), fused
+72/128 (56.25%), disabled fuser 50/128. Conservative explicit-prefix scoring
+gives fused 65/128 (50.78%), even treating other formats as wrong. Thus the
+fused gain is not wholly explained by the upstream parser's loose fallback.
+Twelve fused parser disagreements remain; manual inspection found mostly
+letter-plus-option outputs and a few prose-only answers. Do not present every
+upstream fallback as unambiguous. The exploratory paired bootstrap CIs are
+[8.59,24.22]pp (upstream) and [2.34,19.53]pp (conservative), stratified by dataset.
+
+Disabled-fuser text agreement is 99.22%. Sender generation is both more accurate
+and faster in this setting (35.32s total versus fused 60.80s), so the baseline
+does not establish communication's superiority over simply using the sender.
+The mechanism helps the smaller receiver; this is an existing-method result,
+not novelty or a deployment-update finding. No update training is justified
+by this result alone. Next work is the text-transfer baseline and a controlled
+natural-update protocol. All GPU jobs have exited and evidence is secured;
+the completed-run heartbeat is paused while offline preparation continues.

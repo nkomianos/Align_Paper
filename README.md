@@ -24,8 +24,13 @@ reasoning-enabled channel DEV is now verified: text controls 16/16, latent and
 swapped-latent target accuracy 15/16, but the frozen global parse criterion failed
 (81.25%; 16 no-message and two latent responses were token-limited). This is
 encouraging communication evidence, not a valid gate pass or update result.
-A separate released-C2C baseline has launched: 128 public validation questions,
-four arms, no training. See the
+A separate released-C2C baseline completed and is secured: 128 public validation
+questions, four arms, no training. Its strict-format report failed; a separate
+audit using the published parser finds 56.25% fused accuracy versus 39.84% for
+the receiver and 88.28% for the stronger sender. Conservative explicit-prefix
+scoring still gives a 10.94pp fused improvement. This demonstrates a useful
+existing interface, not our proposed update effect. No GPU job remains active;
+text-transfer comparison and update training remain unrun. See the
 [live queue and verified LC0 result](docs/INDEPENDENT_QUEUE_20260904.md).
 
 The [Efference-Pair EP0](docs/EFFERENCE_PAIR_EP0_RUNBOOK.md) implementation is a
