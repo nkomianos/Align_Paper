@@ -13,6 +13,14 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ### Current GPU window — September 4, approximately 10:10 UTC
 
+Subsequent [motion-interface diagnostic](docs/EP_INTERFACE_DIAGNOSTIC_RESULT_20260904.md)
+completed and is secured locally: native video2/6, ordered images2/6, first-frame
+control2/6, numeric oracle4/6. This does not qualify a larger motion experiment;
+the original real-video hypothesis remains untested. The closer SDPO calibration
+was launched but stopped before its first generation on a missing Jinja version;
+an isolated-environment repair and fresh-root retry are being prepared. No
+parameter updates have run in that reproduction.
+
 The [read-only checkpoint diagnostic](docs/SDPO_FROZEN_FORWARD_DIAGNOSTIC_20260904.md)
 completed all 192 forwards in 21.64 seconds, without training. Its complete
 archive is local and remote/local SHA-256 matched. The
