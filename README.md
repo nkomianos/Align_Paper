@@ -75,6 +75,12 @@ opposite updates under action-dependent feedback, including execution of the
 pinned released losses on exact logits. Saved LM scores show the distinction
 under imposed feedback channels. This is a diagnostic lead, not actual LM
 training, a welfare result, or an established novel contribution.
+A subsequent [pretrained CPU parameter probe](docs/HINDSIGHT_PARAMETER_PROBE_V1.md)
+has now run: 66 forwards, eight backwards and two separate one-step adapters.
+The primary directions are nearly parallel (cosine 0.999156); both score 7/8
+on a tiny heldout set, versus 6/8 initially. This does not show a useful
+practical estimator split or warrant expensive expansion. It is not full SDPO
+training; all raw evidence and updated adapters are preserved locally.
 Exact CPU checks establish a compact immediate-log ambiguity but disprove
 automatic polarization in the proposed symmetric Bayesian example. The new
 language assays have completed their smoke and full runs on the new GH200;

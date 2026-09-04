@@ -882,3 +882,42 @@ The mismatch identity alone is not a novel method. Next is a tightly controlled
 learning diagnostic design separating estimator fidelity from utility, not
 another anchor-prompt gate. See `docs/HINDSIGHT_SAMPLING_LAW_AUDIT_20260904.md`.
 No GPU work was launched. The paper-finding goal remains unmet.
+
+## 2026-09-04 — Actual pretrained CPU parameter probe completed
+
+Implemented and froze a restricted-A/B, norm-matched one-step comparison on
+public Qwen3-0.6B, with rank-4 attention LoRA and four CPU threads. Four task
+types in two option orders form eight training contexts; four analogous fresh
+scenarios form eight heldout contexts. The designed feedback channel mixes
+truthful original-preference messages with action-copying expression. This
+does not model or measure real persuasion. Paid GPU use remained zero.
+
+The first launch failed before scientific forwards because Transformers 5's
+chat-template default returned a BatchEncoding. Explicit `return_dict=False`
+fixed token formatting without changing prompts or science. Failed root
+`artifacts/hindsight_parameter_probe_cpu_v1` remains intact. Fresh retry at
+commit `085479e`, root `artifacts/hindsight_parameter_probe_cpu_v1_retry1`,
+completed 66 forwards, eight backwards and both one-step updates in 26.78s.
+
+Result: primary rho=.5 parameter-gradient cosine is 0.999156 (float64 replay);
+rho=.9 gives 0.995805; the independent-feedback null matches exactly. Both
+updates improve heldout accuracy from 6/8 to 7/8 and train accuracy from 4/8
+to 7/8. Heldout NLL is .724127 before, .359969 after own-response scoring and
+.356621 after full KL. These are near-identical beneficial one-step results,
+not the opposite parameter directions suggested by extrapolating the earlier
+logit example. No substantive learning-level split is demonstrated here.
+
+Independent read-only verification checks checksums, cases, metric arithmetic,
+stored directions and actual adapter deltas; it does not rerun the model.
+Float32 cosine/norm reductions were slightly inaccurate; the separate verifier
+recomputes in float64 and reports actual .1000033 step norms. Original artifacts
+remain unchanged. Report `artifacts/hindsight_parameter_probe_cpu_v1_verified.json`;
+manifest SHA `72e2b3422393fa9d8ecc8b39a4460b63a011fb369ad930957f561388e535c7d6`.
+All adapters, directions, predictions, prompts and source remain on this laptop.
+
+45 relevant tests pass. Limits: tiny handcrafted split, low starting task
+accuracy, only one normalized step, restricted vocabulary, no teacher mass
+record, and changed model/prompts/channel relative to the earlier saved-score
+study. Do not attribute the difference to any one changed factor. PI decision:
+no expensive expansion yet; isolate those factors before making a practical
+claim from the exact estimator mismatch. The paper-finding goal remains unmet.

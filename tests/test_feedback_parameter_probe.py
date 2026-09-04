@@ -49,3 +49,15 @@ def test_norm_matched_updates_and_dimension_guard():
         apply_direction(params, torch.zeros(5), .1)
     with pytest.raises(ValueError):
         apply_direction(params, torch.ones(4), .1)
+
+
+def test_report_verifier_rejects_duplicate_case_and_wrong_label():
+    from scripts.verify_hindsight_parameter_probe import validate_rows
+    rows = [{"id": c["id"], "split": c["split"], "answer": c["answer"],
+             "probabilities": [.4, .6], "AB_mass": .99} for c in cases()]
+    validate_rows(rows)
+    with pytest.raises(ValueError):
+        validate_rows(rows[:-1]+[rows[0]])
+    rows[0]["answer"] = 1-rows[0]["answer"]
+    with pytest.raises(ValueError):
+        validate_rows(rows)
