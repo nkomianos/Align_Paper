@@ -998,3 +998,12 @@ details and scope in `docs/FLOW_UNCERTAINTY_NULL_CONTROLS.md`. At epsilon .05 an
 the null terminal KL is exactly zero. This is constructed evidence, not natural
 model prevalence. Next is ordinary trained-ensemble testing without injected
 rotations; no VLA/GPU expansion queued. Twenty-six relevant tests currently pass.
+
+Flow-audit integrity follow-up: strict verification rejected the first root's
+manifest because the writer hashed the newly opened manifest itself as an empty
+file. Preserve that root. Commit `a393caa` changes only manifest creation order;
+a fresh arithmetic replay at `artifacts/flow_gauge_audit_v1_retry1` reproduces
+the same RESULT bytes and passes the strict checksum/analytic verifier. Separate
+receipt `artifacts/flow_gauge_audit_v1_retry1_verified.json`, manifest SHA-256
+`e453f6b2e532066c7cf793b3dc1c40f59d5d1e14d42bb056aab2418be8b87c79`.
+This is one analytical experiment plus a bookkeeping retry, not two findings.

@@ -69,7 +69,14 @@ perturbations and does not affect decisions of naturally trained models.
 
 ## Completed exact control
 
-Commit `2aaf4e5`; evidence `artifacts/flow_gauge_audit_v1`. All 24 cells complete.
+Initial commit `2aaf4e5`; root `artifacts/flow_gauge_audit_v1` is preserved but
+its manifest incorrectly included its own empty-file digest. The strict verifier
+rejected that bookkeeping error. Commit `a393caa` fixes manifest creation only;
+fresh `artifacts/flow_gauge_audit_v1_retry1` completes all 24 identical cells and
+passes the checksum and analytic verifier. Receipt:
+`artifacts/flow_gauge_audit_v1_retry1_verified.json`; manifest SHA-256
+`e453f6b2e532066c7cf793b3dc1c40f59d5d1e14d42bb056aab2418be8b87c79`.
+No earlier evidence was changed or discarded.
 The independent analytic integral is epsilon^2*(1+2*pi^2/3), matching numerical
 quadrature. For epsilon .05, excess FM risk is .01894934 and the maximum
 intermediate rotation is .05 radians; endpoint error is below 1.4e-17. The
