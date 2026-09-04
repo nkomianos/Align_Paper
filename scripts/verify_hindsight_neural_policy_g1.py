@@ -34,6 +34,7 @@ from interaction_sprint.hindsight_neural_policy_g1 import (
     build_policy_schedules,
     expected_policy_arm_names,
     summarize_evaluation_rows,
+    summarize_policy_controls,
     summarize_policy_endpoints,
 )
 
@@ -77,7 +78,7 @@ def main() -> None:
 
     spec = json.loads((args.root / "spec.json").read_text(encoding="utf-8"))
     expected_spec = {
-        "version": "policy-learning-g1-v2-independent-population",
+        "version": "policy-learning-g1-v3-oracle-distance",
         "model": MODEL_ID,
         "revision": MODEL_REVISION,
         "official_sdpo_repository": OFFICIAL_SDPO_REPOSITORY,
@@ -190,7 +191,11 @@ def main() -> None:
     ):
         raise SystemExit("invalid runtime setup")
 
-    expected_names = expected_policy_arm_names()
+    all_names = expected_policy_arm_names()
+    if result["decision"] == "STOP_POLICY_ACQUISITION_UNQUALIFIED":
+        expected_names = all_names[:3]
+    else:
+        expected_names = all_names
     expected_completed = expected_names[1:]
     if result.get("completed_arms") != expected_completed:
         raise SystemExit("completed-arm order mismatch")
@@ -231,8 +236,17 @@ def main() -> None:
 
     if metrics != result.get("endpoint_metrics"):
         raise SystemExit("endpoint metric mismatch")
-    summary = summarize_policy_endpoints(metrics)
-    for key in ("decision", "gates", "aggregate", "panels", "scope"):
+    if result["decision"] == "STOP_POLICY_ACQUISITION_UNQUALIFIED":
+        summary = summarize_policy_controls(metrics)
+        summary["scope"] = (
+            "Raw/full-oracle policy acquisition control stopped before sparse-panel "
+            "training; this is an assay stop, not a correction result."
+        )
+        summary_keys = ("decision", "gates", "aggregate", "scope")
+    else:
+        summary = summarize_policy_endpoints(metrics)
+        summary_keys = ("decision", "gates", "aggregate", "panels", "scope")
+    for key in summary_keys:
         if result.get(key) != summary[key]:
             raise SystemExit(f"policy summary mismatch: {key}")
     print(json.dumps({

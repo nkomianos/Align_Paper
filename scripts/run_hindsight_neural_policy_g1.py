@@ -41,6 +41,7 @@ from interaction_sprint.hindsight_neural_policy_g1 import (
     build_policy_schedules,
     expected_policy_arm_names,
     summarize_evaluation_rows,
+    summarize_policy_controls,
     summarize_policy_endpoints,
 )
 from latent_contract.sender_update import adapter_state, load_adapter
@@ -121,7 +122,7 @@ def main() -> None:
     schedules = build_policy_schedules(rows, panels)
     by_id = {str(row["id"]): row for row in rows}
     spec = {
-        "version": "policy-learning-g1-v2-independent-population",
+        "version": "policy-learning-g1-v3-oracle-distance",
         "model": MODEL_ID,
         "revision": MODEL_REVISION,
         "official_sdpo_repository": OFFICIAL_SDPO_REPOSITORY,
@@ -453,6 +454,20 @@ def main() -> None:
         endpoint_metrics["oracle_delayed"] = run_arm(
             "oracle_delayed", "oracle", global_schedule,
         )
+        controls = summarize_policy_controls(endpoint_metrics)
+        if controls["decision"] != "POLICY_ACQUISITION_QUALIFIED":
+            finish(controls["decision"], {
+                "qualification": qualification_metrics,
+                "endpoint_metrics": endpoint_metrics,
+                "completed_arms": completed,
+                "gates": controls["gates"],
+                "aggregate": controls["aggregate"],
+                "scope": (
+                    "Raw/full-oracle policy acquisition control stopped before sparse-panel "
+                    "training; this is an assay stop, not a correction result."
+                ),
+            })
+            return
         for panel_index in range(POLICY_PANEL_COUNT):
             panel_schedule = schedules["panels"][str(panel_index)]
             anchor_ids = panel_schedule["anchor_ids"]

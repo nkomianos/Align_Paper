@@ -155,10 +155,8 @@ def expected_policy_arm_names() -> list[str]:
     return names
 
 
-def summarize_policy_endpoints(metrics: dict[str, dict[str, float]]) -> dict[str, object]:
-    """Apply the prospectively frozen G1 endpoint decision rule."""
-    expected = expected_policy_arm_names()
-    if set(metrics) != set(expected):
+def _validate_endpoint_metrics(metrics: dict[str, dict[str, float]], expected: set[str]) -> None:
+    if set(metrics) != expected:
         raise ValueError("policy arm keys do not match the frozen design")
     required = {
         "semantic1_probability_mean", "swap0_semantic1_probability_mean",
@@ -170,33 +168,15 @@ def summarize_policy_endpoints(metrics: dict[str, dict[str, float]]) -> dict[str
         if not all(0 <= float(values[key]) <= 1 + 1e-5 for key in required):
             raise ValueError(f"endpoint metric outside probability range: {name}")
 
+
+def summarize_policy_controls(metrics: dict[str, dict[str, float]]) -> dict[str, object]:
+    """Qualify raw/oracle policy acquisition before sparse-panel training."""
+    expected = {"baseline", "raw_immediate", "oracle_delayed"}
+    _validate_endpoint_metrics(metrics, expected)
     probability = {name: float(values["semantic1_probability_mean"]) for name, values in metrics.items()}
     baseline = probability["baseline"]
     raw = probability["raw_immediate"]
     oracle = probability["oracle_delayed"]
-    panel_rows: list[dict[str, object]] = []
-    for panel_index in range(POLICY_PANEL_COUNT):
-        prefix = f"panel_{panel_index:02d}"
-        sdpo_name = f"{prefix}_anchor_sdpo"
-        sft_name = f"{prefix}_anchor_sft"
-        augmented_name = f"{prefix}_augmented"
-        comparator_name = sdpo_name if probability[sdpo_name] >= probability[sft_name] else sft_name
-        comparator = probability[comparator_name]
-        augmented = probability[augmented_name]
-        panel_rows.append({
-            "panel": panel_index,
-            "best_anchor_baseline": comparator_name.rsplit("_", 2)[-2] + "_" + comparator_name.rsplit("_", 1)[-1],
-            "best_anchor_probability": comparator,
-            "augmented_probability": augmented,
-            "augmented_gain": augmented - comparator,
-            "best_anchor_oracle_distance": abs(comparator - oracle),
-            "augmented_oracle_distance": abs(augmented - oracle),
-            "augmented_wins": augmented > comparator,
-        })
-
-    gains = [float(row["augmented_gain"]) for row in panel_rows]
-    baseline_distances = [float(row["best_anchor_oracle_distance"]) for row in panel_rows]
-    augmented_distances = [float(row["augmented_oracle_distance"]) for row in panel_rows]
     min_mass_floor = max(.10, .50 * float(metrics["baseline"]["min_ab_mass"]))
     position_gap_ceiling = max(.10, float(metrics["baseline"]["semantic_position_gap"]) + .02)
     aggregate = {
@@ -206,15 +186,8 @@ def summarize_policy_endpoints(metrics: dict[str, dict[str, float]]) -> dict[str
         "raw_shift": raw - baseline,
         "oracle_shift": oracle - baseline,
         "oracle_raw_gap": oracle - raw,
-        "augmented_wins": sum(bool(row["augmented_wins"]) for row in panel_rows),
-        "median_augmented_gain": median(gains),
-        "mean_augmented_gain": mean(gains),
-        "median_best_anchor_oracle_distance": median(baseline_distances),
-        "median_augmented_oracle_distance": median(augmented_distances),
-        "mean_best_anchor_oracle_distance": mean(baseline_distances),
-        "mean_augmented_oracle_distance": mean(augmented_distances),
-        "min_endpoint_ab_mass": min(float(values["min_ab_mass"]) for values in metrics.values()),
-        "max_endpoint_position_gap": max(float(values["semantic_position_gap"]) for values in metrics.values()),
+        "min_control_ab_mass": min(float(values["min_ab_mass"]) for values in metrics.values()),
+        "max_control_position_gap": max(float(values["semantic_position_gap"]) for values in metrics.values()),
         "min_mass_floor": min_mass_floor,
         "position_gap_ceiling": position_gap_ceiling,
     }
@@ -222,15 +195,99 @@ def summarize_policy_endpoints(metrics: dict[str, dict[str, float]]) -> dict[str
         "oracle_increases_semantic1_by_point10": aggregate["oracle_shift"] >= .10,
         "raw_decreases_semantic1_by_point10": aggregate["raw_shift"] <= -.10,
         "oracle_raw_gap_at_least_point25": aggregate["oracle_raw_gap"] >= .25,
-        "augmented_wins_at_least_six_panels": aggregate["augmented_wins"] >= 6,
-        "median_augmented_gain_at_least_point05": aggregate["median_augmented_gain"] >= .05,
-        "median_oracle_distance_reduced_twenty_percent": (
-            aggregate["median_augmented_oracle_distance"]
-            <= .80 * aggregate["median_best_anchor_oracle_distance"]
+        "control_answer_mass_preserved": aggregate["min_control_ab_mass"] >= min_mass_floor,
+        "control_position_preserved": aggregate["max_control_position_gap"] <= position_gap_ceiling,
+    }
+    return {
+        "decision": "POLICY_ACQUISITION_QUALIFIED" if all(gates.values()) else "STOP_POLICY_ACQUISITION_UNQUALIFIED",
+        "gates": gates,
+        "aggregate": aggregate,
+    }
+
+
+def summarize_policy_endpoints(metrics: dict[str, dict[str, float]]) -> dict[str, object]:
+    """Apply the prospectively frozen G1 endpoint decision rule."""
+    expected = expected_policy_arm_names()
+    _validate_endpoint_metrics(metrics, set(expected))
+
+    probability = {name: float(values["semantic1_probability_mean"]) for name, values in metrics.items()}
+    oracle = probability["oracle_delayed"]
+    controls = summarize_policy_controls({name: metrics[name] for name in expected[:3]})
+    panel_rows: list[dict[str, object]] = []
+    for panel_index in range(POLICY_PANEL_COUNT):
+        prefix = f"panel_{panel_index:02d}"
+        sdpo_name = f"{prefix}_anchor_sdpo"
+        sft_name = f"{prefix}_anchor_sft"
+        augmented_name = f"{prefix}_augmented"
+        sdpo_distance = abs(probability[sdpo_name] - oracle)
+        sft_distance = abs(probability[sft_name] - oracle)
+        comparator_name = sdpo_name if sdpo_distance <= sft_distance else sft_name
+        comparator = probability[comparator_name]
+        augmented = probability[augmented_name]
+        comparator_distance = abs(comparator - oracle)
+        augmented_distance = abs(augmented - oracle)
+        distance_gain = comparator_distance - augmented_distance
+        panel_rows.append({
+            "panel": panel_index,
+            "best_anchor_baseline": comparator_name.rsplit("_", 2)[-2] + "_" + comparator_name.rsplit("_", 1)[-1],
+            "best_anchor_probability": comparator,
+            "augmented_probability": augmented,
+            "oracle_distance_gain": distance_gain,
+            "best_anchor_oracle_distance": comparator_distance,
+            "augmented_oracle_distance": augmented_distance,
+            "augmented_strictly_closer": distance_gain > .01,
+            "augmented_noninferior": augmented_distance <= comparator_distance + .01,
+        })
+
+    gains = [float(row["oracle_distance_gain"]) for row in panel_rows]
+    baseline_distances = [float(row["best_anchor_oracle_distance"]) for row in panel_rows]
+    augmented_distances = [float(row["augmented_oracle_distance"]) for row in panel_rows]
+    min_mass_floor = max(.10, .50 * float(metrics["baseline"]["min_ab_mass"]))
+    position_gap_ceiling = max(.10, float(metrics["baseline"]["semantic_position_gap"]) + .02)
+    aggregate = {
+        **controls["aggregate"],
+        "augmented_strictly_closer_panels": sum(
+            bool(row["augmented_strictly_closer"]) for row in panel_rows
         ),
+        "augmented_noninferior_panels": sum(
+            bool(row["augmented_noninferior"]) for row in panel_rows
+        ),
+        "mean_oracle_distance_gain": mean(gains),
+        "median_best_anchor_oracle_distance": median(baseline_distances),
+        "median_augmented_oracle_distance": median(augmented_distances),
+        "mean_best_anchor_oracle_distance": mean(baseline_distances),
+        "mean_augmented_oracle_distance": mean(augmented_distances),
+        "rms_best_anchor_oracle_distance": math.sqrt(mean([value * value for value in baseline_distances])),
+        "rms_augmented_oracle_distance": math.sqrt(mean([value * value for value in augmented_distances])),
+        "max_best_anchor_oracle_distance": max(baseline_distances),
+        "max_augmented_oracle_distance": max(augmented_distances),
+        "min_endpoint_ab_mass": min(float(values["min_ab_mass"]) for values in metrics.values()),
+        "max_endpoint_position_gap": max(float(values["semantic_position_gap"]) for values in metrics.values()),
+        "min_mass_floor": min_mass_floor,
+        "position_gap_ceiling": position_gap_ceiling,
+    }
+    gates = {
+        **controls["gates"],
         "mean_oracle_distance_reduced_twenty_percent": (
             aggregate["mean_augmented_oracle_distance"]
             <= .80 * aggregate["mean_best_anchor_oracle_distance"]
+        ),
+        "rms_oracle_distance_reduced_twenty_percent": (
+            aggregate["rms_augmented_oracle_distance"]
+            <= .80 * aggregate["rms_best_anchor_oracle_distance"]
+        ),
+        "mean_oracle_distance_gain_at_least_point02": aggregate["mean_oracle_distance_gain"] >= .02,
+        "augmented_strictly_closer_at_least_three_panels": (
+            aggregate["augmented_strictly_closer_panels"] >= 3
+        ),
+        "augmented_noninferior_at_least_six_panels": aggregate["augmented_noninferior_panels"] >= 6,
+        "median_oracle_distance_not_worse": (
+            aggregate["median_augmented_oracle_distance"]
+            <= aggregate["median_best_anchor_oracle_distance"] + 1e-12
+        ),
+        "maximum_oracle_distance_not_worse": (
+            aggregate["max_augmented_oracle_distance"]
+            <= aggregate["max_best_anchor_oracle_distance"] + 1e-12
         ),
         "answer_mass_preserved": aggregate["min_endpoint_ab_mass"] >= min_mass_floor,
         "position_control_preserved": aggregate["max_endpoint_position_gap"] <= position_gap_ceiling,
@@ -242,7 +299,8 @@ def summarize_policy_endpoints(metrics: dict[str, dict[str, float]]) -> dict[str
         "panels": panel_rows,
         "scope": (
             "Synthetic first-token Qwen3.5-9B policy-learning gate after gradient G0. "
-            "It tests whether paired sparse delayed anchors improve actual SDPO policy endpoints "
-            "over equal-anchor SDPO and SFT, not human prevalence or paper viability."
+            "It tests whether paired sparse delayed anchors move actual SDPO policy endpoints "
+            "closer to a full delayed-feedback oracle than equal-anchor SDPO and SFT, not human "
+            "prevalence or paper viability."
         ),
     }

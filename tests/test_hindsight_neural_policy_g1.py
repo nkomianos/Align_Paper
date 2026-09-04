@@ -13,6 +13,7 @@ from interaction_sprint.hindsight_neural_policy_g1 import (
     build_policy_schedules,
     expected_policy_arm_names,
     summarize_evaluation_rows,
+    summarize_policy_controls,
     summarize_policy_endpoints,
 )
 
@@ -83,7 +84,7 @@ def test_policy_summary_qualifies_clear_policy_learning_effect():
         metrics[f"panel_{panel_index:02d}_augmented"] = _metric(.73)
     summary = summarize_policy_endpoints(metrics)
     assert summary["decision"] == "NEURAL_POLICY_G1_QUALIFIED"
-    assert summary["aggregate"]["augmented_wins"] == 8
+    assert summary["aggregate"]["augmented_strictly_closer_panels"] == 8
 
 
 def test_policy_summary_rejects_correction_that_only_matches_anchor_baselines():
@@ -96,4 +97,15 @@ def test_policy_summary_rejects_correction_that_only_matches_anchor_baselines():
         metrics[f"panel_{panel_index:02d}_augmented"] = _metric(.63)
     summary = summarize_policy_endpoints(metrics)
     assert summary["decision"] == "NEURAL_POLICY_G1_NOT_QUALIFIED"
-    assert not summary["gates"]["augmented_wins_at_least_six_panels"]
+    assert not summary["gates"]["mean_oracle_distance_reduced_twenty_percent"]
+
+
+def test_policy_controls_stop_before_sparse_training_when_oracle_does_not_move():
+    controls = {
+        "baseline": _metric(.50),
+        "raw_immediate": _metric(.30),
+        "oracle_delayed": _metric(.55),
+    }
+    summary = summarize_policy_controls(controls)
+    assert summary["decision"] == "STOP_POLICY_ACQUISITION_UNQUALIFIED"
+    assert not summary["gates"]["oracle_increases_semantic1_by_point10"]

@@ -2,12 +2,18 @@
 
 ## Role in the decision ladder
 
-This v2 protocol supersedes the unrun v1 at commit `e00a159` before any G1
+This v3 protocol supersedes the unrun v1 at commit `e00a159` and unrun v2 at
+commit `3a8baf4` before any G1
 endpoint exists. A prospective code audit found that v1 repeatedly inserted all
 eight anchors into a nominal 16-record population batch. Its implemented loss
 would therefore have overweighted the fixed panel and would not have been the
-claimed population expectation plus paired correction. V2 separates those two
-samples exactly; v1 must never be run or interpreted.
+claimed population expectation plus paired correction. V2 separated those two
+samples exactly. A subsequent exact panel audit found that v2's rule called any
+higher action-1 probability a win, even when an anchor-only learner overshot the
+full oracle. It also required six/eight directional wins although the exact
+paired estimator improves variance rather than having one privileged direction.
+V3 retains v2's corrected estimator but scores absolute distance to the full
+oracle endpoint. V1 and v2 must never be run or interpreted.
 
 This protocol may run only after the
 nested-budget neural-gradient G0 v2 returns `NEURAL_GRADIENT_G0_V2_QUALIFIED` and
@@ -62,20 +68,31 @@ Semantic action 1 is the persistent-preference oracle target; raw immediate
 feedback favors semantic action 0. All probabilities are normalized within the
 native A/B answer tokens after undoing option order.
 
-G1 qualifies only if every condition holds:
+The raw and oracle controls run first. Sparse arms stop without being launched if
+the first five acquisition/control conditions do not all hold:
 
 1. the full delayed oracle raises mean action-1 probability by at least `.10`
    from the common baseline;
 2. raw immediate SDPO lowers it by at least `.10`;
 3. the oracle-minus-raw endpoint gap is at least `.25`;
-4. augmented SDPO beats the better of equal-anchor SDPO and SFT in at least six
-   of eight panels;
-5. its median action-1 advantage over that best comparator is at least `.05`;
-6. median absolute distance to the oracle endpoint falls by at least 20%;
-7. mean absolute distance to the oracle endpoint falls by at least 20%;
-8. every endpoint retains A/B probability mass of at least `.10` and at least
+4. the three control endpoints retain A/B probability mass of at least `.10`
+   and at least half the baseline minimum mass; and
+5. their maximum option-position gap is no more than `.10` or baseline plus
+   `.02`, whichever is larger.
+
+If acquisition qualifies, G1 qualifies only if every additional condition holds:
+
+6. mean absolute distance to the oracle endpoint falls by at least 20% relative
+   to the closer of equal-anchor SDPO and SFT in each panel;
+7. root-mean-square oracle distance falls by at least 20%;
+8. mean absolute oracle-distance improvement is at least `.02`;
+9. augmented SDPO is more than `.01` closer in at least three panels;
+10. it is no more than `.01` worse in at least six panels;
+11. its median and maximum oracle distances are no worse than the corresponding
+    best-anchor baselines;
+12. every endpoint retains A/B probability mass of at least `.10` and at least
    half the baseline minimum mass; and
-9. the maximum option-position gap is no more than `.10` or baseline plus `.02`,
+13. the maximum option-position gap is no more than `.10` or baseline plus `.02`,
    whichever is larger.
 
 Thresholds and schedules cannot change after any G1 model endpoint is produced.
@@ -94,6 +111,7 @@ A qualified interface and G0 followed by G1 failure parks the current correction
 instead of changing thresholds. Failure of raw/oracle acquisition invalidates
 the policy assay on this interface rather than disproving the causal theorem.
 
-Expected GH200 time is approximately 4--8 hours after model/environment setup.
+Expected GH200 time is approximately 4--8 hours after model/environment setup on
+the pass path. Failed raw/oracle acquisition stops after only 64 updates.
 This is deliberately more expensive than G0 because it measures 832 actual
 optimizer updates instead of only initial gradients.
