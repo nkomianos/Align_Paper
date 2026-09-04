@@ -15,10 +15,15 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 The [read-only checkpoint diagnostic](docs/SDPO_FROZEN_FORWARD_DIAGNOSTIC_20260904.md)
 completed all 192 forwards in 21.64 seconds, without training. Its complete
-archive is local and remote/local SHA-256 matched. Independent arithmetic
-verification is investigating a discrepancy in the convention for cosine
-similarity at almost-zero gradient norms; no diagnostic conclusion is yet
-claimed. The original logits and frozen verifier remain preserved. A closer
+archive is local and remote/local SHA-256 matched. The
+[forensic audit](docs/SDPO_FROZEN_FORWARD_FORENSIC_FINDINGS_20260904.md) verified
+byte identities and scalar/norm arithmetic, but leaves gradient directions
+unresolved (29 raw cosine discrepancies and 197 null-convention differences).
+No tolerance was relaxed and no directional claim is made. Importantly, a valid
+lowercase response can have almost zero probability for the original uppercase
+first token: token displacement alone is not semantic failure. The separate
+archived generation test established the teacher's preservation defect.
+The original logits and frozen verifier remain preserved. A closer
 single-profile, released-default SDPO reproduction is being prepared, not yet
 running; it would qualify our experimental learner, not establish a new paper.
 
