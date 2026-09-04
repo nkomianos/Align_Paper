@@ -2,12 +2,11 @@
 
 ## Frozen transfer inputs
 
-- Source bundle:
-  `artifacts/deployment/hindsight_gpu_queue_e522ad6.bundle`
-- Bundle SHA-256:
-  `93b0098eacc7d6cd0161c6e59372baa5814d631b5a4f9b04834caadf812bc12b`
-- Bundle branch tip and required detached commit:
-  `e522ad62c2a5fa812f55e252140c922f178e8485`
+- Source bundle and checksum are refreshed after the policy-G1 implementation
+  commit. Use the latest non-overwriting `hindsight_gpu_queue_*.bundle` and its
+  adjacent receipt rather than the superseded `e522ad6` bundle.
+- The exact detached commit used on the host must equal the branch tip recorded
+  by `git bundle list-heads` and the commit named in every launcher variable.
 - Private PUPPET input:
   `artifacts/puppet_schema_20260904_v1/hidden_puppet_master_dataset.csv`
 - PUPPET SHA-256:
@@ -25,31 +24,48 @@ committed or placed in a public archive.
 3. Run neural-gradient G0 v2. Its semantic-interface qualification can stop the
    assay before any gradient. If it qualifies, preserve all 48 gradient vectors.
 4. Secure and verify that evidence.
-5. Run the independent PUPPET capable-reader DEV regardless of the gradient's
+5. If and only if gradient G0 v2 qualifies and verifies, run the frozen neural
+   policy-learning G1 using that exact G0 root as its prerequisite. Preserve all
+   26 trained arms and verify its evidence.
+6. Run the independent PUPPET capable-reader DEV regardless of the gradient's
    scientific decision, provided the runtime and private-input checks pass.
-6. Secure and verify that evidence. Do not run the locked human confirmation
-   split or any policy-learning expansion automatically.
+7. Secure and verify that evidence. Do not run the locked human confirmation
+   split or any post-G1 expansion automatically.
 
-Estimated paid time after the model is cached is 25--70 minutes for gradient G0
-and 30--60 minutes for the capable reader. Allow another 15--40 minutes on a
-fresh host for environment validation and model download. The expected total is
-approximately 1.2--2.8 hours, with earlier fail-closed stops possible.
+Estimated paid time after the model is cached is 25--70 minutes for gradient G0,
+3--6 hours for conditional policy G1, and 30--60 minutes for the capable reader.
+Allow another 15--40 minutes on a fresh host for environment validation and
+model download. The pass-path total is approximately 4--8.2 hours; a failed G0
+skips G1 and reduces the total to about 1.2--2.8 hours.
 
 ## Remote launch contract
 
-Both launchers require an absolute fresh output root, exact clean Git commit,
+All launchers require an absolute fresh output root, exact clean Git commit,
 one CUDA device, Transformers with native `Qwen3_5ForCausalLM`, and an explicit
 Python runtime. The human launcher also verifies the private dataset SHA-256
-before model loading. They write a remote checksum for the sealed manifest.
+before model loading. Policy G1 additionally reruns the committed G0 verifier
+inside its runner and records the prerequisite manifest and result hashes. All
+three launchers write a remote checksum for the sealed manifest.
 
 Gradient environment variables:
 
 ```bash
 export HINDSIGHT_GRADIENT_V2_ROOT=/home/ubuntu/hindsight_gradient_g0_v2_TIMESTAMP
 export HINDSIGHT_GRADIENT_V2_PYTHON=/home/ubuntu/Align_Paper/.venv/bin/python
-export HINDSIGHT_GRADIENT_V2_PINNED_COMMIT=e522ad62c2a5fa812f55e252140c922f178e8485
+export HINDSIGHT_GRADIENT_V2_PINNED_COMMIT=EXACT_TRANSFER_COMMIT
 export HF_HOME=/home/ubuntu/Align_Paper/.hf_cache
 bash scripts/run_hindsight_neural_gradient_g0_v2_remote.sh
+```
+
+Conditional policy-G1 environment variables:
+
+```bash
+export HINDSIGHT_POLICY_G1_ROOT=/home/ubuntu/hindsight_policy_g1_TIMESTAMP
+export HINDSIGHT_POLICY_G1_GRADIENT_ROOT=/home/ubuntu/hindsight_gradient_g0_v2_TIMESTAMP
+export HINDSIGHT_POLICY_G1_PYTHON=/home/ubuntu/Align_Paper/.venv/bin/python
+export HINDSIGHT_POLICY_G1_PINNED_COMMIT=EXACT_TRANSFER_COMMIT
+export HF_HOME=/home/ubuntu/Align_Paper/.hf_cache
+bash scripts/run_hindsight_neural_policy_g1_remote.sh
 ```
 
 Human-reader environment variables:
@@ -57,7 +73,7 @@ Human-reader environment variables:
 ```bash
 export HINDSIGHT_HUMAN_LLM_ROOT=/home/ubuntu/hindsight_human_llm_dev_TIMESTAMP
 export HINDSIGHT_HUMAN_LLM_PYTHON=/home/ubuntu/Align_Paper/.venv/bin/python
-export HINDSIGHT_HUMAN_LLM_PINNED_COMMIT=e522ad62c2a5fa812f55e252140c922f178e8485
+export HINDSIGHT_HUMAN_LLM_PINNED_COMMIT=EXACT_TRANSFER_COMMIT
 export PUPPET_DATA=/home/ubuntu/frozen_inputs/puppet/hidden_puppet_master_dataset.csv
 export HF_HOME=/home/ubuntu/Align_Paper/.hf_cache
 bash scripts/run_hindsight_human_feedback_llm_dev_remote.sh

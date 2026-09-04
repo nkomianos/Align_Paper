@@ -40,20 +40,29 @@ regret from `.00677` to `.00418`. It also exposes the hard boundary: once the
 delayed measurement itself is contaminated enough to reverse the target,
 weighting consistently learns the wrong target. This supplies an explicit
 assumption/sensitivity story rather than pretending every delayed reply is an
-anchor. A stricter
-[neural gradient gate](docs/HINDSIGHT_NEURAL_GRADIENT_G0_PROTOCOL_20260904.md)
-is now frozen at commit `49f8552`. It uses Qwen3.5-9B, the SDPO hindsight block,
+anchor. A corrected
+[neural gradient gate](docs/HINDSIGHT_NEURAL_GRADIENT_G0_V2_PROTOCOL_20260904.md)
+is frozen at commit `2a15a80`. It uses Qwen3.5-9B, the SDPO hindsight block,
 the exact full-vocabulary reverse-KL objective and eight outcome-blind sparse
-anchor panels. It compares each equal-anchor gradient and the augmented
-immediate-plus-residual estimator against the full delayed-feedback oracle. A
-prospective audit superseded the older unrun policy gate as the first test:
-forcing anchors to be outcome-representative removed much of the sampling
-variance the method should reduce, and a global binary endpoint could saturate.
-The replacement needs only32 backward passes and is the next available-GPU
-priority (estimated15--45 GH200 minutes). On a pass, a redesigned multi-panel
-policy gate follows; the capable PUPPET reader remains an independent sub-hour
-test. No GPU host is currently
-reachable; `192.222.57.245` times out, so no paid process is active there.
+anchor panels at nested budgets of four and eight labels. It compares each
+equal-anchor gradient and the augmented immediate-plus-residual estimator
+against the full delayed-feedback oracle. A prospective power audit superseded
+the older unrun binary rule because its fixed cosine-gain threshold rejected
+large error reductions near a directional ceiling. The replacement requires 48
+backward passes and is the next available-GPU priority (estimated 25--70 GH200
+minutes). The exact small-model infrastructure rehearsal stopped correctly at
+semantic-interface qualification; it is not evidence about the 9B endpoint.
+
+If gradient G0 v2 qualifies, the prospectively frozen
+[neural policy-learning G1](docs/HINDSIGHT_NEURAL_POLICY_G1_PROTOCOL_20260904.md)
+tests 26 independently reset training arms across eight disjoint sparse panels.
+It asks whether the paired delayed-minus-immediate correction beats both
+equal-label SDPO and supervised baselines and approaches a full delayed oracle
+after actual optimizer updates. The runner, checkpoints, failure recovery and
+read-only verifier are implemented at commit `1b55bb9`; estimated GH200 time is
+3--6 hours. The capable PUPPET reader remains an independent 30--60-minute
+human-data substrate check. No GPU host is currently reachable;
+`192.222.57.245` times out, so no paid process is active there.
 
 ### CPU-only follow-up
 

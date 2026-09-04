@@ -1949,3 +1949,32 @@ gradient G0 v2 (25--70 minutes), then capable-reader DEV (30--60 minutes), plus
 fresh-host setup/model transfer. No policy expansion or locked human split is
 automatic. The prior GH200 address remains unreachable, so no paid process is
 being monitored.
+
+## 2026-09-04 -- stronger Hindsight policy-learning gate frozen and implemented
+
+Rechecked `192.222.57.245`; SSH times out, so no GPU process is active and there
+is no remote endpoint to retrieve. Continued offline rather than treating the
+absence of a host as scientific evidence.
+
+Prospectively froze policy-learning G1 at commit `e00a159`, before any model
+endpoint. Eight disjoint hash-selected panels contain eight delayed labels each,
+balanced only on randomized logged action and blind to latent state/outcomes.
+For each panel the same labels feed anchor-only SDPO, first-token SFT, and the
+paired immediate-plus-delayed-minus-immediate estimator. Full immediate and full
+delayed-oracle SDPO are global controls. All 26 arms start from the identical
+adapter and run 32 fixed updates, for 832 updates total.
+
+The decision requires opposed raw/oracle acquisition, augmented wins in at least
+six/eight panels, at least `.05` median improvement over the better equal-anchor
+baseline, 20% mean and median reductions in distance to the oracle endpoint,
+and preserved A/B-mass and option-position controls. Fourteen design/loss tests
+pass. This is deliberately harder than the prior global endpoint and cannot be
+run unless checksum-valid gradient G0 v2 first qualifies.
+
+Implemented the GPU runner, prerequisite binding, checkpoints, optimizer and
+failure-state preservation, source manifests, hardened remote launcher, and a
+read-only arithmetic/structure/checkpoint verifier at commit `1b55bb9`.
+Compilation, shell syntax, and all 14 targeted tests pass. No policy endpoint
+exists. Expected post-cache GH200 time is 25--70 minutes for G0 and 3--6 hours
+for conditional G1; the independent PUPPET reader remains 30--60 minutes. The
+scientific status remains conditional yellow, not greenlit.
