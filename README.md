@@ -101,6 +101,16 @@ certificates and learnability theory are parked; the proposed steering extension
 has substantial prior-work overlap. These new apparatus stages are recorded
 separately from the historical empirical-experiment count below.
 
+**Current local work:** a [capability-controlled feedback-learning pilot](docs/HINDSIGHT_COMPETENCE_PILOT_V1.md)
+is running on the laptop CPU (not the idle remote GPU). Sixteen supervised
+warmup updates improved separate qualification accuracy from 16/32 to 30/32,
+passing its fixed capability rule. Eight short feedback/anchor comparison arms
+follow from that same checkpoint; final results are pending. This is a restricted
+categorical, frozen-teacher synthetic pilot, not a full SDPO reproduction.
+An independent [flow-uncertainty control](docs/FLOW_UNCERTAINTY_NULL_CONTROLS.md)
+has an exact checked example where outputs remain unchanged while a velocity
+disagreement score rises. Natural trained-model validation is still unrun.
+
 See the [researcher journal](docs/RESEARCH_JOURNAL.md) for hypothesis, design,
 numbers, evidence paths, failed launches, interpretation limits, and next steps;
 the [new-idea review](docs/IDEA_REVIEW_20260902.md) records the Mostik/latent-channel

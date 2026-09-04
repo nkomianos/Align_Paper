@@ -955,3 +955,46 @@ negative cosine subset. No GPU work launched. Latest read-only GPU check shows
 GH200 0% utilization, 3 MiB used, no compute process. Existing GPU evidence was
 already secured locally; the instance remains safe to terminate. The research
 goal remains unmet, rather than being marked complete on a diagnostic finding.
+
+## 2026-09-04 — Capability-controlled learning and a separate flow lead
+
+The preceding turn made progress: it completed and verified a matched gradient
+diagnostic, not just a status check. This turn froze and launched actual local
+parameter training at commit `3d32159`, root
+`artifacts/hindsight_competence_cpu_v1`, execution session 26297, Windows Python
+PID 73036. This handle was confirmed live with increasing CPU time. No remote
+GPU job was launched and its earlier termination clearance remains unchanged.
+
+192 distinct context records across four numeric-choice domains, with disjoint
+underlying pairs across warmup, qualification, adaptation and final evaluation.
+Two fixed warmup epochs/16 updates increase qualification accuracy from 16/32
+to 30/32; minimum A/B mass .999982 and all domain accuracies >=.875. Qualification
+passes. Eight adaptation arms (four learners times two feedback channels) are
+running, not complete as of this entry. Every arm starts from the same warmup
+adapter; frozen teacher, eight SGD updates, fixed labels/batches. Compare raw
+own-response/full-KL learning with label-budget-matched anchor-only and standard
+gradient projection. This is neither an implemented novel correction nor full
+SDPO. Read-only final verifier is implemented; do not report a final result
+until the process exits, complete manifest exists, and verification succeeds.
+
+Fresh literature triage rejects another generic ambiguous-tool-retry benchmark:
+Verified Tool Calls (2608.02645), Resume Means Resume (2608.03836), and public
+IdempotencyBench already cover the core proposal. This was a novelty rejection
+before experimentation, not an additional failed empirical gate.
+
+For the user's transport-reliability direction, read VFD/SAVE (2606.18043),
+including its ideal-path KL identity and proof. Derived an endpoint-preserving
+rotational perturbation of a Gaussian flow. Its marginals and outputs remain
+unchanged, but weighted velocity disagreement grows logarithmically with score
+resolution. It incurs nonzero, controllably small excess FM loss, so it does not
+contradict the identity for exact population-optimal fields. The distinction is
+extension to approximate fields, not a claim that the original theorem is false.
+
+Committed exact construction at `2aaf4e5`, ran all 24 cells, checked ODE
+derivatives, covariance continuity, endpoints, quadrature, and an independent
+closed-form excess-loss calculation. Evidence `artifacts/flow_gauge_audit_v1`;
+details and scope in `docs/FLOW_UNCERTAINTY_NULL_CONTROLS.md`. At epsilon .05 and
+10 steps, null VFD .045944 exceeds a genuine mean-shift control .031146, while
+the null terminal KL is exactly zero. This is constructed evidence, not natural
+model prevalence. Next is ordinary trained-ensemble testing without injected
+rotations; no VLA/GPU expansion queued. Twenty-six relevant tests currently pass.

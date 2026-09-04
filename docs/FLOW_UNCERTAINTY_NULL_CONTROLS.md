@@ -66,3 +66,22 @@ of a constructed example, not evidence that natural trained models fail.
 No VLA GPU job is queued. First check the exact construction and a tiny
 CPU-trained flow ensemble. Stop this route if the effect requires constructed
 perturbations and does not affect decisions of naturally trained models.
+
+## Completed exact control
+
+Commit `2aaf4e5`; evidence `artifacts/flow_gauge_audit_v1`. All 24 cells complete.
+The independent analytic integral is epsilon^2*(1+2*pi^2/3), matching numerical
+quadrature. For epsilon .05, excess FM risk is .01894934 and the maximum
+intermediate rotation is .05 radians; endpoint error is below 1.4e-17. The
+null VFD is .045944 at 10 quadrature steps, .152713 at 100 and .265673 at 1000.
+The genuine mean-shift control has terminal KL .03125 and matching convergent
+VFD. Thus even at 10 steps the null can rank above the nonzero-KL control.
+These numbers verify the stated construction, not its prevalence in training.
+
+Next independent empirical question: fit ordinary finite-data flow ensembles
+without injected rotations and test whether VFD misranks terminal-distribution
+disagreement or useful data acquisition. Include exact Gaussian KL as a
+diagnostic oracle, output-distribution distances as practical baselines, and
+fixed high-accuracy integration so solver error cannot create the finding.
+Do not count the same analytic construction at more epsilon values as new
+empirical validation. That natural-ensemble experiment is not running yet.
