@@ -1157,3 +1157,35 @@ added replay/tamper test, preserved all artifacts. Eight targeted tests pass.
 Decision: no paper or GPU expansion. The goal remains unmet but not blocked:
 real public trajectories now support further offline investigation. No live CPU
 or GPU experiment, monitor, or automatically executing experiment queue created.
+
+## 2026-09-04 — Matched-task selection and held-out calibration
+
+Previous status turn was no progress toward a candidate, not a verified wait:
+GPU was confirmed idle. This continuation implemented and completed two offline
+analyses on all 556 public AgentUQ traces. Full task/protocol matching passes
+for 278 pairs. No new model inference, training or GPU launch.
+
+Five fixed-orientation percentile selectors all lose to leave-one-task-out
+constant model choice. To avoid handicapping uncertainty by erasing model base
+rates, followed with standard logistic calibration: five deterministic task
+folds, train-only scaling, model identity and separate feature slopes, no tuning.
+NLL/entropy add no selection gain in any domain. Terminal action count adds
+eight successes/114 in retail (50.88% -> 57.89%), but loses four points in
+airline and ties in telecom. First-two-action features show no substantial gain.
+Telecom has only one GPT-only success versus 52 Kimi-only successes: there is
+almost no gain available over always choosing Kimi. No new method claim.
+
+See docs/AGENTUQ_MATCHED_SELECTION_20260904.md for all results and caveats.
+Bootstrap intervals are conditional/descriptive, not confirmatory significance.
+Retrospective selection cannot establish live switching/repair utility.
+Progress Advantage is a mandatory prior/baseline; no scores reproduced here.
+Its advertised repeated-rollout dataset API was inaccessible; nothing downloaded.
+
+Matched root artifacts/agentuq_matched_v1 replay verifies, manifest
+c2f5d54d377249726743328886ea5e9a3fdc699238f0f2bb7f9aea57d350dfec.
+Calibrated root artifacts/agentuq_calibrated_v2 replay verifies, manifest
+8120c559e9571c6b3411c58f497dee1fee2b6f816f50fa23c54897e238d65270.
+Initial calibrated v1 retained; validation hardened against fractional-label
+truncation before identical-result v2. Seventeen relevant tests pass, including
+held-out-label-change invariance. Same-implementation replay, not external
+replication. No active process remains. No paper expansion; goal still unmet.

@@ -11,6 +11,14 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
+**Latest matched-task follow-up:** a [cross-model selection audit](docs/AGENTUQ_MATCHED_SELECTION_20260904.md)
+has run on the 556 public traces, with verified task/protocol matching and
+task-held-out logistic calibration. Ordinary uncertainty features do not improve
+selection over choosing the model with the better training-task success rate.
+A terminal action-count baseline adds 7.02 points in retail only; this is
+retrospective and not a new method or early intervention result. Seventeen
+relevant tests pass. No GPU job or automatic expansion launched.
+
 **Latest offline research:** the [agent-monitoring audit](docs/AGENT_MONITORING_RESEARCH_AUDIT_20260904.md)
 checks an exact clustered-certification failure and inventories three public
 datasets. All 556 AgentUQ v1.1 trajectories are downloaded, hashed and analyzed
