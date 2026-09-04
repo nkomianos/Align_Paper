@@ -629,3 +629,23 @@ or staging. Implemented and froze the 512-call four-arm baseline and read-only
 verifier before inspecting any outcomes from that baseline. Fifteen CPU tests
 cover data selection, inventory and analysis; GPU wrapper integration is still
 untested. The active 96-call reasoning study remains unchanged.
+
+## 2026-09-04 — Reasoning channel result secured; published baseline launched
+
+Fresh reasoning DEV completed: 96 calls / eight independent pairs, generation
+time 1,046.71 seconds. Retrieved complete evidence and prefixes to
+`retrieved/lc0_reasoning_dev_20260904T0459Z`; remote/local archive digest
+`95895efa41f9334a740857fb00935f3cea7a07c2b23ec64da6d43f782d5b47a8` matches.
+The frozen verifier reports text/normalized/counterfactual-text target accuracy
+100%, latent and counterfactual-latent target accuracy 93.75%, no-message 0%.
+All 16 no-message and two latent responses are token-limited; global parse rate
+81.25% fails the frozen validity prerequisite, so `INVALID_CHANNEL_ASSAY` stands.
+Do not discard this requirement after seeing the data. Equally, do not call the
+15/16 latent answers a negative communication result. This is a useful working
+apparatus clue, not a model-update result or paper green light.
+
+After process exit and verified local preservation, launched the already frozen
+released-C2C baseline (512 calls; 128 public validation examples, four arms;
+PID 15457). Upstream imports pass in the isolated environment. No update
+training is launched. Follow-up design remains conditional on functional
+controls and a meaningful baseline signal. See the live queue for exact roots.

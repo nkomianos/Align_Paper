@@ -19,15 +19,21 @@ completed with invalid text controls, EP0 smoke completed with weak oracle
 controls (25% accuracy), and native-video hindsight completed with a valid
 negative (zero observed past-state corruption in 48 pairs). All three runs
 are secured locally. A 24-call diagnostic found exact token-ID/embedding
-equivalence and unfinished reasoning under the old budget. A fresh 96-call
-reasoning-enabled channel DEV test is now running; it is not paper expansion. See the
+equivalence and unfinished reasoning under the old budget. The fresh 96-call
+reasoning-enabled channel DEV is now verified: text controls 16/16, latent and
+swapped-latent target accuracy 15/16, but the frozen global parse criterion failed
+(81.25%; 16 no-message and two latent responses were token-limited). This is
+encouraging communication evidence, not a valid gate pass or update result.
+A separate released-C2C baseline has launched: 128 public validation questions,
+four arms, no training. See the
 [live queue and verified LC0 result](docs/INDEPENDENT_QUEUE_20260904.md).
 
-The active implementation is [Efference-Pair EP0](docs/EFFERENCE_PAIR_EP0_RUNBOOK.md),
-a small, synthetic camera-versus-object-motion apparatus pilot. It is **not** the
-previously proposed ACaM/MotionBench G0 and cannot pass that gate. The first paid
-step is only 24 frozen smoke forwards; a separate 450-forward pilot is conditional
-on compatibility and measured throughput. The real-video gate remains unrun.
+The [Efference-Pair EP0](docs/EFFERENCE_PAIR_EP0_RUNBOOK.md) implementation is a
+small synthetic camera-versus-object-motion apparatus pilot. Its 24-call smoke
+is complete and did not justify the separate 450-forward pilot. It is **not**
+the previously proposed ACaM/MotionBench G0. The real-video gate remains unrun.
+The [latent-update baseline plan](docs/LATENT_UPDATE_BASELINE_PLAN.md) records
+the current released-C2C baseline, source/model pins, and required controls.
 
 The [data inventory](docs/DATA_AND_EXPERIMENT_QUEUE_20260902.md) and
 [current executable queue](configs/research_queue_20260903.json) include five

@@ -137,7 +137,7 @@ matches remote: `d9c5406346b654c5abaf049657cd0e9bf4e9fbbdf84ebef4d408ae879bc9bf1
 Read-only verifier `scripts/verify_lc0_text_diagnostic.py` checks source, cases,
 model, budget, output grid and original-run equivalence; report `verified.json`.
 
-## Active follow-up: fresh reasoning-enabled channel DEV
+## Completed follow-up: fresh reasoning-enabled channel DEV
 
 Root `/home/ubuntu/lc0_reasoning_dev_20260904T0500Z`; log/PID beside it,
 initial process 13826. [Frozen design](LC0_REASONING_DEVELOPMENT.md): 16 worlds
@@ -155,6 +155,35 @@ generation-only estimate is 13–27 minutes (250–512 tokens x 96 calls), plus
 prefix preparation and evidence transfer. This is not a measured complete-run
 ETA and actual decoding lengths differ by arm. No automatic further budget
 increase or full training follows; review controls and relevance first.
+
+Verified at `retrieved/lc0_reasoning_dev_20260904T0459Z`, report `verified.json`.
+Remote/local archive SHA-256:
+`95895efa41f9334a740857fb00935f3cea7a07c2b23ec64da6d43f782d5b47a8`.
+All 96 calls completed in 1,046.71 generation seconds. Text, normalized text and
+counterfactual-text donor-target accuracy are 16/16; latent and donor-latent
+target accuracy are 15/16. Both swapped arms score 0/16 against original-world
+answers, supporting message dependence on these DEV pairs. No-message accuracy
+is 0/16 with all 16 outputs truncated. Two latent outputs also truncated.
+Global parse rate is 81.25%, failing the unchanged >=95% prerequisite: formal
+`INVALID_CHANNEL_ASSAY`. Do not relabel it a pass or silently exclude no-message
+responses. The working message channel is encouraging apparatus evidence, not a
+claim of robustness to model updates or scientific novelty. No more nonce
+reasoning-budget ladder is planned.
+
+## Active released-C2C baseline
+
+Root `/home/ubuntu/c2c_baseline_dev_20260904_v1`; log and PID beside it; initial
+PID 15457. Started only after previous process exit, retrieval and verification.
+Frozen at local commit `f276652`, standalone runner SHA-256
+`55a5bc561eaf3ae37e16b9a70db6fd6e893258a1d0e67b09012e93314d3637ef`.
+Runs 128 fixed public validation questions x four arms = 512 calls. No training,
+no answer-key access. Source `/home/ubuntu/c2c_upstream_113c3a9` at pinned commit
+`113c3a9b2538cbf096a0477e1ec99ae2a2e0d12a`; isolated `.venv-c2c-baseline-v1`.
+Full design and model hashes are in [the baseline plan](LATENT_UPDATE_BASELINE_PLAN.md).
+Use `scripts/verify_c2c_baseline_dev.py --root RETRIEVED --prepared
+artifacts/c2c_baseline_dev_20260904_v1 --output FRESH_REPORT` with local
+`PYTHONPATH=src;.` after fresh retrieval and checksum checks. Do not auto-expand
+to update training. This tests the published apparatus, not our proposed claim.
 
 ## Preservation and monitoring
 
