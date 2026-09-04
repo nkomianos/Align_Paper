@@ -18,8 +18,14 @@ def preexecution_view(record, step_id, tool_call_id):
                         ('source','message','tool_calls','observation')})
     # Tool-call extras are not model inputs: labels/provenance can reside there.
     for item in history:
-        item['tool_calls']=[{k:copy.deepcopy(c[k]) for k in ('function_name','arguments')}
+        item['tool_calls']=[{k:copy.deepcopy(c[k]) for k in ('tool_call_id','function_name','arguments')}
                             for c in (item['tool_calls'] or [])]
+        observation=item['observation']
+        if observation is not None:
+            # Keep call/result association, not arbitrary source metadata.
+            item['observation']={'results':[
+                {k:copy.deepcopy(result[k]) for k in ('source_call_id','content')}
+                for result in observation['results']]}
     proposed={k:copy.deepcopy(calls[0][k]) for k in ('function_name','arguments')}
     return dict(history=history,proposed_call=proposed,
                 policy_note='Original platform system prompt omitted; no replacement judge policy supplied.')

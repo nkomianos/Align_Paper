@@ -11,6 +11,20 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
+### CPU-only follow-up
+
+The [ScopeJudge audit](docs/SCOPEJUDGE_OFFLINE_SCHEMA_AUDIT_20260904.md)
+verified 4,897 labeled calls and constructed metadata-filtered pre-execution
+views. Of 377 majority-labeled violations, 301 occur after their trajectory's
+first positive step. This motivates an offline check of released monitor
+predictions, **not** a paper greenlight or a claim of poor monitor performance.
+No new GPU run is queued. Theory and video-removal audits likewise have not
+yet qualified a paper-scale expansion.
+The subsequent leave-one-expert-out check found first/later positive agreement
+79.27%/83.53%, with the trajectory-bootstrap difference interval crossing zero.
+Public model prediction files are explicitly uncommitted. The generic
+first-boundary direction is parked, not promoted to a GPU sweep.
+
 ### Current GPU window — September 4, 15:45 UTC
 
 No GPU process remains active. Completed experiment evidence and trained adapters

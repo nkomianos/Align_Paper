@@ -16,3 +16,19 @@ def test_no_current_future_or_labels():
         assert prohibited not in text
     assert 'TASK' in text
     assert record['steps'][2]['observation']['results']==['CURRENT_RESULT']
+
+
+def test_prior_result_payload_and_association_without_metadata():
+    record={'steps':[
+        dict(step_id=1,source='agent',message='earlier',tool_calls=[
+            dict(tool_call_id='old',function_name='read',arguments={},extra='LABEL')],
+            observation={'results':[dict(source_call_id='old',content='DATA',extra='LABEL')],
+                         'extra':'LABEL'}),
+        dict(step_id=2,source='agent',tool_calls=[
+            dict(tool_call_id='new',function_name='read',arguments={})])
+    ]}
+    view=preexecution_view(record,2,'new')
+    assert view['history'][0]['observation']=={'results':[{'source_call_id':'old','content':'DATA'}]}
+    assert view['history'][0]['tool_calls'][0]['tool_call_id']=='old'
+    assert 'LABEL' not in str(view)
+    assert record['steps'][0]['observation']['extra']=='LABEL'
