@@ -577,3 +577,22 @@ while package metadata says MIT; preserve upstream notices and resolve before
 redistributing adaptations. No upstream code executed and no fuser weights
 downloaded yet. Small published-model reproduction would be a baseline, not a
 claim about frontier-model communication.
+
+## 2026-09-04 — C2C release provenance and conditional update design
+
+While the 96-call reasoning DEV process was verified live, audited the released
+C2C model metadata without loading weights. Evidence is preserved in
+`artifacts/c2c_release_metadata_20260904T0450Z`: pinned fuser revision
+`f01fc3258b305e280e04c7238f4f2cf31b7dc70d`, 28 projectors, 59 selected files,
+1,058,841,119 bytes. Selected sender Qwen3-4B matches the cached snapshot;
+receiver Qwen3-0.6B has 28 layers, and the release maps sender layers 8–35 into
+receiver layers 0–27. The original config lacks model revisions, so this is
+not a claim of exact original-paper numerical reproduction.
+
+Added metadata-only preflight script and a
+[conditional update-study plan](LATENT_UPDATE_BASELINE_PLAN.md). The plan
+requires useful independently selected updates, retained sender performance,
+paired text/C2C comparisons, separate calibration/evaluation data, and strong
+alignment plus version-check/text-fallback baselines. A broken adapter alone is
+not a strong contribution. Existing compatible-representation learning further
+limits novelty. No training or new GPU job was launched during this audit.
