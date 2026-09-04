@@ -1750,7 +1750,8 @@ This uses exact full-vocabulary reverse KL at the first decision token. The
 released online default is a top-20-plus-tail approximation, so a pass is only a
 mechanism qualification and must be replicated under that released loss, full
 sequences and multiple seeds. A qualified teacher/acquisition followed by a
-gate failure parks the current Hindsight correction. Expected GH200 time is
-roughly2--6 hours, with earlier stops possible. The prior host
+gate failure parks the current Hindsight correction. Archived Qwen3.5-9B GH200
+update rates imply roughly1--3 hours for all seven arms, with earlier
+qualification/acquisition stops possible. The prior host
 `192.222.57.245` still times out; no GPU process is active and no endpoint has
 been generated.

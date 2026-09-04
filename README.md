@@ -40,8 +40,10 @@ anchor budgets, and acquisition/interface stops. The two causal worlds have
 byte-identical immediate data but opposite correct policies. A pass must recover
 the expression-world policy, preserve the transition-world raw objective, and
 beat both anchor-only SDPO and anchor SFT by the frozen margin. This is the next
-available-GPU priority (estimated 2--6 GH200 hours), followed by the already
-frozen capable PUPPET reader DEV (under one hour). No GPU host is currently
+available-GPU priority (estimated 1--3 GH200 hours), followed by the already
+frozen capable PUPPET reader DEV (under one hour). The estimate is grounded in
+the archived GH200 Qwen3.5-9B update timings; qualification and acquisition
+stops can end the run earlier. No GPU host is currently
 reachable; `192.222.57.245` times out, so no paid process is active there.
 
 ### CPU-only follow-up
