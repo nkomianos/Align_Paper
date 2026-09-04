@@ -1007,3 +1007,41 @@ the same RESULT bytes and passes the strict checksum/analytic verifier. Separate
 receipt `artifacts/flow_gauge_audit_v1_retry1_verified.json`, manifest SHA-256
 `e453f6b2e532066c7cf793b3dc1c40f59d5d1e14d42bb056aab2418be8b87c79`.
 This is one analytical experiment plus a bookkeeping retry, not two findings.
+
+## 2026-09-04 — Naturally fitted Gaussian flow acquisition test: no practical lead
+
+Previous goal turn was progress: actual LM warmup training, a live feedback
+pilot and a new checked flow construction. This turn implemented and froze
+ordinary affine flow matching fitted by least squares, without injected
+rotations or installing the analytical optimal field. Commit `bf4e5e3`, root
+`artifacts/flow_ensemble_pilot_v1`. Eight seed pools, each with four target
+geometries and four initial dataset sizes; two ensemble members before/after
+64 additional labels/context. 512 fits across 128 contexts, 18.28 seconds.
+One BLAS thread to avoid substantially competing with the active LM process.
+
+All data, coefficients and results saved; strict manifest verification plus
+complete dataset regeneration, fitting, ODE, score and acquisition replay
+passes. Receipt `artifacts/flow_ensemble_pilot_v1_verified.json`; manifest
+`da64be075573d82d7397c5ff8c86fd712dd667f5608311f8a3af18aa067e489b`.
+This is repeat execution of the same reviewed numerical methods, not an
+independent implementation or external replication.
+
+Mean whole-pool KL-risk gains: VFD10 .038739, VFD100 .035614, VFD1000 .034922,
+endpoint energy .028777, common-source L2 .036410, exact ensemble KL .036111,
+random .017553, unattainable future-gain oracle .039787. Energy wins in 0/8
+pools, ratio .743 to VFD10. Frozen no-practical-lead decision retained. Median
+rank correlation between VFD10 and VFD1000 is .925: scale dependence does not
+automatically mean practically destructive reranking.
+
+Post-hoc sanity check: choose contexts with the least data. Gain .039620,
+almost the future oracle. Thus this is an easy varying-label-count acquisition
+task and should not be overstated as evidence for any sophisticated uncertainty
+method. A fixed-label-count, fresh-seed control would be needed before deciding
+whether to abandon the broader natural-uncertainty question. No neural/VLA/GPU
+expansion is justified. The constructed counterexample alone is not a paper.
+
+The independent Hindsight LM run remains live as of this entry, execution
+session 26297/PID 73036, with increasing CPU time. All four zero-copy feedback
+arms have completed; the copying arms are in progress. Do not restart it from
+this journal. Check the actual handle and final manifest before claiming a
+complete result. No GPU job was launched. The paper-finding goal remains unmet.

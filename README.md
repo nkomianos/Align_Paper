@@ -109,7 +109,12 @@ follow from that same checkpoint; final results are pending. This is a restricte
 categorical, frozen-teacher synthetic pilot, not a full SDPO reproduction.
 An independent [flow-uncertainty control](docs/FLOW_UNCERTAINTY_NULL_CONTROLS.md)
 has an exact checked example where outputs remain unchanged while a velocity
-disagreement score rises. Natural trained-model validation is still unrun.
+disagreement score rises. A [finite-data affine-flow pilot](docs/FLOW_ENSEMBLE_PILOT_V1.md)
+has now run and been verified: endpoint-distance acquisition loses to the
+existing velocity score in all eight seed pools. This does not support the
+proposed practical improvement. Its varying-label-count selection task is also
+too easy to discriminate mechanisms well. Neural/VLA validation remains unrun;
+no remote GPU expansion is queued.
 
 See the [researcher journal](docs/RESEARCH_JOURNAL.md) for hypothesis, design,
 numbers, evidence paths, failed launches, interpretation limits, and next steps;

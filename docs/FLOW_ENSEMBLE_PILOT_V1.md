@@ -46,3 +46,48 @@ if ranking/calibration can absorb it. The practical question is decision quality
 512 fitted fields in total (two members before/after in 128 contexts). Save all
 data and coefficients, source, per-context results and checksums. One BLAS thread
 to limit interference with the active laptop LM experiment. No GPU launch.
+
+## Completed and verified
+
+Frozen commit `bf4e5e3`; root `artifacts/flow_ensemble_pilot_v1`.
+512 fitted fields, 128 contexts, eight independent seed pools; runtime 18.28s
+on one BLAS thread. All data and fitted coefficients are saved. The verifier
+regenerates all datasets and fits, re-integrates the ODEs, recalculates scores
+and acquisitions, and checks file hashes without mutating the root. Receipt
+`artifacts/flow_ensemble_pilot_v1_verified.json`; manifest SHA-256
+`da64be075573d82d7397c5ff8c86fd712dd667f5608311f8a3af18aa067e489b`.
+Replay uses the same reviewed fitting/scoring code, not an independent learner.
+
+Mean whole-pool KL-risk reduction after a 256-label acquisition budget:
+
+| Selection score | Risk reduction (larger is better) |
+|---|---:|
+| VFD, 10 steps | .038739 |
+| VFD, 100 steps | .035614 |
+| VFD, 1000 steps | .034922 |
+| Endpoint energy distance | .028777 |
+| Common-source endpoint squared distance | .036410 |
+| Exact Gaussian ensemble KL (diagnostic oracle) | .036111 |
+| Random | .017553 |
+| Realized future-gain oracle (not deployable) | .039787 |
+
+Energy distance beats 10-step VFD in **zero of eight pools**; its mean gain is
+.743 times VFD. Median within-pool rank correlation between 10- and 1000-step
+VFD is .925. Frozen decision:
+`NO_PREFROZEN_PRACTICAL_LEAD_IN_GAUSSIAN_PILOT`. Score-resolution dependence
+exists but does not establish a practically inferior acquisition method here.
+
+Important post-hoc baseline: simply choosing the four contexts with the least
+initial data gives mean gain .039620, nearly the future-gain oracle. This was
+not in the frozen comparison and cannot be relabeled a prespecified result.
+It shows that varying initial label count makes this acquisition problem too
+easy to discriminate uncertainty mechanisms. Do not claim VFD is generally
+superior from this pilot, or that its success disproves the exact null example.
+
+PI decision: no VLA/GPU expansion. The exact warning remains mathematically
+valid, but it has not produced a useful new method or a demonstrated natural
+failure. A meaningful further test would hold initial label counts fixed, use
+fresh seeds and include scale-normalized distribution-distance baselines before
+measuring actual acquisition gain. That control is not implemented/running yet.
+Ultimately a neural, non-Gaussian and released-policy result is needed for the
+intended paper claim; this Gaussian test alone cannot justify it.

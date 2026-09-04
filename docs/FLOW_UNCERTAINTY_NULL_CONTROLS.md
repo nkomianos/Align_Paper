@@ -91,4 +91,9 @@ disagreement or useful data acquisition. Include exact Gaussian KL as a
 diagnostic oracle, output-distribution distances as practical baselines, and
 fixed high-accuracy integration so solver error cannot create the finding.
 Do not count the same analytic construction at more epsilon values as new
-empirical validation. That natural-ensemble experiment is not running yet.
+empirical validation. The subsequent
+[ordinary fitted-field pilot](FLOW_ENSEMBLE_PILOT_V1.md) is now complete and
+verified. It does not show the proposed acquisition weakness: endpoint energy
+distance loses to 10-step VFD in all eight pools. Varying initial label counts
+makes that Gaussian selection problem easy, as a post-hoc count-only baseline
+nearly matches the oracle. No neural/VLA expansion is justified by these results.
