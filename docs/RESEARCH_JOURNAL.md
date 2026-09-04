@@ -823,3 +823,35 @@ JUnit: `artifacts/c2c_repair_implementation_checks_v1.xml` and
 service. All stages now have code/protocols and CPU checks. Full CUDA runtime
 validation, actual experiments, and empirical evidence remain outstanding.
 GPU access must be reconfirmed after the previous termination clearance.
+
+## 2026-09-04 — Existing-result utility audit and closer prior work
+
+Verified the previous status request against the live host: GH200 idle, no
+scientific process, all completed evidence already local. This was not an
+active experimental queue. No subsequent GPU job was launched.
+
+Primary-source reading of the final DroidSpeak paper confirms that its
+motivation explicitly includes models updated over time, not only unrelated
+specialists. PrefillShare section 3.2 directly treats compatibility failure
+after fine-tuning and trains cache-compatible decoders. XKV addresses frozen
+heterogeneous private-context communication. These do not prove our exact
+frozen-fuser update test already exists, but substantially weaken its current
+novelty argument. Sources and distinctions are recorded in
+`docs/C2C_NOVELTY_UTILITY_REVIEW_20260904.md`.
+
+Implemented a read-only paired utility audit, with five passing focused tests,
+and ran it on the complete baseline after immutable-evidence re-verification.
+Both parsers give four C2C-only correct answers; sender-only correct answers
+number 45 under the published parser and 52 conservatively. A label-using
+oracle union reaches 117/128, only 3.125pp over sender alone; this is explicitly
+not an achieved selector. Recorded generation is 35.324s for sender versus
+60.797s for fusion. The paired result is saved separately at
+`artifacts/c2c_sender_utility_audit_v1.json`. Original reports are untouched.
+
+PI action: park the current same-input natural-update/repair paper route on
+novelty and utility grounds before training. Added a top-level hold to the
+execution-plan JSON; preserved every stage, protocol and package. A different
+private-information or long-context deployment could have value, but requires
+its own rationale and comparisons and is not automatically authorized by this
+finding. This is a literature/portfolio decision, not evidence that updates
+are harmless. The broader paper-finding goal remains unmet.

@@ -100,6 +100,10 @@ No automatic update training follows it.
 
 ## Before paying for update training
 
+**Superseding execution decision, September 4:** the current same-input study
+is parked after a [closer novelty and utility audit](C2C_NOVELTY_UTILITY_REVIEW_20260904.md).
+The protocols below remain preserved but are not a launch authorization.
+
 1. Reproduce inference with the released fuser on a predetermined published-task
    DEV slice. Record receiver alone, sender alone, text transfer, C2C, and
    disabled-fuser outputs. Preserve exact prompts, decoding budgets, token IDs,

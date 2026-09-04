@@ -58,6 +58,15 @@ stages has run on the GPU; renewed access confirmation and hardware validation
 are required before launch.
 LC0 only tests the communication prerequisite.
 
+**Subsequent PI review: the same-input C2C update/repair chain is parked, not
+queued to execute.** DroidSpeak and PrefillShare substantially overlap its
+broad compatibility claim. A new paired audit finds only four questions where
+fusion succeeds and the stronger sender fails, versus 45–52 in the reverse
+direction (depending on parser); sender alone also has lower recorded generation
+time. See the [novelty and utility review](docs/C2C_NOVELTY_UTILITY_REVIEW_20260904.md).
+This is not a failed update experiment: no sender update has run. All prepared
+code, data, and packages remain preserved.
+
 The [five-idea PI review](docs/USER_IDEA_REVIEW_20260903.md) conditionally prioritizes
 **Hindsight Is Not Counterfactual** and **Dialogue Retractions as Algebra**.
 Exact CPU checks establish a compact immediate-log ambiguity but disprove

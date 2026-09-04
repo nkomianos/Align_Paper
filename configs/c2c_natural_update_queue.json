@@ -2,6 +2,9 @@
   "schema": "c2c_natural_update_pilot_v1",
   "kind": "declared_execution_plan_not_running_service",
   "gpu_active": false,
+  "execution_status": "PARKED_NOVELTY_AND_UTILITY_REVIEW",
+  "decision_document": "docs/C2C_NOVELTY_UTILITY_REVIEW_20260904.md",
+  "launch_authorized": false,
   "requires_access_reconfirmation": true,
   "paper_green_light": false,
   "stages": [
