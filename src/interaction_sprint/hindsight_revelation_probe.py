@@ -58,7 +58,7 @@ def run(root):
     choice=torch.tensor([x[0] for x in ids]);rows=[]
     def score(case,kind,text,action=None,target=None):
         tokens=tok.apply_chat_template([dict(role='user',content=text)],tokenize=True,
-            add_generation_prompt=True,enable_thinking=False)
+            add_generation_prompt=True,enable_thinking=False,return_dict=False)
         if len(tokens)>512:raise ValueError('No truncation permitted')
         with torch.no_grad():
             h=model.model(input_ids=torch.tensor([tokens]),use_cache=False).last_hidden_state[:,-1]
