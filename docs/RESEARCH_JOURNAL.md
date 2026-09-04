@@ -369,3 +369,69 @@ read-only checksum checks, both shell launchers passed syntax checks, and change
 documentation links resolved. CPU integration environment: torch 2.11.0+cpu,
 Transformers 5.6.2, huggingface-hub 1.11.0, NumPy 2.4.2, Pillow 12.1.1,
 pytest 9.0.3. These versions do not replace the older frozen GPU environments.
+
+## 2026-09-03 — User shortlist: mathematical audit and two bounded assays
+
+Full rationale, proofs, source links and limitations:
+[five-idea PI review](USER_IDEA_REVIEW_20260903.md). The official abstract/full
+deadlines are September 18/25 AoE. This is preparation, not a new GPU result.
+
+**Hindsight:** a rational binary construction gives identical immediate feedback
+under any common randomized one-step logging policy (channel probabilities
+7/40 and 19/25), despite opposite rankings under initial-preference utility.
+This is an elementary independent-episode result, not a claimed new general
+theorem. The source SDPO paper already models action-dependent follow-ups;
+the proposed research must concern a separately defined anchor estimand.
+
+The suggested self-fulfilling polarization result is not automatic. In an ideal
+Bayesian symmetric channel, the exact logit gradient is +0.109177 at policy
+probability 0.1 and -0.109177 at 0.9: it restores balance. A simple linear
+population-feedback model likewise has eigenvalues 1 and 0.42, not unstable
+polarization. These counterexamples narrow the claim, not kill all endogenous
+feedback research or establish real SDPO safety.
+
+Sparse-anchor CPU calibration uses 12,000 independent simulated people in each
+of four regimes. Cross-fitted delayed-anchor ATE estimates are -0.0449, 0.0044,
+0.4925 and 0.5065 for truths 0, 0, 0.5 and 0.5 respectively. This includes
+sampling error and is not a trained-policy welfare result. Assumptions and
+anchor-contamination sensitivity are explicit. Sealed audit:
+`artifacts/interaction_sprint_theory_20260903_v2`, manifest SHA-256
+`d3dbfb7b258a804aaf0755ae62bcf318cd761e9fe397fa8c19f8e476ca10e163`.
+Earlier unsealed v1 output is preserved.
+
+**UNDO:** executable register semantics require a fresh-register guard for
+set/clear cancellation. Clear removes a value; it does not restore a stack.
+The generic local-to-global Lipschitz/telescoping bound is conditional and can
+be vacuous. It is not itself a theorem-level novelty claim; CCOPD and state
+tracking are necessary baselines.
+
+New prepared roots are `artifacts/endo_signal_20260903_v1` (64 smoke/512 full
+forwards) and `artifacts/undo_algebra_20260903_v1` (48 smoke/768 full). Source
+is under `src/interaction_sprint`. Both runners score a pinned Qwen3-4B model
+without weight updates. They retain raw probability mass, token budgets,
+counterfactual controls, private keys, manifests and read-only analysis.
+Smoke cannot yield a paper-go decision. Full SDPO/Anchor-SDPO and algebraic
+local-relation training are **not yet implemented**; a positive first assay
+would justify designing that next stage. CUDA compatibility is untested.
+
+Transport is parked pending a target-linked inequality: exact inverse and
+correct marginal distribution cannot identify a particular coupling (Gaussian
+2D rotation counterexample). Succinctness is parked until a precise learning
+lower-bound formulation exists. The steering extension overlaps the cited
+paper's own identification assumptions. No GPU experiments for these three.
+
+Updated queue: `configs/research_queue_20260903.json`; old queue retained.
+No GPU connection, model training, expansion, remote push or human-data download
+occurred in this preparation. Talk2AI is a publication-level data lead only.
+
+The actual pinned Qwen tokenizer was checked locally (tokenizer files only, no
+model weights): A/B/C/D map to single IDs 32/33/34/35. All 512 hindsight inputs
+fit 37–75 tokens (27,136 total); all 768 UNDO inputs fit 105–3,022 tokens
+(847,648 total). The runner performs this audit before allocating model weights.
+
+Validation: **69 focused CPU tests passed** (26 new interaction-sprint tests and
+43 existing motion/latent/video tests). All seven queue/data/audit roots passed
+read-only integrity checks; the new remote launcher passed Bash syntax checking
+and `git diff --check` passed. GPU model loading and the new inference runner
+remain untested on hardware; neither test counts nor checksums are scientific
+evidence for either proposed paper.

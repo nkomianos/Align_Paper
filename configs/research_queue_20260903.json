@@ -1,0 +1,75 @@
+{
+  "schema": "offline_research_queue_v1",
+  "automatic_launch": false,
+  "gpu_inference_performed": false,
+  "experiments": [
+    {
+      "id": "efference_pair_ep0",
+      "prepared": "artifacts/efference_pair_ep0_20260902_v3",
+      "manifest_sha256": "b111de93c0da843e3e24723e5cd7dc2e63d1018576bc81ab8c7b5d140d3ab97e",
+      "first_stage_forwards": 24,
+      "conditional_full_forwards": 450,
+      "entrypoint": "scripts/run_efference_pair_ep0_remote.sh",
+      "scope": "synthetic ordered-image motion apparatus, not real-video G0"
+    },
+    {
+      "id": "visual_hindsight_g0",
+      "prepared": "artifacts/visual_hindsight_g0_20260902_v2",
+      "ordered_frame_digest": "6e56b3d7d116a76fb13046ddcfc0ce2c265502ec6429aa4c4ae44bbe7dffc089",
+      "first_stage_forwards": 240,
+      "entrypoint": "scripts/run_visual_hindsight_g0_remote.sh",
+      "scope": "native-video synthetic counterfactual-future gate"
+    },
+    {
+      "id": "latent_channel_lc0",
+      "prepared": "artifacts/latent_channel_lc0_20260902_v1",
+      "manifest_sha256": "3903c8b19e349c70f0ebb67ad599c00900f8ca81c2de32069f1827d37d063fbb",
+      "first_stage_forwards": 48,
+      "first_stage_sender_prefills": 8,
+      "conditional_full_forwards": 768,
+      "conditional_full_sender_prefills": 128,
+      "entrypoint": "scripts/run_latent_channel_lc0_remote.sh",
+      "scope": "cross-context channel validity only; update study not implemented"
+    },
+    {
+      "id": "endo_signal",
+      "prepared": "artifacts/endo_signal_20260903_v1",
+      "manifest_sha256": "0932a2aa2f79e8a71894343fb569b94351bdfe37c2f7e317a4e46a9d67f09e04",
+      "first_stage_forwards": 64,
+      "conditional_full_forwards": 512,
+      "entrypoint": "scripts/run_interaction_sprint_remote.sh",
+      "scope": "frozen hindsight/anchor language signal; not SDPO training, polarization or welfare evaluation",
+      "training_implemented": false,
+      "decision_after_smoke": "manual assay-validity review; no automatic expansion"
+    },
+    {
+      "id": "undo_algebra",
+      "prepared": "artifacts/undo_algebra_20260903_v1",
+      "manifest_sha256": "76c717ce667f6b90d1ba93635672912197d054136f29598692596f3ff380470f",
+      "first_stage_forwards": 48,
+      "conditional_full_forwards": 768,
+      "entrypoint": "scripts/run_interaction_sprint_remote.sh",
+      "scope": "last-write-wins register residue assay; local-relation training and branch/merge not implemented",
+      "training_implemented": false,
+      "decision_after_smoke": "manual assay-validity and long-context timing review; no automatic expansion"
+    }
+  ],
+  "real_video_development": {
+    "prepared": "artifacts/motionbench_dev_media_20260902_v2",
+    "manifest_sha256": "20dbb02debd8cc2419318ad25a7b2beb7cb90fe0cf8b3ed9137caeb6699f681e",
+    "downloaded": 12,
+    "decode_ok": 11,
+    "visually_screened_live_action_decode_ok": 10,
+    "decode_quarantined": 1,
+    "animation_not_natural_video": 1,
+    "held_out_evaluation_ready": false
+  },
+  "completed_cpu_audits": [
+    {
+      "id": "interaction_sprint_theory",
+      "prepared": "artifacts/interaction_sprint_theory_20260903_v2",
+      "manifest_sha256": "d3dbfb7b258a804aaf0755ae62bcf318cd761e9fe397fa8c19f8e476ca10e163",
+      "scope": "exact finite-model checks and simulated anchor estimation; no language-model inference"
+    }
+  ]
+}

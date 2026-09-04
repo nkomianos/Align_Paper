@@ -11,7 +11,7 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
-**Updated 2 September 2026. No candidate has earned paper expansion.** Phantom
+**Updated 3 September 2026. No candidate has earned paper expansion.** Phantom
 Rollback and Reward Extinction Debt both completed, but their prerequisites
 failed: these are **invalid assays/model organisms**, not universal negative
 results. No new GPU experiment is running as part of this update.
@@ -22,14 +22,25 @@ previously proposed ACaM/MotionBench G0 and cannot pass that gate. The first pai
 step is only 24 frozen smoke forwards; a separate 450-forward pilot is conditional
 on compatibility and measured throughput. The real-video gate remains unrun.
 
-The [data inventory and executable queue](docs/DATA_AND_EXPERIMENT_QUEUE_20260902.md)
-now includes three initial stages: motion EP0, independent native-video hindsight,
-and a newly implemented latent-channel validity pilot. Twelve MotionBench DEV
+The [data inventory](docs/DATA_AND_EXPERIMENT_QUEUE_20260902.md) and
+[current executable queue](configs/research_queue_20260903.json) include five
+initial stages: motion EP0, independent native-video hindsight, latent-channel
+validity, hindsight/anchor feedback, and dialogue-retraction residue. Twelve MotionBench DEV
 MP4s are local: 11 decode fully, including one cartoon; the remaining clip is
 quarantined. These are development/media-audit examples, not a held-out result.
 With `PYTHONPATH` set to `src`, run `python scripts/check_research_queue.py` to
 verify prepared bytes without connecting to a GPU. No model-update robustness experiment has
 been run or implemented yet; LC0 only establishes its communication prerequisite.
+
+The [five-idea PI review](docs/USER_IDEA_REVIEW_20260903.md) conditionally prioritizes
+**Hindsight Is Not Counterfactual** and **Dialogue Retractions as Algebra**.
+Exact CPU checks establish a compact immediate-log ambiguity but disprove
+automatic polarization in the proposed symmetric Bayesian example. The new
+language assays are prepared (64 and 48 smoke forwards); **neither full SDPO
+training nor algebraic local-relation training is implemented or run**. Transport
+certificates and learnability theory are parked; the proposed steering extension
+has substantial prior-work overlap. These CPU/preparation stages do not increase
+the historical empirical-experiment count below.
 
 See the [researcher journal](docs/RESEARCH_JOURNAL.md) for hypothesis, design,
 numbers, evidence paths, failed launches, interpretation limits, and next steps;
