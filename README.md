@@ -32,6 +32,10 @@ A [human-data search](docs/HINDSIGHT_HUMAN_DATA_SEARCH_20260904.md) located a
 public pre/post-belief dataset and completed a schema-only audit. Inclusion-rule
 and data-license questions remain; no participant outcome analysis or training
 has been performed.
+The [reconstruction metric audit](docs/BELIEF_RECONSTRUCTION_METRIC_AUDIT_20260904.md)
+adds a negative control: shared rating noise alone creates a .707 error/change
+correlation for a perfect latent-belief estimator. Such a correlation must not
+be treated as evidence of hindsight bias. Paired error metrics are implemented.
 
 The [ScopeJudge audit](docs/SCOPEJUDGE_OFFLINE_SCHEMA_AUDIT_20260904.md)
 verified 4,897 labeled calls and constructed metadata-filtered pre-execution
