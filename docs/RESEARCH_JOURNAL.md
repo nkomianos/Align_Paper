@@ -498,3 +498,20 @@ These later stages are not implemented/launched. See
 Total this turn: 2,144 additional Qwen3-4B forwards, 31 passing targeted CPU
 tests, all results checksum-secured locally, no weight updates, GPU idle after
 completion. All roots/logs/private keys and previous attempts are preserved.
+
+## 2026-09-04 — Independent queue resumed after idle scheduling gap
+
+The independent motion, native-video hindsight and latent-channel candidates
+were not blocked by the text candidate outcomes. Leaving them waiting was a
+scheduling error. LC0 has now completed; complete evidence is locally secured
+with matching remote/local SHA-256 and the committed verifier.
+
+LC0 smoke: four pairs, 48 receiver calls; text/normalized-text/latent each 12.5%
+accuracy, no-message 37.5%, parse rate 68.75%. Communication controls fail;
+formal decision `SMOKE_ONLY_NO_THESIS_DECISION`. No weights were updated. This
+invalid interface cannot judge latent communication or update compatibility.
+
+Created an isolated CUDA vision environment without changing the text venv;
+transferred and checksum-validated the EP0 corpus. Launched its frozen 24-call
+smoke. Native-video hindsight is the independent next candidate after evidence
+preservation. See [run roots, hashes and operational queue](INDEPENDENT_QUEUE_20260904.md).

@@ -14,7 +14,10 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 **Updated 4 September 2026. No candidate has earned paper expansion.** Phantom
 Rollback and Reward Extinction Debt both completed, but their prerequisites
 failed: these are **invalid assays/model organisms**, not universal negative
-results. No new GPU experiment is running as part of this update.
+results. The independent queue resumed on the GH200 on September 4: LC0 smoke
+completed with invalid text controls, EP0 smoke is launched (initial model
+download), and native-video hindsight is next. See the
+[live queue and verified LC0 result](docs/INDEPENDENT_QUEUE_20260904.md).
 
 The active implementation is [Efference-Pair EP0](docs/EFFERENCE_PAIR_EP0_RUNBOOK.md),
 a small, synthetic camera-versus-object-motion apparatus pilot. It is **not** the
