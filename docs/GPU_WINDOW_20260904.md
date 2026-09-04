@@ -170,3 +170,15 @@ Approved preparation only of a closer single-profile released-default SDPO
 reproduction on natural TLDR prompts. Public8B-model/data staging and implementation
 are in progress; no reproduction inference or training launched. This is a known
 method prerequisite, not a new paper or an endogenous-feedback comparison.
+
+Continuation audit: the preceding turn made concrete progress: committed and ran
+the frozen diagnostic, secured its complete archive, and staged reproduction
+assets. The goal remains unachieved. Current GPU check is idle, not stalled;
+implementation and read-only verification are active local work.
+
+The independent Efference-Pair audit confirmed its original real-video hypothesis
+was never tested: the24-call synthetic smoke returned stationary throughout and
+failed apparatus qualification. Root approved preparation of one <=24-call
+native-video versus ordered-image interface diagnostic, using fixed obvious
+motion and coordinate-frame controls. This does not authorize the old450-call
+full experiment or a paper claim. Code/protocol review must precede inference.
