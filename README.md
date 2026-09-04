@@ -13,6 +13,16 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ### CPU-only follow-up
 
+The [persistent-state mechanism check](docs/HINDSIGHT_LONGITUDINAL_MECHANISM_20260904.md)
+finds that symmetric preference copying plus direct report learning does **not**
+produce the assumed excess mean baseline-preference loss when adaptation closes
+the loop. Exact mean equations and28 Monte Carlo configurations agree: adaptation
+can instead reduce drift relative to frozen-policy exposure. All states/draws
+are preserved and replayed. This is a finite-model finding, not LM evidence or
+a new theorem claim. Do not spend GPU time on this symmetric/direct-learning
+formulation expecting a harmful feedback-loop result. Other dynamics/objectives
+remain separate, untested hypotheses rather than automatic rescue experiments.
+
 **Positive semantic-choice result:** the
 [fresh constrained-choice test](docs/HINDSIGHT_SEMANTIC_CHOICE_20260904.md)
 scores published hindsight32/32 development and31/32 new-domain confirmation.

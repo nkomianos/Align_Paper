@@ -44,7 +44,7 @@ In the open loop replace P_t by q only in the exposure equation. Because
 P_t,R_t>=q, induction gives R_closed>=R_open and P_closed>=P_open at every
 round. Thus this symmetric model **does not predict excess baseline-fidelity
 harm from closing the adaptation loop**. It can reduce preference drift.
-For rho,eta>0 its closed-loop consensus is
+For rho,eta>0 the two closed-loop expected means converge to
 
     [eta(1-rho)+rho*q] / [rho+eta(1-rho)].
 
@@ -65,3 +65,73 @@ If verified, do not use symmetric copying plus this direct learner to promise
 a harmful positive feedback loop. An asymmetric transition, shared-parameter
 interference or a different learning objective would be a different hypothesis
 requiring its own motivation and prospective test, not a hidden rescue.
+
+## Executed result
+
+Frozen runner `17ccaa8`. Root:
+`artifacts/hindsight_longitudinal_mechanism_cpu_20260904_v1`.
+All28 configurations completed in1.57seconds CPU. Each uses16 seed blocks of
+1,024 users,64 rounds and3 coupling conditions. This is1,344 seed-block/arm
+trajectories, not1,344 independent paper replications. The exogenous draws,
+final per-user policy/state arrays and checkpoint metrics are saved.
+
+**No exact negative closed-minus-open baseline-fidelity contrast occurs.**
+The stationary contrast is exactly zero. Both influence regimes have nonnegative
+contrasts, as predicted before execution. Example persistent-regime means at
+initial fidelity q=.8, after64 rounds:
+
+| Transition rate rho | Learning rate eta | Closed fidelity | Open fidelity |
+|---|---:|---:|---:|
+|.2|.1|.8571|.8002|
+|.5|.1|.8182|.8000|
+|.8|.1|.8049|.8000|
+|.2|.5|.9333|.8000|
+|.5|.5|.8667|.8000|
+|.8|.5|.8222|.8000|
+
+These are rounded exact expectations, not fitted empirical estimates. All168
+Monte Carlo bounded means fall within the prospectively specified simultaneous
+Hoeffding tolerance of.019706 from the exact means. Maximum error is.010437.
+This does not establish negligible Monte Carlo error for every small contrast;
+the sign statement follows from the mean equations, not significance selection.
+First-round expression/persistent reports match exactly under coupled randomness,
+and open/frozen latent-state trajectories match as required by the intervention.
+
+The read-only verifier replays every saved block's states and checkpoint
+measurements from preserved exogenous draws with the runner's transition code.
+It independently checks the scalar expectation recursion using matrix powers.
+All8 manifest files match. Receipt: adjacent `_verified_v2.json`. The first
+verifier process was stopped before writing a receipt because repeated indexing
+re-decompressed entire NPZ arrays; materializing them once fixed audit overhead.
+No scientific artifact or simulation was changed/rerun. Five tests pass,
+including zero-learning and stationary nulls and matrix/scalar agreement.
+
+PI interpretation: closing an adaptive personalization loop need not amplify
+preference drift. Here it protects baseline preferences relative to frozen
+exposure in expectation, while the direct learner tracks genuine corrections.
+This is not individual-level protection: matched random trajectories can harm
+particular users even when the mean contrast is favorable. It also does not
+show that all current preferences are good, or that an ideal neutral probe is
+available for real people.
+
+Independent mathematical review confirmed the recursions and dominance proof,
+with this scope clarification: the limiting value concerns expected means,
+not a common deterministic limiting state for each user. The comparison is
+against frozen-exposure/open-loop learning, **not** against truthful stationary
+learning or no preference change. Persistent exposure still changes some users
+away from Z0; adaptation merely reduces that change in the chosen comparison.
+In the open-loop arm the final evaluated policy is the updated shadow learner,
+not the frozen policy that delivered exposures. The primary contrast is therefore
+final learned-policy fidelity under different exposure assignments, not cumulative
+delivered-action welfare. The update differentiates only its observed, detached
+report loss, not future user states or the full closed-loop objective. The
+Hoeffding check covers the two declared final-time means, not all checkpoint
+measurements or current-preference satisfaction.
+
+Do not send this symmetric direct-learning setting to a GPU to obtain a harm
+figure. The original Hindsight idea is not generally disproved, and different
+distillation objectives need not share this learner's recursion. But the assumed
+generic causal mechanism is not sufficient. A further neural test must justify
+the additional mechanism and an identifiable correction before launch; otherwise
+park this formulation. These elementary control calculations are not claimed
+as novel theory or a paper greenlight.

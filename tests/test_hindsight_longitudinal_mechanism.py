@@ -39,3 +39,12 @@ def test_symmetric_model_no_excess_expected_baseline_harm():
                         opened=exact(q,eta,rho,regime,'open',t)
                         assert closed['baseline_fidelity']>=opened['baseline_fidelity']-1e-12
                         assert closed['baseline_fidelity']>=q-1e-12
+
+
+def test_matrix_check_matches_separate_scalar_recursion():
+    from scripts.verify_hindsight_longitudinal_mechanism import matrix_mean
+    from interaction_sprint.hindsight_longitudinal_mechanism import configs
+    for c in configs():
+        for arm in ('closed','open','frozen'):
+            for t in (0,1,8,64):
+                assert matrix_mean(c,arm,t)==pytest.approx(exact(**c,coupling=arm,rounds=t),abs=1e-12)
