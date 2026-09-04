@@ -36,6 +36,10 @@ The [reconstruction metric audit](docs/BELIEF_RECONSTRUCTION_METRIC_AUDIT_202609
 adds a negative control: shared rating noise alone creates a .707 error/change
 correlation for a perfect latent-belief estimator. Such a correlation must not
 be treated as evidence of hindsight bias. Paired error metrics are implemented.
+The [nested-prefix feasibility check](docs/BELIEF_RECONSTRUCTION_COHORT_20260904.md)
+identifies 305 non-personalized conversations for a third-versus-sixth-user-turn
+comparison that preserves early evidence. This is a new developmental cohort,
+not the original study's filter or a model-performance result.
 
 The [ScopeJudge audit](docs/SCOPEJUDGE_OFFLINE_SCHEMA_AUDIT_20260904.md)
 verified 4,897 labeled calls and constructed metadata-filtered pre-execution
