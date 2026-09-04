@@ -611,3 +611,21 @@ pass. This removes a checkpoint-schema concern for one module but does not
 validate full cache fusion, the ARM64 dependency environment, or task accuracy.
 The active reasoning DEV GPU process continued unchanged (53/96 calls at the
 last process check); no outcome peeking or adjustment was performed.
+
+## 2026-09-04 — Baseline inference implementation and isolated setup
+
+Created `.venv-c2c-baseline-v1` on the GH200 without altering either active
+environment. Transformers 4.52.4 cache API and dependency checks pass; torch
+2.7.1+cu128 is an explicit ARM64 compatibility deviation from upstream 2.6.0.
+Setup evidence `/home/ubuntu/c2c_baseline_setup_20260904_v1` is preserved.
+The setup launch's PID file contains a literal `$!` due to quoting; its actual
+process was confirmed exited and successful via the readiness marker, import
+check and dependency log. Do not use that malformed PID file as a live handle.
+
+Download-only process 14631 completed and checksum-verified seven receiver
+assets and 58 fuser assets at pinned revisions. Evidence root:
+`/home/ubuntu/c2c_assets_20260904_v1`. No model inference was performed by setup
+or staging. Implemented and froze the 512-call four-arm baseline and read-only
+verifier before inspecting any outcomes from that baseline. Fifteen CPU tests
+cover data selection, inventory and analysis; GPU wrapper integration is still
+untested. The active 96-call reasoning study remains unchanged.

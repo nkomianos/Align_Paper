@@ -71,6 +71,31 @@ loaded, no natural-language evaluation, and no inference-time cache hooks tested
 The key gate is closed and value gate open for this layer in eval mode; a closed
 learned gate is not a loading failure. Full baseline inference remains pending.
 
+### Frozen next inference baseline
+
+`scripts/run_c2c_baseline_dev.py` and `scripts/verify_c2c_baseline_dev.py` define
+512 calls: the 128 prepared questions in receiver-only, sender-only, released
+C2C, and disabled-fuser arms. The same upstream prompt builder, non-thinking
+chat template and 64-token greedy generation cap apply. Require identical
+input tokens across both model tokenizers before any generation. Every fuser
+loads strictly; inference uses the official unmodified C2C wrapper at the pinned
+source commit. A separate isolated ARM64 environment uses Transformers 4.52.4
+and CUDA torch 2.7.1, explicitly not exact upstream torch 2.6.0 reproduction.
+
+The strict answer parser accepts a lone A/B/C/D or `The correct answer is X`
+with an optional final period; it does not recover letters from explanations.
+Functional prerequisites are >=95% parse rate per arm and >=98% text agreement
+between receiver and disabled-fuser outputs. Conditional on these, a >=5pp
+C2C advantage only advances protocol design. No training, text-transfer arm,
+novelty claim or paper go is included in this baseline. Other outcomes are
+inconclusive for this release/task slice, not a refutation of C2C.
+
+All prompts, tokens, timings, asset hashes, runtime and source are preserved;
+analysis uses the private key locally. Run only after the active 96-call DEV
+process has exited and its evidence has been secured. This baseline is relevant
+regardless of the custom nonce assay result because the two interfaces differ.
+No automatic update training follows it.
+
 ## Before paying for update training
 
 1. Reproduce inference with the released fuser on a predetermined published-task
