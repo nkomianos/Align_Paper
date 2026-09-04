@@ -1,5 +1,13 @@
 # Neural delayed-anchor SDPO G0 protocol
 
+> **Status: frozen but unrun; superseded as the first neural gate.** A
+> prospective design audit found that exact outcome-stratified anchors remove
+> much of the sampling variation the method is supposed to exploit, while a
+> global binary endpoint can let equal-anchor training saturate. No neural
+> endpoint exists. Run `HINDSIGHT_NEURAL_GRADIENT_G0_PROTOCOL_20260904.md`
+> first. Retain this implementation as an acquisition/policy diagnostic only;
+> its original blanket park-on-failure interpretation is withdrawn before data.
+
 ## Purpose
 
 This is the next mechanism test after the positive finite-state delayed-anchor
