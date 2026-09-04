@@ -33,6 +33,15 @@ maximum. The result supports a large dynamic/control contrast but does not clean
 attribute every split to feedback performativity. Natural, uncalibrated starting
 policies are the next required test; no threshold is being relaxed post hoc.
 
+The natural-initialization test is now complete and
+[negative](docs/HINDSIGHT_NATURAL_FEEDBACK_LORA_PROTOCOL_20260904.md): median
+dynamic advantage over matched frozen feedback is only.0023, and only9/14
+confirmation contexts remain in the exact map's predicted basin. The calibrated
+instability is therefore real but not naturally robust in this shared-LoRA setup.
+PI decision: park this mechanism without a GPU expansion. The general causal
+identifiability concern remains conceptually valid but presently lacks a strong
+empirical method/result package.
+
 The [persistent-state mechanism check](docs/HINDSIGHT_LONGITUDINAL_MECHANISM_20260904.md)
 finds that symmetric preference copying plus direct report learning does **not**
 produce the assumed excess mean baseline-preference loss when adaptation closes

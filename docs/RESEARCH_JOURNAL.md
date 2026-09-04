@@ -67,6 +67,26 @@ context-specific calibration additionally tests local stability rather than
 natural prevalence. A next run must use uncalibrated initial policies and a
 paired dynamic-minus-fixed estimand. No paper green light follows yet.
 
+### Natural-initialization diagnostic
+
+The calibrated offsets were then removed in a separately frozen two-arm run.
+Dynamic and frozen report-marginal arms started from exactly the same natural
+zero-adapter policy, trained on all16 development contexts, and were evaluated
+on14 bistable confirmation contexts. Both arms completed64 steps (128 updates,
+997.73seconds CPU).
+
+The dynamic-minus-fixed movement in the predicted basin direction has frozen
+upper median.0023008, not the required.25. Eleven of14 paired directions are
+positive, but only9/14 dynamic outcomes remain on the exact map's predicted side.
+Final ordinary median absolute arm gap is.00494. Prospective status:
+`NATURAL_LORA_FEEDBACK_SCREEN_NEGATIVE`.
+
+This resolves the calibrated result as a local mechanism demonstration rather
+than evidence of a robust naturally occurring failure. Park the bifurcation
+line; do not scale it on GPU or lower its gate. The broader post-treatment
+feedback/non-identifiability thesis is not logically disproved, but it still
+lacks a compelling empirical correction and is not currently paper-qualified.
+
 ## Recording rules
 
 - Give each hypothesis and empirical stage a stable ID. Retried launches,
