@@ -118,3 +118,29 @@ retrieved+checksumverified and58manifest files/accounting checked. Longhistory
 counts baseline23/32,SFT24/32,canonical28/32,local24/32. Parklocalmethod/noexpansion.
 See UNDO_TRAINING_RESULT_20260904.md. GH200 is idle pending SDPO readiness; do not
 describe preparation as active inference. CPU coupling remains independently live.
+
+## SDPO launch and mixed coupling follow-up preparation
+
+SDPO source commit a9de2c1, archive SHA remote/local matched:
+49d8f44248aeab7cb0d701dec96fcbc208d47580adeaf0b9ee2ad06fe6ab51bc.
+First attempt /home/ubuntu/sdpo_format_g0_20260904T0905Z stopped before model
+generation because Git export changed apparatus line endings, violating its
+prepared raw-byte checksum. Failure retained. `diff --strip-trailing-cr` verified
+the only difference. A fresh source copy /home/ubuntu/sdpo_source_20260904T0910Z
+uses exact prepared apparatus bytes SHA140e93dd3b6b04d98b64723735ee20886bd554b2c54d8784e714cfeb26bab297.
+No algorithm, data or scientific criterion changed.
+
+Active SDPO root /home/ubuntu/sdpo_format_g0_20260904T0910Z, log/PID/exit beside it.
+Process22804 verified live using8522MiB, calibration_original.jsonl being written.
+Run starts with native-generative calibration before64truthful-feedback updates.
+No endogeneity arm is authorized by the launcher.
+
+CPU coupling subsequently completed and verified; see CPU_COUPLING_RESULT.
+Its positive descriptive result contrasts with the larger-pair negative. A
+post-hoc nested seed/question bootstrap widens intervals across no effect.
+Root authorized PREPARING one bounded clarification on all40remaining eligible
+articles, both fixed pairs and32new fixedseeds, unchangedmethods. This explicitly
+reopens only a diagnostic after mixed completed evidence; it is not a paper
+expansion or replacement of oldresults. No selective pair/task reporting and no
+further clarification loops if mixed. Launch only after SDPO finishes and is
+secured, within the deadline. This additional run is not currently launched.
