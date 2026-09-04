@@ -96,6 +96,45 @@ def immediate_agreement_values(p: float, copying: Mapping[int, float]) -> dict[i
     return policy_values(p, copying, mechanism="transition")
 
 
+def observational_minimax_regret(
+    p: float, copying: Mapping[int, float],
+) -> dict[str, float | int]:
+    """Decision lower bound for two observationally equivalent mechanisms.
+
+    A new anonymous user's initial state is unavailable when the constant action
+    is chosen.  Since every immediate-log sample has the same law in the two
+    mechanisms, any data-dependent learner induces the same probability of
+    choosing action one in both.  When the mechanisms have opposite strict
+    optima, minimizing the worse of their two expected regrets yields the
+    closed-form two-point minimax value below.
+    """
+    expression = policy_values(p, copying, mechanism="expression")
+    transition = policy_values(p, copying, mechanism="transition")
+    expression_optimum = max(expression, key=expression.get)
+    transition_optimum = max(transition, key=transition.get)
+    if expression_optimum == transition_optimum:
+        raise ValueError("strict policy-ranking reversal is required")
+    expression_gap = expression[expression_optimum] - expression[transition_optimum]
+    transition_gap = transition[transition_optimum] - transition[expression_optimum]
+    if expression_gap <= 0 or transition_gap <= 0:
+        raise ValueError("strict policy-ranking reversal is required")
+    probability_expression_optimum = expression_gap / (expression_gap + transition_gap)
+    probability_action_one = (
+        probability_expression_optimum
+        if expression_optimum == 1 else 1 - probability_expression_optimum
+    )
+    lower_bound = expression_gap * transition_gap / (expression_gap + transition_gap)
+    return {
+        "expression_optimal_action": expression_optimum,
+        "transition_optimal_action": transition_optimum,
+        "expression_gap": expression_gap,
+        "transition_gap": transition_gap,
+        "minimax_probability_action_one": probability_action_one,
+        "randomized_minimax_regret_lower_bound": lower_bound,
+        "deterministic_minimax_regret_lower_bound": min(expression_gap, transition_gap),
+    }
+
+
 def report() -> dict[str, object]:
     p = 0.6
     propensity = {0: 0.35, 1: 0.7}  # deliberately state-dependent, with overlap
@@ -128,4 +167,3 @@ def report() -> dict[str, object]:
             "it is not an empirical claim about users, SDPO training, or a unique welfare objective."
         ),
     }
-

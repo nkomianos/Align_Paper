@@ -64,6 +64,20 @@ beyond the constructed binary example.
   Its reactions are themselves measured after the assistant response; it does
   not distinguish prior-preference satisfaction from action-induced persistent
   transition. See the dedicated ThoughtTrace collision audit.
+- [Self-Consuming Performative Loops](https://arxiv.org/abs/2601.05184) shows
+  bias amplification under iterative LLM retraining and incremental fine-tuning
+  with a controlled decision-dependent data mixture. It occupies a broad claim
+  that performative feedback can amplify LLM bias, but its human feedback is an
+  imposed group-sampling rule; it does not infer whether a next user message is
+  expression or persistent state transition.
+- [Performative Prediction](https://proceedings.mlr.press/v119/perdomo20a.html),
+  [stateful performative prediction](https://proceedings.mlr.press/v151/brown22a.html),
+  and [Performative Power](https://arxiv.org/abs/2203.17232) already supply the
+  general decision-dependent-distribution, persistent-state, and causal
+  influence framings. Neither the broad performativity claim nor a generic
+  two-point minimax consequence is standalone novelty here. The remaining
+  application-specific question is whether next-turn self-distillation mistakes
+  these mechanisms and whether sparse delayed probes correct its neural update.
 
 ## Older statistical boundary
 

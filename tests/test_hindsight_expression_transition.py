@@ -3,6 +3,7 @@ import pytest
 from interaction_sprint.hindsight_expression_transition import (
     extended_joint,
     immediate_joint,
+    observational_minimax_regret,
     policy_values,
     report,
     total_variation,
@@ -39,3 +40,36 @@ def test_invalid_parameters_fail():
     with pytest.raises(ValueError):
         policy_values(.5, {0: -.1, 1: .5}, mechanism="transition")
 
+
+def test_observational_minimax_regret_is_positive_despite_unlimited_logs():
+    bound = observational_minimax_regret(.6, {0: 1., 1: 0.})
+    assert bound == pytest.approx({
+        "expression_optimal_action": 1,
+        "transition_optimal_action": 0,
+        "expression_gap": .2,
+        "transition_gap": .4,
+        "minimax_probability_action_one": 1 / 3,
+        "randomized_minimax_regret_lower_bound": 2 / 15,
+        "deterministic_minimax_regret_lower_bound": .2,
+    })
+
+
+@pytest.mark.parametrize("p,copying", [
+    (.55, {0: 1., 1: 0.}),
+    (.7, {0: .9, 1: 0.}),
+    (.3, {0: 0., 1: .9}),
+])
+def test_minimax_mixture_equalizes_the_two_mechanism_regrets(p, copying):
+    bound = observational_minimax_regret(p, copying)
+    q = bound["minimax_probability_action_one"]
+    expression = policy_values(p, copying, mechanism="expression")
+    transition = policy_values(p, copying, mechanism="transition")
+    expression_regret = max(expression.values()) - ((1 - q) * expression[0] + q * expression[1])
+    transition_regret = max(transition.values()) - ((1 - q) * transition[0] + q * transition[1])
+    assert expression_regret == pytest.approx(bound["randomized_minimax_regret_lower_bound"])
+    assert transition_regret == pytest.approx(bound["randomized_minimax_regret_lower_bound"])
+
+
+def test_minimax_bound_requires_a_strict_ranking_reversal():
+    with pytest.raises(ValueError, match="ranking reversal"):
+        observational_minimax_regret(.5, {0: 0., 1: 0.})
