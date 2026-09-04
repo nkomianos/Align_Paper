@@ -11,6 +11,14 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
+**Latest pretrained follow-up:** the [cached-verification BERT audit](docs/CACHE_VERIFICATION_BERT_20260904.md)
+completed 288 CPU forwards on 24 frozen clozes. The official COVER source is now
+located and its relevant information flow inspected. Candidate dependence
+survives a pretrained network, but corrected-cache accuracy is 16/24 versus
+14/24 for fresh masking; no useful clean-verification improvement is established.
+Both candidate-dependent answer changes occur outside the clean-competent
+subset. Seventeen combined tests pass; evidence verified, no active GPU queue.
+
 **Latest candidate check:** a [cached-verification operator audit](docs/CACHE_VERIFICATION_AUDIT_20260904.md)
 finds that exact per-layer diagonal correction does not ensure end-to-end
 independence from a hidden candidate: information can return through other

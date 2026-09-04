@@ -1281,3 +1281,34 @@ Source/result hashes and deterministic same-implementation replay pass; 13 tests
 pass including analytic and single-layer controls, preservation and tamper tests.
 No model downloaded and no process remains. Goal active and unmet. Next exact
 scope and caveats: docs/CACHE_VERIFICATION_AUDIT_20260904.md.
+
+## 2026-09-04 — Pretrained cache-verification audit and upstream source
+
+Previous goal turn was progress. This turn located official xyzCS/COVER commit
+188a341f5a1a0da9b08af2f13448d3f34b147486 and read the LLaDA-instruct override,
+diagonal correction, block composition, and seed scheduler. Candidate-bearing
+caches are plausible: seeds are selected among already-unmasked positions,
+excluding current verification seeds. A pinned standalone arithmetic function
+passes an independent direct-row comparison; no complete decoder was executed.
+
+Implemented a local pretrained BERT instrumentation with native-forward equality
+and final-layer-only negative controls. Frozen 24 handwritten clozes, 288 CPU
+forwards, 22.41-second inference loop, no training. BERT pin
+86b5e0934494bd15c9632b12f734a8a67f723594. Source/data/model hashes saved.
+
+Clean exact-match14/24 passes the predefined12-case competence minimum. All-layer
+corrected override16/24 with either gold or wrong cache,13/14 on clean-competent.
+Candidate swap changes2/24 top answers, both non-competent cases; it does not
+change those to the prescribed wrong token. Post-hoc wrong/gold log-odds shift
+is positive21/24, mean1.227nats. This supports score dependence, not a broad
+error-retention failure. Fresh masking is worse overall than corrected override
+here; no evidence that paying for clean verification is a useful method.
+
+Native/instrumented logits exactly equal; corrected final-layer-only max error
+2.003e-5 < frozen2e-4. Seventeen combined tests pass. Full evidence root
+artifacts/cache_verification_bert_v1, manifest
+0a4529882eef2e0f9bfbcd014cf2f431c12d286d9fce1753c56e5b399f7deaa9.
+Byte/model integrity and metric recomputation verified, not full forward replay.
+All artifacts retained. No live process, paid GPU, or expansion queue. Practical
+paper story held; next needs natural mistaken drafts and cost-matched decisions.
+See docs/CACHE_VERIFICATION_BERT_20260904.md. Goal remains active and unmet.

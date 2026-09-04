@@ -4,6 +4,11 @@
 
 **Operator audit completed; pretrained-model effect and paper viability unproven.**
 
+Subsequent update: the [pretrained BERT follow-up](CACHE_VERIFICATION_BERT_20260904.md)
+is complete and the official COVER source has now been located. It confirms
+candidate-dependent scores but not a useful accuracy improvement from clean
+verification. The historical operator result below remains unchanged.
+
 [COVER v1](https://arxiv.org/html/2602.06161v1), Section 5.1 and Appendix B,
 describes masking verification seeds, retaining their cached KV for other
 queries, and replacing the seed's own diagonal KV. Its single-layer softmax

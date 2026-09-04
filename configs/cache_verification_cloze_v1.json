@@ -1,0 +1,33 @@
+{
+  "scope": "handwritten_developmental_single_token_cloze_not_benchmark",
+  "model": "google-bert/bert-base-uncased",
+  "revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+  "equivalence_tolerance": 0.0002,
+  "minimum_clean_correct_for_interpretation": 12,
+  "cases": [
+    {"id":"capital_fr", "text":"The capital of France is [MASK].", "gold":"paris", "wrong":"london"},
+    {"id":"capital_de", "text":"The capital of Germany is [MASK].", "gold":"berlin", "wrong":"paris"},
+    {"id":"capital_it", "text":"The capital of Italy is [MASK].", "gold":"rome", "wrong":"berlin"},
+    {"id":"capital_es", "text":"The capital of Spain is [MASK].", "gold":"madrid", "wrong":"rome"},
+    {"id":"capital_jp", "text":"The capital of Japan is [MASK].", "gold":"tokyo", "wrong":"paris"},
+    {"id":"capital_cn", "text":"The capital of China is [MASK].", "gold":"beijing", "wrong":"tokyo"},
+    {"id":"capital_ru", "text":"The capital of Russia is [MASK].", "gold":"moscow", "wrong":"london"},
+    {"id":"capital_uk", "text":"The capital of England is [MASK].", "gold":"london", "wrong":"berlin"},
+    {"id":"capital_gr", "text":"The capital of Greece is [MASK].", "gold":"athens", "wrong":"rome"},
+    {"id":"capital_eg", "text":"The capital of Egypt is [MASK].", "gold":"cairo", "wrong":"paris"},
+    {"id":"capital_ie", "text":"The capital of Ireland is [MASK].", "gold":"dublin", "wrong":"madrid"},
+    {"id":"capital_th", "text":"The capital of Thailand is [MASK].", "gold":"bangkok", "wrong":"moscow"},
+    {"id":"opposite_hot", "text":"The opposite of hot is [MASK].", "gold":"cold", "wrong":"warm"},
+    {"id":"opposite_up", "text":"The opposite of up is [MASK].", "gold":"down", "wrong":"left"},
+    {"id":"opposite_big", "text":"The opposite of big is [MASK].", "gold":"small", "wrong":"large"},
+    {"id":"opposite_day", "text":"The opposite of day is [MASK].", "gold":"night", "wrong":"morning"},
+    {"id":"week_tue", "text":"The day after Monday is [MASK].", "gold":"tuesday", "wrong":"friday"},
+    {"id":"week_wed", "text":"The day after Tuesday is [MASK].", "gold":"wednesday", "wrong":"sunday"},
+    {"id":"week_thu", "text":"The day after Wednesday is [MASK].", "gold":"thursday", "wrong":"monday"},
+    {"id":"week_fri", "text":"The day after Thursday is [MASK].", "gold":"friday", "wrong":"tuesday"},
+    {"id":"animal_cat", "text":"A kitten is a young [MASK].", "gold":"cat", "wrong":"dog"},
+    {"id":"animal_dog", "text":"A puppy is a young [MASK].", "gold":"dog", "wrong":"cat"},
+    {"id":"animal_cow", "text":"A calf is a young [MASK].", "gold":"cow", "wrong":"bird"},
+    {"id":"animal_horse", "text":"A foal is a young [MASK].", "gold":"horse", "wrong":"fish"}
+  ]
+}
