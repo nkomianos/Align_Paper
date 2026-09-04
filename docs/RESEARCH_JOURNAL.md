@@ -1755,3 +1755,28 @@ update rates imply roughly1--3 hours for all seven arms, with earlier
 qualification/acquisition stops possible. The prior host
 `192.222.57.245` still times out; no GPU process is active and no endpoint has
 been generated.
+
+## 2026-09-04 -- delayed-anchor selection/contamination boundary
+
+Froze commit `6455e05` before endpoints, then ran and deterministically replayed
+320 finite-state cells. Fresh evidence root
+`artifacts/hindsight_anchor_robustness_dev_20260904_v1`; manifest SHA-256
+`180130ed3713c186cc4d4b0eff970ece6e996527a53dd74427f025a9d84560ba`.
+All six gates pass with decision `DEV_ROBUSTNESS_LAW_QUALIFIED`.
+
+With clean random delayed anchors, regret on13 immediate-ranking reversals is
+.345673 raw, .006765 equal-anchor Horvitz--Thompson and .004177 augmented IPW.
+At maximum post-report selection, mean absolute bias is .020851 for naive
+augmentation versus .001243 for IPW augmentation. Across all clean selection
+conditions the worst augmented bias falls from .106438 to .0056125. This
+confirms the exact law under positive known propensities and
+`S independent of B conditional on A,O`.
+
+The same run records the method's non-negotiable limitation. In176 cells where
+the contaminated anchor target preserves the initial-preference ranking, IPW
+augmentation chooses that initial optimum96.55% of the time. In44 cells where
+the measured target materially flips, it does so only2.42% of the time: the
+estimator correctly learns a corrupted estimand. For the neural main setting
+the analytic flip is at contamination2/3. This is a sensitivity boundary, not
+human evidence or estimator novelty. The neural SDPO gate remains the empirical
+bottleneck; no further tabular sweep is warranted before it.

@@ -32,7 +32,15 @@ augmentation lowers expression-world regret from `.01377` for the equal-anchor
 baseline to `.00934`, versus `.08628` for raw immediate feedback, while exactly
 preserving truthful feedback. This is the first positive intervention result,
 but it is finite-state and uses a standard difference estimator; the package is
-therefore **promising but not yet paper-qualified**. A stricter
+therefore **promising but not yet paper-qualified**. A subsequent
+[selection/contamination audit](docs/HINDSIGHT_ANCHOR_ROBUSTNESS_DEV_RESULT_20260904.md)
+also passes all six frozen criteria: known-propensity augmentation cuts maximum
+post-report-selection bias from `.10644` to `.00561` and clean equal-anchor
+regret from `.00677` to `.00418`. It also exposes the hard boundary: once the
+delayed measurement itself is contaminated enough to reverse the target,
+weighting consistently learns the wrong target. This supplies an explicit
+assumption/sensitivity story rather than pretending every delayed reply is an
+anchor. A stricter
 [neural delayed-anchor gate](docs/HINDSIGHT_NEURAL_ANCHOR_G0_PROTOCOL_20260904.md)
 is now frozen at commit `3c2c1c2`. It uses Qwen3.5-9B, the SDPO hindsight block,
 the exact full-vocabulary reverse-KL objective, swapped semantic choices, equal
