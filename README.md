@@ -15,9 +15,12 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 investigates cheaper stochastic model comparisons, not improved model accuracy.
 A finite-model DEV is replay-verified: byte-clock/grouped coupling fixes constructed
 tokenization mismatches, but a counterexample doubles variance. Thus no general
-improvement claim or paper green light. A small greedy native-decoder qualification
-is running on the laptop (Qwen3-0.6B and SmolLM2-360M, eight public DEV questions
-each); it is not yet the stochastic variance experiment. No paid GPU queue.
+improvement claim or paper green light. Native-decoder qualification completed:
+16 outputs, 124 forwards, 162 seconds; hashes, decoding and saved-logit sampling
+replay verified. Exact-option formatting was poor, not evidence of zero comprehension.
+The [stochastic SQuAD DEV](docs/SQUAD_COUPLING_DEV_20260904.md) is now running
+on the laptop: eight questions, 16 seeds, four sampling policies, two small models
+(1,024 completions). No efficacy result yet and no paid GPU queue.
 
 **Latest completed comparison:** [OPDLM on-policy verification](docs/OPDLM_ONPOLICY_20260904.md)
 finished 24 arithmetic prompts under four closed-loop policies plus 87 paired

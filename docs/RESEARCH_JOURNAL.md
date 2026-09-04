@@ -1509,3 +1509,29 @@ saved logits and decoded bytes, not neural forwards. Preserve raw outputs even
 when models ignore the exact-option-text instruction. Next action: finish,
 verify and inspect qualification before deciding the native stochastic DEV.
 No automatic paid expansion, no new monitor required while active goal owns job.
+
+## 2026-09-04 — qualification completed; stochastic DEV launched
+
+Native qualification finished 16 outputs / 124 forwards in 162.04 seconds.
+All outputs terminated. The read-only verifier passed hashes, decoding and
+sampling replay from saved logits, not neural-forward replay. Manifest:
+04753f1dc8692d4733d8a8e353bff02201912324fb756cb4fd3b7efa2dd750e3.
+Strict exact-option compliance was Qwen 1/8 and SmolLM 0/8; many answers included
+option letters. Preserve the scores; do not equate this formatting failure with
+zero comprehension or tune the old parser retrospectively.
+
+Prepared a separately declared free-answer SQuAD DEV with standard whole-answer
+EM/F1 scoring, eight hash-selected articles and 16 seeds, four policies, two
+models. Seventeen targeted tests passed across finite/native sampling, data,
+batched cached decoding and analysis. Started local process session 51921 at
+artifacts/squad_coupling_dev_v1. Weights loaded; no scientific result yet.
+Runner/config/helpers are now frozen and must not change during this run.
+No GPU was launched. See SQUAD_COUPLING_DEV_20260904.md for the full protocol.
+
+Process audit: distinguish infrastructure qualification, assay validity,
+phenomenon detection and intervention efficacy. Earlier invalid controls,
+format mismatches, floor/ceiling tasks and arbitrary small-sample cutoffs do not
+constitute independent refutations of paper hypotheses. Require an informative
+task and strong simple baselines before expansion, check novelty early, and
+avoid repeatedly changing tasks or scoring to seek a positive result. This DEV
+can justify a better-powered confirmation, never an acceptance claim.
