@@ -13,6 +13,19 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ### CPU-only follow-up
 
+**Positive semantic-choice result:** the
+[fresh constrained-choice test](docs/HINDSIGHT_SEMANTIC_CHOICE_20260904.md)
+scores published hindsight32/32 development and31/32 new-domain confirmation.
+Direct preference feedback scores26/32 and30/32. The hindsight arm meets its
+thresholds; the pre-set joint gate remains unqualified because its direct
+development control misses90%. This distinction matters: the primary teacher
+signal is strong, but no neural learning or causal harm was tested. Candidate
+probabilities are normalized over an explicitly constrained action set, not
+free-form generation. All evidence verified;144seconds CPU, zero updates.
+The next paper-facing step is a
+[longitudinal coupling intervention](docs/HINDSIGHT_LONGITUDINAL_NEXT_20260904.md),
+not another fixed-preference report-copying sweep. No GPU job is queued.
+
 The [full-response teacher audit](docs/HINDSIGHT_GENERATION_AUDIT_20260904.md)
 adds an important qualification:44/64 first-token correctness was **not**
 semantic preference accuracy. Greedy complete answers mention the correct
