@@ -37,6 +37,20 @@ published single-profile online personalization setting. Also, this uses the
 released simple-signal loss variant, not the launcher's default full distillation.
 See [scope audit](SDPO_SHARED_USER_SCOPE_AUDIT_20260904.md).
 
+The saved-trace [collapse audit](SDPO_V3_COLLAPSE_TRACE_AUDIT_20260904.md)
+finds a more specific warning than user-ID difficulty: truthful approval at
+step5 gives the correct colon a negative28.98 token advantage; subsequent
+outputs converge to the wrong compact layout and sampled-token gradients
+become very small. The trace supports that mechanism but does not isolate
+optimizer, teacher and routing effects causally.
+
+Our qualification design also omitted preservation of already-correct outputs:
+all eight initially correct calibration cases regressed under hindsight,
+despite perfect recovery on the other24. This was visible before training.
+We should not treat passing the narrower frozen qualification rule as proof
+that the teacher supplies beneficial feedback overall. The original outputs,
+rule, pass flag and failed training outcome remain unchanged.
+
 The result fails to qualify this specific adaptation apparatus. It does not
 refute SDPO, demonstrate preference shaping, or kill the original causal
 question. Do not queue noisy/polite feedback arms on this unsuccessful control.
