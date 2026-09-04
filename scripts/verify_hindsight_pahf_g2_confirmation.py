@@ -13,7 +13,7 @@ import torch
 from interaction_sprint.hindsight_neural_anchor import (
     LORA_ALPHA, LORA_RANK, MODEL_ID, MODEL_REVISION,
 )
-from interaction_sprint.hindsight_pahf_g2 import (
+from interaction_sprint.hindsight_pahf_g2_v2 import (
     G2_BATCH, expected_g2_arm_names, summarize_g2_stage,
 )
 from run_hindsight_pahf_g2_dev import INPUT_MANIFEST_SHA256
@@ -70,7 +70,7 @@ def main() -> None:
     receipt = prerequisite.get("receipt", {})
     if (
         receipt.get("verified") is not True
-        or receipt.get("decision") != "ENDO_PAHF_G2_DEV_QUALIFIED"
+        or receipt.get("decision") != "ENDO_PAHF_G2_V2_DEV_QUALIFIED"
         or replay_receipt != receipt
         or prerequisite.get("manifest_sha256") != sha256(args.dev_root / "MANIFEST.json")
         or prerequisite.get("result_sha256") != sha256(args.dev_root / "RESULT.json")
@@ -90,7 +90,7 @@ def main() -> None:
         raise SystemExit("confirmation input receipt mismatch")
     expected_arms = expected_g2_arm_names()
     expected_spec = {
-        "version": "endo-pahf-g2-confirmation-v1",
+        "version": "endo-pahf-g2-confirmation-v2-full-learning",
         "model": MODEL_ID,
         "revision": MODEL_REVISION,
         "lora_rank": LORA_RANK,
@@ -99,7 +99,7 @@ def main() -> None:
         "batch": G2_BATCH,
         "input_manifest_sha256": INPUT_MANIFEST_SHA256,
         "adapter_manifest_sha256": prerequisite["manifest_sha256"],
-        "panel_aggregation": "arithmetic mean of eight panel probability vectors",
+        "panel_aggregation": "arithmetic mean of four panel probability vectors",
         "confirmation_opened": True,
         "training_or_selection_on_confirmation": False,
         "paper_green_light": False,
@@ -133,6 +133,7 @@ def main() -> None:
         repository / "src" / "interaction_sprint" / "hindsight_neural_anchor.py",
         repository / "src" / "interaction_sprint" / "hindsight_pahf_cluster_stats.py",
         repository / "src" / "interaction_sprint" / "hindsight_pahf_g2.py",
+        repository / "src" / "interaction_sprint" / "hindsight_pahf_g2_v2.py",
         repository / "src" / "latent_contract" / "sender_update.py",
         repository / "scripts" / "run_hindsight_pahf_g2_dev.py",
         repository / "scripts" / "verify_hindsight_pahf_g2_dev.py",

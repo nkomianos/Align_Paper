@@ -21,7 +21,7 @@ from interaction_sprint.hindsight_pahf_preflight import (
 )
 
 
-INPUT_MANIFEST_SHA256 = "915dbc068573c50990c42db8aa48a1ba5158f12c4684cea4d0d10727d151e5c2"
+INPUT_MANIFEST_SHA256 = "2ae32c119087d97de6f2e5a65959b4c94a7d81362732871ff806b157e000fab2"
 BATCH_SIZE = 16
 
 
@@ -40,7 +40,7 @@ def main() -> None:
     parser.add_argument("--hf-home", type=Path, required=True)
     args = parser.parse_args()
     if sha256(args.input_root / "MANIFEST.json") != INPUT_MANIFEST_SHA256:
-        raise SystemExit("EndoPAHF v2 input manifest mismatch")
+        raise SystemExit("EndoPAHF v3 input manifest mismatch")
     args.root.mkdir(parents=True, exist_ok=False)
     started = time.time()
     repository = Path(__file__).parents[1]

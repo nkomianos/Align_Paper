@@ -13,7 +13,7 @@ import time
 from interaction_sprint.hindsight_neural_anchor import (
     LORA_ALPHA, LORA_RANK, MODEL_ID, MODEL_REVISION, install_qwen35_lora,
 )
-from interaction_sprint.hindsight_pahf_g2 import (
+from interaction_sprint.hindsight_pahf_g2_v2 import (
     G2_BATCH, expected_g2_arm_names, summarize_g2_stage,
 )
 from interaction_sprint.hindsight_pahf_interface import OPTION_LETTERS
@@ -47,7 +47,7 @@ def main() -> None:
     parser.add_argument("--hf-home", type=Path, required=True)
     args = parser.parse_args()
     if sha256(args.input_root / "MANIFEST.json") != INPUT_MANIFEST_SHA256:
-        raise SystemExit("EndoPAHF v2 input manifest mismatch")
+        raise SystemExit("EndoPAHF v3 input manifest mismatch")
     args.root.mkdir(parents=True, exist_ok=False)
     repository = Path(__file__).parents[1]
     started = time.time()
@@ -77,7 +77,10 @@ def main() -> None:
         write_manifest()
         raise RuntimeError("G2 development prerequisite failed verification")
     dev_receipt = json.loads(verification.stdout)
-    if dev_receipt.get("verified") is not True or dev_receipt.get("decision") != "ENDO_PAHF_G2_DEV_QUALIFIED":
+    if (
+        dev_receipt.get("verified") is not True
+        or dev_receipt.get("decision") != "ENDO_PAHF_G2_V2_DEV_QUALIFIED"
+    ):
         write("FAILED.json", {
             "stage": "development_prerequisite_decision",
             "receipt": dev_receipt,
@@ -103,7 +106,7 @@ def main() -> None:
     })
     expected_arms = expected_g2_arm_names()
     spec = {
-        "version": "endo-pahf-g2-confirmation-v1",
+        "version": "endo-pahf-g2-confirmation-v2-full-learning",
         "model": MODEL_ID,
         "revision": MODEL_REVISION,
         "lora_rank": LORA_RANK,
@@ -112,7 +115,7 @@ def main() -> None:
         "batch": G2_BATCH,
         "input_manifest_sha256": INPUT_MANIFEST_SHA256,
         "adapter_manifest_sha256": prerequisite["manifest_sha256"],
-        "panel_aggregation": "arithmetic mean of eight panel probability vectors",
+        "panel_aggregation": "arithmetic mean of four panel probability vectors",
         "confirmation_opened": True,
         "training_or_selection_on_confirmation": False,
         "paper_green_light": False,
@@ -122,6 +125,7 @@ def main() -> None:
         repository / "src" / "interaction_sprint" / "hindsight_neural_anchor.py",
         repository / "src" / "interaction_sprint" / "hindsight_pahf_cluster_stats.py",
         repository / "src" / "interaction_sprint" / "hindsight_pahf_g2.py",
+        repository / "src" / "interaction_sprint" / "hindsight_pahf_g2_v2.py",
         repository / "src" / "latent_contract" / "sender_update.py",
         repository / "scripts" / "run_hindsight_pahf_g2_dev.py",
         repository / "scripts" / "verify_hindsight_pahf_g2_dev.py",

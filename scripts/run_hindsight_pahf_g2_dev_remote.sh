@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RUN_ROOT="${HINDSIGHT_PAHF_G2_DEV_ROOT:?set a fresh absolute evidence root}"
-INPUT_ROOT="${HINDSIGHT_PAHF_V2_INPUT_ROOT:?set the verified EndoPAHF v2 root}"
+INPUT_ROOT="${HINDSIGHT_PAHF_V3_INPUT_ROOT:?set the verified EndoPAHF v3 root}"
 G1_ROOT="${HINDSIGHT_PAHF_G2_G1_ROOT:?set the verified qualified G1 root}"
 PREFLIGHT_ROOT="${HINDSIGHT_PAHF_G2_PREFLIGHT_ROOT:?set the verified qualified preflight root}"
 PYTHON_BIN="${HINDSIGHT_PAHF_G2_PYTHON:-$ROOT/.venv/bin/python}"

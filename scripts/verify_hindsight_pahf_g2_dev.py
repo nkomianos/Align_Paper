@@ -14,7 +14,7 @@ from interaction_sprint.hindsight_neural_anchor import (
     HINDSIGHT_BLOCK, LORA_ALPHA, LORA_RANK, MODEL_ID, MODEL_REVISION,
     OFFICIAL_SDPO_COMMIT, OFFICIAL_SDPO_REPOSITORY,
 )
-from interaction_sprint.hindsight_pahf_g2 import (
+from interaction_sprint.hindsight_pahf_g2_v2 import (
     G2_ANCHOR_BASES_PER_PANEL, G2_ANCHOR_ROWS_PER_STEP, G2_BATCH,
     G2_LEARNING_RATE, G2_PANEL_COUNT, G2_SEED, G2_STEPS,
     build_g2_anchor_panels, build_g2_schedules, expected_g2_arm_names,
@@ -92,7 +92,7 @@ def main() -> None:
 
     spec = json.loads((args.root / "spec.json").read_text(encoding="utf-8"))
     expected_spec = {
-        "version": "endo-pahf-g2-dev-v1",
+        "version": "endo-pahf-g2-dev-v2-full-learning",
         "model": MODEL_ID,
         "revision": MODEL_REVISION,
         "official_sdpo_repository": OFFICIAL_SDPO_REPOSITORY,
@@ -112,7 +112,9 @@ def main() -> None:
         "input_manifest_sha256": INPUT_MANIFEST_SHA256,
         "g2_routing_power_manifest_sha256": G2_ROUTING_POWER_MANIFEST_SHA256,
         "confirmation_rule_power_manifest_sha256": CONFIRM_RULE_POWER_MANIFEST_SHA256,
-        "panel_aggregation": "arithmetic mean of eight panel probability vectors",
+        "global_unique_learning_bases": 630,
+        "global_variants_per_base": 1,
+        "panel_aggregation": "arithmetic mean of four panel probability vectors",
         "confirmation_opened": False,
         "paper_green_light": False,
     }
@@ -177,6 +179,7 @@ def main() -> None:
         repository / "src" / "interaction_sprint" / "hindsight_neural_anchor.py",
         repository / "src" / "interaction_sprint" / "hindsight_pahf_cluster_stats.py",
         repository / "src" / "interaction_sprint" / "hindsight_pahf_g2.py",
+        repository / "src" / "interaction_sprint" / "hindsight_pahf_g2_v2.py",
         repository / "src" / "latent_contract" / "sender_update.py",
         repository / "scripts" / "verify_hindsight_neural_policy_g1.py",
         repository / "scripts" / "verify_hindsight_pahf_preflight.py",

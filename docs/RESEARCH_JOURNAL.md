@@ -2231,3 +2231,34 @@ of that ambiguity on SDPO's hindsight distribution. PI decision remains
 conditional yellow: only a working sparse delayed-minus-immediate neural method,
 equal-label baseline wins, PAHF-surface transfer and independent validation can
 make the remaining conjunction paper-worthy. A theorem-only fallback is killed.
+
+## 2026-09-04 -- EndoPAHF full-learning repair before GPU spend
+
+Before asking for another capable endpoint, tested whether the external assay
+could learn both of its intended targets. A position-invariant candidate
+logistic diagnostic on the designated 96-base development split uses explicit
+user-by-feature and product-by-feature interactions. With the frozen 128-base
+learning subset, old-target accuracy/NLL were `.2708/1.8526`; with all 630
+public learning bases they improve to `.4792/1.0744`. New-target results improve
+from `.6667/1.2660` to `.7083/.8976`. Chance is `.25`, uniform NLL `1.3863`.
+
+This is retrospective development-only assay diagnosis, not model or paper
+evidence; confirmation was not read. It showed the initial G2 could fail simply
+because its oracle target was underlearnable. Sealed replay evidence at
+`artifacts/hindsight_endo_pahf_learnability_20260904_v2`, manifest SHA-256
+`e2452666697ec4caeba9ae04ee02731d065c76b4f8cdfc3e96e7dca90866f182`.
+
+Prepared and replay-verified EndoPAHF v3 without overwriting v2: all 630
+learning bases under four rotations (2,520 rows), the same 96 development bases,
+and the same 256 reserved confirmation bases. Manifest SHA-256
+`2ae32c119087d97de6f2e5a65959b4c94a7d81362732871ff806b157e000fab2`.
+
+Prospectively replaced unrun G2 v1 with a compute-efficient full-learning G2 v2.
+Each arm sees every learning base exactly once under an outcome-blind balanced
+rotation assignment: 35 steps of 18. Four 16-base panels retain 64 disjoint
+anchor bases. Fifteen trained arms require 525 updates, versus 864 previously.
+The revised routing-power audit passes at null `.2063`, signal `.9159`, and noisy
+signal `.8357`; manifest SHA-256
+`8e050034619ff21fddfbc73bb337cdee0f41c4a0117cb816b8c8100ac935e4ca`.
+Thirteen combined targeted tests, Python compilation, three launcher syntax
+checks, and all new replay verifiers pass. No capable EndoPAHF output exists.

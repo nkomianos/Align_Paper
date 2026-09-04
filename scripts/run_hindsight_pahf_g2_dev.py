@@ -24,7 +24,7 @@ from interaction_sprint.hindsight_neural_anchor import (
     install_qwen35_lora,
     reverse_kl_per_example,
 )
-from interaction_sprint.hindsight_pahf_g2 import (
+from interaction_sprint.hindsight_pahf_g2_v2 import (
     G2_ANCHOR_BASES_PER_PANEL,
     G2_ANCHOR_ROWS_PER_STEP,
     G2_BATCH,
@@ -41,8 +41,8 @@ from interaction_sprint.hindsight_pahf_interface import OPTION_LETTERS
 from latent_contract.sender_update import adapter_state, load_adapter
 
 
-INPUT_MANIFEST_SHA256 = "915dbc068573c50990c42db8aa48a1ba5158f12c4684cea4d0d10727d151e5c2"
-G2_ROUTING_POWER_MANIFEST_SHA256 = "663df8a48cc0e359be7256afd8ad7d3df57da0012cea409aa39480a149789b8c"
+INPUT_MANIFEST_SHA256 = "2ae32c119087d97de6f2e5a65959b4c94a7d81362732871ff806b157e000fab2"
+G2_ROUTING_POWER_MANIFEST_SHA256 = "8e050034619ff21fddfbc73bb337cdee0f41c4a0117cb816b8c8100ac935e4ca"
 CONFIRM_RULE_POWER_MANIFEST_SHA256 = "7a13b16c1a1acdf02d43efe30ba7830a519fcd7b1ce271c17a741891da9fe48e"
 
 
@@ -73,7 +73,7 @@ def main() -> None:
     parser.add_argument("--hf-home", type=Path, required=True)
     args = parser.parse_args()
     if sha256(args.input_root / "MANIFEST.json") != INPUT_MANIFEST_SHA256:
-        raise SystemExit("EndoPAHF v2 input manifest mismatch")
+        raise SystemExit("EndoPAHF v3 input manifest mismatch")
     args.root.mkdir(parents=True, exist_ok=False)
     started = time.time()
     repository = Path(__file__).parents[1]
@@ -146,7 +146,7 @@ def main() -> None:
     write("schedules.json", schedules)
 
     spec = {
-        "version": "endo-pahf-g2-dev-v1",
+        "version": "endo-pahf-g2-dev-v2-full-learning",
         "model": MODEL_ID,
         "revision": MODEL_REVISION,
         "official_sdpo_repository": OFFICIAL_SDPO_REPOSITORY,
@@ -166,7 +166,9 @@ def main() -> None:
         "input_manifest_sha256": INPUT_MANIFEST_SHA256,
         "g2_routing_power_manifest_sha256": G2_ROUTING_POWER_MANIFEST_SHA256,
         "confirmation_rule_power_manifest_sha256": CONFIRM_RULE_POWER_MANIFEST_SHA256,
-        "panel_aggregation": "arithmetic mean of eight panel probability vectors",
+        "global_unique_learning_bases": 630,
+        "global_variants_per_base": 1,
+        "panel_aggregation": "arithmetic mean of four panel probability vectors",
         "confirmation_opened": False,
         "paper_green_light": False,
     }
@@ -175,6 +177,7 @@ def main() -> None:
         repository / "src" / "interaction_sprint" / "hindsight_neural_anchor.py",
         repository / "src" / "interaction_sprint" / "hindsight_pahf_cluster_stats.py",
         repository / "src" / "interaction_sprint" / "hindsight_pahf_g2.py",
+        repository / "src" / "interaction_sprint" / "hindsight_pahf_g2_v2.py",
         repository / "src" / "latent_contract" / "sender_update.py",
         repository / "scripts" / "verify_hindsight_neural_policy_g1.py",
         repository / "scripts" / "verify_hindsight_pahf_preflight.py",

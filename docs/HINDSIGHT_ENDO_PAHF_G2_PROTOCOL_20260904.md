@@ -1,6 +1,8 @@
 # EndoPAHF Neural Transfer G2 Protocol
 
-Status: prospective design, frozen before any capable EndoPAHF training output.
+Status: prospectively superseded before any capable EndoPAHF training output by
+`HINDSIGHT_ENDO_PAHF_G2_V2_PROTOCOL_20260904.md`. This file preserves the
+original 128-base design and must not be launched.
 The synthetic Qwen3.5-9B gradient G0 and conditional policy G1 remain mandatory
 prerequisites. This protocol does not authorize opening confirmation by itself.
 

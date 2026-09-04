@@ -89,12 +89,23 @@ failure. Do not use 0.6B as a scientific endpoint; the external assay requires
 a stronger model and remains downstream of G0/G1.
 
 Because that rehearsal also exposed an imbalanced displayed-label distribution,
-the unrun external assay was prospectively superseded by
+the original external assay was prospectively superseded by
 [EndoPAHF v2](docs/HINDSIGHT_ENDO_PAHF_V2_RESULT_20260904.md). Each selected
 base task now appears under all four cyclic option rotations: 512 learning, 384
 development and 1,024 reserved confirmation variants. Old and new targets are
 exactly balanced over A/B/C/D in every split, with zero matched-log violations.
 This closes a position-bias shortcut before any capable-model endpoint.
+
+A subsequent [development-only learnability audit](docs/HINDSIGHT_ENDO_PAHF_LEARNABILITY_RESULT_20260904.md)
+found another pre-run assay problem: with only 128 learning bases, a
+position-invariant user-by-feature diagnostic predicts the old target at 27.08%
+accuracy and NLL 1.8526, essentially chance and worse than uniform log loss.
+Using all 630 available public learning bases raises this to 47.92% and 1.0744;
+the new target reaches 70.83% and .8976. The unrun 128-base learner is therefore
+retired. [EndoPAHF v3](docs/HINDSIGHT_ENDO_PAHF_V3_RESULT_20260904.md) is sealed
+and replay-verified with 2,520 balanced learning variants while preserving the
+same 96 development and 256 reserved confirmation bases. This makes the assay
+capable of learning both targets; it is not neural evidence.
 
 A frozen Qwen3.5-9B EndoPAHF capability preflight v2 now checks 16 base tasks
 under all four rotations and both old/new preference contexts. Unlike the
@@ -112,13 +123,13 @@ condition, the rule qualified `.75%` of nulls, `90.25%` of planned signals and
 `74.5%` of noisier signals. This closes a pseudoreplication problem and validates
 the decision rule, but it is not a capable-model result or paper green light.
 
-The full [EndoPAHF G2 neural-transfer protocol](docs/HINDSIGHT_ENDO_PAHF_G2_PROTOCOL_20260904.md)
+The repaired [EndoPAHF G2 v2 neural-transfer protocol](docs/HINDSIGHT_ENDO_PAHF_G2_V2_PROTOCOL_20260904.md)
 is now implemented prospectively. It binds a qualified G1 and exact-interface
-preflight, trains raw, full-oracle, equal-delayed-label SDPO/SFT and augmented
-arms over eight disjoint base-task panels, and averages panel probabilities
-rather than selecting a winner. A transition-world sanity arm must reproduce
-raw learning exactly. Its 96-base DEV routing rule is
-[power-qualified](docs/HINDSIGHT_ENDO_PAHF_G2_POWER_RESULT_20260904.md), and a
+preflight, covers all 630 learning bases once per arm using balanced single
+rotations, and trains raw, full-oracle, equal-delayed-label SDPO/SFT and
+augmented arms across four disjoint panels. It requires 525 optimizer updates,
+down from 864 in the retired 128-base design. Its revised 96-base DEV routing
+audit qualifies (null `.2063`, signal `.9159`, noisy signal `.8357`), and a
 separate verifier-gated runner opens the 256-base confirmation only after a
 qualified DEV. No G2 neural endpoint exists.
 

@@ -31,10 +31,12 @@ committed or placed in a public archive.
    scientific decision, provided the runtime and private-input checks pass.
 7. Secure and verify that evidence. Do not run the locked human confirmation
    split or any post-G1 expansion automatically.
-8. If and only if G1 qualifies, run EndoPAHF exact-interface preflight v2. The
+8. If and only if G1 qualifies, stage and verify the full-learning EndoPAHF v3
+   input root, then run exact-interface preflight v2 against that root. The
    superseded extraction-query preflight must not be used.
-9. If and only if that preflight qualifies, run G2 DEV. It trains 27 frozen
-   arms across eight panels and never reads EndoPAHF confirmation.
+9. If and only if that preflight qualifies, run repaired G2 v2 DEV. It trains
+   15 frozen arms for 35 steps across four panels, covers every one of the 630
+   learning bases once per arm, and never reads EndoPAHF confirmation.
 10. Secure and independently verify G2 DEV with the actual G1, preflight and
     input roots. Only a qualified DEV may authorize the separate locked
     EndoPAHF confirmation runner. That runner evaluates frozen adapters and
@@ -46,9 +48,9 @@ Allow another 15--40 minutes on a fresh host for environment validation and
 model download. The pass-path total is approximately 5--10.2 hours; a failed G0
 skips G1 and reduces the total to about 1.2--2.8 hours.
 
-If G1 passes, budget roughly 5--10 additional hours for exact-interface
+If G1 passes, budget roughly 4--8 additional hours for exact-interface
 preflight, G2 DEV and conditional confirmation. The complete synthetic-plus-
-external pass path is therefore approximately 10--20 hours, but every expensive
+external pass path is therefore approximately 9--18 hours, but every expensive
 stage is skipped immediately when its prerequisite fails.
 
 ## Remote launch contract
@@ -91,6 +93,34 @@ export PUPPET_DATA=/home/ubuntu/frozen_inputs/puppet/hidden_puppet_master_datase
 export HF_HOME=/home/ubuntu/Align_Paper/.hf_cache
 bash scripts/run_hindsight_human_feedback_llm_dev_remote.sh
 ```
+
+Conditional EndoPAHF v3 preflight variables:
+
+```bash
+export HINDSIGHT_PAHF_V3_INPUT_ROOT=/home/ubuntu/frozen_inputs/hindsight_endo_pahf_v3
+export HINDSIGHT_PAHF_PREFLIGHT_ROOT=/home/ubuntu/hindsight_pahf_preflight_TIMESTAMP
+export HINDSIGHT_PAHF_PREFLIGHT_PYTHON=/home/ubuntu/Align_Paper/.venv/bin/python
+export HINDSIGHT_PAHF_PREFLIGHT_PINNED_COMMIT=EXACT_TRANSFER_COMMIT
+export HF_HOME=/home/ubuntu/Align_Paper/.hf_cache
+bash scripts/run_hindsight_pahf_preflight_remote.sh
+```
+
+Conditional EndoPAHF G2 v2 DEV variables:
+
+```bash
+export HINDSIGHT_PAHF_V3_INPUT_ROOT=/home/ubuntu/frozen_inputs/hindsight_endo_pahf_v3
+export HINDSIGHT_PAHF_G2_G1_ROOT=/home/ubuntu/hindsight_policy_g1_TIMESTAMP
+export HINDSIGHT_PAHF_G2_PREFLIGHT_ROOT=/home/ubuntu/hindsight_pahf_preflight_TIMESTAMP
+export HINDSIGHT_PAHF_G2_DEV_ROOT=/home/ubuntu/hindsight_pahf_g2_v2_dev_TIMESTAMP
+export HINDSIGHT_PAHF_G2_PYTHON=/home/ubuntu/Align_Paper/.venv/bin/python
+export HINDSIGHT_PAHF_G2_PINNED_COMMIT=EXACT_TRANSFER_COMMIT
+export HF_HOME=/home/ubuntu/Align_Paper/.hf_cache
+bash scripts/run_hindsight_pahf_g2_dev_remote.sh
+```
+
+Do not set `HINDSIGHT_PAHF_G2_CONFIRM_ROOT` or run the confirmation launcher
+unless the DEV root has first passed the committed verifier. Confirmation uses
+the same variables plus a fresh confirmation root.
 
 When launching non-interactively, redirect each command to its own log and save
 its PID beside the output root. Never reuse a root after any failure.
