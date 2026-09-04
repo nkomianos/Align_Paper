@@ -66,7 +66,7 @@ def query_split(query_ids: Sequence[str]) -> tuple[set[str], set[str]]:
 
 
 def records_from_rows(rows: Iterable[Mapping[str, str]]) -> tuple[list[AuditRecord], dict[str, set[str]]]:
-    eligible: list[tuple[int, Mapping[str, str], Sequence[Mapping[str, str]]]] = []
+    eligible: list[tuple[int, Mapping[str, str], Sequence[Mapping[str, str]], float, float]] = []
     query_ids: list[str] = []
     for row_index, row in enumerate(rows):
         if row.get("passed_attention_check") != "True" or row.get("condition") not in CONDITIONS:
@@ -83,11 +83,11 @@ def records_from_rows(rows: Iterable[Mapping[str, str]]) -> tuple[list[AuditReco
         delta = float(row["belief_delta"])
         if not (0 <= pre <= 100 and 0 <= post <= 100 and np.isclose(delta, post - pre)):
             raise ValueError("invalid rating arithmetic")
-        eligible.append((row_index, row, turns))
+        eligible.append((row_index, row, turns, pre, delta))
         query_ids.append(row["queryId"])
     dev_queries, confirmation_queries = query_split(query_ids)
     result = []
-    for row_index, row, turns in eligible:
+    for row_index, row, turns, pre, delta in eligible:
         texts = {depth: arm_texts(row["belief_statement"], row["queryText"], turns, depth)
                  for depth in (3, 6)}
         result.append(AuditRecord(
@@ -188,4 +188,3 @@ def cluster_bootstrap_gain(
         "bootstrap_draws": int(draws),
         "query_groups": int(len(unique)),
     }
-

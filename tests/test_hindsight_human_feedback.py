@@ -5,6 +5,7 @@ from interaction_sprint.hindsight_human_feedback import (
     arm_texts,
     cluster_bootstrap_gain,
     query_split,
+    records_from_rows,
 )
 
 
@@ -45,3 +46,29 @@ def test_cluster_bootstrap_detects_strict_improvement():
     with pytest.raises(ValueError):
         cluster_bootstrap_gain(target, reference[:-1], candidate, groups)
 
+
+def test_record_targets_are_row_specific(monkeypatch):
+    # Four query groups are sufficient for the fixed split.  Six USER turns are
+    # needed, and targets must not inherit the final row's local variables.
+    transcript = "\n".join(
+        f"{'USER' if index % 2 == 0 else 'BOT'}: turn {index}"
+        for index in range(11)
+    )
+    rows = []
+    for index in range(4):
+        rows.append({
+            "passed_attention_check": "True",
+            "condition": "C3",
+            "personalization": "non-personalized",
+            "conversation_parsed": transcript,
+            "total_messages": "11",
+            "pre_belief": str(10 + index),
+            "post_belief": str(12 + 2 * index),
+            "belief_delta": str(2 + index),
+            "queryId": f"q{index}",
+            "belief_statement": "statement",
+            "queryText": "query",
+        })
+    records, _ = records_from_rows(rows)
+    assert [record.pre_belief for record in records] == [10, 11, 12, 13]
+    assert [record.belief_delta for record in records] == [2, 3, 4, 5]
