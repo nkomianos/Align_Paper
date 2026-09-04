@@ -31,6 +31,17 @@ def write_json(path, value):
         json.dump(value, f, indent=2, allow_nan=False)
 
 
+def loading_metadata_json(value):
+    """Normalize Transformers container metadata without changing its contents."""
+    if isinstance(value, dict):
+        return {key: loading_metadata_json(item) for key, item in value.items()}
+    if isinstance(value, set):
+        return [loading_metadata_json(item) for item in sorted(value, key=repr)]
+    if isinstance(value, (tuple, list)):
+        return [loading_metadata_json(item) for item in value]
+    return value
+
+
 def finish(root, status):
     write_json(root / "status.json", status)
     write_json(root / "MANIFEST.json", {str(p.relative_to(root)): digest(p) for p in root.rglob("*") if p.is_file()})
@@ -190,7 +201,7 @@ def main():
     write_json(args.root / "model.json", dict(revision=args.revision, sha256=model_files, transformers=transformers.__version__))
     model, loading_info = AutoModelForCausalLM.from_pretrained(args.model_path, local_files_only=True,
                     torch_dtype=dtype, attn_implementation="sdpa", output_loading_info=True)
-    write_json(args.root / "loading_info.json", loading_info)
+    write_json(args.root / "loading_info.json", loading_metadata_json(loading_info))
     if any(loading_info.get(k) for k in ("missing_keys", "unexpected_keys", "mismatched_keys", "error_msgs")):
         finish(args.root, dict(status="INVALID_MODEL_LOADING", scientific_decision=None))
         return

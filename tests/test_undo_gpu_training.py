@@ -2,7 +2,7 @@ import copy
 import pytest
 import torch
 
-from interaction_sprint.undo_gpu_training import collate, loss_for, schedule, validate_data, next_logits, qualification
+from interaction_sprint.undo_gpu_training import collate, loss_for, schedule, validate_data, next_logits, qualification, loading_metadata_json
 from latent_contract.sender_update import install_lora, adapter_state, load_adapter
 
 
@@ -14,6 +14,19 @@ def test_schedule_and_padding():
     assert batch["input_ids"].tolist() == [[3, 4], [0, 5]]
     assert batch["position_ids"].tolist() == [[0, 1], [0, 0]]
     assert batch["attention_mask"].tolist() == [[1, 1], [0, 1]]
+
+
+def test_transformers_loading_metadata_containers():
+    import json
+    raw = {"missing_keys": set(), "unexpected_keys": {"b", "a"},
+           "mismatched_keys": [("weight", (2, 3), (3, 2))], "nested": {"x": {("k", 1)}}}
+    normalized = loading_metadata_json(raw)
+    assert normalized["missing_keys"] == []
+    assert normalized["unexpected_keys"] == ["a", "b"]
+    assert normalized["mismatched_keys"] == [["weight", [2, 3], [3, 2]]]
+    assert normalized["nested"] == {"x": [["k", 1]]}
+    assert json.loads(json.dumps(normalized)) == normalized
+    assert raw["unexpected_keys"] == {"b", "a"}
 
 
 def test_losses_match_full_vocab_and_detach_teacher():
