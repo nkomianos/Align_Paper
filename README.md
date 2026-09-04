@@ -28,6 +28,10 @@ The [stress test](docs/HINDSIGHT_ANCHOR_STRESS_20260904.md) now shows that allow
 large reporting-model error removes the gain, and sufficiently cheap extra
 anchors outperform the combined rule. A realistic low-cost-log setting and
 defensible measurement assumptions are prerequisites for an LM run.
+A [human-data search](docs/HINDSIGHT_HUMAN_DATA_SEARCH_20260904.md) located a
+public pre/post-belief dataset and completed a schema-only audit. Inclusion-rule
+and data-license questions remain; no participant outcome analysis or training
+has been performed.
 
 The [ScopeJudge audit](docs/SCOPEJUDGE_OFFLINE_SCHEMA_AUDIT_20260904.md)
 verified 4,897 labeled calls and constructed metadata-filtered pre-execution
