@@ -182,3 +182,26 @@ failed apparatus qualification. Root approved preparation of one <=24-call
 native-video versus ordered-image interface diagnostic, using fixed obvious
 motion and coordinate-frame controls. This does not authorize the old450-call
 full experiment or a paper claim. Code/protocol review must precede inference.
+
+## Approximately 10:24 UTC — native-video interface diagnostic live
+
+Frozen scientific source commit42fe2d5; source archive SHA
+78015da58264c25be71ccb2313a65d60f1bfec038cd48ca96ab1c37e6293ecdf.
+Prepared manifest87bb923231812e17d08247307942b63d3b28dda0bbc7a1f1cd03ba81931495e8.
+Executed runner SHA f28b7fd1bdad93e9d6a78587d20525c658fef604d7d9972863b1a7166ef395d2;
+helper6081fa23823e65a008dbeed5e8bbc6f21da76d1171422623876f5ce7dfb5414c.
+
+Two pre-inference setup failures retained: T1030Z wrapper selected the wrong
+environment (no cv2), and retryT1032Z encountered missing public README and
+.gitattributes cache metadata. Only those two metadata files were downloaded;
+all14 existing cached files, including four weight shards, rehashed unchanged.
+No scientific code, scene, prompt, or output changed. The fresh cachedT1034Z
+attempt uses the preflight-verified .venv-vision Python. PID30603 confirmed alive
+with17966MiB GPU memory. Root is /home/ubuntu/ep_interface_cached_20260904T1034Z.
+Tags are identifiers; actual launch occurred before10:30UTC.
+
+SDPO calibration source separately frozen at168cf41 and staged, not launched.
+Source archive SHAa63804133380a184a2f20f26d515193ec21ef8ddcb61d63de1935b88de1f5c1e;
+executed-source SHA5c23a0ca58b56d57cf08b3f59f3ac3c07f37a10e24cc9356610949306a1712ed.
+Final staged import/data preflight exited0. It waits for the short vision run
+to exit; calibration alone is approved, not parameter updates.
