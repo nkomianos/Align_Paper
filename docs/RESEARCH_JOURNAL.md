@@ -855,3 +855,30 @@ private-information or long-context deployment could have value, but requires
 its own rationale and comparisons and is not automatically authorized by this
 finding. This is a literature/portfolio decision, not evidence that updates
 are harmless. The broader paper-finding goal remains unmet.
+
+## 2026-09-04 — Hindsight estimator audit yields a sharper learning question
+
+Read SDPO section 3 and appendix B and inspected pinned released online/offline
+losses. Distinguished own-response sampling under p(a)K(o|a) from a full-KL
+update under p(a)M(o), with teacher and sampling weights stopped in both. An
+exact two-action example gives opposite ascent directions at p=0.1: sampled
++0.1091770192, full KL -0.1265601357. Actual released loss methods executed on
+mocked logits reproduce both; frozen-target finite differences check full KL.
+The earlier balanced-attractor result remains correct for the sampled update,
+not both losses. Earlier reports are preserved.
+
+Reverified the 512-forward Hindsight archive and reused its 20 unique base and
+feedback prompts. Under imposed action-copying channels, saved A/B distributions
+yield opposing scalar-logit directions in 7/8 surface/wording contexts for copy
+probabilities 0.5 through 0.9. Independent feedback gives zero mismatches. This
+post-hoc calculation is not LM training or measured real-user behavior. Shared
+parameter gradients, learning trajectories and utility effects remain unknown.
+Reports: `artifacts/feedback_gradient_audit_v1.json` and
+`artifacts/feedback_gradient_audit_v2.json`.
+
+Close prior work, Privileged Likelihood Is Not Automatically Value, already
+discusses own-rollout feedback, cross-fitting and partial/upstream gradients.
+The mismatch identity alone is not a novel method. Next is a tightly controlled
+learning diagnostic design separating estimator fidelity from utility, not
+another anchor-prompt gate. See `docs/HINDSIGHT_SAMPLING_LAW_AUDIT_20260904.md`.
+No GPU work was launched. The paper-finding goal remains unmet.

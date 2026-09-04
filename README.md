@@ -69,6 +69,12 @@ code, data, and packages remain preserved.
 
 The [five-idea PI review](docs/USER_IDEA_REVIEW_20260903.md) conditionally prioritizes
 **Hindsight Is Not Counterfactual** and **Dialogue Retractions as Algebra**.
+An additional [Hindsight sampling-law audit](docs/HINDSIGHT_SAMPLING_LAW_AUDIT_20260904.md)
+verifies that own-response scoring and full reverse-KL distillation can produce
+opposite updates under action-dependent feedback, including execution of the
+pinned released losses on exact logits. Saved LM scores show the distinction
+under imposed feedback channels. This is a diagnostic lead, not actual LM
+training, a welfare result, or an established novel contribution.
 Exact CPU checks establish a compact immediate-log ambiguity but disprove
 automatic polarization in the proposed symmetric Bayesian example. The new
 language assays have completed their smoke and full runs on the new GH200;

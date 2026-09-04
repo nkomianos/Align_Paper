@@ -78,6 +78,12 @@ paper must address.
 
 ### The proposed polarization claim is not automatic
 
+Scope clarification from the subsequent
+[sampling-law audit](HINDSIGHT_SAMPLING_LAW_AUDIT_20260904.md): the calculation
+below is for the sampled own-response stopped-advantage update. Under endogenous
+feedback it must not be substituted for the full reverse-KL update. The new
+exact example finds opposite directions; neither is automatically welfare.
+
 Let K_a(o) be a fixed action-to-message channel, p=P(A=1), and
 M_p(o)=(1-p)K_0(o)+pK_1(o). Under an exact Bayesian hindsight teacher,
 
