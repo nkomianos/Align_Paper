@@ -18,17 +18,19 @@ tokenization mismatches, but a counterexample doubles variance. Thus no general
 improvement claim or paper green light. Native-decoder qualification completed:
 16 outputs, 124 forwards, 162 seconds; hashes, decoding and saved-logit sampling
 replay verified. Exact-option formatting was poor, not evidence of zero comprehension.
-The [stochastic SQuAD DEV](docs/SQUAD_COUPLING_DEV_20260904.md) is now running
-on the laptop: eight questions, 16 seeds, four sampling policies, two small models
-(1,024 completions). No efficacy result yet and no paid GPU queue.
+The [stochastic SQuAD DEV](docs/CPU_COUPLING_RESULT_20260904.md) completed on the
+laptop: eight questions,16seeds,four policies,two small models (1,024completions).
+Its descriptive F1 variance reduction is positive (~34% versus independent),
+but the larger-model GPU result below is negative. Overall evidence is mixed,
+not a paper green light; no coupling experiment is currently running.
 
 **Subsequent GPU result:** the larger Qwen3-4B / SmolLM2-1.7B comparison completed
 1,024 outputs in 84.33 seconds, with evidence retrieved and verified. Hierarchical
 F1 difference variance was 1.058x independent and 1.252x the simpler token-clock
 baseline; including measured cost, 1.084x and 1.328x. No practical win demonstrated;
 park this heuristic. See [result audit](docs/GPU_COUPLING_RESULT_AND_BASELINE_AUDIT_20260904.md).
-The CPU run above remains an independent developmental record, not a reason to
-ignore this negative result. Corrected UNDO training is the next GPU work stream.
+The CPU run above remains a separate developmental record, not a reason to
+ignore this negative result. Both are retained for interpretation.
 
 **Corrected UNDO training now complete:** [verified comparison](docs/UNDO_TRAINING_RESULT_20260904.md).
 On32 longest histories: no adaptation23, terminalSFT24, canonicaldistillation28,
