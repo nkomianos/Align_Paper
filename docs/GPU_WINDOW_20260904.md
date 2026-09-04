@@ -85,3 +85,9 @@ Python PID21147 verified live, 11,190 MiB GPU memory, weights loaded.
 Frozen budget: two epochs, batch4/evalbatch4, max4096tokens, lr1e-4,
 seed9047701, rank8 alpha16, three arms. DEV qualification precedes training.
 No qualification or training result was available at this timestamped check.
+
+Subsequent live check: DEV qualification passed. Canonical, padded and
+counterfactual controls each8/8; mean answer-choice probability mass
+0.9999999876. Terminal-SFT reached160/256updates, process21147 live. This clears
+the narrow setup prerequisite, not the intervention or paper criterion. Wait for
+all three arms and complete-manifest verification before comparing results.
