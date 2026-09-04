@@ -24,6 +24,15 @@ full-reverse-KL Hindsight updates. It does not establish human preference change
 welfare harm, free-form generation, or neural training dynamics. The next gate
 is finite-step shared-parameter learning; no GPU job is currently running.
 
+That shared-LoRA follow-up has now completed locally. Dynamic feedback creates
+near-total held-out separation (14/14 directions; median approximately1), while
+the fixed-feedback median separation is only approximately.02. However, the
+[frozen gate is negative](docs/HINDSIGHT_BIFURCATION_LORA_PROTOCOL_20260904.md)
+because one fixed-control pair reaches.171, above the prospectively fixed.10
+maximum. The result supports a large dynamic/control contrast but does not cleanly
+attribute every split to feedback performativity. Natural, uncalibrated starting
+policies are the next required test; no threshold is being relaxed post hoc.
+
 The [persistent-state mechanism check](docs/HINDSIGHT_LONGITUDINAL_MECHANISM_20260904.md)
 finds that symmetric preference copying plus direct report learning does **not**
 produce the assumed excess mean baseline-preference loss when adaptation closes

@@ -46,6 +46,27 @@ Prompting/Select-Compress-Reinvest close the obvious temporal routes, while
 FragFuse/MOSAIC/TEPA/GateMem/MemGhost/AuthBench occupy the obvious compositional
 memory and authority failures. No GPU time was spent on those closed directions.
 
+### Shared-LoRA follow-up
+
+The next prospectively frozen run replaced exact independent Bernoulli projection
+with finite rank-8 LoRA updates shared across prompts. Development-only training
+used four matched arms: dynamic and frozen report marginals, each initialized .01
+below or above the measured unstable point. All four completed64 updates locally
+(256 optimizer steps, 1,209.88seconds); confirmation prompts were held out.
+
+Dynamic plus-minus separation transferred in the predicted direction on14/14
+bistable confirmation contexts, with ordinary median .99981. Frozen-feedback
+ordinary median separation was .01719, but three pairs exceeded.10 and the maximum
+was.170681. Consequently the unchanged prospective decision is
+`LORA_BIFURCATION_SCREEN_NEGATIVE`. Do not relabel it based on the median contrast.
+
+PI interpretation: the dynamic effect is large and not erased by shared neural
+parameters, but this gate does not fully isolate it because fixed LoRA training
+also magnifies the artificial initial offset on a minority of contexts. The
+context-specific calibration additionally tests local stability rather than
+natural prevalence. A next run must use uncalibrated initial policies and a
+paired dynamic-minus-fixed estimand. No paper green light follows yet.
+
 ## Recording rules
 
 - Give each hypothesis and empirical stage a stable ID. Retried launches,
