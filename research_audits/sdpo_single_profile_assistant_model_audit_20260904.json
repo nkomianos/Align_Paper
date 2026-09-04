@@ -1,0 +1,108 @@
+{
+  "audit_type": "independent_assistant_model_audit",
+  "auditor": "hindsight_priority",
+  "source_manifest_sha256": "03b08fc8548cdf0e11bbb8a48b9f2f91e1ce824f00c71d1782db2dc76f969386",
+  "source_root": "retrieved/sdpo_single_profile_20260904T1045Z/sdpo_single_profile_calibration_retry_20260904T1040Z",
+  "rubric": "Frozen short/direct, everyday-accessible, conversational style; material unsupported entities/numbers, changed negation, contradictions or misleading omissions. No numerical word cutoff; third-person narration is not by itself formal. Null means substantive ambiguity, not failure or success.",
+  "method": "Read all sixteen source prompts and all forty-eight ordinary/explicit/teacher responses without using simulator feedback or pairwise scores to assign these labels. This is an assistant assessment, not a blinded human study; the condition names were visible.",
+  "protocol_deviation": "Actual policy responses were sampled rather than the intended greedy evaluation. Labels describe these realized responses only; this does not establish deterministic teacher quality or isolate conditioning from sampling variability.",
+  "approval": "No training approval. No threshold-driven reassignment of ambiguous cases.",
+  "cases": [
+    {
+      "index": 0, "id": "33fcaed6588fe8a8da172ee038dd0e68b2f500b6",
+      "ordinary": {"style_satisfactory": null, "material_content_error": false, "style_reason": "Understandable and reasonably compressed, but the concluding analytical framing about a tension sounds more like a formal synopsis than casual speech; borderline rather than plainly unsuitable.", "content_reason": "Preserves pay figures and the central predicted consequence of eliminating tips. It attributes the argument to the server rather than presenting the prediction as an established fact."},
+      "explicit": {"style_satisfactory": true, "material_content_error": true, "style_reason": "Direct, everyday wording and a compact explanation; the blunt description of feeling shafted is conversational.", "content_reason": "The last sentence makes higher meal prices and lower wages a consequence accepted by people entering service jobs. In the source those are part of a hypothetical abolition-of-tipping question, not a current consequence of job entry."},
+      "teacher": {"style_satisfactory": true, "material_content_error": null, "style_reason": "Straightforward short personal account with accessible pay examples.", "content_reason": "The claim about what people might prefer loosely resembles the source's rhetorical question, but dropping abolition of tipping and substituting a fair-wages contrast may materially change the argument. The degree of distortion is ambiguous."}
+    },
+    {
+      "index": 1, "id": "30d63f12e4e4b04b399bce4564ef95b0d8218737",
+      "ordinary": {"style_satisfactory": true, "material_content_error": null, "style_reason": "Clear short account of payment, disappearance and the desired repayment; no unexplained technical terms beyond the source topic.", "content_reason": "Saying the Twitter account was linked to a news story is imprecise: the source describes tracing its image to that story. It could be shorthand for that connection rather than a materially false assertion."},
+      "explicit": {"style_satisfactory": true, "material_content_error": true, "style_reason": "Readable, direct and conversational, despite slightly repeating the scam allegation.", "content_reason": "Invents a belief that fake mushroom spores were being sold. The source describes paying and receiving nothing, plus a separate Twitter scam; it does not identify counterfeit spores."},
+      "teacher": {"style_satisfactory": true, "material_content_error": true, "style_reason": "Short and plainly worded personal summary.", "content_reason": "Turns an image traced to a news story and a Twitter scam into posting fake news. That is a different allegation unsupported by the source."}
+    },
+    {
+      "index": 2, "id": "8c9f7cc53b8269c2a2dca219d3466aee94cce383",
+      "ordinary": {"style_satisfactory": true, "material_content_error": true, "style_reason": "Compact, clear description of the school difficulties and request for practical help; using third person is not itself a failure.", "content_reason": "Presents the social-life impact as already occurring, whereas the source fears a future effect. Test anxiety is also an inferred explanation rather than the source's stated diagnosis."},
+      "explicit": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Direct accessible statement of the difficulty and desired practical advice.", "content_reason": "Preserves ADD, test and assignment problems, existing understanding and the request for help. Describing difficulty staying on track does not necessarily contradict the author's claim to be organized."},
+      "teacher": {"style_satisfactory": false, "material_content_error": null, "style_reason": "Repeated statements that it is hard, not easy, tough and that the speaker is trying add unnecessary restatement rather than a concise summary.", "content_reason": "Adds a self-description as smart and broadens grade problems to life being affected. These are plausible paraphrases of confidence and worry, but are not directly established; materiality is uncertain."}
+    },
+    {
+      "index": 3, "id": "b414669e105683376f2e0e9a3b08442a1d7b10f1",
+      "ordinary": {"style_satisfactory": true, "material_content_error": true, "style_reason": "Direct first-person explanation with ordinary vocabulary and no unnecessary exposition.", "content_reason": "Changes what the agency misrepresented from the worker's abilities to the role. That changes the explanation for the firing, although the interview lie is correctly identified."},
+      "explicit": {"style_satisfactory": true, "material_content_error": true, "style_reason": "Short, plain and easy to follow.", "content_reason": "Changes the author's lie from having attended an interview to having received a job offer, and changes the appearance concern from employer desperation to the author's desperation."},
+      "teacher": {"style_satisfactory": true, "material_content_error": true, "style_reason": "Accessible compact narrative, with a little more background but no clear stylistic excess.", "content_reason": "Again says the author lied about a job offer rather than an interview, and frames the concern as appearing personally desperate. These alter the central event."}
+    },
+    {
+      "index": 4, "id": "108c0a9867889e44cf8d29906b6e98dc3851da0a",
+      "ordinary": {"style_satisfactory": true, "material_content_error": null, "style_reason": "Clear, warm and fairly compact account, not formal merely because it says author.", "content_reason": "Accurately describes the setting and family's reaction, but never explicitly says the author actually acknowledged coming out. The omission may obscure the story's central disclosure."},
+      "explicit": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Clear everyday summary with the brief family response capturing its light tone.", "content_reason": "Preserves the movie, stepfather's question, acknowledgment and easy family acceptance without inventing additional conduct."},
+      "teacher": {"style_satisfactory": true, "material_content_error": true, "style_reason": "Concise and conversational, although cruder than necessary. Content offensiveness alone is not used to change the frozen style label.", "content_reason": "Invents a specific physiological sexual response absent from the source's girl-crush and weak-at-the-knees description. This is a substantive unsupported personal detail."}
+    },
+    {
+      "index": 5, "id": "ad5a32f34b5067573400edb4dbae83d7ac433a67",
+      "ordinary": {"style_satisfactory": true, "material_content_error": true, "style_reason": "One readable, reasonably concise sentence with accessible language.", "content_reason": "Says the man needs to regain her confidence. The source concerns his own insecurity and uncertainty about her assurances, not her lost confidence in him."},
+      "explicit": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Simple concise description of insecurity and uncertainty.", "content_reason": "Captures the triggering comparison and later reassurance. It omits renewed Facebook contact, but the remaining statement is not misleading enough to call that omission a definite material error in a brief summary."},
+      "teacher": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Direct short personal account without technical or formal language.", "content_reason": "Preserves the comparison, apology, later reassurance and unresolved doubt. The omitted Facebook detail does not contradict the summarized core concern."}
+    },
+    {
+      "index": 6, "id": "d7524284f17ec0e1ac5b63795f5659a96bbd706f",
+      "ordinary": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Accessible explanation of the contrast between messaging and meeting in person; sufficiently compressed without an arbitrary length rule.", "content_reason": "Preserves reduced remote contact, enjoyable in-person friendship and uncertainty about the mother's assumption."},
+      "explicit": {"style_satisfactory": true, "material_content_error": null, "style_reason": "Plain and compact wording.", "content_reason": "Says texting and calling stopped, rather than becoming rare. This may be colloquial shorthand, but an absolute loss of contact would overstate the source."},
+      "teacher": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Short conversational account of the main contrast and complication.", "content_reason": "Preserves the reduced contact, continuing hangouts, empty-feeling texting and denial of being in love. The hangout sentence qualifies the broad phrase about barely communicating."}
+    },
+    {
+      "index": 7, "id": "3254ef7fa3b0e13f0cd115e2fa313f87a17adbdb",
+      "ordinary": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Straightforward compact description of the unanswered invitation and unusual silence.", "content_reason": "Captures the planned meeting, repeated texts and normal responsiveness. Feeling avoided is a reasonable description of the expressed suspicion, not an asserted fact about the friend's intent."},
+      "explicit": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Direct everyday wording and a clear reason the silence is puzzling.", "content_reason": "Accurately conveys multiple unanswered messages and the writer's expectation that the friend should not play games."},
+      "teacher": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Brief and conversational, with no unnecessary background.", "content_reason": "Preserves the unanswered follow-up and the writer's view that the behavior is unusual. The age-related judgment is the writer's opinion in the source."}
+    },
+    {
+      "index": 8, "id": "429e00397db25a7d83ff909e1da48af0a8b7aa8e",
+      "ordinary": {"style_satisfactory": true, "material_content_error": null, "style_reason": "Very clear, short summary of the relationship context and request.", "content_reason": "The phrase about not having had a romantic relationship likely refers to this pair, which is supported; read as a claim about the person's whole dating history, it is unsupported. The scope is ambiguous."},
+      "explicit": {"style_satisfactory": true, "material_content_error": true, "style_reason": "Short, accessible and conversational.", "content_reason": "Adds a requirement that the gesture not be too intense. The source asks for something especially meaningful and provides no such limiting preference."},
+      "teacher": {"style_satisfactory": false, "material_content_error": true, "style_reason": "Restates caring, wanting something special, uncertainty and wanting a thoughtful gesture in overlapping phrases rather than compressing the request.", "content_reason": "Invents an exact count of one sleepover. The source only says she has slept over before; no count is given."}
+    },
+    {
+      "index": 9, "id": "8cdbb18baf110d4d2dc81718beab80ff14753ff9",
+      "ordinary": {"style_satisfactory": true, "material_content_error": null, "style_reason": "Clear practical summary, using accessible fragments appropriate for the request.", "content_reason": "Conveys target price, quantity and willingness to decorate plastic. Saying the person cannot afford more may overstate reluctance to spend that amount, although the source also mentions budget constraints."},
+      "explicit": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Compact and direct while retaining the actionable shopping constraints.", "content_reason": "Correctly preserves approximate price, plastic acceptability, quantity and the more expensive option."},
+      "teacher": {"style_satisfactory": true, "material_content_error": true, "style_reason": "Readable concise description of the shopping request; third-person narration alone is not formal.", "content_reason": "Converts willingness to accept plastic into a preference for plastic and adds a causal rationale for that preference. This changes an actionable purchasing constraint."}
+    },
+    {
+      "index": 10, "id": "c97f8ecc7a9b81790fc37d4a370407606ed692b7",
+      "ordinary": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Short clear description of the problem and access/cost constraints.", "content_reason": "Faithfully conveys the student's belief that the stray has a broken leg and difficulty finding affordable care. It does not invent a confirmed veterinary diagnosis beyond the source's own description."},
+      "explicit": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Very direct and accessible without extra explanation.", "content_reason": "Preserves the injured stray and need for affordable treatment; omitted local detail does not alter that request."},
+      "teacher": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Brief ordinary-language personal summary.", "content_reason": "Preserves the same central request without an unsupported treatment recommendation."}
+    },
+    {
+      "index": 11, "id": "5ced2e8b03d7dafb1cfc7abf2458354639920f7c",
+      "ordinary": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Understandable concise explanation; the word infatuated alone does not make it technical or inaccessible.", "content_reason": "Preserves being a new senior, not knowing the girl and having limited opportunity to approach her. The class detail is awkwardly worded but not a definite material change."},
+      "explicit": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Simple direct statement of the social problem and request.", "content_reason": "Accurately conveys limited chances to talk and uncertainty about approaching her."},
+      "teacher": {"style_satisfactory": true, "material_content_error": null, "style_reason": "Short conversational summary ending in the actual question.", "content_reason": "Saying they only meet when the bell rings could imply existing interaction, while the source describes an opportunity to speak, not meetings already occurring. It could also mean simply crossing paths."}
+    },
+    {
+      "index": 12, "id": "ba485e124637619cb7ad9fda8f33a61ba2ded023",
+      "ordinary": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Accessible summary retaining why the book is wanted and why help is needed. No jargon beyond the source's dinosaur-dating topic.", "content_reason": "Preserves the first museum visit, curiosity, forgotten book title and Valentine's gift request."},
+      "explicit": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Plain language and a direct explanation of the request.", "content_reason": "Accurately captures the museum experience and search for a suitable explanatory book."},
+      "teacher": {"style_satisfactory": true, "material_content_error": null, "style_reason": "Clear personal summary with ordinary wording.", "content_reason": "Omits inability to remember the title and openness to suggestions, potentially obscuring why assistance is being requested. The remaining facts are accurate, so the materiality of that omission is ambiguous."}
+    },
+    {
+      "index": 13, "id": "9ba79f47fbbbd03b3b40382f939d92bef0e6454b",
+      "ordinary": {"style_satisfactory": null, "material_content_error": true, "style_reason": "Readable but somewhat report-like, with several successive descriptions of concern, criticism and accusation; whether that is sufficiently conversational is borderline.", "content_reason": "Attributes concern for the fiancé's safety to the fiancé. In the source the narrator expresses that concern, and the fiancé objects that the narrator neglects their own welfare."},
+      "explicit": {"style_satisfactory": true, "material_content_error": true, "style_reason": "Short clear account with the source's label retained in context.", "content_reason": "Again makes the fiancé the person concerned about his own safety, changing the direction of the initiating concern."},
+      "teacher": {"style_satisfactory": null, "material_content_error": true, "style_reason": "Understandable but uses a somewhat detached conflict synopsis rather than distinctly conversational phrasing; third person itself is not the reason for uncertainty.", "content_reason": "Repeats the reversal of who expressed concern about whose safety. This changes the interaction that prompted the request."}
+    },
+    {
+      "index": 14, "id": "9b97d7b9ca0f17e0b50a8cf060b3826d0dce0df0",
+      "ordinary": {"style_satisfactory": true, "material_content_error": true, "style_reason": "Short and intelligible; a common word such as unsustainable is not by itself an accessibility failure.", "content_reason": "States that four years of separation have already occurred. The source anticipates four future university years as too long for the relationship."},
+      "explicit": {"style_satisfactory": true, "material_content_error": null, "style_reason": "Clear and fairly compact account of the difficult choice.", "content_reason": "Avoids asserting that four years have already passed, but assigns the eight-hour distance to the universities rather than the current homes. The source does not clearly establish the campuses' separation."},
+      "teacher": {"style_satisfactory": true, "material_content_error": true, "style_reason": "Direct conversational explanation of the dilemma.", "content_reason": "Again describes difficulty maintaining the relationship over four years as if those years have occurred; the source concerns the prospective duration."}
+    },
+    {
+      "index": 15, "id": "b8ecda76e0e137234f5c0090720a3651b9261931",
+      "ordinary": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Plain, reasonably compressed explanation of the mixed signals and tentative interpretation.", "content_reason": "Keeps the possible fear of falling in love as the writer's suspicion, not an established explanation of her behavior."},
+      "explicit": {"style_satisfactory": true, "material_content_error": null, "style_reason": "Direct and conversational, with accessible short sentences.", "content_reason": "Adds advice to stay patient and give her space, which is absent from the text. This is an unsupported task addition rather than a clearly false factual claim, so material factual-error classification is ambiguous under the frozen rubric."},
+      "teacher": {"style_satisfactory": true, "material_content_error": false, "style_reason": "Clear concise account of the change, uncertainty and request for advice.", "content_reason": "Preserves uncertainty about the woman's motives and does not add a prescription or present the speculation as fact."}
+    }
+  ]
+}

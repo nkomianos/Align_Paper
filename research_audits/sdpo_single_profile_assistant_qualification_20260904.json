@@ -1,0 +1,148 @@
+{
+  "calibration_manifest_sha256": "03b08fc8548cdf0e11bbb8a48b9f2f91e1ce824f00c71d1782db2dc76f969386",
+  "reviewer_kind": "assistant_model_audit",
+  "original_satisfactory": {
+    "n": 6,
+    "successes": 4,
+    "rate": 0.6666666666666666
+  },
+  "original_unsatisfactory": {
+    "n": 0,
+    "successes": 0,
+    "rate": null
+  },
+  "ambiguous_judgments": [
+    [
+      "33fcaed6588fe8a8da172ee038dd0e68b2f500b6",
+      "ordinary"
+    ],
+    [
+      "33fcaed6588fe8a8da172ee038dd0e68b2f500b6",
+      "teacher"
+    ],
+    [
+      "30d63f12e4e4b04b399bce4564ef95b0d8218737",
+      "ordinary"
+    ],
+    [
+      "8c9f7cc53b8269c2a2dca219d3466aee94cce383",
+      "teacher"
+    ],
+    [
+      "108c0a9867889e44cf8d29906b6e98dc3851da0a",
+      "ordinary"
+    ],
+    [
+      "d7524284f17ec0e1ac5b63795f5659a96bbd706f",
+      "explicit"
+    ],
+    [
+      "429e00397db25a7d83ff909e1da48af0a8b7aa8e",
+      "ordinary"
+    ],
+    [
+      "8cdbb18baf110d4d2dc81718beab80ff14753ff9",
+      "ordinary"
+    ],
+    [
+      "5ced2e8b03d7dafb1cfc7abf2458354639920f7c",
+      "teacher"
+    ],
+    [
+      "ba485e124637619cb7ad9fda8f33a61ba2ded023",
+      "teacher"
+    ],
+    [
+      "9ba79f47fbbbd03b3b40382f939d92bef0e6454b",
+      "ordinary"
+    ],
+    [
+      "9ba79f47fbbbd03b3b40382f939d92bef0e6454b",
+      "teacher"
+    ],
+    [
+      "9b97d7b9ca0f17e0b50a8cf060b3826d0dce0df0",
+      "explicit"
+    ],
+    [
+      "b8ecda76e0e137234f5c0090720a3651b9261931",
+      "explicit"
+    ]
+  ],
+  "material_errors": [
+    [
+      "33fcaed6588fe8a8da172ee038dd0e68b2f500b6",
+      "explicit"
+    ],
+    [
+      "30d63f12e4e4b04b399bce4564ef95b0d8218737",
+      "explicit"
+    ],
+    [
+      "30d63f12e4e4b04b399bce4564ef95b0d8218737",
+      "teacher"
+    ],
+    [
+      "8c9f7cc53b8269c2a2dca219d3466aee94cce383",
+      "ordinary"
+    ],
+    [
+      "b414669e105683376f2e0e9a3b08442a1d7b10f1",
+      "ordinary"
+    ],
+    [
+      "b414669e105683376f2e0e9a3b08442a1d7b10f1",
+      "explicit"
+    ],
+    [
+      "b414669e105683376f2e0e9a3b08442a1d7b10f1",
+      "teacher"
+    ],
+    [
+      "108c0a9867889e44cf8d29906b6e98dc3851da0a",
+      "teacher"
+    ],
+    [
+      "ad5a32f34b5067573400edb4dbae83d7ac433a67",
+      "ordinary"
+    ],
+    [
+      "429e00397db25a7d83ff909e1da48af0a8b7aa8e",
+      "explicit"
+    ],
+    [
+      "429e00397db25a7d83ff909e1da48af0a8b7aa8e",
+      "teacher"
+    ],
+    [
+      "8cdbb18baf110d4d2dc81718beab80ff14753ff9",
+      "teacher"
+    ],
+    [
+      "9ba79f47fbbbd03b3b40382f939d92bef0e6454b",
+      "ordinary"
+    ],
+    [
+      "9ba79f47fbbbd03b3b40382f939d92bef0e6454b",
+      "explicit"
+    ],
+    [
+      "9ba79f47fbbbd03b3b40382f939d92bef0e6454b",
+      "teacher"
+    ],
+    [
+      "9b97d7b9ca0f17e0b50a8cf060b3826d0dce0df0",
+      "ordinary"
+    ],
+    [
+      "9b97d7b9ca0f17e0b50a8cf060b3826d0dce0df0",
+      "teacher"
+    ]
+  ],
+  "informative_strata": false,
+  "descriptive_engineering_thresholds_met": false,
+  "approval": false,
+  "scientific_decision": null,
+  "scope": "Supplied reviewer labels are not independently established ground truth. Ambiguities remain explicit and block automatic threshold satisfaction. Pairwise judge consistency and root review still required; no training approval or paper decision.",
+  "judgments_sha256": "93dd34ba364862d8eb5c6b5acb5de1f9c739d091d81b8d0236960407e43860ab"
+}

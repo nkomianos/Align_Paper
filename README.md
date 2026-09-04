@@ -11,7 +11,18 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
-### Current GPU window — September 4, approximately 10:10 UTC
+### Current GPU window — September 4, 15:45 UTC
+
+No GPU process remains active. Completed experiment evidence and trained adapters
+are secured locally; no expansion is queued. The latest
+[SDPO calibration decision](docs/SDPO_SINGLE_PROFILE_CALIBRATION_DECISION_20260904.md)
+withholds training: this assay does not establish an informative improvement
+stratum and has factual-preservation problems. This is not a paper-hypothesis
+refutation. Further CPU-only candidate investigation can continue without this
+instance. The public video-removal release audit found 180 complete triples,
+but has not yet established valid effect-region ground truth or a paper result.
+
+The paragraphs below retain the sequence of earlier checks in this window.
 
 Subsequent [motion-interface diagnostic](docs/EP_INTERFACE_DIAGNOSTIC_RESULT_20260904.md)
 completed and is secured locally: native video2/6, ordered images2/6, first-frame
@@ -22,8 +33,8 @@ the isolated-environment repair passed native template checks and a fresh-root
 retry completed16 cases in284.87seconds, with zero parameter updates. Evidence
 is secured and receipt-verified locally. The
 [configuration audit](docs/SDPO_GENERATION_CONFIG_FORENSIC_20260904.md) establishes
-sampled rather than intended greedy execution; factual/style review is pending,
-and training is not approved. The GPU is currently idle during that review.
+sampled rather than intended greedy execution; factual/style review is complete,
+and training is not approved. The GPU is idle.
 
 The [read-only checkpoint diagnostic](docs/SDPO_FROZEN_FORWARD_DIAGNOSTIC_20260904.md)
 completed all 192 forwards in 21.64 seconds, without training. Its complete
