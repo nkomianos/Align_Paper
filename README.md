@@ -11,13 +11,16 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
-### Current GPU window — September 4, approximately 09:05 UTC
+### Current GPU window — September 4, approximately 09:40 UTC
 
-The GH200 is **running** the frozen both-pair coupling clarification:
-40 new articles, 32 new seeds, four sampling policies, 20,480 completions.
-Both original model pairs use the same GPU implementation. This is one bounded
-clarification of mixed evidence, not a paper expansion or a retroactive pass.
-See [frozen protocol](docs/COUPLING_CLARIFICATION_FROZEN_PROTOCOL_20260904.md).
+The GH200 is **running SDPOv3's frozen positive control**. The preceding
+20,480-output coupling clarification completed and is secured locally:
+[verified results](docs/COUPLING_CLARIFICATION_RESULT_20260904.md).
+The early small-pair gain did not replicate strongly; the method is ~10% worse
+than token-clock on the small pair after cost, with uncertain modest gains on
+the larger pair. Park this heuristic, without claiming its true effect is zero.
+An invalid prepared-manifest self-entry is disclosed; all substantive inputs
+and separately pinned manifest bytes verified, including fresh reconstruction.
 Earlier “idle”, “no queue”, and “safe to terminate” statements below describe
 their historical runs, **not the current instance**. Preserve this instance until
 the active work and its evidence transfer finish; target evidence cutoff is
