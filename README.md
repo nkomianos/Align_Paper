@@ -11,9 +11,14 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
-### Current GPU window — September 4, approximately 09:40 UTC
+### Current GPU window — September 4, approximately 09:50 UTC
 
-The GH200 is **running SDPOv3's frozen positive control**. The preceding
+SDPOv3 completed: exact format success16/64 →0/64, factual correctness61/64 →64/64.
+All64 updates and checkpoints are verified and saved locally. This shared-user
+pilot failed, not the broader SDPO method or causal hypothesis; see
+[result and scope](docs/SDPO_V3_RESULT_20260904.md). No feedback-corruption arm
+is queued. The GPU was checked idle after completion; read-only diagnosis is
+ongoing and all completed experiments' unique evidence is secured. The preceding
 20,480-output coupling clarification completed and is secured locally:
 [verified results](docs/COUPLING_CLARIFICATION_RESULT_20260904.md).
 The early small-pair gain did not replicate strongly; the method is ~10% worse
