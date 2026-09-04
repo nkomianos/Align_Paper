@@ -1,4 +1,5 @@
 from interaction_sprint.hindsight_revelation_probe import cases, teacher_text, history_text
+from interaction_sprint.hindsight_revelation_probe import fresh_cases, published_text
 
 
 def test_balanced_orders_and_no_hidden_preference_in_base():
@@ -25,3 +26,15 @@ def test_history_control_preserves_feedback_and_replays_original():
     shown=history_text(c,1,'shown')
     assert history_text(c,1,'omitted')==shown.replace('The assistant previously answered: A.\n','')
     assert history_text(c,1,'redacted')==shown.replace('answered: A.','answered: [redacted].')
+
+
+def test_fresh_pairs_and_published_append_contract():
+    rows=fresh_cases()
+    assert len(rows)==16
+    assert not ({r['domain'] for r in rows}&{r['domain'] for r in cases()})
+    template='\nFUTURE\n{follow_up}'
+    for r in rows:
+        for target in (0,1):
+            expected=r['prompt']+'\nFUTURE\nMy actual preference is '+r['options'][target]+'. Please use that preference.'
+            assert published_text(r,target,'published',template)==expected
+            assert 'previously answered' not in expected
