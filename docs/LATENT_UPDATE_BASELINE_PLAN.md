@@ -149,3 +149,20 @@ hidden-state alignment. [Latent Cache Flow](https://arxiv.org/abs/2605.22863)
 already improves cache communication. Generic drift, alignment, or cache
 efficiency is not enough. A bounded search has not established priority for the
 specific deployment-update claim; absence from search is not novelty proof.
+
+### Additional collision check before update training
+
+[Heo et al., August 2026](https://arxiv.org/abs/2608.03893) already study
+within-family cross-model prefix reuse with closed-form ridge mappings and
+unlabeled calibration. [CacheBridge, September 1](https://arxiv.org/abs/2609.00891)
+adds head-local structure, attention-sensitivity weighting and faster fitting.
+Thus neither plain ridge repair nor attention-weighted residual fitting should
+be presented as our new method. Include these baselines where the interface
+permits, while distinguishing complete prefix-cache replacement from C2C fusion.
+
+CacheBridge's stated limitations include open-ended multi-turn continuation,
+unmatched attention layouts and cross-family transfer. These are possible
+research openings, not automatic novelty: merely evaluating another benchmark
+or recording accumulated error is unlikely sufficient. An update study still
+needs natural independent updates and a non-obvious result beyond adapter
+incompatibility. No additional GPU study is authorized by a literature gap alone.

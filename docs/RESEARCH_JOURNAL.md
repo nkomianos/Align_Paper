@@ -649,3 +649,13 @@ released-C2C baseline (512 calls; 128 public validation examples, four arms;
 PID 15457). Upstream imports pass in the isolated environment. No update
 training is launched. Follow-up design remains conditional on functional
 controls and a meaningful baseline signal. See the live queue for exact roots.
+
+## 2026-09-04 — Stronger nearby cache-transfer baselines located
+
+Primary-source search located [cross-model cache transfer](https://arxiv.org/abs/2608.03893)
+and the September 1 [CacheBridge paper](https://arxiv.org/abs/2609.00891).
+These occupy closed-form unlabeled alignment and attention-sensitive repair;
+do not claim either as a new corrective mechanism. CacheBridge explicitly
+leaves open-ended multi-turn quality outside its evaluation, but that gap alone
+does not green-light a new paper. Added the collision and interface distinction
+to the conditional update plan. The frozen C2C baseline remains unchanged.
