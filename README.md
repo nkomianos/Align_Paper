@@ -11,6 +11,15 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
+**Latest candidate check:** a [cached-verification operator audit](docs/CACHE_VERIFICATION_AUDIT_20260904.md)
+finds that exact per-layer diagonal correction does not ensure end-to-end
+independence from a hidden candidate: information can return through other
+positions at later layers. An analytic witness and random-network depth controls
+are replay-verified; 13 tests pass. This is not an official decoder reproduction
+or a pretrained-model performance result. A local trained-model diagnostic is
+the next step, not an active GPU queue. The [diffusion scout](docs/DIFFUSION_SCOUT_20260904.md)
+records close prior work and the limited novelty claim. No paper green light.
+
 **Latest workflow audit:** [protocol events versus agent decisions](docs/AGENTUQ_DECISION_EVENTS_20260904.md)
 compares held-out categorical baselines on 19,929 events / 6,500 agent decisions.
 Protocol transitions explain much predictability, but agent-history information

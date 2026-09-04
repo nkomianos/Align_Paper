@@ -1249,3 +1249,35 @@ Source/input hash and same-implementation replay pass,26 relevant tests pass.
 Positive synthetic control confirms decision-only metric can detect genuine
 context information. All earlier artifacts preserved; no live CPU/GPU job.
 Goal remains active and unmet, with no genuine blocker to further research.
+
+## 2026-09-04 — Diffusion scout and cached-verification independence
+
+The immediately preceding user-facing turn was a status response, not research
+progress: the host was checked idle and no job was launched. This continuation
+made new progress through primary-source triage and a completed CPU operator
+audit. No paid GPU was resumed after telling the user it was safe to terminate.
+
+Broad order-inconsistency, sampler-bias, confidence-stability and diffusion
+uncertainty ideas collide with existing work. Sources and decisions are saved
+in docs/DIFFUSION_SCOUT_20260904.md. A narrower question examines whether exact
+layer-local diagonal correction implies global hidden-candidate independence.
+
+New independent implementation demonstrates it need not: a two-layer scalar
+residual-attention witness gives seed value a(n-1)/n^2, versus zero for fresh
+masking. Candidate information travels through non-seed hidden states. Direct
+row recomputation agrees with the post-hoc formula, so this is not a claim that
+the single-layer algebra is wrong. Eight random pre-normalized attention stacks
+show zero sensitivity at depth one, nonzero sensitivity at depths two/four/eight.
+The two seed-set variants are paired, not sixteen independent networks.
+
+No pretrained language task, actual decoding outcome, or official COVER code
+was tested. Cache information flow is an established architectural concern;
+XLNet/SimSD and shadow-stream methods must be distinguished. This supports a
+local trained-model diagnostic only, not a paper acceptance or method claim.
+
+Root artifacts/cache_verification_audit_v1, manifest
+5090b532b24fbdf341138ef75891af92071d179191ca321579b0fe59e52b1621.
+Source/result hashes and deterministic same-implementation replay pass; 13 tests
+pass including analytic and single-layer controls, preservation and tamper tests.
+No model downloaded and no process remains. Goal active and unmet. Next exact
+scope and caveats: docs/CACHE_VERIFICATION_AUDIT_20260904.md.
