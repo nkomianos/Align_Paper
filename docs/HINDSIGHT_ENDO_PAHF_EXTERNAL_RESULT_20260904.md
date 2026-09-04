@@ -35,3 +35,10 @@ non-handwritten tasks and provides a close PAHF baseline. It does not turn
 PAHF's exogenous persona update into evidence of assistant-induced influence.
 The external neural assay remains conditional on the synthetic Qwen3.5-9B
 gradient and policy-learning gates.
+
+## Supersession note
+
+The later 0.6B interface rehearsal exposed displayed-label imbalance in this
+unpermuted split. V1 remains valid construction evidence, but the
+[label-counterbalanced v2](HINDSIGHT_ENDO_PAHF_V2_RESULT_20260904.md) supersedes
+it for all future model endpoints.

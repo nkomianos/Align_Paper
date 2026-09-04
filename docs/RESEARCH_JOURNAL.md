@@ -2070,3 +2070,21 @@ memory-amplified-sycophancy claims are occupied. The surviving claim is the
 narrow conjunction of immediate-log expression/transition ambiguity, its effect
 on next-turn self-distillation, sparse delayed identification, and a neural
 correction.
+
+## 2026-09-04 -- EndoPAHF label shortcut removed prospectively
+
+The 0.6B rehearsal revealed that 19/32 v1 immediate targets occupied displayed
+position D and that errors were strongly target-dependent. Before running a
+capable model, froze commit `4b99b2e` and counterbalanced each already-selected
+base task through all four cyclic option rotations. This does not change base
+selection or inspect a confirmation model endpoint.
+
+The v2 read-only replay verifier returns
+`ENDO_PAHF_V2_COUNTERBALANCED_INPUTS_REPLAY_VERIFIED`; evidence root
+`artifacts/hindsight_endo_pahf_external_20260904_v2`, manifest SHA-256
+`915dbc068573c50990c42db8aa48a1ba5158f12c4684cea4d0d10727d151e5c2`.
+Counts are 512 learning, 384 development and 1,024 confirmation variants. Each
+old and new displayed target occurs exactly 128, 96 and 256 times per label in
+the respective splits. All records have unique IDs, zero ordinary-log world
+mismatches, and differing delayed probes. V2 supersedes v1 for future neural
+endpoints; v1 and its rehearsal remain preserved.

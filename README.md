@@ -88,6 +88,14 @@ old delayed-expression extraction was only 23/32. The A/B/C/D mass was above
 failure. Do not use 0.6B as a scientific endpoint; the external assay requires
 a stronger model and remains downstream of G0/G1.
 
+Because that rehearsal also exposed an imbalanced displayed-label distribution,
+the unrun external assay was prospectively superseded by
+[EndoPAHF v2](docs/HINDSIGHT_ENDO_PAHF_V2_RESULT_20260904.md). Each selected
+base task now appears under all four cyclic option rotations: 512 learning, 384
+development and 1,024 reserved confirmation variants. Old and new targets are
+exactly balanced over A/B/C/D in every split, with zero matched-log violations.
+This closes a position-bias shortcut before any capable-model endpoint.
+
 ### CPU-only follow-up
 
 **Positive Hindsight mechanism screen:** the prospectively frozen
