@@ -76,6 +76,18 @@ than evidence about assistant-induced change. A PAHF-derived
 expression/transition assay belongs after a qualified synthetic neural G0/G1;
 the source audit is not another positive model result.
 
+The deterministic [EndoPAHF preparation](docs/HINDSIGHT_ENDO_PAHF_EXTERNAL_RESULT_20260904.md)
+is now sealed and replay-verified: 128 learning, 96 development and 256 untouched
+confirmation examples use identical public tasks/options and matched immediate
+logs in expression and transition worlds, with different delayed persistent
+targets. This is a construction result, not user-influence evidence. A local
+[Qwen3-0.6B interface rehearsal](docs/HINDSIGHT_ENDO_PAHF_INTERFACE_RESULT_20260904.md)
+correctly refused qualification: immediate/new-target extraction was 30/32 but
+old delayed-expression extraction was only 23/32. The A/B/C/D mass was above
+.995 in every aggregate condition, isolating a small-model semantic/option-bias
+failure. Do not use 0.6B as a scientific endpoint; the external assay requires
+a stronger model and remains downstream of G0/G1.
+
 ### CPU-only follow-up
 
 **Positive Hindsight mechanism screen:** the prospectively frozen

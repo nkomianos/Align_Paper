@@ -2028,3 +2028,45 @@ v2 to counts/digests before using its result. V2 verifies with decision
 `51f26d741d078e509b38105ff15cc996286ee031eef8941c5e80f5878d51c146`.
 This qualifies an EndoPAHF external surface after the synthetic neural gate; it
 is not model evidence or a paper green light.
+
+## 2026-09-04 -- EndoPAHF natural surface sealed
+
+Converted the verified PAHF shopping pairs into a deterministic external assay
+without opening its future model endpoint. The sealed evidence root
+`artifacts/hindsight_endo_pahf_external_20260904_v1` contains 128 learning, 96
+development and 256 disjoint confirmation examples. Every record has identical
+ordinary assistant/follow-up text in constructed expression and transition
+worlds, while the delayed neutral probe returns the old versus new persistent
+target. Every selected split includes all 12 ordered A/B/C/D transitions.
+
+The read-only replay verifier returns `ENDO_PAHF_INPUTS_REPLAY_VERIFIED`;
+`MANIFEST.json` SHA-256 is
+`ee2d023c5d285022a1f7220e680f57fcf4a3aea76d59e5202426b0b9c13e56e0`.
+This is a natural-surface construction, not evidence that real users implement
+either constructed mechanism. It is reserved until synthetic neural G0/G1
+qualifies.
+
+## 2026-09-04 -- EndoPAHF 0.6B interface rehearsal unqualified
+
+Prospectively froze a local CPU-only extraction check at commit `3f02114`, then
+ran cached Qwen3-0.6B on 32 deterministic development cases in immediate,
+delayed-expression and delayed-transition contexts. The evidence root
+`artifacts/hindsight_endo_pahf_interface_cpu_20260904_v1` passes its read-only
+verifier; `MANIFEST.json` SHA-256 is
+`242c940b5814e5845ebf8fef7956e52204d0c6ed7452e5dff43a0ec28d24d9f3`.
+
+Immediate and delayed-transition targets were correct in 30/32 cases with mean
+normalized target probability .8994. Delayed-expression targets were only
+23/32 with mean .7067. Mean full-vocabulary A/B/C/D mass remained above .995 in
+all conditions, so this is semantic/option bias rather than a tokenization
+failure. Decision `CPU_REHEARSAL_ONLY_INTERFACE_UNQUALIFIED`: do not use the
+0.6B model as a scientific endpoint and do not relax the threshold. Preserve
+confirmation. The stronger-model synthetic gradient G0 remains first in the
+next GPU queue.
+
+The novelty scope was also tightened against *AI Value Alignment for Evolving
+Social Norms* and *Recalling Too Well*. Broad co-adaptation/value-lock-in and
+memory-amplified-sycophancy claims are occupied. The surviving claim is the
+narrow conjunction of immediate-log expression/transition ambiguity, its effect
+on next-turn self-distillation, sparse delayed identification, and a neural
+correction.

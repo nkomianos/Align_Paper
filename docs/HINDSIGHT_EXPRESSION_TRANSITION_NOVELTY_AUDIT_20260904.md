@@ -81,6 +81,17 @@ beyond the constructed binary example.
   that performative feedback can amplify LLM bias, but its human feedback is an
   imposed group-sampling rule; it does not infer whether a next user message is
   expression or persistent state transition.
+- [AI Value Alignment for Evolving Social Norms](https://arxiv.org/abs/2607.18506)
+  already models bidirectional user/assistant value dynamics, AI influence,
+  value lock-in and normative mode collapse. It occupies a broad “systems and
+  users shape one another” story. Its object is population-level value dynamics,
+  not identification from an immediate user message or a correction to
+  next-turn language-model learning.
+- [Recalling Too Well](https://arxiv.org/abs/2606.10949) evaluates and mitigates
+  sycophancy amplified by preference memories. It occupies a broad claim that
+  preference extraction and memory can reinforce agreement. It does not make
+  action-caused transient expression observationally equivalent to a persistent
+  preference transition or identify either mechanism with delayed probes.
 - [Performative Prediction](https://proceedings.mlr.press/v119/perdomo20a.html),
   [stateful performative prediction](https://proceedings.mlr.press/v151/brown22a.html),
   and [Performative Power](https://arxiv.org/abs/2203.17232) already supply the
@@ -135,3 +146,9 @@ replace another hand-written prompt sweep. It must construct observationally
 matched expression and transition mechanisms on the same public tasks, retain
 PAHF as a baseline, and use a delayed neutral probe. Do not report PAHF's
 exogenous phase change as assistant-induced influence.
+
+That deterministic EndoPAHF construction is now complete and replay-verified,
+but no model has been trained on it. A Qwen3-0.6B extraction rehearsal failed
+its frozen capability threshold specifically on old B/C targets; this is a
+warning to capability-qualify the stronger external model, not evidence for or
+against the causal hypothesis.
