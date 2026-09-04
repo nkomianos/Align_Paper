@@ -1220,3 +1220,32 @@ adjacent verified receipt. Full source/input hashes and deterministic replay
 pass; no independent implementation claim. Twenty-one relevant tests pass,
 including future-suffix/simulator-reasoning invariance and held-out-label test.
 All evidence preserved. No paid GPU work or live local process; goal unmet.
+
+## 2026-09-04 — Decision-only workflow prediction audit
+
+Prior turn was progress. Implemented and completed four classical prediction
+scopes in each of six public-data cells, holding out entire tasks. 19,929 events,
+6,500 agent decisions. Fit unigram/conditional counts with fixed .5 smoothing,
+train-only alphabets and unseen-context backoff. Content/arguments/outcomes are
+not inputs. No agent execution or GPU. This is a new analysis, not new rollouts.
+
+All-event log-loss gains range .966–1.401 bits/target. Agent-only prediction
+from previous full event gains .056–.296 bits with zero modal accuracy gains.
+But previous-agent context yields real gains in retail/telecom. Kimi retail
+assistant accuracy44.78% ->58.27%, telecom65.31% ->75.42%; conditional tool-name
+prediction improves all cells. Do not claim all workflow predictability is
+protocol plumbing. Different targets have different entropy; no causal
+decomposition inferred from across-scope differences.
+
+Docs/AGENTUQ_DECISION_EVENTS_20260904.md credits Automata from Agent Traces,
+which already discusses harness-driven structure and higher-order context.
+No published method exactly reproduced, no semantic/tool-argument correctness
+or intervention utility established. Park generic structural-monitor and
+blanket artifact-critique paper framings; these remain ordinary useful controls.
+
+Root artifacts/agentuq_decision_events_v1 and adjacent verified receipt,
+manifest5fa18dacae9bc7bbb4776fee10c282a86370d0abd655ff6feba06f83a7210ea7.
+Source/input hash and same-implementation replay pass,26 relevant tests pass.
+Positive synthetic control confirms decision-only metric can detect genuine
+context information. All earlier artifacts preserved; no live CPU/GPU job.
+Goal remains active and unmet, with no genuine blocker to further research.

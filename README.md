@@ -11,6 +11,13 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
+**Latest workflow audit:** [protocol events versus agent decisions](docs/AGENTUQ_DECISION_EVENTS_20260904.md)
+compares held-out categorical baselines on 19,929 events / 6,500 agent decisions.
+Protocol transitions explain much predictability, but agent-history information
+still improves tool-choice prediction. Neither a generic workflow predictor nor
+a blanket artifact critique is a new-paper lead. Results replay-verified,
+26 relevant tests pass, no GPU work resumed.
+
 **Latest prefix test:** [observable execution telemetry](docs/AGENTUQ_PREFIX_TELEMETRY_20260904.md)
 has been evaluated at fixed 2/4/8-action clocks. It improves Brier over both
 simple baselines in 5/18 settings (GPT telecom eight-action AUROC .573 -> .700),
