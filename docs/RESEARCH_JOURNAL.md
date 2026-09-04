@@ -1189,3 +1189,34 @@ Initial calibrated v1 retained; validation hardened against fractional-label
 truncation before identical-result v2. Seventeen relevant tests pass, including
 held-out-label-change invariance. Same-implementation replay, not external
 replication. No active process remains. No paper expansion; goal still unmet.
+
+## 2026-09-04 — Observable-prefix telemetry and close prior collision
+
+Prior turn made progress through matched-task calibration. This turn implemented
+and completed 18 model/domain/fixed-clock comparisons on existing public data.
+Clocks are 2/4/8 generated assistant actions plus their immediate tool responses,
+not fractions of future trajectory length. No simulator reasoning or terminal
+summary enters features. Standard length/tool-count logistic baseline versus
+eight-feature execution telemetry, five task-held-out folds, train-only scaling.
+
+Telemetry beats baseline Brier in 6/18 cells, both baseline and constant in 5/18.
+GPT telecom at eight actions: AUROC .57256 -> .69992, Brier .24712 -> .21836;
+103 still-running traces, 54 failures. Kimi retail at four: .54918 -> .62092.
+No robust cross-setting improvement. Kimi telecom eight-action .744 AUROC has
+only three failures, so not useful evidence for a broad claim. Full table saved
+in docs/AGENTUQ_PREFIX_TELEMETRY_20260904.md; no tests of intervention utility.
+
+Primary-source review finds direct priors: Automata from Agent Traces
+(2608.23670) already covers structural prefix monitors; Critic Experience Bank
+(2607.12397) covers outcome-informed confidence; Accurate Failure Prediction
+Does Not Imply Effective Prevention (2602.03338) covers recovery/disruption
+and pilot decisions. Do not claim these broad ideas as new contributions.
+Next candidate measurement: agent-choice prediction versus harness-event
+prediction, with novelty still unestablished. No expansion job prepared/launched.
+
+Root artifacts/agentuq_prefix_v1, manifest
+fbbb789c27c9bfe407c11f653d7bfb2d54118f624a10ec0e2343d3fd8fa048e5,
+adjacent verified receipt. Full source/input hashes and deterministic replay
+pass; no independent implementation claim. Twenty-one relevant tests pass,
+including future-suffix/simulator-reasoning invariance and held-out-label test.
+All evidence preserved. No paid GPU work or live local process; goal unmet.

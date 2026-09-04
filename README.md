@@ -11,6 +11,13 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
+**Latest prefix test:** [observable execution telemetry](docs/AGENTUQ_PREFIX_TELEMETRY_20260904.md)
+has been evaluated at fixed 2/4/8-action clocks. It improves Brier over both
+simple baselines in 5/18 settings (GPT telecom eight-action AUROC .573 -> .700),
+but not consistently. Close structural-monitor and intervention-value papers
+already exist; no generic monitor paper expansion is justified. Twenty-one
+relevant tests pass; artifacts replay-verified. No GPU resumed.
+
 **Latest matched-task follow-up:** a [cross-model selection audit](docs/AGENTUQ_MATCHED_SELECTION_20260904.md)
 has run on the 556 public traces, with verified task/protocol matching and
 task-held-out logistic calibration. Ordinary uncertainty features do not improve
