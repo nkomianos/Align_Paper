@@ -47,8 +47,11 @@ validity, hindsight/anchor feedback, and dialogue-retraction residue. Twelve Mot
 MP4s are local: 11 decode fully, including one cartoon; the remaining clip is
 quarantined. These are development/media-audit examples, not a held-out result.
 With `PYTHONPATH` set to `src`, run `python scripts/check_research_queue.py` to
-verify prepared bytes without connecting to a GPU. No model-update robustness experiment has
-been run or implemented yet; LC0 only establishes its communication prerequisite.
+verify prepared bytes without connecting to a GPU. No model-update robustness
+experiment has been run. A sender-training/qualification stage is implemented
+and CPU-tested, with disjoint data prepared; the paired interface/repair stage
+is still unimplemented. See the [natural-update protocol](docs/C2C_NATURAL_UPDATE_PILOT.md).
+LC0 only tests the communication prerequisite.
 
 The [five-idea PI review](docs/USER_IDEA_REVIEW_20260903.md) conditionally prioritizes
 **Hindsight Is Not Counterfactual** and **Dialogue Retractions as Algebra**.

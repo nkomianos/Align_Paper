@@ -1,8 +1,9 @@
 # Latent-interface update study: conditional baseline plan
 
-Status: design and provenance preflight only. No sender update trained, no C2C
-weight loaded, no paper-level go. Current nonce-channel DEV is a separate apparatus
-test; passing it does not reproduce a published method or establish novelty.
+Status: released-C2C inference completed and secured; post-hoc scoring diagnosis
+shows a useful interface, but the original strict-format gate failed. No sender
+update trained and no paper-level go. The nonce-channel DEV was a separate
+apparatus test, not a published-method reproduction or novelty result.
 
 ## Claim worth testing, not an assumed result
 
@@ -69,9 +70,10 @@ This used local torch 2.11.0+cpu / Transformers 5.6.2, not the published full-mo
 environment. It tests one projection module only: no receiver or sender model
 loaded, no natural-language evaluation, and no inference-time cache hooks tested.
 The key gate is closed and value gate open for this layer in eval mode; a closed
-learned gate is not a loading failure. Full baseline inference remains pending.
+learned gate is not a loading failure. Full baseline inference subsequently
+completed; see the README and journal for results and the separate scoring audit.
 
-### Frozen next inference baseline
+### Frozen inference baseline (now completed; original contract preserved)
 
 `scripts/run_c2c_baseline_dev.py` and `scripts/verify_c2c_baseline_dev.py` define
 512 calls: the 128 prepared questions in receiver-only, sender-only, released
@@ -139,6 +141,9 @@ extra communication loss with sender accuracy within a prespecified retention
 margin, and recovery of >=75% of loss on held-out tasks with an end-to-end
 efficiency advantage. These thresholds do not ensure novelty or acceptance.
 Training is not launch-ready until the previous items and protocol are complete.
+The [Stage A training/qualification implementation](C2C_NATURAL_UPDATE_PILOT.md)
+now exists and has CPU tests. The matched text comparator is implemented but
+unrun; the paired update-interface/repair stage still needs implementation.
 
 ## Novelty boundary
 

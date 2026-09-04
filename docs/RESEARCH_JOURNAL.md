@@ -688,3 +688,53 @@ not novelty or a deployment-update finding. No update training is justified
 by this result alone. Next work is the text-transfer baseline and a controlled
 natural-update protocol. All GPU jobs have exited and evidence is secured;
 the completed-run heartbeat is paused while offline preparation continues.
+
+## 2026-09-04 — Offline comparator and natural sender-update implementation
+
+No GPU job was launched. The user has termination clearance, and the paid host
+was confirmed idle before this work. The earlier wording of a "queue" conflated
+executable jobs with conditional design entries; these are now explicitly
+separated in the README and pilot protocol. No paper viability claim follows.
+
+Implemented the prospective two-stage text comparator: 128 questions, 256
+generations, pinned sender/receiver and upstream prompt structure. It records
+the generated background and exact transfer conversation and charges both
+generation stages. A fixed explicit-label scorer accepts letter-plus-option
+answers without interpreting arbitrary prose. It will rescore the preserved
+historical arms identically; the original strict report remains untouched.
+Full verifier-path tests use synthetic T2T records against the real saved
+baseline, clearly marked test fixtures, not model results. They catch duplicate
+outputs, altered message transfers, bad caps, NaN timings and wrong datasets.
+
+Prepared and independently reconstructed four disjoint public-data partitions:
+1,024 update-training, 128 qualification, 128 repair-calibration, 256 final-eval.
+The 128 old baseline questions are excluded by ID and normalized content.
+Preparation manifest SHA-256:
+`ad945cc2588809b6e94e43fdbd46f81159d8acc66dd3339621a0069c4ecd7af6`.
+Read-only report `artifacts/c2c_update_data_audit_v1.json` confirms exact
+reconstruction from saved Parquet rows and answer-key alignment. No model
+evaluated any new partition; public pretraining contamination remains possible.
+
+Implemented Stage A of the natural-update pilot, including ordinary attention
+LoRA training, prompt/padding masking, independent fixed seeds, no-op save/load,
+archived initial/middle/final adapters, merged model export, and sender-only
+qualification. Selection depends on sender retention and choice cross-entropy,
+never bridge degradation. Both seeds must qualify; there is no automatic
+learning-rate/checkpoint sweep. See `docs/C2C_NATURAL_UPDATE_PILOT.md` for exact
+recipe, limits and commands. The paired interface/repair Stage B is still
+unimplemented and must be frozen before Stage A GPU launch.
+
+Engineering evidence: 35 relevant tests pass on local torch 2.11.0+cpu /
+Transformers 5.6.2. Seven training-core tests also pass in an isolated local
+Transformers 4.52.4 environment, including a tiny native Qwen3 train, adapter
+merge, safe-weight export and reload. Base weights remain frozen during adapter
+training; accumulation matches full-batch gradients; all examples are covered.
+An initial bit-exact output reload assertion exposed a 3.7e-8 float32 difference
+from attention backend selection. The test now fixes the backend, checks saved
+weights bit-exactly, and compares outputs at float32 numerical tolerance. This
+is a test correction, not a changed scientific threshold.
+
+JUnit reports: `artifacts/c2c_implementation_checks_v1.xml` and
+`artifacts/c2c_tf452_cpu_checks_v1.xml`. These tests do not exercise GH200 CUDA
+training or constitute an update-effect result. The preserved isolated CPU
+environment is `artifacts/c2c_cpu_compat_v1`; older environments are unchanged.
