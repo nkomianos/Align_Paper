@@ -1388,3 +1388,34 @@ verification/drafting measurements, not more BERT examples or an invented paper
 claim. Protocol/rationale and priors in docs/OPDLM_CACHE_DEV_20260904.md.
 25 combined tests pass. All model artifacts, evidence and attempts preserved.
 No active CPU/GPU job, no expansion automation, no external publication or push.
+
+## 2026-09-04 — on-policy closed-loop comparison launched
+
+Previous goal turn made progress: released-model qualification, measured CPU
+outputs, preserved failed recording attempts, exact replay, commit a7617e7.
+This turn implemented and tested a fixed 24-problem arithmetic comparison with
+baseline, fresh-remask, all-layer-corrected and final-layer-corrected policies.
+Each uses four inference steps per complete four-token block. The baseline also
+gets three *offline diagnostic* probes per block; those extra calls are recorded
+and are not represented as necessary baseline deployment cost. All candidates
+and subsequently revealed tokens come from the model, not the answer key.
+
+Prepared config configs/opdlm_onpolicy_v1.json; protocol
+docs/OPDLM_ONPOLICY_20260904.md; root artifacts/opdlm_onpolicy_v1. Source/config/
+model hashes frozen before inference. Live local exec session72509 at launch.
+Maximum3648forwards, usually fewer because EOS stops generation. This is a CPU
+run, no training, no paid GPU restarted, no expansion automation. Do not restart
+just because a session observation times out: inspect the same session/process.
+
+Strict integer output and predeclared permissive last-numeral scores are separate;
+never silently replace the strict result. Full paired seed logits retained.
+Verification recomputes metadata/evidence hashes, output decoding, scoring,
+per-policy completeness, token records and call counts; not all model forwards.
+
+Important primary-source collision found while the frozen run executes:
+Re-evaluating Confidence Remasking (arXiv2606.12232v1), section2.3 footnote2,
+already explicitly recognizes multi-layer indirect leakage; section3.2 evaluates
+independent leave-one-out checking. Therefore this general observation cannot
+be our novelty claim. The COVER-specific distinction still requires practical
+utility beyond this known result. Do not modify the running experiment to chase
+a different outcome. No paper go/no-go decision until complete evidence review.

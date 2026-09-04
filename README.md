@@ -11,6 +11,14 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
+**Active local-only comparison:** [OPDLM on-policy verification](docs/OPDLM_ONPOLICY_20260904.md)
+is running 24 arithmetic prompts under four closed-loop policies, plus paired
+same-state verifier probes. Root `artifacts/opdlm_onpolicy_v1`. No paid GPU used;
+no results decision yet. A June re-evaluation paper already explicitly discusses
+indirect leakage and tests independent verification, substantially narrowing
+novelty. A useful decoding improvement—not the leakage observation alone—is
+required before any paper expansion.
+
 **Latest modern-decoder qualification:** [OPDLM cache DEV](docs/OPDLM_CACHE_DEV_20260904.md)
 ran locally on pinned OPDLM-0.6B. Native and instrumented attention agree exactly,
 but a 16-case Wikipedia continuation DEV does not show a useful late-cache

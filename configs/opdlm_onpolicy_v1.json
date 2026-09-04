@@ -1,0 +1,14 @@
+{
+  "seed": 9405,
+  "max_new_tokens": 32,
+  "block_size": 4,
+  "policies": ["baseline", "fresh", "all_corrected", "late_corrected"],
+  "tasks": [
+    ["add", 3, 4], ["add", 8, 5], ["add", 12, 9], ["add", 17, 6],
+    ["add", 23, 18], ["add", 35, 27], ["add", 48, 16], ["add", 59, 24],
+    ["subtract", 9, 4], ["subtract", 14, 8], ["subtract", 22, 7], ["subtract", 31, 16],
+    ["subtract", 45, 19], ["subtract", 63, 28], ["subtract", 72, 36], ["subtract", 91, 47],
+    ["multiply", 3, 4], ["multiply", 6, 7], ["multiply", 8, 9], ["multiply", 12, 3],
+    ["multiply", 14, 5], ["multiply", 17, 4], ["multiply", 21, 6], ["multiply", 23, 7]
+  ]
+}
