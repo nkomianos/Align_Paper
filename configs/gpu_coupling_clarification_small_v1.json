@@ -1,0 +1,60 @@
+{
+  "prepared": "/home/ubuntu/gpu_coupling_inputs/clarification_v1",
+  "n_cases": 40,
+  "threads": 4,
+  "batch_size": 8,
+  "max_prompt_tokens": 512,
+  "max_new_tokens": 32,
+  "cache_tolerance": 0.0005,
+  "temperature": 1,
+  "policies": [
+    "independent",
+    "token_clock",
+    "byte_clock",
+    "byte_hierarchical"
+  ],
+  "seeds": [
+    941000,
+    941001,
+    941002,
+    941003,
+    941004,
+    941005,
+    941006,
+    941007,
+    941008,
+    941009,
+    941010,
+    941011,
+    941012,
+    941013,
+    941014,
+    941015,
+    941016,
+    941017,
+    941018,
+    941019,
+    941020,
+    941021,
+    941022,
+    941023,
+    941024,
+    941025,
+    941026,
+    941027,
+    941028,
+    941029,
+    941030,
+    941031
+  ],
+  "models": [
+    {
+      "name": "qwen3_06b",
+      "path": "/home/ubuntu/Align_Paper/.hf_cache/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca"
+    },
+    {
+      "name": "smollm2_360m",
+      "path": "/home/ubuntu/coupling_models/models--HuggingFaceTB--SmolLM2-360M-Instruct/snapshots/a10cc1512eabd3dde888204e902eca88bddb4951"
+    }
+  ]
+}
