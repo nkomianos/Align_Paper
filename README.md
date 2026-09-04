@@ -13,6 +13,17 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ### CPU-only follow-up
 
+The [full-vocabulary Hindsight learning control](docs/HINDSIGHT_FULL_FEEDBACK_20260904.md)
+completed96 updates in595seconds on CPU. Held-out phrasing accuracy improved
+from8/32 to24/32, but missed the prospectively frozen90%/per-domain/format
+qualification criteria. The teacher itself answers only44/64 training prompts
+correctly despite receiving the true preference; its average A/B mass is.771.
+The five copying/noise/anchor/comparison arms therefore **did not run**.
+All19 evidence files, saved arithmetic, adapter and optimizer states verified;
+this is useful apparatus diagnosis, not a negative test of preference shaping
+or a paper greenlight. Next priority is an independently qualified teacher,
+not more optimization of these imperfect targets. No GPU process was launched.
+
 **Acquisition positive control now passes.** The
 [fixed96-step supervised calibration](docs/HINDSIGHT_ACQUISITION_CALIBRATION_20260904.md)
 learns64/64 training phrasings and32/32 held-out phrasings, with full-vocabulary
