@@ -30,7 +30,7 @@ def main() -> None:
     repository = Path(__file__).parents[1]
     result = audit_pinned_source(args.source_root)
     write_json(args.root / "spec.json", {
-        "version": "pahf-source-audit-v1",
+        "version": "pahf-source-audit-v2",
         "content_policy": "metadata and hashes only; no public scenario text copied",
         "paper_green_light": False,
     })
@@ -51,4 +51,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

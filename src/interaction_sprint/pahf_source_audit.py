@@ -123,6 +123,7 @@ def paired_summary(
     *,
     surface_fields: Sequence[str],
     label_fields: Sequence[str],
+    report_categorical_transitions: bool = True,
 ) -> dict[str, object]:
     if len(original) != len(evolved):
         raise ValueError("paired files have different row counts")
@@ -143,13 +144,15 @@ def paired_summary(
         for left, is_surface, is_changed in zip(original, exact_surface, changed_label)
         if is_surface and is_changed
     ]
-    transitions = Counter(
-        f"{','.join(normalize_label(left[field]) for field in label_fields)}->"
-        f"{','.join(normalize_label(right[field]) for field in label_fields)}"
+    transition_values = [
+        (
+            tuple(normalize_label(left[field]) for field in label_fields),
+            tuple(normalize_label(right[field]) for field in label_fields),
+        )
         for left, right, is_surface, is_changed in zip(original, evolved, exact_surface, changed_label)
         if is_surface and is_changed
-    )
-    return {
+    ]
+    report: dict[str, object] = {
         "rows": len(original),
         "field_match_counts": field_matches,
         "exact_surface_pairs": sum(exact_surface),
@@ -159,8 +162,18 @@ def paired_summary(
             "\n".join(candidates).encode("ascii")
         ).hexdigest(),
         "candidate_identifiers_unique": len(set(candidates)) == len(candidates),
-        "transition_counts": dict(sorted(transitions.items())),
+        "transition_class_count": len(set(transition_values)),
     }
+    if report_categorical_transitions:
+        transitions = Counter(
+            f"{','.join(left)}->{','.join(right)}" for left, right in transition_values
+        )
+        report["transition_counts"] = dict(sorted(transitions.items()))
+    else:
+        report["transition_multiset_sha256"] = hashlib.sha256(
+            canonical_json(sorted(transition_values)).encode("utf-8")
+        ).hexdigest()
+    return report
 
 
 def _validate_source_markers(source_root: Path) -> dict[str, bool]:
@@ -229,12 +242,14 @@ def audit_pinned_source(source_root: Path) -> dict[str, object]:
         _records(source_root / "data/embodied/scenarios/evolved_scenarios_A.json"),
         surface_fields=EMBODIED_SURFACE_FIELDS,
         label_fields=EMBODIED_INTENT_FIELDS,
+        report_categorical_transitions=False,
     )
     embodied_evaluation = paired_summary(
         _records(source_root / "data/embodied/scenarios/original_scenarios_B.json"),
         _records(source_root / "data/embodied/scenarios/evolved_scenarios_B.json"),
         surface_fields=EMBODIED_SURFACE_FIELDS,
         label_fields=EMBODIED_INTENT_FIELDS,
+        report_categorical_transitions=False,
     )
     markers = _validate_source_markers(source_root)
     return {

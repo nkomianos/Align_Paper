@@ -29,7 +29,7 @@ def main() -> None:
         if not path.is_file() or sha256(path) != expected:
             raise SystemExit(f"manifest mismatch: {name}")
     expected_spec = {
-        "version": "pahf-source-audit-v1",
+        "version": "pahf-source-audit-v2",
         "content_policy": "metadata and hashes only; no public scenario text copied",
         "paper_green_light": False,
     }
@@ -54,4 +54,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

@@ -27,7 +27,15 @@ at least one latent target field changes.
 For shopping, the visible surface is product, options A/B/C, user and task; the
 target is `gt`. For embodied scenarios, the visible surface is scene, task,
 context, user and scene objects; targets are intended object and location.
-Candidate IDs are SHA-256 hashes of canonicalized visible fields.
+Candidate IDs are SHA-256 hashes of canonicalized visible fields. Categorical
+shopping option transitions may be counted as A/B/C/D. Open-text embodied
+intent transitions are represented only by a class count and multiset digest;
+their values must not be copied into the audit output.
+
+The first local v1 execution revealed that its generic transition counter
+printed open-text embodied intent values. Preserve it as a superseded audit;
+v2 adds the output-policy control above. This is a reporting correction, not a
+change to source qualification or candidate selection.
 
 ## Interpretation boundary
 

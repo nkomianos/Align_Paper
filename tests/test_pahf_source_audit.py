@@ -43,6 +43,7 @@ def test_paired_summary_finds_exact_surface_label_changes_without_text_output():
     assert summary["label_changed_pairs"] == 1
     assert summary["exact_surface_changed_label_candidates"] == 1
     assert summary["candidate_identifiers_unique"] is True
+    assert summary["transition_class_count"] == 1
     assert summary["transition_counts"] == {"A->B": 1}
     assert "camera" not in str(summary)
 
@@ -62,6 +63,23 @@ def test_surface_change_is_not_admitted_as_exact_candidate():
     assert summary["exact_surface_changed_label_candidates"] == 0
 
 
+def test_open_text_transition_values_are_replaced_by_count_and_digest():
+    original = _shopping_rows()
+    evolved = copy.deepcopy(original)
+    evolved[0]["gt"] = "a potentially identifying free-text value"
+    summary = paired_summary(
+        original,
+        evolved,
+        surface_fields=("product", "Option A", "Option B", "Option C", "User", "Task"),
+        label_fields=("gt",),
+        report_categorical_transitions=False,
+    )
+    assert summary["transition_class_count"] == 1
+    assert "transition_counts" not in summary
+    assert len(summary["transition_multiset_sha256"]) == 64
+    assert "potentially identifying" not in str(summary)
+
+
 def test_length_mismatch_fails_closed():
     with pytest.raises(ValueError, match="different row counts"):
         paired_summary(
@@ -70,4 +88,3 @@ def test_length_mismatch_fails_closed():
             surface_fields=("Task",),
             label_fields=("gt",),
         )
-
