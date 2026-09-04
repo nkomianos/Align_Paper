@@ -28,6 +28,9 @@ def _sources(bases: int = 128) -> list[dict[str, object]]:
             "label_rotation": rotation,
             "old_target": letters[rotation],
             "new_target": letters[(rotation + 1) % 4],
+            "immediate_followup": f"new-{rotation}",
+            "delayed_transition_followup": f"new-{rotation}",
+            "delayed_expression_followup": f"old-{rotation}",
         }
         for base in range(bases) for rotation in range(4)
     ]
@@ -111,10 +114,16 @@ def test_stage_rule_qualifies_ideal_and_rejects_null() -> None:
         else:
             old = .60
         ideal[name] = _predictions(sources, old)
-    result = summarize_g2_stage(sources, ideal, stage="development", bootstrap_samples=1000)
+    result = summarize_g2_stage(
+        sources, ideal, stage="development",
+        transition_adapter_max_abs_difference=0.0, bootstrap_samples=1000,
+    )
     assert result["decision"] == "ENDO_PAHF_G2_DEV_QUALIFIED"
     null = {name: _predictions(sources, .45) for name in expected_g2_arm_names()}
-    result = summarize_g2_stage(sources, null, stage="development", bootstrap_samples=1000)
+    result = summarize_g2_stage(
+        sources, null, stage="development",
+        transition_adapter_max_abs_difference=0.0, bootstrap_samples=1000,
+    )
     assert result["decision"] == "ENDO_PAHF_G2_DEV_NOT_QUALIFIED"
 
 
@@ -123,7 +132,14 @@ def test_malformed_rotation_or_arm_grid_fails_closed() -> None:
     with pytest.raises(ValueError, match="four rotations"):
         score_prediction_rows(sources[:-1], _predictions(sources[:-1], .5))
     with pytest.raises(ValueError, match="arm grid"):
-        summarize_g2_stage(sources, {}, stage="development", bootstrap_samples=1000)
+        summarize_g2_stage(
+            sources, {}, stage="development",
+            transition_adapter_max_abs_difference=0.0, bootstrap_samples=1000,
+        )
+    corrupted = _sources(8)
+    corrupted[0]["delayed_transition_followup"] = "different"
+    with pytest.raises(ValueError, match="transition probe"):
+        build_g2_anchor_panels(corrupted)
 
 
 def test_development_routing_power_audit_is_deterministic() -> None:

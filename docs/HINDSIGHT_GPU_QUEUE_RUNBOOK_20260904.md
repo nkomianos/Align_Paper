@@ -31,12 +31,25 @@ committed or placed in a public archive.
    scientific decision, provided the runtime and private-input checks pass.
 7. Secure and verify that evidence. Do not run the locked human confirmation
    split or any post-G1 expansion automatically.
+8. If and only if G1 qualifies, run EndoPAHF exact-interface preflight v2. The
+   superseded extraction-query preflight must not be used.
+9. If and only if that preflight qualifies, run G2 DEV. It trains 27 frozen
+   arms across eight panels and never reads EndoPAHF confirmation.
+10. Secure and independently verify G2 DEV with the actual G1, preflight and
+    input roots. Only a qualified DEV may authorize the separate locked
+    EndoPAHF confirmation runner. That runner evaluates frozen adapters and
+    performs no training or model selection.
 
 Estimated paid time after the model is cached is 25--70 minutes for gradient G0,
 4--8 hours for conditional policy G1, and 30--60 minutes for the capable reader.
 Allow another 15--40 minutes on a fresh host for environment validation and
 model download. The pass-path total is approximately 5--10.2 hours; a failed G0
 skips G1 and reduces the total to about 1.2--2.8 hours.
+
+If G1 passes, budget roughly 5--10 additional hours for exact-interface
+preflight, G2 DEV and conditional confirmation. The complete synthetic-plus-
+external pass path is therefore approximately 10--20 hours, but every expensive
+stage is skipped immediately when its prerequisite fails.
 
 ## Remote launch contract
 

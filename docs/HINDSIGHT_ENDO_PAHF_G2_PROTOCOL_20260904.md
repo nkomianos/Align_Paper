@@ -68,3 +68,9 @@ preflight and G2 development decision, each of which itself requires a verified
 qualified G1. A confirmation pass is external controlled-surface evidence, not
 a paper green light: a second model family and real longitudinal substrate or a
 strictly simulation-scoped claim remain required.
+
+The Qwen3.5-9B DEV runner, hardened remote launcher, checkpoint preservation,
+complete prerequisite replay, read-only verifier, locked-confirmation runner
+and confirmation verifier are implemented. DEV performs 27 independently reset
+32-step training arms (864 optimizer updates); confirmation performs no training
+or selection and evaluates the frozen 27 arm states.

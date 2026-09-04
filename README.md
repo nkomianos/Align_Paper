@@ -112,6 +112,16 @@ condition, the rule qualified `.75%` of nulls, `90.25%` of planned signals and
 `74.5%` of noisier signals. This closes a pseudoreplication problem and validates
 the decision rule, but it is not a capable-model result or paper green light.
 
+The full [EndoPAHF G2 neural-transfer protocol](docs/HINDSIGHT_ENDO_PAHF_G2_PROTOCOL_20260904.md)
+is now implemented prospectively. It binds a qualified G1 and exact-interface
+preflight, trains raw, full-oracle, equal-delayed-label SDPO/SFT and augmented
+arms over eight disjoint base-task panels, and averages panel probabilities
+rather than selecting a winner. A transition-world sanity arm must reproduce
+raw learning exactly. Its 96-base DEV routing rule is
+[power-qualified](docs/HINDSIGHT_ENDO_PAHF_G2_POWER_RESULT_20260904.md), and a
+separate verifier-gated runner opens the 256-base confirmation only after a
+qualified DEV. No G2 neural endpoint exists.
+
 A fresh [PUMA collision audit](docs/HINDSIGHT_PUMA_COLLISION_AUDIT_20260904.md)
 found the closest adjacent 2026 method: PUMA already models action-conditioned
 latent user-state transitions separately from utterance observations and plans

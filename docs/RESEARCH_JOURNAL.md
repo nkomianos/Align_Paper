@@ -2178,3 +2178,28 @@ shared neural-anchor source, and retains the same per-context/per-label gates.
 Three targeted tests, compilation and hardened-launcher shell validation pass.
 No model output or confirmation data was inspected. The next paid run must use
 v2; the historical v1 commit remains preserved but must not be executed.
+
+## 2026-09-04 -- EndoPAHF G2 transfer endpoint frozen and routing-power qualified
+
+Specified the full controlled external transfer after synthetic G1. Eight
+outcome-blind disjoint panels each contain eight PAHF learning bases and all four
+label rotations. Raw immediate, full delayed oracle, panelwise equal-label SDPO,
+panelwise equal-label SFT, and immediate-plus-paired-residual arms all start from
+one adapter and run 32 fixed updates. Panel probabilities are averaged rather
+than selected. A transition-world augmented sanity arm has an analytically zero
+residual and must match raw training in both adapter weights and predictions.
+
+The 96-base DEV routing threshold was frozen at commit `aa30afd` and then passed
+its 10,000-study-per-condition audit: null `.2041`, planned signal `.9196`, noisy
+signal `.8317`. Decision
+`ENDO_PAHF_G2_DEV_ROUTING_RULE_POWER_QUALIFIED`; evidence manifest SHA-256
+`175b3ac2a5d8b35cf7e3959d393be9f0ce943b80913ec0b2088a5accf3048a64`.
+The permissive null-routing rate is acceptable only because DEV cannot establish
+a result; final confirmation retains the stringent clustered rule.
+
+Implemented the prerequisite-bound Qwen3.5-9B DEV runner, full checkpoint and
+step-ledger preservation, hardened launcher, read-only verifier, and a separate
+locked-confirmation runner/verifier. Verification replays G1 and exact-interface
+preflight against their actual evidence roots. Confirmation is not read unless
+DEV is checksum-valid and qualified. Nineteen combined G1/G2/preflight tests,
+Python compilation and both shell launchers pass. No capable G2 endpoint exists.

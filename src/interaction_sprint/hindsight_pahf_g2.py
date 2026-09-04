@@ -42,6 +42,10 @@ def _group_bases(rows: Sequence[Mapping[str, object]]) -> dict[str, list[Mapping
         if row_id in ids:
             raise ValueError("duplicate row id")
         ids.add(row_id)
+        if str(row["immediate_followup"]) != str(row["delayed_transition_followup"]):
+            raise ValueError(f"transition probe differs from immediate log: {row_id}")
+        if str(row["immediate_followup"]) == str(row["delayed_expression_followup"]):
+            raise ValueError(f"expression and transition probes are not opposed: {row_id}")
         grouped[str(row["base_id"])].append(row)
     if not grouped:
         raise ValueError("no base clusters")
@@ -338,6 +342,7 @@ def summarize_g2_stage(
     arm_predictions: Mapping[str, Sequence[Mapping[str, object]]],
     *,
     stage: str,
+    transition_adapter_max_abs_difference: float,
     bootstrap_samples: int = BOOTSTRAP_SAMPLES,
 ) -> dict[str, object]:
     """Apply the fixed DEV or confirmation rule to complete arm predictions."""
@@ -408,11 +413,14 @@ def summarize_g2_stage(
     transition_max_difference = _transition_difference(
         scored["raw_immediate"], scored["transition_sanity"]
     )
+    if not math.isfinite(transition_adapter_max_abs_difference) or transition_adapter_max_abs_difference < 0:
+        raise ValueError("invalid transition adapter difference")
     controls = {
         "all_primary_comparisons_qualified": all(
             value["qualified"] for value in comparisons.values()
         ),
         "transition_augmented_matches_raw": transition_max_difference <= 1e-6,
+        "transition_adapter_matches_raw": transition_adapter_max_abs_difference <= 1e-6,
         "all_reported_arms_preserve_choice_mass": all(
             float(value["minimum_label_mean_choice_mass"]) >= .05
             for value in diagnostics.values()
@@ -435,6 +443,7 @@ def summarize_g2_stage(
         "comparisons": comparisons,
         "diagnostics": diagnostics,
         "transition_sanity_max_probability_difference": transition_max_difference,
+        "transition_adapter_max_abs_difference": transition_adapter_max_abs_difference,
         "primary_estimand": (
             "old persistent-target normalized choice NLL, averaged across rotations "
             "within base task and then paired across base tasks"
