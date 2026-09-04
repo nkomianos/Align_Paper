@@ -51,6 +51,14 @@ delayed-probe method remain distinct. PUMA must be cited as direct adjacent work
 and a conceptual baseline. The candidate should not claim a new user-state
 model, a new POMDP framing, or the general observation/transition factorization.
 
+The follow-up exact construction now establishes the ambiguity under PUMA's
+formal factorization: persistent preference and transient stance form the hidden
+state, both worlds share the action-independent emission `O=stance`, and only
+their controlled state transitions differ. Immediate-log total variation is
+exactly zero, while a neutral delayed transition/probe yields total variation
+`.30` in the frozen ranking-reversal example. This closes the factorization
+objection but does not make hidden-state non-identification itself novel.
+
 ## Consequence for experiments
 
 Do not add a broad PUMA reproduction to G0. The decisive low-cost question is

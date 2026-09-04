@@ -105,6 +105,14 @@ novelty claim but leaves the narrower question intact: when immediate logs are
 observationally identical, can sparse delayed probes identify the persistent-
 state objective and correct an SDPO update?
 
+The corresponding [factorized exact check](docs/HINDSIGHT_FACTORIZED_NONIDENTIFICATION_RESULT_20260904.md)
+now passes. Representing hidden state as persistent preference plus transient
+stance permits a shared action-independent emission in both worlds. Immediate
+logs still have exactly zero total variation, the delayed neutral probe has
+total variation `.30`, and the persistent-state-optimal action reverses. This
+closes a formal scope gap; it remains classical identification machinery rather
+than neural or human evidence.
+
 ### CPU-only follow-up
 
 **Positive Hindsight mechanism screen:** the prospectively frozen

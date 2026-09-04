@@ -54,6 +54,23 @@ transition model has `P(B=A)=c_A`. Thus randomized actions plus a delayed neutra
 measurement identify the transition probability under these assumptions. With
 known symmetric anchor error below one half, the usual affine correction applies.
 
+### Proposition 4: the ambiguity survives a common action-independent emission
+
+The action-dependent expression channel above can be rewritten as a controlled
+latent-state model. Let the hidden state be `(P,S)`, persistent preference plus
+transient expressed stance, initialized as `(Z0,Z0)`. Under copying, expression
+moves it to `(Z0,A)` and transition moves it to `(A,A)`. Both worlds use the
+same action-independent observation law `O=S`; the action affects the report
+only through state transition.
+
+Marginalizing the hidden state gives the same immediate conditional law as
+Proposition 1. A neutral delayed action maps `(P,S)` to `(P,P)`, after which the
+same emission reveals persistent preference. Thus the result is not avoided by
+writing a PUMA-style transition/observation factorization or by increasing
+latent-state capacity. The exact factorized result and verifier are documented
+separately; this remains an application of standard hidden-state identification
+logic rather than standalone general theorem novelty.
+
 ## Executable check
 
 The exact enumerator evaluates all finite outcomes, not Monte Carlo samples.

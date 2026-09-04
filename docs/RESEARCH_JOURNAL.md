@@ -2107,3 +2107,21 @@ next-turn self-distillation update can value observationally equivalent worlds
 oppositely. The paper survives only as theorem plus neural consequence plus
 sparse delayed-probe identification and external validation. Gradient G0 remains
 the decisive next experiment; no PUMA reproduction is added to the cheap gate.
+
+## 2026-09-04 -- PUMA-factorized non-identification verified exactly
+
+The original binary proof expressed compliance as an action-dependent report
+channel, whereas PUMA writes observations as depending only on hidden state.
+Froze commit `2be2af5` before constructing a stricter controlled-state version:
+hidden state `(persistent preference, transient stance)`, common emission
+`O=stance`, and world-specific action-conditioned state transitions.
+
+The exact rational-arithmetic result preserves zero immediate-log total
+variation, yields delayed neutral-probe total variation `3/10`, and reverses the
+best persistent-state action (1 under expression, 0 under transition). The
+read-only verifier passes; evidence root
+`artifacts/hindsight_factorized_nonidentification_20260904_v1`, manifest SHA-256
+`04144cea0ca4b468ea753925b30deac567c715b981aa6d997ece1ca41e8ea0e9`.
+Sixty-two related tests pass. This closes the PUMA-factorization objection but
+does not change the scientific gate: neural SDPO correction and external
+validation remain necessary.
