@@ -79,7 +79,7 @@ def run(root):
         write('scores.json',rows)
         true=[r for r in rows if r['kind']=='truthful']
         summary=dict(forwards=len(rows),updates=0,elapsed_seconds=time.monotonic()-start,
-            truthful_correct=sum(np.argmax(r['probabilities'])==r['target'] for r in true),truthful_n=len(true),
+            truthful_correct=sum(int(np.argmax(r['probabilities'])==r['target']) for r in true),truthful_n=len(true),
             truthful_mean_target_probability=float(np.mean([r['probabilities'][r['target']] for r in true])),
             minimum_AB_mass=min(r['AB_mass'] for r in rows),
             scope='Teacher competence and susceptibility only; not learning harm, human welfare, or paper approval')

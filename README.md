@@ -13,6 +13,16 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ### CPU-only follow-up
 
+The [fresh Hindsight preference-revelation probe](docs/HINDSIGHT_REVELATION_PROBE_20260904.md)
+completed 144 CPU forwards: explicit feedback selects the stated preference
+56/64 times (25/32 when reversing the prior action). Endorsement does not
+reinforce the prior action more than generic thanks (paired probability
+difference −.05125). Complete scores were recovered after a summary serialization
+failure; original evidence is unchanged. No learning or paper effect is claimed.
+The [human-data provenance audit](docs/PUPPET_MESSAGE_PROVENANCE_20260904.md)
+also found scripted first USER messages in every valid record and broad-topic
+overlap across the proposed query split. That reconstruction extension is parked.
+
 A [bounded-influence population check](docs/HINDSIGHT_PARTIAL_IDENTIFICATION_20260904.md)
 constructs sharp binary preference intervals and a conservative update filter.
 It retains useful updates in designed examples, but depends on a valid influence
