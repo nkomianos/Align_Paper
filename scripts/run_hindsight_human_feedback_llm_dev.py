@@ -42,19 +42,22 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def load_runtime():
+def load_runtime(hf_home: Path):
     import torch
     from transformers import AutoTokenizer, Qwen3_5ForCausalLM
 
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA is required")
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, revision=MODEL_REVISION, use_fast=True)
+    tokenizer = AutoTokenizer.from_pretrained(
+        MODEL_ID, revision=MODEL_REVISION, cache_dir=hf_home, use_fast=True,
+    )
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side = "left"
     model = Qwen3_5ForCausalLM.from_pretrained(
         MODEL_ID,
         revision=MODEL_REVISION,
+        cache_dir=hf_home,
         dtype=torch.bfloat16,
         attn_implementation="sdpa",
         device_map={"": torch.cuda.current_device()},
@@ -98,6 +101,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--hf-home", type=Path, required=True)
     parser.add_argument("--batch-size", type=int, default=16)
     args = parser.parse_args()
     if args.batch_size < 1:
@@ -113,7 +117,35 @@ def main() -> None:
     if len(dev) != 72 or len({record.query_sha256 for record in dev}) != 7:
         raise ValueError("frozen DEV cohort changed")
 
-    torch, tokenizer, model = load_runtime()
+    repository = Path(__file__).parents[1]
+    spec = {
+        "model": MODEL_ID,
+        "revision": MODEL_REVISION,
+        "dataset_sha256": DATA_SHA256,
+        "cohort": "attention-pass strict-alternation non-personalized C3/C4/C6 with six USER turns",
+        "split": "frozen seven-query DEV only",
+        "depths": [3, 6],
+        "arms": list(ARMS),
+        "max_context_tokens": MAX_CONTEXT_TOKENS,
+        "max_new_tokens": MAX_NEW_TOKENS,
+        "thinking": False,
+        "training": False,
+        "raw_text_persisted": False,
+        "paper_green_light": False,
+    }
+    (args.output / "spec.json").write_text(json.dumps(spec, indent=2), encoding="utf-8")
+    source_paths = [
+        repository / "src" / "interaction_sprint" / "hindsight_human_feedback.py",
+        repository / "src" / "interaction_sprint" / "hindsight_human_feedback_llm.py",
+        Path(__file__),
+        repository / "scripts" / "verify_hindsight_human_feedback_llm_dev.py",
+    ]
+    (args.output / "source_hashes.json").write_text(json.dumps({
+        str(path.relative_to(repository)).replace("\\", "/"): sha256(path)
+        for path in source_paths
+    }, indent=2), encoding="utf-8")
+
+    torch, tokenizer, model = load_runtime(args.hf_home)
     qualification = qualification_cases()
     q_prompts = [render(tokenizer, build_rating_messages(case["pre_belief"], case["evidence"]))
                  for case in qualification]
@@ -127,11 +159,30 @@ def main() -> None:
         "rows": q_rows,
     }, indent=2), encoding="utf-8")
     if not qualified:
-        (args.output / "STATUS.json").write_text(json.dumps({
+        report_path = args.output / "report.json"
+        report_path.write_text(json.dumps({
             "decision": "MODEL_INTERFACE_QUALIFICATION_FAILED",
             "human_prompts_run": 0,
+            "paper_green_light": False,
+            "runtime": {
+                "python": platform.python_version(),
+                "torch": torch.__version__,
+                "cuda": torch.version.cuda,
+                "gpu": torch.cuda.get_device_name(),
+                "wall_seconds": time.time() - started,
+                "batch_size": args.batch_size,
+            },
         }, indent=2), encoding="utf-8")
-        raise RuntimeError("model interface qualification failed before human-data inference")
+        manifest_paths = [
+            args.output / "qualification.json", report_path,
+            args.output / "spec.json", args.output / "source_hashes.json",
+        ]
+        (args.output / "MANIFEST.json").write_text(
+            json.dumps({path.name: sha256(path) for path in manifest_paths}, indent=2),
+            encoding="utf-8",
+        )
+        print(json.dumps({"decision": "MODEL_INTERFACE_QUALIFICATION_FAILED"}, indent=2))
+        return
 
     jobs = []
     for record in dev:
@@ -214,10 +265,14 @@ def main() -> None:
             "Model predictions may track linguistic style rather than latent belief.",
             "Confirmation outcomes remain unopened by this runner.",
         ],
+        "paper_green_light": False,
     }
     report_path = args.output / "report.json"
     report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
-    manifest_paths = [args.output / "qualification.json", prediction_path, report_path]
+    manifest_paths = [
+        args.output / "qualification.json", prediction_path, report_path,
+        args.output / "spec.json", args.output / "source_hashes.json",
+    ]
     (args.output / "MANIFEST.json").write_text(
         json.dumps({path.name: sha256(path) for path in manifest_paths}, indent=2), encoding="utf-8"
     )
@@ -227,4 +282,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

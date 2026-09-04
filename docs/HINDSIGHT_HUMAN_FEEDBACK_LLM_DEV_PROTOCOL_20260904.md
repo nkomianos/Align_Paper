@@ -1,5 +1,10 @@
 # Capable-reader Hindsight human-feedback DEV protocol
 
+> Evidence-integrity revision, still before any capable-reader endpoint: the
+> runner now pins the shared HF cache, records source/spec hashes, exits cleanly
+> on interface failure, and has a dedicated private-data verifier. The cohort,
+> model, prompts, predictions, split and scientific criteria are unchanged.
+
 ## Why this follow-up is justified
 
 The frozen classical DEV reader failed: late full-text Spearman was 0.096 and
@@ -41,4 +46,3 @@ Only a full pass authorizes a separately frozen confirmation runner. It still
 does not prove influence, preference shaping, SDPO failure, or paper viability.
 The paper-level thesis would additionally require the non-identifiability result,
 a faithful learning experiment, and an intervention-based correction.
-
