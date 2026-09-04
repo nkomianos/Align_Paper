@@ -1543,3 +1543,20 @@ were saved at this check, with no scoring performed. Qwen cache deviations are
 with next-token argmax agreement. Added the separate covariance decomposition
 diagnostic described in the protocol; three unit tests passed. Goal remains
 unachieved; no paper efficacy claim, no GPU expansion, no restart.
+
+## 2026-09-04 — user-authorized eight-hour GPU window
+
+See GPU_WINDOW_20260904.md for authoritative launches, preservation and deadline.
+GPU coupling completed 1,024outputs in84.33s; complete evidence secured locally.
+Hierarchical variance and cost did not beat the simple token-clock baseline;
+park heuristic. This is a qualified negative DEV, not a proof no cross-tokenizer
+coupling could work. No task/seed changes were made to rescue it.
+
+Parallel audits corrected the UNDO algebra: overwrite then clear does not restore
+the old state. Implemented valid local rewrite training versus terminal SFT and
+one-action canonical distillation, identical student token budgets. Native
+tokenizer lengths pass without truncation. Metadata-only setup failure preserved
+and fixed; fresh retry process21147 is live on GH200. Qualification must pass
+before training, and one seed cannot establish reproducibility or novelty.
+Concurrent cybersecurity/VLM prior-work audit found no additional candidate
+clearing the launch bar; documented collisions instead of claiming novelty.

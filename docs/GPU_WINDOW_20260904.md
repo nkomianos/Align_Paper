@@ -76,3 +76,12 @@ JSON serializable. No scientific decision. Full failed evidence preserved locall
 at retrieved/undo_failed_20260904T0845Z; archive remote/local SHA:
 0e961458f3221ef5d30a552b28763338e6dae96941c77d678854c93fb606f248.
 Serialization-only fix and fresh-root retry are being prepared.
+
+Retry launched from commit837bc4c, archive SHA remote/local matched:
+6b5f2336fc1e3f4a91066e58ce0a17fae287c9b074cf1d4b33d47f781cb2b8aa.
+Active root /home/ubuntu/undo_relation_g0_20260904T0850Z, source
+/home/ubuntu/undo_source_20260904T0850Z, log/PID/exit beside run root.
+Python PID21147 verified live, 11,190 MiB GPU memory, weights loaded.
+Frozen budget: two epochs, batch4/evalbatch4, max4096tokens, lr1e-4,
+seed9047701, rank8 alpha16, three arms. DEV qualification precedes training.
+No qualification or training result was available at this timestamped check.
