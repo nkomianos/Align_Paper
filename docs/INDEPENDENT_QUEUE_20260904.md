@@ -52,7 +52,7 @@ Remote/local archive SHA-256 matches:
 Committed verifier validates all 3,615 sealed files and writes `ep0_verified.json`
 outside the run root.
 
-## Native-video hindsight: launched after EP0 verification
+## Native-video hindsight: complete and locally verified
 
 After EP0 exits and its evidence is retrieved and verified, run this candidate
 regardless of EP0's scientific outcome. No concurrent model process or duplicate
@@ -69,6 +69,42 @@ Frozen code-tree SHA-256:
 `6a5e058f44ce19c5b6e32bbe9f804b4deeb91dfdf395272da0e91d68fa2d92b7`.
 Same pinned model as EP0. 48 synthetic pairs, five conditions, 240 calls;
 native-video only, no optional second model or multi-image expansion.
+
+Result: `KILL_VISUAL_HINDSIGHT_HYPOTHESIS` for this frozen synthetic candidate.
+All five assay prerequisites pass. Prefix-past and both future-state accuracies
+are 100%; invalid rate is zero. All 48 paired assignments show zero change in
+the reported past and zero endpoint-following. No cut-recovery effect exists
+because there are no corrupted answers to recover. This is a valid negative
+for the tested model/task, not a universal claim about all video reasoning.
+
+Local evidence: `retrieved/visual_hindsight_20260904T0441Z` with `verified.json`
+outside the evidence root. Archive SHA-256 matches remote:
+`1f53bbea9c3fe273514d09f0ea35232447c2798ad88aa8518097b455a979d9d0`.
+The outer completion manifest's 3,081 file checksums also match; the committed
+family verifier validates corpus, configuration, code, runtime and completions.
+No GPU model process remained at the post-retrieval check.
+
+Statistical caveat: the frozen bootstrap produces a degenerate [0,0] interval
+when every observed effect is zero. That is not proof of population zero.
+For zero events in 48 independent paired units, a one-sided exact 95% binomial
+upper bound is about 6.05%. Applicability depends on treating these synthetic
+pairs as independent draws from the specified task distribution, not all videos.
+
+## Post-hoc interface audit (not altered gate scores)
+
+`scripts/audit_smoke_interfaces.py` revalidates both smoke roots before diagnosis.
+Output: `retrieved/smoke_interface_diagnostic_20260904T0440Z.json`.
+All 24 EP0 predictions map to **stationary**, despite shuffled answer letters.
+Thus this is a semantic default, not a single-letter preference. We have not
+identified whether resolution, arrow decoding, timeline layout or the world-
+versus-image reference frame causes it. Manual inspection confirms dense blue
+right-pointing arrows exist in scene-007 oracle view 08. Do not train around
+this unexplained assay or attribute it to a specific causal mechanism yet.
+
+LC0 relaxed leading-letter extraction raises text accuracy from 1/8 to 3/8,
+equal to the no-message baseline. It also gives 3/8 for other message arms.
+Formatting explains two errors, but does not rescue communication validity.
+This exploratory parsing diagnostic does not replace the frozen strict score.
 
 ## Preservation and monitoring
 

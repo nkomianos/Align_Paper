@@ -522,3 +522,28 @@ locally; archive SHA-256 matches remote. Formal smoke-only result, unusable
 oracle prerequisite; no full-pilot expansion. Median forward 0.13033 seconds.
 After verification, launched the independent 240-call native-video hindsight
 run at `/home/ubuntu/visual_hindsight_g0_20260904Tqueue`, preserving all EP0 data.
+
+## 2026-09-04 — Video gate complete; diagnose before interpreting failed controls
+
+The 240-call native-video hindsight gate completed. All readability and format
+prerequisites pass, with 100% prefix-past/future accuracy and zero endpoint-
+following or paired-assignment effects in 48 pairs. Committed decision:
+`KILL_VISUAL_HINDSIGHT_HYPOTHESIS`. Stop this frozen candidate, without claiming
+all models or harder natural videos are immune. Evidence retrieved to
+`retrieved/visual_hindsight_20260904T0441Z`; remote/local archive hashes,
+3,081 outer-manifest hashes and the committed verifier pass. No active model
+process remained. All three independent candidate runs are now secured.
+
+Added a read-only post-hoc interface diagnostic and passing parser unit test.
+EP0's 24 predictions all decode to stationary; LC0 leading-letter extraction
+only recovers text to 3/8, equal to no-message. Neither issue is rescued by
+lenient scoring. Original reports and thresholds remain unchanged.
+
+Literature refresh also found [CREDIT](https://arxiv.org/abs/2605.11613), whose
+posterior-compatible self-distillation analysis already derives pointwise
+mutual information and an input-contrastive correction. We must not promote
+our earlier mutual-information calculation into a novel theorem. New adjacent
+camera work [CamChoreo/CamDistill](https://arxiv.org/abs/2608.10932) covers
+temporally grounded compositional camera-motion recognition and geometric
+distillation. Both tighten the novelty boundary; neither justifies relabeling
+the failed controls as a positive paper result.

@@ -16,7 +16,9 @@ Rollback and Reward Extinction Debt both completed, but their prerequisites
 failed: these are **invalid assays/model organisms**, not universal negative
 results. The independent queue resumed on the GH200 on September 4: LC0 smoke
 completed with invalid text controls, EP0 smoke completed with weak oracle
-controls (25% accuracy), and native-video hindsight is now launched. See the
+controls (25% accuracy), and native-video hindsight completed with a valid
+negative (zero observed past-state corruption in 48 pairs). All three runs
+are secured locally; no GPU model process remains. See the
 [live queue and verified LC0 result](docs/INDEPENDENT_QUEUE_20260904.md).
 
 The active implementation is [Efference-Pair EP0](docs/EFFERENCE_PAIR_EP0_RUNBOOK.md),
