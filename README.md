@@ -11,7 +11,16 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
-### Current GPU window — September 4, approximately 09:50 UTC
+### Current GPU window — September 4, approximately 10:10 UTC
+
+The [read-only checkpoint diagnostic](docs/SDPO_FROZEN_FORWARD_DIAGNOSTIC_20260904.md)
+completed all 192 forwards in 21.64 seconds, without training. Its complete
+archive is local and remote/local SHA-256 matched. Independent arithmetic
+verification is investigating a discrepancy in the convention for cosine
+similarity at almost-zero gradient norms; no diagnostic conclusion is yet
+claimed. The original logits and frozen verifier remain preserved. A closer
+single-profile, released-default SDPO reproduction is being prepared, not yet
+running; it would qualify our experimental learner, not establish a new paper.
 
 SDPOv3 completed: exact format success16/64 →0/64, factual correctness61/64 →64/64.
 All64 updates and checkpoints are verified and saved locally. This shared-user

@@ -144,3 +144,29 @@ reopens only a diagnostic after mixed completed evidence; it is not a paper
 expansion or replacement of oldresults. No selective pair/task reporting and no
 further clarification loops if mixed. Launch only after SDPO finishes and is
 secured, within the deadline. This additional run is not currently launched.
+
+## 10:10 UTC — checkpoint diagnostic secured; closer reproduction in preparation
+
+Subsequent complete results are in SDPO_V3_RESULT_20260904.md,
+UNDO_TRAINING_RESULT_20260904.md and COUPLING_CLARIFICATION_RESULT_20260904.md.
+All corresponding unique evidence/checkpoints are now local. None cleared a
+paper-expansion criterion; SDPO's failure is a non-default shared-user pilot,
+not a fair refutation of the released method or the causal thesis.
+
+Read-only diagnostic commit df8d961 ran once at
+/home/ubuntu/sdpo_frozen_forward_20260904T1005Z: 192 forwards,21.64098seconds,
+exit0. Source archive SHA6aa29c5610bd79aa22d7a44016afae56207fd316c12dbe3b92f4ea16821638d6;
+executed runner SHA85b7136223e44162f0657597833f3ca966fccacf551a324c09b4b1a7029aba13.
+No parameter updates or generation. Source LoRA bytes matched the original.
+Full archive retrieved under retrieved/sdpo_frozen_forward_20260904T1007Z;
+remote/local SHA58c97ccbdac0dd3cec89349ec12f66f5b1926801af376d53ce190a4ff82b54d2.
+Manifest SHA9836fa358b73f25a8c2bc08a0ed09a87ae50ee816ce3e5181262d53bd7cea5ed.
+Initial independent verification stopped on undefined sampled_vs_expected_cosine:
+runner defines cosine whenever the norm product is positive, whereas independent
+math uses a1e-15 cutoff. Investigation ongoing; preserve both frozen implementations
+and all outputs, and do not describe the diagnostic as fully verified yet.
+
+Approved preparation only of a closer single-profile released-default SDPO
+reproduction on natural TLDR prompts. Public8B-model/data staging and implementation
+are in progress; no reproduction inference or training launched. This is a known
+method prerequisite, not a new paper or an endogenous-feedback comparison.
