@@ -96,6 +96,15 @@ development and 1,024 reserved confirmation variants. Old and new targets are
 exactly balanced over A/B/C/D in every split, with zero matched-log violations.
 This closes a position-bias shortcut before any capable-model endpoint.
 
+A fresh [PUMA collision audit](docs/HINDSIGHT_PUMA_COLLISION_AUDIT_20260904.md)
+found the closest adjacent 2026 method: PUMA already models action-conditioned
+latent user-state transitions separately from utterance observations and plans
+over future user states. It uses gold state labels and a constructed simulator,
+not passive-log identification. This removes any broad dynamical-user-model
+novelty claim but leaves the narrower question intact: when immediate logs are
+observationally identical, can sparse delayed probes identify the persistent-
+state objective and correct an SDPO update?
+
 ### CPU-only follow-up
 
 **Positive Hindsight mechanism screen:** the prospectively frozen

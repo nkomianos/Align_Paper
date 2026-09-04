@@ -75,6 +75,15 @@ beyond the constructed binary example.
   622 evaluation shopping rows with exactly matched visible tasks/options but a
   changed intended choice. These form a useful external surface for our narrow
   action-induced expression-versus-transition test, not evidence for it.
+- [PUMA](https://arxiv.org/html/2605.24647) is the closest dynamical-user
+  collision. It explicitly factorizes action-conditioned latent user-state
+  transitions from utterance observations and plans over the future state. It
+  evaluates with gold state labels and a constructed DynPatient simulator;
+  it does not establish identification of the two components from ordinary
+  passive dialogue logs. PUMA therefore occupies the user-state/POMDP/world-
+  model framing but makes our expression-versus-persistent-transition
+  non-identification and delayed-measurement question more concrete. See the
+  dedicated PUMA collision audit.
 - [Self-Consuming Performative Loops](https://arxiv.org/abs/2601.05184) shows
   bias amplification under iterative LLM retraining and incremental fine-tuning
   with a controlled decision-dependent data mixture. It occupies a broad claim

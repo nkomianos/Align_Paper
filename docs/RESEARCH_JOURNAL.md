@@ -2088,3 +2088,22 @@ old and new displayed target occurs exactly 128, 96 and 256 times per label in
 the respective splits. All records have unique IDs, zero ordinary-log world
 mismatches, and differing delayed probes. V2 supersedes v1 for future neural
 endpoints; v1 and its rehearsal remain preserved.
+
+## 2026-09-04 -- PUMA narrows the Hindsight framing
+
+A fresh primary-source collision search found PUMA (*Know You Before You Speak*,
+arXiv:2605.24647). PUMA already factorizes an action-conditioned latent
+user-state transition model from an utterance observation model, maintains a
+belief over state and selects responses by expected free energy over future
+states. It uses Qwen3-8B/Llama-3.1-8B and evaluates dynamic behavior through a
+profile-grounded simulator with explicit state/readiness rules; static state
+prediction uses gold annotations. The paper contains no passive-log
+identification result.
+
+PI interpretation: do not claim that user-state dynamics, a POMDP framing, or a
+transition/observation factorization are new. PUMA instead sharpens the missing
+piece: ordinary dialogue logs need not identify those components, and a
+next-turn self-distillation update can value observationally equivalent worlds
+oppositely. The paper survives only as theorem plus neural consequence plus
+sparse delayed-probe identification and external validation. Gradient G0 remains
+the decisive next experiment; no PUMA reproduction is added to the cheap gate.
