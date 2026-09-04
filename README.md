@@ -36,11 +36,13 @@ The [five-idea PI review](docs/USER_IDEA_REVIEW_20260903.md) conditionally prior
 **Hindsight Is Not Counterfactual** and **Dialogue Retractions as Algebra**.
 Exact CPU checks establish a compact immediate-log ambiguity but disprove
 automatic polarization in the proposed symmetric Bayesian example. The new
-language assays are prepared (64 and 48 smoke forwards); **neither full SDPO
+language assays have completed their 64- and 48-forward smoke runs on the new
+GH200; see [timings and preliminary results](docs/GH200_TIMING_20260904.md).
+Long-history/full assays remain unrun. **Neither full SDPO
 training nor algebraic local-relation training is implemented or run**. Transport
 certificates and learnability theory are parked; the proposed steering extension
-has substantial prior-work overlap. These CPU/preparation stages do not increase
-the historical empirical-experiment count below.
+has substantial prior-work overlap. These two new apparatus smokes are recorded
+separately from the historical empirical-experiment count below.
 
 See the [researcher journal](docs/RESEARCH_JOURNAL.md) for hypothesis, design,
 numbers, evidence paths, failed launches, interpretation limits, and next steps;

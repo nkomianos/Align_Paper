@@ -435,3 +435,25 @@ read-only integrity checks; the new remote launcher passed Bash syntax checking
 and `git diff --check` passed. GPU model loading and the new inference runner
 remain untested on hardware; neither test counts nor checksums are scientific
 evidence for either proposed paper.
+
+## 2026-09-03 PDT / 2026-09-04 UTC — GH200 text smoke assays completed
+
+User supplied `192.222.57.245` and requested estimates. Transferred source
+`cb1bac1` and verified both prepared text corpora. Created an isolated environment
+using server CUDA torch 2.7.0; corrected old inherited SciPy/Jinja2/Pillow inside
+that venv. Initial pre-inference failure is preserved; retries use fresh roots
+and unchanged scientific inputs. No historical environment was changed.
+
+Hindsight: 64 forwards, 2.313 seconds summed synchronized forward time; anchor
+and truthful-correction comprehension essentially perfect. Wrong-action hindsight
+advantage 1.2500 nats; anchor restoration 6.724 percentage points on the conflict
+subset. Preliminary weak correction signal, not a full gate or SDPO result.
+UNDO: 48 forwards, 1.832 seconds summed forward time; all arms correct at depth
+4, no stale choices. Long histories not tested. Both decisions `SMOKE_ONLY`.
+No full assay, training run or expansion followed; GPU idle after completion.
+
+Complete evidence, failed attempt, logs and environment freeze retrieved to
+`retrieved/interaction_smokes_20260904T0340Z`. Remote/local archive SHA-256 agrees;
+committed local verifiers pass. See [timing note](GH200_TIMING_20260904.md).
+These are two new apparatus smokes, separate from the 15 historical stages—not
+two accepted/rejected papers. Setup and loading are excluded from forward times.
