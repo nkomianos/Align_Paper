@@ -13,6 +13,12 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ### CPU-only follow-up
 
+The [paired history control](docs/HINDSIGHT_HISTORY_CONTROL_20260904.md) completed
+96 more CPU forwards: shown prior answer 25/32, omitted 16/32 (all choices A),
+redacted 30/32. Shown predictions replay exactly. This is a prompt-sensitive
+apparatus finding, not full SDPO or a new cleanup method; the actual published
+teacher construction remains a required control before learning experiments.
+
 The [fresh Hindsight preference-revelation probe](docs/HINDSIGHT_REVELATION_PROBE_20260904.md)
 completed 144 CPU forwards: explicit feedback selects the stated preference
 56/64 times (25/32 when reversing the prior action). Endorsement does not
