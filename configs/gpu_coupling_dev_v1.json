@@ -1,0 +1,16 @@
+{
+  "prepared":"/home/ubuntu/gpu_coupling_inputs/squad_coupling_prepared_v1",
+  "n_cases":8,
+  "threads":4,
+  "batch_size":8,
+  "max_prompt_tokens":512,
+  "max_new_tokens":32,
+  "cache_tolerance":0.0005,
+  "temperature":1.0,
+  "policies":["independent","token_clock","byte_clock","byte_hierarchical"],
+  "seeds":[940610,940611,940612,940613,940614,940615,940616,940617,940618,940619,940620,940621,940622,940623,940624,940625],
+  "models":[
+    {"name":"qwen3_4b","path":"/home/ubuntu/Align_Paper/.hf_cache/hub/models--Qwen--Qwen3-4B/snapshots/1cfa9a7208912126459214e8b04321603b3df60c"},
+    {"name":"smollm2_17b","path":"/home/ubuntu/coupling_models/models--HuggingFaceTB--SmolLM2-1.7B-Instruct/snapshots/31b70e2e869a7173562077fd711b654946d38674"}
+  ]
+}
