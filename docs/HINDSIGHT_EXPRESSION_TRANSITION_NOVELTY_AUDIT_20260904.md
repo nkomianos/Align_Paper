@@ -41,6 +41,22 @@ beyond the constructed binary example.
   data plus importance weighting/double robustness.  It addresses confounding
   of exposure and outcome; randomization alone does not separate the two
   post-treatment mechanisms in our construction.
+- [CausalRM](https://arxiv.org/abs/2603.18736) already combines inverse
+  propensity weighting, doubly robust imputation, and class-conditional noise
+  correction for reward models trained from selectively observed clicks,
+  copies, or votes. Generic propensity correction or “observational feedback is
+  noisy and selected” is therefore occupied. Its unit is a fixed
+  prompt--response pair with a latent ground-truth preference label; the
+  observability indicator is the treatment being corrected. It does not model
+  an assistant action changing the user's persistent state, nor distinguish
+  that transition from a transient next-message expression under exactly
+  matched logs. CausalRM must be a baseline/contrast, and our IPW extension is a
+  robustness device rather than a novelty claim.
+- [Doubly Robust Alignment](https://arxiv.org/abs/2506.01183) already occupies
+  generic double-robustness claims for preference/reference-model
+  misspecification. Any future augmentation beyond known propensities must be
+  stated for the longitudinal post-treatment estimand, not branded merely as
+  “doubly robust alignment.”
 
 ## Older statistical boundary
 
@@ -66,16 +82,17 @@ The relevant paper-level novelty, if the experiments work, is the conjunction:
 
 ## Consequence for the queue
 
-The existing Qwen3.5-9B PUPPET reader DEV remains the cheapest next GPU check.  It
-tests whether participant messages contain query-general signal about measured
-later belief shift beyond assistant text.  A pass would validate the human-data
-measurement substrate; it would not validate SDPO harm or the anchor correction.
+The finite-state method and robustness gates now pass, but their Horvitz--Thompson
+machinery is not new in view of CausalRM. The next experiment must test the
+application-specific object CausalRM does not: the gradient induced when a
+next-turn SDPO teacher receives observationally equivalent expression or
+transition messages. The frozen Qwen3.5-9B neural-gradient G0 compares eight
+outcome-blind sparse panels with the full delayed-feedback oracle. Do not run a
+broad model sweep or claim a new debiasing estimator unless this neural control
+variate actually beats equal-anchor estimation.
 
-If that reader qualifies, freeze and run the untouched 20-query confirmation.
-Independently, the next mechanism experiment must use matched expression-only and
-persistent-transition user processes with identical first-turn logs.  Compare raw
-hindsight learning, no adaptation, anchor-only learning, and an anchor-corrected
-hindsight learner under equal anchor and update budgets.  A capable positive
-control and zero-influence regime are mandatory.  Do not spend on a broad model
-sweep until the correction beats the same-anchor baseline in this small gate.
-
+The capable PUPPET reader remains a separate sub-hour GPU check of whether
+participant messages contain query-general signal about measured later belief
+shift beyond assistant text. A pass would validate a possible human-data
+substrate, not SDPO harm, causal identification, or the correction. Untouched
+confirmation stays locked until that reader passes.

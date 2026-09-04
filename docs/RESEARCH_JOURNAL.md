@@ -1807,3 +1807,23 @@ backward passes and is estimated at15--45 GH200 minutes from archived9B timing.
 A pass authorizes a redesigned multi-panel policy-learning test; a qualified
 teacher followed by gradient failure parks this estimator cleanly. No endpoint
 has been generated and the prior host remains unreachable.
+
+## 2026-09-04 -- propensity/noise novelty collision checked
+
+A fresh primary-source search located CausalRM (arXiv:2603.18736, March2026).
+It already trains reward models from selectively observed implicit feedback with
+IPS, doubly robust imputation and class-conditional label-noise correction. Its
+theorems explicitly claim unbiasedness under accurate propensities/noise rates
+and double robustness with an accurate propensity or imputation model. NeurIPS
+2025 Doubly Robust Alignment separately occupies generic robustness to
+preference/reference-model misspecification.
+
+This narrows rather than kills Hindsight. CausalRM treats each prompt--response
+unit as having a fixed ground-truth preference label and corrects whether/noisily
+that label is observed. It contains no preference-state transition and no exact
+expression-versus-transition equivalence induced by the assistant action. Our
+IPW selection result is therefore a required baseline/robustness check, not a
+new method contribution. The candidate's novelty must remain the longitudinal
+post-treatment ambiguity, its consequence for next-turn self-distillation, and
+neural evidence that sparse delayed measurements correct that specific gradient.
+The queue is unchanged: run the gradient G0 before any policy expansion.
