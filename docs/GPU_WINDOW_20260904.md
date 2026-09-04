@@ -36,3 +36,23 @@ until required evidence is secured and active jobs have been checked.
 
 Status is a timestamped journal, not proof of current process liveness. The
 remote host check above was idle; model preparation is not GPU inference.
+
+## Launch milestone
+
+Source archive commit 0a16592; remote/local archive SHA-256 matched:
+4bc3ba3dbc2fdd427c4148763cece8b12186fa8fbf5a775bb4cac0dfd399df5a.
+Source /home/ubuntu/coupling_source_20260904T0830Z. Pytest was absent from the
+remote environment; no packages were installed. A standalone CUDA/reference
+preflight matched 800 selections with max log-probability error 1.78e-15.
+
+The first wrapper attempt /home/ubuntu/gpu_coupling_g0_20260904T0830Z.log failed
+before Python due to CRLF shell line endings. Log retained. Only wrapper line
+endings were normalized; runner/helpers/config remained untouched. Fresh active
+root: /home/ubuntu/gpu_coupling_g0_20260904T0833Z, log/PID/exit beside the root.
+Python PID19448 was verified live with 17,528 MiB GPU memory and outputs/timings
+already saved. Qwen cache qualification completed. Do not duplicate this run.
+
+UNDO agents are jointly preparing a corrected local-relation training DEV with
+terminal-SFT and canonical-distillation baselines; not launched. The current
+Hindsight numeric-choice apparatus remains parked after review, not queued for
+another anchor sweep. Local CPU coupling continues independently.
