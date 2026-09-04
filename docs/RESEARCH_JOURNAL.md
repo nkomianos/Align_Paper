@@ -1112,3 +1112,48 @@ be called pre-treatment measurements of the target preference. The linked
 GitHub Data_paper page returned 404 in this check. No dataset was downloaded,
 no participant outcomes analyzed, and no external validation claimed. This
 does not block all research; it is a limitation of that proposed data route.
+
+## 2026-09-04 — Agent monitoring: exact statistical audit and public trace analysis
+
+Previous user-status turn checked the idle GPU but did not advance a candidate.
+This continuation made concrete offline progress; no paid GPU job resumed.
+See `docs/AGENT_MONITORING_RESEARCH_AUDIT_20260904.md` for primary-source links,
+novelty constraints, equations, data pins, full scope and reproduction artifacts.
+
+Compared recent early-failure-monitoring work and examined the distinction
+between task difficulty, within-task execution failure, retrospective clocks,
+and the sampling unit in reliability certificates. Do not claim that results
+from different environments/features contradict one another. Generic risk-aware
+monitoring, grouped inference and intervention-value routing have strong priors.
+
+Implemented/exactly evaluated a cluster counterexample: 20 iid tasks, 8 perfectly
+correlated repeats per task, true retained-success recall95%, target97%. Naive
+episode-pooled CP falsely certifies with probability35.8486% despite nominal5%.
+Independent-task and genuinely iid-episode controls do not violate their levels.
+Twelve exact cases plus a standard task-mean Hoeffding ratio certificate, not a
+novel algorithm. This is a constructed mathematical example, not new agent runs
+and not proof that any specific paper used the invalid certification design.
+
+Public data audits: Replay Gap896rows/56tasks has six successes across only two
+tasks and mixes fork/policy configurations. AgentHazard training3043rows includes
+1135successes but lacks task IDs. Neither supports the intended within-task
+certification study. Downloaded only allowed public slices, no hidden tests.
+
+Found better offline infrastructure in AgentUQv1.1: all556 full trajectories
+downloaded at revision824d9ec3b53067cb65153fed7c6bbc3815f7e2bb, untouched. Recomputed
+terminal agent-only NLL AUROCs: GPT airline/retail/telecom .361/.597/.624;
+Kimi .442/.478/.636. First-two-action token-count scores .580/.424/.518 and
+.538/.546/.578, respectively. These features are not a new predictor and no
+sign flipping or threshold tuning was used. Kimi telecom has only4failures.
+One trial per task/model means no within-policy repeat identification here.
+The already-disclosed role corrections/API logprob gaps are not our discovery.
+
+Both analysis manifests/input hashes and deterministic read-only replay pass.
+Cluster manifest3b9d8702023070a55b40e34a4e86003f051efbf4fe5f25b0a3f4c864e2e2447d;
+AgentUQ manifest1b6c2adeaaef34d8714cce6daf386349fb51da5ffcec795d29d3330249c1616e.
+An initial verifier failed on JSON histogram int/string keys; corrected verifier,
+added replay/tamper test, preserved all artifacts. Eight targeted tests pass.
+
+Decision: no paper or GPU expansion. The goal remains unmet but not blocked:
+real public trajectories now support further offline investigation. No live CPU
+or GPU experiment, monitor, or automatically executing experiment queue created.

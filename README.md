@@ -11,6 +11,13 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
+**Latest offline research:** the [agent-monitoring audit](docs/AGENT_MONITORING_RESEARCH_AUDIT_20260904.md)
+checks an exact clustered-certification failure and inventories three public
+datasets. All 556 AgentUQ v1.1 trajectories are downloaded, hashed and analyzed
+locally, with a replay-verified descriptive baseline. No new model calls or GPU
+jobs were launched. The statistical issue is known and no novel useful monitor
+has been demonstrated; this is research progress, not a paper green light.
+
 **Updated 4 September 2026. No candidate has earned paper expansion.** Phantom
 Rollback and Reward Extinction Debt both completed, but their prerequisites
 failed: these are **invalid assays/model organisms**, not universal negative
