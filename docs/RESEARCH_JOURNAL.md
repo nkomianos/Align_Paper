@@ -1347,3 +1347,44 @@ DEV artifacts/cache_draft_context_dev_v1 manifest
 Hashes and metrics verified, not forward replay.20combinedtests pass. All sources,
 model, dataset, logits and failed premises preserved. No live process or GPU.
 Goal remains unmet; concrete next step in docs/CACHE_NATURAL_DRAFTS_20260904.md.
+
+## 2026-09-04 — repaired draft result and modern decoder qualification
+
+Previous status turn verified new BERT results and live idle GPU state; progress
+in evidence, not a waiting experiment. This goal continuation recorded those
+results and moved to the released OPDLM-0.6B architecture locally. No paid GPU
+resumed. Goal remains unmet; no candidate paper green light.
+
+Repaired BERT format: 128 new sentences/50 articles, 1,408 forwards/164.33s,
+119 lexical drafts, 43 initially correct. Fresh60 vs corrected-stale52 correct;
+fresh repairs19/loses2 vs cache repairs15/loses6. Formal screen inconclusive:
+19 recoverable errors vs20 required. Do not enlarge just to pass that cutoff.
+Evidence and full table: docs/CACHE_SHORT_CONTEXT_20260904.md; manifest
+26e7ce4f2a22f07c5d8c5b7c8145600b4853b45f1340416218b5017208cb42d4.
+
+Downloaded public OPDLM-0.6B weights (~1.19GB) and pinned author source; weight
+SHA matches Hub LFS. Executed reviewed model/mask AST definitions, not the whole
+upstream worker module. Uses current local Transformers/PyTorch; no native GPU
+kernel claim. Checked block-causal mask, grouped-query projections, RoPE,
+native/plain equivalence and final-layer single-seed independence. The optional
+ARM logit shift is disabled in the released BD3LM config; it is not applied.
+
+16-case unprompted WikiText DEV: 80 forwards, recording failed only on metadata
+set serialization. Saved raw logits preserved; recording fix plus fresh-root
+80-forward replay reproduced all logits exactly. Native seed2/16, other1/48;
+all-layer corrected seed2/16, other2/48; late-only seed2/16, other1/48. No useful
+late-only drafting gain shown. Native/plain error0, late seed error6.91e-6.
+Verified manifest6627d3609325d394f4e82019d5a44732445d5cf80a6ab03244a502ee92730dc9.
+
+Native chat DEV: an initial caller API error stopped before inference; preserved.
+Fixed return_dict=False then36 forwards/16.15s. Expected facts in all4 responses,
+but answer-only noncompliance, duplicated punctuation and 'five5' prevent a clean
+format claim. All4 terminate. Manifest
+a6f019bc3ab97c45dce2dc36d71379a81fbc8eee3d4d4094f8c70b7ad3eb94ef.
+Hashes/model/source/record/call counts verified; not a second chat replay.
+
+Next: actual chat denoising trajectories with model-produced context and paired
+verification/drafting measurements, not more BERT examples or an invented paper
+claim. Protocol/rationale and priors in docs/OPDLM_CACHE_DEV_20260904.md.
+25 combined tests pass. All model artifacts, evidence and attempts preserved.
+No active CPU/GPU job, no expansion automation, no external publication or push.

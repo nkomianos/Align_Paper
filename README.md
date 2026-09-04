@@ -11,14 +11,31 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
+**Latest modern-decoder qualification:** [OPDLM cache DEV](docs/OPDLM_CACHE_DEV_20260904.md)
+ran locally on pinned OPDLM-0.6B. Native and instrumented attention agree exactly,
+but a 16-case Wikipedia continuation DEV does not show a useful late-cache
+advantage (fresh 3/64 exact token matches; late-only also 3/64). Four native chat
+prompts yield the expected facts with formatting/duplication problems. This
+qualifies a local implementation for an on-policy diagnostic, not a paper.
+160 paired forwards including an exact replay, plus 36 chat forwards; 25 combined
+tests pass. All evidence preserved. No active GPU or CPU queue.
+
+**Latest corrected-format result:** [short-right-context cached verification](docs/CACHE_SHORT_CONTEXT_20260904.md)
+completed 1,408 CPU forwards on 128 new sentences. Fresh verification scores
+60/128 versus 52/128 for corrected stale cache; 119/128 initial drafts are
+lexical. The formal screen is inconclusive (19 fresh-recoverable errors versus
+20 required), not a paper go. The next useful step is modern-decoder validation
+and a drafting/verification tradeoff, not a larger BERT run to cross that cutoff.
+Evidence verified; 23 combined tests pass. No active GPU queue.
+
 **Latest natural-draft follow-up:** [public-text cached verification](docs/CACHE_NATURAL_DRAFTS_20260904.md)
 completed 1,408 CPU forwards on 128 WikiText validation cases. Fresh masking
 scores 73/128 versus 62/128 with corrected stale cache, but every initial draft
 is punctuation: the truncated-context format fails the intended lexical-draft
 premise. This is not a paper green light despite the numerical rule passing.
 A separate 48-forward DEV check with three right-context tokens produces
-23/24 lexical guesses and 13/24 correct; the repaired full comparison remains
-unrun. All evidence preserved, 20 combined tests pass, no active GPU queue.
+23/24 lexical guesses and 13/24 correct; the repaired comparison is completed
+above. All earlier evidence is preserved.
 
 **Latest pretrained follow-up:** the [cached-verification BERT audit](docs/CACHE_VERIFICATION_BERT_20260904.md)
 completed 288 CPU forwards on 24 frozen clozes. The official COVER source is now
