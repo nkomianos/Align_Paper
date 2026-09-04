@@ -1,0 +1,20 @@
+{
+  "scope": "public_validation_text_developmental_reconstruction_not_diffusion_replication",
+  "dataset": "Salesforce/wikitext",
+  "dataset_revision": "b08601e04326c79dfdd32d625aee71d232d685c3",
+  "dataset_file": "wikitext-2-raw-v1/validation-00000-of-00001.parquet",
+  "dataset_sha256": "204929b7ff9d6184953f867dedb860e40aa69c078fc1e54b3baaa8fb28511c4c",
+  "license": "CC-BY-SA-3.0 and GFDL per dataset card",
+  "model": "google-bert/bert-base-uncased",
+  "model_revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+  "cases": 128,
+  "max_per_article": 4,
+  "min_tokens": 20,
+  "max_tokens": 96,
+  "min_side_tokens": 8,
+  "selection_seed": 74103,
+  "equivalence_tolerance": 0.0002,
+  "minimum_recoverable_drafts": 20,
+  "minimum_net_clean_gain_cases": 5,
+  "automatic_expansion": false
+}

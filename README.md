@@ -11,6 +11,15 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
+**Latest natural-draft follow-up:** [public-text cached verification](docs/CACHE_NATURAL_DRAFTS_20260904.md)
+completed 1,408 CPU forwards on 128 WikiText validation cases. Fresh masking
+scores 73/128 versus 62/128 with corrected stale cache, but every initial draft
+is punctuation: the truncated-context format fails the intended lexical-draft
+premise. This is not a paper green light despite the numerical rule passing.
+A separate 48-forward DEV check with three right-context tokens produces
+23/24 lexical guesses and 13/24 correct; the repaired full comparison remains
+unrun. All evidence preserved, 20 combined tests pass, no active GPU queue.
+
 **Latest pretrained follow-up:** the [cached-verification BERT audit](docs/CACHE_VERIFICATION_BERT_20260904.md)
 completed 288 CPU forwards on 24 frozen clozes. The official COVER source is now
 located and its relevant information flow inspected. Candidate dependence

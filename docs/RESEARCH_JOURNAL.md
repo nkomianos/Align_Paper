@@ -1312,3 +1312,38 @@ Byte/model integrity and metric recomputation verified, not full forward replay.
 All artifacts retained. No live process, paid GPU, or expansion queue. Practical
 paper story held; next needs natural mistaken drafts and cost-matched decisions.
 See docs/CACHE_VERIFICATION_BERT_20260904.md. Goal remains active and unmet.
+
+## 2026-09-04 — Public-text drafts expose a format confound
+
+Previous goal turn was progress. Downloaded only pinned WikiText-2 raw validation
+parquet (657,209bytes), matching upstreamSHA204929b7ff9d6184953f867dedb860e40aa69c078fc1e54b3baaa8fb28511c4c.
+Before model inference, froze128cases/52articles by deterministic token eligibility
+and seeded content hash, capped4/article. No model-score-based selection.
+Prepared manifest8d47777db8fe50b70feb97e09e12986e9ffd2475afb7cf9224214e0ec88e9656.
+
+Ran1,408CPUforwards,177.59sec inference/summary loop, no updates. Fresh73/128,
+stale corrected62, uncorrected61, refreshed corrected59, neutral corrected69,
+last-layer-only73. Native/plainexact, last-onlyerror2.265e-5. Fresh-only12 versus
+cache-only1; net8.594pp, article-bootstrap descriptive95% interval3.85–13.99pp.
+Frozen numerical runner passes its developmental criterion; output preserved.
+
+PI audit finds all128initialdrafts are punctuation(108period,18semicolon,1?,1!).
+Target at truncated sentence end induces a bad lexical-draft apparatus. No
+initial correct predictions exist, so no measurement of their regressions is
+possible. Corrected cache retains old punctuation on0/73recoverable cases:
+do not claim demonstrated repeated endorsement of the old wrong answer.
+No expansion justified by this apparent gain; numerical checks are insufficient.
+
+Separate post-hoc DEV format qualification ran48native forwards on first24
+exposedcases. Zero rightcontext yields0/24lexical,0correct; preserving3right
+contexttokens yields23/24lexical,13correct. No cache-method comparison here.
+Next freeze corrected format and exclude these24DEVcases from primary testing.
+Current128case outcomes are all exposed; a new split is developmental, not pristine.
+
+Main evidence artifacts/cache_natural_drafts_v1 manifest
+7da8b8c731c4592f713ee3e51d5d8074b96c428ed9b8112dcfa3f2c1f388582f.
+DEV artifacts/cache_draft_context_dev_v1 manifest
+090d3818c70e9b2304afab289f11bebedd02d17308e4877436b2cf82d6e4d43f.
+Hashes and metrics verified, not forward replay.20combinedtests pass. All sources,
+model, dataset, logits and failed premises preserved. No live process or GPU.
+Goal remains unmet; concrete next step in docs/CACHE_NATURAL_DRAFTS_20260904.md.
