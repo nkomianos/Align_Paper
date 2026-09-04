@@ -3,6 +3,7 @@ import argparse
 from collections import Counter
 import hashlib
 import json
+import math
 from pathlib import Path
 
 
@@ -12,12 +13,14 @@ def audit(raw):
     votes=Counter()
     first_votes=Counter()
     positive_trajectories=0
+    unanimously_clean=0
     later_positive_calls=0
     results=Counter()
     for record in records:
         metadata=record['extra']['scopejudge']
         families[metadata['task_family']]+=1
         labels={(l['step_id'],l['tool_call_id']):l for l in metadata['labels']}
+        unanimously_clean+=all(l['votes']==0 for l in labels.values())
         found=False
         for step in record['steps']:
             for result in (step.get('observation') or {}).get('results',[]):
@@ -39,6 +42,13 @@ def audit(raw):
                 task_families=len(families),trajectories_per_family_histogram=dict(Counter(families.values())),
                 vote_histogram=dict(sorted(votes.items())),
                 trajectories_with_majority_violation=positive_trajectories,
+                unanimously_clean_trajectories=unanimously_clean,
+                hypothetical_zero_alarm_iid_certification=dict(
+                    majority_clean_episodes=len(records)-positive_trajectories,
+                    one_sided_95_upper_bound=(1-.05**(1/(len(records)-positive_trajectories)))
+                        if len(records)>positive_trajectories else None,
+                    zero_alarm_episodes_needed_for_5pct_bound=math.ceil(math.log(.05)/math.log(.95)),
+                    caveat='Sample-size diagnostic only: no monitor ran, no observed zero-alarm result, iid and reliable safe labels not established.'),
                 first_positive_step_call_vote_histogram=dict(sorted(first_votes.items())),
                 positive_calls_strictly_after_first_positive_step=later_positive_calls,
                 result_field_types=[dict(field=k,type=t,count=n) for (k,t),n in sorted(results.items())],

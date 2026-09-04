@@ -24,6 +24,10 @@ The subsequent leave-one-expert-out check found first/later positive agreement
 79.27%/83.53%, with the trajectory-bootstrap difference interval crossing zero.
 Public model prediction files are explicitly uncommitted. The generic
 first-boundary direction is parked, not promoted to a GPU sweep.
+The [calibration follow-up](docs/MONITOR_CALIBRATION_NOVELTY_CHECK_20260904.md)
+found direct prior work on session-level risk control and insufficient independent
+safe episodes for a simple 5%-risk/95%-confidence certification claim. It also
+clarifies that inconclusive evidence is not a hypothesis refutation.
 
 ### Current GPU window — September 4, 15:45 UTC
 
