@@ -596,3 +596,18 @@ paired text/C2C comparisons, separate calibration/evaluation data, and strong
 alignment plus version-check/text-fallback baselines. A broken adapter alone is
 not a strong contribution. Existing compatible-representation learning further
 limits novelty. No training or new GPU job was launched during this audit.
+
+## 2026-09-04 — Published-task DEV data and strict projector load verified
+
+Prepared 128 source-pinned validation examples (64 OpenBookQA, 64 ARC-Challenge)
+with label-independent hashed selection and separated answer key. No TEST split
+accessed. Eight selection/inventory tests pass. Cases digest
+`a279178264c7b2e66c65d852193723925b42482d532ef6dc568a5bf3d0ce046b`.
+These are ordinary public validation examples, not novel benchmark data.
+
+Loaded released C2C projector 0 strictly on local CPU after matching its public
+LFS digest. Synthetic-tensor forward shapes, finiteness and eval determinism
+pass. This removes a checkpoint-schema concern for one module but does not
+validate full cache fusion, the ARM64 dependency environment, or task accuracy.
+The active reasoning DEV GPU process continued unchanged (53/96 calls at the
+last process check); no outcome peeking or adjustment was performed.

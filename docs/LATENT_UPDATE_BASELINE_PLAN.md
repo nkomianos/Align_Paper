@@ -44,6 +44,33 @@ input model, the contribution is probably too obvious.
 inventory and available LFS digests without loading weights or executing upstream
 code. It does not certify model behavior or environment compatibility.
 
+### Completed CPU/data preflight, 2026-09-04
+
+`scripts/prepare_c2c_baseline_dev.py` prepared 64 OpenBookQA and 64 ARC-Challenge
+validation examples, selected by a fixed salted hash of source ID. OpenBookQA
+has 500 eligible validation examples; ARC-Challenge has 291 of 299 with four
+source labels in ABCD order. The latter restriction matches the audited upstream
+formatter/scorer contract, not answer correctness. Selection is independent of
+labels and row order. No TEST split was downloaded. This publicly available DEV
+slice cannot support claims of new uncontaminated held-out generalization.
+
+- Prepared root: `artifacts/c2c_baseline_dev_20260904_v1`.
+- Public cases SHA-256: `a279178264c7b2e66c65d852193723925b42482d532ef6dc568a5bf3d0ce046b`.
+- Manifest SHA-256: `7104a4165454138c6ca24099bcd6dc8f8f470b228b2b43590c03eefe1aa2be87`.
+- OpenBookQA revision: `388097ea7776314e93a529163e0fea805b8a6454`.
+- ARC revision: `210d026faf9955653af8916fad021475a3f00453`.
+
+`scripts/inspect_c2c_projector_cpu.py` downloaded only projector 0, checked its
+released LFS SHA-256, loaded every state-dict key strictly, and ran deterministic
+finite synthetic-tensor forwards on CPU. Result root:
+`artifacts/c2c_projector_cpu_20260904T0452Z`. Weight digest:
+`f60f3b3e5fd27a96cee8d9d30de8bfdd2a88bc041ae70ade8cb9e29c06d5e4a8`.
+This used local torch 2.11.0+cpu / Transformers 5.6.2, not the published full-model
+environment. It tests one projection module only: no receiver or sender model
+loaded, no natural-language evaluation, and no inference-time cache hooks tested.
+The key gate is closed and value gate open for this layer in eval mode; a closed
+learned gate is not a loading failure. Full baseline inference remains pending.
+
 ## Before paying for update training
 
 1. Reproduce inference with the released fuser on a predetermined published-task
