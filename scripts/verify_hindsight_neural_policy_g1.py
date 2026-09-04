@@ -78,7 +78,7 @@ def main() -> None:
 
     spec = json.loads((args.root / "spec.json").read_text(encoding="utf-8"))
     expected_spec = {
-        "version": "policy-learning-g1-v3-oracle-distance",
+        "version": "policy-learning-g1-v4-separate-baselines",
         "model": MODEL_ID,
         "revision": MODEL_REVISION,
         "official_sdpo_repository": OFFICIAL_SDPO_REPOSITORY,

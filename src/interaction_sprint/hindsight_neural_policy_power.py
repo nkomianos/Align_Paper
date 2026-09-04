@@ -133,7 +133,7 @@ def summarize_power_cells(
     )
     false_direction_qualifications = sum(
         cell["summary"]["decision"] == "NEURAL_POLICY_G1_QUALIFIED"  # type: ignore[index]
-        and cell["summary"]["aggregate"]["mean_oracle_distance_gain"] <= 0  # type: ignore[index]
+        and cell["summary"]["aggregate"]["mean_sdpo_oracle_distance_gain"] <= 0  # type: ignore[index]
         for cell in alternatives
     )
     gates = {

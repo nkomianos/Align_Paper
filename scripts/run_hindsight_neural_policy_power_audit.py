@@ -43,7 +43,7 @@ def main() -> None:
     alternatives, nulls = build_power_cells(targets)
     summary = summarize_power_cells(alternatives, nulls)
     write("spec.json", {
-        "version": "policy-g1-rule-power-v1",
+        "version": "policy-g1-rule-power-v2",
         "effective_gains": list(EFFECTIVE_GAINS),
         "sft_gain_multipliers": list(SFT_GAIN_MULTIPLIERS),
         "alternative_requirement": "at least 6 of 9",

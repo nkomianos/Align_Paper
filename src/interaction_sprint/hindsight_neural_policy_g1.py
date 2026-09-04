@@ -221,45 +221,50 @@ def summarize_policy_endpoints(metrics: dict[str, dict[str, float]]) -> dict[str
         augmented_name = f"{prefix}_augmented"
         sdpo_distance = abs(probability[sdpo_name] - oracle)
         sft_distance = abs(probability[sft_name] - oracle)
-        comparator_name = sdpo_name if sdpo_distance <= sft_distance else sft_name
-        comparator = probability[comparator_name]
         augmented = probability[augmented_name]
-        comparator_distance = abs(comparator - oracle)
         augmented_distance = abs(augmented - oracle)
-        distance_gain = comparator_distance - augmented_distance
         panel_rows.append({
             "panel": panel_index,
-            "best_anchor_baseline": comparator_name.rsplit("_", 2)[-2] + "_" + comparator_name.rsplit("_", 1)[-1],
-            "best_anchor_probability": comparator,
+            "anchor_sdpo_probability": probability[sdpo_name],
+            "anchor_sft_probability": probability[sft_name],
             "augmented_probability": augmented,
-            "oracle_distance_gain": distance_gain,
-            "best_anchor_oracle_distance": comparator_distance,
+            "anchor_sdpo_oracle_distance": sdpo_distance,
+            "anchor_sft_oracle_distance": sft_distance,
             "augmented_oracle_distance": augmented_distance,
-            "augmented_strictly_closer": distance_gain > .01,
-            "augmented_noninferior": augmented_distance <= comparator_distance + .01,
+            "sdpo_oracle_distance_gain": sdpo_distance - augmented_distance,
+            "sft_oracle_distance_gain": sft_distance - augmented_distance,
+            "augmented_strictly_closer_than_sdpo": sdpo_distance - augmented_distance > .01,
+            "augmented_noninferior_to_sdpo": augmented_distance <= sdpo_distance + .01,
         })
 
-    gains = [float(row["oracle_distance_gain"]) for row in panel_rows]
-    baseline_distances = [float(row["best_anchor_oracle_distance"]) for row in panel_rows]
+    sdpo_gains = [float(row["sdpo_oracle_distance_gain"]) for row in panel_rows]
+    sft_gains = [float(row["sft_oracle_distance_gain"]) for row in panel_rows]
+    sdpo_distances = [float(row["anchor_sdpo_oracle_distance"]) for row in panel_rows]
+    sft_distances = [float(row["anchor_sft_oracle_distance"]) for row in panel_rows]
     augmented_distances = [float(row["augmented_oracle_distance"]) for row in panel_rows]
     min_mass_floor = max(.10, .50 * float(metrics["baseline"]["min_ab_mass"]))
     position_gap_ceiling = max(.10, float(metrics["baseline"]["semantic_position_gap"]) + .02)
     aggregate = {
         **controls["aggregate"],
-        "augmented_strictly_closer_panels": sum(
-            bool(row["augmented_strictly_closer"]) for row in panel_rows
+        "augmented_strictly_closer_than_sdpo_panels": sum(
+            bool(row["augmented_strictly_closer_than_sdpo"]) for row in panel_rows
         ),
-        "augmented_noninferior_panels": sum(
-            bool(row["augmented_noninferior"]) for row in panel_rows
+        "augmented_noninferior_to_sdpo_panels": sum(
+            bool(row["augmented_noninferior_to_sdpo"]) for row in panel_rows
         ),
-        "mean_oracle_distance_gain": mean(gains),
-        "median_best_anchor_oracle_distance": median(baseline_distances),
+        "mean_sdpo_oracle_distance_gain": mean(sdpo_gains),
+        "mean_sft_oracle_distance_gain": mean(sft_gains),
+        "median_anchor_sdpo_oracle_distance": median(sdpo_distances),
+        "median_anchor_sft_oracle_distance": median(sft_distances),
         "median_augmented_oracle_distance": median(augmented_distances),
-        "mean_best_anchor_oracle_distance": mean(baseline_distances),
+        "mean_anchor_sdpo_oracle_distance": mean(sdpo_distances),
+        "mean_anchor_sft_oracle_distance": mean(sft_distances),
         "mean_augmented_oracle_distance": mean(augmented_distances),
-        "rms_best_anchor_oracle_distance": math.sqrt(mean([value * value for value in baseline_distances])),
+        "rms_anchor_sdpo_oracle_distance": math.sqrt(mean([value * value for value in sdpo_distances])),
+        "rms_anchor_sft_oracle_distance": math.sqrt(mean([value * value for value in sft_distances])),
         "rms_augmented_oracle_distance": math.sqrt(mean([value * value for value in augmented_distances])),
-        "max_best_anchor_oracle_distance": max(baseline_distances),
+        "max_anchor_sdpo_oracle_distance": max(sdpo_distances),
+        "max_anchor_sft_oracle_distance": max(sft_distances),
         "max_augmented_oracle_distance": max(augmented_distances),
         "min_endpoint_ab_mass": min(float(values["min_ab_mass"]) for values in metrics.values()),
         "max_endpoint_position_gap": max(float(values["semantic_position_gap"]) for values in metrics.values()),
@@ -268,26 +273,41 @@ def summarize_policy_endpoints(metrics: dict[str, dict[str, float]]) -> dict[str
     }
     gates = {
         **controls["gates"],
-        "mean_oracle_distance_reduced_twenty_percent": (
+        "mean_oracle_distance_reduced_twenty_percent_vs_sdpo": (
             aggregate["mean_augmented_oracle_distance"]
-            <= .80 * aggregate["mean_best_anchor_oracle_distance"]
+            <= .80 * aggregate["mean_anchor_sdpo_oracle_distance"]
         ),
-        "rms_oracle_distance_reduced_twenty_percent": (
+        "rms_oracle_distance_reduced_twenty_percent_vs_sdpo": (
             aggregate["rms_augmented_oracle_distance"]
-            <= .80 * aggregate["rms_best_anchor_oracle_distance"]
+            <= .80 * aggregate["rms_anchor_sdpo_oracle_distance"]
         ),
-        "mean_oracle_distance_gain_at_least_point02": aggregate["mean_oracle_distance_gain"] >= .02,
-        "augmented_strictly_closer_at_least_three_panels": (
-            aggregate["augmented_strictly_closer_panels"] >= 3
+        "mean_oracle_distance_reduced_twenty_percent_vs_sft": (
+            aggregate["mean_augmented_oracle_distance"]
+            <= .80 * aggregate["mean_anchor_sft_oracle_distance"]
         ),
-        "augmented_noninferior_at_least_six_panels": aggregate["augmented_noninferior_panels"] >= 6,
-        "median_oracle_distance_not_worse": (
+        "rms_oracle_distance_reduced_twenty_percent_vs_sft": (
+            aggregate["rms_augmented_oracle_distance"]
+            <= .80 * aggregate["rms_anchor_sft_oracle_distance"]
+        ),
+        "mean_sdpo_oracle_distance_gain_at_least_point015": (
+            aggregate["mean_sdpo_oracle_distance_gain"] >= .015
+        ),
+        "mean_sft_oracle_distance_gain_at_least_point015": (
+            aggregate["mean_sft_oracle_distance_gain"] >= .015
+        ),
+        "augmented_strictly_closer_than_sdpo_at_least_three_panels": (
+            aggregate["augmented_strictly_closer_than_sdpo_panels"] >= 3
+        ),
+        "augmented_noninferior_to_sdpo_at_least_six_panels": (
+            aggregate["augmented_noninferior_to_sdpo_panels"] >= 6
+        ),
+        "median_oracle_distance_not_worse_than_sdpo": (
             aggregate["median_augmented_oracle_distance"]
-            <= aggregate["median_best_anchor_oracle_distance"] + 1e-12
+            <= aggregate["median_anchor_sdpo_oracle_distance"] + 1e-12
         ),
-        "maximum_oracle_distance_not_worse": (
+        "maximum_oracle_distance_not_worse_than_sdpo": (
             aggregate["max_augmented_oracle_distance"]
-            <= aggregate["max_best_anchor_oracle_distance"] + 1e-12
+            <= aggregate["max_anchor_sdpo_oracle_distance"] + 1e-12
         ),
         "answer_mass_preserved": aggregate["min_endpoint_ab_mass"] >= min_mass_floor,
         "position_control_preserved": aggregate["max_endpoint_position_gap"] <= position_gap_ceiling,

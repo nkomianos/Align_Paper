@@ -25,4 +25,4 @@ def test_surrogate_grid_is_complete_and_null_reuses_anchor_target():
     cell = surrogate_cell(targets, 2.5, 1., null_correction=True)
     for panel in range(8):
         metrics = cell["summary"]["panels"][panel]
-        assert metrics["augmented_probability"] == metrics["best_anchor_probability"]
+        assert metrics["augmented_probability"] == metrics["anchor_sdpo_probability"]

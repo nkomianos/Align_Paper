@@ -122,7 +122,7 @@ def main() -> None:
     schedules = build_policy_schedules(rows, panels)
     by_id = {str(row["id"]): row for row in rows}
     spec = {
-        "version": "policy-learning-g1-v3-oracle-distance",
+        "version": "policy-learning-g1-v4-separate-baselines",
         "model": MODEL_ID,
         "revision": MODEL_REVISION,
         "official_sdpo_repository": OFFICIAL_SDPO_REPOSITORY,

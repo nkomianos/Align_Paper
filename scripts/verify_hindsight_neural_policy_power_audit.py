@@ -35,7 +35,7 @@ def main() -> None:
         if not (args.root / name).is_file() or sha256(args.root / name) != expected:
             raise SystemExit(f"manifest mismatch: {name}")
     expected_spec = {
-        "version": "policy-g1-rule-power-v1",
+        "version": "policy-g1-rule-power-v2",
         "effective_gains": list(EFFECTIVE_GAINS),
         "sft_gain_multipliers": list(SFT_GAIN_MULTIPLIERS),
         "alternative_requirement": "at least 6 of 9",

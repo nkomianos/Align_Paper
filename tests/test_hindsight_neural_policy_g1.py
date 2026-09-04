@@ -84,7 +84,7 @@ def test_policy_summary_qualifies_clear_policy_learning_effect():
         metrics[f"panel_{panel_index:02d}_augmented"] = _metric(.73)
     summary = summarize_policy_endpoints(metrics)
     assert summary["decision"] == "NEURAL_POLICY_G1_QUALIFIED"
-    assert summary["aggregate"]["augmented_strictly_closer_panels"] == 8
+    assert summary["aggregate"]["augmented_strictly_closer_than_sdpo_panels"] == 8
 
 
 def test_policy_summary_rejects_correction_that_only_matches_anchor_baselines():
@@ -97,7 +97,7 @@ def test_policy_summary_rejects_correction_that_only_matches_anchor_baselines():
         metrics[f"panel_{panel_index:02d}_augmented"] = _metric(.63)
     summary = summarize_policy_endpoints(metrics)
     assert summary["decision"] == "NEURAL_POLICY_G1_NOT_QUALIFIED"
-    assert not summary["gates"]["mean_oracle_distance_reduced_twenty_percent"]
+    assert not summary["gates"]["mean_oracle_distance_reduced_twenty_percent_vs_sdpo"]
 
 
 def test_policy_controls_stop_before_sparse_training_when_oracle_does_not_move():

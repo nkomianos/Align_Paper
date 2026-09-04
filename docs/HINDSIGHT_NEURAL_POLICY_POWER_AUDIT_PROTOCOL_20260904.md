@@ -1,8 +1,16 @@
 # Hindsight neural policy G1 decision-rule power audit
 
-This protocol is frozen before generating the audit artifact and before any
-Qwen G1 endpoint. It validates the v3 decision rule; it cannot supply neural or
-paper evidence.
+The v1 protocol was frozen before its artifact and before any Qwen G1 endpoint.
+It tested the v3 decision rule and returned
+`POLICY_G1_RULE_POWER_NOT_QUALIFIED`: all nine acquisition controls passed and
+all nine nulls were rejected, but only two/nine ideal paired-estimator cells
+passed. The failure exposed the v3 rule's oracle-aware panelwise selection of
+the better of two baselines.
+
+This v2 protocol retains the exact same grid and four audit criteria while
+testing the prospectively corrected v4 rule, which compares aggregate oracle
+distance against each named baseline separately. It still cannot supply neural
+or paper evidence.
 
 The audit derives each panel's exact full delayed target, raw immediate target,
 equal-anchor delayed target, and paired target

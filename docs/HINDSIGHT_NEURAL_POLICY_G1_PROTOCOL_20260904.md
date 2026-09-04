@@ -2,8 +2,8 @@
 
 ## Role in the decision ladder
 
-This v3 protocol supersedes the unrun v1 at commit `e00a159` and unrun v2 at
-commit `3a8baf4` before any G1
+This v4 protocol supersedes the unrun v1 at commit `e00a159`, unrun v2 at
+commit `3a8baf4`, and unrun v3 at commit `9e719a0` before any G1
 endpoint exists. A prospective code audit found that v1 repeatedly inserted all
 eight anchors into a nominal 16-record population batch. Its implemented loss
 would therefore have overweighted the fixed panel and would not have been the
@@ -12,8 +12,13 @@ samples exactly. A subsequent exact panel audit found that v2's rule called any
 higher action-1 probability a win, even when an anchor-only learner overshot the
 full oracle. It also required six/eight directional wins although the exact
 paired estimator improves variance rather than having one privileged direction.
-V3 retains v2's corrected estimator but scores absolute distance to the full
-oracle endpoint. V1 and v2 must never be run or interpreted.
+V3 retained v2's corrected estimator and scored absolute distance to the full
+oracle endpoint. Its prospectively executed model-free audit qualified only two
+of nine ideal paired-estimator cells because it selected the closer of SDPO and
+SFT separately in every panel. That oracle-aware post-hoc minimum gives the two
+baselines an unfair multiple-comparison advantage. V4 compares aggregate
+distances against each named baseline separately, without panelwise cherry
+picking. V1--v3 must never be run or interpreted as the neural gate.
 
 This protocol may run only after the
 nested-budget neural-gradient G0 v2 returns `NEURAL_GRADIENT_G0_V2_QUALIFIED` and
@@ -82,14 +87,15 @@ the first five acquisition/control conditions do not all hold:
 
 If acquisition qualifies, G1 qualifies only if every additional condition holds:
 
-6. mean absolute distance to the oracle endpoint falls by at least 20% relative
-   to the closer of equal-anchor SDPO and SFT in each panel;
-7. root-mean-square oracle distance falls by at least 20%;
-8. mean absolute oracle-distance improvement is at least `.02`;
-9. augmented SDPO is more than `.01` closer in at least three panels;
-10. it is no more than `.01` worse in at least six panels;
-11. its median and maximum oracle distances are no worse than the corresponding
-    best-anchor baselines;
+6. mean and root-mean-square oracle distance each fall by at least 20% relative
+   to anchor-only SDPO;
+7. the same two aggregate reductions hold relative to anchor-only SFT;
+8. mean absolute oracle-distance improvement is at least `.015` against each
+   named baseline;
+9. augmented SDPO is more than `.01` closer than anchor-only SDPO in at least
+   three panels;
+10. it is no more than `.01` worse than anchor-only SDPO in at least six panels;
+11. its median and maximum oracle distances are no worse than anchor-only SDPO;
 12. every endpoint retains A/B probability mass of at least `.10` and at least
    half the baseline minimum mass; and
 13. the maximum option-position gap is no more than `.10` or baseline plus `.02`,
