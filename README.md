@@ -40,6 +40,11 @@ The [nested-prefix feasibility check](docs/BELIEF_RECONSTRUCTION_COHORT_20260904
 identifies 305 non-personalized conversations for a third-versus-sixth-user-turn
 comparison that preserves early evidence. This is a new developmental cohort,
 not the original study's filter or a model-performance result.
+The [query-cluster precision check](docs/BELIEF_RECONSTRUCTION_PRECISION_20260904.md)
+now assigns 72 conversations to DEV and 233 to confirmation without reading
+endpoints. With hypothetical within-query correlation .3, confirmation has
+about 47 independent-observation equivalents; this is a sensitivity calculation,
+not measured power or a human-data effect. No inference has started.
 
 The [ScopeJudge audit](docs/SCOPEJUDGE_OFFLINE_SCHEMA_AUDIT_20260904.md)
 verified 4,897 labeled calls and constructed metadata-filtered pre-execution
