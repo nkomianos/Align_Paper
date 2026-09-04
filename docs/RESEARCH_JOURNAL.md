@@ -1978,3 +1978,29 @@ Compilation, shell syntax, and all 14 targeted tests pass. No policy endpoint
 exists. Expected post-cache GH200 time is 25--70 minutes for G0 and 3--6 hours
 for conditional G1; the independent PUPPET reader remains 30--60 minutes. The
 scientific status remains conditional yellow, not greenlit.
+
+## 2026-09-04 -- G1 pre-execution audit finds and removes two protocol defects
+
+Before any neural G1 endpoint, audited the estimator implementation and found
+that v1 repeated all eight anchors inside its nominal population batch. The
+implemented objective would not have equaled the claimed population immediate
+term plus paired delayed-minus-immediate correction. Superseded it at commit
+`3a8baf4` with separate fixed population batches and anchor corrections.
+
+A second exact audit showed that v2/v3 called higher action-1 probability a win
+and then selected whichever of SDPO or SFT happened to lie closest to the oracle
+inside each panel. The former rewards overshooting; the latter gives two
+baselines a panelwise oracle-aware multiple-comparison advantage. The frozen v1
+power audit at commit `4fc5a67` therefore correctly returned
+`POLICY_G1_RULE_POWER_NOT_QUALIFIED`: all controls and null rejections behaved,
+but only two/nine ideal paired cells qualified. Evidence manifest SHA-256 is
+`a88559c46bceeaa9dfd2c78d45a283df67627502222798f5cf646577924540c2`.
+
+Prospectively replaced that rule with aggregate oracle-distance comparisons
+against each named baseline separately at commit `f68ffdd`, without changing
+the estimator, panels, model, or observing a neural endpoint. The same frozen
+nine-cell grid then returned `POLICY_G1_RULE_POWER_QUALIFIED`: 9/9 ideal paired
+cells qualified, 0/9 matched nulls qualified, and all acquisition controls
+passed. Verified manifest SHA-256 is
+`080a934b05b51b2e8e013aa6bea3e77bd0ebd38c394d409d19362afacc96ea23`.
+This is decision-protocol validation, not Qwen or paper evidence.

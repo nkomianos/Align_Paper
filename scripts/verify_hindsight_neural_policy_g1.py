@@ -37,6 +37,7 @@ from interaction_sprint.hindsight_neural_policy_g1 import (
     summarize_policy_controls,
     summarize_policy_endpoints,
 )
+from run_hindsight_neural_policy_g1 import POLICY_RULE_POWER_AUDIT_MANIFEST_SHA256
 
 
 def sha256(path: Path) -> str:
@@ -97,6 +98,7 @@ def main() -> None:
         "hindsight_block": HINDSIGHT_BLOCK,
         "trained_arms": 2 + 3 * POLICY_PANEL_COUNT,
         "required_gradient_manifest_sha256": prerequisite["manifest_sha256"],
+        "policy_rule_power_audit_manifest_sha256": POLICY_RULE_POWER_AUDIT_MANIFEST_SHA256,
         "paper_green_light": False,
     }
     if spec != expected_spec:

@@ -33,9 +33,9 @@ committed or placed in a public archive.
    split or any post-G1 expansion automatically.
 
 Estimated paid time after the model is cached is 25--70 minutes for gradient G0,
-3--6 hours for conditional policy G1, and 30--60 minutes for the capable reader.
+4--8 hours for conditional policy G1, and 30--60 minutes for the capable reader.
 Allow another 15--40 minutes on a fresh host for environment validation and
-model download. The pass-path total is approximately 4--8.2 hours; a failed G0
+model download. The pass-path total is approximately 5--10.2 hours; a failed G0
 skips G1 and reduces the total to about 1.2--2.8 hours.
 
 ## Remote launch contract

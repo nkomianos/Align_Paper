@@ -59,9 +59,12 @@ tests 26 independently reset training arms across eight disjoint sparse panels.
 It asks whether the paired delayed-minus-immediate correction beats both
 equal-label SDPO and supervised baselines and approaches a full delayed oracle
 after actual optimizer updates. The runner, checkpoints, failure recovery and
-read-only verifier are implemented at commit `1b55bb9`; estimated GH200 time is
-3--6 hours. The capable PUPPET reader remains an independent 30--60-minute
-human-data substrate check. No GPU host is currently reachable;
+read-only verifier are implemented. A prospectively executed model-free audit
+first rejected an unfair, underpowered endpoint rule; the corrected rule then
+qualified 9/9 ideal paired-estimator cells while rejecting 9/9 matched nulls.
+That validates protocol power, not Qwen. Estimated GH200 time is 4--8 hours.
+The capable PUPPET reader remains an independent 30--60-minute human-data
+substrate check. No GPU host is currently reachable;
 `192.222.57.245` times out, so no paid process is active there.
 
 ### CPU-only follow-up

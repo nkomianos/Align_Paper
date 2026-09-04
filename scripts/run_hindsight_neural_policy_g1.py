@@ -47,6 +47,11 @@ from interaction_sprint.hindsight_neural_policy_g1 import (
 from latent_contract.sender_update import adapter_state, load_adapter
 
 
+POLICY_RULE_POWER_AUDIT_MANIFEST_SHA256 = (
+    "080a934b05b51b2e8e013aa6bea3e77bd0ebd38c394d409d19362afacc96ea23"
+)
+
+
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -141,6 +146,7 @@ def main() -> None:
         "hindsight_block": HINDSIGHT_BLOCK,
         "trained_arms": 2 + 3 * POLICY_PANEL_COUNT,
         "required_gradient_manifest_sha256": prerequisite["manifest_sha256"],
+        "policy_rule_power_audit_manifest_sha256": POLICY_RULE_POWER_AUDIT_MANIFEST_SHA256,
         "paper_green_light": False,
     }
     write("spec.json", spec)
