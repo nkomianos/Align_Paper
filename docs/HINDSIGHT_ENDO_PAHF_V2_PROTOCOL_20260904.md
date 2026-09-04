@@ -35,3 +35,15 @@ confirmation variants. Selection and thresholds remain blind to confirmation.
 Future model reports must show both base-example macro averages and performance
 by displayed label/rotation. A capable-model interface preflight must pass each
 label, not only the aggregate, before any learning comparison is interpreted.
+
+## Frozen capable-model preflight
+
+Before external training, Qwen3.5-9B must score two explicit preference contexts
+for all four rotations of 16 hash-selected development base records. This gives
+16 observations in each of eight context-by-target cells: immediate/new target
+and delayed-expression/old target crossed with A/B/C/D. Every cell must achieve
+at least 14/16 correct, mean normalized target probability at least `.70`, and
+mean full-vocabulary choice mass at least `.10`. Failure stops the external
+assay as an interface/capability failure; passing only authorizes later
+development training and is not scientific evidence by itself. Confirmation is
+not read.
