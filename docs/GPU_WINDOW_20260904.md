@@ -112,3 +112,9 @@ positive control is itself claimed as a novel paper contribution.
 
 Two agents are preparing runner and data/checker separately while UNDO completes.
 No endogenous-feedback arm or additional GPU process is launched at this entry.
+
+UNDO terminal milestone: exit0, processgone,410.82seconds. Complete1GBarchive
+retrieved+checksumverified and58manifest files/accounting checked. Longhistory
+counts baseline23/32,SFT24/32,canonical28/32,local24/32. Parklocalmethod/noexpansion.
+See UNDO_TRAINING_RESULT_20260904.md. GH200 is idle pending SDPO readiness; do not
+describe preparation as active inference. CPU coupling remains independently live.

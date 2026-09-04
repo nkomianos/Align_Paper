@@ -30,6 +30,12 @@ park this heuristic. See [result audit](docs/GPU_COUPLING_RESULT_AND_BASELINE_AU
 The CPU run above remains an independent developmental record, not a reason to
 ignore this negative result. Corrected UNDO training is the next GPU work stream.
 
+**Corrected UNDO training now complete:** [verified comparison](docs/UNDO_TRAINING_RESULT_20260904.md).
+On32 longest histories: no adaptation23, terminalSFT24, canonicaldistillation28,
+localrewrite24. Three matched256-update arms,410.82seconds; all checkpoints saved
+locally and58manifest files verified. Park the local-rewrite method: it does not
+beat canonical distillation. This is not evidence that all training failed.
+
 **Latest completed comparison:** [OPDLM on-policy verification](docs/OPDLM_ONPOLICY_20260904.md)
 finished 24 arithmetic prompts under four closed-loop policies plus 87 paired
 verifier probes: 1,661 CPU forwards in 19.33 minutes. Evidence hashes and metrics
