@@ -91,3 +91,24 @@ counterfactual controls each8/8; mean answer-choice probability mass
 0.9999999876. Terminal-SFT reached160/256updates, process21147 live. This clears
 the narrow setup prerequisite, not the intervention or paper criterion. Wait for
 all three arms and complete-manifest verification before comparing results.
+
+## Next preparation: method-faithful SDPO positive control
+
+Re-audit distinguishes model scale and method: earlier actual parameter-update
+studies used Qwen3-0.6B; the Qwen3-4B study did not train. Therefore the current
+apparatus is parked, but those results do not fairly refute full-response SDPO
+or the report's broad endogeneity hypothesis.
+
+Root approved preparing (not yet launching) an isolated Qwen3-4B full-response
+truthful-feedback positive control. Eight opaque users have stable output-format
+preferences; train/eval share users but have disjoint case IDs and grounded fact
+content. Policy inputs omit the preference; truthful feedback is available only
+to the hindsight teacher, as in the tested interaction-learning procedure.
+Explicit-preference calibration and feedback-teacher competence precede updates.
+Use the released updater's actual sequence objective, not another four-choice
+proxy. Only successful learning from truthful corrections could justify a later
+expression-endogeneity comparison. Neither formatting personalization nor this
+positive control is itself claimed as a novel paper contribution.
+
+Two agents are preparing runner and data/checker separately while UNDO completes.
+No endogenous-feedback arm or additional GPU process is launched at this entry.
