@@ -142,8 +142,8 @@ margin, and recovery of >=75% of loss on held-out tasks with an end-to-end
 efficiency advantage. These thresholds do not ensure novelty or acceptance.
 Training is not launch-ready until the previous items and protocol are complete.
 The [Stage A training/qualification implementation](C2C_NATURAL_UPDATE_PILOT.md)
-now exists and has CPU tests. The matched text comparator is implemented but
-unrun; the paired update-interface/repair stage still needs implementation.
+now exists and has CPU tests. The matched text comparator and paired interface
+runner are implemented but unrun; repair comparisons still need implementation.
 
 ## Novelty boundary
 

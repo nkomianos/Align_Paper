@@ -738,3 +738,45 @@ JUnit reports: `artifacts/c2c_implementation_checks_v1.xml` and
 `artifacts/c2c_tf452_cpu_checks_v1.xml`. These tests do not exercise GH200 CUDA
 training or constitute an update-effect result. The preserved isolated CPU
 environment is `artifacts/c2c_cpu_compat_v1`; older environments are unchanged.
+
+## 2026-09-04 — Paired natural-update measurement implemented, not run
+
+Added Stage B (`scripts/run_c2c_paired_update.py`) and its local verifier. For
+each of 256 reserved public DEV questions it compares the original and merged
+updated sender: sender alone, frozen C2C, disabled fuser, and two-stage text
+transfer, plus a shared standalone receiver. This is 2,816 generations per
+training seed, 5,632 total. Both predetermined seeds are required. No sender
+has yet been trained and none of these model calls has run.
+
+The local release-ticket builder first re-verifies the text comparator and both
+Stage A archives. It refuses to release final DEV for an unqualified or missing
+seed. The GPU runner checks the separately recorded ticket digest and every
+merged-model file before loading the model. It never receives private keys.
+The same frozen projectors/receiver are used across versions; ordering is
+counterbalanced by case index, not outcomes.
+
+Frozen descriptive analysis: old/new accuracy changes and the C2C-minus-text
+difference in changes, paired question bootstrap stratified by dataset, and
+separate seed reports. Sender retention, a usable original bridge, parsing and
+disabled-fuser controls are necessary before interpreting extra latent loss.
+Both seeds must show >=10pp extra loss with upper interval below zero to advance
+to repair investigation. A failed seed cannot be pooled away. A positive result
+is still not geometric causal identification or a paper go. Costs include both
+text generations and the standalone sender comparison. Exact rules and caveats
+are in `docs/C2C_PAIRED_UPDATE_PROTOCOL.md`.
+
+Verification: 55 C2C tests pass in the main CPU environment, with one intentional
+skip for the older wrapper API. Eight tests pass in the isolated Transformers
+4.52.4 environment, including the previously skipped tiny native Qwen3/C2C
+integration test. It executes both source models, switches old/new/old sender
+membership, checks repeated-old generation equality, and verifies disabled
+fusion equals the unchanged receiver before/after switching. Synthetic tests
+reject changed checkpoint files, missing/failed seeds, corrupted transfer
+messages, duplicates and invalid timings; they distinguish shared channel
+degradation from the proposed extra latent loss. These are engineering tests,
+not measured paper effects or a full GPU runtime validation.
+
+Reports: `artifacts/c2c_paired_implementation_checks_v1.xml` and
+`artifacts/c2c_paired_tf452_cpu_checks_v1.xml`. GPU launch remains on hold after
+termination clearance. Repair comparisons are the remaining implementation
+work before the full pilot is ready; no automated run or expansion was started.
