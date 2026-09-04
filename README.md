@@ -67,6 +67,15 @@ The capable PUPPET reader remains an independent 30--60-minute human-data
 substrate check. No GPU host is currently reachable;
 `192.222.57.245` times out, so no paid process is active there.
 
+A checksum-verified [PAHF source audit](docs/HINDSIGHT_PAHF_SOURCE_AUDIT_RESULT_20260904.md)
+now qualifies a stronger external surface: its public shopping release has 630
+learning and 622 evaluation rows whose visible task and options are exactly
+matched across original/evolved preferences. PAHF itself loads the changed
+persona exogenously, so it is a close continual-personalization baseline rather
+than evidence about assistant-induced change. A PAHF-derived
+expression/transition assay belongs after a qualified synthetic neural G0/G1;
+the source audit is not another positive model result.
+
 ### CPU-only follow-up
 
 **Positive Hindsight mechanism screen:** the prospectively frozen

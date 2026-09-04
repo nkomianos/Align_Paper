@@ -64,6 +64,17 @@ beyond the constructed binary example.
   Its reactions are themselves measured after the assistant response; it does
   not distinguish prior-preference satisfaction from action-induced persistent
   transition. See the dedicated ThoughtTrace collision audit.
+- [Learning Personalized Agents from Human Feedback (PAHF)](https://arxiv.org/html/2602.16173)
+  uses pre-action clarification, post-action feedback and explicit memory on
+  shopping and embodied tasks under externally imposed persona changes. It is a
+  close continual-personalization baseline: generic claims that dual-channel
+  feedback helps adaptation or that preferences drift are occupied. Its public
+  implementation loads the updated persona before later phases; assistant
+  actions affect the feedback message and agent memory but do not cause the
+  persona transition. The checksum-verified source audit found 630 learning and
+  622 evaluation shopping rows with exactly matched visible tasks/options but a
+  changed intended choice. These form a useful external surface for our narrow
+  action-induced expression-versus-transition test, not evidence for it.
 - [Self-Consuming Performative Loops](https://arxiv.org/abs/2601.05184) shows
   bias amplification under iterative LLM retraining and incremental fine-tuning
   with a controlled decision-dependent data mixture. It occupies a broad claim
@@ -118,3 +129,9 @@ participant messages contain query-general signal about measured later belief
 shift beyond assistant text. A pass would validate a possible human-data
 substrate, not SDPO harm, causal identification, or the correction. Untouched
 confirmation stays locked until that reader passes.
+
+After a qualified synthetic neural G0/G1, a PAHF-derived external surface should
+replace another hand-written prompt sweep. It must construct observationally
+matched expression and transition mechanisms on the same public tasks, retain
+PAHF as a baseline, and use a delayed neutral probe. Do not report PAHF's
+exogenous phase change as assistant-induced influence.

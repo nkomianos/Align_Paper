@@ -2004,3 +2004,27 @@ cells qualified, 0/9 matched nulls qualified, and all acquisition controls
 passed. Verified manifest SHA-256 is
 `080a934b05b51b2e8e013aa6bea3e77bd0ebd38c394d409d19362afacc96ea23`.
 This is decision-protocol validation, not Qwen or paper evidence.
+
+## 2026-09-04 -- PAHF collision and natural paired surface verified
+
+Pinned the public *Learning Personalized Agents from Human Feedback* source at
+commit `7a11213360a82d5f437a035e3a31c92d6307f8cf` and audited it without executing
+external code. MIT license and every used data/source hash match. Shopping
+phase 1/3 has 630 and phase 2/4 has 622 rows where product, options, user and
+task are exactly unchanged while the intended choice changes. Embodied A/B
+provide 1,106/1,096 exact visible-surface target changes. This is a substantially
+better natural task substrate than another hand-written prompt set.
+
+PAHF is also a close collision: it already learns from pre-action clarification,
+post-action feedback and memory under preference drift. Its drift is exogenous;
+updated personas are loaded before later phases, while the assistant action only
+changes the feedback and agent memory. It therefore does not test the candidate's
+narrow expression-versus-persistent-transition ambiguity.
+
+The first local metadata audit printed public open-text embodied intent labels
+in a transition counter. Preserved v1 as superseded and prospectively sanitized
+v2 to counts/digests before using its result. V2 verifies with decision
+`PAHF_NATURAL_PAIRED_SURFACE_QUALIFIED_EXOGENOUS_ONLY`; manifest SHA-256
+`51f26d741d078e509b38105ff15cc996286ee031eef8941c5e80f5878d51c146`.
+This qualifies an EndoPAHF external surface after the synthetic neural gate; it
+is not model evidence or a paper green light.
