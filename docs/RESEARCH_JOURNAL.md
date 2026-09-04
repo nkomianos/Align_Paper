@@ -1850,3 +1850,34 @@ report the old diagnostics, but do not let that cosine ceiling alone kill the
 estimator. Implement a prospective nested four/eight-anchor error-fidelity gate;
 cosine becomes continuous evidence and practical value remains for the later
 policy-learning assay. This is protocol validation, not neural evidence.
+
+## 2026-09-04 -- corrected neural queue and ThoughtTrace collision
+
+Implemented and froze commit `2a15a80` for neural gradient G0 v2. It retains
+the same pinned Qwen3.5-9B teacher, exact full-vocabulary first-token reverse KL,
+LoRA layout and eight v1 panels, and adds nested four-anchor panels. Both sparse
+budgets must show at least 20% median and mean error reduction and six/eight
+panel wins. Cosine remains preserved evidence but not a fixed-gain gate. The run
+now requires 48 backward passes, estimated 25--70 GH200 minutes. Fifteen related
+tests, compilation and shell syntax pass; no endpoint exists.
+
+Hardened the independent capable PUPPET reader in commit `d64dc81`: explicit HF
+cache, source/spec hashes, clean qualification stop, private-data verifier and
+non-overwriting remote launcher. Its scientific design remains unchanged and
+the confirmation split remains locked. Seventeen related local tests pass.
+
+A fresh primary-source audit found ThoughtTrace (arXiv 2605.20087), which
+directly occupies broad claims that next messages omit private reactions,
+thought-guided rewrites beat message-guided rewrites, and thought-guided OPD is
+promising. The public source was pinned locally at commit
+`c3078d310c623f7c28f31e16ed7413730ea0c1e2`; dataset SHA-256
+`43ed4584661dc78ccd43dceeb84f88ac9780744997e32c5d329bf05292e95d25`.
+Aggregate schema counts reproduce 1,058 users, 2,155 conversations, 17,058
+messages and 10,174 thoughts without exposing participant content.
+
+ThoughtTrace reactions are measured after the assistant action and therefore do
+not identify prior-preference satisfaction versus persistent transition. This
+preserves only the narrow Hindsight causal opening. Do not queue a ThoughtTrace
+message-versus-thought experiment because the paper already runs it. Current GPU
+queue: nested-budget gradient G0, then the PUPPET capable-reader DEV; policy
+training is conditional on a gradient pass. No GPU is reachable or running.

@@ -57,6 +57,13 @@ beyond the constructed binary example.
   misspecification. Any future augmentation beyond known propensities must be
   stated for the longitudinal post-treatment estimand, not branded merely as
   “doubly robust alignment.”
+- [ThoughtTrace](https://arxiv.org/abs/2605.20087) directly establishes that
+  private user reactions are richer than next messages, trains thought-guided
+  DPO, and proposes thought-guided on-policy distillation. This occupies broad
+  “messages are lossy feedback” and “use internal reactions instead” framings.
+  Its reactions are themselves measured after the assistant response; it does
+  not distinguish prior-preference satisfaction from action-induced persistent
+  transition. See the dedicated ThoughtTrace collision audit.
 
 ## Older statistical boundary
 
@@ -86,8 +93,9 @@ The finite-state method and robustness gates now pass, but their Horvitz--Thomps
 machinery is not new in view of CausalRM. The next experiment must test the
 application-specific object CausalRM does not: the gradient induced when a
 next-turn SDPO teacher receives observationally equivalent expression or
-transition messages. The frozen Qwen3.5-9B neural-gradient G0 compares eight
-outcome-blind sparse panels with the full delayed-feedback oracle. Do not run a
+transition messages. The corrected Qwen3.5-9B neural-gradient G0 compares eight
+outcome-blind sparse panels at four and eight anchors with the full delayed-
+feedback oracle. Do not run a
 broad model sweep or claim a new debiasing estimator unless this neural control
 variate actually beats equal-anchor estimation.
 
