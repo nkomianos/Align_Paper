@@ -76,3 +76,27 @@ Pinned DiffuEraser `8e6f279ac7531e27ad1849c6f8dab5372a8597e7`,
 Decision: keep this as a mechanistic pilot under design. Do not represent the
 current two-generation proposal as a fully isolated 2x2 experiment yet. The prior
 and temporal processing contracts are required parts of the frozen protocol.
+
+## Pipeline inspection and implemented replay
+
+Inspected the imported `pipeline_diffueraser.py` at the same pinned revision:
+https://github.com/lixiaowen-xw/DiffuEraser/blob/8e6f279ac7531e27ad1849c6f8dab5372a8597e7/diffueraser/pipeline_diffueraser.py .
+The inspected denoising loop uses encoded masked images and masks as BrushNet
+conditioning, updates overlapping latent windows, and decodes to frames before
+the wrapper's final composite. No source-pixel composite was found in that loop.
+This supports a post-generation output-permission contrast, not a pure causal
+interpretation of changing the conditioning mask. VAE conditioning sampling also
+needs its RNG captured; the supplied scheduler generator alone is insufficient
+for a fully paired stochastic run.
+
+Implemented `interaction_sprint.video_composite_replay`: with fixed generated
+pixels, independently vary output alpha and report region-specific reference MAE,
+source change, and an unavoidable error contribution from exactly-zero alpha.
+Four CPU tests pass for endpoints, fixed-support error floor, soft-alpha semantics,
+invalid inputs, and nonmutation. This is normalized float-domain analysis; it
+does not claim bit-exact reproduction of the wrapper's uint8 quantization or
+video encoding. Reference pixels enter scoring only, never generation.
+
+The hard-support floor is an elementary deterministic diagnostic, not a proposed
+theoretical contribution. We still need actual generated pre-composite frames
+and qualified region annotations before the tool can answer a scientific question.
