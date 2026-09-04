@@ -62,12 +62,17 @@ zero, nonzero delayed-anchor total variation, and best actions 1 versus 0. Tests
 sweep 45 boundary/interior parameter combinations and verify normalization and
 exact observational equality.
 
-This is a compact theorem candidate, not yet a novelty claim. Dynamic Reward
-MDPs already establish that influenceable preferences matter, while SDPO's
-latent-reward interpretation explicitly relies on idealized user-response and
-Bayesian-conditioning assumptions. The candidate distinction is identification
-of persistent transition versus transient expression from immediate language
-feedback. A full literature audit may still uncover an equivalent result.
+This is a compact diagnostic theorem, not a standalone novelty claim. Dynamic
+Reward MDPs already establish that influenceable preferences matter, while
+SDPO's latent-reward interpretation explicitly relies on idealized user-response
+and Bayesian-conditioning assumptions. Psychometric response-shift and dynamic
+discrete-choice literatures also occupy the general distinction between latent
+change and changed measurement. The scoped
+[novelty audit](HINDSIGHT_EXPRESSION_TRANSITION_NOVELTY_AUDIT_20260904.md)
+did not find the exact next-turn self-distillation application, but concludes
+that the theorem is only the diagnostic spine of a potential paper. The novel
+package would need a faithful learner, an identifying intervention, and empirical
+evidence that the correction preserves useful learning.
 
 ## Paper implication
 
@@ -77,4 +82,3 @@ equivalence. It also specifies the intervention required by an `Anchor-SDPO`
 method. It does **not** establish prevalence, welfare harm, or successful neural
 correction. Those require the capable-reader human audit and a faithful stateful
 SDPO experiment.
-

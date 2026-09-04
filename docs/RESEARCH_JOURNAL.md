@@ -1674,3 +1674,28 @@ GH200 runtime is under one hour for576 human generations. The previous GH200
 address no longer answers SSH, so no paid compute is active and no user action is
 required until a new instance is available. A pass would unlock a separately
 frozen confirmation run, not a paper greenlight.
+
+## 2026-09-04 -- Hindsight expression--transition identification boundary
+
+Replaced the fragile claim that learning must create polarization with a sharper
+identification question.  Exact finite enumeration proves that a pure expression
+world and a persistent transition world can have total-variation distance zero
+over `(Z0,A,O)` for every initial-preference distribution, logging policy and
+copy rate.  For `p=.6,c0=1,c1=0`, the best constant action is1 under the
+expression model and0 under the transition model; an immediate-agreement learner
+chooses0 in both.  A delayed neutral measurement has TV distance.18 and separates
+the mechanisms.  Forty-seven tests cover normalization,45 parameter settings,
+ranking reversal and invalid inputs.  Commit5351cd9 contains the theorem/code.
+
+The subsequent primary-source audit narrows novelty.  Psychometric response-shift
+work already distinguishes true latent change from longitudinal measurement
+non-invariance; dynamic discrete-choice and hidden-state identification are also
+mature.  DR-MDP and Constructive Alignment occupy changing-preference framing,
+and AcCoRD now occupies generic dynamic-preference agent benchmarking.  SDPO,
+however, does not separate action-induced expression from persistent transition,
+and randomization as used in causal text-outcome optimization does not resolve
+the exact equivalence.  PI status: retain the result as the diagnostic spine of
+Hindsight, not as a standalone theorem contribution.  A publishable claim still
+requires faithful next-turn learning, a sparse delayed-anchor correction that
+beats equal-anchor baselines, and natural-language/human evidence.  No GPU is
+reachable; the frozen capable-reader DEV remains the next sub-hour GPU job.

@@ -11,6 +11,26 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
+### Strongest live lead: Hindsight identifiability
+
+The current best lead is narrower than the originally proposed automatic
+polarization story.  An [exact finite-state result](docs/HINDSIGHT_EXPRESSION_TRANSITION_THEOREM_20260904.md)
+shows that transient compliant expression and persistent preference transition
+can generate identical immediate interaction logs--even with a measured initial
+preference and randomized assistant actions--while reversing which policy is
+best for a declared latent-preference objective.  A delayed neutral anchor
+separates the two worlds.  The result is exact and covered by 47 tests.
+
+The [novelty audit](docs/HINDSIGHT_EXPRESSION_TRANSITION_NOVELTY_AUDIT_20260904.md)
+finds that latent-change versus measurement-change is established statistical
+territory, so this elementary theorem is not a paper by itself.  The apparently
+open contribution is its consequence for next-turn LLM self-distillation plus a
+working sparse-anchor correction.  That package is **promising but not yet
+paper-qualified**.  The next available-GPU priority is the already frozen
+Qwen3.5-9B human-feedback reader DEV (expected under one GH200-hour), followed
+only on a pass by untouched confirmation and a small faithful SDPO/anchor gate.
+No GPU host is currently reachable.
+
 ### CPU-only follow-up
 
 **Positive Hindsight mechanism screen:** the prospectively frozen
