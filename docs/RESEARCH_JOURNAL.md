@@ -1699,3 +1699,30 @@ Hindsight, not as a standalone theorem contribution.  A publishable claim still
 requires faithful next-turn learning, a sparse delayed-anchor correction that
 beats equal-anchor baselines, and natural-language/human evidence.  No GPU is
 reachable; the frozen capable-reader DEV remains the next sub-hour GPU job.
+
+## 2026-09-04 -- matched delayed-anchor method gate qualifies
+
+Froze commit05ffeca before endpoint generation: six initial-preference rates,
+25 action-specific copying pairs,16/64 anchors per action,512 immediate reports
+per action and2,000 coupled repetitions per cell. Expression and transition
+worlds use identical immediate outcomes. Compared raw immediate agreement,
+delayed anchors alone, and the same anchors augmented by the abundant immediate
+mean plus an anchored delayed-minus-immediate residual. This is a standard
+two-phase difference estimator, not claimed algorithmic novelty.
+
+Fresh root `artifacts/hindsight_delayed_anchor_dev_20260904_v1` passes all six
+frozen gates and deterministic replay verification; manifest SHA-256 is
+8f4d2e20ecf3075e6d9c6745dc82922023a355cd8762f250c276100aef9ead1a.
+With16 anchors, expression regret is.086281 raw, .013770 anchor-only and.009343
+augmented. Across37 policy-reversal cells it is.259371/.018028/.013609.
+Transition regret is.000067 raw/augmented versus.009247 anchor-only. The
+augmented method is better/equal in143/150 expression cells and every reversal
+cell; its seven losses are at most.000975. With64 anchors it is better/equal in
+148/150. All truthful controls exactly preserve raw decisions.
+
+PI interpretation: this is the first positive correction result and validates a
+sample-efficiency mechanism beyond anchor-only learning. It does not establish
+neural SDPO behavior, human prevalence, estimator novelty or paper viability.
+Next CPU work is contamination/selection stress. Next GPU work remains the
+frozen capable PUPPET reader, followed only if justified by a faithful
+SDPO-style residual-correction gate.

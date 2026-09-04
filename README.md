@@ -25,8 +25,14 @@ The [novelty audit](docs/HINDSIGHT_EXPRESSION_TRANSITION_NOVELTY_AUDIT_20260904.
 finds that latent-change versus measurement-change is established statistical
 territory, so this elementary theorem is not a paper by itself.  The apparently
 open contribution is its consequence for next-turn LLM self-distillation plus a
-working sparse-anchor correction.  That package is **promising but not yet
-paper-qualified**.  The next available-GPU priority is the already frozen
+working sparse-anchor correction. The first
+[matched method gate](docs/HINDSIGHT_DELAYED_ANCHOR_DEV_RESULT_20260904.md)
+now passes all six frozen criteria: with 16 delayed anchors per action, residual
+augmentation lowers expression-world regret from `.01377` for the equal-anchor
+baseline to `.00934`, versus `.08628` for raw immediate feedback, while exactly
+preserving truthful feedback. This is the first positive intervention result,
+but it is finite-state and uses a standard difference estimator; the package is
+therefore **promising but not yet paper-qualified**. The next available-GPU priority is the already frozen
 Qwen3.5-9B human-feedback reader DEV (expected under one GH200-hour), followed
 only on a pass by untouched confirmation and a small faithful SDPO/anchor gate.
 No GPU host is currently reachable.
