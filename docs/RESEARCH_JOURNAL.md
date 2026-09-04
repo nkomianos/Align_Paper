@@ -10,6 +10,42 @@ used here, **not** a claim that all historical inferential verifiers were rerun
 today. `scripts/journal_fingerprints.py` rebuilds it from an explicit allowlist
 without reading raw trajectories or private keys.
 
+## 2026-09-04 — Hindsight objective split and positive bifurcation screen
+
+The earlier symmetric persistent-user calculation falsified the proposed harm
+mechanism for direct report Brier learning: adaptation contracts the discrepancy
+and improves expected baseline-preference fidelity relative to open-loop exposure.
+That negative result is preserved and not relabeled.
+
+A separately frozen test examined the published full-distribution reverse-KL
+Hindsight objective. Under copying feedback its exact two-action update is the
+geometric teacher barycenter `F(p)=sigmoid((1-p)l0+p*l1)`. A symmetric teacher
+has an unstable neutral point and two stable self-confirming equilibria once its
+logit strength exceeds2. This is a different update law, not a rescue by changing
+the outcome definition.
+
+Fresh Qwen3-0.6B constrained-choice evidence:96 prompts/192 sequence forwards,
+97.43seconds CPU, no updates. Teacher correctness is32/32 in development and
+32/32 in disjoint confirmation domains. Three fixed points occur in9/16 and
+14/16 contexts. Confirmation median dynamic endpoint separation is.9935;
+maximum matched fixed-marginal separation is.0820. Prospective status:
+`BIFURCATION_SCREEN_POSITIVE`. All raw probabilities and token likelihoods are
+retained under `artifacts/hindsight_bifurcation_cpu_20260904_v1`.
+
+Scope: exact reverse-KL projection, constrained two-action policy, and a copying
+report channel. No human state transition, user welfare, free-form generation,
+shared neural parameter update, or acceptance claim follows. Classical
+performative-prediction dynamics and pitchfork bifurcations are major novelty
+risks. The next discriminating experiment is finite-step shared-parameter
+dynamic-versus-fixed-marginal training, followed only if successful by an
+externally anchored behavioral design.
+
+Parallel current-literature reviews found no launch-worthy cheap VLM or agent
+memory/cyber candidate: Dyn-3D/ViTAL-X/The Shape of Time/Structured Video
+Prompting/Select-Compress-Reinvest close the obvious temporal routes, while
+FragFuse/MOSAIC/TEPA/GateMem/MemGhost/AuthBench occupy the obvious compositional
+memory and authority failures. No GPU time was spent on those closed directions.
+
 ## Recording rules
 
 - Give each hypothesis and empirical stage a stable ID. Retried launches,

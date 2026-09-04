@@ -57,3 +57,29 @@ major novelty risks.
 
 A negative result parks this Hindsight bifurcation on the present model/template;
 we will not alter thresholds or domains to rescue it.
+
+## Verified result
+
+Frozen source commit `9a35a84`. The CPU run completed 96 scored prompts and 192
+candidate-sequence forwards in 97.43 seconds with no parameter updates. The
+teacher selected the named option 32/32 times in development and 32/32 times in
+the untouched confirmation domains; mean target probabilities were .9755 and
+.9861 respectively.
+
+The measured map has three fixed points in 9/16 development contexts and 14/16
+confirmation contexts. Every confirmation domain contributes at least three of
+its four crossings. Around each confirmation unstable point, the median terminal
+separation after the two predeclared perturbations is .9935. The largest paired
+separation under the fixed-marginal control is .0820. The prospective status is
+`BIFURCATION_SCREEN_POSITIVE`.
+
+This is a real positive mechanism result but **not a paper green light**. It is
+conditioned on a two-action interface and exact per-round reverse-KL projection;
+the next gate is finite-step shared-parameter training with dynamic versus frozen
+report marginals. Even if that works, externally anchored behavior is required
+to connect self-confirming reports to preference shaping or welfare.
+
+Evidence: `artifacts/hindsight_bifurcation_cpu_20260904_v1`; the adjacent
+verification receipt checks all six manifest members, source/case identity,
+likelihood arithmetic, row coverage, fixed points, endpoints, and the decision.
+It does not replay the 192 neural forwards.

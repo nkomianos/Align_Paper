@@ -13,6 +13,17 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ### CPU-only follow-up
 
+**Positive Hindsight mechanism screen:** the prospectively frozen
+[performative-bifurcation test](docs/HINDSIGHT_BIFURCATION_G0_PROTOCOL_20260904.md)
+finds three policy fixed points in14/16 fresh confirmation contexts. The
+feedback-conditioned teacher is32/32 correct in both splits. Perturbations on
+opposite sides of the unstable point separate to nearly opposite policies
+(median .9935), while a matched fixed-report-marginal control stays within.082.
+This supports a self-confirming-equilibrium mechanism specific to exact
+full-reverse-KL Hindsight updates. It does not establish human preference change,
+welfare harm, free-form generation, or neural training dynamics. The next gate
+is finite-step shared-parameter learning; no GPU job is currently running.
+
 The [persistent-state mechanism check](docs/HINDSIGHT_LONGITUDINAL_MECHANISM_20260904.md)
 finds that symmetric preference copying plus direct report learning does **not**
 produce the assumed excess mean baseline-preference loss when adaptation closes
