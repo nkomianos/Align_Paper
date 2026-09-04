@@ -62,3 +62,9 @@ Code: `src/interaction_sprint/parameter_probe.py`; data and settings are emitted
 into a fresh root before model loading. Only already downloaded public files
 are loaded. Model download is separate; no external service/API is invoked by
 the experimental runner.
+
+Pre-inference engineering note: the first launch stopped before any scientific
+forward because Transformers 5 returned a BatchEncoding by default. Explicit
+`return_dict=False` restores the intended token-ID list. Preserve the failed
+root `artifacts/hindsight_parameter_probe_cpu_v1`; the retry uses a fresh root.
+No data, prompt content, model, objective or decision rule changed.

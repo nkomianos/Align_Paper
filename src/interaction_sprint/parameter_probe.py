@@ -119,7 +119,7 @@ def run(root):
                         f"Thanks, I prefer {c['options'][o]}.")
             for arm, text in texts.items():
                 tokens = tokenizer.apply_chat_template([{"role": "user", "content": text}],
-                         tokenize=True, add_generation_prompt=True, enable_thinking=False)
+                         tokenize=True, return_dict=False, add_generation_prompt=True, enable_thinking=False)
                 if len(tokens) > SPEC["maximum_prompt_tokens"]:
                     raise ValueError("overlength prompt; no truncation")
                 encoded[c["id"], arm] = torch.tensor([tokens])
