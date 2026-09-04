@@ -13,6 +13,13 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ### CPU-only follow-up
 
+A [bounded-influence population check](docs/HINDSIGHT_PARTIAL_IDENTIFICATION_20260904.md)
+constructs sharp binary preference intervals and a conservative update filter.
+It retains useful updates in designed examples, but depends on a valid influence
+bound; a tested misspecification counterexample shows compatibility alone is not
+enough. This is not an SDPO result or paper greenlight. The next comparison must
+include learning directly from the same sparse anchors.
+
 The [ScopeJudge audit](docs/SCOPEJUDGE_OFFLINE_SCHEMA_AUDIT_20260904.md)
 verified 4,897 labeled calls and constructed metadata-filtered pre-execution
 views. Of 377 majority-labeled violations, 301 occur after their trajectory's
