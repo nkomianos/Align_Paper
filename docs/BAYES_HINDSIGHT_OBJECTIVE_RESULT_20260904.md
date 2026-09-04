@@ -47,3 +47,27 @@ and check literature on mode-seeking distillation before claiming novelty. A
 useful result would link the objective difference to an observed learning effect
 while retaining benign correction capability. Do not launch a GPU replication
 until that mapping and a nontrivial correction baseline are specified.
+
+## Released loss mapping executed
+
+`scripts/probe_released_sdpo_binary_loss.py` extracts the unmodified
+`_full_distillation_loss` and `_renorm_topk` methods from the pinned upstream file
+(SHA-256 `6d9b92726fffa857e02d3a3773a309d8418433c50f33f91252e760b17fec6b8d`).
+Controlled two-token logits replace model forwards. With top-k=2 and no tail,
+autograd through the released method agrees with the analytic marginal-feedback
+direction to absolute tolerance 1e-12 at all five policy probabilities.
+Torch 2.11.0+cpu; receipt `artifacts/released_sdpo_binary_probe_20260904_v1/probe.json`.
+This tests the loss operator, not default top-20/tail approximation, tokenization,
+the Bayesian teacher assumption, or a real LM's learning dynamics.
+
+## Closest prior work found
+
+Nicolicioiu, Pezeshki and Courville's June 2026 paper already establishes
+probability-gap amplification and reduced diversity under sampled-demonstration
+self-distillation, with theory and experiments:
+https://arxiv.org/abs/2606.26091 . Its stated scope excludes richer environmental
+feedback. Consequently, our binary example is not enough for a new paper.
+The possible extension is how action-dependent feedback changes the dynamics
+and a specified user objective, with a correction that still learns useful
+feedback. The broader August review is useful context, not primary experimental
+evidence: https://arxiv.org/html/2608.25936v1 .
