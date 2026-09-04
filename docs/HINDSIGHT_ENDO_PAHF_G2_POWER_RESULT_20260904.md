@@ -11,8 +11,11 @@ effect and positive cluster-bootstrap lower-bound requirements.
 
 The read-only verifier returned
 `ENDO_PAHF_G2_DEV_ROUTING_RULE_POWER_QUALIFIED`. Evidence root:
-`artifacts/hindsight_endo_pahf_g2_power_20260904_v1`; `MANIFEST.json` SHA-256:
-`175b3ac2a5d8b35cf7e3959d393be9f0ce943b80913ec0b2088a5accf3048a64`.
+`artifacts/hindsight_endo_pahf_g2_power_20260904_v2`; `MANIFEST.json` SHA-256:
+`663df8a48cc0e359be7256afd8ad7d3df57da0012cea409aa39480a149789b8c`.
+The identical v1 numerical result is preserved but superseded because the final
+transition-integrity check changed the hashed G2 source after v1 was written;
+no threshold, random seed or simulated outcome changed.
 
 Across 10,000 simulated development studies per condition:
 
@@ -26,4 +29,3 @@ The 20.41% null routing rate is intentional and cannot be interpreted as a
 final false-positive rate. It spends confirmation on some ambiguous DEV
 outcomes instead of killing a useful effect prematurely. The already-qualified
 confirmation rule controls the final decision.
-

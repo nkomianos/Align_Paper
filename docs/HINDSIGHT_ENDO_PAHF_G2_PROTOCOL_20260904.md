@@ -19,6 +19,13 @@ rotations. The ordinary immediate log is byte-identical between worlds. In the
 expression world the delayed probe names the old target; in the transition
 world it repeats the new target.
 
+This is deliberately a continual-personalization transfer assay, not unseen-user
+generalization. Learning contains 20 public PAHF user identities; all 19 users
+in development and all 20 users in confirmation also occur in learning, while
+base-task IDs are disjoint across every split. Results must therefore be scoped
+as transfer to unseen tasks for previously observed users. An unseen-user claim
+would require a separately constructed dataset and is not authorized here.
+
 Eight disjoint, outcome-blind panels contain eight base tasks apiece. Each
 training step uses 16 population variants plus, where applicable, eight anchor
 variants comprising all rotations of two panel bases. All arms start from one

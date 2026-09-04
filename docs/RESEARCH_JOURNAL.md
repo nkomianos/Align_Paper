@@ -2193,7 +2193,9 @@ The 96-base DEV routing threshold was frozen at commit `aa30afd` and then passed
 its 10,000-study-per-condition audit: null `.2041`, planned signal `.9196`, noisy
 signal `.8317`. Decision
 `ENDO_PAHF_G2_DEV_ROUTING_RULE_POWER_QUALIFIED`; evidence manifest SHA-256
-`175b3ac2a5d8b35cf7e3959d393be9f0ce943b80913ec0b2088a5accf3048a64`.
+`663df8a48cc0e359be7256afd8ad7d3df57da0012cea409aa39480a149789b8c`
+in v2. V1 produced the same rates but is superseded solely because the final
+transition-integrity invariant changed the source hash after it was written.
 The permissive null-routing rate is acceptable only because DEV cannot establish
 a result; final confirmation retains the stringent clustered rule.
 
@@ -2203,3 +2205,9 @@ locked-confirmation runner/verifier. Verification replays G1 and exact-interface
 preflight against their actual evidence roots. Confirmation is not read unless
 DEV is checksum-valid and qualified. Nineteen combined G1/G2/preflight tests,
 Python compilation and both shell launchers pass. No capable G2 endpoint exists.
+
+Audited learnability scope before launch. Learning contains 20 PAHF user
+identities; development contains 19 and confirmation 20, with complete overlap
+into learning (19/19 and 20/20) and zero base-task overlap across splits. G2 is
+therefore within-user transfer to unseen shopping tasks, matching continual
+personalization. It cannot be reported as unseen-user generalization.
