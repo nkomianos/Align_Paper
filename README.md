@@ -96,6 +96,12 @@ development and 1,024 reserved confirmation variants. Old and new targets are
 exactly balanced over A/B/C/D in every split, with zero matched-log violations.
 This closes a position-bias shortcut before any capable-model endpoint.
 
+A frozen Qwen3.5-9B EndoPAHF capability preflight now checks 16 base tasks under
+all four rotations and both old/new preference contexts. Each of the eight
+context-by-label cells must pass separately before external training. The
+runner, hardened remote launcher and read-only verifier are implemented; it is
+downstream of synthetic G0/G1 and has no endpoint yet.
+
 A fresh [PUMA collision audit](docs/HINDSIGHT_PUMA_COLLISION_AUDIT_20260904.md)
 found the closest adjacent 2026 method: PUMA already models action-conditioned
 latent user-state transitions separately from utterance observations and plans

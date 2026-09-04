@@ -2125,3 +2125,19 @@ read-only verifier passes; evidence root
 Sixty-two related tests pass. This closes the PUMA-factorization objection but
 does not change the scientific gate: neural SDPO correction and external
 validation remain necessary.
+
+## 2026-09-04 -- capable EndoPAHF preflight frozen
+
+Implemented and froze commit `dc58e0c` for a Qwen3.5-9B capability preflight on
+the counterbalanced v2 development inputs. Sixteen deterministic base tasks are
+scored under all four rotations and two contexts, producing 16 observations in
+each immediate/delayed-expression by A/B/C/D cell. Every cell must reach 14/16
+correct, mean normalized target probability `.70`, and mean full-vocabulary
+choice mass `.10`. Aggregate success cannot hide a failed label.
+
+The runner pins the v2 input manifest and model revision, never reads
+confirmation, fails closed on model/runtime/root drift, and emits a sealed
+manifest for the read-only verifier. Nine targeted tests, compilation and shell
+syntax pass. There is no endpoint because no GPU is reachable. This preflight is
+reserved for external validation after synthetic gradient G0 and policy G1; it
+does not add paid time to a failed-G0 path.
