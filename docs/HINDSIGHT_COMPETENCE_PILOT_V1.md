@@ -69,3 +69,51 @@ Ambiguous tool failures and unsafe retries are directly covered by
 Do not add another timeout/idempotency benchmark to the GPU queue as a novel
 candidate without a materially different contribution. No experiment was run
 for that rejected idea; these are primary-source collision findings.
+
+## Completed and verified — scope limit discovered
+
+Commit `3d32159`; root `artifacts/hindsight_competence_cpu_v1`. Completed
+1,250 forwards, 544 backwards, 16 warmup and 64 feedback-stage updates in
+1022.4 seconds (~17 minutes), all on the laptop CPU. All adapters, warm optimizer,
+data, prompts, probabilities and logs are retained. Read-only verifier passes
+checksums, coefficients, outcomes, batch/anchor accounting, checkpoint validity
+and the exact independent-feedback null (own/full final adapters identical).
+It does not independently rerun model inference or optimizer steps.
+Receipt `artifacts/hindsight_competence_cpu_v1_verified.json`; manifest SHA
+`1e434e319d625cf869892664da6776e64d70bff20cbf0e57711453c553184675`.
+
+The qualification check passes: 30/32, versus 16/32 before warmup. However,
+the no-adaptation checkpoint scores only **36/64 = 56.25%** on the separate,
+differently rendered final evaluation (NLL 2.59856). Numeric values and rendering
+both differ from qualification; this is not a paired proof that wording alone
+caused the drop. It shows that competence did not transfer sufficiently to the
+intended evaluation. Do not describe this as preservation of a robustly acquired
+general ability. The frozen qualification decision remains unchanged; the final
+scientific interpretation is weaker than that engineering prerequisite.
+
+| Method | Independent-feedback accuracy | Copying .9 accuracy | Independent NLL | Copying .9 NLL |
+|---|---:|---:|---:|---:|
+| Own-response | 39/64 (60.94%) | 36/64 (56.25%) | 2.28610 | 2.16949 |
+| Full reverse KL | 39/64 (60.94%) | 40/64 (62.50%) | 2.28610 | 1.87298 |
+| Anchor-projected full KL | 40/64 (62.50%) | 40/64 (62.50%) | 2.24728 | 1.90514 |
+| Anchor-only | 36/64 (56.25%) | 36/64 (56.25%) | 2.88567 | 2.88567 |
+
+Anchor methods use 16 label exposures covering 15 unique contexts out of 32
+adaptation contexts; the paired option orderings are not independent tasks.
+No claim of 25% unique-label coverage is warranted. All teacher A/B mass is
+at least .999989; the issue is not unrestricted-vocabulary format collapse.
+
+Own-response loses three correct decisions versus its independent-feedback
+control but improves NLL; full KL improves both metrics. Projection does not
+beat unprojected full KL in the copying arm, and is slightly worse in NLL.
+Do not select accuracy alone to manufacture a uniform harmful-feedback story.
+This is neither the report's required benefit-plus-harm phenomenon nor a
+successful corrective method. No human preference transition is represented.
+
+PI decision: no paper or expensive training expansion. The experiment now has
+actual learned parameter updates, but tiny single-model results and weak transfer
+do not justify causal-welfare or high-confidence acceptance claims. A future
+learning study needs competence validated on the intended evaluation distribution
+before feedback updates, stronger models and a useful contribution beyond known
+gradient projection/feedback-dependence observations. Preserve this entire run;
+do not retune its checkpoint or replace its evaluation after seeing the outcome.

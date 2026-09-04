@@ -88,6 +88,8 @@ PI decision: no VLA/GPU expansion. The exact warning remains mathematically
 valid, but it has not produced a useful new method or a demonstrated natural
 failure. A meaningful further test would hold initial label counts fixed, use
 fresh seeds and include scale-normalized distribution-distance baselines before
-measuring actual acquisition gain. That control is not implemented/running yet.
+measuring actual acquisition gain. That [fixed-count control](FLOW_FIXED_COUNT_V1.md)
+has since completed and been verified on fresh seeds; it also misses its
+pre-frozen practical-improvement criterion. The replacement route is parked.
 Ultimately a neural, non-Gaussian and released-policy result is needed for the
 intended paper claim; this Gaussian test alone cannot justify it.

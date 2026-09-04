@@ -1045,3 +1045,70 @@ session 26297/PID 73036, with increasing CPU time. All four zero-copy feedback
 arms have completed; the copying arms are in progress. Do not restart it from
 this journal. Check the actual handle and final manifest before claiming a
 complete result. No GPU job was launched. The paper-finding goal remains unmet.
+
+## 2026-09-04 — Equal-count flow control also misses practical criterion
+
+To remove the label-count confound, froze a second Gaussian acquisition
+experiment at `db195b2`: 16 independently defined target geometries, all with
+64 starting labels, eight fresh seed pools, 64 additional labels for each of
+four queried contexts. Same affine fitting protocol, no injected perturbations.
+Added pooled-whitened endpoint energy and sample-fit Gaussian KL as explicitly
+standard baselines. Their shared-affine-coordinate invariance is unit tested.
+
+Root `artifacts/flow_fixed_count_v1`; all 512 fits/128 contexts completed in
+17.05 seconds. Full read-only data/fitting/ODE/score/selection replay passes,
+with maximum stricter-solver endpoint difference 2.92e-10. Receipt
+`artifacts/flow_fixed_count_v1_verified.json`, manifest
+`a0fcebeca9e0f3eead7640c52f8cfae597d0d7f2dd164075724a865b53ccfdf8`.
+Whitened energy wins 4/8 pools, with mean gain .013404 versus VFD10 .016341,
+ratio .820. Frozen decision `NO_FIXED_COUNT_ACQUISITION_LEAD` retained.
+Common-source endpoint L2 averages .017285; that small aggregate advantage is
+not a new method or the specified success criterion. All scores and seeds saved.
+
+PI decision: park this proposed uncertainty replacement route. Exact null
+construction is useful mathematically but two naturally fitted Gaussian pilots
+do not establish the practical advantage needed for our paper. No claim about
+universal validity of VFD; no neural/VLA/GPU expansion warranted on this evidence.
+
+## 2026-09-04 — Hindsight learning run completed: weak transfer, no corrective win
+
+Execution session 26297 completed exit 0; all 1,250 forwards, 544 backwards,
+16 warmup updates and 64 feedback updates completed in 1022.4 seconds. No GPU
+used. Root `artifacts/hindsight_competence_cpu_v1`, source commit `3d32159`.
+Strict read-only verifier checks hashes, cases, batch schedule, coefficient
+arithmetic, final metrics, valid adapter files and independent-feedback null
+trajectory. Own/full independent-feedback adapters are exactly identical.
+Receipt `artifacts/hindsight_competence_cpu_v1_verified.json`; manifest
+`1e434e319d625cf869892664da6776e64d70bff20cbf0e57711453c553184675`.
+No independent model/optimizer replay is claimed.
+
+Important scope correction: 30/32 qualification does not translate into robust
+heldout competence. Before feedback, the warmup checkpoint scores only 36/64
+on a fresh differently worded evaluation. Numeric values and wording changed
+together; this does not isolate which change caused the transfer failure.
+Our earlier qualification update was accurate, but it was not a generalization
+claim. Do not now portray these arms as protecting an already robust ability.
+
+Under copying strength .9, own-response 36/64, full KL 40/64, projected full KL
+40/64, anchor-only 36/64. Independent-feedback counterparts: 39/64,39/64,40/64,
+36/64. Own-response loses three decisions versus its control but improves NLL;
+full KL improves both. Projection is slightly worse than full KL on copying NLL
+(1.90514 vs1.87298) and tied on accuracy. No successful correction demonstrated.
+Anchor budget: 16 exposures, 15 unique contexts of 32, not 25% unique examples.
+All teacher A/B probability masses exceed .999988. All original artifacts kept.
+
+PI decision: no paper/high-cost expansion. This completes actual learned-model
+testing, not just prompt probes, but does not establish the required robust
+effect or novel useful remedy. Future learning tests need stronger competence
+on their intended evaluation distribution, independently validated before
+adaptation. Do not tune/relabel this run to obtain a pass. There are now no
+active local experiments or newly launched GPU jobs. All completed evidence
+is preserved, and the broader paper-finding goal is still unfulfilled.
+
+External-data feasibility note: read the primary Talk2AI dataset paper
+(https://arxiv.org/html/2604.04354v1). It links repeated chats to post-session
+ratings and pre-chat psychometrics; those psychometrics should not automatically
+be called pre-treatment measurements of the target preference. The linked
+GitHub Data_paper page returned 404 in this check. No dataset was downloaded,
+no participant outcomes analyzed, and no external validation claimed. This
+does not block all research; it is a limitation of that proposed data route.

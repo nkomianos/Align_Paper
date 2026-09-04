@@ -27,3 +27,41 @@ fixed-count acquisition lead. Report other comparators and negative gains
 without choosing a more favorable criterion afterward. A passing result would
 only motivate independent non-Gaussian/neural replication, not paper approval.
 Do not launch any GPU work automatically. One BLAS thread, laptop CPU only.
+
+## Completed and verified
+
+Commit `db195b2`, evidence `artifacts/flow_fixed_count_v1`. 512 fitted fields,
+128 contexts, eight fresh seed pools; 17.05 seconds. Full data, fit, ODE, score
+and selection replay passes. Separate verification receipt
+`artifacts/flow_fixed_count_v1_verified.json`; manifest SHA-256
+`a0fcebeca9e0f3eead7640c52f8cfae597d0d7f2dd164075724a865b53ccfdf8`.
+The verifier adds stricter endpoint integration checks to both before/after
+fits: maximum difference 2.92e-10, below 1e-6. Replay uses the same fitted-model
+implementation and is not independent external replication.
+
+| Selection score | Mean pool KL-risk reduction |
+|---|---:|
+| VFD10 | .016341 |
+| VFD100 | .009556 |
+| VFD1000 | .010328 |
+| Raw endpoint energy | .016057 |
+| Whitened endpoint energy | .013404 |
+| Sample Gaussian KL | .014085 |
+| Common-source endpoint L2 | .017285 |
+| Exact ensemble Gaussian KL | .015141 |
+| Random | .011743 |
+| Future-gain oracle | .026056 |
+
+Whitened energy wins in 4/8 pools and achieves .820 times VFD10's mean gain.
+Frozen decision: `NO_FIXED_COUNT_ACQUISITION_LEAD`. Common-source L2 is about
+5.8% ahead in the aggregate, but that is not the specified improvement and is
+not sufficient to declare a successful new method. Greater VFD score resolution
+does reduce mean gain in this setup; retain that descriptive observation without
+changing the winning criterion or generalizing from eight Gaussian pools.
+
+PI decision: park the proposed flow-uncertainty replacement route. The exact
+endpoint-preserving warning remains valid, but neither ordinary fitted-field
+pilot provides a sufficiently strong practical advantage for the replacement
+baselines. Do not spend VLA GPU time on this claim now. This does not prove that
+all VFD extensions or all non-Gaussian settings are sound; it means the current
+evidence does not support our proposed paper.

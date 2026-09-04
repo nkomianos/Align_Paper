@@ -101,12 +101,15 @@ certificates and learnability theory are parked; the proposed steering extension
 has substantial prior-work overlap. These new apparatus stages are recorded
 separately from the historical empirical-experiment count below.
 
-**Current local work:** a [capability-controlled feedback-learning pilot](docs/HINDSIGHT_COMPETENCE_PILOT_V1.md)
-is running on the laptop CPU (not the idle remote GPU). Sixteen supervised
-warmup updates improved separate qualification accuracy from 16/32 to 30/32,
-passing its fixed capability rule. Eight short feedback/anchor comparison arms
-follow from that same checkpoint; final results are pending. This is a restricted
-categorical, frozen-teacher synthetic pilot, not a full SDPO reproduction.
+**Latest completed local work:** the [capability-controlled feedback-learning pilot](docs/HINDSIGHT_COMPETENCE_PILOT_V1.md)
+completed and was verified: 1,250 forwards, 544 backwards, 16 supervised warmup
+and 64 feedback-stage updates. Qualification improves from 16/32 to 30/32,
+but the checkpoint starts at only 36/64 on differently rendered heldout cases.
+Under copying feedback, own-response and anchor-only finish at 36/64, full KL
+and projected full KL at 40/64. Projection does not improve over full KL, and
+no robust harmful-feedback/corrective-learning result is established. This is a
+restricted categorical, frozen-teacher synthetic pilot, not full SDPO. All local
+runs have finished; there is no active GPU or CPU experiment queue.
 An independent [flow-uncertainty control](docs/FLOW_UNCERTAINTY_NULL_CONTROLS.md)
 has an exact checked example where outputs remain unchanged while a velocity
 disagreement score rises. A [finite-data affine-flow pilot](docs/FLOW_ENSEMBLE_PILOT_V1.md)
@@ -115,6 +118,10 @@ existing velocity score in all eight seed pools. This does not support the
 proposed practical improvement. Its varying-label-count selection task is also
 too easy to discriminate mechanisms well. Neural/VLA validation remains unrun;
 no remote GPU expansion is queued.
+A subsequent [equal-label-count flow control](docs/FLOW_FIXED_COUNT_V1.md)
+also missed its practical-improvement criterion (whitened endpoint energy wins
+4/8 pools, .820 times the original velocity score's mean acquisition gain).
+The proposed uncertainty-replacement paper route is parked, not expanded.
 
 See the [researcher journal](docs/RESEARCH_JOURNAL.md) for hypothesis, design,
 numbers, evidence paths, failed launches, interpretation limits, and next steps;
