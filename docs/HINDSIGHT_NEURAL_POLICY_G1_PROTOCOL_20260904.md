@@ -2,7 +2,14 @@
 
 ## Role in the decision ladder
 
-This protocol is frozen before any G1 endpoint exists. It may run only after the
+This v2 protocol supersedes the unrun v1 at commit `e00a159` before any G1
+endpoint exists. A prospective code audit found that v1 repeatedly inserted all
+eight anchors into a nominal 16-record population batch. Its implemented loss
+would therefore have overweighted the fixed panel and would not have been the
+claimed population expectation plus paired correction. V2 separates those two
+samples exactly; v1 must never be run or interpreted.
+
+This protocol may run only after the
 nested-budget neural-gradient G0 v2 returns `NEURAL_GRADIENT_G0_V2_QUALIFIED` and
 its complete evidence passes the committed read-only verifier. G0 asks whether
 the sparse paired estimator points in the right neural-gradient direction; G1
@@ -32,11 +39,18 @@ the same eight delayed labels:
 
 Raw immediate SDPO and full delayed-oracle SDPO are global controls. Every arm
 starts from the identical zero-B adapter and runs 32 AdamW updates at `1e-4`.
-Global batches contain 16 records balanced on logged action; every record appears
-exactly four times. A panel batch contains all eight panel anchors plus eight
-ordinary immediate-feedback records, again balanced on logged action. The panel
-schedule is identical across its three paired learners. Anchor-only learners use
-only the eight anchors from that shared batch.
+The fixed population schedule contains 16-record batches balanced on logged
+action; every record appears exactly four times. Each augmented update computes
+the raw immediate term on one such population batch and independently computes
+the delayed-minus-immediate correction on all eight anchors in its fixed panel:
+
+`mean_population L_immediate + mean_panel(L_delayed - L_immediate)`.
+
+The repeatedly measured anchors are never substituted for members of the
+population batch. Anchor-only learners use only the same eight panel anchors.
+Thus all three sparse learners share exactly the same delayed labels, while only
+the augmented learner also uses the identical population log available to raw
+SDPO.
 
 There are 26 trained arms: two global controls and three learners for each of
 eight panels. Adapters, optimizer states, step logs, evaluation rows, failure
@@ -80,6 +94,6 @@ A qualified interface and G0 followed by G1 failure parks the current correction
 instead of changing thresholds. Failure of raw/oracle acquisition invalidates
 the policy assay on this interface rather than disproving the causal theorem.
 
-Expected GH200 time is approximately 3--6 hours after model/environment setup.
+Expected GH200 time is approximately 4--8 hours after model/environment setup.
 This is deliberately more expensive than G0 because it measures 832 actual
 optimizer updates instead of only initial gradients.

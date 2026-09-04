@@ -31,7 +31,7 @@ def test_policy_panels_are_disjoint_outcome_blind_and_action_balanced():
         }
 
 
-def test_policy_schedules_are_fixed_balanced_and_share_panel_information():
+def test_policy_schedules_keep_population_batches_separate_from_anchor_correction():
     rows, _, _ = build_records()
     by_id = {str(row["id"]): row for row in rows}
     panels = build_disjoint_policy_panels(rows)
@@ -45,12 +45,8 @@ def test_policy_schedules_are_fixed_balanced_and_share_panel_information():
         assert Counter(int(by_id[row_id]["logged_action"]) for row_id in batch) == {0: 8, 1: 8}
     for panel_index, panel in enumerate(panels):
         item = schedules["panels"][str(panel_index)]
-        assert item["anchor_ids"] == panel
-        assert len(item["batches"]) == POLICY_STEPS
-        for batch in item["batches"]:
-            assert len(batch) == len(set(batch)) == POLICY_BATCH
-            assert set(panel) <= set(batch)
-            assert Counter(int(by_id[row_id]["logged_action"]) for row_id in batch) == {0: 8, 1: 8}
+        assert item == {"anchor_ids": panel}
+        assert Counter(int(by_id[row_id]["logged_action"]) for row_id in panel) == {0: 4, 1: 4}
 
 
 def _metric(probability, *, mass=.8, gap=.02):

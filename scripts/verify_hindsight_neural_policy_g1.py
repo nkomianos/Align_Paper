@@ -77,7 +77,7 @@ def main() -> None:
 
     spec = json.loads((args.root / "spec.json").read_text(encoding="utf-8"))
     expected_spec = {
-        "version": "policy-learning-g1-v1",
+        "version": "policy-learning-g1-v2-independent-population",
         "model": MODEL_ID,
         "revision": MODEL_REVISION,
         "official_sdpo_repository": OFFICIAL_SDPO_REPOSITORY,
@@ -210,13 +210,15 @@ def main() -> None:
         step_rows = json.loads((args.root / f"{name}_steps.json").read_text(encoding="utf-8"))
         if len(step_rows) != POLICY_STEPS or [row["step"] for row in step_rows] != list(range(1, POLICY_STEPS + 1)):
             raise SystemExit(f"invalid step log: {name}")
-        if name in {"raw_immediate", "oracle_delayed"}:
-            expected_schedule = schedules["global"]
-        else:
+        expected_schedule = schedules["global"]
+        expected_anchor_ids = []
+        if name not in {"raw_immediate", "oracle_delayed"}:
             panel_index = int(name.split("_")[1])
-            expected_schedule = schedules["panels"][str(panel_index)]["batches"]
-        if [row["batch_ids"] for row in step_rows] != expected_schedule:
+            expected_anchor_ids = schedules["panels"][str(panel_index)]["anchor_ids"]
+        if [row["population_batch_ids"] for row in step_rows] != expected_schedule:
             raise SystemExit(f"step schedule mismatch: {name}")
+        if any(row["anchor_ids"] != expected_anchor_ids for row in step_rows):
+            raise SystemExit(f"anchor schedule mismatch: {name}")
         adapter = torch.load(args.root / f"{name}_adapter.pt", map_location="cpu", weights_only=True)
         if set(adapter) != set(initial):
             raise SystemExit(f"adapter keys mismatch: {name}")

@@ -69,7 +69,12 @@ def _cycled_action_batches(
 def build_policy_schedules(
     rows: list[dict[str, object]], panels: list[list[str]],
 ) -> dict[str, object]:
-    """Build fixed global and panel schedules shared by all paired learners."""
+    """Build the fixed population schedule and paired anchor sets.
+
+    Augmented training must not insert the repeatedly measured anchors into the
+    population batch.  It uses ``global`` for the population expectation and a
+    panel's separate ``anchor_ids`` for the paired correction.
+    """
     by_id = {str(row["id"]): row for row in rows}
     if len(by_id) != len(rows) or len(panels) != POLICY_PANEL_COUNT:
         raise ValueError("rows or panels do not match the frozen design")
@@ -96,36 +101,13 @@ def build_policy_schedules(
 
     panel_schedules: dict[str, dict[str, object]] = {}
     for panel_index, panel in enumerate(panels):
-        panel_set = set(panel)
         if any(
             sum(int(by_id[row_id]["logged_action"]) == action for row_id in panel)
             != POLICY_ANCHORS_PER_ACTION
             for action in (0, 1)
         ):
             raise ValueError("panels must be balanced on logged action")
-        ordinary_by_action = {
-            action: [
-                str(row["id"]) for row in rows
-                if int(row["logged_action"]) == action and str(row["id"]) not in panel_set
-            ]
-            for action in (0, 1)
-        }
-        ordinary_parts = {
-            action: _cycled_action_batches(
-                ordinary_by_action[action], per_step=POLICY_ANCHORS_PER_ACTION,
-                steps=POLICY_STEPS,
-                salt=f"panel-{panel_index}-ordinary-action-{action}-{POLICY_SEED}",
-            )
-            for action in (0, 1)
-        }
-        batches: list[list[str]] = []
-        for step in range(POLICY_STEPS):
-            batch = list(panel) + ordinary_parts[0][step] + ordinary_parts[1][step]
-            random.Random(POLICY_SEED + 1000 * (panel_index + 1) + step).shuffle(batch)
-            if len(batch) != POLICY_BATCH or len(set(batch)) != POLICY_BATCH:
-                raise AssertionError("invalid panel training batch")
-            batches.append(batch)
-        panel_schedules[str(panel_index)] = {"anchor_ids": list(panel), "batches": batches}
+        panel_schedules[str(panel_index)] = {"anchor_ids": list(panel)}
     return {"global": global_schedule, "panels": panel_schedules}
 
 

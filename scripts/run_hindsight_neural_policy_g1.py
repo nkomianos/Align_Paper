@@ -22,7 +22,6 @@ from interaction_sprint.hindsight_neural_anchor import (
     OFFICIAL_SDPO_REPOSITORY,
     SEED,
     TRAIN_BATCH,
-    augmented_reverse_kl,
     build_records,
     feedback_for_row,
     hindsight_user_text,
@@ -122,7 +121,7 @@ def main() -> None:
     schedules = build_policy_schedules(rows, panels)
     by_id = {str(row["id"]): row for row in rows}
     spec = {
-        "version": "policy-learning-g1-v1",
+        "version": "policy-learning-g1-v2-independent-population",
         "model": MODEL_ID,
         "revision": MODEL_REVISION,
         "official_sdpo_repository": OFFICIAL_SDPO_REPOSITORY,
@@ -349,15 +348,13 @@ def main() -> None:
         active_arm = name
         active_steps = []
         active_optimizer = optimizer
-        anchor_set = set(anchor_ids or [])
+        anchor_rows = [by_id[row_id] for row_id in (anchor_ids or [])]
+        if mode in {"anchor_sdpo", "anchor_sft", "augmented"}:
+            if len(anchor_rows) != POLICY_ANCHORS_PER_PANEL:
+                raise RuntimeError(f"invalid anchor count in {name}")
         steps = []
         for step_index, batch_ids in enumerate(schedule, 1):
             batch = [by_id[row_id] for row_id in batch_ids]
-            mask_values = [str(row["id"]) in anchor_set for row in batch]
-            anchor_mask = torch.tensor(mask_values, device=model.device, dtype=torch.bool)
-            if mode in {"anchor_sdpo", "anchor_sft", "augmented"}:
-                if int(anchor_mask.sum()) != POLICY_ANCHORS_PER_PANEL:
-                    raise RuntimeError(f"invalid anchor count in {name}")
             optimizer.zero_grad(set_to_none=True)
             detail: dict[str, float] = {}
             if mode == "raw":
@@ -375,7 +372,6 @@ def main() -> None:
                 loss = reverse_kl_per_example(student, teacher).mean()
                 detail["oracle_mean"] = float(loss.detach())
             elif mode == "anchor_sdpo":
-                anchor_rows = [row for row, selected in zip(batch, mask_values) if selected]
                 teacher = logits([
                     feedback_prompts[(str(row["id"]), "delayed_expression_feedback")]
                     for row in anchor_rows
@@ -384,7 +380,6 @@ def main() -> None:
                 loss = reverse_kl_per_example(student, teacher).mean()
                 detail["anchor_sdpo_mean"] = float(loss.detach())
             elif mode == "anchor_sft":
-                anchor_rows = [row for row, selected in zip(batch, mask_values) if selected]
                 student = logits([plain[str(row["id"])] for row in anchor_rows], grad=True)
                 targets = torch.tensor([
                     answer_id_values[semantic_letter_index(
@@ -398,18 +393,27 @@ def main() -> None:
                 immediate_teacher = logits([
                     feedback_prompts[(str(row["id"]), "immediate_feedback")] for row in batch
                 ], grad=False)
-                anchor_rows = [row for row, selected in zip(batch, mask_values) if selected]
                 delayed_teacher = logits([
                     feedback_prompts[(str(row["id"]), "delayed_expression_feedback")]
                     for row in anchor_rows
                 ], grad=False)
-                student = logits([plain[str(row["id"])] for row in batch], grad=True)
-                immediate_each = reverse_kl_per_example(student, immediate_teacher)
-                delayed_each = reverse_kl_per_example(student[anchor_mask], delayed_teacher)
-                residual = (delayed_each - immediate_each[anchor_mask]).mean()
-                loss = immediate_each.mean() + residual
+                anchor_immediate_teacher = logits([
+                    feedback_prompts[(str(row["id"]), "immediate_feedback")]
+                    for row in anchor_rows
+                ], grad=False)
+                population_student = logits([plain[str(row["id"])] for row in batch], grad=True)
+                anchor_student = logits([plain[str(row["id"])] for row in anchor_rows], grad=True)
+                population_immediate_each = reverse_kl_per_example(
+                    population_student, immediate_teacher,
+                )
+                anchor_delayed_each = reverse_kl_per_example(anchor_student, delayed_teacher)
+                anchor_immediate_each = reverse_kl_per_example(
+                    anchor_student, anchor_immediate_teacher,
+                )
+                residual = (anchor_delayed_each - anchor_immediate_each).mean()
+                loss = population_immediate_each.mean() + residual
                 detail.update({
-                    "immediate_mean": float(immediate_each.mean().detach()),
+                    "population_immediate_mean": float(population_immediate_each.mean().detach()),
                     "anchor_residual_mean": float(residual.detach()),
                 })
             else:
@@ -421,7 +425,8 @@ def main() -> None:
             optimizer.step()
             steps.append({
                 "step": step_index,
-                "batch_ids": batch_ids,
+                "population_batch_ids": batch_ids,
+                "anchor_ids": list(anchor_ids or []),
                 "loss": float(loss.detach()),
                 "gradient_norm": float(gradient_norm),
                 **detail,
@@ -451,14 +456,15 @@ def main() -> None:
         for panel_index in range(POLICY_PANEL_COUNT):
             panel_schedule = schedules["panels"][str(panel_index)]
             anchor_ids = panel_schedule["anchor_ids"]
-            batches = panel_schedule["batches"]
             for suffix, mode in (
                 ("anchor_sdpo", "anchor_sdpo"),
                 ("anchor_sft", "anchor_sft"),
                 ("augmented", "augmented"),
             ):
                 name = f"panel_{panel_index:02d}_{suffix}"
-                endpoint_metrics[name] = run_arm(name, mode, batches, anchor_ids)
+                endpoint_metrics[name] = run_arm(
+                    name, mode, global_schedule, anchor_ids,
+                )
         if list(endpoint_metrics) != expected_policy_arm_names():
             raise RuntimeError("arm completion order differs from frozen design")
         summary = summarize_policy_endpoints(endpoint_metrics)
