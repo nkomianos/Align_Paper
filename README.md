@@ -102,6 +102,14 @@ context-by-label cells must pass separately before external training. The
 runner, hardened remote launcher and read-only verifier are implemented; it is
 downstream of synthetic G0/G1 and has no endpoint yet.
 
+The external confirmation statistics are also now frozen and
+[power-qualified](docs/HINDSIGHT_ENDO_PAHF_CLUSTER_POWER_RESULT_20260904.md).
+The four rotations are averaged within each of 256 base tasks rather than
+counted as 1,024 independent examples. Across 400 simulated studies per
+condition, the rule qualified `.75%` of nulls, `90.25%` of planned signals and
+`74.5%` of noisier signals. This closes a pseudoreplication problem and validates
+the decision rule, but it is not a capable-model result or paper green light.
+
 A fresh [PUMA collision audit](docs/HINDSIGHT_PUMA_COLLISION_AUDIT_20260904.md)
 found the closest adjacent 2026 method: PUMA already models action-conditioned
 latent user-state transitions separately from utterance observations and plans

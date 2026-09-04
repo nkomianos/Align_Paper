@@ -2141,3 +2141,26 @@ manifest for the read-only verifier. Nine targeted tests, compilation and shell
 syntax pass. There is no endpoint because no GPU is reachable. This preflight is
 reserved for external validation after synthetic gradient G0 and policy G1; it
 does not add paid time to a failed-G0 path.
+
+## 2026-09-04 -- EndoPAHF confirmation rule made cluster-aware and power-qualified
+
+The four cyclic option rotations in EndoPAHF v2 are controlled views of one
+PAHF base task, not independent experimental units. Before any capable-model or
+confirmation endpoint, froze commit `11e2970` with paired base-cluster
+inference. The primary comparison averages the four rotations within each base
+and then compares augmented versus equal-anchor old-target log loss over 256
+paired bases. Qualification requires mean NLL gain at least `.05`, a positive
+10,000-resample cluster-bootstrap lower bound, and accuracy noninferiority
+within `.02`.
+
+The prospective power audit then qualified. Across 400 studies per condition,
+the rule selected `.0075` of nulls, `.9025` of signals with mean `.08` and SD
+`.35`, and `.7450` of equally sized noisier signals with SD `.50`. All frozen
+rate gates passed. The read-only verifier reports
+`ENDO_PAHF_CLUSTER_RULE_POWER_QUALIFIED`; evidence root
+`artifacts/hindsight_endo_pahf_cluster_power_20260904_v1`, manifest SHA-256
+`7a13b16c1a1acdf02d43efe30ba7830a519fcd7b1ce271c17a741891da9fe48e`.
+
+This validates the statistical decision rule and removes a pseudoreplication
+risk. It is not evidence of a neural effect. Qwen3.5-9B gradient G0 v2 remains
+the next decisive GPU gate; policy G1 and capable EndoPAHF remain conditional.
