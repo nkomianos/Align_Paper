@@ -56,3 +56,23 @@ UNDO agents are jointly preparing a corrected local-relation training DEV with
 terminal-SFT and canonical-distillation baselines; not launched. The current
 Hindsight numeric-choice apparatus remains parked after review, not queued for
 another anchor sweep. Local CPU coupling continues independently.
+
+## Coupling terminal result and UNDO retry
+
+Coupling exit0, 1,024 completions, measured inference/runtime84.33s. All complete
+evidence retrieved to retrieved/gpu_coupling_20260904T0840Z; 37 bundle file hashes
+match and four weight files independently rehashed remotely. Large weights are
+remotely checksum-attested, not locally rehashed. Archive SHA:
+1c8e4849f61f7d98b44d8ef1a63498b1fd602da07a5fae7bbc0cd9278906e39f.
+Hierarchical F1 variance ratios vs independent/token-clock/byte-clock:
+1.058/1.252/0.947; cost-adjusted1.084/1.328/0.971. All descriptive intervals include
+1. Park this specific heuristic, no expansion or claim of universal failure.
+
+UNDO source commit95e841a, archive SHA:
+17cf7b88fe63c137e1811d6feee5c38f50bdb1397ddb3bc07bba41311003c64c.
+Initial /home/ubuntu/undo_relation_g0_20260904T0845Z stopped before any predictions
+or training: Transformers loading metadata included a Python set, not directly
+JSON serializable. No scientific decision. Full failed evidence preserved locally
+at retrieved/undo_failed_20260904T0845Z; archive remote/local SHA:
+0e961458f3221ef5d30a552b28763338e6dae96941c77d678854c93fb606f248.
+Serialization-only fix and fresh-root retry are being prepared.

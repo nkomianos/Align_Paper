@@ -22,6 +22,14 @@ The [stochastic SQuAD DEV](docs/SQUAD_COUPLING_DEV_20260904.md) is now running
 on the laptop: eight questions, 16 seeds, four sampling policies, two small models
 (1,024 completions). No efficacy result yet and no paid GPU queue.
 
+**Subsequent GPU result:** the larger Qwen3-4B / SmolLM2-1.7B comparison completed
+1,024 outputs in 84.33 seconds, with evidence retrieved and verified. Hierarchical
+F1 difference variance was 1.058x independent and 1.252x the simpler token-clock
+baseline; including measured cost, 1.084x and 1.328x. No practical win demonstrated;
+park this heuristic. See [result audit](docs/GPU_COUPLING_RESULT_AND_BASELINE_AUDIT_20260904.md).
+The CPU run above remains an independent developmental record, not a reason to
+ignore this negative result. Corrected UNDO training is the next GPU work stream.
+
 **Latest completed comparison:** [OPDLM on-policy verification](docs/OPDLM_ONPOLICY_20260904.md)
 finished 24 arithmetic prompts under four closed-loop policies plus 87 paired
 verifier probes: 1,661 CPU forwards in 19.33 minutes. Evidence hashes and metrics
