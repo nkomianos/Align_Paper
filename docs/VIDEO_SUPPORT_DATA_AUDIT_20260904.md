@@ -31,3 +31,33 @@ Local receipts: `artifacts/beyondmasks_contract_audit_20260904_v1`.
 Reproducible metadata collector: `scripts/audit_beyondmasks_contract.py`.
 Public sources: https://huggingface.co/datasets/yigitekin/BeyondMasks and
 https://github.com/lixiaowen-xw/DiffuEraser .
+
+## Executed sample inspection
+
+Fetched the three smallest triples by total released byte size (175, 168, 171),
+not by model performance. All nine files match their pinned LFS SHA-256 values.
+Decoded frame counts and dimensions agree within each triple: 20, 38, and 68
+frames respectively. This is a size-biased feasibility sample, not representative
+evaluation. Script: `scripts/inspect_beyondmasks_samples.py`; raw videos, receipts,
+and first/middle/last contact sheets: `artifacts/beyondmasks_samples_20260904_v1`.
+Contact sheets resize for inspection and are not measurement inputs.
+
+Visual inspection finds a red moving object and mirror reflection (175), a glass
+and tabletop reflection (168), and a lamp with broad illumination changes (171).
+The lamp pair differs by about 50/255 mean absolute channel intensity outside
+the object mask; about 80% of those pixels exceed a mean difference of 10.
+This can be the intended physical illumination effect, NOT evidence that the
+pair is invalid. In the other two examples the corresponding fraction is about
+1–3% at the inspected frames. Neither statistic identifies true effect support.
+
+This changes the prospective design: illumination and localized reflections must
+be separate strata. An equal-area expansion control can be useful for localized
+effects, but global illumination may require nearly full-frame editable support.
+Do not call unchanged pixels outside an object mask a generic preservation win.
+Frame-count agreement also does not establish pixel-exact temporal alignment.
+
+Next qualification: independent effect-region annotation on a prospectively
+selected reflection subset, with background alignment checks and uncertainty
+regions excluded from pixel-based scoring. A lamp/global-lighting arm needs a
+separate assessment protocol. No model has been run and no paper claim is yet
+supported by these samples.
