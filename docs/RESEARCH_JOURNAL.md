@@ -1637,3 +1637,40 @@ and fixed; fresh retry process21147 is live on GH200. Qualification must pass
 before training, and one seed cannot establish reproducibility or novelty.
 Concurrent cybersecurity/VLM prior-work audit found no additional candidate
 clearing the launch bar; documented collisions instead of claiming novelty.
+
+## 2026-09-04 — real-human Hindsight feedback-state DEV
+
+Revisited the broad Hindsight thesis after the natural-initialization bifurcation
+screen failed. Chose a different necessary premise rather than retuning the
+synthetic feedback channel: whether actual participant replies add query-general
+predictive signal about measured post-conversation belief shift beyond the
+assistant text that elicited them. This uses the local checksummed PUPPET release,
+non-personalized C3/C4/C6 only, strict six-USER-turn records, and the previously
+frozen outcome-blind seven-query DEV / twenty-query confirmation split. It does
+not train a policy or identify message-level effects.
+
+Frozen and committed a word/character TF-IDF Ridge assay before endpoints were
+read. It compares query-only, assistant-only, participant-reply-only and full
+prefixes under leave-one-query-out validation. Tests passed. The first run root
+is invalid: a local-variable binding bug copied one row's target to every record,
+yielding a constant zero target. Preserved it, fixed target binding in commit
+188cb51, added a row-specific regression test, and reran to a fresh root. The
+invalid output was never used to adjust thresholds and no confirmation endpoint
+was opened.
+
+Corrected DEV is negative. At the late prefix, query-only/full Spearman is
+.2068/.0960; MSE418.853/427.121. User-only versus query-only MSE gain is -7.584
+(-1.81%), query-cluster bootstrap interval[-14.587,4.762]. Full versus
+assistant-only gain is -.239 (-.056%), interval[-1.076,1.283]. Every fixed
+criterion fails. Park the classical reader and confirmation; this is not a
+refutation of the causal thesis because the reader underperforms the source
+paper's capable-LLM baselines.
+
+Prepared and tested a separate capable-reader protocol using frozen text-only
+Qwen3.5-9B, strict JSON, synthetic explicit-rating qualification, no training,
+no raw transcript/completion persistence, and the same untouched DEV split.
+It requires all original signal bars plus complete strict parsing. Estimated
+GH200 runtime is under one hour for576 human generations. The previous GH200
+address no longer answers SSH, so no paid compute is active and no user action is
+required until a new instance is available. A pass would unlock a separately
+frozen confirmation run, not a paper greenlight.

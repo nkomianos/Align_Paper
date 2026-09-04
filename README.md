@@ -157,7 +157,17 @@ The [query-cluster precision check](docs/BELIEF_RECONSTRUCTION_PRECISION_2026090
 now assigns 72 conversations to DEV and 233 to confirmation without reading
 endpoints. With hypothetical within-query correlation .3, confirmation has
 about 47 independent-observation equivalents; this is a sensitivity calculation,
-not measured power or a human-data effect. No inference has started.
+not measured power or a human-data effect. The subsequent
+[classical DEV reader](docs/HINDSIGHT_HUMAN_FEEDBACK_DEV_RESULT_20260904.md)
+failed all five fixed criteria: late full-dialogue Spearman was .0960, versus
+.2068 for query plus pre-rating, and neither participant replies nor full text
+improved query-cluster-bootstrap MSE. The 20-query confirmation split remains
+unopened. A first output root with a row-target binding bug is explicitly invalid
+and preserved; its corrected rerun and regression test are authoritative. A
+[capable-reader protocol](docs/HINDSIGHT_HUMAN_FEEDBACK_LLM_DEV_PROTOCOL_20260904.md)
+is code-complete for a short Qwen3.5-9B DEV run when a GPU is next available.
+That follow-up tests the underpowered reader explanation, not a new post-hoc
+threshold or the paper claim itself.
 
 The [ScopeJudge audit](docs/SCOPEJUDGE_OFFLINE_SCHEMA_AUDIT_20260904.md)
 verified 4,897 labeled calls and constructed metadata-filtered pre-execution
