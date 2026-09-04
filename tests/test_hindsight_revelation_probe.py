@@ -1,4 +1,4 @@
-from interaction_sprint.hindsight_revelation_probe import cases, teacher_text
+from interaction_sprint.hindsight_revelation_probe import cases, teacher_text, history_text
 
 
 def test_balanced_orders_and_no_hidden_preference_in_base():
@@ -16,3 +16,12 @@ def test_previous_action_separate_from_feedback():
     assert text.startswith(c['prompt'])
     assert 'previously answered: A.' in text
     assert 'next user message was: My actual preference is coffee.' in text
+
+
+def test_history_control_preserves_feedback_and_replays_original():
+    c=cases()[0]
+    feedback='My actual preference is coffee. Please use that preference.'
+    assert history_text(c,1,'shown')==teacher_text(c,0,feedback)
+    shown=history_text(c,1,'shown')
+    assert history_text(c,1,'omitted')==shown.replace('The assistant previously answered: A.\n','')
+    assert history_text(c,1,'redacted')==shown.replace('answered: A.','answered: [redacted].')
