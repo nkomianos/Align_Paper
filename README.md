@@ -131,6 +131,15 @@ novelty claim but leaves the narrower question intact: when immediate logs are
 observationally identical, can sparse delayed probes identify the persistent-
 state objective and correct an SDPO update?
 
+A broader [performative/causal-personalization collision audit](docs/HINDSIGHT_PERFORMATIVE_CAUSAL_COLLISION_AUDIT_20260904.md)
+further narrows the contribution. ICML 2024 already establishes identification
+of performative effects from suitable sequential dynamics, CAFL already adjusts
+recommendation feedback loops, and ICLR 2026 NextQuill already uses causal-effect
+language for personalization. Accordingly, neither generic nonidentification,
+sequential probes nor a causal-personalization loss is novel. The paper remains
+defensible only as their specific consequence for next-turn SDPO plus a neural
+sparse-probe correction that beats equal-label baselines and transfers.
+
 The corresponding [factorized exact check](docs/HINDSIGHT_FACTORIZED_NONIDENTIFICATION_RESULT_20260904.md)
 now passes. Representing hidden state as persistent preference plus transient
 stance permits a shared action-independent emission in both worlds. Immediate

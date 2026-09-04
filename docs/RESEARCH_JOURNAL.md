@@ -2211,3 +2211,23 @@ identities; development contains 19 and confirmation 20, with complete overlap
 into learning (19/19 and 20/20) and zero base-task overlap across splits. G2 is
 therefore within-user transfer to unseen shopping tasks, matching continual
 personalization. It cannot be reported as unseen-user generalization.
+
+## 2026-09-04 -- performative and causal-personalization prior art narrows novelty
+
+A targeted primary-source search found two important adjacent lines not yet
+explicitly recorded. *Causal Inference out of Control* (ICML 2024) already shows
+that isolated observations may not identify performative effects and derives
+sequential-dynamics identification conditions. CAFL already corrects recommender
+feedback loops with intervention distributions and inverse-propensity weighting.
+NextQuill (ICLR 2026) already uses model/data-side causal preference effects for
+LLM personalization, contrasting history with no history and weighting
+preference-attributed response tokens.
+
+These works occupy generic performative nonidentification, sequential recovery,
+feedback-loop adjustment and causal-personalization framing. They do not analyze
+the assistant response as a treatment that makes the next linguistic follow-up
+ambiguous between transient expression and persistent transition, nor the effect
+of that ambiguity on SDPO's hindsight distribution. PI decision remains
+conditional yellow: only a working sparse delayed-minus-immediate neural method,
+equal-label baseline wins, PAHF-surface transfer and independent validation can
+make the remaining conjunction paper-worthy. A theorem-only fallback is killed.
