@@ -81,3 +81,18 @@ useful correction could still matter, but our elementary witness and BERT
 experiment alone do not justify a new-paper claim. Completing the frozen small
 run remains useful for deciding whether the proposed correction has any task
 benefit. Do not change its policy, tasks or metrics in response to this paper.
+
+## Separate analysis prepared while the run is live
+
+`scripts/analyze_opdlm_onpolicy.py ROOT FRESH_REPORT.json` first invokes the
+frozen verifier, then reports task-paired wins/losses and descriptive bootstrap
+intervals for both scoring rules. Exact discordance p-values are unadjusted,
+exploratory, and are not used as an acceptance threshold. A zero-width empirical
+bootstrap interval for identical small-sample outcomes does not prove equivalence.
+
+It also separates seed tokens that belong to the last parsed answer numeral
+from earlier numerals (including echoed operands), special tokens, and other
+text. This is a post-hoc coverage diagnostic, not a new primary metric or a
+change to seed selection. It checks whether this particular highest-confidence
+selection policy is actually verifying answer digits before drawing conclusions
+about correction. The frozen experiment is still unchanged.

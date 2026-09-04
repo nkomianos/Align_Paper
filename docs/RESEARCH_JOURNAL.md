@@ -1419,3 +1419,20 @@ independent leave-one-out checking. Therefore this general observation cannot
 be our novelty claim. The COVER-specific distinction still requires practical
 utility beyond this known result. Do not modify the running experiment to chase
 a different outcome. No paper go/no-go decision until complete evidence review.
+
+### Live-run continuation: paired and token-coverage analysis
+
+Revalidated exec session72509 live; did not restart. Implemented a separate
+post-run analysis (scripts/analyze_opdlm_onpolicy.py) with task-paired gains and
+losses, exploratory task bootstrap/exact discordance statistics, changed answer
+inspection, and coverage of last answer numerals versus earlier numerals and
+non-numeric tokens. It first requires frozen evidence verification and writes
+exclusively to a new report path outside the evidence root. Three new unit tests
+check pair direction, identical-output handling and last-number spans. Running
+source/config unchanged. No completed scientific result or paper decision yet.
+
+Primary-source scouting also found existing coverage of generic tool-retry and
+camera-motion ideas (IdempotencyBench, ReliabilityBench, ACaM, and Geometry-Guided
+Camera Motion Understanding). Search-level triage only: no new experiment or
+novelty claim based on these generic formulations. Current next action is to
+finish/analyze the live OPDLM run, not start another GPU job.
