@@ -1,0 +1,24 @@
+{
+  "seed": 9406201,
+  "samples": 100000,
+  "pairs": [
+    {"name":"identical_native_laws",
+     "a":[{"tokens":["red"],"p":0.55,"reward":1},{"tokens":["blue"],"p":0.45,"reward":0}],
+     "b":[{"tokens":["red"],"p":0.55,"reward":1},{"tokens":["blue"],"p":0.45,"reward":0}]},
+    {"name":"split_token_same_text_law",
+     "a":[{"tokens":["red"],"p":0.55,"reward":1},{"tokens":["blue"],"p":0.45,"reward":0}],
+     "b":[{"tokens":["r","ed"],"p":0.55,"reward":1},{"tokens":["b","lue"],"p":0.45,"reward":0}]},
+    {"name":"shifted_token_clock_same_text_law",
+     "a":[{"tokens":["answer:","red"],"p":0.55,"reward":1},{"tokens":["answer:","blue"],"p":0.45,"reward":0}],
+     "b":[{"tokens":["an","swer",":","red"],"p":0.55,"reward":1},{"tokens":["an","swer",":","blue"],"p":0.45,"reward":0}]},
+    {"name":"split_and_shifted_same_text_law",
+     "a":[{"tokens":["answer:","red"],"p":0.55,"reward":1},{"tokens":["answer:","blue"],"p":0.45,"reward":0}],
+     "b":[{"tokens":["an","swer",":","r","ed"],"p":0.55,"reward":1},{"tokens":["an","swer",":","b","lue"],"p":0.45,"reward":0}]},
+    {"name":"different_probabilities_split_and_shifted",
+     "a":[{"tokens":["answer:","red"],"p":0.55,"reward":1},{"tokens":["answer:","blue"],"p":0.45,"reward":0}],
+     "b":[{"tokens":["an","swer",":","r","ed"],"p":0.65,"reward":1},{"tokens":["an","swer",":","b","lue"],"p":0.35,"reward":0}]},
+    {"name":"adversarial_prefix_reward_alignment",
+     "a":[{"tokens":["xgood"],"p":0.5,"reward":1},{"tokens":["ybad"],"p":0.5,"reward":0}],
+     "b":[{"tokens":["xbad"],"p":0.5,"reward":0},{"tokens":["ygood"],"p":0.5,"reward":1}]}
+  ]
+}

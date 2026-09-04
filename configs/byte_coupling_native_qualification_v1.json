@@ -1,0 +1,13 @@
+{
+  "cases":"artifacts/c2c_baseline_dev_20260904_v1/cases.json",
+  "cases_per_dataset":4,
+  "threads":2,
+  "max_new_tokens":24,
+  "temperature":1.0,
+  "policies":["greedy"],
+  "seeds":[94061],
+  "models":[
+    {"name":"qwen3_06b","path":"C:/Users/nkomi/.cache/huggingface/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca"},
+    {"name":"smollm2_360m","path":"artifacts/byte_coupling_models/models--HuggingFaceTB--SmolLM2-360M-Instruct/snapshots/a10cc1512eabd3dde888204e902eca88bddb4951"}
+  ]
+}

@@ -1468,3 +1468,44 @@ User told safe to terminate this instance for the completed experiments. No
 CPU experiment remains active; no hidden GPU queue. Research goal remains unmet,
 not complete or blocked. Next work is a differentiated hypothesis/protocol,
 not paid hardware held idle. All local/remote artifacts preserved, no push.
+
+## 2026-09-04 — new cross-tokenizer coupling candidate and local qualification
+
+Previous goal turn is progress: OPDLM closed-loop experiment finished, evidence
+verified and reviewed, decoder correction parked, committed1b12b51. Not blocked;
+the paper goal remains unmet. No GPU restart and no expansion of that old assay.
+
+Investigated stochastic model-evaluation coupling. Benz et al. AISTATS2026
+(arXiv2502.01754v3) section6 explicitly leaves different vocabularies open;
+ByteSampler2506.14123 and exact byte probabilities2410.09303 are direct priors.
+Generic common-noise evaluation or byte conversion is not new. Candidate:
+native-token coupling with byte-aligned clocks and shared first-byte group draws,
+followed by independent-stream within-group token draws. Native marginals are
+preserved by the grouped categorical identity and fresh event noise. No claim
+of general variance reduction, optimality, or established novelty. Full boundary
+and theory/assay details in docs/BYTE_CLOCK_COUPLING_DEV_20260904.md.
+
+Implemented finite-model DEV, six pairs x four policies x100000seeds. Verified
+full deterministic sampling replay plus hashes; manifest
+260199db01bed5d2211b9a80aee885422e3a87a91ff348c7d8b5f0015875463f.
+Combined splitting/clock shift: hierarchical variance0 vs approximately.495
+independent. Unequal probabilities: variance ratio.188. Adversarial prefix/reward
+alignment: ratio2.00, explicitly worse. These are constructed mechanism checks,
+not pretrained performance or millions of independent real tasks.
+
+Downloaded public SmolLM2-360M weights, pinned a10cc1512eabd3dde888204e902eca88bddb4951;
+SHA matches Hub LFS. Uses existing Qwen3-0.6B cache and public validation cases
+from the earlier C2C preparation, clearly exposed DEV rather than new TEST.
+Preflight found Qwen padded output IDs absent from tokenizer. Native decoding
+drops them; retain their probability and count silent events in the sampling
+clock instead of filtering or reusing noise. Ten targeted tests pass.
+
+Launched artifacts/byte_coupling_native_qualification_v1, local session82373,
+six of16 outputs observed at01:08PDT, process confirmed live. Greedy only,
+eight questions/model,24-token cap; all logits retained. Source/config/weights
+hashed before inference. No answer key in runner, no stochastic variance result
+yet. Separate read-only verifier prepared; it replays sampling decisions from
+saved logits and decoded bytes, not neural forwards. Preserve raw outputs even
+when models ignore the exact-option-text instruction. Next action: finish,
+verify and inspect qualification before deciding the native stochastic DEV.
+No automatic paid expansion, no new monitor required while active goal owns job.

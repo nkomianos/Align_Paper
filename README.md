@@ -11,6 +11,14 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Scientific status
 
+**New local candidate:** [native-marginal cross-tokenizer coupling](docs/BYTE_CLOCK_COUPLING_DEV_20260904.md)
+investigates cheaper stochastic model comparisons, not improved model accuracy.
+A finite-model DEV is replay-verified: byte-clock/grouped coupling fixes constructed
+tokenization mismatches, but a counterexample doubles variance. Thus no general
+improvement claim or paper green light. A small greedy native-decoder qualification
+is running on the laptop (Qwen3-0.6B and SmolLM2-360M, eight public DEV questions
+each); it is not yet the stochastic variance experiment. No paid GPU queue.
+
 **Latest completed comparison:** [OPDLM on-policy verification](docs/OPDLM_ONPOLICY_20260904.md)
 finished 24 arithmetic prompts under four closed-loop policies plus 87 paired
 verifier probes: 1,661 CPU forwards in 19.33 minutes. Evidence hashes and metrics
@@ -19,7 +27,7 @@ last-number metric; both cache variants score 23/24. Strict answer-only complian
 is 0/24 in every arm. There is no demonstrated improvement over ordinary decoding.
 Only 18/87 probed seeds belong to final answer numerals; baseline accuracy is at
 ceiling, limiting correction conclusions. With direct prior-work overlap too,
-this route is parked, not expanded. No active CPU or GPU experiment queue remains.
+this route is parked, not expanded. No OPDLM or GPU experiment queue remains.
 All artifacts are preserved; the GH200 was live-checked idle after completion
 of its previously secured runs and is safe to terminate for these experiments.
 
