@@ -515,3 +515,10 @@ Created an isolated CUDA vision environment without changing the text venv;
 transferred and checksum-validated the EP0 corpus. Launched its frozen 24-call
 smoke. Native-video hindsight is the independent next candidate after evidence
 preservation. See [run roots, hashes and operational queue](INDEPENDENT_QUEUE_20260904.md).
+
+EP0 subsequently completed: all 24 answers parse, but native, joint and oracle
+each score 25% on both strata. Complete evidence and 3,615-file manifest verify
+locally; archive SHA-256 matches remote. Formal smoke-only result, unusable
+oracle prerequisite; no full-pilot expansion. Median forward 0.13033 seconds.
+After verification, launched the independent 240-call native-video hindsight
+run at `/home/ubuntu/visual_hindsight_g0_20260904Tqueue`, preserving all EP0 data.

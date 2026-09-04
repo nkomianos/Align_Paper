@@ -25,7 +25,7 @@ to parameter updates is impossible. Do not run the full LC0 or update study on
 this invalid assay. Any interface diagnosis must be separately labeled and must
 not replace or edit this evidence.
 
-## EP0: launched, 24-forward smoke
+## EP0: completed and verified, 24-forward smoke
 
 Root `/home/ubuntu/ep0_smoke_20260904T0432Z`; log and PID beside it.
 Prepared `/home/ubuntu/Align_Paper/artifacts/efference_pair_ep0_20260902_v3`.
@@ -39,7 +39,20 @@ Original interaction environment unchanged. Initial model download precedes
 GPU inference; zero utilization during downloading is not a process stall.
 The 450-forward pilot remains conditional on valid smoke controls and review.
 
-## Native-video hindsight: independent next run
+Update: all 24 calls completed with 100% parse rate, but native RGB, estimated
+joint motion and oracle joint motion each score 25% (camera and object both
+25%). The oracle does not establish a usable interface/capability prerequisite.
+Do not expand to the 450-call pilot on this evidence. This is not a test of a
+trained motion method or a real-video hypothesis rejection. Formal decision
+`SMOKE_ONLY_NO_SCIENTIFIC_DECISION`. Median forward time 0.13033 seconds.
+
+Complete local evidence: `retrieved/ep0_smoke_20260904T0436Z`.
+Remote/local archive SHA-256 matches:
+`9c84745f92858dd1fe1213e2d6dcccca0f39a2dda047361839380b61479d5478`.
+Committed verifier validates all 3,615 sealed files and writes `ep0_verified.json`
+outside the run root.
+
+## Native-video hindsight: launched after EP0 verification
 
 After EP0 exits and its evidence is retrieved and verified, run this candidate
 regardless of EP0's scientific outcome. No concurrent model process or duplicate
