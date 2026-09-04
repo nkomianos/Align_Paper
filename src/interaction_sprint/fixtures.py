@@ -140,7 +140,12 @@ Population influence probabilities and policy sampling are NOT estimated here.
     return cases, key
 
 
-BUILDERS = {"endo_signal": endo_signal, "undo": undo}
+def undo_audit():
+    from .undo_audit import build
+    return build()
+
+
+BUILDERS = {"endo_signal": endo_signal, "undo": undo, "undo_audit": undo_audit}
 
 
 def settings(study):

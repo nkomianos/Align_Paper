@@ -30,6 +30,9 @@ def analyze(study, cases, key, records, mode):
     common = {"scope": "frozen_model_assay_only", "weight_updates": 0,
               "forwards": len(records), "mode": mode,
               "mean_choice_mass": float(np.mean([r["choice_mass"] for r in records]))}
+    if study == "undo_audit":
+        from .undo_audit import analyze as audit_analyze
+        return audit_analyze(cases, key, records, mode, common)
     if study == "undo":
         def accuracy(group):
             return float(np.mean([index[c["case_id"]]["predicted"] == key[c["case_id"]]["answer"] for c in group]))
