@@ -13,6 +13,12 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ### CPU-only follow-up
 
+The [released-template fresh preference test](docs/HINDSIGHT_PUBLISHED_TEMPLATE_CONTROL_20260904.md)
+completed 128 CPU forwards: published hindsight 25/32, direct preference 27/32,
+redacted wrapper 30/32. All three still favor option A; uninformative controls
+choose A throughout. This qualifies useful but imperfect teacher signals, not
+endogenous-feedback learning harm. Matched parameter learning is the next step.
+
 The [paired history control](docs/HINDSIGHT_HISTORY_CONTROL_20260904.md) completed
 96 more CPU forwards: shown prior answer 25/32, omitted 16/32 (all choices A),
 redacted 30/32. Shown predictions replay exactly. This is a prompt-sensitive
