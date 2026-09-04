@@ -13,6 +13,18 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ### CPU-only follow-up
 
+The [full-response teacher audit](docs/HINDSIGHT_GENERATION_AUDIT_20260904.md)
+adds an important qualification:44/64 first-token correctness was **not**
+semantic preference accuracy. Greedy complete answers mention the correct
+unambiguous label in55/64 cases;11 recoveries use parenthesized labels. Exact
+whole-response A/B correctness is25/64, showing that different format checks
+measure different things. Wrong/contradictory labels remain. All64 outputs,
+source hashes and token counts verified;64seconds CPU, no training. The earlier
+gate remains stopped, but cannot be interpreted as a clean preference-understanding
+test. New trials must separate semantic choice from its response format.
+The [refreshed novelty audit](docs/HINDSIGHT_NOVELTY_BOUNDARY_20260904.md)
+also records causal/implicit-feedback baselines; this is not yet a paper greenlight.
+
 The [full-vocabulary Hindsight learning control](docs/HINDSIGHT_FULL_FEEDBACK_20260904.md)
 completed96 updates in595seconds on CPU. Held-out phrasing accuracy improved
 from8/32 to24/32, but missed the prospectively frozen90%/per-domain/format
