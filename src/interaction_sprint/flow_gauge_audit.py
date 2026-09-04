@@ -79,6 +79,7 @@ if __name__ == "__main__":
     (root/"runner_source.py").write_bytes(Path(__file__).read_bytes())
     with (root/"RESULT.json").open("x", encoding="utf-8") as f:
         json.dump(result, f, indent=2, allow_nan=False)
+    manifest = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in root.iterdir() if p.is_file()}
     with (root/"MANIFEST.json").open("x", encoding="utf-8") as f:
-        json.dump({p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in root.iterdir() if p.is_file()}, f, indent=2)
+        json.dump(manifest, f, indent=2)
     print(json.dumps(result))

@@ -6,7 +6,7 @@ from pathlib import Path
 
 import numpy as np
 
-SOURCE_SHA = "6667401402df384a3368b9f18a353a206cbf71ff42872be9b913c4409644c6f0"
+SOURCE_SHA = "677e2132b7fbdede38d93901c765646414a387045737a2574a39035e23b8eb84"
 
 
 def verify(root):
