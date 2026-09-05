@@ -11,14 +11,29 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Session handover
 
-The current cross-session source of truth is the
-[ICLR 2027 research handover and independent-audit mandate](docs/ICLR_2027_SESSION_HANDOVER_AND_AUDIT_MANDATE_20260904.md).
-It records the full candidate ledger, the conditional Hindsight lead, known
-methodological mistakes, unrun GPU queue, repository state, and the audit that
-must occur before more compute is spent. Older submission-readiness and queue
-documents are historical and must not be treated as current without that audit.
+**Independent audit completed 5 September UTC / 4 September Pacific:** see the
+[correction ledger and paper decision](docs/ICLR_2027_INDEPENDENT_AUDIT_REPORT_20260905.md),
+[rebuilt evidence index](docs/RESEARCH_EVIDENCE_INDEX_20260905.json), and
+[actual paper completion plan](docs/ICLR_2027_PAPER_COMPLETION_PLAN_20260905.md).
+The decision is a **persistence-specific Hindsight pivot; no current candidate
+is submission-ready, and the old GPU queue should not run unchanged**.
 
-## Scientific status
+The audit corrects a false universal deterministic-regret statement, an omitted
+strong anchor baseline, invalid-versus-negative classifications, oracle-distance
+versus utility confusion, pseudo-independent prompt/rotation/panel counts,
+confirmation-access language, and overstated verifier/power claims. It also
+confirms close prior art against a generic feedback/gradient-validity fallback.
+The reports distinguish fully replayed results from unavailable raw evidence.
+No new model experiment or GPU request occurred during this audit.
+
+The original
+[ICLR 2027 research handover and independent-audit mandate](docs/ICLR_2027_SESSION_HANDOVER_AND_AUDIT_MANDATE_20260904.md)
+is preserved as the mandate and pre-audit record. The older status and queue
+entries below are retained chronologically; where they conflict, the independent
+audit's corrected claim-level conclusions take precedence. No past endpoint or
+frozen threshold has been silently rewritten.
+
+## Pre-audit scientific status (historical record)
 
 ### Strongest live lead: Hindsight identifiability
 

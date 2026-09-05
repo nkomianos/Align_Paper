@@ -1,5 +1,35 @@
 # Researcher journal
 
+## 2026-09-05 UTC — Independent audit and correction record
+
+The [independent audit](ICLR_2027_INDEPENDENT_AUDIT_REPORT_20260905.md) now
+supersedes the scientific interpretations below where they conflict. Its
+[claim-level evidence index](RESEARCH_EVIDENCE_INDEX_20260905.json) distinguishes
+measured assays, aborted attempts, calculations/preparations, formal claims and
+unrun stages. The original 15-report fingerprint index remains preserved; it was
+never proof that all experiments had been independently reverified.
+
+Key corrections: fixed-action `.2` regret is not a universal deterministic-learner
+bound; the `2/15` expected-risk result survives within its deployment restrictions.
+The robustness IPW headline omitted a stronger ordinary anchor comparator.
+Under Extinction was a failed capability assay; the broad Hindsight prompt test
+was a valid narrow endpoint negative. UNDO/C2C and matched learning remain
+developmental descriptive comparisons. PUPPET's numerical verifier passes its
+invalid constant-target version. G1 oracle-distance and aggregate position checks
+do not validate policy utility; EndoPAHF is constructed within-cohort task transfer,
+not observed assistant-induced persistent change. Reserved-content reconstruction
+is different from confirmation endpoint evaluation. Close prior art also rules
+out a generic gradient-validity fallback.
+
+Decision: persistence-specific pivot, no unchanged GPU queue, no current
+submission-ready paper. The [completion plan](ICLR_2027_PAPER_COMPLETION_PLAN_20260905.md)
+proposes a six-arm equal-label method screen and hard September 8 / September
+11–12 measurement-feasibility and paper decisions. This is a proposal, not an
+experiment. Historical evidence, experiment code and frozen endpoint definitions
+remain unchanged; queue hold notices are additive.
+
+## Preserved pre-audit consolidation
+
 Last consolidated: **2026-09-04**. This is the current experiment index; historical
 protocols and the thesis scout retain their original context. The short ledger
 is in the [README](../README.md). Outcomes are reconstructed from the saved

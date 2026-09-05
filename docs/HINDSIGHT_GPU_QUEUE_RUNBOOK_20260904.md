@@ -1,5 +1,13 @@
 # Hindsight decisive GPU queue
 
+> **Audit hold — 5 September 2026 UTC.** This runbook is preserved as a historical
+> frozen queue, not current launch authorization. The
+> [independent audit](ICLR_2027_INDEPENDENT_AUDIT_REPORT_20260905.md) found endpoint,
+> baseline, statistical-unit, verifier and estimand defects. Do not launch this
+> sequence unchanged. A proposed reduced study and conditional queue are in the
+> [paper completion plan](ICLR_2027_PAPER_COMPLETION_PLAN_20260905.md); they require
+> their own prospective implementation/validation/freeze before any model endpoint.
+
 ## Frozen transfer inputs
 
 - Source bundle and checksum are refreshed after the policy-G1 implementation
