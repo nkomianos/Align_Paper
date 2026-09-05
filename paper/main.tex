@@ -31,10 +31,13 @@ delayed measurements identify the finite transition law under explicit
 measurement assumptions. Existing constructed simulations show both benefits
 and limitations of standard residual correction: a simpler anchor estimator can
 outperform its propensity-weighted version in policy regret. We specify a
-prospective neural comparison with equal delayed-label access, direct predictive
-endpoints, and semantic and acquisition controls. \textbf{The neural study and
-external persistence validation have not been run; this draft establishes
-neither neural method superiority nor real assistant-induced preference change.}
+gated neural comparison with direct predictive and semantic controls. An initial
+interface fails; one task-instruction repair qualifies, but training fails the
+acquisition gate and the sparse methods remain unrun. A secondary public-data
+audit yields an attrition-bound interval spanning both directions of change in
+later reported attitudes. \textbf{This draft establishes neither neural method
+superiority nor real assistant-induced preference change and is not currently
+qualified for submission.}
 \end{abstract}
 
 \section{Introduction}
@@ -228,10 +231,10 @@ These retained results motivate sharper measurement and decision questions;
 they do not jointly establish a successful learning method. Original protocols,
 raw rows, replay receipts and corrected claim classifications remain preserved.
 
-\section{Prospective neural screen}
+\section{Gated neural screen}
 \label{sec:neural}
 \paragraph{Status and population.}
-No result from the reduced screen exists. The prospective task uses 630 learning
+The reduced screen stopped at acquisition. The task uses 630 learning
 bases derived from PAHF and 96 development bases, with four option rotations
 per base. The learning cohort has 20 source-user display-name groups; all 19
 development groups occur in learning. The prepared data do not provide a
@@ -257,17 +260,17 @@ then six hash-selected revisits, totaling 280 anchor-row presentations.
 \toprule
 Arm & Signal & Delayed bases & DEV result \\
 \midrule
-Raw & Immediate SDPO-style loss & 0 & \pending \\
-Full oracle & Delayed SDPO-style loss & 630 & \pending \\
+Raw & Immediate SDPO-style loss & 0 & Invalid \\
+Full oracle & Delayed SDPO-style loss & 630 & Invalid \\
 Anchor SFT & Pooled native-label NLL & 64 & \pending \\
 Anchor SDPO & Pooled delayed teacher & 64 & \pending \\
 Residual & Immediate plus paired correction & 64 & \pending \\
 Mixture & $0.5$ immediate $+0.5$ anchor SDPO & 64 & \pending \\
 \bottomrule
 \end{tabularx}
-\caption{Prospective comparison, not experimental results. All sparse arms
-may use the same 630 immediate logs and the same 64 delayed bases. A no-update
-baseline and fixed profile/memory readouts are additional controls.}
+\caption{Stagewise development screen. Raw and oracle ran but failed acquisition;
+all four sparse arms remain unrun. Sparse arms would receive the same 630
+immediate logs and 64 delayed bases. No method-superiority comparison is earned.}
 \label{tab:neural}
 \end{table}
 
@@ -305,6 +308,31 @@ routing frequencies are not calibrated false-positive rates for the neural
 experiment. They reinforce the need for independent replication and a separately
 specified confirmatory analysis.
 
+\paragraph{Observed acquisition failure.}
+The initial interface passes all eight cell-level accuracy/mass checks but
+fails paired option-order stability (maximum target-probability range $.66690$).
+It stops before training. One prospectively recorded repair adds the same
+hypothetical preference-identification instruction to every neural prompt,
+clarifying that listed product alternatives are stipulated rather than assessed
+for technical feasibility. All 128 learning-only qualification choices then
+match their targets. Labels, cases, budgets and numerical gates remain fixed.
+
+After 35 updates per acquisition arm, oracle old-target NLL is $8.79766$ worse
+than no-update, despite a $.02463$ correct-token probability gain. Raw new-target
+NLL is $5.90668$ worse, despite a $.32009$ probability gain. The oracle's paired
+probability range approaches one; the no-update DEV distribution also fails
+its range guards. The run stops at 70 updates in 149.46 seconds on one GH200.
+This is an invalid acquisition assay, not a negative result for residual
+correction. It illustrates why one favorable endpoint cannot certify acquisition.
+
+A post hoc diagnostic replays one outcome-blind selected 16-row batch per saved
+checkpoint and reproduces all full logits exactly. On the original 128
+learning qualification prompts, the final oracle teacher answers A throughout
+and scores 32/128, versus the initial teacher's 128/128. Thus the saved adapter
+has lost the initially demonstrated conditional capability. This diagnoses the
+particular first-token training recipe; it neither isolates every cause nor
+establishes a general failure of the released multi-token SDPO method.
+
 \paragraph{Dependence, verification and stopping.}
 Average rotations within base; retain source-user dependence in sensitivity
 analysis. Check the exact expected IDs and semantic option mapping, rather
@@ -315,8 +343,13 @@ requirements but is exempt from an argmax-disagreement gate: a uniform
 stochastic distribution is a valid baseline despite arbitrary discrete ties.
 Its disagreement is still reported. Record effective configurations, source and environment hashes,
 resolved model/tokenizer and weight receipts, initialization and optimizer
-states, raw logits, tokens and elapsed work. An offline verifier proves only
-its numerical and provenance checks, not that it independently reran the model.
+states, raw logits, tokens and elapsed work. The original v2 verifier had a
+wrong runner reference; a separate replay inspector binds the actual frozen
+runner. It also found that floating-point profile-score ties depended on Python
+hash iteration order. Exact rational arithmetic repairs the prospective control,
+but the original controls are not retroactively certified. The amended receipt
+explicitly distinguishes verified neural-acquisition evidence from an uncertified
+full comparison. None of these repairs changes the failed acquisition decision.
 
 A qualified negative parks this estimator at this budget. Interface failure
 permits at most one isolated prospective repair. A pass permits independent
@@ -357,8 +390,21 @@ needs an explicit population, item-scoring rule and bounded-outcome attrition
 sensitivity. The previously considered conspiracy-belief source
 \citep{costello2024durably} has a 2026 editorial expression of concern concerning
 its data pipeline \citep{thorp2026concern}; we do not treat its original public
-release as a clean replication route. No substantive human-response endpoint
-has been computed for this draft.
+release as a clean replication route.
+
+We subsequently froze and executed a secondary numeric audit. Within the fixed
+1,108-person processed cohort, the primary estimand is the change in recorded
+treatment-minus-control prejudice-score contrast from immediate measurement to
+the observed recontact round. Each of six items lies in $[0,100]$; allowing
+every missing item its full range yields the sharp finite-cohort interval
+$[-29.5053,36.3433]$. The policy-support analogue is $[-37.8035,28.5397]$.
+These are identification intervals under range restrictions, not confidence
+intervals or causal effects. They leave the direction unresolved and do not
+establish absence of persistence. The 723 joint-complete prejudice respondents
+give a descriptive contrast change of $+1.0377$; this selected subset cannot
+replace the cohort bounds. All 49 prespecified missing-item departure settings
+per scale and baseline completeness summaries are retained. No prediction,
+demographic subgroup or persuasion-targeting analysis was performed.
 
 The intended contribution remains conditional on a consequential learning
 result and an honest external estimand. The strongest unresolved objection is

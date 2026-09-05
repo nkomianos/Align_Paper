@@ -1,0 +1,5 @@
+pdf/*.aux
+pdf/*.bbl
+pdf/*.blg
+pdf/*.log
+pdf/*.out

@@ -11,6 +11,13 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Session handover
 
+**Latest executed decision:** [GH200 results, corrections and ICLR no-go](docs/ICLR_2027_EXECUTION_DECISION_20260905.md).
+One interface repair qualified, but the70-update acquisition stage failed and
+the oracle teacher collapsed to a constant letter. All four sparse methods
+remain unrun. The public response audit is executed and inconclusive under
+full-range attrition bounds. The paper now reports these outcomes. The current
+neural recipe and submission plan are parked; the remaining compute is not queued.
+
 **Remediation and execution, 5 September UTC:** a corrected working manuscript is
 in [paper/main.tex](paper/main.tex), with a [repair tracker](docs/AUDIT_REMEDIATION_TRACKER_20260905.md),
 [prospective reduced DEV protocol](docs/HINDSIGHT_REDUCED_DEV_PROTOCOL_20260905.md),

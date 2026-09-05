@@ -1,8 +1,9 @@
 # Working manuscript
 
 `main.tex` is the actual research draft, not a submission or completed empirical
-paper. It uses the official ICLR 2027 style and explicitly marks neural and
-external results as unrun. The title block is changed in memory to avoid falsely
+paper. It uses the official ICLR 2027 style, reports the executed acquisition
+failure and public-response bounds, and marks the four unrun sparse methods.
+The current submission decision is no-go. The title block is changed in memory to avoid falsely
 claiming review or publication; the downloaded style files remain unchanged.
 
 Rebuild existing-data figures with:

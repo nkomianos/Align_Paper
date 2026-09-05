@@ -1,0 +1,69 @@
+{
+  "scope": "Post-audit remediation; original144record index remains unchanged",
+  "paper_green_light": false,
+  "records": [
+    {
+      "id": "reduced_v1",
+      "classification": "Invalid assay/capability",
+      "reason": "paired interface range failed",
+      "updates": 0,
+      "root": "artifacts/remote_reduced_evidence_20260905/reduced_dev_v1"
+    },
+    {
+      "id": "reduced_v2",
+      "classification": "Invalid assay/capability",
+      "reason": "acquisition and stability failed; original profile control nondeterministic",
+      "updates": 70,
+      "root": "artifacts/remote_reduced_evidence_20260905/reduced_dev_v2",
+      "full_verified": false,
+      "neural_acquisition_evidence_verified": true
+    },
+    {
+      "id": "checkpoint_replay",
+      "classification": "Verification; dependent on reduced_v2",
+      "rows": 48,
+      "full_logits_exact": true
+    },
+    {
+      "id": "final_teacher_diagnosis",
+      "classification": "Post hoc developmental; dependent on reduced_v2",
+      "learning_rows": 128,
+      "initial_correct": 128,
+      "oracle_final_correct": 32
+    },
+    {
+      "id": "public_response_reconstruction",
+      "classification": "Preparation/measurement audit",
+      "participants": 1108,
+      "matched_recontacts": 750
+    },
+    {
+      "id": "public_response_bounds",
+      "classification": "Valid descriptive partial identification; direction inconclusive",
+      "primary_bounds": [
+        -29.50526212832551,
+        36.34328595026952
+      ],
+      "causal_claim": false,
+      "latent_state_claim": false
+    },
+    {
+      "id": "joint_rule_stress",
+      "classification": "Developmental model-free simulation",
+      "artificial_studies": 1200,
+      "real_power_guarantee": false
+    },
+    {
+      "id": "sparse_methods_and_replication",
+      "classification": "Never run",
+      "arms": [
+        "pooled_sft",
+        "pooled_sdpo",
+        "residual",
+        "mixture"
+      ],
+      "replication_run": false,
+      "confirmation_opened": false
+    }
+  ]
+}

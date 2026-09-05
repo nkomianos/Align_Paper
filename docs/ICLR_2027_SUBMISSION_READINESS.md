@@ -1,6 +1,12 @@
 # ICLR 2027 submission readiness after the independent audit
 
 Status: **not submission-ready** as of 5 September 2026 UTC / 4 September Pacific.
+After authorized GPU execution, the decision remains **NO-GO**: see
+[the executed decision and correction ledger](ICLR_2027_EXECUTION_DECISION_20260905.md).
+The acquisition stage failed; final-teacher replay confirms capability collapse.
+Sparse methods, replication and confirmation remain unrun. Public-response
+range bounds leave the direction of change unresolved. The working draft now
+contains actual outcomes; no new method or causal-human claim qualifies.
 The current recommendation is a persistence-specific Hindsight pivot. No other
 candidate has a defensible complete paper package. Do not launch the historical
 GPU queue unchanged.

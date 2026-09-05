@@ -2338,3 +2338,41 @@ The user authorized SSH to one GH200 with at most100GH200hours. Conservative
 accounting starts2026-09-05T05:46UTC, including setup/idle time. Model revision
 and dependencies are pinned; the first gated run has a four-hour process cap.
 Follow-up depends on the observed qualified result, never on spending the budget.
+
+## 2026-09-05 -- executed acquisition failure and public measurement bounds
+
+Source `b813556` produced an invalid initial interface after30.95seconds and
+zero updates. A single common task-instruction repair, frozen at`46b9975`,
+qualified128/128 learning-only choices. Its raw/oracle acquisition stage then
+failed after70updates in149.46seconds: correct-token probability gains coexisted
+with substantially worse NLL and oracle position collapse. The four sparse
+methods were never launched. This is invalid acquisition, not a residual-method
+negative. A19.47-second post hoc diagnostic reproduced all full logits exactly
+on48selected saved-checkpoint rows and found the final oracle teacher always
+answeredA on128previously used learning qualification prompts (32correct).
+
+Replay exposed a wrong v1 runner reference in the v2 verifier and a hash-order
+tie bug in the float profile baseline. Separate replay code binds the actual
+frozen sources and explicitly certifies only the neural acquisition evidence;
+full verification remains false for the original controls. Exact rational
+readouts now pass five independent hash-seed checks. An additional portable
+replay uses1e-12 absolute tolerance only for recalculated floats, retaining
+exact decisions, IDs, configuration and source checks; the initial exact-JSON
+cross-architecture replay failure is preserved.
+
+Public-data reconstruction was frozen at`e886de5`; its statistical runner at
+`84476ab` before endpoints. The selected1,108-person cohort has750unique
+recontacts. Full-range missing-item bounds give prejudice contrast change
+[−29.5053,36.3433] and policy[−37.8035,28.5397]. These are descriptive
+identification intervals, not confidence intervals, causal effects or evidence
+of no persistence. All49missing-cell departure settings per scale were retained.
+No participant table or raw human export enters a release bundle.
+
+The working ICLR-format paper now contains actual failures and bounded human
+results. Current decision: no-go; park the neural recipe and submission plan.
+The restricted theorem survives, but neither useful method performance nor the
+required novelty/latent-measurement bridge has been established. See
+`docs/ICLR_2027_EXECUTION_DECISION_20260905.md` for corrections, classifications,
+conditional next work and realistic deadline criteria. Raw neural evidence,
+checkpoints and logs were retrieved and checksum-verified. No confirmation,
+push, submission, participant contact or message to another person occurred.

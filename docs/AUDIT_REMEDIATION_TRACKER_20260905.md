@@ -36,3 +36,15 @@ old protocol thresholds and raw artifacts are not modified to make old runs pass
 New gates and controls must be fixed before any capable-model endpoint. A new
 negative cannot be rescued by changing the threshold, parser, checkpoint or
 comparison set afterward.
+
+Post-execution update: see `ICLR_2027_EXECUTION_DECISION_20260905.md`. The initial
+interface failed; one declared task-instruction repair qualified; acquisition
+then failed and all sparse methods remain unrun. The final oracle teacher
+collapsed to a constant letter, confirmed by saved-checkpoint replay. The
+original v2 verifier root and nondeterministic profile ties were discovered
+and preserved; separate partial/portable inspection and exact-rational controls
+repair current verification tools without certifying the original full assay.
+Cross-platform recalculated floats use1e-12 tolerance; decisions/IDs/hashes stay
+exact. The public measured-response audit is executed and direction-inconclusive
+under its declared range restrictions. These outcomes do not close the method,
+latent-measurement or novelty gaps. Current submission decision remains no-go.
