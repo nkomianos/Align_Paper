@@ -2308,3 +2308,33 @@ audit split locks, experimental units, power, parser/capability gates, training
 isolation, GPU accounting, and current primary-source novelty before requesting
 more compute. The terminal objective is one defensible, submission-ready ICLR
 2027 paper, not continued idea accumulation. No GPU process is known to be active.
+
+## 2026-09-05 -- independent audit remediation and bounded execution
+
+The audit baseline is local commit `df3443713016321aacaf8cc7050f92aec0f1f3a1`.
+The new working paper corrects the decision restriction and deterministic-risk
+error, retains all finite-state comparators, separates human reported attitudes
+from latent preference state, and marks missing neural evidence explicitly.
+The exact rational verifier and regression tests pass. The official ICLR style
+build renders cleanly; the main text is within the nine-page limit.
+
+A prospectively superseding six-arm screen adds pooled64-label SFT/SDPO,
+mixture, no-update and deterministic same-information controls; separates format
+mass from semantic performance; and gates training on learning-only interface
+qualification and direct DEV acquisition. Source/model/tokenizer/optimizer and
+raw-logit verification includes a full sealed synthetic CLI fixture and tamper
+rejection. Reserved confirmation data remain excluded from transport and readers.
+The final source-pinned full-rule stress audit has 1,200 artificial studies;
+19/200 high-user-noise null studies route as promising, emphasizing that DEV
+thresholds are not a calibrated significance procedure.
+
+The public Deep Canvassing release supports 750 unique follow-up joins to its
+current1,108-person cohort. Actual timestamps imply roughly40--49days, unlike
+the source's35-day claim. No human effect or predictive endpoint has been
+computed; the prospective measurement audit must retain attrition and selection
+limits. Its availability does not validate the synthetic task's causal bridge.
+
+The user authorized SSH to one GH200 with at most100GH200hours. Conservative
+accounting starts2026-09-05T05:46UTC, including setup/idle time. Model revision
+and dependencies are pinned; the first gated run has a four-hour process cap.
+Follow-up depends on the observed qualified result, never on spending the budget.

@@ -1,0 +1,419 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{iclr2027_conference,times}
+\usepackage{amsmath,amssymb,amsthm,booktabs,graphicx,tabularx,xcolor,hyperref,etoolbox}
+\hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\pending}{\textit{Not run}}
+\newcommand{\R}{\mathbb{R}}
+\makeatletter
+\patchcmd{\@maketitle}{Under review as a conference paper at ICLR 2027}{Working draft -- 5 September 2026 -- not submitted}{}{\errmessage{Draft header patch failed}}
+\patchcmd{\@maketitle}{Anonymous authors}{Anonymous research draft}{}{\errmessage{Draft author patch failed}}
+\patchcmd{\@maketitle}{Paper under double-blind review}{Empirical completion pending}{}{\errmessage{Draft status patch failed}}
+\makeatother
+\title{When Immediate Agreement Cannot Identify\ Persistent Preference}
+\author{Anonymous authors}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Learning from a user's next message requires specifying what that message
+measures. Immediate agreement may reflect a transient change in expression or
+a persistent change in preference. We give an exact finite-state construction
+in which these mechanisms induce the same historical observations, including
+observed baseline states, but rank population actions differently under a
+declared post-action matching objective. For a new user whose baseline state is
+unavailable, the two-world expected-risk minimax regret is $2/15$. The result
+does not apply unchanged when the deployment user's baseline state is observed,
+and post-action matching is not itself a welfare criterion. Known, informative
+delayed measurements identify the finite transition law under explicit
+measurement assumptions. Existing constructed simulations show both benefits
+and limitations of standard residual correction: a simpler anchor estimator can
+outperform its propensity-weighted version in policy regret. We specify a
+prospective neural comparison with equal delayed-label access, direct predictive
+endpoints, and semantic and acquisition controls. \textbf{The neural study and
+external persistence validation have not been run; this draft establishes
+neither neural method superiority nor real assistant-induced preference change.}
+\end{abstract}
+
+\section{Introduction}
+The next user message provides inexpensive supervision for an assistant, but
+it is also a response to the assistant's own action. Hindsight self-distillation
+conditions a teacher on that subsequent message and trains a student that did
+not observe it \citep{sdpo}. Such training can be useful without making any
+causal claim. A stronger claim---that the update improves a persistent user
+preference---requires a connection between the observed utterance and a
+specified persistent target. That connection cannot be inferred merely because
+the user agrees with the preceding response.
+
+Consider a recommendation followed by assent. The user may temporarily echo
+the recommendation while retaining an earlier preference, or the recommendation
+may change a preference that remains after the immediate conversational context
+is removed. If both mechanisms generate the same observable logs, collecting
+more of those logs cannot distinguish them. This ambiguity concerns the
+measurement of latent state, in addition to familiar uncertainty about the
+function used to predict an observed label. A delayed probe helps only when
+its interpretation is justified independently: delay alone does not make a
+report neutral, stable, or nonreactive.
+
+This problem sits close to several established lines of work. SLIFT decomposes
+feedback for selective learning \citep{slift}; PUMA models action-conditioned
+user dynamics and inferred state \citep{puma}. Work on privileged likelihood
+already separates loss or gradient fidelity from utility
+\citep{privilegedlikelihood}. Human preference elicitation can change reported
+preferences under a fixed underlying reward \citep{influencing}, and influenceable
+reward functions raise competing normative objectives \citep{carroll2024}.
+Our remaining question is specifically whether independent persistence
+measurements resolve a consequential ambiguity for interaction learning. A
+generic causal-personalization framing or a renamed residual estimator would
+not establish a new contribution.
+
+The present draft separates three objects. First, an exact witness establishes
+observational nonidentification under a restricted decision setting. Second,
+constructed finite-state simulations evaluate ordinary difference estimation;
+they do not measure how frequently the ambiguity occurs among people. Third,
+a prospective neural screen asks whether correction improves prediction of
+stipulated delayed labels beyond simple learners receiving the same labels.
+That predictive experiment is not an empirical test of the theorem's
+action-induced state objective. Its completion and an externally defensible
+measurement study remain necessary for the intended paper.
+
+\section{Observed feedback and declared targets}
+Let $Z_0$ be a baseline persistent state, $A$ an assistant action, $Z_1(A)$ the
+persistent state after that action, and $S_1$ a transient expressed stance.
+The observed next message $O$ is emitted from the latent state. In the exact
+witness, the emission is the same in both mechanisms and simply reports $S_1$.
+Historical data contain $(Z_0,A,O)$; thus the witness does not rely on hiding
+the historical baseline state. The logging action has positive probability
+under each baseline state.
+
+We distinguish the value of an action that changes the target state,
+\begin{equation}
+ V_m(a)=\Prob_m\{a=Z_1(a)\}, \qquad m\in\{E,T\},
+ \label{eq:causal-value}
+\end{equation}
+from the value of a predictive distribution for a fixed delayed label $B$,
+\begin{equation}
+ U(\pi)=\E[\pi(B\mid X)]. \label{eq:prediction-value}
+\end{equation}
+In Equation~\ref{eq:causal-value}, the evaluated action can change the state
+that supplies its own reward. In Equation~\ref{eq:prediction-value}, the
+evaluation label is fixed when the prediction is scored. Optimizing either
+quantity is not automatically equivalent to protecting autonomy, consent,
+pre-treatment preferences, or long-term welfare. Those require separately
+defended objectives.
+
+In the neural screen, $B$ is a constructed delayed-expression label on a held-out
+task from an observed user cohort. The prediction is the full-vocabulary
+probability of the native token for the correct option; other vocabulary tokens
+receive zero credit. If $M(X)$ is the total probability of the four answer
+tokens and $q(B\mid X)$ their normalized conditional probability, then
+$\pi(B\mid X)=M(X)q(B\mid X)$. Consequently, both full-vocabulary NLL and
+correct-token probability can improve solely by placing more mass on the answer
+format. We report and gate conditional semantic correctness separately.
+
+\section{A restricted identification witness}
+Set $\Prob(Z_0=1)=3/5$ and log actions independently with probability $1/2$.
+When an action conflicts with $Z_0$, let the user copy action zero with
+probability one and action one with probability zero. In mechanism $E$, copying
+changes expression only; in mechanism $T$, it changes persistent state as well.
+The resulting immediate observation is $O=0$ when $A=0$ and $O=Z_0$ when $A=1$
+in both mechanisms. Thus their complete historical laws are identical.
+
+The action values under Equation~\ref{eq:causal-value} are
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Mechanism & $V(0)$ & $V(1)$ \\
+\midrule
+Expression only $E$ & $2/5$ & $3/5$ \\
+Persistent transition $T$ & $1$ & $3/5$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+For a new anonymous user whose $Z_0$ is unavailable to the policy, let $q$ be
+the learner's overall probability of action one, integrating over historical
+data and any randomization. Identical historical laws imply the same $q$ in
+both worlds. The expected regrets are $(1-q)/5$ and $2q/5$, so their maximum is
+minimized at $q=1/3$, with regret $2/15$. This statement covers data-dependent
+deterministic rules as well as randomized rules. A bound of $.2$ for every
+deterministic learner would be false because the random historical sample
+itself supplies randomization; Appendix~\ref{app:theory} gives a counterexample.
+
+The deployment restriction matters. If the current user's $Z_0$ is observed,
+the personalized rule $A=Z_0$ achieves value one in both witness worlds. The
+historical mechanisms remain nonidentified, but this particular decision
+problem no longer incurs regret. The construction therefore establishes neither
+a universal personalization lower bound nor inevitable harm from adaptation.
+
+A stipulated neutral probe maps $(Z_1,S_1)$ to $(Z_1,Z_1)$ without changing
+$Z_1$. Adding its observation gives total variation distance $3/10$ between
+the witness laws. More generally, with a known state-emission matrix $M$ of
+full row rank, conditional probe distributions satisfy $Q_a=T_aM$ and identify
+$T_a=Q_aM^\dagger$. This is standard linear identification, not a new general
+matrix theorem. Unknown emission, missing action support, ill conditioning,
+state-label ambiguity or probe-induced transitions change the conclusion.
+Complete assumptions and proofs are in Appendix~\ref{app:theory}.
+
+\section{Standard residual correction and fair information}
+For a fixed model parameter $\theta$, let $g_i^{I}(\theta)$ be a proxy loss
+gradient based on immediate feedback and $g_i^{D}(\theta)$ the corresponding
+gradient under a valid delayed label. With $N$ immediate examples and a uniform
+sample of $n$ paired delayed anchors, ordinary difference estimation uses
+\begin{equation}
+ \widehat g(\theta)=\frac1N\sum_{i=1}^{N}g_i^I(\theta)
+ +\frac1n\sum_{i\in\mathcal A}\{g_i^D(\theta)-g_i^I(\theta)\}.
+ \label{eq:difference}
+\end{equation}
+For fixed $\theta$ and the stated sampling design, the correction targets the
+full delayed-gradient mean. Nonuniform selection requires the appropriate
+known inclusion probabilities and support. This estimator belongs to classical
+difference estimation and prediction-powered inference \citep{ppi}; the
+arithmetic is not the proposed novelty.
+
+The fixed-parameter identity does not establish a neural training guarantee.
+Our SDPO-style teacher depends on the current adapter, is detached within an
+update, and changes between updates. Reusing a fixed anchor set while adapting
+parameters does not preserve an unconditional fixed-parameter unbiasedness
+claim along the entire trajectory. Clipping a correction, clipping gradients,
+finite optimization and selecting an action from an estimated value further
+separate estimation bias from decision regret. Even an unbiased value estimate
+need not induce a better decision than a biased estimate with favorable ranking.
+
+Every sparse comparator must receive the same available immediate logs,
+delayed labels and metadata. A full-delayed oracle is an extra-information
+acquisition control, not an equal-budget baseline. Equal optimizer updates also
+do not imply equal computation: the residual arm needs additional teacher and
+student forwards. We report label access and computation separately and require
+matched-compute comparisons before claiming method superiority.
+
+\section{Existing constructed evidence}
+\label{sec:finite}
+The retained finite-state studies are developmental experiments on designed
+cells. We recomputed their displayed aggregates directly from saved cell rows
+and retained every relevant comparator. The first study uses 150 qualifying
+design cells at each anchor budget, with 2,000 coupled synthetic draws per cell.
+At 16 anchors per action, mean expression regret is $.08628067$ for immediate
+feedback, $.01377017$ for ordinary anchors and $.00934317$ for clipped
+augmentation. At 64 anchors the latter two values are $.00431483$ and
+$.00268983$. These improvements are properties of this constructed screen, not
+neural or human effect estimates.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{generated/finite_evidence.pdf}
+\caption{Existing constructed simulations, recomputed from saved design-cell
+rows. Left: 150 qualifying cells per budget. Right: all five comparators in
+13 clean ranking-reversal cells per selection level. The logarithmic regret
+axis preserves the raw comparator. Cells and coupled draws are not independent
+human samples. Ordinary anchors can beat augmented IPW; unweighted augmentation
+is best at random selection in this grid.}
+\label{fig:finite}
+\end{figure}
+
+The robustness screen is more cautionary. Its clean ranking-reversal subset
+contains 13 designed configurations per selection level. At random selection,
+ordinary anchors have regret $.00380385$, better than augmented IPW at
+$.00417692$, while unweighted augmentation is better than both at $.00222308$.
+At the strongest included selection bias, ordinary anchors attain
+$.00000769$ versus $.00218077$ for augmented IPW. The original bias-correction
+checks still pass. The conclusion is that bias control and policy superiority
+are distinct, and that omitting a simple comparator changes the interpretation.
+Figure~\ref{fig:finite} shows all comparators rather than only the favorable pair.
+
+A separate finite longitudinal calculation also rejects an automatic-harm
+interpretation: symmetric adaptation need not increase mean baseline drift.
+These retained results motivate sharper measurement and decision questions;
+they do not jointly establish a successful learning method. Original protocols,
+raw rows, replay receipts and corrected claim classifications remain preserved.
+
+\section{Prospective neural screen}
+\label{sec:neural}
+\paragraph{Status and population.}
+No result from the reduced screen exists. The prospective task uses 630 learning
+bases derived from PAHF and 96 development bases, with four option rotations
+per base. The learning cohort has 20 source-user display-name groups; all 19
+development groups occur in learning. The prepared data do not provide a
+separate unique person identifier. We therefore target held-out tasks within this cohort, not
+unseen-user generalization. The 256 reserved confirmation bases remain unopened
+and are not consumed by preparation or development verification. The stipulated
+old/new labels and transition narratives are constructed; they do not measure
+assistant-caused human persistence.
+
+\paragraph{Arms and budgets.}
+Pool the existing four disjoint 16-base panels into one 64-base delayed-label
+budget shared by all sparse learners. Each arm is one Qwen3.5-9B model with
+the same immutable base revision, identical initial rank-eight adapter and a
+fresh AdamW optimizer. Use 35 fixed updates at learning rate $10^{-4}$, no
+weight decay, and the fixed final checkpoint. The population schedule visits
+each learning base once, 18 rows per update. The anchor schedule presents two
+bases in all four rotations per update: all 64 bases in the first 32 updates,
+then six hash-selected revisits, totaling 280 anchor-row presentations.
+
+\begin{table}[t]
+\centering\small
+\begin{tabularx}{\linewidth}{lXcc}
+\toprule
+Arm & Signal & Delayed bases & DEV result \\
+\midrule
+Raw & Immediate SDPO-style loss & 0 & \pending \\
+Full oracle & Delayed SDPO-style loss & 630 & \pending \\
+Anchor SFT & Pooled native-label NLL & 64 & \pending \\
+Anchor SDPO & Pooled delayed teacher & 64 & \pending \\
+Residual & Immediate plus paired correction & 64 & \pending \\
+Mixture & $0.5$ immediate $+0.5$ anchor SDPO & 64 & \pending \\
+\bottomrule
+\end{tabularx}
+\caption{Prospective comparison, not experimental results. All sparse arms
+may use the same 630 immediate logs and the same 64 delayed bases. A no-update
+baseline and fixed profile/memory readouts are additional controls.}
+\label{tab:neural}
+\end{table}
+
+The teacher loss is first-answer-token full-vocabulary
+$\mathrm{KL}(p_\theta\Vert\operatorname{stopgrad}p_\theta^{\rm hindsight})$.
+This is an SDPO-style adaptation, not a reproduction of the released
+multi-token algorithm. Full-sequence SDPO and SLIFT given the same delayed
+information belong to the conditional follow-up, not to an unearned baseline
+claim in Table~\ref{tab:neural}.
+
+\paragraph{Qualification and outcomes.}
+The exact downstream serialization first undergoes a learning-only
+16-base, four-rotation, two-context interface check. Every context/label cell
+must have at least 14 of 16 correct conditional choices, mean target probability
+at least $.70$ and mean answer mass at least $.10$. The raw and full-oracle arms
+then run before any sparse arm. The oracle must improve old-target NLL by at
+least $.10$ over both no-update and raw; raw must improve new-target NLL by at
+least $.10$ over no-update. Every corresponding full-vocabulary and conditional
+semantic probability change must be positive. Failure is an invalid acquisition
+assay, not a causal negative.
+
+If acquisition qualifies, the residual must improve old-target NLL by at least
+$.03$, full-vocabulary correct-choice probability by $.02$, and conditional
+semantic correctness by $.01$ against each of raw, anchor SFT, anchor SDPO and
+the mixture. Probability gains must remain nonnegative in every rotation
+stratum and leave-one-source-user-out aggregate. It must also beat each
+prespecified cheap readout by more than $.005$ on both probability metrics.
+Otherwise there is no basis to advance a neural-superiority claim. These are
+practical development routing thresholds; they are not statistical equivalence
+tests or validated neural power guarantees. A model-free stress audit invokes
+the complete rule in 1,200 artificial studies with task and source-user
+dependence. With no systematic residual advantage, 19 of 200 high-user-noise
+studies pass, versus zero of 200 low-user-noise studies. These illustrative
+routing frequencies are not calibrated false-positive rates for the neural
+experiment. They reinforce the need for independent replication and a separately
+specified confirmatory analysis.
+
+\paragraph{Dependence, verification and stopping.}
+Average rotations within base; retain source-user dependence in sensitivity
+analysis. Check the exact expected IDs and semantic option mapping, rather
+than accepting any complete-looking table. Paired per-base option-order ranges
+and disagreement are required because global means can cancel opposing order
+effects. The no-update comparator retains the mass and probability-range
+requirements but is exempt from an argmax-disagreement gate: a uniform
+stochastic distribution is a valid baseline despite arbitrary discrete ties.
+Its disagreement is still reported. Record effective configurations, source and environment hashes,
+resolved model/tokenizer and weight receipts, initialization and optimizer
+states, raw logits, tokens and elapsed work. An offline verifier proves only
+its numerical and provenance checks, not that it independently reran the model.
+
+A qualified negative parks this estimator at this budget. Interface failure
+permits at most one isolated prospective repair. A pass permits independent
+seeds, matched-compute controls and a second family, followed by fair published
+baselines and one separately frozen confirmation. An identity in which delayed
+and immediate text coincide is checked on CPU; a redundant 35-update training
+arm is not counted as a transition experiment. No stage automatically turns
+development success into a submission decision.
+
+\section{External measurement and remaining evidence}
+\label{sec:measurement}
+A delayed response is an informative instrument only under an argued
+measurement model. A credible external study needs randomized exposure,
+comparable immediate and delayed measurements of the same declared construct,
+a neutral comparison, repeated-measure stability or reactivity controls, and
+prespecified delay and attrition handling. A new elicitation context may reveal
+a different construct or cause a new transition. Repeated interaction can
+confound retention of an earlier change with continued treatment.
+
+Public data offer a narrower operational route. We inspected the public
+release for \citet{costello2026canvassing}, which randomizes a conversation
+about immigration versus smartphones. Its current processed cohort contains
+1,108 records; an older public follow-up export uniquely matches 750 of them,
+with 383 control and 367 treatment respondents. All eleven immediate and
+follow-up item definitions match after whitespace normalization. The recorded
+elapsed time from initial-study end to follow-up start is approximately
+40--49 days (median 45.54), whereas the source manuscript states a 35-day mean.
+This unresolved metadata discrepancy must remain visible in a reconstruction.
+These are availability and linkage checks, not estimated response effects.
+
+Such data can support a separately specified secondary analysis of later
+\emph{reported attitudes}. They do not supply latent preference ground truth,
+randomized measurement-reactivity controls, or an empirical bridge to the
+action-induced target in Equation~\ref{eq:causal-value}. Roughly one third of
+the processed cohort lacks follow-up, and postassignment exclusions prevent an
+automatic intention-to-treat interpretation. A prospective analysis therefore
+needs an explicit population, item-scoring rule and bounded-outcome attrition
+sensitivity. The previously considered conspiracy-belief source
+\citep{costello2024durably} has a 2026 editorial expression of concern concerning
+its data pipeline \citep{thorp2026concern}; we do not treat its original public
+release as a clean replication route. No substantive human-response endpoint
+has been computed for this draft.
+
+The intended contribution remains conditional on a consequential learning
+result and an honest external estimand. The strongest unresolved objection is
+that the construction supplies better labels by assumption and applies a known
+estimator. Passing a proxy-gradient gate, adding labels unavailable to baselines,
+or selecting a favorable parser does not resolve that objection.
+
+\section{Discussion and limitations}
+The exact construction separates two latent mechanisms with identical immediate
+observations. Its value is the explicit measurement and deployment assumptions,
+not a claim that all personalization is nonidentifiable. The matrix recovery
+argument and residual estimator are standard, and the finite-state evidence
+already shows a simpler estimator can be better for decisions. No claim of
+new general causal identification or general policy superiority follows.
+
+The proposed neural screen measures fixed-label prediction on an observed
+cohort. It cannot validate Equation~\ref{eq:causal-value}, identify human
+persistence, or demonstrate welfare improvement. Its full decision rule has
+undergone model-free stress checks and still needs empirical replication;
+constructed Gaussian power for one marginal endpoint cannot qualify the whole
+study. The same development data must not be used to repeatedly repair a
+scientific failure until it passes. Submission is contingent on completing
+the missing evidence, not on the existence of this draft.
+
+\section*{Reproducibility statement}
+The exact proofs are in the appendix. Displayed finite-state aggregates and
+Figure~\ref{fig:finite} are generated from preserved cell rows with input hashes.
+The corrected audit distinguishes formal claims, developmental simulations,
+invalid assays, qualified negatives and unrun stages. A prospective protocol
+and source freeze govern the reduced screen; immutable evidence and a separate
+offline verifier are required for any eventual result. No anonymous artifact
+URL is claimed before a concrete release exists.
+
+\section*{Ethics statement}
+Matching a post-action preference is not assumed to be welfare or consent.
+Preference measurement can itself influence users. No new human study has been
+conducted for this draft; any collection requires an appropriate consent,
+review, privacy and follow-up plan before recruitment.
+
+\section*{AI use statement}
+AI systems assisted with hypothesis development, theoretical formulations and
+proof checking, literature search, experimental design, code and test generation,
+synthetic-data analysis, scientific interpretation and manuscript drafting.
+This assistance includes substantive research contributions, not only language
+editing. The human authors must verify all claims, sources and artifacts before
+submission and remain responsible for them.
+
+\bibliography{theory_sources}
+\bibliographystyle{iclr2027_conference}
+\clearpage
+\appendix
+\input{sections/theory}
+\section{Complete constructed comparison}
+\input{generated/finite_table}
+The selected subsets match the original declared design predicates. Their
+averages do not estimate population prevalence. Complete raw cells and
+unselected diagnostics remain in their historical evidence roots.
+\end{document}

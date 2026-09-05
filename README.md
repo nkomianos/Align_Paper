@@ -11,6 +11,15 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Session handover
 
+**Remediation and execution, 5 September UTC:** a corrected working manuscript is
+in [paper/main.tex](paper/main.tex), with a [repair tracker](docs/AUDIT_REMEDIATION_TRACKER_20260905.md),
+[prospective reduced DEV protocol](docs/HINDSIGHT_REDUCED_DEV_PROTOCOL_20260905.md),
+[execution verifier specification](docs/HINDSIGHT_EXECUTION_INTEGRITY_20260905.md),
+and [public measurement feasibility review](docs/HINDSIGHT_PERSISTENCE_MEASUREMENT_FEASIBILITY_20260905.md).
+The user authorized one GH200 with a [100-hour maximum budget](docs/GH200_COMPUTE_BUDGET_20260905.md).
+This superseding run is gated; the historical queue remains on hold. A draft,
+source tests, or allocated compute does not establish submission readiness.
+
 **Independent audit completed 5 September UTC / 4 September Pacific:** see the
 [correction ledger and paper decision](docs/ICLR_2027_INDEPENDENT_AUDIT_REPORT_20260905.md),
 [rebuilt evidence index](docs/RESEARCH_EVIDENCE_INDEX_20260905.json), and

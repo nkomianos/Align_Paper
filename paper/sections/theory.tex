@@ -1,0 +1,316 @@
+% Input after \appendix. Requires amsmath, amssymb, and natbib.
+% Bibliography entries are in paper/theory_sources.bib.
+\section{Identification, restricted decision risk, and measurement assumptions}
+\label{app:theory}
+
+This appendix gives an exact counterexample and the assumptions under which
+additional measurements resolve it. The example is a construction, not an
+estimated model of human preferences. Its decision objective is one explicit
+choice among objectives for influenceable preferences
+\citep{carroll2024}. Neither the counterexample nor the sampling
+identity below establishes a new general estimation method, human prevalence,
+or a neural learning result.
+
+\subsection{Two mechanisms with a common observation law}
+\label{app:theory:witness}
+
+Let a user's initial binary state be $Z_0\sim\operatorname{Bernoulli}(p)$.
+A logging policy draws $A\in\{0,1\}$ with
+$\Pr(A=1\mid Z_0=z)=e_z$. The post-action state is
+$(P_1,S_1)$, where $P_1$ is the persistent component and $S_1$ is an expressed
+stance. The initial state is $(Z_0,Z_0)$, and the common, action-independent
+observation function is $O=S_1$. Fix copying probabilities $c_0,c_1\in[0,1]$.
+If $A=Z_0$, both mechanisms leave the state unchanged. If $A\ne Z_0$,
+the expression mechanism $E$ and the transition mechanism $T$ use
+\begin{align}
+ E:\quad (P_1,S_1)&=
+ \begin{cases}(Z_0,A),&\text{with probability }c_A,\\
+ (Z_0,Z_0),&\text{with probability }1-c_A;\end{cases}\\
+ T:\quad (P_1,S_1)&=
+ \begin{cases}(A,A),&\text{with probability }c_A,\\
+ (Z_0,Z_0),&\text{with probability }1-c_A.\end{cases}
+\end{align}
+The labels ``persistent'' and ``expression'' are part of the construction.
+They do not turn a recorded utterance into an independently measured state.
+
+\paragraph{Proposition 1 (immediate observational equivalence).}
+For any $p,e_0,e_1,c_0,c_1$, the joint law of $(Z_0,A,O)$ is identical under
+$E$ and $T$. This remains true even if the historical log records $Z_0$ without
+error and the action has randomized overlap.
+
+\paragraph{Proof.}
+When $a=z$, $\Pr(O=z\mid Z_0=z,A=a)=1$ in both mechanisms. When $a\ne z$,
+both give $\Pr(O=a\mid Z_0=z,A=a)=c_a$ and
+$\Pr(O=z\mid Z_0=z,A=a)=1-c_a$. Multiplying by the same initial-state and
+logging probabilities proves equality of every joint atom. Hence the total
+variation distance is zero. Any independent sample of historical logs, and
+any statistic or randomized post-processing of that sample, has the same
+law in the two worlds. This is equality by construction, not a test passed
+by human data.\hfill$\square$
+
+For a fresh user drawn independently from the same initial-state population,
+define the value of an intervention that always chooses action $a$ by
+\begin{equation}
+ V_m(a)=\Pr_m\{a=P_1(a)\},\qquad m\in\{E,T\}.
+ \label{eq:theory:persistent-value}
+\end{equation}
+The evaluated action itself may change the state against which it is scored.
+This objective rewards post-action matching; it is not a definition of welfare
+or a requirement to preserve the initial state. Direct evaluation gives
+\begin{align}
+ (V_E(0),V_E(1))&=(1-p,p),\\
+ (V_T(0),V_T(1))&=(1-p+pc_0,\ p+(1-p)c_1).
+\end{align}
+For the exact witness $p=3/5$, $c_0=1$, $c_1=0$, these values are
+\begin{equation}
+ (V_E(0),V_E(1))=(2/5,3/5),\qquad
+ (V_T(0),V_T(1))=(1,3/5).
+ \label{eq:theory:witness-values}
+\end{equation}
+Thus action $1$ is uniquely optimal among constant actions in $E$, while
+action $0$ is uniquely optimal in $T$. With $e_0=e_1=1/2$, the nonzero
+immediate-log atoms $(z,a,o)$ have masses
+\begin{equation}
+ (0,0,0):1/5,\quad (0,1,0):1/5,\quad
+ (1,0,0):3/10,\quad (1,1,1):3/10.
+\end{equation}
+The same equivalence also holds for the separately archived logging design
+$(e_0,e_1)=(7/20,7/10)$; the logging designs must not be interchanged when
+reporting a delayed-log total variation distance.
+
+\subsection{The corrected expected-risk minimax statement}
+\label{app:theory:minimax}
+
+A learner receives $n$ independent historical immediate logs $D_n$ and may
+use independent randomization $U$. It outputs one action $\delta(D_n,U)$ for
+a fresh anonymous user. The fresh user's $Z_0$ is unavailable at deployment
+and independent of $D_n,U$. The comparison class contains the two constant
+actions. Define expected regret, averaging over training data and learner
+randomization, by
+\begin{equation}
+ R_m(\delta)=\max_{a\in\{0,1\}}V_m(a)
+             -\mathbb E_m[V_m(\delta(D_n,U))].
+\end{equation}
+This restriction is essential: it is not a lower bound for all personalized
+policies with access to the current user's state.
+
+\paragraph{Proposition 2 (two-point minimax risk).}
+For the witness in Eq.~\eqref{eq:theory:witness-values}, for every $n\geq0$,
+\begin{equation}
+ \inf_\delta\max\{R_E(\delta),R_T(\delta)\}=\frac{2}{15},
+ \label{eq:theory:minimax}
+\end{equation}
+where the infimum allows randomized learners. It is attained by ignoring
+the data and choosing action $1$ with probability $1/3$.
+
+\paragraph{Proof.}
+By Proposition 1, $q=\Pr_m\{\delta(D_n,U)=1\}$ is the same under both
+mechanisms. Equation~\eqref{eq:theory:witness-values} therefore gives
+\begin{equation}
+ R_E(\delta)=\frac15(1-q),\qquad
+ R_T(\delta)=\frac25q.
+\end{equation}
+If $q\leq1/3$, the first expression is at least $2/15$; if $q\geq1/3$,
+the second is at least $2/15$. At $q=1/3$ they are equal. The data-independent
+randomized rule attains this probability for every sample size.\hfill$\square$
+
+\paragraph{Correction: deterministic data dependence is not a fixed action.}
+The minimum worst-case regret over the two \emph{fixed} deterministic actions
+is $1/5$. The stronger assertion that every deterministic learning algorithm
+has expected worst-case regret at least $1/5$ is false. For $n\geq1$, consider
+the deterministic rule
+\begin{equation}
+ \delta(D_n)=\mathbf 1\{Z_{0,1}=0\},
+\end{equation}
+where $Z_{0,1}$ is the first historical user's initial state. In either world,
+$q=2/5$. Its two expected regrets are $3/25$ and $4/25$, with maximum
+$4/25<1/5$. The random historical sample supplies randomness even though the
+algorithm has no random seed. Proposition 2 remains a lower bound for this
+algorithm; no claim that the deterministic subclass attains $2/15$ at each
+fixed finite $n$ is needed.
+
+\paragraph{Observed-current-state escape.}
+If the fresh user's $Z_0$ is observed before acting, the policy $A=Z_0$
+causes no copying branch and has $A=P_1=Z_0$ with probability one under both
+mechanisms. Its value is one and its regret against the optimal policy in
+that enlarged class is zero. Historical mechanism nonidentification survives,
+but the restricted anonymous-user decision lower bound no longer applies.
+Likewise, the witness alone does not establish impossibility for an unknown
+longitudinal system with other informative interventions or observations.
+
+\subsection{What an additional measurement must identify}
+\label{app:theory:measurement}
+
+In the binary construction, define an ideal neutral probe by the state map
+$(P_1,S_1)\mapsto(P_1,P_1)$ followed by the same emission function. Its
+output is $B=P_1$. The only immediate-log atom whose delayed outcome differs
+between the witness worlds is $(Z_0,A,O)=(1,0,0)$: it has $B=1$ in $E$ and
+$B=0$ in $T$. Consequently, the total variation distance between the extended
+laws of $(Z_0,A,O,B)$ is $3/10$ under balanced randomized logging, and
+$(3/5)(1-7/10)=9/50$ under the archived state-dependent logging design.
+The probe identifies these two stipulated worlds because its exclusion and
+measurement properties were specified, not because time elapsed.
+
+The following finite-state statement makes the measurement requirement
+explicit. Let $Z_0$ and $P_1$ take values in $\{1,\ldots,r\}$ and let
+$T_a(z,j)=\Pr(P_1=j\mid Z_0=z,\operatorname{do}(A=a))$. Assume that:
+\begin{enumerate}
+ \item the baseline states being conditioned on are observed without error,
+ have positive probability, and the logged action is randomized conditional
+ on these states with positive probability for each relevant action;
+ \item the probe does not change $P_1$, which remains stable over the specified
+ horizon; and its known measurement law is the row-stochastic matrix
+ $M_{jb}=\Pr(B=b\mid P_1=j)$, with no remaining direct dependence on action,
+ baseline, or transient expression conditional on $P_1$;
+ \item the full-population conditional probe distributions are observed or
+ recoverable under an explicitly justified sampling and response model.
+\end{enumerate}
+Randomizing invitations to a delayed survey does not by itself justify the
+third condition when actual response depends on the unobserved outcome.
+
+\paragraph{Proposition 3 (known-emission identification).}
+Writing $Q_a(z,b)=\Pr(B=b\mid Z_0=z,A=a)$, these assumptions give
+$Q_a=T_aM$. If $M$ has full row rank $r$, then
+\begin{equation}
+ T_a=Q_aM^+,\qquad
+ \|\widehat T_a-T_a\|_F
+ \leq\|\widehat Q_a-Q_a\|_F\,\|M^+\|_2,
+ \quad \widehat T_a=\widehat Q_aM^+,
+ \label{eq:theory:known-emission}
+\end{equation}
+where $M^+$ is its Moore--Penrose inverse. The error bound assumes $M$ is
+known exactly; it does not account for estimating or misspecifying $M$.
+
+\paragraph{Proof.}
+Conditioning on $P_1$ gives $Q_a=T_aM$. Full row rank implies $MM^+=I_r$,
+so right multiplication identifies $T_a$. Submultiplicativity of the
+Frobenius and spectral norms proves the error bound.\hfill$\square$
+
+Small singular values can make finite-sample inversion unstable. Full row
+rank is a sufficient condition here, not a claim that every target functional
+requires full transition identification. Conversely, for
+\begin{equation}
+ M=\begin{pmatrix}1&0\\0&1\\0&1\end{pmatrix},\qquad
+ T^{(1)}=I_3,\qquad
+ T^{(2)}=\begin{pmatrix}1&0&0\\0&0&1\\0&1&0\end{pmatrix},
+\end{equation}
+$T^{(1)}M=T^{(2)}M$ although $T^{(1)}\ne T^{(2)}$. Thus additional probe
+samples alone do not fix a measurement channel that aliases these states.
+An unknown emission matrix also leaves a factorization problem; this theorem
+does not learn or validate it from arbitrary conversational logs.
+
+\subsection{The standard residual estimator and its limits}
+\label{app:theory:residual}
+
+For one randomized action stratum, let the finite population of $N$ logged
+units have immediate agreement scores $O_i\in[0,1]$ and delayed scores
+$B_i\in[0,1]$. The target here is the finite-population mean
+$\overline B_N=N^{-1}\sum_i B_i$. Let $S$ be a uniformly selected subset of
+$k$ units, sampled without replacement, on which both scores are observed.
+Then the difference estimator is
+\begin{equation}
+ \widehat\mu_{\rm diff}=\overline O_N+
+ \frac1k\sum_{i\in S}(B_i-O_i).
+ \label{eq:theory:difference}
+\end{equation}
+It is standard model-assisted estimation, closely related to the mean
+estimator in prediction-powered inference
+\citep{ppi,mozer2026difference}.
+
+\paragraph{Proposition 4 (design expectation).}
+Conditional on the complete finite population,
+$\mathbb E_S[\widehat\mu_{\rm diff}]=\overline B_N$. More generally, if
+$R_i$ indicates that unit $i$ is measured and its positive inclusion
+probability $\pi_i=\Pr(R_i=1\mid\{O_j,B_j\}_{j=1}^N)$ is known, then
+\begin{equation}
+ \widehat\mu_{\rm HT-diff}=\frac1N\sum_{i=1}^N
+ \left[O_i+\frac{R_i}{\pi_i}(B_i-O_i)\right]
+ \label{eq:theory:ht-difference}
+\end{equation}
+has the same conditional expectation. Dependence among the $R_i$ does not
+change this expectation identity, although it matters for variance.
+
+\paragraph{Proof.}
+In the first design, $\mathbb E[\mathbf1\{i\in S\}]=k/N$; linearity gives
+$\mathbb E[k^{-1}\sum_{i\in S}(B_i-O_i)]
+=N^{-1}\sum_i(B_i-O_i)$. In the second design,
+$\mathbb E[R_i/\pi_i]=1$ for each unit. Adding $\overline O_N$ yields
+$\overline B_N$ in each case.\hfill$\square$
+
+For a superpopulation response model using observed covariates $W$, a
+corresponding sufficient condition is
+$\mathbb E[R\mid B,O,W]=\pi(W)>0$ with known $\pi(W)$. A randomized
+invitation probability is not the full measurement-inclusion probability
+if nonresponse is selective. Plug-in estimated weights, self-normalization,
+outcome-dependent selection with unknown probabilities, and fitting a proxy
+on the same sampled labels require their own analysis; Proposition 4 does
+not supply a blanket finite-sample unbiasedness guarantee for them.
+
+\paragraph{Clipping changes the expectation.}
+The archived first finite-state implementation clips
+$\widehat\mu_{\rm diff}$ to $[0,1]$. This can reduce squared error for a
+target in $[0,1]$, but does not preserve unbiasedness. For the finite
+population $N=2$, $k=1$, $(O_1,O_2)=(1,0)$ and $(B_1,B_2)=(0,0)$,
+Eq.~\eqref{eq:theory:difference} equals $-1/2$ or $1/2$ with equal
+probability. Its expectation is the true mean zero. After clipping, the
+expectation is $1/4$. This counterexample concerns estimator expectation;
+it does not invalidate a properly reported Monte Carlo regret comparison.
+
+\paragraph{Unbiasedness does not imply a decision advantage.}
+For independent identically distributed pairs with finite second moments,
+the same $k$ uniformly selected labels from $N$ pairs, and coefficient one,
+direct covariance expansion gives
+\begin{equation}
+ \operatorname{Var}(\widehat\mu_{\rm diff})
+ =\frac{\operatorname{Var}(B)}{k}
+ +\left(\frac1k-\frac1N\right)
+ \left[\operatorname{Var}(O)-2\operatorname{Cov}(B,O)\right].
+\end{equation}
+Here $\operatorname{Var}(\overline O_N)=\operatorname{Var}(O)/N$,
+$\operatorname{Var}(\overline{B-O}_S)=\operatorname{Var}(B-O)/k$, and
+$\operatorname{Cov}(\overline O_N,\overline{B-O}_S)
+=\operatorname{Cov}(O,B-O)/N$, which proves the formula. Thus the estimator
+need not beat the ordinary mean of the same $k$ delayed labels. Smaller
+estimation error also need not change which action is selected, and a biased
+estimator can have smaller decision regret on a particular population.
+All same-label anchor means and simple shrinkage/mixture baselines therefore
+belong in a method comparison. In the constructed truthful-transition world
+$B_i=O_i$ for every pair, so its correction is identically zero; observing
+this equality in a replay is an algebra check, not an independent empirical
+discovery about human behavior.
+
+\subsection{The empirical target is a separate estimand}
+\label{app:theory:bridge}
+
+The constructed EndoPAHF assay assigns a historical interaction an immediate
+label and a stipulated delayed label. It then scores a later model answer
+against that fixed label. No state-transition kernel is applied to the
+\emph{evaluated} later answer. Its expected correct-label score has the form
+\begin{equation}
+ U_B(\theta)=\mathbb E_{(X,B)\sim\mathcal D}
+                   [\pi_\theta(B\mid X)],
+ \label{eq:theory:predictive-target}
+\end{equation}
+with a fixed constructed distribution $\mathcal D$. If $\pi_\theta$ is a
+full-vocabulary next-token distribution, all tokens other than the native
+correct answer token receive reward zero; a constrained option-normalized
+policy instead defines a different decision rule and must be labeled as such.
+Neither version equals Eq.~\eqref{eq:theory:persistent-value} merely because
+the label is called delayed. Established users appearing in both learning
+and evaluation also do not become unseen users when the query prefix changes.
+
+Replacing $(B_i,O_i)$ in the residual identity by fixed, differentiable
+delayed and immediate losses can identify the corresponding sampled loss
+or its gradient when the same sampling conditions hold and differentiation
+commutes with expectation. It does not prove that this gradient improves
+Eq.~\eqref{eq:theory:predictive-target}, let alone an action-dependent human
+state objective. Feedback generated from the learner's own policy adds
+distributional derivatives not supplied by a fixed-target identity.
+The distinction between likelihood, held-out feedback gradients, and value
+is already central to \citet{privilegedlikelihood}.
+
+Finally, an immediate-versus-delayed human survey study can identify effects
+on a specified measured response under randomization and justified attrition
+assumptions. It cannot establish $B=P_1$, a known full-rank $M$, absence of
+measurement reactivity, or a uniquely correct welfare objective simply by
+having a follow-up date. Those are separate validation and normative tasks.

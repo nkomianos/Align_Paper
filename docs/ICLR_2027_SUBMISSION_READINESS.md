@@ -5,6 +5,15 @@ The current recommendation is a persistence-specific Hindsight pivot. No other
 candidate has a defensible complete paper package. Do not launch the historical
 GPU queue unchanged.
 
+Remediation now provides a complete, explicitly incomplete-evidence working
+manuscript in `paper/main.tex`, corrected proofs and all-comparator figures,
+a prospective six-arm reduced DEV protocol, complete offline integrity checks,
+and a model-free full-rule stress audit. A public repeated-response source has
+been linked at the schema/availability level; its estimand is later reported
+attitudes, not validated latent preferences. Neural execution is now authorized
+on a GH200 under a 100-hour cap. These are concrete preparation advances;
+they do not remove the missing scientific-result and novelty conditions below.
+
 The [independent report](ICLR_2027_INDEPENDENT_AUDIT_REPORT_20260905.md) and
 [claim-level evidence index](RESEARCH_EVIDENCE_INDEX_20260905.json) replace the
 old semantic-ancestry readiness framing. The prior page is preserved byte-for-byte
