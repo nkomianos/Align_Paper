@@ -1,6 +1,6 @@
 # Researcher journal
 
-Last consolidated: **2026-09-02**. This is the current experiment index; historical
+Last consolidated: **2026-09-04**. This is the current experiment index; historical
 protocols and the thesis scout retain their original context. The short ledger
 is in the [README](../README.md). Outcomes are reconstructed from the saved
 reports below, not from memory or optimistic chat summaries. The
@@ -2262,3 +2262,19 @@ signal `.8357`; manifest SHA-256
 `8e050034619ff21fddfbc73bb337cdee0f41c4a0117cb816b8c8100ac935e4ca`.
 Thirteen combined targeted tests, Python compilation, three launcher syntax
 checks, and all new replay verifiers pass. No capable EndoPAHF output exists.
+
+## 2026-09-04 -- cross-session handover freezes an audit-first decision point
+
+Created `docs/ICLR_2027_SESSION_HANDOVER_AND_AUDIT_MANDATE_20260904.md` as the
+current navigation document for a fresh session. It explicitly separates valid
+positive, valid negative, invalid assay, developmental/apparatus, and never-run
+work; records the strongest surviving Hindsight claim and its unrun capable-model
+queue; summarizes the broader failure ledger; and lists methodological mistakes
+that may have distorted prior conclusions.
+
+The handover does not certify those conclusions. It requires the next session to
+reconstruct every headline metric from raw evidence, rerun committed verifiers,
+audit split locks, experimental units, power, parser/capability gates, training
+isolation, GPU accounting, and current primary-source novelty before requesting
+more compute. The terminal objective is one defensible, submission-ready ICLR
+2027 paper, not continued idea accumulation. No GPU process is known to be active.

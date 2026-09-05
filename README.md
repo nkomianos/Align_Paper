@@ -9,6 +9,15 @@ project was **Under Extinction**:
 It now also contains independent alignment, agent-security, and vision candidates.
 No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
+## Session handover
+
+The current cross-session source of truth is the
+[ICLR 2027 research handover and independent-audit mandate](docs/ICLR_2027_SESSION_HANDOVER_AND_AUDIT_MANDATE_20260904.md).
+It records the full candidate ledger, the conditional Hindsight lead, known
+methodological mistakes, unrun GPU queue, repository state, and the audit that
+must occur before more compute is spent. Older submission-readiness and queue
+documents are historical and must not be treated as current without that audit.
+
 ## Scientific status
 
 ### Strongest live lead: Hindsight identifiability
