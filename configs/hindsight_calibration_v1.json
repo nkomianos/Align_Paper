@@ -1,0 +1,25 @@
+{
+  "version": "learning-only-calibration-v1-20260905",
+  "status": "PROSPECTIVE_NOT_RUN",
+  "model_id": "Qwen/Qwen3.5-9B",
+  "model_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "seed": 202609051,
+  "steps": 32,
+  "effective_batch": 16,
+  "microbatch": 2,
+  "checkpoints": [
+    8,
+    16
+  ],
+  "learning_rate": 0.0001,
+  "common_task_prefix": "This is a hypothetical preference-identification task. Your answer identifies the user's preferred listed option. Treat all listed product descriptions as valid hypothetical alternatives, regardless of technical compatibility or real-world availability. Use supplied preference evidence when present. Reply with the option's displayed letter only.\n\n",
+  "arms": [
+    "supervised",
+    "frozen_teacher",
+    "current_teacher"
+  ],
+  "maximum_run_seconds": 3600,
+  "total_budget_h200_hours": 50,
+  "automatic_followup": false,
+  "paper_green_light": false
+}

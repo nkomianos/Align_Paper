@@ -11,6 +11,10 @@ No historical OSH adapter or old OSH paper artifact is imported or packaged.
 
 ## Session handover
 
+**Current preparation (5 September):** [50-H200-hour research shortlist](docs/ICLR_50H_RESEARCH_SHORTLIST_20260905.md)
+and [learning-only calibration deployment](docs/CALIBRATION_FAST_DEPLOY_20260905.md).
+This is prospective preparation; no new GPU run or paper qualification is implied.
+
 **Latest executed decision:** [GH200 results, corrections and ICLR no-go](docs/ICLR_2027_EXECUTION_DECISION_20260905.md).
 One interface repair qualified, but the70-update acquisition stage failed and
 the oracle teacher collapsed to a constant letter. All four sparse methods
