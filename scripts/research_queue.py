@@ -15,14 +15,14 @@ REPO = Path(__file__).resolve().parents[1]
 ENTRIES = [
     {'id': 'hindsight_calibration', 'state': 'CPU_TESTED_HOST_CHECK_REQUIRED',
      'cap_hours': 1, 'blockers': ['compatible single GPU', 'pinned cached model', 'learning input']},
-    {'id': 'compensating_update', 'state': 'RESEARCH_BLOCKED', 'cap_hours': 3,
-     'blockers': ['closest-source comparison', 'frozen task data', 'GPU runner', 'independent verifier', 'CPU rehearsal']},
-    {'id': 'clara_rule_edit', 'state': 'RESEARCH_BLOCKED', 'cap_hours': 3,
-     'blockers': ['exact CPU baseline comparison', 'natural evaluation dataset', 'method advantage']},
-    {'id': 'unreliable_reference', 'state': 'RESEARCH_BLOCKED', 'cap_hours': 2,
-     'blockers': ['reference acquisition protocol', 'model organism qualification', 'runner and verifier']},
-    {'id': 'specification_monitor', 'state': 'RESEARCH_BLOCKED', 'cap_hours': 2,
-     'blockers': ['MALT label/split audit', 'existing monitor comparison', 'runner and verifier']},
+    {'id': 'compensating_update', 'state': 'EXPLORATORY_RUNNER_CPU_TESTED', 'cap_hours': 3,
+     'blockers': ['GPU qualification pending; use launch_research_suite.py']},
+    {'id': 'clara_rule_edit', 'state': 'CPU_BASELINES_RUN_AND_VERIFIED', 'cap_hours': .05,
+     'blockers': ['natural evaluation and method advantage required before GPU expansion']},
+    {'id': 'unreliable_reference', 'state': 'EXPLORATORY_RUNNER_CPU_TESTED', 'cap_hours': 2,
+     'blockers': ['prompted organism only; GPU qualification pending; use launch_research_suite.py']},
+    {'id': 'specification_monitor', 'state': 'RUNNER_DATA_BLOCKED', 'cap_hours': 2,
+     'blockers': ['reviewed local MALT data; remote endpoint returned HTTP401']},
 ]
 
 
@@ -48,7 +48,7 @@ def main():
                           'automatic_expansion': False, 'all_candidates_ready': False}, indent=2))
         return
     if a.run != 'hindsight_calibration':
-        p.error('This candidate is research-blocked, not GPU-ready.')
+        p.error('Use launch_research_suite.py for the new exploratory runners; see RESEARCH_PILOTS_IMPLEMENTATION_20260906.md.')
     for field in ['learning', 'snapshot', 'out', 'allocation_start_utc', 'previous_h200_hours']:
         if getattr(a, field) is None:
             p.error('Missing --' + field.replace('_', '-'))

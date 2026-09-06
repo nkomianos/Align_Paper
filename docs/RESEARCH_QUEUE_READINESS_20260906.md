@@ -1,5 +1,9 @@
 # Readiness before renting GPU time
 
+**Historical snapshot, superseded:** the four exploratory runners are now
+implemented. See [current implementation and execution contract](RESEARCH_PILOTS_IMPLEMENTATION_20260906.md).
+The protocol-only table below records the earlier state; it is not current readiness.
+
 The full research queue is NOT deployment-ready. The research shortlist is a
 set of hypotheses and protocols, not four implemented experiments.
 
