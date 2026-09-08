@@ -1,5 +1,10 @@
 # Implemented pilot suite: execution contract
 
+**Updated 7 September:** wall-clock experiment caps are removed at the user's
+request. Runtime numbers below are historical planning estimates, not current
+termination limits. The current queue uses estimate-based admission and lets
+admitted experiments finish. See [new budget policy and tabular pilot](IDEA_TRIAGE_AND_RUNTIME_POLICY_20260907.md).
+
 This supersedes the protocol-only readiness table in RESEARCH_QUEUE_READINESS_20260906.md.
 All four candidate runners now exist. GPU execution is untested. The monitor is
 data-blocked: the MALT raw-file endpoint returned HTTP 401, and no reviewed
@@ -67,18 +72,19 @@ blocked and omitted. Supplied monitor data must pass review/split checks before
 any model loads. Input token lengths are checked without loading GPU weights;
 overlength traces are rejected, never silently truncated.
 
-Order: optional Hindsight (1h cap), CLARA CPU (3 minutes cap), compensation (3h),
-reference (2h), optional monitor (2h). Maximum scheduled caps sum to 6.05 hours
+Original order and estimates: optional Hindsight (1h), CLARA CPU (3 minutes), compensation (3h),
+reference (2h), optional monitor (2h). Estimated times sum to 6.05 hours
 including Hindsight without monitoring, or 8.05 with both optional stages.
 Without Hindsight these sums are 5.05 and 7.05 hours. Actual runs should generally be shorter,
 but throughput/fit remain unbenchmarked. All use the same original allocation
 start, so time spent loading, verifying and between jobs reduces remaining budget.
 No stage may expand into replication or paper confirmation automatically. An
 execution or verifier failure stops the suite; a verified scientific stop may
-continue to the next independent screen. Maximum budget remains 50 allocated
-H200 hours. GH200 timing must be measured separately.
+continue to the next independent screen. The budget target remains 50 allocated
+H200 hours. GH200 timing must be measured separately. A run that overruns its
+estimate is allowed to finish; the next admission uses actual elapsed time.
 
-The supervisor terminates processes, not cloud billing. Retrieve evidence and
+The supervisor no longer applies a wall-clock experiment timeout. Retrieve evidence and
 stop the rental through the provider when the suite ends; SSH disconnection is
 not termination. Do not leave an instance waiting for implementation work.
 

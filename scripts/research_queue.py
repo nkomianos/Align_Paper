@@ -14,14 +14,16 @@ import sys
 REPO = Path(__file__).resolve().parents[1]
 ENTRIES = [
     {'id': 'hindsight_calibration', 'state': 'CPU_TESTED_HOST_CHECK_REQUIRED',
-     'cap_hours': 1, 'blockers': ['compatible single GPU', 'pinned cached model', 'learning input']},
-    {'id': 'compensating_update', 'state': 'EXPLORATORY_RUNNER_CPU_TESTED', 'cap_hours': 3,
+     'estimated_hours': 1, 'blockers': ['compatible single GPU', 'pinned cached model', 'learning input']},
+    {'id': 'tabular_drift', 'state': 'REAL_MODEL_CPU_SMOKE_PASSED', 'estimated_hours': 2,
+     'blockers': ['use launch_research_suite.py with pinned checkpoint, source and frozen inputs']},
+    {'id': 'compensating_update', 'state': 'EXPLORATORY_RUNNER_CPU_TESTED', 'estimated_hours': 3,
      'blockers': ['GPU qualification pending; use launch_research_suite.py']},
-    {'id': 'clara_rule_edit', 'state': 'CPU_BASELINES_RUN_AND_VERIFIED', 'cap_hours': .05,
+    {'id': 'clara_rule_edit', 'state': 'CPU_BASELINES_RUN_AND_VERIFIED', 'estimated_hours': .05,
      'blockers': ['natural evaluation and method advantage required before GPU expansion']},
-    {'id': 'unreliable_reference', 'state': 'EXPLORATORY_RUNNER_CPU_TESTED', 'cap_hours': 2,
+    {'id': 'unreliable_reference', 'state': 'EXPLORATORY_RUNNER_CPU_TESTED', 'estimated_hours': 2,
      'blockers': ['prompted organism only; GPU qualification pending; use launch_research_suite.py']},
-    {'id': 'specification_monitor', 'state': 'RUNNER_DATA_BLOCKED', 'cap_hours': 2,
+    {'id': 'specification_monitor', 'state': 'RUNNER_DATA_BLOCKED', 'estimated_hours': 2,
      'blockers': ['reviewed local MALT data; remote endpoint returned HTTP401']},
 ]
 
@@ -58,9 +60,9 @@ def main():
         p.error('Local input/snapshot missing; online downloads are prohibited')
     if a.out.exists() or a.out.with_suffix('.queue.json').exists():
         p.error('Output already exists; no resume or overwrite')
-    from launch_hindsight_calibration import remaining_seconds
-    if remaining_seconds(a.allocation_start_utc, a.previous_h200_hours) < 120:
-        p.error('Allocation budget exhausted')
+    from research_pilots.budget import admission
+    if not admission(a.run,a.allocation_start_utc,a.previous_h200_hours)['admit']:
+        p.error('Estimated runtime plus margin does not fit remaining budget')
     env = dict(os.environ, HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1',
                PYTHONPATH=os.pathsep.join([str(REPO / 'src'), str(REPO)]))
     checks = [

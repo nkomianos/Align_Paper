@@ -20,7 +20,7 @@ def remaining_seconds(allocation_started, already_spent_hours, now=None):
     if elapsed<0: raise ValueError('allocation start cannot be in future')
     if not math.isfinite(already_spent_hours) or not 0<=already_spent_hours<50:
         raise ValueError('prior H200 allocation hours must be in [0,50)')
-    return min(3600.,(50-already_spent_hours)*3600-elapsed)
+    return (50-already_spent_hours)*3600-elapsed
 
 
 def supervise(command, seconds, env, log_path):
@@ -32,9 +32,9 @@ def supervise(command, seconds, env, log_path):
                 try: os.killpg(process.pid,signal.SIGTERM)
                 except ProcessLookupError: pass
         prior={s:signal.signal(s,terminate) for s in (signal.SIGTERM,signal.SIGINT,signal.SIGHUP)}
-        grace=min(10.,seconds*.1)
+        grace=10. if seconds is None else min(10.,seconds*.1)
         try:
-            try: return process.wait(timeout=max(.01,seconds-grace))
+            try: return process.wait(timeout=None if seconds is None else max(.01,seconds-grace))
             except subprocess.TimeoutExpired:
                 terminate()
                 try: process.wait(timeout=grace)
@@ -54,9 +54,11 @@ def main():
     p.add_argument('--out',type=Path,required=True)
     p.add_argument('--allocation-start-utc',required=True)
     p.add_argument('--previous-h200-hours',type=float,required=True)
+    p.add_argument('--estimated-hours',type=float)
     a=p.parse_args()
-    seconds=remaining_seconds(a.allocation_start_utc,a.previous_h200_hours)
-    if seconds<120: raise ValueError('insufficient budget remaining')
+    from research_pilots.budget import admission
+    budget=admission('hindsight_calibration',a.allocation_start_utc,a.previous_h200_hours,a.estimated_hours)
+    if not budget['admit']: raise ValueError('estimated run plus margin does not fit remaining budget')
     a.out.parent.mkdir(parents=True,exist_ok=True)
     if a.out.exists(): raise FileExistsError('no resume or overwrite')
     if shutil.disk_usage(a.out.parent).free<30*1024**3: raise ValueError('need30GiB free for full evidence')
@@ -67,11 +69,11 @@ def main():
     command=[sys.executable,str(repo/'scripts/run_hindsight_calibration.py'),'--learning',str(a.learning),
              '--snapshot',str(a.snapshot),'--out',str(a.out)]
     receipt=a.out.with_suffix('.launch.json')
-    with receipt.open('x') as f: json.dump({'argv':command,'hard_cap_seconds':seconds,
+    with receipt.open('x') as f: json.dump({'argv':command,'budget_admission':budget,'hard_cap_seconds':None,
         'allocation_start_utc':a.allocation_start_utc,'previous_h200_hours':a.previous_h200_hours,
         'budget_h200_hours':50,'no_auto_followup':True},f,indent=2)
     start=time.monotonic()
-    code=supervise(command,seconds,env,a.out.with_suffix('.log'))
+    code=supervise(command,None,env,a.out.with_suffix('.log'))
     with a.out.with_suffix('.exit.json').open('x') as f:
         json.dump({'exit_code':code,'wall_seconds':time.monotonic()-start,
                    'complete':(a.out/'MANIFEST.json').exists(), 'provider_instance_terminated':False},f,indent=2)

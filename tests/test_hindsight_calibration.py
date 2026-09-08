@@ -69,7 +69,7 @@ def test_teacher_gate_checks_every_rotation():
 def test_budget_includes_idle_and_prior_usage():
     now=datetime(2026,9,5,12,tzinfo=timezone.utc)
     assert remaining_seconds('2026-09-05T11:00:00Z',48.5,now)==1800
-    assert remaining_seconds('2026-09-05T11:00:00Z',0,now)==3600
+    assert remaining_seconds('2026-09-05T11:00:00Z',0,now)==49*3600
     for bad in (-1,50,float('nan')):
         with pytest.raises(ValueError):remaining_seconds('2026-09-05T11:00:00Z',bad,now)
     with pytest.raises(ValueError):remaining_seconds('2026-09-05T13:00:00Z',0,now)

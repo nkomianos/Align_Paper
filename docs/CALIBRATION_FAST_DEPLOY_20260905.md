@@ -1,5 +1,10 @@
 # Fast deployment: learning-only calibration
 
+**Superseded runtime policy, 7 September:** current launchers use estimated-runtime
+admission and allow admitted jobs to finish. The hard-cap instructions below describe
+the old immutable package only. Use the latest research package and
+[runtime policy](IDEA_TRIAGE_AND_RUNTIME_POLICY_20260907.md) for new runs.
+
 Ready locally for deployment preparation; GPU execution has NOT run. Do not
 start the old v1/v2 experiment launchers. New ceiling:50 H200 allocation hours.
 First diagnostic cap:1hour, no automatic follow-up. Code, input and wheel
