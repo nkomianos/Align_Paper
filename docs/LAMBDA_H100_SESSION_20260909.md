@@ -414,3 +414,14 @@ CLASSIFICATION_CAPACITY_PROVISIONAL.json preserves counts. Independently replay
 semantics before accepting runner labels. Let the frozen test phases complete;
 do not tune eligibility, prompts or locked splits to obtain a positive result.
 
+Independent CPU classification replay launched under PID 19281 from
+audit_tools/replay_validator_classification.py, using validator_offline and
+repo_validator_verify/src. Report target validator_classification_replay.json;
+live log validator_classification_replay.log. First 18/192 match saved results.
+The script re-parses raw completions and executes the frozen oracle independently
+of the saved labels; it shares evaluator/oracle code and is not final verification.
+Two hidden execution failures are duplicate normalized Qwen patches on
+cwe400-run-expansion, both ValueError on bad-run. They are recorded deterministic
+program exceptions, not GPU failures/timeouts. Keep the frozen eligibility rule.
+Qwen spec-only generation remains live (30/64 suites at last check).
+
