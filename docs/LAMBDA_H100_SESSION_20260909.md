@@ -54,3 +54,16 @@ bypassing provenance checks. Bundle SHA256 matched local/remote:
 69232ff3f2f68b77b3c9cf8e3144a270b7ec4f32c2fba3390a8fee76afa2738e.
 Current run is suite_v2/, handle suite_v2.pid, console suite_v2.console.log.
 SciPy upgraded to packaged 1.15.3 for compatibility with NumPy 1.26.4.
+
+suite_v2 loaded the model but failed before scoring because system Jinja2 3.0.3
+cannot render the Transformers template. Installed the complete pinned application
+wheel overlay, verified actual chat-template rendering, and froze environment.txt.
+Current run: suite_v3/, suite_v3.pid (initial PID 5606), suite_v3.console.log,
+repository repo_git/. Both prior attempts are terminal and preserved. No scored
+forward records or scientific outcomes existed in either failed attempt.
+
+Live qualification: suite_v3 child PID 5690 observed at elapsed 53 seconds with
+188 saved forward records, H100 utilization 63%, memory 17961 MiB. Actual scoring
+is running; backward-memory qualification remains pending. This is execution
+evidence, not a completed experiment or a scientific positive.
+
