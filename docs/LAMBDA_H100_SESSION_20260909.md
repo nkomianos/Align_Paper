@@ -317,3 +317,15 @@ Do not launch another copy or edit repo_validator. Local wider validator tests
 remain active in exec session 96751; no final pass claim yet. Formal CPU verifier
 environment validator_offline is installed separately with its exact lock.
 
+Superseding update at 06:15 UTC: v1 oracle passed (32 tasks, 64 mutants, 47
+plausible incomplete). Both pinned model smokes subsequently passed after cache
+completion and installing torchvision 0.22.1+cu128. v1 then terminated because
+the launcher merged progress stderr into the JSON it parses. Preserve v1; it
+contains no experimental completions. The source fix separates stdout/stderr;
+two launcher tests pass. New immutable checkout repo_validator_v2 at
+409aa990b1a8980ee66614b9e7c2716c0fc85f78 is launched with root validator_g0_v2 and
+outer log validator_launch_v2.log. Follow that live run, not terminal v1.
+It is currently repeating mandatory oracle checks before model preflight.
+Local full validator tests session 96751 remains unfinished. Full overlap
+extraction/projection completed (62933 terminal); see external-data audit.
+
