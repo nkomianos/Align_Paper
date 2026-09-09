@@ -1,0 +1,611 @@
+{
+  "checks": {
+    "gemma4/ensemble": false,
+    "gemma4/frequency_control": false,
+    "gemma4/phase_lock": false,
+    "gemma4/thin_flip": true,
+    "qwen3_vl/ensemble": false,
+    "qwen3_vl/frequency_control": false,
+    "qwen3_vl/phase_lock": false,
+    "qwen3_vl/thin_flip": true
+  },
+  "config_sha256": "d824795ed85ed9829be471aa8456d8438750aa1905d30e83f6412b71652391e9",
+  "decision": "KILL_PATCH_PHASE_STUDY",
+  "families": {
+    "gemma4": {
+      "best_expected_period": 16,
+      "best_periodic_excess": 0.000347222222222221,
+      "ensemble_gap": {
+        "ci95_high": -0.075,
+        "ci95_low": -0.3,
+        "point": -0.175
+      },
+      "periodic_excess": {
+        "16": 0.000347222222222221
+      },
+      "test_rows": [
+        {
+          "answer": "yes",
+          "base_id": "vp-0020",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "6",
+          "base_id": "vp-0021",
+          "difference": -1.0,
+          "phase_vote": "5",
+          "same_image_vote": "6"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0022",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0023",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "3",
+          "base_id": "vp-0024",
+          "difference": 0.0,
+          "phase_vote": "3",
+          "same_image_vote": "3"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0025",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0026",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "6",
+          "base_id": "vp-0027",
+          "difference": -1.0,
+          "phase_vote": "5",
+          "same_image_vote": "6"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0028",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0029",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "3",
+          "base_id": "vp-0030",
+          "difference": 0.0,
+          "phase_vote": "3",
+          "same_image_vote": "3"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0031",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0032",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "6",
+          "base_id": "vp-0033",
+          "difference": -1.0,
+          "phase_vote": "5",
+          "same_image_vote": "6"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0034",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0035",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "3",
+          "base_id": "vp-0036",
+          "difference": 0.0,
+          "phase_vote": "3",
+          "same_image_vote": "3"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0037",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0038",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "6",
+          "base_id": "vp-0039",
+          "difference": -1.0,
+          "phase_vote": "5",
+          "same_image_vote": "6"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0040",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0041",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "3",
+          "base_id": "vp-0042",
+          "difference": 0.0,
+          "phase_vote": "3",
+          "same_image_vote": "3"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0043",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0044",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "6",
+          "base_id": "vp-0045",
+          "difference": -1.0,
+          "phase_vote": "5",
+          "same_image_vote": "6"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0046",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0047",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "3",
+          "base_id": "vp-0048",
+          "difference": 0.0,
+          "phase_vote": "3",
+          "same_image_vote": "3"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0049",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0050",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "6",
+          "base_id": "vp-0051",
+          "difference": -1.0,
+          "phase_vote": "5",
+          "same_image_vote": "6"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0052",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0053",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "3",
+          "base_id": "vp-0054",
+          "difference": 0.0,
+          "phase_vote": "3",
+          "same_image_vote": "3"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0055",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0056",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "6",
+          "base_id": "vp-0057",
+          "difference": -1.0,
+          "phase_vote": "5",
+          "same_image_vote": "6"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0058",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0059",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        }
+      ],
+      "thick_flip_rate": 0.4166666666666667,
+      "thin_flip_rate": 0.25,
+      "thin_minus_thick_flip": -0.16666666666666669
+    },
+    "qwen3_vl": {
+      "best_expected_period": 16,
+      "best_periodic_excess": 0.005044934640522876,
+      "ensemble_gap": {
+        "ci95_high": 0.0,
+        "ci95_low": -0.175,
+        "point": -0.075
+      },
+      "periodic_excess": {
+        "16": 0.005044934640522876
+      },
+      "test_rows": [
+        {
+          "answer": "yes",
+          "base_id": "vp-0020",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "6",
+          "base_id": "vp-0021",
+          "difference": 0.0,
+          "phase_vote": "5",
+          "same_image_vote": "5"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0022",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0023",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "3",
+          "base_id": "vp-0024",
+          "difference": 0.0,
+          "phase_vote": "3",
+          "same_image_vote": "3"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0025",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0026",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "6",
+          "base_id": "vp-0027",
+          "difference": -1.0,
+          "phase_vote": "5",
+          "same_image_vote": "6"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0028",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0029",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "3",
+          "base_id": "vp-0030",
+          "difference": 0.0,
+          "phase_vote": "3",
+          "same_image_vote": "3"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0031",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0032",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "6",
+          "base_id": "vp-0033",
+          "difference": 0.0,
+          "phase_vote": "5",
+          "same_image_vote": "5"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0034",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0035",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "3",
+          "base_id": "vp-0036",
+          "difference": 0.0,
+          "phase_vote": "3",
+          "same_image_vote": "3"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0037",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0038",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "6",
+          "base_id": "vp-0039",
+          "difference": -1.0,
+          "phase_vote": "5",
+          "same_image_vote": "6"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0040",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0041",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "3",
+          "base_id": "vp-0042",
+          "difference": 0.0,
+          "phase_vote": "3",
+          "same_image_vote": "3"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0043",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0044",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "6",
+          "base_id": "vp-0045",
+          "difference": 0.0,
+          "phase_vote": "5",
+          "same_image_vote": "5"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0046",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0047",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "3",
+          "base_id": "vp-0048",
+          "difference": 0.0,
+          "phase_vote": "3",
+          "same_image_vote": "3"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0049",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0050",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "6",
+          "base_id": "vp-0051",
+          "difference": -1.0,
+          "phase_vote": "5",
+          "same_image_vote": "6"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0052",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0053",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "3",
+          "base_id": "vp-0054",
+          "difference": 0.0,
+          "phase_vote": "3",
+          "same_image_vote": "3"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0055",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0056",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "6",
+          "base_id": "vp-0057",
+          "difference": 0.0,
+          "phase_vote": "5",
+          "same_image_vote": "5"
+        },
+        {
+          "answer": "yes",
+          "base_id": "vp-0058",
+          "difference": 0.0,
+          "phase_vote": "yes",
+          "same_image_vote": "yes"
+        },
+        {
+          "answer": "no",
+          "base_id": "vp-0059",
+          "difference": 0.0,
+          "phase_vote": "no",
+          "same_image_vote": "no"
+        }
+      ],
+      "thick_flip_rate": 0.16666666666666666,
+      "thin_flip_rate": 0.16666666666666666,
+      "thin_minus_thick_flip": 0.0
+    }
+  },
+  "pass": false
+}
