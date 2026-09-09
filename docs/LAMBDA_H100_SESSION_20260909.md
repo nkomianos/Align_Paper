@@ -30,3 +30,27 @@ Heartbeat monitor-lambda-h100-research is active every 10 minutes. Inspect actua
 processes and logs before acting; never infer live execution from a PID file alone.
 Retrieve artifacts with SHA256 verification at each milestone. Preserve attempts,
 locked confirmation splits and user-owned analysis/. No paper is yet qualified.
+
+## Initial launch
+
+Source commit 15e0103; source ZIP SHA256
+263ee75e0204d6849256d17a3edaad53997d6d6fa9b47201ddfbc07ff403a7d2
+matched locally and remotely. Execution repository: remote repo_h100/.
+Suite PID 4425, handle suite_v1.pid, console suite_v1.console.log, output suite_v1/.
+Launch argv persisted in remote launch.json. Scheduled stages estimate 6.05 hours
+before host measurement. Frozen public weights downloaded successfully in 24s.
+Pillow and NumPy overlays repair old system dependency versions; no kernel or
+model changes. CPU regression suite passed (one POSIX-only skip); the added
+12-hour budget test and all 13 research-pilot tests passed.
+
+The user may obtain a GH200 later for 50 hours or extend this H100. Neither is
+assumed allocated until confirmed. Continue useful H100 work within the current
+window and use measured throughput and scientific results to recommend extension.
+
+Initial suite_v1 failed before inference: ZIP export has no Git metadata, which
+the execution provenance recorder requires. Preserved all v1 files. Repaired by
+cloning the actual commit-bound bundle into repo_git/ (same 15e0103 source), not
+bypassing provenance checks. Bundle SHA256 matched local/remote:
+69232ff3f2f68b77b3c9cf8e3144a270b7ec4f32c2fba3390a8fee76afa2738e.
+Current run is suite_v2/, handle suite_v2.pid, console suite_v2.console.log.
+SciPy upgraded to packaged 1.15.3 for compatibility with NumPy 1.26.4.
