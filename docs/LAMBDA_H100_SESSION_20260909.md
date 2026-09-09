@@ -281,3 +281,13 @@ audit/outcome metadata; it does not claim full source coverage. Read external-da
 audit and cheatbench_event_view_v2/MANIFEST.json before any experiment admission.
 Live SSH at 05:46:11 UTC confirmed GPU 0%/0 MiB. No monitor job has been launched.
 
+Post-extraction coverage audit found released snippets in 30/31 prepared positive
+or attempt records (audit-only gold usage, no label-guided extraction). The next
+admission check is the full CheatBench release, not further tuning on the small
+micro subset. Full download runs in exec session 16627, observed live and growing
+past 423,624,704 bytes at local 22:56:55. Do not read its partial parquet or restart
+the transfer. Completion writes CHEATBENCH_FULL_DOWNLOAD.json; then run
+scripts/audit_cheatbench_full_cohort.py with --data pointing to cheatbench_full.parquet
+and a fresh --out report path under artifacts/monitor_external_sources_20260909.
+No full-cohort counts or new GPU result are known yet.
+

@@ -225,3 +225,26 @@ Do not claim a full-benchmark false-positive or detection rate from such a slice
 Outputs and provenance are in cheatbench_event_view_v2/MANIFEST.json. Three
 targeted tests pass. Task-instruction completeness, semantic labels, natural
 within-task controls and actual monitor comprehension remain unqualified.
+
+## Post-extraction coverage and full-release admission check
+
+After freezing the schema-only event projection, checked whether each released
+positive/attempt snippet occurs in a preserved string field. Thirty of the 31
+prepared positive/attempt records retain the snippet; one does not. Eight other
+positives are in the unsupported HAL schema. Gold annotations were used only
+for this subsequent coverage measurement, not to choose or construct model input.
+This is a necessary textual coverage check, not semantic validation of labels.
+Report: CHEATBENCH_EVENT_COVERAGE.json.
+
+The prepared micro event views total 9,394,345 raw tokens. Approximately 470
+30k windows would be required even before adding repeated task context, overlap,
+prompt overhead or any aggregation protocol. No chunked assay is admitted by
+that arithmetic alone. The micro subset is too small after short-context
+filtering for the intended paper, so inspect the full public release before
+concluding that the entire dataset lacks usable natural controls.
+
+Full parquet download at the same pinned revision is in progress; completion is
+recorded only by CHEATBENCH_FULL_DOWNLOAD.json with the final hash. The streaming
+audit_cheatbench_full_cohort.py is prepared to measure exact provisional task,
+model and harness overlap without loading all trace objects into memory. It does
+not use an unexplained top-level id as a task identity. It has not yet run.
