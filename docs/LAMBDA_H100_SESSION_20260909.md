@@ -256,3 +256,11 @@ so do not claim their published monitor result is invalid from raw-file counts.
 Read the latest external-data audit section and V2 prerequisite report before
 proposing any GPU follow-up. All source reads were static; no submitted code ran.
 
+Pinned Trace-and-Amplify monitor preprocessors retain response text, but launcher
+directory globs do not bind reported results to raw versus separately cleaned
+files. No blanket claim about published leakage is justified. CheatBench micro
+schema scan is complete: three SWE-smith rows have prior monitor metadata inside
+extra; 25 rows have empty/missing standardized events. Do not pass raw JSON or
+silently discard missing-event rows. See the external-data audit for scope and
+the source-bound CHEATBENCH_SCHEMA_AUDIT.json report. No GPU job was admitted.
+

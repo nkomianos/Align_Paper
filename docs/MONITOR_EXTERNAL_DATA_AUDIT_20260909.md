@@ -136,3 +136,32 @@ external control, or a causal observer-view diagnostic that preserves the origin
 executable and binds each removed span to what the monitor was allowed to see.
 The static separation is evidence against an expensive raw-view-only comparison,
 not evidence that the intended ICLR paper goal has been achieved.
+
+## Monitor preprocessing and natural-record schemas
+
+Read the pinned paired preprocessing and conversion scripts, BERT/probe launch
+scripts, and gpt_evaluate.py. Instruct preprocessing removes end markers and
+extracts the user prompt; it retains the response. Conversion uses that response
+as final_answer. The LLM evaluator sanitizes control characters and cleans task
+prompt wording, then supplies the response as agent_messages. These paths do not
+themselves delete unittest code. The launchers consume directory globs rather
+than an immutable per-experiment input manifest, so the separately available
+deletion scripts cannot yet be linked to particular reported numbers. This
+narrows the uncertainty; it does not justify asserting all published monitors
+saw either raw or code-deleted inputs.
+
+CheatBench schema audit covered all 263 micro rows, recording source trace hashes
+and field/event schemas. Three SWE-smith rows include prior monitor_* fields
+inside extra (including verdict/score-related fields). A naive raw-JSON input
+would expose these pre-existing judgments. That is a risk in OUR proposed reader,
+not evidence that the source benchmark's own monitor consumes them.
+
+All 15 SWE-bench Verified rows and 10 Terminal-Bench rows have empty or missing
+standardized events. Many others lack a standardized task object. These findings
+do not establish missing source evidence: alternate fields and wrapped records
+must be inspected before any exclusion. An events-only conversion would silently
+lose these rows unless it fails closed or handles each schema explicitly.
+
+Artifacts: CHEATBENCH_SCHEMA_AUDIT.json and pinned source_code files under
+artifacts/monitor_external_sources_20260909. This remains a CPU data audit;
+there are no monitor scores, qualified natural controls or newly admitted GPU jobs.
