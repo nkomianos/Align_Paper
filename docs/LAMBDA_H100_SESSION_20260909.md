@@ -435,3 +435,12 @@ not a stale runner label. This does not prove the oracle is exhaustive or replac
 final test-suite reconstruction. Qwen spec-only generation continues; 52/64 at
 06:45:53. Do not poll the completed classification-replay PID as an active job.
 
+06:47:22 UTC: Qwen specification-only test phase completed (64 suites), Gemma
+spec-only generation started, PID 21295. Qwen backup retrieved with matching
+archive SHA256 de7d01e73e1758453429c6e4aa4de84df84b3293fed3ba8cefaa9315f3274a7c
+at artifacts/validator_deployment_20260909/validator_qwen_spec.tar.gz. Closed phase
+inventory, file sizes/hashes, raw-completion hashes and parser replay all pass.
+58 suites parse; six fail strict JSON. Retain failures as consumed proposal
+budget. QWEN_SPEC_COLLECTION_REPLAY.json records these checks, not semantic
+test correctness or planted-control power. No prompt/parser changes were made.
+
