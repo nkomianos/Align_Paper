@@ -193,3 +193,35 @@ The locator must never select model input using the gold snippet: that would
 give the monitor privileged evidence. A future extractor must choose fields by
 schema alone, with these annotations used only to audit coverage afterward.
 One targeted path/repeated-match regression test passes.
+
+## Concrete observer-view preparation
+
+Implemented a schema-defined events/messages projection. It includes conversation
+and tool fields, excluding top-level outcomes, configuration, source metadata,
+extra, and stored files. Stored files include result.json, reward.txt and verifier
+reports, so they cannot be included indiscriminately. This projection is an
+observer view, not a lossless rendering of all files or a certified full trajectory.
+It is selected without using source labels, gold spans, model scores or length.
+Unknown event fields fail closed. All 23 observed cache_control fields were exactly
+{"type":"ephemeral"}; V2 explicitly omits only that known provider setting.
+
+V2 prepares 245 of 263 records. Eight HAL-USACO records have an unsupported trace
+schema; 10 other records lack conversation events. Original V1 remains preserved.
+The pinned tokenizer measured every prepared record without truncation:
+
+| Raw observer-view token ceiling | Benign | Cheating | Attempt | Total |
+|---|---:|---:|---:|---:|
+| 30,000 | 148 | 6 | 7 | 161 |
+| 60,000 | 184 | 13 | 9 | 206 |
+| 120,000 | 209 | 15 | 9 | 233 |
+
+These ceilings are descriptive fit screens, not selected experimental populations;
+prompt overhead is additional. Maximum view length is 1,088,011 tokens. Only the
+32,768-token hardware path has been tested. Longer context cannot be assumed to
+work from these CPU counts. Selecting short traces markedly changes the available
+positive population, and a 30k-only study would have six successful-cheating cases.
+Do not claim a full-benchmark false-positive or detection rate from such a slice.
+
+Outputs and provenance are in cheatbench_event_view_v2/MANIFEST.json. Three
+targeted tests pass. Task-instruction completeness, semantic labels, natural
+within-task controls and actual monitor comprehension remain unqualified.

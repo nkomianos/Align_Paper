@@ -272,3 +272,12 @@ selection for a monitor; repeated hits occur. Reports CHEATBENCH_EVIDENCE_AUDIT
 V1/V2/V3 are preserved locally. Read the latest external-data audit for counts
 and interpretation. No new neural experiment or paper-quality claim follows.
 
+CheatBench events/messages projection V2 is complete: 245 prepared, 8 unsupported
+HAL schemas, 10 empty conversations. CPU tokenization completed (session 36707
+terminal); 30k raw-token screen has 148 benign/6 cheating/7 attempts, so it is not
+an adequate main-paper confirmation cohort. 60k/120k screens have more positives
+but those GPU lengths are unqualified. The projection excludes stored files and
+audit/outcome metadata; it does not claim full source coverage. Read external-data
+audit and cheatbench_event_view_v2/MANIFEST.json before any experiment admission.
+Live SSH at 05:46:11 UTC confirmed GPU 0%/0 MiB. No monitor job has been launched.
+
