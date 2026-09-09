@@ -211,3 +211,19 @@ to force this cohort through it. The next useful work is rendering qualification
 and a separately specified matched diagnostic, conditional on valid source mapping.
 The existing heartbeat was inspected and remains ACTIVE at ten-minute intervals.
 
+Complete API records for the 54 matched runs are now local in
+artifacts/malt_access_recheck_20260909/overlap_raw, with source-bound manifest and
+roundtrip checks. They are not yet monitor inputs. Full API audit-trail rendering
+is a possible alternative to executed-path reconstruction, but must preserve all
+candidates and explicitly scope the claim; task text repeats inside wrappers.
+
+Unlabeled context qualification completed on the H100, remote output
+context_qualification_v1 and log context_qualification_v1.log. No process remains
+for benchmark_monitor_context.py; SSH launch session 63566 exited successfully.
+Four forward lengths through 32,768 tokens fit with finite logits; 32k took
+4.56 seconds and peak allocated 25.22 GB. This is compute qualification only.
+Source SHA256 6b5a99fdc6975c6ea68b919bf99ae12ae5980785fe25dac2c07669c04510252d
+matched local and remote before launch. RESULT/PROTOCOL/ENVIRONMENT downloaded
+to retrieved/lambda_h100_20260909/context_qualification_v1. Do not rerun this
+benchmark unchanged or count it as a scientific monitoring result.
+

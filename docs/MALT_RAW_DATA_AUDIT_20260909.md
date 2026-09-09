@@ -137,3 +137,32 @@ allows multiple candidates; it does not supply an execution-selection rule.
 The official label definitions describe exploited loopholes and explicit task
 violations. Do not silently replace these labels with an unreviewed definition
 such as whether any generated candidate mentions a forbidden action.
+
+## Matched raw records and compute qualification
+
+Extracted all 54 overlapping runs into overlap_raw/run_*.json.gz. The manifest
+binds every record to its source shard hash and row index, canonical JSON hash,
+compressed hash, and matching-selection hash. Extraction roundtrips every nested
+value back to the original parquet row; it does not select candidate completions.
+First-request inspection across all six tasks finds native chat instructions in
+some runs and advisor/file-path/candidate-rating scaffolds in others. Native
+chat last-input lengths reach 234,021 characters. No generic last-request parser
+has been qualified as a complete executed transcript.
+
+An alternative representation can preserve the entire API audit trail, including
+every candidate and its uncertainty, rather than reconstructing an executed path.
+That could support classification of source run labels from API records. It
+would require a separately stated estimand, reversible deduplication with explicit
+request/output-group references, removal of run-level label/model metadata from
+model inputs, and qualification on actual token lengths. It would NOT establish
+which candidate executed or automatically validate action-grounded evidence.
+Do not force these records into the old task/trace ablation schema: task text is
+repeated inside scaffold wrappers, so a nominal trace-only prompt can leak tasks.
+
+Unlabeled inference qualification on the pinned Qwen3.5-9B/H100 completed:
+4,096/8,192/16,384/32,768 tokens took 1.10/1.10/2.59/4.56 seconds respectively.
+Peak allocated memory at 32,768 was 25,216,476,160 bytes; all logits were finite.
+These are single forward measurements on repeated benign text, no cache and no
+gradients, with last-token logits only. They qualify fit, not comprehension,
+real-input throughput, or monitor accuracy. No extrapolation past 32,768 tokens
+is certified. Reports are retrieved/lambda_h100_20260909/context_qualification_v1.
