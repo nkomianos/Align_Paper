@@ -329,3 +329,18 @@ It is currently repeating mandatory oracle checks before model preflight.
 Local full validator tests session 96751 remains unfinished. Full overlap
 extraction/projection completed (62933 terminal); see external-data audit.
 
+Post-completion verification helper is now deployed outside the frozen checkout:
+audit_tools/verify_validator_completed_run.py. After v2 generation has exited and
+COMPLETION_MANIFEST.json exists, launch it with validator_offline/bin/python and:
+--run /home/ubuntu/align_run_20260909/validator_g0_v2
+--checkout /home/ubuntu/align_run_20260909/repo_validator_v2
+--python /home/ubuntu/align_run_20260909/validator_offline/bin/python
+--report /home/ubuntu/align_run_20260909/validator_g0_v2_verified.json
+--commit 409aa990b1a8980ee66614b9e7c2716c0fc85f78
+It checks the full terminal artifact inventory before invoking the frozen raw
+reconstruction. Do not run it against partial evidence. Retrieve the completed
+root and report with hash verification; generation completion alone is no result.
+At 06:17 UTC orchestrator PID 14710 and oracle child 14737 remain live.
+Local pytest PID 80888 also has a newly spawned child; its quiet log is not
+evidence of termination or deadlock. Session 96751 remains the polling handle.
+
