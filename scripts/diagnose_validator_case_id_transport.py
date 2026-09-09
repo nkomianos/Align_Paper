@@ -54,7 +54,7 @@ def main():
     suites, counts = {}, Counter()
     for family in ('qwen3_5', 'gemma4'):
         path = root / 'evidence/phases' / ('tests_' + family + '_spec_only') / 'raw_test_completions.jsonl'
-        for line in path.read_text().splitlines():
+        for line in path.read_bytes().splitlines():
             row = json.loads(line)
             raw = row['raw_completion']
             assert hashlib.sha256(raw.encode()).hexdigest() == row['completion_sha256']
