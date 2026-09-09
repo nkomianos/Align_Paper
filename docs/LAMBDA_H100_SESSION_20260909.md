@@ -129,3 +129,17 @@ Never use unreviewed normal as validated negatives. Full metadata is in
 artifacts/malt_access_recheck_20260909/run_metadata.json. Label/source/task-family
 and full-transcript construction still need audit; no monitor job is yet admitted.
 
+At ~04:57 UTC compensation completed with verified STOP_INVALID_EDIT_FORMATION.
+Base DEV and train accuracy 1.0; every one of six fixed doses retains train
+accuracy 1.0 (target probability .9904–.9954). No recovery training ran.
+Classify invalid intervention formation, not a compensation hypothesis negative.
+Reference run PID 7160 is live in suite_remaining_v1/reference. Supplemental
+calibration float64 audit passed all 3328 forwards and 768 gradient microbatches.
+
+Calibration archive SHA256:
+5b150dd43d1e2f4eca38cc6e3854d0904164cb51ded7b08312b66260d63ca11e.
+Local transfer is live in exec session 27861; do not restart solely on timeout.
+Destination retrieved/lambda_h100_20260909/calibration_sealed.tar. Complete local
+hash verification and extraction after transfer finishes. MALT raw-data findings
+and required normalization work are in MALT_RAW_DATA_AUDIT_20260909.md.
+
