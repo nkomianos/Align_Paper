@@ -369,3 +369,13 @@ reconstruction. This exact source-difference check also passed on the remote hos
 Its receipt records both identities; never imply identical generating/verifying
 source. The old root and active generation have not been modified or restarted.
 
+06:25:34 UTC: Qwen patch phase completed with all 96 records and a sealed phase
+manifest. Gemma patch-run is now live (PID 16716). A backup of the completed Qwen
+phase was retrieved while Gemma runs: artifacts/validator_deployment_20260909/
+validator_qwen_phase.tar.gz, SHA256
+4e3afcd517e9f7f05c8bd10fbbe7c776cd58fdfcc5e256d48c302f47858feb21.
+Remote/local archive hashes agree; all internal phase file sizes/hashes and the
+closed file inventory pass. QWEN_PHASE_BACKUP_RECEIPT.json records this limited
+check. This is a partial backup, not final retrieval or scientific verification.
+Do not poll the old Qwen PID or expect its .partial file to remain after sealing.
+
