@@ -344,3 +344,10 @@ At 06:17 UTC orchestrator PID 14710 and oracle child 14737 remain live.
 Local pytest PID 80888 also has a newly spawned child; its quiet log is not
 evidence of termination or deadlock. Session 96751 remains the polling handle.
 
+06:19:09 UTC: v2 oracle and both model preflights PASSED. Actual experimental
+patch generation is now live, Qwen runner PID 16320 under orchestrator 14710.
+GPU utilization 70%, memory 17,909 MiB at this check. The active command is
+validator_monoculture.runner patch-run, family qwen3_5. Monitor phase artifacts
+for durable record counts/throughput; do not call this merely queued or still
+in oracle preflight. No analysis result is available yet.
+
