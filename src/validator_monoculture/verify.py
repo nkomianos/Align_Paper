@@ -470,8 +470,8 @@ def _deserialize_config(payload: bytes) -> tuple[dict[str, Any], GateThresholds]
     if _integer(
         generation_environment["minimum_device_memory_bytes"],
         label="minimum_device_memory_bytes",
-    ) < 80 * 1024**3:
-        raise ValueError("generation device-memory floor is below 80 GiB")
+    ) < 80_000_000_000:
+        raise ValueError("generation device-memory floor is below 80 GB")
     analysis = _mapping(config.get("analysis"), label="config analysis")
     thresholds = GateThresholds(**analysis)
     if thresholds.proposal_test_budget != 12:

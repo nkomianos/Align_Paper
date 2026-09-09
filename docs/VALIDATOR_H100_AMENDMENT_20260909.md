@@ -42,3 +42,17 @@ stdout. Separate and preserve stderr in its own log, keeping stdout as the stric
 JSON record. Preserve validator_g0_v1 unchanged. A new committed launch/root is
 required because orchestration changed; no experimental generations existed in
 v1. Oracle checks passed for 32 tasks and 64 mutants (47 plausible incomplete).
+
+At 06:19 UTC, after v2 began patch generation, the broader CPU test suite exposed
+a missed copy of the old 80 GiB floor in the independent verifier. Five verifier
+tests failed at this configuration check before their intended assertions. The
+two-line correction changes only the minimum-byte comparison and its error text;
+all eight tests in test_validator_monoculture_verify.py then pass. No generated
+patches or test outcomes were used to select this correction.
+
+Do not mutate or restart the generating checkout. Use a separately committed
+verifier with its own source/commit attestation. The dispatch helper requires
+that its entire src diff from the generating commit is exactly this two-line
+unit correction, otherwise it rejects the independent verifier. Original run
+binding and artifact hashes remain required. The receipt distinguishes generation
+and verifier identities. No scoring, controls, filtering or thresholds change.
