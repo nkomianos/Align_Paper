@@ -305,3 +305,15 @@ See VALIDATOR_H100_AMENDMENT_20260909.md for the pre-output memory-unit fix.
 No crossed validator generation has started yet. Follow this live bootstrap,
 do not launch another copy. The 16:26 UTC allocation deadline remains unchanged.
 
+Validator launch update: bootstrap finished successfully (not live). Dedicated
+SymPy correction applied and dependency check passes. Committed deployment
+f57f42e2e2aed8672036bb06e9736f275809ba1e is in repo_validator; 22 remote tests
+covering launch script, prompts and analysis passed. Orchestrator PID 11614 is
+LIVE with oracle_preflight child PID 11641. Root: validator_g0_v1, outer log:
+/home/ubuntu/align_run_20260909/validator_launch.log. Preparation and binding
+checks completed; oracle preflight is still active at this entry. It will proceed
+to both model smoke checks and then frozen generation if prerequisites pass.
+Do not launch another copy or edit repo_validator. Local wider validator tests
+remain active in exec session 96751; no final pass claim yet. Formal CPU verifier
+environment validator_offline is installed separately with its exact lock.
+
