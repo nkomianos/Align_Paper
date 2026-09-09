@@ -1,5 +1,5 @@
 kind: validator_monoculture_g0
-status: frozen_v3_cpu_and_integrity_validated__awaiting_explicit_gpu_authorization
+status: frozen_v3_h100_runtime_amendment_20260909
 purpose: crossed_family_security_patch_verification
 models:
   qwen3_5:
@@ -38,7 +38,7 @@ generation_environment:
   torch_version_prefix: "2.7.1"
   cuda_version: "12.8"
   transformers_version: 5.15.0
-  minimum_device_memory_bytes: 85899345920
+  minimum_device_memory_bytes: 80000000000
 offline_verification:
   os_name: posix
   platform_system: Linux

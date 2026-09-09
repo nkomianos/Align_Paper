@@ -25,9 +25,9 @@ RUN_ROOT="${VALIDATOR_MONOCULTURE_RUN_ROOT:?set a fresh absolute evidence root}"
 PINNED_COMMIT="${VALIDATOR_MONOCULTURE_PINNED_COMMIT:?set the exact committed revision}"
 CONFIG="$REPO_ROOT/configs/validator_monoculture_g0.yaml"
 
-PINNED_CONFIG_SHA256="6c265fd0d8e0d7a3fba23f45410e2961089408449ca424544bb0fa23e73c7cf1"
+PINNED_CONFIG_SHA256="ec92904f932c074b02bd843327353db53fff979d000ace53066ca26a739c03b6"
 PINNED_CORPUS_SHA256="b97a59829940395b5bb4d588402b9d7ff43bf18f3cdea113ae77aef47ac709e5"
-PINNED_CODE_SHA256="c5aca267a6930843285fc3590d39fb1e7fe02466b3b28ea8b763cc21e7b82188"
+PINNED_CODE_SHA256="7b17f6979a14d1b8a260ab23504c253d03c3d7775f8a7d9fbf4baa0e26f2d22b"
 
 VENV_ROOT="${VALIDATOR_MONOCULTURE_VENV:-$REPO_ROOT/.venv}"
 HF_CACHE="${VALIDATOR_MONOCULTURE_HF_HOME:-$REPO_ROOT/.hf_cache}"
@@ -209,7 +209,7 @@ static_binding = {
         "python_major_minor": "3.12",
         "torch_version_prefix": "2.7.1",
         "cuda_version": "12.8",
-        "minimum_device_memory_bytes": 85899345920,
+        "minimum_device_memory_bytes": 80000000000,
     },
 }
 target = root / "RUN_BINDING.json"
@@ -544,7 +544,7 @@ if str(torch.version.cuda) != "12.8":
 if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
     raise SystemExit("the frozen gate requires exactly one CUDA-visible GPU")
 properties = torch.cuda.get_device_properties(0)
-if properties.total_memory < 80 * 1024**3:
+if properties.total_memory < 80_000_000_000:
     raise SystemExit(f"insufficient CUDA memory: {properties.total_memory} bytes")
 if not torch.cuda.is_bf16_supported():
     raise SystemExit("the CUDA device must support bfloat16")
@@ -635,7 +635,7 @@ if (
     not str(value.get("python_version", "")).startswith("3.12.")
     or not str(value.get("torch_version", "")).startswith("2.7.1")
     or value.get("cuda_version") != "12.8"
-    or int(value.get("device_memory_bytes", 0)) < 85899345920
+    or int(value.get("device_memory_bytes", 0)) < 80000000000
 ):
     raise SystemExit("checkpointed model preflight has generation-environment drift")
 smokes = value.get("exact_runtime_smokes", {})

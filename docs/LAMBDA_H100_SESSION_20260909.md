@@ -291,3 +291,17 @@ scripts/audit_cheatbench_full_cohort.py with --data pointing to cheatbench_full.
 and a fresh --out report path under artifacts/monitor_external_sources_20260909.
 No full-cohort counts or new GPU result are known yet.
 
+Correction at 06:06 UTC: full CheatBench download and cohort audit are complete;
+sessions 16627 and 27943 are terminal. The 4,472 rows contain 3,587 benign, 844
+cheating and 41 attempt labels. Provisional exact task/model/harness matching
+finds 42 overlap cells, 85 positives and 129 negatives, at most 58 disjoint pairs.
+500 rows have unresolved task IDs; 189 benign rows have no standard payload.
+This is cohort feasibility, not monitor performance or independent label replay.
+
+Validator deployment is active: bootstrap PID 10530, log
+/home/ubuntu/align_run_20260909/validator_bootstrap.log. Gemma pinned weights have
+downloaded; separate Python 3.12/torch 2.7.1 CUDA 12.8 installation is underway.
+See VALIDATOR_H100_AMENDMENT_20260909.md for the pre-output memory-unit fix.
+No crossed validator generation has started yet. Follow this live bootstrap,
+do not launch another copy. The 16:26 UTC allocation deadline remains unchanged.
+
