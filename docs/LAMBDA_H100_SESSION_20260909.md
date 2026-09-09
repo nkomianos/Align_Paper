@@ -493,3 +493,5 @@ section of VALIDATOR_H100_AMENDMENT_20260909.md for justification and limits.
 
 
 Correction at 07:25 UTC: the initial v3 launch was rejected before creating its run root, not running as the preceding entry stated. The archive-derived source pin was wrong. All 257 remote source files were compared directly with committed git blobs b0f3435: zero mismatches. Correct source inventory hash is 43d2e848bcce4dc4ee1b4caf83752b8d724b06b422641029a0e5a5815dfad8e1. Updating only the deployment pin before a fresh launch; no evidence source changed.
+
+07:25:13 UTC verified live restart: v3 orchestration PID 23823, oracle preflight PID 23850, run root validator_g0_v3 now exists. Checkout/launcher/verifier pin 478c63282d98b2b6794c32720c2af3d92fb52840. Current outer log validator_launch_v3_retry.log; initial validator_launch_v3.log is the preserved failed preflight. GPU generation had not yet started at this check.
