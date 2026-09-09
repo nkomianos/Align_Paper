@@ -114,6 +114,16 @@ def test_verifier_rejects_rehashed_wrong_prompt(tmp_path):
     with pytest.raises(ValueError,match='source row'):verify(tmp_path)
 
 
+def test_twelve_hour_allocation_admission(monkeypatch):
+    from research_pilots.budget import admission
+    monkeypatch.setenv('RESEARCH_ALLOCATION_HOURS','12')
+    now=datetime.now(timezone.utc)
+    from datetime import timedelta
+    result=admission('compensation',(now-timedelta(hours=8)).isoformat(),0,now=now)
+    assert result['remaining_hours']==4 and not result['admit']
+    assert result['budget_target_hours']==12 and not result['mid_run_timeout']
+
+
 def test_training_updates_only_adapter_and_resets_optimizer(tmp_path):
     import torch
     from research_pilots.neural import Backend

@@ -13,7 +13,7 @@ import subprocess
 import sys
 from research_pilots.common import write
 from launch_research_pilot import budget_seconds
-from research_pilots.budget import admission,ESTIMATED_HOURS
+from research_pilots.budget import admission,ESTIMATED_HOURS,allocation_hours
 
 
 def main():
@@ -43,7 +43,7 @@ def main():
     for stage in stages:admission(stage,a.allocation_start_utc,a.previous_h200_hours,estimates[stage])
     plan={'stages':stages,'monitor_blocked':not bool(a.monitor_data),
           'tabular_omitted':not bool(a.tabular_checkpoint),'mid_run_timeout':False,
-          'calibration_omitted':not bool(a.learning),'total_ceiling_hours':50,
+          'calibration_omitted':not bool(a.learning),'total_ceiling_hours':allocation_hours(),
           'estimated_stage_hours':{s:estimates[s] for s in stages},
           'estimated_hours_sum':sum(estimates[s] for s in stages),
           'paper_confirmation_queued':False,'provider_billing_stopped':False}

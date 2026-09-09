@@ -48,8 +48,8 @@ def main():
     from latent_contract.sender_update import adapter_state, load_adapter
     if torch.cuda.device_count() != 1:
         raise RuntimeError('exactly one GPU required')
-    if torch.cuda.get_device_properties(0).total_memory < 90*1024**3:
-        raise RuntimeError('requires at least90GiB; no automatic smaller-model substitution')
+    if torch.cuda.get_device_properties(0).total_memory < 70*1024**3:
+        raise RuntimeError('requires at least70GiB; actual workload fit requires qualification')
     write('MODEL.json', capture_model_provenance(args.snapshot, cfg['model_id'], cfg['model_revision']))
     torch.manual_seed(cfg['seed']); torch.cuda.manual_seed_all(cfg['seed'])
     tokenizer = AutoTokenizer.from_pretrained(args.snapshot, local_files_only=True)

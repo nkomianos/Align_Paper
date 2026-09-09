@@ -71,7 +71,7 @@ def main():
     receipt=a.out.with_suffix('.launch.json')
     with receipt.open('x') as f: json.dump({'argv':command,'budget_admission':budget,'hard_cap_seconds':None,
         'allocation_start_utc':a.allocation_start_utc,'previous_h200_hours':a.previous_h200_hours,
-        'budget_h200_hours':50,'no_auto_followup':True},f,indent=2)
+        'budget_allocation_hours':budget['budget_target_hours'],'no_auto_followup':True},f,indent=2)
     start=time.monotonic()
     code=supervise(command,None,env,a.out.with_suffix('.log'))
     with a.out.with_suffix('.exit.json').open('x') as f:

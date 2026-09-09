@@ -19,8 +19,8 @@ class Backend:
         snapshot = Path(snapshot)
         if snapshot.name != REVISION:
             raise ValueError('pinned Qwen3.5-9B snapshot required')
-        if torch.cuda.device_count() != 1 or torch.cuda.get_device_properties(0).total_memory < 90*1024**3:
-            raise ValueError('need one GPU with >=90GiB memory')
+        if torch.cuda.device_count() != 1 or torch.cuda.get_device_properties(0).total_memory < 70*1024**3:
+            raise ValueError('need one GPU with >=70GiB memory; workload fit requires qualification')
         torch.manual_seed(seed)
         torch.cuda.manual_seed_all(seed)
         self.tokenizer = AutoTokenizer.from_pretrained(snapshot, local_files_only=True)

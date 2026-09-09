@@ -1,6 +1,13 @@
 """Prospective admission estimates; never interrupt an admitted experiment."""
 from datetime import datetime, timezone
 import math
+import os
+
+def allocation_hours():
+    value = float(os.environ.get('RESEARCH_ALLOCATION_HOURS', '50'))
+    if not math.isfinite(value) or not 0 < value <= 50:
+        raise ValueError('allocation hours must be positive and at most 50')
+    return value
 
 ESTIMATED_HOURS = {'hindsight_calibration':1., 'clara':.05, 'compensation':3.,
                    'reference':2., 'monitor':2., 'tabular_drift':2.}
@@ -11,7 +18,7 @@ def remaining_hours(start, spent, now=None):
     now=now or datetime.now(timezone.utc)
     if moment.tzinfo is None or moment>now:raise ValueError('invalid allocation start')
     if not math.isfinite(spent) or not 0<=spent<50:raise ValueError('invalid previous hours')
-    return 50-spent-(now-moment).total_seconds()/3600
+    return allocation_hours()-spent-(now-moment).total_seconds()/3600
 
 
 def admission(stage,start,spent,estimate=None,now=None):
@@ -21,4 +28,4 @@ def admission(stage,start,spent,estimate=None,now=None):
     required=1.5*estimate+.5
     return {'admit':remaining>=required,'estimated_hours':estimate,'remaining_hours':remaining,
             'required_hours_with_margin':required,'estimate_multiplier':1.5,'reserve_hours':.5,
-            'mid_run_timeout':False,'budget_target_hours':50}
+            'mid_run_timeout':False,'budget_target_hours':allocation_hours()}
