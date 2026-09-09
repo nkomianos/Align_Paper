@@ -1,5 +1,23 @@
 # ICLR 2027 submission readiness after the independent audit
 
+## Superseding status — 9 September 2026 UTC
+
+**NO-GO for submission.** The earlier Hindsight-centered recommendation below is historical and is not an active deployment instruction. The current H100 allocation ends 9 September at 16:26 UTC; no additional compute is assumed available.
+
+| Direction | Latest evidence | Disposition |
+|---|---|---|
+| Validator monoculture | 460 generations and raw reconstruction complete; one common held-out task; weak/asymmetric control power; confirmed metadata parser confound | Inconclusive assay. Stop current-corpus expansion. |
+| Hindsight learning calibration | SFT improves; frozen teacher fails position gate; updating teacher collapses to one label | Developmental learning diagnosis; no causal-method expansion. |
+| Compensation | Original and one repair fail edit formation | Invalid organism; no recovery or mechanism conclusion. |
+| Reference grafting | No advantage in prompted-organism screen | Stop this screen; no conclusion about natural sandbagging. |
+| Natural external security tasks | Two components with CPU checks; no qualified full corpus or model outputs | Preparation only, not external validation. |
+
+See [verified validator decision](VALIDATOR_G0_VERIFIED_DECISION_20260909.md), [H100 results](H100_INITIAL_RESULTS_20260909.md), and [external feasibility](VALIDATOR_EXTERNAL_FEASIBILITY_20260909.md). The parser diagnosis is post-hoc; it cannot replace the registered result. Distinct copies, partial repairs and multiple assertions are not independent tasks.
+
+The immediate paper bottleneck is a qualified scientific effect with adequate task diversity, not manuscript polish or GPU throughput. The next qualification is [specified but not deployment-ready](VALIDATOR_TRANSPORT_V2_QUALIFICATION_PLAN_20260909.md). Do not turn two developmental component checks into a claimed benchmark. No paper abstract or submission is justified by current results. Reassess the dated September 11–12 scientific go/no-go milestone against actual new evidence, not work completed on infrastructure.
+
+## Historical 5 September assessment (preserved)
+
 Status: **not submission-ready** as of 5 September 2026 UTC / 4 September Pacific.
 After authorized GPU execution, the decision remains **NO-GO**: see
 [the executed decision and correction ledger](ICLR_2027_EXECUTION_DECISION_20260905.md).

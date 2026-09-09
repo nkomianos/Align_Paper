@@ -1,5 +1,11 @@
 # Researcher journal
 
+## 2026-09-09 UTC — Completed H100 runs and correction
+
+[Validator G0](VALIDATOR_G0_VERIFIED_DECISION_20260909.md) completed all 460 generations and independent raw reconstruction. Its formal decision is INCONCLUSIVE_INSUFFICIENT_APPARATUS_POWER. Common held-out support is four patches on one task. Gemma's original 0/16 planted detection is substantially confounded by strict rejection of extra case_id metadata; a CPU-only post-hoc adapter recovers 10/16 without changing test inputs or expected values. Qwen remains 13/16. Original decisions and evidence remain preserved.
+
+All GPU runs are terminal and backed up; no successor is admitted as of 11:54 UTC. Current task-pool work consists of two natural components with limited CPU qualification, not a paper-ready external benchmark. [Transport qualification plan](VALIDATOR_TRANSPORT_V2_QUALIFICATION_PLAN_20260909.md) records missing prerequisites. [Session record](LAMBDA_H100_SESSION_20260909.md) records failures, repairs, active handles and source/artifact hashes. No paper is submission-ready; draft existence is not evidence of readiness.
+
 ## 2026-09-05 UTC — Independent audit and correction record
 
 The [independent audit](ICLR_2027_INDEPENDENT_AUDIT_REPORT_20260905.md) now

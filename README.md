@@ -1,5 +1,13 @@
 # AI Research Journal — ICLR 2027 exploration
 
+## Current verified status — 9 September 2026 UTC
+
+**No candidate is submission-ready.** [Validator G0 completed with an inconclusive result](docs/VALIDATOR_G0_VERIFIED_DECISION_20260909.md): independent task support and planted-control power failed. A post-hoc metadata-only diagnosis raised Gemma detection from 0/16 to 10/16, showing a parser confound; it did not establish a monoculture effect. [Initial H100 pilots](docs/H100_INITIAL_RESULTS_20260909.md) likewise do not qualify a paper.
+
+All validator generations and formal verification are complete and backed up. At the last live check (11:54 UTC), no research process was running on the H100. [Live session record](docs/LAMBDA_H100_SESSION_20260909.md) is the source for process state and the allocation ending 16:26 UTC; historical 100-hour budget text below is not the current allocation.
+
+A stricter transport prompt is implemented but unrun. [Fresh qualification prerequisites](docs/VALIDATOR_TRANSPORT_V2_QUALIFICATION_PLAN_20260909.md) are not met: only two [natural components](docs/VALIDATOR_EXTERNAL_FEASIBILITY_20260909.md) have developmental checks, not a qualified multi-category corpus. No follow-up GPU job is admitted. Existing manuscripts are working drafts, not recommended submissions.
+
 This repository preserves the hypotheses, implementations, failed attempts,
 measurements, and decisions from our ICLR 2027 research exploration. Its original
 project was **Under Extinction**:
