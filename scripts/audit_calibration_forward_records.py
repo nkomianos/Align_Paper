@@ -15,7 +15,7 @@ def audit(root, snapshot):
     from interaction_sprint.hindsight_execution_integrity import verify_manifest
     from interaction_sprint.hindsight_pahf_reduced import HINDSIGHT_BLOCK
     verify_manifest(root)
-    read=lambda name: json.loads((root/name).read_text())
+    read=lambda name: json.loads((root/name).read_text(encoding='utf8'))
     cfg=read('CONFIG.json'); selected=read('INPUTS.json')
     lookup={r['id']:r for split in ('train','holdout') for r in selected[split]}
     train=selected['train']; tokenizer=AutoTokenizer.from_pretrained(snapshot,local_files_only=True)
@@ -25,7 +25,7 @@ def audit(root, snapshot):
     if any(len(x)!=1 for x in answers):raise ValueError('answer token not singular')
     answers=[x[0] for x in answers]
     if answers!=read('RUNTIME.json')['answer_ids']:raise ValueError('answer token binding differs')
-    if tokenizer.backend_tokenizer.to_str()!=(root/'tokenizer.json').read_text():
+    if tokenizer.backend_tokenizer.to_str()!=(root/'tokenizer.json').read_text(encoding='utf8'):
         raise ValueError('tokenizer backend differs')
     # Bind the frozen teacher cache to the original pre-update scored forwards.
     cached={}

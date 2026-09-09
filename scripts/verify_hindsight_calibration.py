@@ -24,14 +24,14 @@ def close(actual,expected):
 def verify(root,learning):
     import torch
     verify_manifest(root)
-    read=lambda name:json.loads((root/name).read_text())
+    read=lambda name:json.loads((root/name).read_text(encoding='utf8'))
     selected=prepare(learning)
     close(read('INPUTS.json'),selected)
     lookup={r['id']:r for split in ('train','holdout') for r in selected[split]}
     answers=read('RUNTIME.json')['answer_ids']
     scored={}
     for path in root.glob('*.json'):
-        payload=json.loads(path.read_text())
+        payload=json.loads(path.read_text(encoding='utf8'))
         if not isinstance(payload,dict) or set(payload)!= {'rows','summary'}: continue
         rows=payload['rows']; expected_ids={r['id'] for r in selected['train' if '_train_' in path.stem else 'holdout']}
         if len(rows)!=len(expected_ids) or {r['id'] for r in rows}!=expected_ids: raise ValueError('score population differs')

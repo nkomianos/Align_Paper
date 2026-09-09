@@ -6,7 +6,7 @@ import numpy as np
 
 
 def summarize(root):
-    read=lambda name:json.loads((root/name).read_text())
+    read=lambda name:json.loads((root/name).read_text(encoding='utf8'))
     result=read('RESULT.json')
     if result['decision']=='STOP_INVALID_INITIAL_TEACHER':
         return {'decision':result['decision'],'comparisons':[]}

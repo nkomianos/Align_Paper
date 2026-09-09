@@ -143,3 +143,43 @@ Destination retrieved/lambda_h100_20260909/calibration_sealed.tar. Complete loca
 hash verification and extraction after transfer finishes. MALT raw-data findings
 and required normalization work are in MALT_RAW_DATA_AUDIT_20260909.md.
 
+## Current handles after original suite completion
+
+suite_remaining_v1 completed all three stages with successful verifiers.
+Reference decision STOP_NO_REFERENCE_ADVANTAGE (selected b16_c4_mean). This is
+a scoped exploratory negative for the prompted reference screen, not a finding
+about trained or natural sandbagging. Do not rerun the unchanged reference pilot.
+
+One dose-only compensation repair is frozen in
+COMPENSATION_SINGLE_DOSE_REPAIR_20260909.md, source commit 8c1f0fb. Bundle hash
+eb9faed93235a87fba5b975d551e40e7f4c8e2fe1aa444925c03b1352d7c8026 matched local/remote.
+Remote source repo_repair, output compensation_repair_v1, supervisor PID 7607,
+handle compensation_repair_v1.pid; log compensation_repair_v1.log, console
+compensation_repair_v1.console.log. Launched only after reference was terminal.
+Six fixed stronger doses; all scientific gates unchanged; no further dose/site
+search if formation still fails. Estimate .5h with margin, not a wall-clock kill.
+
+Calibration archive transfer completed: local hash exactly matches the recorded
+5b150dd4... value. Extracting into retrieved/lambda_h100_20260909/calibration
+in exec session 51688; then supplemental audit report copied alongside archive.
+Local same-tolerance float64 verifier and paired table report remain to be run
+against extracted evidence. Do not confuse remote verification with local replay.
+
+Repair completed with verified STOP_INVALID_EDIT_FORMATION; no recovery training.
+No further compensation dose/site search in this version. All GPU experiments
+are terminal at ~05:04 UTC; instance currently idle while preparing valid MALT
+data. Do not invent GPU utilization or restart failed screens unchanged.
+Canonical graph repo revision 3521e8e22b6af12fea3249443e554b96b6fc4f49 is separately
+gated; authenticated access returned 403. User asked to accept that dataset too.
+
+Calibration local extraction complete. First local replay used an incorrect
+learning path; next exposed Windows cp1252 default decoding. Fixed explicit UTF8
+reads in audit scripts; correct-path replay active in exec session 66522.
+Thresholds and data unchanged. Initial numerical results and raw argmax-label
+collapse are recorded in H100_INITIAL_RESULTS_20260909.md.
+
+Completed other pilots archive pilots_complete.tar remote SHA256
+d71231282e5fa277bc34af1449236c8b1071cdaa1cfc7a282661a1c38d8153f0;
+local SCP/hash command in progress (see latest exec session), destination
+retrieved/lambda_h100_20260909/pilots_complete.tar.
+
