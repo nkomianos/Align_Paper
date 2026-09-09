@@ -101,3 +101,39 @@ outputs_not_observed_as_input, with unchanged arithmetic, and explicitly warns
 that matching signatures do not prove execution. Original reports are retained.
 Three targeted scanner tests pass, including a repeated earlier-input case.
 No monitor GPU run or paper-quality positive follows from this scan.
+
+## Exact task/model overlap and split feasibility
+
+The CPU matching audit finds only eight exact task/model cells containing both
+labels: 20 positive and 34 negative runs, supporting at most 12 disjoint matched
+pairs. These span six exact tasks in five provisional families. This excludes
+27 of the 47 positives from a within-cell comparison; report that selection,
+rather than presenting the matched subset as representative of all MALT.
+All-pairs rankings reuse runs and are not independent observations. Treat tasks
+as clusters and show cell-level results; eight cells are not eight independent
+task families. The source-bound report is MATCHING_FEASIBILITY.json.
+
+The family/model incidence graph has one connected component containing all
+741 runs. Therefore partitioning ALL these rows into nonempty splits that share
+neither family nor model is impossible. Dropping connecting cells can permit a
+different partition but changes the population and must be specified in advance.
+Model identifiers are narrower than lineages, so grouping true lineages cannot
+rescue this all-row split. Separate family-transfer and model-transfer tests are
+different estimands and must be reported separately.
+
+Next admissible MALT work: qualify transcript rendering against source semantics,
+then freeze a matched developmental diagnostic with all 54 overlap runs before
+monitor scores exist. Keep the original family-heldout runner and its minimum
+counts unchanged; it cannot be fed this smaller matched cohort as if it satisfied
+that contract. A new matched diagnostic needs its own protocol, full-context
+baseline and tokenizer/memory qualification. Do not interpret an advantage here
+as confirmation or as generalization to new families/models. External data with
+broader within-task/model overlap is required for the intended paper claim.
+
+Source-code discovery did not locate a public MALT conversion implementation in
+the official report or targeted searches. This is a search limitation, not proof
+none exists. The ordered-export card explicitly calls outputs API responses and
+allows multiple candidates; it does not supply an execution-selection rule.
+The official label definitions describe exploited loopholes and explicit task
+violations. Do not silently replace these labels with an unreviewed definition
+such as whether any generated candidate mentions a forbidden action.

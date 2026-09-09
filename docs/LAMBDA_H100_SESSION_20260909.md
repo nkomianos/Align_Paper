@@ -201,3 +201,13 @@ Live SSH check at 05:15:14 UTC confirmed GPU utilization 0%, memory 0 MiB.
 Do not fill the idle allocation with unchanged failed pilots. Allocation extension
 is not confirmed; retain the conservative 16:26 UTC deadline.
 
+Matching feasibility was independently computed after the linked-input scan.
+Only 20 positive and 34 negative runs share exact task/model cells with both
+labels, supporting 12 disjoint pairs across six tasks/five families. All 741
+rows form one family/model incidence component: using every row in mutually
+family-and-model-disjoint nonempty splits is impossible. Read the new section
+of MALT_RAW_DATA_AUDIT_20260909.md; do not weaken the existing runner contract
+to force this cohort through it. The next useful work is rendering qualification
+and a separately specified matched diagnostic, conditional on valid source mapping.
+The existing heartbeat was inspected and remains ACTIVE at ten-minute intervals.
+
