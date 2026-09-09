@@ -25,3 +25,20 @@ SymPy 1.13.3, conflicting with torch 2.7.1's requirement. The dedicated
 requirements/validator-h100-cu128.lock preserves its other pins and uses SymPy
 1.14.0. After applying it, uv pip check reports all 83 packages compatible.
 The formal CPU verifier still requires its separate offline lock/environment.
+
+Oracle preflight passed. Initial model preflight failed because the Qwen cache
+lacked .gitattributes, LICENSE and README.md; completing the same pinned snapshot
+resolved this. Resume then loaded Qwen but Gemma's AutoProcessor import required
+torchvision, absent from the generic lock. Installed torchvision 0.22.1+cu128,
+matching torch 2.7.1; all 84 installed packages pass dependency checking. Added
+this requirement to the deployment lock for reproducibility. The executing
+source checkout and RUN_BINDING remain unchanged; no experimental completions
+were collected before either fix. Failed logs remain in the run's recovery
+history. Second resume uses validator_resume2.log.
+
+Both model smokes passed on the second resume. The launcher then failed parsing
+its own preflight log: stderr weight-loading progress had been merged into JSON
+stdout. Separate and preserve stderr in its own log, keeping stdout as the strict
+JSON record. Preserve validator_g0_v1 unchanged. A new committed launch/root is
+required because orchestration changed; no experimental generations existed in
+v1. Oracle checks passed for 32 tasks and 64 mutants (47 plausible incomplete).

@@ -518,7 +518,8 @@ run_stage "01a_oracle_preflight" \
 if [[ ! -f "$RUN_ROOT/checkpoints/01b_model_cache_preflight.complete" ]]; then
 CURRENT_STAGE="01b_model_cache_preflight"
 preserve_stage_log "01b_model_cache_preflight"
-"$PYTHON" - "$LOCAL_FILES_ONLY" > "$RUN_ROOT/logs/01b_model_cache_preflight.log" 2>&1 <<'PY'
+preserve_stage_log "01b_model_cache_preflight_stderr"
+"$PYTHON" - "$LOCAL_FILES_ONLY" > "$RUN_ROOT/logs/01b_model_cache_preflight.log" 2> "$RUN_ROOT/logs/01b_model_cache_preflight_stderr.log" <<'PY'
 from __future__ import annotations
 
 import json

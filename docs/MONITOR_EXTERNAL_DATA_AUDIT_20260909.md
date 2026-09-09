@@ -248,3 +248,24 @@ recorded only by CHEATBENCH_FULL_DOWNLOAD.json with the final hash. The streamin
 audit_cheatbench_full_cohort.py is prepared to measure exact provisional task,
 model and harness overlap without loading all trace objects into memory. It does
 not use an unexplained top-level id as a task identity. It has not yet run.
+
+### Completed full-release cohort audit
+
+The full download and audit are now complete: 4,472 rows, comprising 3,587 benign,
+844 cheating and 41 attempt labels. Exact provisional task/model/harness overlap
+gives 42 cells, 85 positives and 129 benign rows, at most 58 disjoint pairs.
+There are 500 unresolved task IDs and 189 benign rows without standard payload.
+Most overlap cells (36/42) are Terminal-Bench-2, not cross-benchmark diversity.
+
+All 214 rows in those overlap cells were extracted with source hash checks and
+without ranking. The unchanged schema projection prepares 210 event views; four
+have no conversation events. Under a 30k raw-token limit, retaining only cells
+with both labels leaves 24 cells, 38 positives and 76 benign rows (at most 35
+pairs), of which 22 cells are Terminal-Bench-2. At 60k the corresponding counts
+are 26/45/91/38, and at 120k 35/63/116/51. Prompt overhead is additional; hardware
+qualification beyond 32k is absent. Cells can share tasks, so these are not
+independent task counts. These length-selected, label-conditioned subsets do not
+estimate full-benchmark performance. No monitor experiment has been run.
+
+Reports: CHEATBENCH_FULL_COHORT_AUDIT.json, full_overlap/MANIFEST.json,
+full_overlap_event_view/MANIFEST.json, FULL_OVERLAP_CONTEXT_FEASIBILITY.json.
