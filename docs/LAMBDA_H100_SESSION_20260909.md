@@ -471,3 +471,23 @@ qualified external model experiment. Fix the fixture equally for both baselines
 before treating this case as executable ground truth. Gemma spec-only generation
 continues: 54/64 at the most recent live check; PID 21295.
 
+Superseding failure/repair update: v2 TERMINATED at 07:04:59 UTC in the first
+Qwen patch-aware phase after one saved record. Both specification-only phases
+completed. UnicodeEncodeError came from a parsed escaped lone surrogate in JSON;
+literal UTF-8 serialization failed. Snapshot of the entire failed v2 root was
+retrieved, SHA256 fe9f8f45a2cdca7a750567fcebf925a7354651826f371b9af08ab21ee3ee65b2.
+Do NOT poll v2 as active or run its completion verifier.
+
+Repair preserves surrogate-valued JSON via escapes in transport/content hashes,
+with ordinary Unicode byte-identical; 24 targeted tests passed. New committed
+checkout repo_validator_v3 at b0f343570e061b2dccaa5c2cc5971bf0b5be2938, code hash
+767d9c8585fa5e1d1303923925fd19a36e3ae33667bec69e0b1db40339b66c66.
+Fresh repaired run validator_g0_v3 is launched, outer log validator_launch_v3.log.
+It repeats the same original prompts/seeds/corpus/model pins/gates; repeated
+outputs are NOT independent replications, and prior capacity failure remains.
+All old roots/checkouts preserved. No partial migration or silent source rebinding.
+After completion use bash /home/ubuntu/align_run_20260909/verify_validator_v3.sh
+(same committed generating/verifying source, separate exact offline environment).
+Compare overlapping v2/v3 outputs before using repaired results. See the Unicode
+section of VALIDATOR_H100_AMENDMENT_20260909.md for justification and limits.
+
