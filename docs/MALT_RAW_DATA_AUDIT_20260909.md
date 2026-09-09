@@ -40,3 +40,38 @@ would remain developmental until independently validated.
 
 Access is now unblocked; normalization, experimental design and capability
 qualification are still incomplete. No MALT GPU experiment has been run.
+
+## CPU metadata-only leakage screen
+
+Implemented audit_malt_metadata_baseline.py with fixed logistic regression,
+one-hot metadata, five-fold run-stratified versus family-grouped splits, and
+no trace text. All preprocessing is fitted inside each training fold. Fixed
+cohort: 741 reviewed unprompted runs, 47 positives and 694 negatives.
+
+Pooled out-of-fold AUROC for family+model is .986602 under random run splitting
+and .540760 under family-heldout splitting. These numbers alone exaggerate the
+interpretive contrast: pooling differently calibrated heldout folds can distort
+AUROC. The saved second report includes each fold's positive count and AUROC;
+within-fold test-size-weighted AUROC for family+model is .692419 on family holdout.
+Model identity alone remains .740254 within folds. Family-only predictions on
+unseen families are constant within a fold and cannot discriminate there.
+
+Conclusion: metadata substantially predicts the labels, and family separation
+alone does not remove model-lineage confounding. This supports stronger controls,
+not a claim that a zero-shot monitor actually exploits metadata or that METR's
+published monitoring results are invalid. Their study uses a different population
+and prompted LLM monitors; our fitted classifier is not a reproduction. The
+[source report](https://metr.org/blog/2025-10-14-malt-dataset-of-natural-and-prompted-behaviors/)
+already warns about sampling bias, label frequency, and limited natural diversity.
+
+Reports: METADATA_BASELINES.json preserves the original pooled analysis;
+METADATA_BASELINES_WITH_FOLDS.json adds the corrective within-fold analysis.
+Both reside in artifacts/malt_access_recheck_20260909. No p-values, population
+prevalence estimates or paper go decision are inferred from these diagnostics.
+
+Further raw inspection: native-chat run 342367 includes node_id, parent_node_id,
+branch_id and timestamps on input messages but not on newly generated outputs.
+Its final sample is marked unmatched. Other scaffolds wrap prior trajectories in
+candidate-rating prompts. A union of observed input-node IDs may support partial
+reconstruction, but it is not yet evidence that the full executed terminal path
+is present. Keep this distinction when testing against canonical graph data.
