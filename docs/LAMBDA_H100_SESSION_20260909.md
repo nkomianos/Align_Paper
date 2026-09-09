@@ -400,3 +400,17 @@ Combined collection: 192 patches across 32 tasks, four parser failures total.
 This is not 192 independent tasks or a scientific endpoint. No eligibility
 counts or same-family penalty have been calculated yet.
 
+06:40:21 UTC: classification completed; Qwen specification-only test generation
+is live, PID 19094. Classification backup retrieved and file hashes checked:
+validator_classifications.tar.gz SHA256
+e1d8a46fa313738ca65fb30d3c55277b34bd5193c9a265467ed9a4f1f824df42.
+PROVISIONAL runner labels: 147 fully correct under the oracle; 35 plausible
+incomplete; four parser failures, four public-regression rejections, two hidden
+execution failures. Eligible TEST is Qwen 9/Gemma 3. Common-task TEST support is
+only Qwen 1/Gemma 3, all CWE-601, versus the frozen requirement of 30 patches,
+10 per generator and four held-out CWEs. DEV common support also has one CWE.
+This currently fails the capacity prerequisite, not the scientific hypothesis.
+CLASSIFICATION_CAPACITY_PROVISIONAL.json preserves counts. Independently replay
+semantics before accepting runner labels. Let the frozen test phases complete;
+do not tune eligibility, prompts or locked splits to obtain a positive result.
+
