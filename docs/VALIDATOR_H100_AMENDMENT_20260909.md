@@ -76,3 +76,7 @@ A fresh committed repair run will repeat the same frozen prompts, seeds, model
 pins, corpus and gates. Do not splice source identities into v2 or count repeated
 draws as independent replications. Compare overlapping outputs after completion;
 software repair is not a new scientific condition. Preserve every earlier attempt.
+
+## Offline verifier launch corrections
+
+After completed v3 generation, corrected the external dispatch helper to retain the virtualenv executable path instead of resolving its symlink to the dependency-free base Python. Generating/scoring checkout and evidence unchanged. Initial properly dispatched verifier then encountered worker EOF during oracle preflight. Retrying with BLAS/OpenMP thread counts fixed at one to reduce spawned-worker address space; the sandbox 256 MiB bound and timeouts are unchanged. This is an environment diagnosis, not a passed verifier or permission to reclassify failed executions. Failed logs retained; completion and reconstruction remain required.
