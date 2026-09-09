@@ -463,3 +463,11 @@ live; inspect the final log and container state before interpreting it. No
 external neural experiment is launched. Validator Gemma spec generation remains
 live in parallel, PID 21295.
 
+External baseline session 1125 is TERMINAL (exit 2 after diagnostic SIGINT).
+The security assertion failed as expected, but teardown was stuck in a loop
+whose timeout counter never decreases. See external feasibility note and
+patcheval_case_inspection_v2/vulnerable_baseline.log. Container retained, no
+qualified external model experiment. Fix the fixture equally for both baselines
+before treating this case as executable ground truth. Gemma spec-only generation
+continues: 54/64 at the most recent live check; PID 21295.
+

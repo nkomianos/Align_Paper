@@ -56,3 +56,16 @@ candidate patch. Container patcheval_baseline_2015_1326 remains running at the
 last check; pytest has displayed F, but teardown is not complete. Do not classify
 the result from that marker alone. Remote log: patcheval_audit/vulnerable_baseline.log
 under align_run_20260909; live exec session 1125. Image pull session 63229 finished.
+
+Baseline session 1125 is now terminal. Inspection found stop_dbus in
+dbusmock/testcase.py sets timeout=50 but never decrements it inside while timeout
+> 0. The daemon remained present and pytest stalled in cleanup. Sent SIGINT to
+this diagnostic container; preserved exit 2 and the complete traceback. The test
+itself failed at test_api.py:600 because cache_from_source(template) existed,
+which is the advertised vulnerability assertion. KeyboardInterrupt occurred in
+testcase.py:129 during cleanup. Distinguish reproduced assertion from a clean
+completed assay: neither an exit-2 run nor the initial F alone qualifies the
+benchmark. Original container and files remain preserved. A bounded, documented
+fixture correction must be applied equally to vulnerable and fixed baselines
+before admitting this case. No test assertion or security condition should be
+changed to force baseline separation.
