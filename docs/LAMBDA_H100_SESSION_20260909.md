@@ -444,3 +444,13 @@ inventory, file sizes/hashes, raw-completion hashes and parser replay all pass.
 budget. QWEN_SPEC_COLLECTION_REPLAY.json records these checks, not semantic
 test correctness or planted-control power. No prompt/parser changes were made.
 
+Patch duplication/support audit: locked TEST common support is exactly ONE task
+and one CWE, with Qwen one distinct normalized patch and Gemma three distinct
+normalized patches. They are not independent task replications. DEV common
+support has two tasks in one CWE: six Qwen draws/five distinct task-source pairs
+and six Gemma draws/three distinct pairs. Report PATCH_DUPLICATION_AUDIT.json.
+Counts concern exact normalized text, not semantic defect independence. Preserve
+the original sampling weights and frozen decision rule; do not substitute a
+post-hoc deduplicated primary estimator. Gemma spec-only PID 21295 remains live,
+seven suites saved at 06:48:59 UTC.
+
