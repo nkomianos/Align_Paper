@@ -237,3 +237,12 @@ Further progress needs source-semantic extraction (graph access still unresolved
 or a independently qualified evidence-coverage/aggregation protocol. Do not
 launch the existing monitor runner on these API-record JSON files.
 
+External alternatives are now downloaded and independently inventoried; see
+MONITOR_EXTERNAL_DATA_AUDIT_20260909.md. Trace-and-Amplify actual Git LFS object
+was retrieved and publisher-SHA verified at pinned source commit. Training-time
+files supply 400 exact prompt-matched pairs and short records; label/evaluator
+qualification and a distinct research contribution remain pending. Do not launch
+them through the human-reviewed MALT contract. CheatBench micro has 263 rows;
+its heuristic spans and raw trace metadata require their own audit. No new
+neural experiment launched. These are concrete new substrates, not paper results.
+
