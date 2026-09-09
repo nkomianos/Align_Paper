@@ -75,3 +75,29 @@ Its final sample is marked unmatched. Other scaffolds wrap prior trajectories in
 candidate-rating prompts. A union of observed input-node IDs may support partial
 reconstruction, but it is not yet evidence that the full executed terminal path
 is present. Keep this distinction when testing against canonical graph data.
+
+## Completed input-link feasibility scan
+
+All 42 default-export shards were hashed and all 741 selected runs scanned.
+Across these runs, observed input-node payloads and parent references had zero
+conflicts or missing parents, and all input occurrences had node IDs. This is
+a useful structural positive, not certification of the executed trajectory.
+Twenty-eight runs contain multiple output candidate groups (978 API samples);
+128 runs contain unmatched samples (1,406 samples). Every run has at least one
+final output signature absent from observed inputs. Terminal outputs naturally
+need not appear in another API request: this is not proof of corrupt data or
+missing executed behavior. Execution selection still needs source semantics.
+
+Maximum single-request input character counts per run range from 1,255 to
+234,021 (median 14,715). Characters are not tokenizer lengths. No truncation or
+inference is authorized by this diagnostic alone. The canonical graph export
+remains separately gated; accepting malt-public did not grant graph access.
+
+Reports are in artifacts/malt_access_recheck_20260909/linked_input_audit.
+Preserved first-pass reports use the misleading key
+outputs_not_observed_as_later_input: its calculation is membership across ALL
+observed inputs, without a chronological test. The scanner now calls this
+outputs_not_observed_as_input, with unchanged arithmetic, and explicitly warns
+that matching signatures do not prove execution. Original reports are retained.
+Three targeted scanner tests pass, including a repeated earlier-input case.
+No monitor GPU run or paper-quality positive follows from this scan.

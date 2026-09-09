@@ -183,3 +183,21 @@ d71231282e5fa277bc34af1449236c8b1071cdaa1cfc7a282661a1c38d8153f0;
 local SCP/hash command in progress (see latest exec session), destination
 retrieved/lambda_h100_20260909/pilots_complete.tar.
 
+## Continuity correction at 05:15 UTC
+
+The transfer, extraction and local replay sessions mentioned above are complete;
+do not poll their old session IDs. The local calibration score verifier passed
+with float64 arithmetic and unchanged tolerance. The supplemental audit passed
+all 3,328 scored forwards and 768 gradient minibatches. This verifies recorded
+calculations and routing, not a replay of neural weight updates. Reference and
+compensation artifacts were locally verified; the pilots archive hash matched.
+
+The linked-input MALT scan is complete: 741 selected runs, zero node conflicts
+or missing parents; 28 runs have multiple candidate groups. Final outputs absent
+from inputs occur in every run and are not themselves errors. Read the completed
+scan section of MALT_RAW_DATA_AUDIT_20260909.md before normalization. Graph export
+access remains separately gated. No qualified monitor input or GPU run exists.
+Live SSH check at 05:15:14 UTC confirmed GPU utilization 0%, memory 0 MiB.
+Do not fill the idle allocation with unchanged failed pilots. Allocation extension
+is not confirmed; retain the conservative 16:26 UTC deadline.
+
