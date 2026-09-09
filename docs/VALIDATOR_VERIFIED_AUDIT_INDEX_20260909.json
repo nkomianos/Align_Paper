@@ -1,0 +1,84 @@
+{
+  "kind": "validator_20260909_verified_audit_index",
+  "code_commit": "2bf1055ec5d46243963a100bb883e285726e2793",
+  "registered_decision": "INCONCLUSIVE_INSUFFICIENT_APPARATUS_POWER",
+  "files": {
+    "artifacts/validator_deployment_20260909/validator_g0_v3_verified.json": {
+      "sha256": "dced9efa12c40e50efd3bc05cd5fb9d7c3e94dbd7083c491eb32609348cb6998",
+      "bytes": 294115
+    },
+    "artifacts/validator_deployment_20260909/validator_g0_v3_verified.receipt.json": {
+      "sha256": "533af9dfc289c9f821cc7e39e1229dd3fc9891fcfa27ce8da5d0c333223df856",
+      "bytes": 548
+    },
+    "artifacts/validator_deployment_20260909/validator_case_id_diagnostic.json": {
+      "sha256": "739944bf1462d4672451dedb4539a39ff5c1d962420264c37f8a5334b53a9f07",
+      "bytes": 2623
+    },
+    "artifacts/validator_deployment_20260909/GEMMA_REMAINING_JSON_ERRORS.json": {
+      "sha256": "85020b6fc1b9b00b971a051d8aa66e336b457ed1120df7fa4dc2c61d1238b814",
+      "bytes": 5310
+    },
+    "artifacts/validator_external_sources_20260909/SNOWFLAKE_TWO_DEFECT_COMPONENT_EXECUTION.json": {
+      "sha256": "9162c1fc986998bf1850e71fc79e32ab89327fa501114a04360770520f296d3e",
+      "bytes": 1968
+    },
+    "artifacts/validator_external_sources_20260909/SNOWFLAKE_UPSTREAM_REGRESSION_REPLAY.json": {
+      "sha256": "d8f0d3d67b896d5d117869d1a94f374c68c4e092b4cf637ce32c3e27edb26fe8",
+      "bytes": 3149
+    },
+    "artifacts/validator_external_sources_20260909/REQUESTS_REDIRECT_COMPONENT_CHECK.json": {
+      "sha256": "56635605d1f52ccbe4d7aadc7fcc4b912d4271fd18ab923a1715fbd8b3ddf87b",
+      "bytes": 1254
+    },
+    "artifacts/validator_external_sources_20260909/REQUESTS_UPSTREAM_ATTESTATION.json": {
+      "sha256": "73a83bba1c7ed6ed785833ec4e2d95f6c39f9918e2369a86a31945a23026a033",
+      "bytes": 1540
+    },
+    "artifacts/validator_external_sources_20260909/DJANGO_ARCHIVE_REFERENCE_REPLAY.json": {
+      "sha256": "d94c8b9847c7763294b8a0dd91dd00f86e775aa97c9f838e655d474ae1cb4619",
+      "bytes": 810
+    },
+    "artifacts/validator_external_sources_20260909/snowflake_source/fixed.py": {
+      "sha256": "098864c1ae78851c55e04edc68a75d2e3fcd416d28dea4dad337e4b3f0881913",
+      "bytes": 5346
+    },
+    "artifacts/validator_external_sources_20260909/snowflake_source/fixed_tests.py": {
+      "sha256": "ff78f926ef75e54c003f37f54af8406a0b14f5adaa5836b16311d1db7d849c56",
+      "bytes": 9683
+    },
+    "artifacts/validator_external_sources_20260909/snowflake_source/vulnerable.py": {
+      "sha256": "23a864722f39df4d733d544480b5d8a8e94b9245ad66e6c2a872efd3341c3660",
+      "bytes": 5343
+    },
+    "artifacts/validator_external_sources_20260909/snowflake_source/DOWNLOAD.json": {
+      "sha256": "4d87cafcf064157b3b4acb3cff422de6ce9dac3befa5e482e418a9db08fb787e",
+      "bytes": 891
+    },
+    "artifacts/validator_external_sources_20260909/requests_source/fixed.py": {
+      "sha256": "2233cad5b8fb18b135e25f9c079b15df83dd7c2a4f6d230bf85fdbfabcf54f42",
+      "bytes": 28961
+    },
+    "artifacts/validator_external_sources_20260909/requests_source/fixed_tests.py": {
+      "sha256": "56035dae33832db23079d7ae3f1ab7f60c2f168b9bba304530ae0e54db73f3de",
+      "bytes": 89742
+    },
+    "artifacts/validator_external_sources_20260909/requests_source/vulnerable.py": {
+      "sha256": "cec0ac852fac982c4ea587b859e5fa20a4dbcecd9ad335b1ef912d812d9e181d",
+      "bytes": 28193
+    },
+    "artifacts/validator_external_sources_20260909/requests_source/DOWNLOAD.json": {
+      "sha256": "24e649544c7fa8adc52afa974d31b193091d988622627fab7da73a7c183ffec5",
+      "bytes": 871
+    }
+  },
+  "raw_evidence_archive": {
+    "path": "artifacts/validator_deployment_20260909/validator_v3_completed.tar.gz",
+    "sha256": "85ca0bfde8039985ca4fb304eb241713c3a3c409ef08b15d337f61014c647377"
+  },
+  "limitations": [
+    "Post-hoc parser diagnosis is not confirmation.",
+    "External component checks are not full task or model qualification.",
+    "No submission-ready result."
+  ]
+}
