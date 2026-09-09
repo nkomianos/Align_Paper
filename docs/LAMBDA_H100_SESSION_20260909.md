@@ -425,3 +425,13 @@ cwe400-run-expansion, both ValueError on bad-run. They are recorded deterministi
 program exceptions, not GPU failures/timeouts. Keep the frozen eligibility rule.
 Qwen spec-only generation remains live (30/64 suites at last check).
 
+06:46:50 UTC: independent classification replay is COMPLETE, PID 19281 terminal.
+All 192 reconstructed classifications match exactly (zero mismatches), including
+147 fully correct, 35 plausible incomplete, four parse failures, four public
+regression failures and two hidden exceptions. Retrieved CLASSIFICATION_REPLAY.json
+SHA256 79bc46db380a158fd8013787a4d778d5e3352e8038a00c8b8c20ba6007c6df1c matches remote.
+The insufficient common-support capacity is reproduced under the frozen oracle,
+not a stale runner label. This does not prove the oracle is exhaustive or replace
+final test-suite reconstruction. Qwen spec-only generation continues; 52/64 at
+06:45:53. Do not poll the completed classification-replay PID as an active job.
+
