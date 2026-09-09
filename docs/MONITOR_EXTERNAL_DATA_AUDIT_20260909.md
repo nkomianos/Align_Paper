@@ -88,3 +88,51 @@ to pass the old MALT runner contract.
 No paper recommendation is upgraded on the basis of data availability. The
 archive README assigns no dataset license and contains ground-truth test fields;
 retain downloaded artifacts locally and do not publish them as our dataset.
+
+## Static evaluator and paired-label audit
+
+Followed the public main_ppo.py import into livecodebench.compute_score rather
+than assuming the similarly named prime_code evaluator was the active route.
+Current source files are preserved with SOURCE_CODE_MANIFEST.json. The reward
+manager catches worker failures and can assign zero rewards; low reward alone
+therefore does not certify benign behavior. Historical collection configuration
+and evaluator revision are still not bound by the released trajectory metadata.
+
+The import_prefix branch explicitly inserts `unittest.main = None` before the
+submitted solution. Saved positives can call that function. AST call presence
+does not prove execution, and a submission could reassign it; nonetheless this
+is a concrete replay prerequisite. Do not describe current public code as an
+already verified reproduction of the historical collector. No downloaded
+solution or evaluator was executed on the host.
+
+Static inspection of all three training-time paired files found identical
+ground-truth hashes within each exact prompt group. All positive rows have
+recorded reward 1.0; negatives have lower rewards, including fractional scores.
+Ground truth has several evaluator schemas, not one uniform unittest protocol.
+The saved V2 label-prerequisite report records each row's schema and code parsing.
+Its narrow same-call/literal-output assertion audit does not establish semantic
+satisfiability or replay outcomes. V1 is retained; V2 corrects literal equality
+so Python-equivalent values such as 1 and 1.0 are not counted as conflicting.
+Three targeted tests pass.
+
+In the 400-pair unittest development file, all 400 positives and zero negatives
+contain an AST call to unittest.main in the evaluator-selected Python block.
+Thus this one static feature perfectly separates this DEVELOPMENT file's labels.
+This is not an independently held-out accuracy estimate, a general hack detector,
+or a new result about the published monitors. It makes a generic new LLM prompt
+comparison on that raw view scientifically weak unless the comparison controls
+for this feature and tests broader behavior.
+
+The authors also supply scripts that delete unittest imports/test classes and
+remove selected reasoning lines. Their existence matters: the raw release may
+not be the view used for every reported experiment. Trace actual preprocessing
+and file selection before comparing against published numbers. Do not remove
+code ourselves and retain the label as if the edited executable still performs
+the original behavior; distinguish observer-view ablation from behavior editing.
+
+Decision: no automatic GPU admission for the raw paired unittest prompt screen.
+Remaining useful work is identifying a distinct estimand and qualifying a natural
+external control, or a causal observer-view diagnostic that preserves the original
+executable and binds each removed span to what the monitor was allowed to see.
+The static separation is evidence against an expensive raw-view-only comparison,
+not evidence that the intended ICLR paper goal has been achieved.

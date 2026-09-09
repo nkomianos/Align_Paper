@@ -246,3 +246,13 @@ them through the human-reviewed MALT contract. CheatBench micro has 263 rows;
 its heuristic spans and raw trace metadata require their own audit. No new
 neural experiment launched. These are concrete new substrates, not paper results.
 
+At 05:32:27 UTC, live SSH again confirmed 0% GPU, 0 MiB and no matching active
+pilot/monitor/calibration Python processes. Static Trace-and-Amplify inspection
+found a trivial development-file separator: unittest.main AST calls occur in
+400/400 positives and 0/400 negatives in its 400-pair unittest file. Current
+public evaluator also disables unittest.main on one path; historical code binding
+is unresolved. Existing author preprocessing removes such code for some uses,
+so do not claim their published monitor result is invalid from raw-file counts.
+Read the latest external-data audit section and V2 prerequisite report before
+proposing any GPU follow-up. All source reads were static; no submitted code ran.
+
