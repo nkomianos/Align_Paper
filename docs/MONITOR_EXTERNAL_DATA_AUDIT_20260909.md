@@ -165,3 +165,31 @@ lose these rows unless it fails closed or handles each schema explicitly.
 Artifacts: CHEATBENCH_SCHEMA_AUDIT.json and pinned source_code files under
 artifacts/monitor_external_sources_20260909. This remains a CPU data audit;
 there are no monitor scores, qualified natural controls or newly admitted GPU jobs.
+
+## Alternate fields and localization follow-up
+
+All 15 missing-event SWE-bench Verified records contain a messages list; that
+format is recoverable. The other 10 missing-event rows are Terminal-Bench benign
+records with empty events and files and no messages. Their top-level fields hold
+identifiers/configuration/outcomes rather than a conversation. Do not score these
+as negative behavioral traces. This is specific to the inspected micro release.
+
+Resolved the released loc_field_path and line ranges against each parsed trace.
+Of 39 positive/attempt records, 4 snippets match exactly, 19 differ only in a
+terminal newline, 11 have other range/snippet differences, and 5 have unresolvable
+paths. Thus the initial 30 exact mismatches must NOT be described as 30 missing
+evidence spans. All 11 non-whitespace mismatches still contain the snippet in
+the declared field. The source's exact-line reproduction claim needs these
+format/range qualifications for this pinned release.
+
+For the remaining 16 range/path cases, an audit-only recursive exact substring
+search finds a unique occurrence in 5 records, two occurrences in 9, four in 1,
+and none in 1. Repeated source views make arbitrary first-match relocation
+unsafe. No source annotations were overwritten. V1/V2/V3 reports are retained;
+V3 adds explicit match locations. This verifies textual availability, not whether
+the text establishes cheating or whether a monitor observes it.
+
+The locator must never select model input using the gold snippet: that would
+give the monitor privileged evidence. A future extractor must choose fields by
+schema alone, with these annotations used only to audit coverage afterward.
+One targeted path/repeated-match regression test passes.

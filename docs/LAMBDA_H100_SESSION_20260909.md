@@ -264,3 +264,11 @@ extra; 25 rows have empty/missing standardized events. Do not pass raw JSON or
 silently discard missing-event rows. See the external-data audit for scope and
 the source-bound CHEATBENCH_SCHEMA_AUDIT.json report. No GPU job was admitted.
 
+CheatBench alternate-field audit recovered messages for all 15 SWE-bench records;
+the 10 other empty-event benign records also have no messages or file contents.
+Localization checks: 4 exact, 19 terminal-newline-only, 11 range differences,
+5 invalid paths. Gold-snippet relocation is AUDIT ONLY, not permissible input
+selection for a monitor; repeated hits occur. Reports CHEATBENCH_EVIDENCE_AUDIT
+V1/V2/V3 are preserved locally. Read the latest external-data audit for counts
+and interpretation. No new neural experiment or paper-quality claim follows.
+
