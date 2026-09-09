@@ -205,7 +205,7 @@ def _canonical_hash(value: object) -> str:
             allow_nan=False,
         )
         + "\n"
-    ).encode("utf-8")
+    ).encode("utf-8", errors="backslashreplace")
     return hashlib.sha256(encoded).hexdigest()
 
 

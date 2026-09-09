@@ -11,7 +11,11 @@ from typing import Any, Iterable, Iterator
 
 
 def canonical_json(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    # JSON permits escaped lone surrogates; literal UTF-8 does not. Preserve
+    # their value with JSON escapes while leaving normal Unicode unchanged.
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode(
+        "utf-8", errors="backslashreplace"
+    ).decode("utf-8")
 
 
 def sha256_file(path: str | Path) -> str:
@@ -37,7 +41,7 @@ def _atomic_text(path: Path, text: str) -> None:
     descriptor, temp_name = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent, text=True)
     try:
         with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as handle:
-            handle.write(text)
+            handle.write(text.encode("utf-8", errors="backslashreplace").decode("utf-8"))
             handle.flush()
             os.fsync(handle.fileno())
         os.replace(temp_name, path)

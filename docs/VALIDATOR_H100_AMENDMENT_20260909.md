@@ -56,3 +56,23 @@ that its entire src diff from the generating commit is exactly this two-line
 unit correction, otherwise it rejects the independent verifier. Original run
 binding and artifact hashes remain required. The receipt distinguishes generation
 and verifier identities. No scoring, controls, filtering or thresholds change.
+
+## Unicode transport repair
+
+v2 terminated at 07:04:59 UTC in Qwen patch-aware collection after one durable
+record. Both 64-suite specification-only phases were complete. A parsed JSON
+string contained a lone surrogate; the text writer attempted literal UTF-8 and
+raised UnicodeEncodeError. Preserve the complete failed root (archive SHA256
+fe9f8f45a2cdca7a750567fcebf925a7354651826f371b9af08ab21ee3ee65b2).
+
+Repair canonical JSON transport to escape otherwise unencodable surrogate code
+points, preserving parsed values rather than rejecting or dropping the suite.
+Apply the same representation to JSON files and validator content hashing.
+Normal Unicode serialization remains byte-identical. Regression checks cover
+durable append/resume, JSON/JSONL round trips, literal backslash escapes, Unicode
+keys and unchanged normal-Unicode commitments. Twenty-four targeted tests pass.
+
+A fresh committed repair run will repeat the same frozen prompts, seeds, model
+pins, corpus and gates. Do not splice source identities into v2 or count repeated
+draws as independent replications. Compare overlapping outputs after completion;
+software repair is not a new scientific condition. Preserve every earlier attempt.

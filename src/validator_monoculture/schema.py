@@ -89,7 +89,7 @@ def canonical_json_bytes(value: object) -> bytes:
     return (
         json.dumps(record, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         + "\n"
-    ).encode("utf-8")
+    ).encode("utf-8", errors="backslashreplace")
 
 
 def stable_hash(value: object) -> str:
