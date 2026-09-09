@@ -26,9 +26,11 @@ def main():
     p.add_argument('--allocation-start-utc',required=True)
     p.add_argument('--previous-h200-hours',type=float,required=True)
     p.add_argument('--estimated-hours',type=float)
+    p.add_argument('--compensation-repair',action='store_true')
     p.add_argument('--tabular-checkpoint',type=Path)
     p.add_argument('--tabular-checkpoint-sha256')
     a=p.parse_args()
+    if a.compensation_repair and a.pilot!='compensation':raise ValueError('repair applies only to compensation')
     budget=admission(a.pilot,a.allocation_start_utc,a.previous_h200_hours,a.estimated_hours)
     if not budget['admit']:raise ValueError('estimated run plus margin does not fit remaining budget')
     if a.out.exists():raise FileExistsError('no resume')
@@ -38,6 +40,7 @@ def main():
     env=dict(os.environ,RESEARCH_PILOT_SUPERVISED='1',HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1',
              TOKENIZERS_PARALLELISM='false',PYTHONPATH=os.pathsep.join([str(repo/'src'),str(repo),os.environ.get('PYTHONPATH','')]))
     command=[sys.executable,str(repo/'scripts/run_research_pilot.py'),a.pilot,'--out',str(a.out)]
+    if a.compensation_repair:command.append('--compensation-repair')
     if a.pilot=='tabular_drift':
         command=[sys.executable,str(repo/'scripts/run_tabular_drift.py'),'--backend','tabicl','--out',str(a.out),
                  '--checkpoint',str(a.tabular_checkpoint),'--checkpoint-sha256',str(a.tabular_checkpoint_sha256)]

@@ -16,7 +16,9 @@ def main():
     p.add_argument('--snapshot',type=Path)
     p.add_argument('--data',type=Path)
     p.add_argument('--prepare-only',action='store_true')
+    p.add_argument('--compensation-repair',action='store_true')
     a=p.parse_args()
+    if a.compensation_repair and a.pilot!='compensation':raise ValueError('repair applies only to compensation')
     if a.out.exists():raise FileExistsError('no overwrite/resume')
     if a.pilot=='monitor':
         from research_pilots.monitor import validate as validate_monitor
@@ -69,7 +71,11 @@ def main():
         from research_pilots.reference import run
     else:
         from research_pilots.monitor import run
-    run(backend,data,a.out)
+    if a.compensation_repair:
+        from research_pilots.compensation import REPAIR_DOSES
+        run(backend,data,a.out,doses=REPAIR_DOSES)
+    else:
+        run(backend,data,a.out)
 
 
 if __name__=='__main__':main()

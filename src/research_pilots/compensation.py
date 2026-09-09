@@ -14,7 +14,11 @@ def route(scores):
     return 'DEV_SIGNAL_REQUIRES_CAUSAL_FOLLOWUP' if shift-random_shift >= .10 else 'STOP_NO_SPECIFIC_WITHDRAWAL'
 
 
-def run(backend,data,out):
+DEFAULT_DOSES=(-.5,-1.,-2.,.5,1.,2.)
+REPAIR_DOSES=(-4.,-8.,-16.,-32.,4.,8.)
+
+
+def run(backend,data,out,doses=DEFAULT_DOSES):
     t=backend.torch
     train,dev,utility = data['train'],data['dev'],data['utility']
     scores={'base':backend.score(dev,'base'),'base_utility':backend.score(utility,'base_utility')}
@@ -29,7 +33,9 @@ def run(backend,data,out):
     d=d/d.norm()
     base_train=backend.score(train,'base_train')
     choices=[]
-    for i,alpha in enumerate((-.5,-1.,-2.,.5,1.,2.)):
+    write(out/'DOSE_PROTOCOL.json',{'doses':list(doses),'selection_split':'train',
+        'repair':tuple(doses)==REPAIR_DOSES,'no_further_dose_expansion':True})
+    for i,alpha in enumerate(doses):
         backend.set_edit(d,alpha)
         s=backend.score(train,f'dose_{i}_train')
         if base_train['accuracy']-s['accuracy']>=.15 and s['choice_mass']>=.8:
