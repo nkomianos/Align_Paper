@@ -67,3 +67,24 @@ Live qualification: suite_v3 child PID 5690 observed at elapsed 53 seconds with
 is running; backward-memory qualification remains pending. This is execution
 evidence, not a completed experiment or a scientific positive.
 
+## Supplemental audit prepared during execution
+
+Prior turn classified as progress: deployed and observed actual scored forwards.
+At 04:40 UTC, PID 5690 completed supervised step 17 with ~24749 MiB memory;
+actual backward execution fits. No need to delay these pilots for a GH200.
+At approximately 04:41 UTC step 27 was present, with 1.8 GB raw evidence.
+
+Supplemental CPU audit added at commit ac46b3c. Five tests check clean evidence
+and rejection of token, loss, teacher-context and optimizer-step corruption.
+It reconstructs every prompt and token batch from the original source rows,
+checks no privileged followup enters gradient-bearing student inputs, recomputes
+CE/reverse-KL losses from full saved logits, and checks optimizer step counters.
+It does not replay model weights or certify an experimental effect.
+
+Remote audit_tools/watch_calibration.py waits on actual PID 5690 until the
+calibration manifest exists, then invokes the supplemental audit on one CPU
+thread with GPU hidden. Handle calibration_supplemental_audit.pid; log and exit
+receipt share that stem; successful report calibration_supplemental_audit.json.
+These tools are outside repo_git so the running source closure stays immutable.
+Verify the report and preserve it alongside the normal suite verifier on retrieval.
+
