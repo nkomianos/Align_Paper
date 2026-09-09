@@ -43,7 +43,9 @@ def verify(root,learning):
             raw=cache[name]; i=r['forward_row']; source=lookup[r['id']]
             if raw['ids'][i]!=r['id'] or r['base_id']!=source['base_id'] or r['label_rotation']!=source['label_rotation']: raise ValueError('row binding differs')
             if raw['teacher_context']!=path.stem.endswith('_teacher') or raw['student_gradient']: raise ValueError('score context/gradient differs')
-            logits=raw['logits'][i].float(); choice=logits.log_softmax(-1)[answers]; cond=choice.log_softmax(-1)
+            # Accumulate the large-vocabulary reduction in float64. CPU float32
+            # log_softmax can itself exceed the fixed tolerance to CUDA results.
+            logits=raw['logits'][i].double(); choice=logits.log_softmax(-1)[answers]; cond=choice.log_softmax(-1)
             target='ABCD'.index(source['old_target'])
             recomputed={'nll':-float(choice[target]),'probability':float(choice[target].exp()),
                 'conditional_probability':float(cond[target].exp()),'correct':int(int(choice.argmax())==target),

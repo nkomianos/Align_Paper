@@ -50,7 +50,7 @@ def audit(root, snapshot):
         for key in ('input_ids','attention_mask'):
             if not torch.equal(encoded[key],raw[key]):raise ValueError(f'{key} differs: {path.name}')
         if int(encoded['attention_mask'].sum(-1).max())>1024:raise ValueError('overlength input')
-        logits=raw['logits'].float()
+        logits=raw['logits'].double()
         if logits.shape[0]!=len(rows) or not torch.isfinite(logits).all():raise ValueError('invalid logits')
         if raw['student_gradient']:
             if raw['teacher_context']:raise ValueError('teacher leakage into student')
@@ -67,7 +67,7 @@ def audit(root, snapshot):
                 if arm=='current_teacher':
                     if last is None or last['ids']!=raw['ids'] or not last['teacher_context'] or last['student_gradient']:
                         raise ValueError('current teacher not paired with student')
-                    target=last['logits'].float()
+                    target=last['logits'].double()
                 else:
                     target=[]
                     for row in rows:
@@ -75,7 +75,7 @@ def audit(root, snapshot):
                         original=torch.load(root/name,map_location='cpu',weights_only=True)
                         if original['ids'][index]!=row['id'] or not original['teacher_context']:
                             raise ValueError('frozen teacher binding differs')
-                        target.append(original['logits'][index].float())
+                        target.append(original['logits'][index].double())
                     target=torch.stack(target)
                 logp=logits.log_softmax(-1); logq=target.log_softmax(-1)
                 loss=(logp.exp()*(logp-logq)).sum(-1).mean()

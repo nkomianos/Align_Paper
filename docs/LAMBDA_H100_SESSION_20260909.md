@@ -88,3 +88,44 @@ receipt share that stem; successful report calibration_supplemental_audit.json.
 These tools are outside repo_git so the running source closure stays immutable.
 Verify the report and preserve it alongside the normal suite verifier on retrieval.
 
+## Calibration completed and remaining queue resumed
+
+Calibration completed 96 updates in 876 seconds, peak CUDA allocated
+25185497088 bytes. Decision INVESTIGATE_DISTILLATION_OBJECTIVE_OR_TRANSFER:
+supervised acquisition passed, frozen/current teacher acquisition failed. Final
+teacher qualification held for supervised/frozen but not current. Developmental
+result only; this does not isolate teacher drift as the cause.
+
+The original float32 CPU verifier failed its unchanged 1e-5 tolerance. Diagnosis:
+CPU reduction error up to 4.20e-5. For the worst choice-mass example, CUDA replay
+exactly reproduced .9922508001327515; float64 gave .9922504786366063, while CPU
+float32 gave .9922924637794495. Repaired audit accumulation to float64 without
+relaxing tolerance or gates; complete saved arithmetic/routing verification passes
+in calibration_float64_verify.log. Supplemental float64 audit PID 6995, log
+calibration_supplemental_float64.log, successful output same stem .json. Prior
+failed verifier receipts remain intact. Paired descriptive report is
+calibration_paired_summary.json (32 base tasks; not 128 independent rotations).
+
+Remaining suite launched as suite_remaining_v1, initial PID 7042, handle
+suite_remaining_v1.pid, console same stem .console.log. Runs CLARA, compensation,
+reference; calibration is omitted to prevent duplication. Same 12-hour allocation
+start, original source commit, and scientific gates. CPU threads limited to one.
+
+Initial failures preserved locally: retrieved/lambda_h100_20260909/initial_attempts.tar,
+remote/local SHA256 561db64040f8c29505e6474bd3604da35de19f02c35c7924890f69a46f2eee14.
+Completed calibration archive remote calibration_sealed.tar is being prepared;
+retrieve, hash-check and extract into a new local directory before reporting full
+local evidence preservation.
+
+## MALT access unblocked
+
+User accepted the dataset access agreement. Authentication succeeded via hidden
+transient stdin; no token was put into code, logs, repo or credential store.
+User advised to rotate the token disclosed in chat. Pinned revision
+6100006c2fd23d81e5afe2b1cc3bf3f3fff48df1 downloaded to local
+artifacts/malt_public_6100006 (44 files, ~3.96 GB). Raw metadata audit finds 7179
+unique runs, including 694 reviewed normal and 5353 unreviewed normal runs.
+Never use unreviewed normal as validated negatives. Full metadata is in
+artifacts/malt_access_recheck_20260909/run_metadata.json. Label/source/task-family
+and full-transcript construction still need audit; no monitor job is yet admitted.
+
