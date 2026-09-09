@@ -66,7 +66,7 @@ def main():
     public = root / 'corpus/public/tasks.jsonl'
     private = root / 'corpus/private/oracles.jsonl'
     config = root / 'corpus/FROZEN_CONFIG.yaml'
-    command = [str(args.python.resolve()), '-m', 'validator_monoculture.verify',
+    command = [str(args.python.absolute()), '-m', 'validator_monoculture.verify',
                '--evidence-root', str(root / 'evidence'),
                '--public-corpus', str(public), '--private-oracles', str(private),
                '--config', str(config),
