@@ -31,3 +31,28 @@ identify our repaired-one-defect/retained-another eligibility population.
 
 No external container, patch generation or test-generation experiment has been
 run. The 70 Python entries are a candidate source pool, not 70 qualified tasks.
+
+## First container inspection
+
+Selected the lexicographically first Python CVE for infrastructure qualification,
+CVE-2015-1326 (python-dbusmock), without selecting on model outcomes. Resolved
+its public image to sha256:7084bf21accddef3980657933957bd2cf4792b8b03c329471361853ec9934840
+and inspected files from a stopped container. The evaluation entrypoint applies
+the supplied patch, copies a fixed test file from /workspace/poc, and executes
+tests/test_api.py::TestTemplates::test_local. The test checks local template
+loading and absence of bytecode cache files. It is one test method with several
+assertions, not demonstrated independent repairable defects.
+
+The source evaluator regards successful script exit as repair success; its
+failure categorization is heuristic. Inspect each case's assertions and validate
+both baselines before interpreting this as a security oracle. Do not execute
+prepare.sh during evaluation: it resets the repository and the release warns
+that preparation can alter the prepared baseline.
+
+Started a CPU-only baseline check in a separate container with no network, host
+mounts or GPU access, dropped capabilities, two CPUs, 2 GB RAM and a 256 PID limit.
+It copies the released test file and runs that exact test without applying a
+candidate patch. Container patcheval_baseline_2015_1326 remains running at the
+last check; pytest has displayed F, but teardown is not complete. Do not classify
+the result from that marker alone. Remote log: patcheval_audit/vulnerable_baseline.log
+under align_run_20260909; live exec session 1125. Image pull session 63229 finished.
