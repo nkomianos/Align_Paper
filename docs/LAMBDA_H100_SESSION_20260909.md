@@ -351,3 +351,21 @@ validator_monoculture.runner patch-run, family qwen3_5. Monitor phase artifacts
 for durable record counts/throughput; do not call this merely queued or still
 in oracle preflight. No analysis result is available yet.
 
+06:21:30 UTC: Qwen has 41/96 durable patch records, versus 21 at 06:19:46
+(20 records/104 seconds, about 5.2 seconds each in that interval). PID 16320 live.
+Local broader tests session 96751 is now TERMINAL with five verifier failures:
+the independent verifier retained an old hard-coded 80 GiB admission check.
+Fixed only that comparison/error text in a SEPARATE verifier checkout; all eight
+tests/test_validator_monoculture_verify.py tests pass. Generating source unchanged.
+
+Supersede the earlier post-run command: use bash
+/home/ubuntu/align_run_20260909/verify_validator_v2.sh only after generation exits
+and completion manifest exists. It pins generation commit 409aa990b1a8980ee66614b9e7c2716c0fc85f78
+and verifier commit a67c0bf4364f466f47d3b2a6fa624479301c0be7 at repo_validator_verify,
+source hash 7dcd119f160e3a5cffa9aa3366a0a457b90d62351f35f531d1506c00bed42e07.
+The helper checks that the entire src diff is exactly the documented two-line
+memory-unit correction, then checks the artifact inventory and invokes formal
+reconstruction. This exact source-difference check also passed on the remote host.
+Its receipt records both identities; never imply identical generating/verifying
+source. The old root and active generation have not been modified or restarted.
+
