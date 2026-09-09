@@ -454,3 +454,12 @@ the original sampling weights and frozen decision rule; do not substitute a
 post-hoc deduplicated primary estimator. Gemma spec-only PID 21295 remains live,
 seven suites saved at 06:48:59 UTC.
 
+External feasibility work now has one live CPU-only Docker baseline check,
+patcheval_baseline_2015_1326, exec session 1125. See
+VALIDATOR_EXTERNAL_FEASIBILITY_20260909.md for pinned image/source and scope.
+The stopped inspection container is patcheval_audit_2015_1326. Image pull session
+63229 is terminal. Baseline pytest displayed F but its process/teardown remains
+live; inspect the final log and container state before interpreting it. No
+external neural experiment is launched. Validator Gemma spec generation remains
+live in parallel, PID 21295.
+
