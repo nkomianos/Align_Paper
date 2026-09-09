@@ -166,3 +166,36 @@ These are single forward measurements on repeated benign text, no cache and no
 gradients, with last-token logits only. They qualify fit, not comprehension,
 real-input throughput, or monitor accuracy. No extrapolation past 32,768 tokens
 is certified. Reports are retrieved/lambda_h100_20260909/context_qualification_v1.
+
+## Full API representation: verified but not admitted
+
+Implemented render_malt_api_records.py: intern complete message dictionaries,
+preserve chronological request lists, input references, output candidate groups,
+and all sample metadata. Decoding reproduces every sample in all 54 extracted
+runs exactly. Two regression tests cover repeated messages, empty candidates,
+nulls, distinct node metadata and unexpected schema fields. Run-level metadata
+(including source labels/model identifiers) is not an input to the renderer.
+This does not remove identity or task information literally written in messages.
+
+The pinned tokenizer was copied from the qualified remote model cache; SHA256
+5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42 matched
+local and remote. Full raw-record tokenization completed on CPU for all 54 runs.
+Lengths range from 61,153 to 7,872,360 tokens, excluding prompt/template overhead;
+zero fit the qualified 32,768-token path. No text was truncated. These are lengths
+of this representation, not the minimum possible encoding of source behavior.
+Many scaffold message bodies repeat evolving transcript text, so exact message
+interning alone does not remove that repetition. Source graph data or a separately
+validated scaffold-aware extraction could be substantially smaller.
+
+Decision: reject this renderer for direct single-context GPU inference. Preserve
+it as a reversible reference for checking a future extractor. Do not widen the
+context limit into millions of tokens, silently drop candidate groups, select
+the shortest favorable-label records, or infer a negative monitor result. A chunked
+monitor would need its own evidence-coverage and aggregation controls; it is not
+the already frozen full-context comparison. The canonical graph access prerequisite
+remains unresolved, and a fresh unauthenticated README request returned 401.
+
+Artifacts: overlap_api_records/MANIFEST.json and API_RECORD_TOKEN_LENGTHS.json
+under artifacts/malt_access_recheck_20260909. The initial measurement used the
+same loop now preserved in measure_malt_api_tokens.py; no neural predictions,
+threshold fitting, holdout scoring or monitor-method selection occurred.

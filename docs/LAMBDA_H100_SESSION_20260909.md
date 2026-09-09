@@ -227,3 +227,13 @@ matched local and remote before launch. RESULT/PROTOCOL/ENVIRONMENT downloaded
 to retrieved/lambda_h100_20260909/context_qualification_v1. Do not rerun this
 benchmark unchanged or count it as a scientific monitoring result.
 
+Reversible full-API rendering is complete for all 54 matched records; exact
+nested-value roundtrips passed. CPU tokenization session 79430 completed with
+61,153 to 7,872,360 raw-record tokens, zero fitting the qualified 32k path.
+This format is NOT admitted for direct inference. Preserve it as an extractor
+reference, not normalized monitor data. See the latest MALT raw audit section.
+At 05:24:56 UTC SSH confirmed GPU 0%/0 MiB; no new neural experiment launched.
+Further progress needs source-semantic extraction (graph access still unresolved)
+or a independently qualified evidence-coverage/aggregation protocol. Do not
+launch the existing monitor runner on these API-record JSON files.
+
