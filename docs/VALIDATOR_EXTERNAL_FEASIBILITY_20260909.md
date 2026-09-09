@@ -69,3 +69,9 @@ benchmark. Original container and files remain preserved. A bounded, documented
 fixture correction must be applied equally to vulnerable and fixed baselines
 before admitting this case. No test assertion or security condition should be
 changed to force baseline separation.
+
+## Matched bounded-cleanup baseline result
+
+At approximately 08:13 UTC, ran two fresh isolated containers from the same pinned image, both with exactly one fixture correction: decrement stop_dbus timeout after its existing 0.1-second sleep. No security assertions changed. Vulnerable baseline exited 1 with the expected bytecode-cache assertion failure at test_api.py:600 (11.45 seconds). Released fix.patch applied cleanly with git apply --check; fixed baseline exited 0 with one test passed (11.38 seconds). Cleanup remains capable of reaching its timeout and reporting a warning; it now terminates. This qualifies this one released PoC to distinguish its vulnerable and fixed baselines under the documented fixture amendment. It does not establish multiple independent defects, public regression coverage, or a validator-monoculture task. Classification: developmental apparatus positive only.
+
+Preserved containers patcheval_bounded_vulnerable_2015_1326 and patcheval_bounded_fixed_2015_1326 are TERMINAL. Initial fixture-copy attempt failed on root-owned destination before any new container launch; retry used a separate user-owned amended file. Full launch commands, Docker states, logs, fixture and released patch are backed up in artifacts/validator_external_sources_20260909/bounded_baselines.tar.gz; local/remote SHA256 e3dde59ce2b539af0699c7d845f81b80c58df318340c193020bdfbcbdd194fef. No external neural run admitted.
