@@ -1065,3 +1065,14 @@ No claim about published benchmark numbers or paper novelty. Saved source/result
 hashes; next useful step is released-data reconstruction with fixed graph-level
 splits and standard repaired controls. GH200 untouched; no GPU launch.
 See ITCR_CALIBRATION_CONTRACT_AUDIT_20260910.md.
+
+### ITCR real-data control tempers the exact counterexamples
+
+Verified201-question release JSON and froze40DEV/40train/60cal/61eval groups.
+Initial probability-score assumption failed before outcomes; signed accumulated
+scores are not probabilities. Preserved original plan and recorded constant-only
+amendment before comparison, with unchanged rows/splits. Constant-score released
+no-false56/61 coverage versus repaired61/61 through empty outputs; both no-miss
+60/61 with99.2% mean node retention. No empirical collapse or useful repair win.
+Exact contract counterexamples remain valid. Frequency/trained-score arms unrun;
+no automatic GPU expansion. See ITCR_CALIBRATION_CONTRACT_AUDIT_20260910.md.

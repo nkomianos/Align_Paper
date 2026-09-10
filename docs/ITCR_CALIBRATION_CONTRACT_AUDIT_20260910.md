@@ -85,3 +85,55 @@ recover standard coverage through near-total abstention with no useful new
 question. Do not tune on final audit evaluation outcomes. A paper requires an
 independently useful result beyond correcting known conformal bookkeeping, plus
 independent data and generator-level validation; none is established yet.
+
+## Released-data constant-score replay (completed)
+
+Retrieved the pinned `gsm8k_data.json`, verified its Git blob and SHA256
+`a4af2fa804d29c2feb07fdf42940211fc54413be6243a36ce6eec544df02bd62`.
+It contains 201 distinct normalized question strings and 1,005 claims. Frozen
+question-hash membership: 40 development, 40 training, 60 calibration, 61
+evaluation. All adjacency matrices, binary labels and DAG checks passed. This
+checks structure, not the semantic correctness of dependency edges or labels.
+No fitted classifier or training-set optimization was performed.
+
+Our initial plan incorrectly treated frequency-score as a probability. The
+prerequisite check stopped before computing outcomes: 726 values were outside
+[0,1], with range -72 to 94. Inspection of the released score-generation code
+showed signed support accumulation rather than probability normalization. Thus
+the range alone is not proof of malformed data. The available code does not
+establish the generation provenance of every stored score. We preserved the
+original plan and recorded a pre-outcome amendment that removes the
+score-dependent arm, retains all rows/splits, and runs only the constant scorer.
+We did not clip, normalize or relabel the stored values to obtain a result.
+
+Runner: `scripts/audit_itcr_released_data.py`. Frozen plan, amendment and result
+are in `artifacts/itcr_source_audit_20260910/`. Result:
+`CONSTANT_SCORE_DATA_REPLAY.json`. Same constant scorer and size penalty for
+released and repaired rules; alpha=0.1 and lower interpolation fixed beforehand.
+Released selected prefixes were cross-checked against the original prediction
+function bodies. The corrected order-statistic helpers additionally passed
+exhaustive tests over discrete i.i.d. populations, including ties, zero through
+five calibration samples, and three alpha values. These tests are not a general
+proof of the full pipeline.
+
+| Target | Rule | Covered / 61 | Mean retained-node fraction | Nonempty outputs |
+|---|---|---:|---:|---:|
+| No-false | Released | 56 | 0.4934 | 61 |
+| No-false | Repaired | 61 | 0 | 0 |
+| No-miss | Released | 60 | 0.9920 | 61 |
+| No-miss | Repaired | 60 | 0.9920 | 61 |
+
+Only 15 of 60 calibration graphs contain a false node. For the repaired
+no-false arm, the lower-tail order statistic is the minimum earliest-bad score,
+which equals the first-node score; strict acceptance returns the empty graph.
+Its perfect coverage is therefore vacuous. All reported empirical proportions
+meet 0.9 on this one split, but 61 questions cannot establish a distribution-free
+guarantee. The synthetic counterexamples survive; an empirical coverage-collapse
+claim and a useful repaired-method advantage do not follow from this replay.
+The no-miss arms' identical outcome also does not erase their differing contracts.
+
+This completes the smallest constant-score data control. The frequency-based
+arm and trained-author-scorer reconstruction remain unrun. Stop automatic
+expansion here: standard corrections plus total abstention are not an ICLR
+contribution. Further work needs an independently useful question and verified
+score provenance, rather than another scorer selected for a favorable result.
