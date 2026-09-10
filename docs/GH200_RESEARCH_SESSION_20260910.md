@@ -1374,3 +1374,15 @@ Recorded storage/query-budget and conversation-isolation controls for any future
 retention proposal. No new method or reproduced paper error claimed. Four new
 primary weekly-list follow-ups now screened; no new campaign admitted.
 No SSH/GPU use, no security investigation,16:55UTC limit unchanged.
+
+### 13:03 heartbeat: scoped CPU replay backup verified
+
+Created artifacts/deployment/cpu_audits_24e5484.zip (300951bytes,32members), SHA256
+21b4779905dcbd6f9f8429836173031bf70f257d87edea570dcbf5a41e40ea42.
+Fresh local extraction ran horizon-null, CLARA matched-coverage, CLARA simultaneous
+and PMI timing audits successfully. All32 archived members remain byte-identical
+after replay. Receipt: cpu_audits_24e5484_REPLAY.json. Extraction retained.
+This backup includes original CLARA rows and selected PMI timing evidence, not
+neural logits/weights or the full research portfolio. No hidden workspace imports
+were needed for these four standard-library CPU scripts. No remote publication,
+SSH/GPU work, provider action or access extension. Paper status unchanged.
