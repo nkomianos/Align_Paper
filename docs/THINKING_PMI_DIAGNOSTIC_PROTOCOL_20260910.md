@@ -46,3 +46,20 @@ Generic reference-bias or exploration-suppression claims are already occupied.
 Scripts: prepare_thinking_pmi_traces.py, verify_thinking_pmi_traces.py,
 run_thinking_pmi_comparison.py, verify_thinking_pmi_comparison.py. Native span
 selection tests and existing target-transform tests must pass before comparison.
+
+## Numerical execution amendment, before cached comparison
+
+The full-prefix comparison completed but failed its frozen apparatus gate on6/46
+positions (maximum cached/full TV .063341). It remains an invalid comparable
+assay. Post-outcome base-only diagnosis on the three largest discrepancies exactly
+reproduced each original result with its respective inference schedule (TV0 for
+cached-to-cached and full-to-full). FP32 full forwards did not uniformly remove
+the discrepancy. This diagnoses schedule/precision sensitivity, not teacher bias.
+
+Cached comparison v2 uses the identical frozen23question/46probe selection and
+six context strings. Every arm now prefills its native prompt and processes each
+prefix token sequentially using KV cache, exactly as generation. No changed row,
+seed, threshold, target formula, or unrelated-reference assignment. Originalv1,
+raw logits and diagnosis remain retained. Estimate3-10GPUminutes. Reapply the
+original .05 apparatus gate and independently replay every saved metric. This
+is a corrected developmental assay, not independent confirmation of v1 effects.

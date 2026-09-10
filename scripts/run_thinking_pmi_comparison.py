@@ -24,7 +24,7 @@ def metrics(ls):
         entropy_purified=float(-(p.exp()*p).sum()),entropy_control=float(-(q.exp()*q).sum()))
 
 
-def main(data,traces,selection,snapshot,out):
+def main(data,traces,selection,snapshot,out,execution='full'):
     import numpy as np
     import torch
     from transformers import AutoTokenizer,AutoModelForCausalLM
@@ -40,9 +40,11 @@ def main(data,traces,selection,snapshot,out):
         runner_sha256=sha(Path(__file__)),helper_sha256=sha(Path(__file__).with_name('pmi_target_controls.py')),
         wrong_reference='Next question in sorted24questionIDs, cyclic; no outcome-dependent matching; length and subject may differ',
         contexts='Native thinking chat; exact generating base prompt retained; six contexts with identical generated prefix IDs',
+        execution=execution,
+        amendment='Cached mode replays native prompt prefill then one generated prefix token per forward for every arm; original full-mode assay retained separately',
         analysis='Report high-entropy and fixedhash random separately; pair by question; descriptive DEV only, no training/accuracy claim',
         gate='Any cached/full-forward base TV>.05 invalidates numerical comparability for whole assay pending investigation; retain all rows',
-        estimate='3-8 GPU minutes including load; no wallclock kill',
+        estimate='3-10 GPU minutes including load in cached mode; no wallclock kill',
         target='beta1,c10 centered tanh; full reference, irrelevant reference, question-only controls; no fitted temperature')
     (out/'PROTOCOL.json').write_text(json.dumps(protocol,indent=2))
     tok=AutoTokenizer.from_pretrained(snapshot,local_files_only=True,trust_remote_code=False)
@@ -63,9 +65,23 @@ def main(data,traces,selection,snapshot,out):
                     tokenize=False,add_generation_prompt=True,enable_thinking=True)
                 ids=tok.encode(rendered,add_special_tokens=False)
                 if arm=='base':assert rendered==r['rendered'] and ids==r['input_ids']
+                prompt_len=len(ids)
                 ids+=r['prefix_ids'];assert len(ids)<=8192
                 x=torch.tensor([ids],device='cuda')
-                logits[arm]=model(input_ids=x,attention_mask=torch.ones_like(x),use_cache=False).logits[0,-1].float().cpu()
+                if execution=='full':
+                    values=model(input_ids=x,attention_mask=torch.ones_like(x),use_cache=False).logits[0,-1]
+                else:
+                    initial=x[:,:prompt_len]
+                    response=model(input_ids=initial,attention_mask=torch.ones_like(initial),use_cache=True,logits_to_keep=1)
+                    cache=response.past_key_values
+                    for t in range(prompt_len,len(ids)):
+                        response=model(input_ids=x[:,t:t+1],attention_mask=torch.ones_like(x[:,:t+1]),
+                            past_key_values=cache,use_cache=True,logits_to_keep=1)
+                        cache=response.past_key_values
+                    values=response.logits[0,-1]
+                logits[arm]=values.float().cpu()
+                if execution=='cached':del response,cache
+                del values
                 inputs[arm]=dict(rendered=rendered,ids=ids)
             if loaded_key!=r['base']:
                 with np.load(traces/f'logits_{idx:02d}.npz',allow_pickle=False) as z:cached=z['logits']
@@ -86,4 +102,5 @@ def main(data,traces,selection,snapshot,out):
 if __name__=='__main__':
     p=argparse.ArgumentParser()
     for name in ['data','traces','selection','snapshot','out']:p.add_argument('--'+name,type=Path,required=True)
-    a=p.parse_args();main(a.data,a.traces,a.selection,a.snapshot,a.out)
+    p.add_argument('--execution',choices=['full','cached'],default='full')
+    a=p.parse_args();main(a.data,a.traces,a.selection,a.snapshot,a.out,a.execution)
