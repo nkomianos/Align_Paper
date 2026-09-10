@@ -1,0 +1,87 @@
+# Conformal reasoning: exact calibration-contract counterexamples
+
+Status: a verified implementation audit, not a paper-qualified new method or a
+replication of the authors' benchmark results. This is a distinct benign CPU
+follow-up to our structured-memory uncertainty direction. No GPU was used.
+
+Primary sources: [ITCR v1](https://arxiv.org/html/2606.08831v1), particularly
+Algorithm 1, Theorem 3.5 and Appendix A.2;
+[released calibration implementation](https://github.com/tinattw/ITCR/blob/ccbfcbc80c150fa2f80dabbee4a75b59fd30c2b1/ITCR-main/conformal/conformal.py).
+The appendix specifies one earliest-bad score per graph. The code instead pools
+all incorrect prefixes. Its no-miss routine calibrates on the last entirely
+correct prefix. We tested these code paths, including all three supported
+quantile interpolation choices. This description does not establish what code
+produced the paper's tables.
+
+## Executed evidence
+
+Runner: `scripts/audit_itcr_calibration_contract.py`.
+Source and result: `artifacts/itcr_source_audit_20260910/`.
+Commit: `ccbfcbc80c150fa2f80dabbee4a75b59fd30c2b1`.
+Calibration file SHA256:
+`cb1d8d1e5efbb188c4b15bab3bcc330a1a6645638bf45f899a51c58e34567d84`.
+The runner validates the Git blob against the pinned tree, extracts ten reviewed
+function definitions with AST, and executes them without importing the external
+module. It uses a constant scorer returning probabilities (0.5, 0.5), with twenty
+calibration graphs, alpha=0.1, and monotone prefix scores. No external pickle,
+trained classifier, or model output was loaded.
+
+Each construction is a degenerate i.i.d. population: every graph has the same
+specified labels. Therefore the coverage below is exact for that population;
+twenty repeated graphs are not twenty independent scientific replications.
+
+| Population | Released output | Exact target coverage | Diagnostic control |
+|---|---|---:|---|
+| One false node | Accepts that node at score/threshold 0.5 | No-false: 0 | Strict comparison alone returns empty, coverage 1 |
+| Chain of twenty false nodes | Retains 2, 2, or 3 nodes for lower, linear, higher interpolation | No-false: 0 | Strict comparison alone still fails: pooling raises the threshold above the first bad score |
+| Chain with labels true, false, true | Retains only the first true node | No-miss: 0 | The required prefix includes all three nodes; the last entirely correct prefix is the wrong calibration target |
+
+All nine released-function checks contradict nominal 0.9 coverage on these
+populations. The first case demonstrates a tie problem independent of pooling.
+The second isolates pooling from equality handling. The third concerns recall,
+which explicitly permits false nodes in order to retain subsequent true nodes.
+These examples satisfy score monotonicity; estimating the size penalty is not
+the cause here. Assertions passed with torch 2.11.0 CPU, numpy 2.4.2 and
+networkx 3.6.1. The result JSON includes runner and source hashes.
+
+## Corrective interpretation
+
+For a fixed expansion path, use one graph-level score at its earliest false
+prefix. A conservative lower-tail rule uses k=floor(alpha*(m+1)), the kth
+SMALLEST calibration score, and strict acceptance below that score. If k=0,
+return an empty graph. Conditional calibration on graphs containing a false
+node requires stating that conditioning explicitly. Empty outputs are valid
+but potentially useless; efficiency must accompany coverage.
+
+For no-miss, score the first prefix containing every true node, including any
+intervening false nodes. Use the appropriate finite-sample upper order statistic
+and full-output fallback when that index exceeds the calibration count. Empty
+truth sets and score ties need explicit treatment. These are standard conformal
+repairs, not a claimed novel contribution. Their formal scope is fixed policies,
+fixed score construction and exchangeable graph-level units.
+
+The appendix also appears to reverse the order-statistic direction relative to
+its lower-tail objective. The released code uses a lower quantile, so the
+appendix discrepancy alone does not diagnose its empirical behavior. Do not
+attribute all benchmark conclusions to this textual discrepancy.
+
+## Smallest useful next experiment
+
+Audit the released GSM8K JSON schema, graph validity, question duplicates and
+label provenance before fitting anything. Freeze question-grouped development,
+training, calibration and evaluation membership before outcome comparisons.
+Public author data remain an audit dataset, not our untouched confirmation set.
+Compare the released routines with one-score-per-graph, tie-safe repairs using
+the SAME fixed scorer and SAME input graphs. Report coverage and retained-node
+fraction together, plus nonempty-output coverage descriptively. Separate the
+contribution of score quality from calibration correctness. A constant scorer
+and simple maximum node-risk scorer are necessary controls.
+
+Estimate: CPU inspection/replay minutes; classifier reconstruction approximately
+1-15 CPU minutes after schema validation, currently unbenchmarked. No GPU queue
+is admitted by these counterexamples. Stop expansion if the release cannot be
+faithfully reconstructed, labels cannot support the target, or repairs merely
+recover standard coverage through near-total abstention with no useful new
+question. Do not tune on final audit evaluation outcomes. A paper requires an
+independently useful result beyond correcting known conformal bookkeeping, plus
+independent data and generator-level validation; none is established yet.

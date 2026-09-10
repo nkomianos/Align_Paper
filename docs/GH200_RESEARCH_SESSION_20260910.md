@@ -1053,3 +1053,15 @@ queue state historical. Distinguishes completed screens from their unrun trainin
 controller and replication extensions; no assertion that all ideas were fully
 tested. No automatic GPU queue currently admitted. Next source backup includes
 the recent corrected audits and parser implementation; raw archives stay separate.
+
+### New benign CPU result: released conformal-reasoning calibration failures
+
+Pinned tinattw/ITCR ccbfcbc80c150fa2f80dabbee4a75b59fd30c2b1 and executed ten
+reviewed calibration/prediction functions on exact synthetic graph populations.
+Three counterexamples, each under lower/linear/higher interpolation, have zero
+coverage against nominal0.9: ties, pooling bad prefixes, and calibrating no-miss
+on the wrong prefix. Strict-comparison control isolates pooling from tie effects.
+No claim about published benchmark numbers or paper novelty. Saved source/result
+hashes; next useful step is released-data reconstruction with fixed graph-level
+splits and standard repaired controls. GH200 untouched; no GPU launch.
+See ITCR_CALIBRATION_CONTRACT_AUDIT_20260910.md.
