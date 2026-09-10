@@ -55,3 +55,38 @@ our hardware budget without benchmarking, and exclude replication/evaluation.
 A reduced-data pilot would be a new developmental study with uncertain formation
 of the reported degradation, not an economical substitute for verified checkpoints.
 No upstream training script executed and no author contacted.
+
+## Expanded remedy literature changes the novelty assessment
+
+The initial memo did not cover two directly relevant remedies. Read the primary
+abstracts and available method sections, rather than relying on search summaries:
+
+- [Purified OPSD](https://arxiv.org/html/2607.02234v1) constructs a teacher target
+  using a reference-only contrast, a clean base distribution and a bounded PMI
+  correction. It already studies preserving reflective behavior during
+  self-distillation. Its reported setup uses rank-64 LoRA, 1,024-token training
+  completions and up to 200 steps, unlike the full reproduction described above.
+  Its reported best-checkpoint benchmark results need their own selection audit;
+  we have not independently validated them.
+- [Diagnosing and Mitigating Thinking Collapse](https://arxiv.org/html/2607.10805v1)
+  explicitly studies entropy-based gradient masking and suppressive updates at
+  uncertain decision forks. Protecting those tokens is therefore already an
+  investigated intervention, not a fresh proposal here.
+- [One Symptom, Three Levers](https://arxiv.org/html/2608.25936v1) organizes this
+  literature by token weighting, privileged information and teacher dynamics.
+  It explicitly reports no new experiments and is a discovery map, not evidence
+  independently confirming the empirical papers.
+
+This changes the next-action rule: any new prevention method needs comparisons
+to these approaches, not merely vanilla OPSD. Post-training causal restoration
+may still be distinct, but marker preservation or entropy gating alone does not
+establish novelty. These papers do not authenticate a pre/post checkpoint pair
+for our original restoration experiment. A scoped Hugging Face search for
+`purified opsd` returned no matches; it is not exhaustive.
+
+The adapter setup makes a smaller independent distillation study more plausible
+than the eight-H100 reproduction, but no absolute runtime was measured here.
+Do not extrapolate a reported relative overhead into an estimate for our AWS
+host. Before implementing another trainer, specify the remaining causal question,
+its missing baseline and a formation test that establishes the behavior being
+repaired. No new model, dataset, training or inference run occurred in this screen.

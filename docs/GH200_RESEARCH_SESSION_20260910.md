@@ -1107,3 +1107,14 @@ studied; roofline projections concern optimized serving. No generic syntaxfix or
 batch-one timing experiment admitted as novel. Updated main PI ledger with ITCR
 counterexamples, real-data marginal-control correction and ReSO attribution
 question, maintaining NO-GO. No GPU operation; GH200 reservation respected.
+
+### Fork-restoration novelty corrected against existing remedies
+
+Expanded primary-source screen found Purified OPSD and Thinking Collapse remedies,
+plus a review separating token weighting, privileged information and dynamics.
+Generic high-entropy fork protection/marker preservation are already investigated.
+Purified OPSD's rank64LoRA/1024-token/up-to200-step setup is distinct from the
+previous costly full reproduction; absolute AWS runtime remains unmeasured.
+No authenticated pre/post checkpoint pair found or downloaded. Updated feasibility
+memo with mandatory baselines and retained distinction between prevention and
+post-training causal restoration. No GPU run; no paper qualification.
