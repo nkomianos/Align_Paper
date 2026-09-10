@@ -961,3 +961,14 @@ withdrawn. That confirming turn has has_answer=false, an evidence-tag omission,
 not an answer-key error. Saved a source-hash-checked correction verifier and
 receipt. This removes the item as support for the proposed modality-confusion
 claim. No model run or GH200 contact.
+
+### Unrun thinking-distillation question checked against prior tests and artifacts
+
+Revisited CLARA/shortlist rather than reusing its rejected unification claims.
+The thinking-model fork-suppression causal question was not tested by our earlier
+nonthinking MATH bank. Read primary method/controls/limitations, then searched
+model metadata. No authenticated post-distillation checkpoint found in this scoped
+search; one plausible model belongs to a different paper, another lacks card
+metadata. Saved responses and a concrete controlled-restoration design in
+FORK_SUPPRESSION_FEASIBILITY_20260910.md. No weights or GPU experiment launched;
+GH200 reservation honored. No candidate is yet paper-qualified.
