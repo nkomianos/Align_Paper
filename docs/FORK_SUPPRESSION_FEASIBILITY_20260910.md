@@ -90,3 +90,9 @@ Do not extrapolate a reported relative overhead into an estimate for our AWS
 host. Before implementing another trainer, specify the remaining causal question,
 its missing baseline and a formation test that establishes the behavior being
 repaired. No new model, dataset, training or inference run occurred in this screen.
+
+Subsequent exact null-reference analysis adds another necessary baseline:
+`PMI_NULL_REFERENCE_CONTROL_20260910.md`. The purified target can sharpen the
+question-only distribution even when the reference contributes no information.
+Compare against that question-only density-ratio effect before attributing a
+future empirical gain to reference purification. No neural comparison has run.

@@ -1118,3 +1118,13 @@ previous costly full reproduction; absolute AWS runtime remains unmeasured.
 No authenticated pre/post checkpoint pair found or downloaded. Updated feasibility
 memo with mandatory baselines and retained distinction between prevention and
 post-training causal restoration. No GPU run; no paper qualification.
+
+### PMI null-reference calculation identifies an omitted attribution control
+
+Executed24 exact finite-distribution settings using the published PMI target.
+Independent uninformative reference still sharpens a calibrated0.8base to0.94118
+and raises expected log loss0.11474nats; c10processing retains the effect.
+Question-only density-ratio control matches exactly. This is not neural failure,
+not a refutation of the valid variational derivation, and not a novel method.
+Added the control to future distillation-study requirements; original results
+unchanged. No GPU use; GH200 reservation respected.
