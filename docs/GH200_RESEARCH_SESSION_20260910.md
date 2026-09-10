@@ -689,3 +689,8 @@ control with same192-token maximum. Original direct answers produced fewer
 intermediate tokens, so current difference need not imply a useful new method.
 Run run_benign_memory_reasoning_control.py; control qualification/decision frozen
 in the result note. No natural-data or paper claim. Security work remains stopped.
+
+Control live PID23183, root benign_memory_reasoning_v1, log with same name.log.
+11/48 calls completed in27.85 inference seconds at last process check. Verifier
+verify_benign_memory_reasoning.py compares original/run file hashes and recomputes
+answers and token counts. Retrieve/replay when terminal; do not duplicate launch.
