@@ -445,3 +445,24 @@ transition entropy are already occupied. The proposed diagnostic omits entropy
 regularization and isolates a score-estimator question; that distinction alone
 does not establish novelty. A useful learning-per-compute advantage beyond a
 canonical interface is still required, followed by external validation.
+
+### Both queues terminal, approximately 04:44 UTC
+
+MATH queue18395/child18396 and action supervisor19124 have finished; no GPU process
+was reported at final check. MATH8B384/384 completed in2326.75s but parse coverage
+.5104167 failed.32B was NOT RUN, and no replication was admitted. Action-gradient
+diagnostic completed and independently verified; median variance reduction
+1.0988921e-10, route STOP_SMALL_VARIANCE_EFFECT. No learning pilot admitted.
+Preferred JSON key order dominates within-action probability by23–35 log units,
+leaving essentially no spelling randomness. Do not force artificial equal alias
+mass to rescue the stopped organism. Both results and their limits are detailed
+in docs/MATH_ACTION_DIAGNOSTIC_RESULTS_20260910.md.
+
+Stage4 archive retrieved, remote/localSHA256 match:
+a4685f58213b43b699740d62f39ce4eb3641332b6f1edc510e824e7705df5fd4.
+Local math-bank verifier and raw-gradient covariance verifier pass. All source
+outputs and failed gates preserved. GPU is idle while the next assay is audited;
+do not restart either completed queue. A parser repair or new external assay needs
+its own frozen protocol before launch. BFCL-derived learning data preparation
+exists but remains unqualified and unrun; v1 smallest-answer shortcut was caught
+and repaired in a separate preserved v2 before any neural use.
