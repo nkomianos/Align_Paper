@@ -101,3 +101,98 @@ gradient projection, NOT a full neural parameter gradient or an RL learning resu
 Reward baseline fixed at .5. Truncation comparisons refer to this finite horizon.
 No adaptation is selected on DEV; continuation allocator must fit calibration only.
 First bank is qualification (384 continuations), with no automatic training.
+
+## Executed work and active queue, approximately 03:17 UTC
+
+Committed source through def388c. Only this research task now uses the GPU.
+Existing OSH interpreter is used read-only; diffusers 0.35.2 is installed solely
+in /home/ubuntu/align_research_20260910/diffusion_overlay. No OSH environment change.
+
+- screens_qwen_v1 and screens_nemo_v1: each 3,456 forced-token forward records,
+  both saved-logit verifiers complete. Qwen action canonical .6171875 and order
+  agreement .4921875: invalid capability/order. Qwen feedback ordinary no-feedback
+  and incorrect-feedback accuracy both 1.0: no misleading-feedback harm in this
+  synthetic screen. Nemo action and feedback fail qualification; tokenizer also
+  warns about its legacy regex, so no scientific endpoint interpretation.
+- Qwen3-8B's five actual cached weight shards match official HF LFS SHA256 hashes.
+  The strange forced-choice behavior cannot be attributed to altered OSH weights.
+- bank_qwen_v1: 384 completed continuations in 485 seconds including prefix
+  generation, 24 external GSM8K train questions, 8 calibration and 16 DEV. Mean
+  correctness .971354, parse coverage .994792, no horizon truncations at 768.
+  Preliminary saved-row audit: adaptive continuation projected-gradient MSE
+  .00066219, uniform corrected .00056504, fewer full rollouts .00011639 at matched
+  expected generated-token cost. STOP_NO_DECISIVE_VARIANCE_ADVANTAGE. This is a
+  ten-digit-logit-bias projection and finite-bank design calculation, not full
+  parameter gradients, learning, GPU-hour efficiency, or a broad method disproof.
+- bank_nemo_v1 is running with the same literal Qwen prefixes and corrected
+  tokenizer regex. queue_reasoning_second_family.py verifies first-bank hashes and
+  rows, then runs Nemo and CPU audits/cross-family comparison. Inspect
+  reasoning_queue.log, bank_nemo_v1.log and PROGRESS.json. Do not launch duplicates.
+- Qwen3-32B revision 9216db5781bf21249d130ec9da846c4624c16137 is downloaded in our
+  isolated cache; official shard hashes verified in QWEN32_DOWNLOAD.json.
+  queue_stronger_screen.py waits for process_value_cross_family.json and idle GPU,
+  then executes screens_qwen32_v1 and its verifier. This is a stronger-capability
+  developmental check on already-seen synthetic cases, not fresh confirmation.
+- queue_endpoint_screen.py has downloaded/hash-checked google/ddpm-cifar10-32 at
+  267b167dc01f0e4e61923ea244e8b988f84deb80. It waits for the stronger screen receipt,
+  then launches endpoint_v1: 24 seeds, 40 deterministic DDIM steps, four separate
+  one-step cache substitutions/seed, 12 calibration / 12 DEV seeds. Compare fixed
+  cheap-feature regression with calibration-chosen timestep and diagnostic local
+  residual norm. Gate: >=20% less endpoint MSE and >=8/12 seed wins against both.
+  This tests pretrained image-sampler endpoint fidelity; it is NOT a rectified-flow
+  experiment, FID improvement, production acceleration, or ERTACache reproduction.
+  Import preflight passed. Inspect endpoint_queue.log and endpoint_v1.log.
+- CPU memory check: 240 parameterizations, exact topological-order enumeration
+  agrees with maximal-element resolver. Classical certain-answer baseline gets
+  100% correct action/clarification at 25% clarification. No method headroom with
+  gold graphs; extraction/natural-data problem remains unrun.
+- CPU fixed-marginal check: exhaustive binary pairing changes harm probability
+  from 0 to 1/3 while preserving mean difference 1/6. Classical identity, not a new
+  causal application; changing shared-noise structure is not automatically valid.
+
+Completed raw stage1 data is backed up locally at
+artifacts/gh200_research_20260910/completed_stage1_20260910.tar.gz, SHA256
+6a5fba661333936e428799029f74006d542af18d42897b43e6b6c9a217c2ac7a, matching remote.
+This contains both short-screen raw roots and the complete Qwen reasoning bank;
+later Nemo/32B/image results require a NEW backup, not replacement of this archive.
+
+## Correction: external monitoring projection
+
+Raw reinspection found cb-000121 (Cybench) retains a report_prelude with a
+retrospective Success summary, plus later retrospective report/configuration text.
+Therefore the earlier event projection's blanket statement that outcome/audit
+metadata was excluded is false for this schema. No monitor model was run on it.
+prepare_cheatbench_event_view.py now rejects the whole retrospective-report source
+rather than deleting a header and leaving a contaminated tail. Two regression
+tests pass; genuine contemporaneous tool success text remains preserved. Existing
+saved artifacts are unchanged and superseded for admission. Rebuild into a fresh
+root before any monitor execution. Also inspect label provenance: example
+cb-001862 is a harness-leak reclassification, not evidence of an intentional agent
+reward-hacking action. Do not conflate those targets.
+
+## Work after queued jobs (goal remains active and incomplete)
+
+1. Verify/retrieve Nemo, 32B and endpoint outputs; do not count arrays/prompts as
+   independent task or training replications. Run independent endpoint arithmetic
+   replay from saved tensors before interpreting that screen.
+2. Audit the strongest surviving signal and follow it with natural tasks/strong
+   baselines. No candidate currently supports manuscript submission. If no signal
+   qualifies, continue the remaining ideas rather than repeat failed pilots.
+3. Finish monitoring source cleanup, semantic target and same-task controls.
+   Code label_source/annotator/harness distinctions before admitting model scoring.
+4. Qualify the fresh validator natural multi-defect corpus. Two isolated external
+   components are not the required sixteen task mechanisms. Preserve old TEST.
+5. Observation-aware video remains unrun; fetch primary TRACE/VES-Bench sources,
+   verify accessible event support/labels and equal-decoded-frame controls. Do not
+   substitute the separate BeyondMasks video-removal proposal and call it the same
+   idea. The latter also remains a distinct unrun model experiment.
+6. Full-model censoring learning, learned portable PRMs, natural memory extraction,
+   full CLARA, Hindsight downstream causal learning and other expensive descendants
+   remain unrun unless independently qualified. New source review found PRM policy
+   dependence already explicit in arXiv:2601.12748; prefix utility in 2606.07190;
+   ERTACache 2508.21091v2 already includes offline residual profiling and propagation.
+   No generic rebranding of these mechanisms supports an ICLR novelty claim.
+7. Keep the paid window productive with justified sequential jobs, prepare CPU/data
+   work during GPU runs, check remaining time before each launch, and continue
+   scheduled research checks until 16:55 UTC. Never mark the paper goal complete
+   based on these developmental screens.

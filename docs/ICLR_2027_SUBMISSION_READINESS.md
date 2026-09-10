@@ -1,5 +1,16 @@
 # ICLR 2027 submission readiness after the independent audit
 
+## Superseding status — 10 September 2026 UTC
+
+**Still NO-GO for submission; active research continues.** A new user-authorized
+GH200 window ends at 16:55 UTC today. Original OSH is excluded and handled by the
+user independently. New short-input screens and an external reasoning bank have
+run; second-family/stronger-model and image-sampler screens are queued or running.
+None yet establishes a submission-ready contribution. See the current
+[session and execution ledger](GH200_RESEARCH_SESSION_20260910.md) for live paths,
+verified findings, corrections and follow-ups. The allocation description below
+is historical and does not describe the new host.
+
 ## Superseding status — 9 September 2026 UTC
 
 **NO-GO for submission.** The earlier Hindsight-centered recommendation below is historical and is not an active deployment instruction. The current H100 allocation ends 9 September at 16:26 UTC; no additional compute is assumed available.
