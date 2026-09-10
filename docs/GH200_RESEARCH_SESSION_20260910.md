@@ -981,3 +981,11 @@ receipts. README reports5–12h on8H100 per training run plus evaluation. It exp
 local output checkpoint paths, not trained model downloads; releases and lead
 author model listing empty. No full reproduction queued on AWS and no claim that
 a small pilot faithfully reproduces this study. See updated fork feasibility memo.
+
+### Concrete math-parser repair implemented without rescoring history
+
+Added exact whole-delimiter-line numeric parser with rational support and explicit
+version/hash in future MATH runner outputs. Historical reasoning parser retained
+for verifiers; imported prefix flags recomputed consistently.22targeted tests pass.
+Posthoc transport coverage on saved384MATH outputs189vs196legacy, seven rejected.
+No endpoint rerouting, new scientific result or GPU run. See MATH_NUMERIC_PARSER_REPAIR_20260910.md.

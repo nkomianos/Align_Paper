@@ -7,6 +7,8 @@ import re
 import subprocess
 import time
 from run_reasoning_bank import answer
+from fractions import Fraction
+import explicit_numeric_answer
 from run_unexplored_screens import sha,dump
 
 
@@ -21,11 +23,17 @@ def prepare(source):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--source',type=Path,required=True);p.add_argument('--snapshot',type=Path,required=True)
-    p.add_argument('--out',type=Path,required=True);p.add_argument('--prefixes',type=Path);a=p.parse_args()
+    p.add_argument('--out',type=Path,required=True);p.add_argument('--prefixes',type=Path)
+    p.add_argument('--parser',choices=['legacy-v1', 'explicit-numeric-v2'],default='explicit-numeric-v2');a=p.parse_args()
     a.out.mkdir(exist_ok=False);rows=prepare(a.source)
+    parse = answer if a.parser == 'legacy-v1' else explicit_numeric_answer.answer
+    if a.parser == 'explicit-numeric-v2':
+        for row in rows: row['target'] = str(Fraction(row['target']))
     dump(a.out/'INPUTS.json',rows)
     dump(a.out/'PROTOCOL.json',{'scope':'harder DEV repair, not confirmation or new PRM algorithm',
-        'source_sha256':sha(a.source),'runner_sha256':sha(Path(__file__)),'selection':'24 salted-ID-first level4/5 integer-answer MATH500 problems; first8 calibration, final16 DEV',
+        'source_sha256':sha(a.source),'runner_sha256':sha(Path(__file__)),
+        'parser':a.parser,'parser_sha256':sha(Path(explicit_numeric_answer.__file__)) if a.parser == 'explicit-numeric-v2' else sha(Path(__file__).with_name('run_reasoning_bank.py')),
+        'selection':'24 salted-ID-first level4/5 integer-answer MATH500 problems; first8 calibration, final16 DEV',
         'prefix_policy':'Qwen3-8B nonthinking, 128-token samples at temperature1.0; 2 prefixes per problem',
         'continuation_policy':'native nonthinking Qwen3-8B or Qwen3-32B, temperature.8 full support, 8 independent draws per prefix, horizon2048',
         'comparison':'exact same textual prefixes and questions; different model capacities within ONE family',
@@ -52,6 +60,7 @@ def main():
     if a.prefixes:
         prefixes=json.loads(a.prefixes.read_text());dump(a.out/'PREFIX_SOURCE.json',{'sha256':sha(a.prefixes),'path':str(a.prefixes)})
         assert {(r['base'],r['index']) for r in prefixes}=={(r['id'],j) for r in rows for j in (0,1)}
+        for prefix in prefixes: prefix['has_answer'] = parse(prefix['text']) is not None
     else:
         with torch.inference_mode():
             for i,row in enumerate(rows):
@@ -61,7 +70,7 @@ def main():
                     ids=model.generate(**enc,generation_config=config,temperature=1.,max_new_tokens=128)[0,enc.input_ids.shape[1]:].tolist()
                     text=tok.decode(ids,skip_special_tokens=True)
                     prefixes.append({'base':row['id'],'index':j,'text':text,'ids':ids,'seed':seed,
-                        'ended':bool(ids and ids[-1]==tok.eos_token_id),'has_answer':answer(text) is not None})
+                         'ended':bool(ids and ids[-1]==tok.eos_token_id),'has_answer':parse(text) is not None})
                 dump(a.out/'PREFIXES.partial.json',prefixes)
                 print(json.dumps({'prefix_questions':i+1,'seconds':time.monotonic()-started}),flush=True)
     dump(a.out/'PREFIXES.json',prefixes);lookup={r['id']:r for r in rows};n=0
@@ -74,7 +83,7 @@ def main():
             generated=model.generate(**enc,generation_config=config,max_new_tokens=2048,num_return_sequences=8)
             for j,ids in enumerate(generated[:,enc.input_ids.shape[1]:].tolist()):
                 if tok.eos_token_id in ids:ids=ids[:ids.index(tok.eos_token_id)+1]
-                completion=tok.decode(ids,skip_special_tokens=True);parsed=answer(prefix['text']+completion)
+                completion=tok.decode(ids,skip_special_tokens=True);parsed=parse(prefix['text']+completion)
                 r={'base':row['id'],'split':row['split'],'prefix_index':prefix['index'],'sample':j,
                     'seed':seed,'target':row['target'],'parsed_answer':parsed,'reward':int(parsed==row['target']),
                     'completion':completion,'ids':ids,'eos':bool(ids and ids[-1]==tok.eos_token_id),'length':len(ids),
