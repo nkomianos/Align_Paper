@@ -1045,3 +1045,11 @@ noise, so condition-specific latent rotations would change another intervention.
 No valid counterexample established; no image/model generation admitted. See
 COUPLING_APPLICATION_SCREEN_20260910.md. This is application selection, not a
 refutation of all coupling research or validation of the source's whole paper.
+
+### Seven-idea queue state consolidated to prevent historical relaunches
+
+Published USER_SEVEN_IDEAS_EXECUTION_STATUS_20260910.md and marked the September7
+queue state historical. Distinguishes completed screens from their unrun training,
+controller and replication extensions; no assertion that all ideas were fully
+tested. No automatic GPU queue currently admitted. Next source backup includes
+the recent corrected audits and parser implementation; raw archives stay separate.

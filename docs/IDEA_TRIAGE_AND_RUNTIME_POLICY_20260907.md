@@ -1,5 +1,10 @@
 # New proposal audit and runtime policy — 7 September 2026
 
+**Historical execution state:** several screens below have since completed.
+Read [current seven-idea status](USER_SEVEN_IDEAS_EXECUTION_STATUS_20260910.md)
+before any launch. Preserve the estimate-based admission policy; do not restart
+completed or scientifically stopped jobs from this snapshot.
+
 The user explicitly replaced mid-run wall-clock caps with estimated-runtime budget
 planning. Current experiment launchers now pass no timeout to the supervisor.
 Normal completion and scientific early exits remain; an operator can still cancel
