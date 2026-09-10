@@ -859,3 +859,19 @@ memory replication admitted. TG-LLM primary overview also occupies generic
 text-to-temporal-graph plus reasoning. See TEMPORAL_EXTERNAL_VALIDATION_AUDIT_20260910.md
 and artifacts/torque_source_20260910/DEV_SUITABILITY.json. No GPU experiment,
 test-split opening, natural-memory result or paper qualification.
+
+### Main paper decision reconciled and full history backed up
+
+Latest readiness page now supersedes stale security-queue instructions and links
+ICLR_PI_DECISION_20260910.md, the six-part scientific recommendation. Current
+paper/main.tex was inspected: it explicitly disclaims qualification and sparse
+methods remain unrun. No prepared scientific GPU follow-up currently meets both
+prerequisite and contribution requirements. This does not establish impossibility
+of future useful research. Current CPU work does not benefit from paid GPU uptime.
+
+Committed decision0b0ce8d, then created/verified complete-history Git bundle
+artifacts/deployment/iclr_pi_decision_0b0ce8d.bundle, SHA256
+eb0b2a22de89ce5df562681313b62fea511a01d4e3660a90cf8e476f44b32556.
+Sidecar saved. Existing bundles and retrieved run archives preserved. This bundle
+backs up tracked source/history, not ignored raw artifacts or model caches.
+No provider termination, publication, external message or new GPU job performed.
