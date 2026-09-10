@@ -105,3 +105,20 @@ configuration available? The inspected entry points use user-supplied/local mode
 paths. Without qualified learned values, a random value head on a cached language
 model would establish only another constructed example. Do not present it as a
 replication. Check checkpoint availability and method relevance before GPU use.
+
+## Checkpoint availability check and launch decision
+
+Checked the pinned release's model-loading paths, the repository releases API,
+Hugging Face model search for DVPO, and the paper-tag filter arxiv:2502.16944.
+The releases API and paper-tag search returned zero entries. The name search
+returned one unrelated account/model entry, not an identifiable trained GVM.
+Raw responses and URL/SHA256 receipts are saved as availability_*.json and
+AVAILABILITY_RECEIPTS.json. This scoped search does not prove no checkpoint exists
+under another name or privately. No author contact was made.
+
+Current decision: no faithful neural replication is launchable from identified
+artifacts. Do not silently substitute a reward model, random value head or newly
+trained toy critic and call it DVPO reproduction. The verified normalization
+finding remains useful engineering evidence; without demonstrated learning impact
+and a broader differentiated contribution it is not a sufficient paper thesis.
+Retraining a replacement critic is not admitted solely to keep the GPU occupied.

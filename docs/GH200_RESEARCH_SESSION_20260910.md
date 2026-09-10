@@ -815,3 +815,19 @@ replication. Historical dependency/version and trained GVM checkpoint availabili
 remain unresolved. Next work is source/checkpoint qualification, not a random-head
 GPU demonstration. Latest SSH check: GPU idle, remote06:35 UTC. Security work
 remains stopped; no new neural job or paper qualification.
+
+### Frozen-value availability checked; latest benign sources narrowed
+
+Previous turn produced executed source-routine evidence. Current scoped search
+found no identifiable trained DVPO GVM checkpoint: zero paper-tagged HF models,
+zero GitHub releases, one unrelated DVPO-name search entry. Receipts retained.
+This is not proof of universal nonavailability. No faithful neural replication
+currently admitted; a substitute random head would not answer the paper question.
+
+Revisited DAIR's latest listed August31–September6 issue and checked primary
+abstracts for Trace as State2609.02702 and Declarative Attention2609.02737.
+See LATEST_BENIGN_RESEARCH_SCREEN_20260910.md. Generic trace-prepending/router
+training is not a differentiated contribution. Next bounded review concerns
+whether naturally erroneous intermediate states get corrected or reinforced by
+condition-first rereading, including the paper's existing controls. No experiment
+launched from abstract-only novelty assessment. Overall submission remains NO-GO.
