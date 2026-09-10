@@ -76,3 +76,28 @@ format compliance. First estimates: 20-60 minutes for the two short-input screen
 
 The DAIR weekly list was inspected through September 6. Leads must be checked
 against primary papers; no novelty claim is cleared by a newsletter summary.
+
+## 03:12 UTC update
+
+User subsequently granted exclusive GPU use: OSH is stopped, but its files remain
+excluded. Qwen and Nemo constrained screens completed. Qwen weights match all five
+official HF LFS hashes. Saved-logit verification initially assumed dict iteration
+order survived sorted-key JSON; fixed verifier to match the full unique ID set.
+No raw data or metric was changed. Qwen action: invalid accuracy/order; feedback:
+no misleading-feedback harm. Nemo fails capability/order gates and emitted a
+tokenizer regex warning; do not interpret its scientific endpoints.
+
+Reasoning bank v1: GSM8K official train release at
+3101c7d5072418e28b9008a6636bde82a006892c; select 24 questions by salted question
+hash without looking at answers (8 calibration, 16 DEV). Two independently sampled
+48-token prefixes per question; retain every prefix, including completed/duplicate
+ones, but report those separately and do not treat them as eligible rank contrasts.
+Eight continuations per prefix per family, temperature .8 with full-support
+softmax, horizon 768 continuation tokens, administrative cutoff 128. Qwen prefixes
+are shared as literal text with Nemo; native chat templates differ as required.
+Save actual token IDs, completion, EOS/horizon status, full log probability and
+score derivatives for ten additive digit-logit biases. This is a restricted exact
+gradient projection, NOT a full neural parameter gradient or an RL learning result.
+Reward baseline fixed at .5. Truncation comparisons refer to this finite horizon.
+No adaptation is selected on DEV; continuation allocator must fit calibration only.
+First bank is qualification (384 continuations), with no automatic training.
