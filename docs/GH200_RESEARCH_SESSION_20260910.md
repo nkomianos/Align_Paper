@@ -1150,3 +1150,20 @@ most endpoints nearly deterministic, limiting fork-level interpretation. No
 reasoning-accuracy or training claim. No automatic training; next valid assay
 would need prospective uncertain thinking positions. AWS postrun process check
 empty; GH200 untouched. See PMI_PREFIX_DIAGNOSTIC_RESULT_20260910.md.
+
+### AWS thinking-position diagnostic: corrected native-template preflight
+
+Initial thinking_traces_v1 stopped before generation: the pinned native tokenizer
+renders an assistant header without prefilling <think>. No samples or comparison
+scores were produced in that attempt. v1 is preserved. Corrected v2 requires an
+actual generated opening tag before a position can qualify; two selector tests
+and three target-transform tests pass. AWS exec4391 is currently generating24
+traces, with18/19 qualified so far; do not duplicate. CPU replay must verify saved
+logits and selection before comparison. Six-context comparison and unrelated-
+reference cyclic control frozen at6344c78 before any teacher-conditioned scores.
+GH200 untouched. See THINKING_PMI_DIAGNOSTIC_PROTOCOL_20260910.md.
+
+Additional August/September primary-source screen found close priors for generic
+reference-bias, structured privileged guidance, majority-teacher distillation and
+decision-aware mechanistic probes. See ADDITIONAL_IDEA_SCREEN_20260910.md. These
+are source screens, not replicated results or evidence for a submission.
