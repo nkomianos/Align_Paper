@@ -1076,3 +1076,14 @@ no-false56/61 coverage versus repaired61/61 through empty outputs; both no-miss
 60/61 with99.2% mean node retention. No empirical collapse or useful repair win.
 Exact contract counterexamples remain valid. Frequency/trained-score arms unrun;
 no automatic GPU expansion. See ITCR_CALIBRATION_CONTRACT_AUDIT_20260910.md.
+
+### Representation-alignment successor screened against source objectives
+
+Read ReSO2609.04022 methods and eight pinned author source/config files, with
+Git-blob verification. Explicit replay KL is trained in ReSO but monitor-only
+in DPO; a matched-preservation2x2 is an unresolved comparison, not proof that
+preservation explains reported safety. Release defaults also differ from paper
+settings. Faithful8B full-parameter+reference run does not fit the AWS GPU under
+ordinary Adam state accounting. No model/dataset/security job launched; smaller
+benign pilot would require its own task/novelty qualification. See
+RESO_MATCHED_PRESERVATION_SCREEN_20260910.md. GH200 reservation respected.
