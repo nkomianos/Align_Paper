@@ -393,3 +393,29 @@ labels and controlled context/name counterfactuals. Generic policy-aware monitor
 controls are not a new contribution. The harder reasoning bank remains the active
 GPU job; at14m41s it had136/384 draws, process18396 confirmed live. Continue its
 frozen queue and verify final outputs before scientific interpretation.
+
+### Scope correction and conditional replication, approximately 04:33 UTC
+
+Original user proposal a521bd9d, section Learning on Actions, Not Spellings,
+targets policy-gradient variance and learning per compute. The forced-letter
+and whole-expression inference screens did not test that claim. Their results
+only stop those decoding screens. The actual representation-aware learning
+proposal remains NOT RUN; do not count it among failed learning experiments.
+The expression runner already explicitly excluded RL variance claims.
+
+docs/ACTION_MARGINAL_LEARNING_SCOPE_20260910.md specifies matched initial action
+mass, frozen normalization offsets, exact finite-grammar score gradients,
+canonical formatting and extra-rollout baselines, no entropy/KL confounds, and
+cost-based stop rules. scripts/action_marginal_policy.py implements its core
+estimators. Four CPU tests verify expected-gradient agreement with independent
+expected-reward differentiation, matched initial behavior, and the canonical
+equality case. Full neural training runner/data remain unimplemented, not queued.
+This is apparatus progress only; no new scientific positive or paper admission.
+
+docs/POLICY_VALUE_REPLICATION_PROTOCOL_20260910.md freezes fresh-seed follow-up
+only if both MATH banks qualify and at least four large reversals occur. Casewise
+intersection-union Fisher tests plus Holm address both directions and multiplicity.
+Power audit shows low power for moderate effects, so a failure cannot rule those
+out. Statistics and power code are committed at e76d88a; no replication launched.
+At this check the active first bank reached280/384 continuations. Process18396
+is live; queue18395 conditionally admits Qwen3-32B. Preserve its frozen gates.
