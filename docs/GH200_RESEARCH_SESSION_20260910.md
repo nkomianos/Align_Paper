@@ -655,3 +655,18 @@ components remain; no sixth or neural result. Four more source entries inspected
 python_pool_index_v3 has54 unreviewed candidates. Full explanation in external
 feasibility report. GPU confirmed idle05:34 UTC. No run admitted while the
 required natural corpus and downstream security oracles remain unqualified.
+
+### User scope change: stop security probes; benign memory diagnostic prepared
+
+User explicitly requested no further security-payload inspection or vulnerability
+probes after reported safety interruptions. Do not resume CVE qualification or
+work around safeguards. No actual rejection reason was available in this turn;
+do not invent one. Heartbeat successfully updated to retain this scope change.
+
+Benign incomplete-order neural extraction diagnostic implemented and three CPU
+tests pass. See BENIGN_MEMORY_EXTRACTION_PROTOCOL_20260910.md. It tests the missing
+neural extraction prerequisite behind the earlier gold-graph CPU memory check,
+with direct explicit-rule baseline and a deterministic solver. Four synthetic
+mechanisms,24 parameter cases,two presentations,96 planned model calls. New
+primary literature locates deterministic freshness, MemConflict and Supersede;
+generic memory-update novelty is occupied. No paper-qualified finding assumed.
