@@ -36,3 +36,22 @@ Next prerequisite is an authenticated pre/post pair or a independently specified
 training study with measured compute. Do not silently substitute an unrelated
 OPSD adapter. No neural launch, paper qualification, or claim that all model
 artifacts are unavailable follows from this scoped search.
+
+## Official release located in follow-up
+
+Found [the official implementation](https://github.com/princeton-pli/rethinking-opsd-for-thinking-models)
+and pinned commit `46ccfbddeb92c3bb8b9602a1e6644eb9fa8f7c04`. Complete tree and
+commit metadata plus README saved alongside earlier search receipts. README
+SHA256: `8fe815b16f727283ea960fcf4012a2fabba2fcbec2c928ef54b268e4dfac1454`.
+It specifies a locked training environment and reports 5–12 hours on eight H100s
+per run, plus separate evaluation costs. It gives local output checkpoint paths,
+not downloadable trained weights. GitHub releases and the lead author's
+`kaur-sim` model listing returned empty arrays. This is stronger source evidence
+than keyword search, but still not proof of universal checkpoint unavailability.
+
+Decision: do not queue the full reproduction within this session. Its reported
+40–96 H100 GPU-hours for one dense training run are not directly convertible to
+our hardware budget without benchmarking, and exclude replication/evaluation.
+A reduced-data pilot would be a new developmental study with uncertain formation
+of the reported degradation, not an economical substitute for verified checkpoints.
+No upstream training script executed and no author contacted.

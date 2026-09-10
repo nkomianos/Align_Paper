@@ -972,3 +972,12 @@ search; one plausible model belongs to a different paper, another lacks card
 metadata. Saved responses and a concrete controlled-restoration design in
 FORK_SUPPRESSION_FEASIBILITY_20260910.md. No weights or GPU experiment launched;
 GH200 reservation honored. No candidate is yet paper-qualified.
+
+### Official thinking-distillation code located; full reproduction not admitted
+
+Pinned official princeton-pli/rethinking-opsd-for-thinking-models release
+46ccfbddeb92c3bb8b9602a1e6644eb9fa8f7c04, saved README/tree/commit and availability
+receipts. README reports5–12h on8H100 per training run plus evaluation. It exposes
+local output checkpoint paths, not trained model downloads; releases and lead
+author model listing empty. No full reproduction queued on AWS and no claim that
+a small pilot faithfully reproduces this study. See updated fork feasibility memo.
