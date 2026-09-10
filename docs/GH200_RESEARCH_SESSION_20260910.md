@@ -753,3 +753,17 @@ must beat strong pooling/semantic controls before it is differentiated. See
 BENIGN_MECHANISTIC_TRIAGE_20260910.md. No training implemented or launched.
 Current broad user authorization covers benign work; old proposal wording about
 missing authorization is historical, not a reason to ask permission again.
+
+### Recipe-selector geometry audit completed
+
+CPU proof/check establishes that max-min alignment to two normalized directions
+is exactly normalized pooling (non-antipodal case); do not train a campaign to
+claim those are different selectors.32 numerical cases agree,30 solver success
+statuses and2 non-success statuses retained with tiny residuals. A constructed
+linear representation example also gives identical baseline behavior with
+positive/negative/zero held-out steering effects. This limits any transfer
+certificate from behavior matching alone; it does not refute empirical transfer
+or every nonlinear selection method. See RECIPE_SELECTION_GEOMETRY_AUDIT_20260910.md
+and recipe_selection_geometry_v1.json. No neural experiment or new theorem claim.
+GPU verified idle06:20 UTC. Next work needs a specified non-equivalent selector
+and credible headroom, rather than rerunning stopped screens or the security work.
