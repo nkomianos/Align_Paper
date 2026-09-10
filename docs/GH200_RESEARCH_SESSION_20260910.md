@@ -784,3 +784,20 @@ the narrow negative and its reproducibility limitation; no fresh raw replay
 claimed. A materially different successor has not been specified or admitted.
 The GPU remains idle at the latest SSH check (remote06:29 UTC). Security probes
 remain stopped. Submission readiness remains NO-GO.
+
+### Frozen-value source audit opens a specific CPU diagnostic
+
+Previous turn made progress by correcting the already-run recipe candidate and
+pinning benign checkpoints. Current primary-source review identifies DVPO ICLR2026
+as a concrete comparison for the earlier portable-value proposal. Pinned9 release
+files, verified their Git blob hashes, inspected advantage construction. Paper
+describes trajectory conditioning/direct-value advantages; inspected release
+uses the same query/response inputs and KL-only GAE over frozen values. Historical
+training configuration is not authenticated. No empirical refutation claimed.
+
+An independent exact-arithmetic diagnostic passed64 telescoping cases and four
+two-step cases: zero-reward GAE at lambda1 reduces to -V, while below1 it retains
+a bootstrap signal. Whitening/clipping/masking prevent extrapolation to the full
+trainer without execution. See FROZEN_VALUE_IMPLEMENTATION_AUDIT_20260910.md.
+Next actionable work is isolated CPU execution with those controls; no MATH rerun,
+GPU training launch, new theorem claim or paper green light.
