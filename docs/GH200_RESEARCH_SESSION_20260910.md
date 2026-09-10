@@ -1436,3 +1436,19 @@ directories include logits and tokenizer data; this is neither a new integrity
 replay nor an additional independent/off-device backup. Existing CPU replay ZIP
 has its separately documented narrow scope. No provider or remote filesystem
 action;16:55UTC reassessment remains pending. No new scientific conclusion.
+
+### 16:50 UTC: end-window reassessment prepared
+
+No new evidence or admitted experiment since the bounded screen completed.
+Submission remains NO-GO; Hindsight training remains parked. No inference that
+elapsed reservation time makes GH200 available. No further remote work is
+planned within this window, and no access extension is assumed after16:55UTC.
+Neither instance has been stopped or terminated by this task; SSH exit does not
+stop charges. Recommend the user stop AWS if it serves only this task.
+
+The full local Git backup and scoped CPU replay backup are documented above.
+A fresh commit-named Git bundle will preserve this handoff; ignored raw evidence
+remains separately stored locally, not automatically included in Git bundles.
+The remaining paper requirement is a distinct, validated contribution, not
+additional rental time or manuscript polish. Any resumed campaign needs a
+concrete qualified intervention and confirmed host availability/access.
