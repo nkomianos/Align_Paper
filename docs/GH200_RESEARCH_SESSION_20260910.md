@@ -711,3 +711,19 @@ verify_benign_memory_extraction.py. Only if qualified consider the same reasonin
 control. No automatic queue chain launched. Independently sourced benign partial
 order data remains unqualified; proScript's official dataset page was located,
 but semantic suitability and split provenance still require inspection.
+
+### Second-family memory replication complete; no expansion admitted
+
+PID23818 terminal. Nemo direct29/48, extraction30/48, semantic graph30/48;
+parse/EOS all pass. All18 graph errors reverse all gold edges, with zero value
+errors. Preserve semantic encoding failure, no posthoc edge correction. Original
+Qwen signal survives narrowly; no cross-family gain established. Stage9 retrieved
+and local replay agrees, SHA256e8abe63eb8204a6749c252225b968f8df676635118dcc4c8a99e533c21dd6732.
+
+proScript official archive downloaded; dev-only structural audit1085rows,
+1031scenario names,361partial orders, all1085single sinks. Not a direct natural
+memory replication; no invented setting values or model evaluation. See
+BENIGN_MEMORY_REPLICATION_RESULT_20260910.md. No successor admitted, no current
+memory GPU job. User prohibition on security probes remains in force. Reassess
+unresolved benign ideas and novelty before new runs rather than repeating these
+synthetic cases with a tuned prompt.
