@@ -951,3 +951,13 @@ enacted increase, requiring full-context review before an error claim. No labels
 changed or synthetic graph labels invented. Existing oracle retrieval privileges
 and extraction/reasoning baseline are explicit. See LONGMEMEVAL_SUBSTRATE_AUDIT_20260910.md.
 No model experiment or GH200 contact. Paper remains unqualified.
+
+### Full-context review withdraws provisional coffee-label concern
+
+Read all turns in both oracle sessions for c6853660. The later user turn at
+zero-based session1/turn6 explicitly confirms the increase to two cups. Therefore
+the released answer is supported; the prior flagged-turn-only suspicion is
+withdrawn. That confirming turn has has_answer=false, an evidence-tag omission,
+not an answer-key error. Saved a source-hash-checked correction verifier and
+receipt. This removes the item as support for the proposed modality-confusion
+claim. No model run or GH200 contact.

@@ -1,5 +1,12 @@
 # Memory external-substrate audit
 
+**Correction after full-context review:** the suspected coffee answer error below
+is withdrawn. A later user turn in the second session explicitly confirms the
+increase to two cups. It has `has_answer: false`. The answer is supported by the
+complete supplied history; evidence flags are incomplete for this item. The
+earlier provisional assessment is retained below as audit history, not a current
+finding against the answer key.
+
 Classification: developmental data audit, no model experiment.
 
 Pinned `xiaowu0162/longmemeval-cleaned` revision
@@ -31,6 +38,14 @@ settled. My assessment: the text supports an intended change more directly than
 an enacted one. This is a specific modality/estimand concern, not proof that the
 whole benchmark is invalid. Full unflagged context remains to be checked before
 a definitive item-level error claim. No label was changed.
+
+Full-context follow-up inspected every turn in both oracle sessions. At zero-based
+session index1/turn index6, the user explicitly reports having increased the limit.
+This supports the released answer without treating a proposal as an enacted change.
+Do not use this item to claim planned-versus-enacted label confusion. The narrower
+annotation omission can affect turn-level retrieval scoring; its aggregate impact
+has not been measured. Artifact `COFFEE_FULL_CONTEXT_CORRECTION.json` records the
+source hash, location, role and flag with a reproducible assertion.
 
 ## Consequence
 
