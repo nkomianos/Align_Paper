@@ -677,3 +677,15 @@ presentations completed in3.27 inference seconds after loading;96 calls planned.
 No other job queued automatically. On completion run verify_benign_memory_extraction.py,
 archive/retrieve raw outputs and independently replay locally. This is a live
 benign synthetic diagnostic, not a continuation of the stopped CVE work.
+
+### Benign memory screen completed; reasoning control prepared
+
+PID22581 terminal.96 calls completed in68.76 inference seconds. Extraction graph
+and final answer48/48; direct34/48. All parse/EOS pass. Remote/local verification
+agrees; stage7 archived/retrieved SHA256ad947880910bf2cd7db4582b10bcf4ef80eae6f275e04bd5db6f3b7f4599f923.
+See BENIGN_MEMORY_INITIAL_RESULT_20260910.md. Four synthetic mechanisms, not48
+independent tasks. Before replication, prepared post-result direct reasoning
+control with same192-token maximum. Original direct answers produced fewer
+intermediate tokens, so current difference need not imply a useful new method.
+Run run_benign_memory_reasoning_control.py; control qualification/decision frozen
+in the result note. No natural-data or paper claim. Security work remains stopped.
