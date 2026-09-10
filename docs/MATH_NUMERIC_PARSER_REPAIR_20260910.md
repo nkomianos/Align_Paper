@@ -54,3 +54,26 @@ All24tests passed in the isolated Python3.12 environment; retrieved log:
 Deployment archive: `artifacts/deployment/math_runtime_25fcf50.tar`.
 No model weights, data, legacy queue, credentials or automatic launch were included.
 This verifies deployment/import/replay compatibility, not neural throughput.
+
+## Established-parser comparison on the saved outputs
+
+Installed Math-Verify0.9.0 in a separate CPU-only AWS environment and executed
+`scripts/audit_math_verify_saved_bank.py` on the hash-checked384-row saved bank.
+No new model generation occurred. All384outputs produced a mathematical parse;
+301matched the target, versus168original rewards. An independent explicit
+box/delimiter numeric check supports300matches. The remaining library match
+comes from a non-EOS response whose final extraction is an equation rather than
+an explicit final answer. It requires manual review, not automatic acceptance.
+
+Saved `MATH_VERIFY_COMPARISON.json` and `MATH_VERIFY_ANCHOR_CHECK.json` under
+`artifacts/gh200_research_20260910`; dependency versions, raw hash, parser settings
+and per-row outcomes retained. Different denominators matter: these counts cover
+all384rows; the earlier .4140625 metric covered eligible DEV only. Do not compare
+them directly as an accuracy delta. Matching a final answer does not certify the
+reasoning process. The historical gate remains failed and the32B arm remains unrun.
+
+[Math-Verify](https://github.com/huggingface/Math-Verify) already provides broad
+numeric/symbolic extraction. Our restricted transport parser is infrastructure,
+not a new mathematical verification method. A future protocol must distinguish
+format validity, explicit-answer correctness and EOS rather than use successful
+flexible extraction as sufficient proof of an answer.

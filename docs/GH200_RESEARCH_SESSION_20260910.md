@@ -1016,3 +1016,12 @@ a matched-risk method win. This pilot already ran; learned perception, rule-edit
 method advantage and external validation did not. Updated main PI ledger with
 CLARA and genuinely unrun fork-restoration status, and corrected stale exclusive
 GPU wording to current OSH reservation/AWS access. No GPU experiment launched.
+
+### Established math-parser baseline clarifies the recorded low score
+
+CPU-only Math-Verify0.9.0 comparison on immutable384saved outputs:384parsed,
+301target matches versus168original rewards. Independent explicit numeric
+box/delimiter check supports300matches; one extra library match is a non-EOS
+equation extraction. These are all-row posthoc counts, not the old eligible-DEV
+accuracy denominator, new model results or a reopened gate. Artifacts retrieved,
+dependencies isolated, GH200 untouched. Restricted parser remains infrastructure.
