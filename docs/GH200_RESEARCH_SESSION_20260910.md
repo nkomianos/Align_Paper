@@ -941,3 +941,13 @@ Reproduction README says dataset release link is pending. Inspected transfer
 metrics expose ordinary flattened-pair correlations, motivating dependence-aware
 inference checks but not proving paper invalidity. See
 STEERING_GEOMETRY_CONTROL_AUDIT_20260910.md. No GPU launch or GH200 contact.
+
+### Natural memory substrate inventoried and a modality concern identified
+
+Previous turn changed the steering launch decision. This turn pinned LongMemEval
+oracle data, selected12DEV questions by ID before answer inspection, and examined
+five cases' flagged evidence. One proposed coffee-limit change is scored as an
+enacted increase, requiring full-context review before an error claim. No labels
+changed or synthetic graph labels invented. Existing oracle retrieval privileges
+and extraction/reasoning baseline are explicit. See LONGMEMEVAL_SUBSTRATE_AUDIT_20260910.md.
+No model experiment or GH200 contact. Paper remains unqualified.
