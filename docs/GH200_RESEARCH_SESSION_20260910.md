@@ -359,3 +359,18 @@ loc_evidence_source often names monitor predictions and must not be mistaken for
 independent human semantic validation. Do not automatically relabel those traces
 as unsafe or declare the entire benchmark invalid. Resolve complete task context,
 benchmark policy and label provenance before a true safe/violation comparison.
+
+### Upstream monitoring identity investigation, 04:10 UTC
+
+Pinned original yoonholee/terminalbench-trajectories at
+04e8940f5b6736a7ce8d22224fe2f2af74163ed2, both public parquet hashes verified.
+All95 cohort representations from that source exactly match original streams
+after the declared null/index normalization. There are75 trial-name/model keys,
+20 repeated keys. These are different event representations, NOT demonstrated
+identical duplicates. One repeated key has attempt versus benign labels; its
+benign representation lacks user text and some tool arguments. Twenty of70
+unresolved-message rows have a unique fuller candidate with original trial UUID;
+fifty lack one. No automatic replacement or relabeling performed. Source agent
+and released harness agree for all95 matched rows. See the appended monitor audit
+and script audit_cheatbench_upstream_identity.py. This changes monitor admission
+and independence assumptions, not a neural research endpoint or paper decision.

@@ -269,3 +269,43 @@ estimate full-benchmark performance. No monitor experiment has been run.
 
 Reports: CHEATBENCH_FULL_COHORT_AUDIT.json, full_overlap/MANIFEST.json,
 full_overlap_event_view/MANIFEST.json, FULL_OVERLAP_CONTEXT_FEASIBILITY.json.
+
+## Superseding input and source-identity audit, 10 September
+
+The earlier projection counts are not a claim of monitor readiness. Raw inspection
+found six retrospective report sources and seventy sources with unresolved user
+messages such as "$32". Fresh full_overlap_event_view_v4 rejects those, plus four
+no-event sources, leaving134 prepared views. Four targeted regression tests pass.
+Exact extraction of ForgeCode -p instructions finds75 rows; matching the same
+instruction/task/model/harness under30k raw tokens yields7 cells on6 provisional
+tasks,9 positive and16 benign labels. This measures extractor coverage and a
+selected cohort, not all available task contexts or full-benchmark performance.
+Reports: admission_v3 (superseded projection) and admission_v4.
+
+The [upstream trajectory release](https://huggingface.co/datasets/yoonholee/terminalbench-trajectories)
+was downloaded at04e8940f5b6736a7ce8d22224fe2f2af74163ed2, both parquet shard hashes
+checked against official LFS metadata. All95 cohort rows from that source match
+an original event stream exactly after omitting null fields and our added step
+indices. Seventy already have unresolved user references upstream. This is not a
+bug caused by our JSON projection. Twenty of those have a candidate fuller row
+with the same trial name/model and a nonempty original trial UUID; differences
+must be reviewed before replacing data. Fifty have no such unique candidate in
+this downloaded release.
+
+Those95 rows have75 unique trial-name/model keys:20 keys occur twice. One key,
+large-scale-text-editing__QaBSzjy, has an attempt-labeled full-text representation
+(cb-004218) and a benign-labeled representation with message placeholders and
+missing tool-argument text (cb-004223). Event payloads are NOT exactly identical.
+Do not claim an identical-input label contradiction or silently deduplicate on
+name alone. The episode identity and representation dependence require source
+review. Source agent fields agree with the released harness for these95 matches;
+no harness-mismatch claim is supported.
+
+Reproduction: scripts/audit_cheatbench_upstream_identity.py, report
+terminalbench_original/UPSTREAM_IDENTITY_V2.json. Earlier exploratory
+UPSTREAM_REPLAY.json used a dictionary keyed only by trial name and mixed row
+counts with unique names; it is superseded for count interpretation. Immutable
+raw downloads and both reports are retained. No neural monitor has run, and no
+safe/violation labels have been independently certified by these source checks.
+The released card explicitly includes unauditable cases in benign; localization
+provenance naming a model prediction is not proof of independent human labeling.
