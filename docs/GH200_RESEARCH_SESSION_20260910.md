@@ -831,3 +831,17 @@ training is not a differentiated contribution. Next bounded review concerns
 whether naturally erroneous intermediate states get corrected or reinforced by
 condition-first rereading, including the paper's existing controls. No experiment
 launched from abstract-only novelty assessment. Overall submission remains NO-GO.
+
+### Trace-state controls and recovery bounds audited
+
+Previous turn narrowed source availability and literature. Inspected full method,
+setup, placement/count controls, limitations and scoring/serializer appendices of
+Trace as State2609.02702v1. Verification warnings and major rereading controls are
+already included. Generic warning/placement/recovery is not our new contribution.
+Published Parents marginals imply at least31.8pp successful second-pass trials
+with no correct first-pass answer, conditional on stated common cohort/weighting.
+Enumerated92 possible joint tables; conditional harm is still not identified.
+No raw author experiment records verified, no new theorem or neural result.
+See LATEST_BENIGN_RESEARCH_SCREEN_20260910.md and RECOVERY_BOUNDS.json.
+No successor corrective method admitted yet. GPU idle at remote06:40 UTC check;
+heartbeat remains active and security probes remain stopped.
