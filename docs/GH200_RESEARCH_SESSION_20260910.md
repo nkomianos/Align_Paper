@@ -585,3 +585,16 @@ existing immutable rollouts would test that missing prerequisite without repeati
 generation. Its protocol, mathematical estimator and runtime must be audited
 before admission. No such diagnostic or training job has been implemented/launched
 at this update; do not count it as done or automatically rerun stopped banks.
+
+### Adapter gradient diagnostic launched at 05:24 UTC
+
+The missing implementation above is now frozen in commit 98e47f4. Two CPU
+derivative tests pass. GPU occupancy was empty before launch. PID 21345 runs
+run_censor_adapter_gradients.py into censor_adapter_gradients_v1, using the
+unchanged bank_qwen_v1 and hash-verified Qwen3-8B snapshot. No new trajectories
+or optimizer steps are being generated. See CENSOR_ADAPTER_GRADIENT_PROTOCOL_20260910.md.
+The pre-result protocol requires adaptive variance improvement over both simple
+allocations under both the old half baseline and a calibration-fitted reward
+baseline. Estimated 5–20 minutes includes an unbenchmarked replay; actual timings
+must replace the estimate. No result is available at launch. Preserve the raw
+vectors and verify/retrieve the completed output before interpreting it.
