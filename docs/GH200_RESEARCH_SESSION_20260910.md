@@ -845,3 +845,17 @@ No raw author experiment records verified, no new theorem or neural result.
 See LATEST_BENIGN_RESEARCH_SCREEN_20260910.md and RECOVERY_BOUNDS.json.
 No successor corrective method admitted yet. GPU idle at remote06:40 UTC check;
 heartbeat remains active and security probes remain stopped.
+
+### Natural temporal dataset inspected; no artificial uncertainty labels
+
+Previous turn changed the trace-state launch decision through full control review.
+Current turn returns to the actual Qwen memory positive's missing external
+validation. Pinned TORQUE author release, fetched only DEV/readme/license, verified
+Git blobs and SHA256.145 passages/79 article IDs/1483 questions;323 empty consensus
+answers,184 with nonempty individual annotations. No span alignment errors.
+Do not label empty answers or annotator disagreement as certain-answer ambiguity.
+No gold precedence graph/numeric state updates supplied. Therefore no direct
+memory replication admitted. TG-LLM primary overview also occupies generic
+text-to-temporal-graph plus reasoning. See TEMPORAL_EXTERNAL_VALIDATION_AUDIT_20260910.md
+and artifacts/torque_source_20260910/DEV_SUITABILITY.json. No GPU experiment,
+test-split opening, natural-memory result or paper qualification.
