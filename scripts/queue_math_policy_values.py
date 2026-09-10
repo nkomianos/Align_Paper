@@ -20,7 +20,7 @@ for index,model in enumerate(models):
             print('STOP_FIRST_BANK_QUALIFICATION',flush=True);break
     name='math_bank8_v2' if index==0 else 'math_bank32_v2'
     command=[sys.executable,str(root/'code/run_math_policy_value_bank.py'),'--source',str(root/'code/math500_test.jsonl'),
-             '--snapshot',str(model),'--out',str(root/name)]
+             '--snapshot',str(model),'--out',str(root/name),'--parser','legacy-v1']
     if index:command.extend(['--prefixes',str(root/'math_bank8_v2/PREFIXES.json')])
     with (root/(name+'.log')).open('x') as log:subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,check=True)
 else:

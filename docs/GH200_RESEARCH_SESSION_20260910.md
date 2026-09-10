@@ -989,3 +989,11 @@ version/hash in future MATH runner outputs. Historical reasoning parser retained
 for verifiers; imported prefix flags recomputed consistently.22targeted tests pass.
 Posthoc transport coverage on saved384MATH outputs189vs196legacy, seven rejected.
 No endpoint rerouting, new scientific result or GPU run. See MATH_NUMERIC_PARSER_REPAIR_20260910.md.
+
+### Parser replay integration and actual historical-bank verification
+
+Previous turn repaired prospective parsing. Found and fixed downstream verifier
+dispatch, parser hash enforcement and cross-parser comparison checks. Original
+dormant queue explicitly selects its legacy parser.24targeted tests pass, including
+a complete rational-answer bank fixture; actual384-row historical MATH replay
+retains original coverage/EOS/accuracy and qualified=false. No GPU launch.

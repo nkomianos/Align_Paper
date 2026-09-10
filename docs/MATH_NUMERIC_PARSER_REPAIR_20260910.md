@@ -27,3 +27,18 @@ No rerun is admitted by this repair. The earlier capability/coverage gate remain
 failed; repeated use of its DEV examples cannot become independent confirmation.
 Future study protocols must specify this transport explicitly and assess EOS,
 coverage and semantic correctness independently. No GPU job launched.
+
+## Replay integration completed
+
+The saved-row verifier now selects the recorded parser, rejects unknown versions
+and mismatching parser hashes, and prevents comparisons across parser versions.
+Unversioned historical banks use legacy-v1. The dormant original queue explicitly
+selects legacy-v1 so its frozen recipe cannot silently inherit a new parser.
+It remains stopped after the failed first bank and has not been launched.
+
+24 targeted tests pass, including a complete384-row constructed rational-answer
+bank replay. Actual historical MATH replay still yields coverage .5104167,
+EOS .9114583, eligible DEV accuracy .4140625 and qualified=false. The additive
+receipt is `artifacts/gh200_research_20260910/math_legacy_parser_replay_20260910.json`.
+These results verify compatibility and the original classification; they are not
+new scientific observations or a paper gate.

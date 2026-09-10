@@ -4,11 +4,28 @@ from collections import defaultdict
 import json
 from pathlib import Path
 from run_reasoning_bank import answer
+import explicit_numeric_answer
 from run_unexplored_screens import sha,dump
+
+
+def resolve_parser(protocol):
+    version=protocol.get('parser','legacy-v1')
+    if version=='legacy-v1':
+        parser=answer;path=Path(__file__).with_name('run_reasoning_bank.py')
+    elif version==explicit_numeric_answer.VERSION:
+        parser=explicit_numeric_answer.answer;path=Path(explicit_numeric_answer.__file__)
+    else:
+        raise ValueError('Unsupported recorded parser: '+str(version))
+    # Unversioned historical banks did not record a separate parser hash.
+    if 'parser' in protocol:
+        if protocol.get('parser_sha256') != sha(path):
+            raise ValueError('Recorded parser source hash does not match replay code')
+    return version,parser
 
 
 def audit(root):
     for name,h in json.loads((root/'MANIFEST.json').read_text()).items():assert sha(root/name)==h
+    version,parse=resolve_parser(json.loads((root/'PROTOCOL.json').read_text()))
     data={r['id']:r for r in json.loads((root/'INPUTS.json').read_text())}
     prefixes={(r['base'],r['index']):r for r in json.loads((root/'PREFIXES.json').read_text())}
     rows=[json.loads(x) for x in (root/'ROLLOUTS.jsonl').read_text().splitlines()]
@@ -21,7 +38,7 @@ def audit(root):
     for r in rows:
         source=data[r['base']];prefix=prefixes[r['base'],r['prefix_index']]
         assert source['target']==r['target'] and source['split']==r['split']
-        parsed=answer(prefix['text']+r['completion']);assert parsed==r['parsed_answer']
+        parsed=parse(prefix['text']+r['completion']);assert parsed==r['parsed_answer']
         assert r['reward']==int(parsed==source['target']) and r['length']==len(r['ids'])
         assert r['eos']==bool(r['ids'] and r['ids'][-1]==eos_id)
         assert eos_id not in r['ids'][:-1] and 0<len(r['ids'])<=2048
@@ -33,13 +50,14 @@ def audit(root):
     eos=sum(r['eos'] for r in rows)/384
     accuracy=sum(r['reward'] for r in dev)/len(dev) if dev else None
     qualified=coverage>=.95 and eos>=.90 and len(eligible)>=12 and .10<=accuracy<=.90
-    return {'scope':'DEV bank qualification; no learning or full parameter gradients','parse_coverage':coverage,'eos_rate':eos,
+    return {'scope':'DEV bank qualification; no learning or full parameter gradients','parser':version,'parse_coverage':coverage,'eos_rate':eos,
         'eligible_dev_questions':eligible,'eligible_dev_accuracy':accuracy,'qualified':qualified,
         'prefix_success':{base:[sum(groups[base,j])/8 for j in (0,1)] for base in eligible},'manifest_sha256':sha(root/'MANIFEST.json')}
 
 
 def compare(first,second):
     a=audit(first);b=audit(second)
+    if a['parser'] != b['parser']:raise ValueError('Cannot compare banks with different answer parsers')
     assert json.loads((first/'INPUTS.json').read_text())==json.loads((second/'INPUTS.json').read_text())
     assert json.loads((first/'PREFIXES.json').read_text())==json.loads((second/'PREFIXES.json').read_text())
     assert a['eligible_dev_questions']==b['eligible_dev_questions']
