@@ -2,6 +2,14 @@
 
 ## PI decision
 
+**Superseded, 10 September 2026:** The conditional green light below is historical.
+G0 completed but was inconclusive; its current corpus must not be expanded.
+See VALIDATOR_G0_VERIFIED_DECISION_20260909.md and
+VALIDATOR_TRANSPORT_V2_QUALIFICATION_PLAN_20260909.md. Four developmental natural
+components now have local checks, but the new sixteen-task corpus remains
+unqualified. No new neural validator run is admitted and no paper claim survives
+merely because this original proposal described an attractive experiment.
+
 Conditionally green-light the bounded G0. This is the current lead because it
 combines a practical agent-security failure mode, a controlled crossed
 design, an automatic hidden oracle, and a decisive one-GPU test. The broad

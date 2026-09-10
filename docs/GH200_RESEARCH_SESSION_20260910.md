@@ -614,3 +614,18 @@ No automatic learning follow-up is admitted. Current research still has no
 paper-qualified result. Next useful work remains independent natural validator
 task qualification and unresolved source/label validation, not repeating stopped
 gradient, channel, video, or near-ceiling reasoning screens.
+
+### Fourth natural validator component qualified on CPU
+
+PyJWT CVE-2022-29217 HMAC key-format admission now has upstream-attested code,
+two independently repairable omitted format branches, synthetic public-key
+probes and whole-package replay of11 unchanged selected upstream HMAC cases.
+All four versions pass the selected regression cases; only the complete fix
+rejects both new public-key probes. This counts as one developmental component,
+not two independent tasks and not a model finding. Four source components now
+exist, still short of the16-task/four-category gate. Source/results/logs under
+artifacts/validator_external_sources_20260909/pyjwt_source_v1 and
+pyjwt_regressions_v1. See updated external feasibility report. Corrected the
+historical candidate document's opening green light with the current NO-GO.
+No neural run admitted. GPU verified idle at05:25 UTC; useful CPU qualification
+continues instead of an unchanged repeat of stopped assays.

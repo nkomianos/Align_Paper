@@ -129,3 +129,29 @@ RESTRICTEDPYTHON_COMPONENT_CHECK.json. This adds ONE developmental source compon
 to Requests and Snowflake. It excludes string.Formatter delegation, full compiler
 integration, container execution, and generated model patches. It is not an
 admitted neural task corpus and does not satisfy the sixteen-task gate.
+
+## PyJWT key-format admission component, 10 September
+
+Pinned upstream fix 9c528670c455b8d948aff95ed50e22940d1ad3fc and parent
+24b29adfebcb4f057a3cef5aaf35653bc0c1c8cc. Benchmark HMAC prepare_key methods
+match upstream executable AST. Fresh synthetic Ed25519 and ECDSA public keys
+are incorrectly accepted as HMAC secrets by the vulnerable method. Independent
+single-format blocklist additions reject one each, while the released fix
+rejects both. Legacy RSA/PEM rejection and ordinary bytes/string secret admission
+are preserved. No tokens are forged and no service is contacted.
+
+This is one key-admission component, not two independent tasks or two categories.
+It adds a fourth developmental source component to Requests, Snowflake and
+RestrictedPython. It does not qualify a sixteen-task neural corpus.
+
+Reproduction: scripts/qualify_pyjwt_component.py; source files, commit response,
+hash receipts, exact public fixtures and results in
+artifacts/validator_external_sources_20260909/pyjwt_source_v1.
+scripts/replay_pyjwt_hmac_regressions.py additionally downloads both immutable
+complete package archives, constructs two partial variants and runs the unchanged
+fixed-revision tests/test_algorithms.py cases selected by `-k hmac` against all
+four packages. Each passes 11 cases, with 53 deselected. This is bounded regression
+coverage, not all upstream tests, and includes parameterized cases rather than
+eleven independent mechanisms. Other upstream tests may cover the vulnerability;
+the selected suite's success does not establish a repository-wide testing gap.
+Raw archives and logs remain in pyjwt_regressions_v1. No GPU run launched.
