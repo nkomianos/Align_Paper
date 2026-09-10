@@ -670,3 +670,10 @@ with direct explicit-rule baseline and a deterministic solver. Four synthetic
 mechanisms,24 parameter cases,two presentations,96 planned model calls. New
 primary literature locates deterministic freshness, MemConflict and Supersede;
 generic memory-update novelty is occupied. No paper-qualified finding assumed.
+
+Live launch: PID22581 runs benign_memory_extraction_v1 under the isolated research
+root; log benign_memory_extraction_v1.log. Frozen commit6c62562. First two input
+presentations completed in3.27 inference seconds after loading;96 calls planned.
+No other job queued automatically. On completion run verify_benign_memory_extraction.py,
+archive/retrieve raw outputs and independently replay locally. This is a live
+benign synthetic diagnostic, not a continuation of the stopped CVE work.
