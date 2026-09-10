@@ -1229,3 +1229,21 @@ diagnostic, not a learned online estimator. Avoid stronger claims than the sourc
 See OUTCOME_DISTILLATION_NOVELTY_GATE_20260910.md. No GPU/SSH activity this turn;
 GH200 reservation remains intact. These are novelty screens, not replications or
 negative performance findings. Research goal active; submission still NO-GO.
+
+### Continued CPU audit: branch viability does not identify teacher advantage
+
+Read PW-OPSD2605.21606v1 Section3.2 and AppendixA; pinned official repository
+35303e00ec47fce345d3531322268354fb211e70 and retained source receipts. The stated
+protocol measures absolute forced-branch viability without a described matched
+unforced resampling control. This does not invalidate reported training gains.
+
+Exact independent hazard null completed: teacher=student, incremental success=0,
+but the probability of the low-viability label rises from less than1e-12 at one
+remaining step to.908751 at40steps. Closed forms match exhaustive enumeration of
+all343 success-count triples for each of five horizons. Developmental logical
+counterexample only; no neural assay, training, accuracy improvement or paper
+qualification. Future outcome studies require matched fresh student continuations
+and a separate held-out learning endpoint. See POSITION_RELIABILITY_AUDIT_20260910.
+
+No GPU launch or SSH contact in this continuation. GH200 reservation and16:55UTC
+window unchanged. No security investigation resumed; paper remains NO-GO.
