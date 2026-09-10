@@ -66,3 +66,30 @@ skill changes or bounded knowledge retention under evolving objectives. These
 require comparisons to established evolutionary search and memory selection,
 independent validation after adaptive selection, and an accessible task-specific
 endpoint. No such experiment is implemented or admitted by this source screen.
+
+## 12:46 follow-up: selective forgetting
+
+[Selective Forgetting](https://arxiv.org/html/2608.28978v1), Sections3–5 and
+AppendixA.1, already reports that its extraction-based graph loses to flat
+retrieval. The paper scopes this to its pipeline, not all graph memory.
+Its retention experiment prunes once after ingesting all500 haystacks into one
+persistent graph, then evaluates questions; it is not repeated pruning over a
+prospective deployment stream. The text acknowledges cross-conversation
+interference and names a same-size random-pruning control as missing future work.
+It also identifies stale-attribute handling as a weakness. Generic pruning,
+verbatim preservation and latest-value correction therefore do not establish our
+novelty. None of its results were independently reproduced here.
+
+Our decision: do not turn this into another expensive graph-extraction campaign.
+A future retention claim would require a matched storage budget, random and
+recency controls, query/context token accounting, conversation isolation, and
+new query batches after each retention decision. Different objectives need
+separate evaluation: answer quality, raw storage and simultaneous correctness
+are not interchangeable. A small interval including zero is not proof of exact
+performance equivalence. This is a baseline/protocol requirement, not a new
+method or a demonstrated flaw in the reported paired comparison.
+
+Four new primary follow-ups from the latest weekly list have now been reviewed.
+No new GPU-ready candidate emerged. Primary HTML and hash receipt saved alongside
+the other weekly-screen artifacts. Do not count these source screens as model
+experiments, or infer that all remaining weekly entries were tested.

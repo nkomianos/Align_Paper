@@ -1364,3 +1364,13 @@ program total or H200-equivalent usage. Untimed setup/loading, hashing,
 transfers and idle allocation remain outside that sum; remaining50hour budget
 cannot be computed from it. See AWS_PMI_TIMING_RECONCILIATION and executable
 ledger. No SSH/GPU work or provider action.16:55UTC limit unchanged.
+
+### 12:46 heartbeat: retention baseline and scope review
+
+Read SelectiveForgetting2608.28978v1 methods/limitations. Its graph-vs-flat
+negative and missing random-pruning control are explicitly acknowledged. Its
+single post-ingestion prune is not a repeated prospective deployment study.
+Recorded storage/query-budget and conversation-isolation controls for any future
+retention proposal. No new method or reproduced paper error claimed. Four new
+primary weekly-list follow-ups now screened; no new campaign admitted.
+No SSH/GPU use, no security investigation,16:55UTC limit unchanged.
