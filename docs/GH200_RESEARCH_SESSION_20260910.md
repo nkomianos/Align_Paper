@@ -419,3 +419,29 @@ Power audit shows low power for moderate effects, so a failure cannot rule those
 out. Statistics and power code are committed at e76d88a; no replication launched.
 At this check the active first bank reached280/384 continuations. Process18396
 is live; queue18395 conditionally admits Qwen3-32B. Preserve its frozen gates.
+
+### Action-gradient apparatus admitted, approximately 04:39 UTC
+
+Commit1fae7e9 adds run_action_gradient_diagnostic.py, an independent raw-vector
+covariance verifier, and a one-run sequential supervisor. Six CPU checks pass;
+remote imports succeed. Supervisor PID19124 is confirmed live, waiting for MATH
+queue18395 to exit. It will recheck GPU occupancy and allocation margin, then run
+action_gradient_diagnostic_v1. Do not launch a second copy. Logs:
+action_gradient_queue_v1.log and action_gradient_diagnostic_v1.log. At this check
+MATH child18396 is live at320/384; the diagnostic itself remains NOT RUN.
+
+The diagnostic uses Qwen3-8B last-layer q/v rank2 LoRA, four cardinal-move contexts,
+two JSON field orders/action, canonical controls, matched uniform initial action
+mass, and actual parameter gradients. Save every sample gradient and replay the
+covariance trace. Frozen numerical gate: relative mean-gradient discrepancy<=.02
+for BF16 backward and action-mass error<=1e-5. At least20% median variance reduction
+only admits designing a learning pilot, not a paper result. Estimate5-20 minutes
+unbenchmarked. No training is queued, no new independent task family claimed.
+
+Primary-source recheck of Baram et al., UAI2021 Action Redundancy in Reinforcement
+Learning (https://proceedings.mlr.press/v161/baram21a/baram21a.pdf, introduction and
+transition-entropy construction) confirms that action cloning and meaningful
+transition entropy are already occupied. The proposed diagnostic omits entropy
+regularization and isolates a score-estimator question; that distinction alone
+does not establish novelty. A useful learning-per-compute advantage beyond a
+canonical interface is still required, followed by external validation.
