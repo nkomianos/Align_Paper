@@ -767,3 +767,20 @@ or every nonlinear selection method. See RECIPE_SELECTION_GEOMETRY_AUDIT_2026091
 and recipe_selection_geometry_v1.json. No neural experiment or new theorem claim.
 GPU verified idle06:20 UTC. Next work needs a specified non-equivalent selector
 and credible headroom, rather than rerunning stopped screens or the security work.
+
+### Benign release provenance and material status correction
+
+Resolved all14 core Italian-food registry checkpoints to exact commits, verified
+registry Git blob identity, saved response/config SHA256 receipts.98 search
+entries are not98 independent original models. Weight metadata totals36.6GB;
+no weights downloaded or GPU experiment launched. See
+BENIGN_ORGANISM_RELEASE_AUDIT_20260910.md.
+
+Corrected the recent triage's erroneous "unimplemented" status: the original
+recipe-selection J0 already ran and failed. Its external replication was
+conditional on a pass. Public checkpoint availability does not override that
+gate. September5 audit also records missing old raw per-case scores. Preserve
+the narrow negative and its reproducibility limitation; no fresh raw replay
+claimed. A materially different successor has not been specified or admitted.
+The GPU remains idle at the latest SSH check (remote06:29 UTC). Security probes
+remain stopped. Submission readiness remains NO-GO.

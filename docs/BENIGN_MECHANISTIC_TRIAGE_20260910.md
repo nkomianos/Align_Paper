@@ -1,5 +1,18 @@
 # Benign mechanistic direction reassessment
 
+## Correction after reconciling the J0 record
+
+The description below of this candidate as "still unimplemented" is incorrect.
+RECIPE_INVARIANT_J0_FINAL_RESULT.md records a completed two-seed test, with
+held-out steering -0.095 and -0.224 percentage points, which closed the original
+selection method. AUDIT_PORTFOLIO_20260905.md also notes that raw per-case scores
+were not saved; archival summary integrity is not a fresh raw-row replication.
+The original candidate memo predates that result and must not reset its status.
+Only a materially different, explicitly specified successor could be unrun.
+No such successor currently qualifies for a GPU launch. The source-release
+inventory is developmental provenance work, not a revival or empirical result.
+The historical text below is retained to make the correction auditable.
+
 The generic steering/answer-encoding audit is already occupied. Gao, Peng,
 Wakamiya and Aramaki, arXiv2608.22985v1 (24August2026), explicitly freeze
 interventions while changing answer encodings and distinguish semantic labels,
