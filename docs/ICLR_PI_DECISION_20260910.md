@@ -17,6 +17,7 @@ neural result. The goal remains a complete, defensible paper, not this report.
 | Trace-before-context correction |Primary paper already includes warnings and relevant rereading controls | Literature overlap; our marginal bounds are elementary, not a new neural result. |
 | Censoring and action gradients |Completed narrow gradient diagnostics lack the required advantage | No admission for their conditional learning campaigns. |
 | Stronger MATH policy comparison |8B bank failed answer-format qualification;32B bank not run | No cross-policy reversal conclusion. Parser diagnosis did not retroactively qualify the bank. |
+| Posthoc MATH answer matching |300/384 explicit numeric target matches; only1DEV prefix gap>=.5 | Even arbitrary outcomes for unparsed/non-EOS rows permit at most3large-gap questions versus4required. No32B launch on this fixed bank under the corrected scoring. |
 | CLARA rule-edit pilot |42,624 exact Bayesian scene/query rows; saved-output verifier passes | Already run as CPU apparatus, not an untested GPU candidate. Query-oracle and joint-set operating points differ; no matched-risk method advantage or natural perception result. |
 | Thinking-model fork restoration |Distinct from the earlier nonthinking MATH bank; official source and costs inspected | Not run. No authenticated trained checkpoint identified; full reproduction not admitted within current resources. |
 | Security validator expansion |User explicitly stopped probes/payload inspection | Stopped by scope instruction, not a scientific refutation. Do not resume. |

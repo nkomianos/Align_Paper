@@ -77,3 +77,22 @@ numeric/symbolic extraction. Our restricted transport parser is infrastructure,
 not a new mathematical verification method. A future protocol must distinguish
 format validity, explicit-answer correctness and EOS rather than use successful
 flexible extraction as sufficient proof of an answer.
+
+## Corrected-score feasibility of the proposed follow-up
+
+`scripts/audit_math_gap_feasibility.py` verifies the original manifest and complete
+sample population before bounding the first policy's between-prefix gaps. Under
+explicit final numeric scoring, only1of16DEV questions has an absolute gap>=.5.
+Allowing every non-EOS or unparsed response either correctness outcome raises the
+maximum number of potentially qualifying questions to3. The planned comparison
+requires4questions with gaps>=.5 in BOTH models. Therefore no32B outcome on these
+fixed samples can satisfy that rule under this rescoring and its uncertainty set.
+
+This is a posthoc finite-bank feasibility bound, conditional on the explicit
+numeric scoring of completed responses. It is not a population bound, a test of
+all policy-dependence hypotheses, or permission to change the historical gate.
+Future resampling could change the bound, but requires a new justified protocol.
+The bound routine passed exhaustive binary-completion checks. Receipt:
+`artifacts/gh200_research_20260910/MATH_GAP_FEASIBILITY.json`.
+Consequently the32B follow-up remains closed even after resolving the score
+understatement. No additional model generation is useful for this fixed-bank gate.

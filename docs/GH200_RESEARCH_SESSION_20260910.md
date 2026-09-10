@@ -1025,3 +1025,13 @@ box/delimiter check supports300matches; one extra library match is a non-EOS
 equation extraction. These are all-row posthoc counts, not the old eligible-DEV
 accuracy denominator, new model results or a reopened gate. Artifacts retrieved,
 dependencies isolated, GH200 untouched. Restricted parser remains infrastructure.
+
+### Corrected MATH scoring still cannot support the fixed-bank32B gate
+
+Verified original manifest/sample population and computed sharp completion bounds
+for missing/non-EOS outcomes. Explicit numeric scoring yields1large-gap DEV question;
+allowing all unresolved outcomes adversarially yields at most3, fewer than4required
+for the planned cross-model reversal criterion. This posthoc bound is conditional
+on scoring completed explicit answers and applies to saved samples only. It closes
+the tempting32B continuation despite the score correction, without another GPU
+run. Saved MATH_GAP_FEASIBILITY.json and exhaustive binary-completion test.
