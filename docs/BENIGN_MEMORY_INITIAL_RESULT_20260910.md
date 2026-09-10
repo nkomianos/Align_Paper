@@ -27,3 +27,19 @@ Prior-art boundary: possible/certain answers over order-incomplete data already
 appear in TIME2017, https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.TIME.2017.4.
 No new partial-order theorem is claimed. Recent deterministic-freshness work also
 already separates extraction and resolution; see the protocol's literature links.
+
+## Reasoning-budget control completed
+
+Same-case reasoning control scores36/48, with48/48 parse/EOS. Extraction remains
+48/48, a25-point descriptive difference. Mean generated tokens: immediate
+direct10.2083, extraction36.3333, reasoning control72.3125. Equal192-token maxima
+therefore do not hide a larger realized output budget for extraction. However,
+prompt/task decomposition still differs, so this is not isolated causal proof
+of solver contribution or a measured end-to-end speedup. No independent-task
+confidence interval applies to four mechanism templates.
+
+Raw control manifest1ab54f31dfbf5947433409c5475c1f5f6702f552b5debe782be91fe981de4b6f.
+Remote/local replay agrees. Stage8 archive SHA256
+cf18fb925627e5cbee1004e53c7202af4ee97d3866a6ed56ed3b2c2d949fe008.
+The result admits the already specified second-family check and fresh benign
+data qualification. It does not authorize calling these cases natural data.

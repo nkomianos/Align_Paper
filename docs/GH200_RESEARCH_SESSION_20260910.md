@@ -694,3 +694,20 @@ Control live PID23183, root benign_memory_reasoning_v1, log with same name.log.
 11/48 calls completed in27.85 inference seconds at last process check. Verifier
 verify_benign_memory_reasoning.py compares original/run file hashes and recomputes
 answers and token counts. Retrieve/replay when terminal; do not duplicate launch.
+
+### Reasoning control verified; second family live
+
+PID23183 terminal. Reasoning control36/48, extraction48/48, all parse/EOS pass.
+Mean output tokens72.3125 vs extraction36.3333, immediate direct10.2083.
+Stage8 raw evidence retrieved/hash-verified; local replay agrees. SHA256
+cf18fb925627e5cbee1004e53c7202af4ee97d3866a6ed56ed3b2c2d949fe008.
+This is same-case diagnostic support, not fresh confirmation or a paper.
+
+Second-family frozen extraction runner now live PID23818 using cached pinned
+Mistral-Nemo-Instruct-2407 snapshot04d8a90549d23fc6bd7f642064003592df51e9b3.
+Root benign_memory_nemo_v1, log benign_memory_nemo_v1.log. Same96 calls, inputs,
+transport parser and gates; no prompt adjustment. Verify with existing
+verify_benign_memory_extraction.py. Only if qualified consider the same reasoning
+control. No automatic queue chain launched. Independently sourced benign partial
+order data remains unqualified; proScript's official dataset page was located,
+but semantic suitability and split provenance still require inspection.
