@@ -1295,3 +1295,19 @@ conformal neurosymbolic work already covers propagation of prediction sets.
 See appended CLARA_MATCHED_COVERAGE_AUDIT and audit_clara_simultaneous.py.
 No SSH/GPU use; no change to original OSH, reservation or16:55UTC window.
 Submission remains NO-GO. Do not admit a neural CLARA rerun from this apparatus.
+
+### 11:04 heartbeat: memory prior screen and AWS idle check
+
+StateFuse and TARL primary methods narrow generic conflict preservation,
+abstention and pending-update ideas. StateFuse explicitly reports strong flat
+baseline ties; TARL evaluates premature pending-state resolution. No exact
+partial-order equivalence or new empirical failure claimed. See
+MEMORY_CONFLICT_NOVELTY_SCREEN_20260910.md and saved source receipts.
+
+AWS44.203.253.82 read-only nvidia-smi compute-app query succeeded with empty output:
+no GPU compute process at this check. No launch or remote mutation. GH200 was not
+contacted despite reservation minimum having elapsed; OSH completion remains
+unverified and no admitted experiment needs it. No provider stop performed.
+If AWS exists only for this task, stopping it while CPU work continues avoids
+idle rental time; user action is required for provider lifecycle changes.
+Total authorization still ends16:55UTC; no extension inferred. Paper NO-GO.
