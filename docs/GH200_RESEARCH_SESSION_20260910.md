@@ -1332,3 +1332,14 @@ not passed. Flagged profile-moderation lead time and conditional one-paper quota
 for author teams with no eligible reciprocal reviewer; eligibility is unknown.
 See ICLR_COMPLETION_CRITICAL_PATH_20260910.md. No submission, account action,
 SSH or GPU work. No human review or author approval falsely claimed.
+
+### 11:55 heartbeat: latest DAIR list and research-allocation prior
+
+Pinned user-specified weekly list789f644f9cf213c192e5625fecbc57e580a4cced; latest
+weekAug31–Sep6. Inventoried ten titles, followed only AIResearchPreferenceModels
+2608.13940v1 as a new primary audit. Its online child-selection benefit and
+already-executed final-selection boundary are distinct and explicitly discussed.
+Generic pilot-based ranking is occupied; a judge score would not establish our
+paper's novelty/validity. Other titles are uninspected leads, not tested negatives.
+See DAIR_LATEST_RESEARCH_ALLOCATION_SCREEN. No SSH/GPU work, no new campaign,
+no security investigation.16:55UTC limit unchanged; goal active, paper NO-GO.
