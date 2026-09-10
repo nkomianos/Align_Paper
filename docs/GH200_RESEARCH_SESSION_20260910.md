@@ -1139,3 +1139,14 @@ local SSH exec session92491. Observed7/48completed, about2seconds per prefix.
 Do not duplicate. This is a target-distribution diagnostic, not thinking-collapse
 replication or model training. Retrieve full logit artifact and run independent
 verifier before interpretation. GH200 untouched. See PMI_PREFIX_DIAGNOSTIC_PROTOCOL.
+
+### AWS PMI diagnostic completed and independently verified
+
+Session92491 finished successfully; raw result_v1 retrieved.48prefixes/24questions,
+192forwards,101.77seconds from model-load start through serialization (weight
+hashing excluded). Verifier replays all saved logits within5e-5. Mean problem
+TV.08015, median.000919;10/48prefixTV>.1. Median base entropy.0001095nats makes
+most endpoints nearly deterministic, limiting fork-level interpretation. No
+reasoning-accuracy or training claim. No automatic training; next valid assay
+would need prospective uncertain thinking positions. AWS postrun process check
+empty; GH200 untouched. See PMI_PREFIX_DIAGNOSTIC_RESULT_20260910.md.
