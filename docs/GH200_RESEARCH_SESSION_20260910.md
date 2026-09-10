@@ -889,3 +889,24 @@ demonstrate raw cancellation is not admitted. Masked-value dependence survives
 at its earlier diagnostic scope. See NORMALIZATION_EXPECTATION.json and the
 updated FROZEN_VALUE_IMPLEMENTATION_AUDIT_20260910.md. No neural result or paper
 qualification; goal remains active.
+
+### User steering: GH200 reserved for OSH; alternative AWS host
+
+At approximately06:52 UTC September10, user reserved GH200192.222.58.223 for OSH
+for the next2–4 hours. Do not use or mutate that host during the reservation.
+Do not assume release at two hours; earliest conservative reassessment10:52 UTC,
+with OSH completion/availability checked before any return. Original overall
+16:55 UTC window has not been extended. No task job was running on GH200 at the
+last check before the user's reservation; no OSH process was stopped.
+
+User authorized ubuntu@44.203.253.82 using the same ECE4150-LAB2.pem key. Read-only
+preflight confirms x86_64,8 CPUs,62GiB host RAM,176GB free root disk, RTX PRO6000
+Blackwell Server Edition GPU97887MiB, driver595.91.07, no GPU compute processes.
+Default Python3.14.4 lacks torch/transformers/accelerate/huggingface-hub. This is
+hardware availability, not a qualified experiment runtime. Use an isolated
+compatible research environment; do not copy the aarch64 GH200 environment.
+
+Updated existing15-minute heartbeat to Monitor AWS ICLR research with the new
+host and explicit GH200 reservation. No experiment launched or checkpoint
+downloaded on AWS yet. Security work remains stopped. Local CPU critic analysis
+can continue without either GPU. The current scientific goal/standards remain.
