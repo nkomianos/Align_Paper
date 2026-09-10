@@ -77,3 +77,18 @@ survive that screening. Kill the paper pitch if matching preservation removes
 the proposed new effect without yielding a useful independent result, or if it
 amounts only to the established observation that replay reduces forgetting.
 Current paper status remains NO-GO; this candidate has no empirical result yet.
+
+## Prior-art screen of the preservation ingredient
+
+Primary abstracts inspected: [GR-SAP, v2 August 24, 2026](https://arxiv.org/abs/2603.10243)
+already proposes generative replay to preserve alignment during downstream
+fine-tuning; [f-DPO](https://arxiv.org/abs/2309.16240) studies preference
+optimization with several divergence constraints, including forward KL;
+[RSPO](https://arxiv.org/abs/2503.00030) studies regularization choices in
+self-play alignment. These are not full independent implementation audits.
+
+Thus neither adding replay nor choosing forward KL is a defensible standalone
+novelty claim. These sources do not by themselves answer the specific ReSO
+matched-preservation comparison. That remains an attribution question requiring
+direct evidence, not an already established refutation or a new method. A
+small generic replay pilot would not resolve the full claim and is not admitted.

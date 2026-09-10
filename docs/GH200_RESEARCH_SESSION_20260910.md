@@ -1087,3 +1087,14 @@ settings. Faithful8B full-parameter+reference run does not fit the AWS GPU under
 ordinary Adam state accounting. No model/dataset/security job launched; smaller
 benign pilot would require its own task/novelty qualification. See
 RESO_MATCHED_PRESERVATION_SCREEN_20260910.md. GH200 reservation respected.
+
+### Corrected conservative-repair interpretation and preservation novelty screen
+
+Added posthoc all-graph marginal first-bad calibration with infinity for45/60
+error-free calibration graphs. Same frozen61evaluation questions:56covered,
+49.34% mean nodes retained,61nonempty, matching released outputs. Valid repair
+therefore does NOT inherently require total abstention; earlier result was the
+stronger conditional-on-error repair. Two exact rank tests passed. No novelty
+or empirical advantage established. ReSO preservation ingredient separately
+collides with established replay/divergence work; its specific attribution
+question remains untested. AWS process query performed; GH200 untouched.

@@ -137,3 +137,29 @@ arm and trained-author-scorer reconstruction remain unrun. Stop automatic
 expansion here: standard corrections plus total abstention are not an ICLR
 contribution. Further work needs an independently useful question and verified
 score provenance, rather than another scorer selected for a favorable result.
+
+## Correction: marginal calibration need not return empty outputs
+
+The preceding empty-output result applies to the conditional-on-error repair,
+not to all valid no-false calibration. A standard marginal alternative assigns
+one earliest-bad score per calibration graph and +infinity to graphs with no bad
+prefix. It targets the requested unconditional coverage without imposing a
+stronger conditional guarantee on the error-containing subpopulation.
+
+Executed this additional control after seeing the earlier results, so it is
+explicitly posthoc. `scripts/audit_itcr_marginal_control.py` preserves the frozen
+splits and constant scorer. Of 60 calibration graphs, 45 have no false prefix.
+The sixth-smallest score gives threshold 1.0 with strict acceptance. On the same
+61 evaluation questions, it covers 56, retains mean node fraction 0.4934, and
+returns nonempty output for all 61: the same observed result as the released
+rule. Artifact: `MARGINAL_CONSTANT_CONTROL.json`. Discrete enumeration tests
+including the no-error infinity sentinel passed alongside the earlier rank tests.
+
+The elementary rank argument applies to one exchangeable extended-real score
+per graph; a false retained prefix requires its finite first-bad score to fall
+strictly below the calibrated order statistic. Infinite scores represent no
+possible false-prefix event. This is standard conformal calibration, not a new
+method. It corrects any interpretation that valid repair necessarily entails
+total abstention here. Neither the matched observed outcome nor this posthoc
+control retroactively validates the released rule's universal guarantee. There
+is still no demonstrated practical advantage or paper-qualified contribution.
