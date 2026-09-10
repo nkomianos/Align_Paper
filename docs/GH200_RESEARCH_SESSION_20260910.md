@@ -1270,3 +1270,16 @@ No new campaign is admitted; u-OPSD weights remain a prepared substrate only.
 No SSH/GPU activity; GH200 reservation and16:55UTC reassessment unchanged.
 A fresh full Git bundle will preserve this committed code/document state; raw
 ignored neural artifacts remain separate and must not be assumed inside Git.
+
+### 10:29 heartbeat: CLARA matched-coverage reanalysis
+
+Verified all four original clara_cpu_final manifest entries and recomputed
+posterior-oracle risk at exactly the joint acceptance count. Pooled error falls
+from.00721857 to.00443658 at coverage.614208, but within each of nine noise cells
+joint and oracle risks are identical. Four full-coverage cells are trivial;
+five partial-coverage cells also match. Thus the pooled gap is cross-setting
+acceptance allocation, not inferior within-setting ranking. Posthoc Bayesian
+apparatus only, not a simultaneous-guarantee comparison or learned-model result.
+See CLARA_MATCHED_COVERAGE_AUDIT_20260910.md and its executable replay.
+No SSH/GPU use, no original OSH work touched. No training admission; GH200
+reservation and16:55UTC window unchanged. Submission remains NO-GO.
