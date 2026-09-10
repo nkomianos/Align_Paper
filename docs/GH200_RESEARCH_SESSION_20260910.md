@@ -875,3 +875,17 @@ eb0b2a22de89ce5df562681313b62fea511a01d4e3660a90cf8e476f44b32556.
 Sidecar saved. Existing bundles and retrieved run archives preserved. This bundle
 backs up tracked source/history, not ignored raw artifacts or model caches.
 No provider termination, publication, external message or new GPU job performed.
+
+### Critic training alignment and exact expectation qualify the source critique
+
+Previous turn reconciled main readiness and backed up source. Inspected preference
+critic builder and its actual reward-target/loss alignment. Then executed the
+released isolated normalization/advantage routine across24 exact binomial batch
+expectations in a calibrated two-step MDP. Normalization preserves a positive
+signal at lambda1 despite the raw telescoping identity; batch1=.353553,
+batch32=.011229, true reward gradient=.5. Here the sign is correct. Thus no
+"released DVPO cannot learn" inference is justified, and training a critic to
+demonstrate raw cancellation is not admitted. Masked-value dependence survives
+at its earlier diagnostic scope. See NORMALIZATION_EXPECTATION.json and the
+updated FROZEN_VALUE_IMPLEMENTATION_AUDIT_20260910.md. No neural result or paper
+qualification; goal remains active.

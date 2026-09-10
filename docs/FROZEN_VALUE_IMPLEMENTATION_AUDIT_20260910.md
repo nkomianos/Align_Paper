@@ -122,3 +122,41 @@ trained toy critic and call it DVPO reproduction. The verified normalization
 finding remains useful engineering evidence; without demonstrated learning impact
 and a broader differentiated contribution it is not a sufficient paper thesis.
 Retraining a replacement critic is not admitted solely to keep the GPU occupied.
+
+## Calibrated-value expectation check: limits the critique
+
+Inspected the released preference critic builder and VASTrainer training path.
+Terminal preference scores enter its return targets; loss compares those targets
+with predictions shifted to the position before the next token. This is a
+state-value alignment in the inspected path. It is not automatically the paper's
+Q(s,a) alignment. No training entry point was executed and no historical run
+configuration was authenticated.
+
+audit_value_normalization_expectation.py now enumerates every binomial composition
+of on-policy batches of size1,2,4,8,16,32, for lambda0,.5,.95,1. The constructed
+two-step MDP has terminal reward+1/-1, probability1/2, exact shared root value0
+and exact next-state value+1/-1. No critic-estimation error is needed. A terminal
+head output0 is included in upstream prewhitening and then trimmed as in the
+inspected path. The released isolated advantage function and pinned compatible
+TRL helpers are executed; this is not the full training program.
+
+Without normalization, the expected root-logit update is(1-lambda)/2 and vanishes
+at lambda1. With the released normalization it does NOT vanish: at lambda1 it is
+0.353553 for batch1 and0.011229 for batch32. At lambda.95 the corresponding
+updates are0.353553 and0.045749. The true terminal-reward gradient is0.5.
+All unnormalized checks agree with the analytical expression to1e-12.
+
+The normalization pools values from states reached after the sampled action,
+so the final centered/scaled quantity is not an action-independent baseline.
+This explains why a simple expected-baseline cancellation cannot characterize
+the complete released update. In this example the surviving signal has the
+RIGHT sign. It does not show harm, inability to learn, or a benchmark regression.
+Gradient magnitudes also cannot be equated with final utility under an optimizer.
+
+Evidence: artifacts/dvpo_source_audit_20260910/NORMALIZATION_EXPECTATION.json.
+This is exact finite-batch arithmetic with floating-point tensor execution, not
+Monte Carlo evidence or independent neural replication. Clipping, learning
+trajectories, critic quality and deployment performance remain untested. Preserve
+the masked-value dependence finding but reject any extrapolation from raw
+telescoping to "DVPO has no learning signal." No critic training campaign is
+admitted on that argument.
