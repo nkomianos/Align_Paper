@@ -25,12 +25,15 @@ def main():
         trace=json.loads(row['trace'])
         if trace.get('source_dataset')=='yoonholee/terminalbench-trajectories':
             cohort.append((row,trace));names.add(trace['trial_name'])
-    originals=defaultdict(list)
+    originals=defaultdict(list);invalid_original_payloads=Counter()
     for file in a.source.glob('*.parquet'):
         for batch in pq.ParquetFile(file).iter_batches(batch_size=128):
             for row in batch.to_pylist():
                 if row['trial_name'] not in names:continue
                 steps=json.loads(row['steps']) if row['steps'] else []
+                if not isinstance(steps,list) or any(not isinstance(step,dict) for step in steps):
+                    invalid_original_payloads[type(steps).__name__]+=1
+                    continue
                 row['canonical_hash']=fingerprint(canonical_steps(steps))
                 row['steps_sha256']=hashlib.sha256((row['steps'] or '').encode()).hexdigest()
                 row['n_steps']=len(steps);row['shard']=file.name
@@ -54,6 +57,7 @@ def main():
         'labels':[r['released_label'] for r in rows],'event_identity_proven':False}
         for key,rows in by_trial.items() if len(rows)>1]
     summary={'cohort_rows':len(cohort),'unique_trial_name_model_keys':len(by_trial),
+        'matching_trial_original_rows_with_invalid_step_payload':dict(invalid_original_payloads),
         'rows_with_exact_original_match':sum(r['exact_source_matches']>0 for r in records),
         'repeated_trial_keys':len(repeats),'repeated_trial_keys_with_different_labels':sum(len(set(r['labels']))>1 for r in repeats),
         'rows_with_unresolved_user_in_original':sum(r['source_unresolved_user'] for r in records),

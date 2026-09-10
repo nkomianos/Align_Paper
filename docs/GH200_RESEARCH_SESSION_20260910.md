@@ -478,3 +478,21 @@ misreading is also demonstrated in a unit counterexample, but no observed false
 positive of that kind is claimed. Older GSM banks replayed with their different
 prefix_index schema; limited diagnostic coverage prevents blanket certification.
 See the appended results note. No old raw rewards rewritten or GPU rerun launched.
+
+### Full-release monitor audit
+
+Extended structural audit to all4472 CheatBench rows:3196 accepted by our observer
+projection,544 retrospective reports,218 unsupported schemas,194 eventless,
+320 unresolved user references. These statuses are not equivalent to mislabeled
+data. Two pairs have byte-identical trace strings with benign/cheating labels;
+metadata and rationales differ. This only forces two errors for a deterministic
+trace-only classifier, not a broad benchmark-failure claim. Full memo:
+docs/FULL_MONITOR_OBSERVABILITY_AUDIT_20260910.md.
+
+Upstream replay covers583 released original-source rows:394 exact event matches,
+189 matching-name original JSON-null step payloads. Fixed our full-source audit
+to record null payloads. Fixed our recovery join to avoid hash-only cross-trial
+overwrites. Full recovery54 candidates yields18 compatible; original20 still
+yield8. Five recovery/identity tests pass. All earlier failed directories and raw
+labels preserved. This is source audit progress; no monitor neural run admitted,
+no paper green light, and no automatic restart of completed GPU queues.

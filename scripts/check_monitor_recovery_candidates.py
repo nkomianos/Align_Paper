@@ -9,6 +9,11 @@ import pyarrow.parquet as pq
 from run_unexplored_screens import dump,sha
 
 
+def identity_matches(rows,trial_name,model,agents,trial_id=None):
+    return [r for r in rows if r['trial_name']==trial_name and r['model']==model
+            and r['agent'] in agents and (trial_id is None or r['trial_id']==trial_id)]
+
+
 def differences(partial,full,path=''):
     if partial==full:return []
     if isinstance(partial,str) and re.fullmatch(r'\$\d+',partial):
@@ -40,13 +45,22 @@ def main():
         for batch in pq.ParquetFile(file).iter_batches(batch_size=128):
             for row in batch.to_pylist():
                 h=hashlib.sha256((row['steps'] or '').encode()).hexdigest()
-                if h in wanted:originals[h]=row
+                if h in wanted:originals.setdefault(h,[]).append(row)
     assert set(originals)==wanted
     results=[]
     for record in selected:
-        partial=originals[record['source_rows'][0]['steps_sha256']]
-        full=originals[record['complete_original_candidates'][0]['steps_sha256']]
-        assert partial['trial_name']==full['trial_name'] and partial['model']==full['model'] and partial['agent']==full['agent']
+        partial_matches=identity_matches(originals[record['source_rows'][0]['steps_sha256']],
+                         record['trial_name'],record['released_model'],record['source_agents'])
+        candidate=record['complete_original_candidates'][0]
+        full_matches=identity_matches(originals[candidate['steps_sha256']],record['trial_name'],
+                         candidate['model'],[candidate['agent']],candidate['trial_id'])
+        if len(partial_matches)!=1 or len(full_matches)!=1 or partial_matches[0]['agent']!=full_matches[0]['agent']:
+            results.append({'id':record['id'],'compatible_retained_fields':False,'differences':[],
+                'classification':'SOURCE_IDENTITY_NOT_UNIQUE_OR_HARNESS_MISMATCH',
+                'partial_matches':len(partial_matches),'full_matches':len(full_matches),
+                'independent_label_verified':False})
+            continue
+        partial=partial_matches[0];full=full_matches[0]
         left=json.loads(partial['steps']);right=json.loads(full['steps']);diff=differences(left,right,'steps')
         unexplained=sum(d['kind']=='unexplained_difference' for d in diff)
         accepted=unexplained==0 and bool(full['trial_id']) and len(left)==len(right)
@@ -63,6 +77,7 @@ def main():
                 'scope':'Original fuller transcript; compatible with retained fields of damaged version. Not independently labeled.'})
         results.append(row)
     summary={'candidates':len(results),'retained_field_compatible':sum(r['compatible_retained_fields'] for r in results),
+        'identity_rejections':sum(r['classification']=='SOURCE_IDENTITY_NOT_UNIQUE_OR_HARNESS_MISMATCH' for r in results),
         'difference_kinds':dict(Counter(d['kind'] for r in results for d in r['differences'])),'neural_admitted':False}
     dump(a.out/'AUDIT.json',{'summary':summary,'records':results,'source_audit_sha256':sha(a.audit),'script_sha256':sha(Path(__file__))})
     dump(a.out/'MANIFEST.json',{p.name:sha(p) for p in a.out.iterdir() if p.is_file()})
