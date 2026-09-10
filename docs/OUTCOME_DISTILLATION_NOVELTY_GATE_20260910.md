@@ -30,3 +30,32 @@ whether a correction retains its benefit on unseen problem families. Both need
 further novelty checks, more than one clean task-level witness, capability and
 parser qualification, and a measured compute plan before model runs. Prior
 results remain unchanged; no published benchmark result is invalidated here.
+
+## 09:56 follow-up: advantage and teacher-free baselines
+
+[Unmasking On-Policy Distillation](https://arxiv.org/html/2605.10889v1),
+Sections2.1-2.5, already defines teacher advantage as the difference between
+teacher- and student-weighted continuation success. It renormalizes over a
+sufficiently visited token subset and estimates local logit-gradient alignment
+using targeted rollouts. AppendixC explicitly acknowledges unvisited-token and
+compute limitations; AppendixE.3 labels selective filtering as an oracle analysis.
+Thus the contrast in our POSITION_RELIABILITY_AUDIT is not a new diagnostic.
+The derivation is at the local-logit level; do not describe it as an independently
+validated prediction of a shared-parameter training update. We have not replicated
+its measurements or established that its rankings fail after actual training.
+
+[OPSA](https://arxiv.org/html/2608.31046v1), Sections3.2-4.2, already studies
+teacher-free negative advantages on selected low-probability tokens and an
+entropy-dependent version. Generic teacher removal or entropy-driven tail
+suppression therefore also needs this baseline. Its noise label is defined from
+advantage sign and final-answer correctness; that operational definition alone
+does not establish whether an individual intermediate token is causally harmful.
+We have not reproduced its gains or invalidated that study.
+
+Both primary HTML snapshots and hashes are saved in
+artifacts/outcome_distillation_screen_20260910/ADVANTAGE_PRIOR_RECEIPTS.json.
+The exact remaining-horizon null survives as a measurement warning. It does not
+supply the missing novelty or an empirical learning result. Do not admit a large
+branch bank for generic teacher-advantage scoring. A distinct experiment would
+need an independently motivated failure condition beyond these existing
+contrasts, and validation against actual held-out behavior under equal compute.

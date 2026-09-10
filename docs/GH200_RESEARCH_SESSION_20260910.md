@@ -1247,3 +1247,15 @@ and a separate held-out learning endpoint. See POSITION_RELIABILITY_AUDIT_202609
 
 No GPU launch or SSH contact in this continuation. GH200 reservation and16:55UTC
 window unchanged. No security investigation resumed; paper remains NO-GO.
+
+### 09:56 heartbeat: exact advantage-diagnostic collision identified
+
+Primary sections of UnmaskingOPD2605.10889v1 already contain teacher-weighted
+minus student-weighted continuation success, local-logit gradient alignment and
+targeted rollout acquisition. Its oracle filtering and unvisited-token limitation
+are explicitly acknowledged. OPSA2608.31046v1 also occupies teacher-free negative
+advantages on low-logp tokens with entropy scaling. Snapshots retained with hashes.
+See updated OUTCOME_DISTILLATION_NOVELTY_GATE. Generic advantage scoring is not an
+admitted new campaign. No published result was replicated or disproved here.
+No GPU/SSH use; GH200 reservation remains until at least10:52UTC plus verification.
+Paper remains NO-GO and total window ends16:55UTC. Goal remains active.
