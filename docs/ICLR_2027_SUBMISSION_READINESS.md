@@ -1,5 +1,18 @@
 # ICLR 2027 submission readiness after the independent audit
 
+## Latest decision — 10 September, morning UTC
+
+**NO-GO.** See [the current six-part PI decision](ICLR_PI_DECISION_20260910.md)
+and [execution ledger](GH200_RESEARCH_SESSION_20260910.md). Security probes are
+stopped at the user's instruction; their historical queue is not active. The
+Qwen memory positive remains narrow and its second-family extraction failed
+qualification. Natural-data audits do not supply direct external validation.
+The frozen-value source diagnostic is not a neural replication; no trained GVM
+was identified in the scoped search. No prepared GPU follow-up currently has
+both qualified prerequisites and a differentiated scientific claim. The current
+Hindsight manuscript is explicitly incomplete, not submission-ready. Preserve
+the dated assessments below as history; do not use them as launch instructions.
+
 ## Superseding status — 10 September 2026 UTC
 
 **Still NO-GO for submission; active research continues.** A new user-authorized

@@ -1,0 +1,91 @@
+# Scientific decision after the GH200 follow-ups
+
+As of the September10 morning audit: **NO-GO for submission**. The previous turn
+made progress by auditing external-label suitability; it did not produce a new
+neural result. The goal remains a complete, defensible paper, not this report.
+
+## 1. Correction and audit ledger
+
+| Claim or direction | Surviving evidence | Classification / correction |
+|---|---|---|
+| Qwen structured memory |48/48 extraction answers versus34/48 direct and36/48 reasoning control | Narrow valid positive on four synthetic mechanisms; not48 independent tasks. |
+| Cross-family structured memory |Nemo extraction30/48 versus29/48 direct;18 reversed graphs | Semantic extraction qualification failed. No replicated method advantage. |
+| Natural memory validation |proScript and TORQUE source audits completed | Developmental only; neither supplies the required state-update/ambiguity labels. |
+| Recipe-invariant mechanism selection |Original two-seed J0 failed; old per-case scores missing | Narrow negative with archival limits. Recent "unimplemented" description corrected; no automatic external replication. |
+| Frozen-value normalization |Released isolated tensor routine changes active advantages when masked values change | Verified implementation diagnostic; no learned-model performance result or authenticated historical dependency configuration. |
+| Frozen DVPO critic replication |No identifiable trained GVM found in scoped release/HF search | Not run; not proof of universal checkpoint unavailability. |
+| Trace-before-context correction |Primary paper already includes warnings and relevant rereading controls | Literature overlap; our marginal bounds are elementary, not a new neural result. |
+| Censoring and action gradients |Completed narrow gradient diagnostics lack the required advantage | No admission for their conditional learning campaigns. |
+| Stronger MATH policy comparison |8B bank failed answer-format qualification;32B bank not run | No cross-policy reversal conclusion. Parser diagnosis did not retroactively qualify the bank. |
+| Security validator expansion |User explicitly stopped probes/payload inspection | Stopped by scope instruction, not a scientific refutation. Do not resume. |
+
+Each row summarizes linked source/result records in GH200_RESEARCH_SESSION_20260910.md.
+This is not a fresh full-portfolio raw replay or an exhaustive experiment count.
+No model calls, repeated views, source files or unit tests are counted as new
+independent experiments in this report.
+
+## 2. Conclusions that survive or change
+
+The narrow memory positive and mathematical identification witnesses survive at
+their stated scope. Neither supplies a novel replicated neural method. Broad
+claims of safe intent, universal mechanisms, natural preference change or
+submission readiness remain unsupported. Invalid interfaces and organisms do
+not establish universal scientific negatives. Available checkpoints and passing
+verifiers do not override failed scientific admission criteria.
+
+## 3. Strongest remaining thesis
+
+No current thesis meets the full submission standard. The strongest recent
+measured seed is that explicitly representing unresolved order can improve a
+model's decisions in a controlled memory task. Its graph/solver components have
+close prior art, its natural estimand is unvalidated, and its second-family result
+did not qualify. Treat it as a seed requiring a distinct contribution, not as
+the chosen abstract. The normalization audit is a concrete correction candidate,
+but a single implementation issue is not presently a sufficient paper package.
+
+## 4. Hindsight disposition
+
+Keep the existing neural method campaign parked. The restricted formal result
+is retained; do not restart the historical gradient/policy queue unchanged.
+Revival requires a qualified learning setup, an advantage over simple equal-label
+controls and an external measurement that actually addresses persistence. Those
+requirements are not solved by another prompt screen. Original OSH stays outside
+this task, as requested.
+
+## 5. Next experiment and conditional queue
+
+There is currently **no admitted, deployment-ready scientific GPU follow-up**.
+This is narrower than saying there are no possible worthwhile experiments.
+The outstanding blockers differ by direction: a new method and external labels
+for memory; a qualified learned critic/configuration and demonstrated relevance
+for the implementation audit; a materially different selector for recipe transfer.
+
+Do not assign a runtime or queue a replacement study before specifying its exact
+claim, inputs and controls. Any next study must declare its primary endpoint,
+capability/measurement qualification, simple and published controls, unit of
+analysis, fresh development/confirmation boundary and interpretation of failure.
+Only a qualified development result admits independent seeds/family and external
+confirmation. Runtime admission uses measured throughput and completion/retrieval
+reserve; no arbitrary wall-clock termination of valid runs.
+
+## 6. Actual paper completion plan
+
+The current paper/main.tex explicitly disclaims submission qualification and
+still contains unrun sparse Hindsight methods. It is a working record, not the
+requested final paper. Do not polish it into an apparently completed submission.
+
+First establish one differentiated, useful result; then freeze the claim and
+replicate it with independent units and strong baselines. Reproduce every proposed
+table from immutable outputs before writing the results abstract. Only after
+that decision should the nine-page narrative, proof appendix, limitations,
+bibliography, anonymization and substantive AI-use statement be finalized.
+
+The earlier September11–12 scientific decision milestone remains a decision
+point, not a promise. If the scientific requirements remain unmet, recommend a
+later venue rather than a placeholder ICLR abstract. Acceptance confidence cannot
+be inferred from effort, code volume, rental time or a positive toy result.
+
+The active heartbeat preserves the exclusive window ending16:55 UTC. No OSH
+environment mutation, new external message, publication or provider termination
+has been performed. A verified idle GPU still incurs rental costs; the current
+CPU-only work does not benefit from keeping the instance running.
