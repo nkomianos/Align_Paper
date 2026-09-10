@@ -23,6 +23,15 @@ INSTRUCTIONS = {
                      'as [later event ID, earlier event ID] pairs. Include all explicit relations only.',
 }
 
+def instructions(version):
+    result=dict(INSTRUCTIONS)
+    if version==2:
+        for arm in ARMS[1:]:
+            result[arm] += (' Return exactly two top-level keys, "values" and "edges". '
+                            '"values" must be an array of integers indexed by event ID. '
+                            'Do not output events, threshold, explanations, or any other keys.')
+    return result
+
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
@@ -131,7 +140,8 @@ def run(args):
     assert not subprocess.check_output(['nvidia-smi','--query-compute-apps=pid','--format=csv,noheader'],text=True).strip()
     args.out.mkdir(parents=True,exist_ok=False)
     rows=prepare(); dump(args.out/'INPUTS.json',rows)
-    dump(args.out/'CONFIG.json',dict(source_sha256=sha(__file__),instructions=INSTRUCTIONS,
+    prompts=instructions(args.schema_version)
+    dump(args.out/'CONFIG.json',dict(source_sha256=sha(__file__),instructions=prompts,schema_version=args.schema_version,
          arms=ARMS,max_new_tokens=192,model=str(args.snapshot),dtype='bfloat16',thinking=False))
     dump(args.out/'MODEL.json',{p.name:sha(p) for p in args.snapshot.iterdir()
          if p.is_file() and p.suffix in ('.json','.safetensors','.jinja')})
@@ -147,7 +157,7 @@ def run(args):
     with (args.out/'OUTPUTS.jsonl').open('x',encoding='utf-8') as f,torch.inference_mode():
         for r in rows:
             for arm in ARMS:
-                prompt=tok.apply_chat_template([{'role':'system','content':INSTRUCTIONS[arm]},
+                prompt=tok.apply_chat_template([{'role':'system','content':prompts[arm]},
                     {'role':'user','content':r['text']}],tokenize=False,add_generation_prompt=True,enable_thinking=False)
                 encoded=tok(prompt,add_special_tokens=False,return_tensors='pt').to('cuda')
                 ids=model.generate(**encoded,generation_config=cfg)[0,encoded.input_ids.shape[1]:].tolist()
@@ -161,6 +171,7 @@ def run(args):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('mode',choices=['prepare','run','score'])
     p.add_argument('--out',type=Path,required=True);p.add_argument('--snapshot',type=Path)
+    p.add_argument('--schema-version',type=int,choices=[1,2],default=1)
     a=p.parse_args()
     if a.mode=='prepare':
         a.out.parent.mkdir(parents=True,exist_ok=True);dump(a.out,prepare())
