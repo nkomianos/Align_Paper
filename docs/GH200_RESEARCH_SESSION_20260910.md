@@ -302,3 +302,60 @@ source qualification and primary-source differentiation. Do not relaunch complet
 pilots, expand failed video, or treat isolated component reproduction as a paper.
 The updated 15-minute heartbeat remains active until 16:55 UTC and records this
 priority. It has the user's exclusive GPU authorization. Goal remains incomplete.
+
+## Active harder reasoning queue and monitoring corrections, 04:04 UTC
+
+Previous turn made progress: completed new experiments, verified evidence and
+changed next actions. This turn adds a new frozen external bank and repairs the
+monitor observer-view admission. Goal remains active; no paper qualification.
+
+**LIVE:** queue_math_policy_values.py PID 18395 and its first bank PID 18396 were
+both confirmed live at 04:03:42 UTC; GPU 17,453 MiB, 37% instantaneous utilization.
+math_bank8_v2 had 24/24 prefix questions and 16/384 continuation draws written.
+No conclusions from partial results. Read math_policy_queue_v2.log,
+math_bank8_v2.log / PROGRESS.json, then math_bank32_v2 if admitted. Do not duplicate.
+
+Protocol committed BEFORE launch at 064975d. MATH500 public source revision
+6e4ed1a2a79af7d8630a6b768ec859cb5af4d3be; test.jsonl SHA256
+35dc41080a3680858b27fa7e0533d2d547825316fc5dafe5d316f4ccc5a06132.
+Source/raw receipt local artifacts/gh200_research_20260910/math500. This public
+test release is declared DEV for our study, not a historical locked confirmation
+split or uncontaminated evaluation. Selection: first 24 salted-ID-ranked level4/5
+integer-answer cases among 156 eligible, first8 calibration/final16 DEV, seven
+math subjects. No model outcomes used to select questions. Native Qwen3-8B samples
+two 128-token prefixes at temperature1, then eight 2048-token-horizon continuations
+per prefix at temperature.8 full support. Qwen3-32B receives identical literal
+prefixes, but only after first-bank qualification. This tests two capacities in
+ONE family, not second-family replication or a new PRM method.
+
+Qualification: parse coverage >=.95, EOS rate >=.90, >=12 DEV questions with neither
+prefix ended/containing an answer, eligible DEV mean accuracy .10-.90. Routing:
+>=4 opposite prefix rankings with within-policy gaps >=.5 in both policies merits
+fresh independent continuation seeds; otherwise stop this screen. No confidence
+claim from eight samples or from routing alone. Prior literature already treats
+policy-conditioned prefix values, so even a qualified reversal needs a distinct
+scientific question and external replication. Estimated both runs 45-100 minutes;
+first observed batches were ~10-11s/eight draws after 214s prefix generation.
+There is ample admission margin before 16:55 UTC; no midrun kill is scheduled.
+
+Monitoring: new full_overlap_event_view_v3 rejects six retrospective reports.
+Further raw review found 70 cheatbench.raw_trace.v1 sources with user message
+references like "$32", often no stored files to resolve them. V4 now rejects
+those as UNRESOLVED_USER_MESSAGE_REFERENCE. Four targeted tests pass, including
+preservation of real instructions containing currency. V4 prepares134 of214;
+six reports, seventy unresolved user references and four no-event sources fail.
+All older raw data/views are preserved. No monitor model has been run.
+
+audit_monitor_admission_v3.py additionally extracts exact -p task instructions
+from ForgeCode commands without executing shell content. It extracts75; this is
+extractor coverage, not proof other schemas lack task instructions. Exact same
+task/model/harness/INSTRUCTION and <=30k view matching leaves7 cells on6 provisional
+tasks,9 positive and16 benign labels. Manifest/report in
+artifacts/monitor_external_sources_20260909/admission_v4. This is a selected cohort,
+not full-benchmark coverage or independent validation. TASK_POSITIVE_REVIEW_QUEUE
+contains source annotations for subsequent complete-trace review, not blinded
+independent labels. The release explicitly includes unauditable traces in benign;
+loc_evidence_source often names monitor predictions and must not be mistaken for
+independent human semantic validation. Do not automatically relabel those traces
+as unsafe or declare the entire benchmark invalid. Resolve complete task context,
+benchmark policy and label provenance before a true safe/violation comparison.

@@ -12,7 +12,9 @@ def audit(root):
     data={r['id']:r for r in json.loads((root/'INPUTS.json').read_text())}
     prefixes={(r['base'],r['index']):r for r in json.loads((root/'PREFIXES.json').read_text())}
     rows=[json.loads(x) for x in (root/'ROLLOUTS.jsonl').read_text().splitlines()]
-    assert len(rows)==384 and len({(r['base'],r['prefix_index'],r['sample']) for r in rows})==384
+    assert len(rows)==384 and {(r['base'],r['prefix_index'],r['sample']) for r in rows}=={
+        (base,prefix,sample) for base in data for prefix in (0,1) for sample in range(8)}
+    eos_id=json.loads((root/'MODEL.json').read_text())['eos_token_id']
     groups=defaultdict(list);eligible=[]
     for base,row in data.items():
         if row['split']=='dev' and not any(prefixes[base,j]['ended'] or prefixes[base,j]['has_answer'] for j in (0,1)):eligible.append(base)
@@ -21,6 +23,9 @@ def audit(root):
         assert source['target']==r['target'] and source['split']==r['split']
         parsed=answer(prefix['text']+r['completion']);assert parsed==r['parsed_answer']
         assert r['reward']==int(parsed==source['target']) and r['length']==len(r['ids'])
+        assert r['eos']==bool(r['ids'] and r['ids'][-1]==eos_id)
+        assert eos_id not in r['ids'][:-1] and 0<len(r['ids'])<=2048
+        assert r['prefix_ended']==prefix['ended'] and r['prefix_has_answer']==prefix['has_answer']
         groups[r['base'],r['prefix_index']].append(r['reward'])
     assert all(len(v)==8 for v in groups.values()) and len(groups)==48
     dev=[r for r in rows if r['base'] in eligible]

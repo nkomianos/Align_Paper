@@ -3,7 +3,7 @@
 Not a claim to include every source file or to verify labels. No selection uses
 gold localization, labels, model scores or trace length.
 """
-import argparse,hashlib,json
+import argparse,hashlib,json,re
 from collections import Counter
 from pathlib import Path
 import pyarrow.parquet as pq
@@ -25,6 +25,14 @@ def project(trace):
     # still leave embedded configuration/outcome summaries in later content.
     if any(isinstance(event,dict) and event.get('kind')=='report_prelude' for event in source):
         return None,{'status':'RETROSPECTIVE_REPORT_SOURCE_REJECTED','field':field}
+    # This released raw schema contains unresolved serialized message references.
+    # A monitor cannot infer a task from "$32". Preserve raw data; do not invent
+    # referenced text or silently score a task-conditioned monitor without it.
+    if trace.get('schema_version')=='cheatbench.raw_trace.v1' and any(
+            isinstance(event,dict) and event.get('src')=='user' and
+            isinstance(event.get('msg'),str) and re.fullmatch(r'\$\d+',event['msg'])
+            for event in source):
+        return None,{'status':'UNRESOLVED_USER_MESSAGE_REFERENCE','field':field}
     unknown=set();view=[]
     for event in source:
         if not isinstance(event,dict):return None,{'status':'UNSUPPORTED_EVENT_TYPE','field':field}
