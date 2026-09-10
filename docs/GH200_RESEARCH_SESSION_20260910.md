@@ -1196,3 +1196,21 @@ See CACHED_CONSENSUS_FEASIBILITY. Recent source screens add novelty collisions;
 no submission-qualified thesis emerges. Goal remains active, paper remains NO-GO.
 GH200 untouched and reserved until at least10:52UTC plus availability check;
 current total authorization still ends16:55UTC. Security investigations stopped.
+
+### 08:52 heartbeat: author-linked u-OPSD adapter prepared locally
+
+New public-release finding: author project page links to u-opsd organization and
+four adapters. The8Bthinking adapter at16ba69e32700ddaeb03ec0a2cf717dfca89296b9
+was downloaded locally (349,244,256bytes) and matched its published LFS SHA256.
+CPU safe-tensor audit passes504finite/nonzero tensors,252rank64pairs,36layers;
+all shapes match our pinnedQwen3-8B config. Trainer state saysstep75. Historical
+base revision is null; no exact historical training-replication claim.
+
+The4Bcard describes an all-agree variant andstep25;8Buses threshold.3 andstep75.
+Do not pool them as matched size replications or call either the default recipe.
+Author repository8140c234586309a183bfb21cd6a298aeafa44f8d still says code forthcoming.
+No4Bweights downloaded; no adapter behavior measured. No GPU or SSH use in this
+release audit. It creates a lower-cost possible experiment substrate, not a
+paper-qualified result or automatic campaign. See UOPSD_RELEASE_FEASIBILITY.
+Original thinking-collapse checkpoint remains unavailable in its scoped search;
+this is a different published method. GH200 reservation and16:55window unchanged.
