@@ -931,3 +931,13 @@ terminal-reward gradients are correct. This does not isolate frozen critics;
 generic normalization bias already has prior art. See
 STOCHASTIC_CRITIC_EXPECTATION_20260910.md and immutable V1/V2 result artifacts.
 No neural experiment admitted, no GH200 contact, no paper qualification.
+
+### Steering source controls and release availability checked
+
+Read the September steering paper's actual methods and relevant appendices,
+then pinned author release6ebdd0b9887fbd2d7ee1692de9aabe5e7c1c1666. Existing
+paraphrase/disjoint/transfer controls substantially overlap our proposed screen.
+Reproduction README says dataset release link is pending. Inspected transfer
+metrics expose ordinary flattened-pair correlations, motivating dependence-aware
+inference checks but not proving paper invalidity. See
+STEERING_GEOMETRY_CONTROL_AUDIT_20260910.md. No GPU launch or GH200 contact.
