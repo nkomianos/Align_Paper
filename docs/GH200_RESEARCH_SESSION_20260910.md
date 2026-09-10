@@ -629,3 +629,17 @@ pyjwt_regressions_v1. See updated external feasibility report. Corrected the
 historical candidate document's opening green light with the current NO-GO.
 No neural run admitted. GPU verified idle at05:25 UTC; useful CPU qualification
 continues instead of an unchanged repeat of stopped assays.
+
+### Systematic validator source inventory and fifth component
+
+Indexed all70 Python source candidates with hashes and diffs;58 remain unreviewed,
+so this is not an exhaustive scientific audit. python_pool_index_v2 supersedesv1.
+Independently reproduced Luigi fixed guard sibling-prefix counterexample with
+recording tar I/O, not file extraction. Excluded it as a comprehensive oracle;
+same mechanism as Django, not an independent new finding. Pydash read/write
+guard ablations now supply a fifth upstream-attested developmental component
+with six benign local regression checks. Attribute category overlaps RestrictedPython.
+See updated VALIDATOR_EXTERNAL_FEASIBILITY_20260909.md and new reproducible
+scripts. Still no16-task corpus or admitted neural run. Next inspect distinct
+mechanisms from the58 unreviewed entries; do not count edit sites as tasks or
+repeat already-rejected archive oracle assumptions.

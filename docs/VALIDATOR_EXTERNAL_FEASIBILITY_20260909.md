@@ -155,3 +155,35 @@ coverage, not all upstream tests, and includes parameterized cases rather than
 eleven independent mechanisms. Other upstream tests may cover the vulnerability;
 the selected suite's success does not establish a repository-wide testing gap.
 Raw archives and logs remain in pyjwt_regressions_v1. No GPU run launched.
+
+## Exhaustive candidate index and additional checks
+
+scripts/index_validator_source_pool.py now exports every one of the70 Python
+entries, raw CWE labels, provenance, paths and full snippet diffs. This is an
+exhaustive metadata inventory, not an exhaustive scientific review:58 entries
+remain unreviewed. Diff count and repeated snippets do not establish independent
+defects. The superseding index is python_pool_index_v2/INDEX.json.
+
+Luigi CVE-2024-21542: the pinned released SafeExtractor class at
+b5d1b965ead7d9f777a3216369b5baf23ec08999 matches the dataset executable AST.
+Its commonprefix guard permits ../dest_sibling/file.txt outside /qualification/dest
+to reach extractall. A member link target is also uninspected. The replay replaces
+tar I/O with a recorder; no archive or file is extracted. Do not infer actual
+runtime tar filters or current-release vulnerability. This excludes the guard as
+a comprehensive containment oracle and repeats the Django prefix mechanism;
+it is not a second independent mechanism. Source and raw result: luigi_reference_v1.
+Reproduction: scripts/check_luigi_archive_reference.py.
+
+Pydash CVE-2023-26145: upstream-attested helpers at fix
+6ff0831ad285fff937cafd2a853f20cc9ae92021 and parent
+1947d2ad210129d1c2925f0c8837323d7fd420db have separately repairable read/write
+attribute guards. Actual functions replayed on synthetic __audit_marker__ fields:
+read-only and write-only ablations each preserve the other omission; fixed blocks
+both. All four states pass six benign local regressions. No exploit traversal,
+globals access, full upstream regression suite or model outputs ran. This adds a
+fifth developmental component; its category overlaps RestrictedPython and does
+not supply a new fourth category. Raw source hashes/results: pydash_source_v1.
+Reproduction: scripts/qualify_pydash_component.py.
+
+No new neural validator run is admitted. Five components are not sixteen qualified
+tasks, and the unreviewed remainder cannot be called invalid or exhausted.
