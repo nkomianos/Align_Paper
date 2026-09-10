@@ -1,5 +1,23 @@
 # Researcher journal
 
+## 2026-09-10 UTC — GH200 screens, corrections and active continuation
+
+The [new session ledger](GH200_RESEARCH_SESSION_20260910.md) records source commits,
+actual outputs, local/remote archive hashes and live process handles. No paper is
+qualified. Whole-expression alias aggregation reached a ceiling with no gain;
+image endpoint selection tied a simple timestep baseline. Video action counting
+failed both image-sequence and native-video capability checks. Earlier reasoning
+banks were limited by ceiling accuracy and Nemo answer formatting, so a fresh
+harder MATH500 DEV bank is running under a frozen two-policy qualification plan.
+
+Monitoring preparation now rejects six retrospective reports and seventy sources
+with unresolved user-message references in the 214-row overlap cohort. The narrow
+instruction extractor finds seven short matched cells on six provisional tasks;
+that is not a population estimate. Label provenance and complete task context
+remain unresolved. A third natural validator component, RestrictedPython, has
+pure CPU partial-repair checks; it is one source task, not two independent defects
+counted as tasks. No neural validator expansion is admitted by those checks.
+
 ## 2026-09-09 UTC — Completed H100 runs and correction
 
 [Validator G0](VALIDATOR_G0_VERIFIED_DECISION_20260909.md) completed all 460 generations and independent raw reconstruction. Its formal decision is INCONCLUSIVE_INSUFFICIENT_APPARATUS_POWER. Common held-out support is four patches on one task. Gemma's original 0/16 planted detection is substantially confounded by strict rejection of extra case_id metadata; a CPU-only post-hoc adapter recovers 10/16 without changing test inputs or expected values. Qwen remains 13/16. Original decisions and evidence remain preserved.

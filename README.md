@@ -1,5 +1,20 @@
 # AI Research Journal — ICLR 2027 exploration
 
+## Current status — 10 September 2026 UTC
+
+**No candidate is submission-ready; research is active on the new GH200.**
+[Current execution and correction ledger](docs/GH200_RESEARCH_SESSION_20260910.md)
+supersedes the older host/queue descriptions below. Completed short screens,
+reasoning banks, expression aggregation, image sampling and video qualification
+have not established a paper contribution. Raw stage1–3 evidence is locally
+backed up and verified. A harder external paired-prefix reasoning bank is now
+running, with the second policy gated on first-bank qualification.
+
+Monitoring-input audits rejected retrospective reports and unresolved task-message
+references; released labels require further review. Three natural validator
+components have CPU checks, still short of the admitted corpus. Original OSH is
+excluded. Existing manuscripts remain drafts, not recommended submissions.
+
 ## Current verified status — 9 September 2026 UTC
 
 **No candidate is submission-ready.** [Validator G0 completed with an inconclusive result](docs/VALIDATOR_G0_VERIFIED_DECISION_20260909.md): independent task support and planted-control power failed. A post-hoc metadata-only diagnosis raised Gemma detection from 0/16 to 10/16, showing a parser confound; it did not establish a monoculture effect. [Initial H100 pilots](docs/H100_INITIAL_RESULTS_20260909.md) likewise do not qualify a paper.
