@@ -29,3 +29,40 @@ No new qualified experiment emerged from this bounded check. Uninspected weekly
 titles remain uninspected leads, not negatives. Source files and hashes are in
 `artifacts/dair_latest_screen_20260910/`. The initial console preview failed on
 Unicode encoding after successful file saving; the subsequent preview succeeded.
+
+## 12:12 follow-up: state and skill-evolution boundaries
+
+Two more primary methods/limitations were read, without executing their systems.
+This increases the new primary follow-ups from the latest list to three; it does
+not mean the other seven entries have all been reviewed or tested.
+
+[SKILL.state](https://arxiv.org/html/2608.26263v1) uses a domain schema, structured
+state patches and the latest observation instead of a growing transcript. Its
+limitations already identify unknown schemas, observations whose relevance is
+recognized later, historical-output tasks and concurrent updates. It also
+reports state-overwrite and schema errors and proposes constrained decoding.
+Generic state compression or syntax repair is therefore not our new contribution.
+This check covered benign state semantics and complexity only; no security
+benchmark, exploit example or payload was investigated.
+
+Our mathematical qualification: total prompt work is proportional to
+sum_t (|P|+|state_t|+|observation_t|). A fixed number of schema fields alone does
+not bound token size: one field can contain an ever-growing list. A linear-in-
+horizon claim therefore needs bounded serialized state and observations, or must
+report their actual growth. This is an elementary accounting condition, not a
+new theorem or evidence that its reported measured savings are wrong. We have
+not established state growth in its released implementation.
+
+[WikiSkill](https://arxiv.org/html/2608.27454v1) separates immutable traces,
+accumulated wiki knowledge and reversible skill changes. Its stated limitations
+include direct skill injection rather than retrieval, strict validation
+improvement excluding neutral proposals, no automated wiki pruning, and limited
+very-long-horizon evaluation. Generic validation-gated skill evolution is already
+covered. None of these acknowledged limitations by itself establishes a new
+research gap or a failure of the published result.
+
+Possible follow-up hypotheses would concern the benefit of neutral intermediate
+skill changes or bounded knowledge retention under evolving objectives. These
+require comparisons to established evolutionary search and memory selection,
+independent validation after adaptive selection, and an accessible task-specific
+endpoint. No such experiment is implemented or admitted by this source screen.
