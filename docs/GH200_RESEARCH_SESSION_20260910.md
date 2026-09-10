@@ -1463,3 +1463,26 @@ Read-only AWS check succeeded: RTX PRO6000Blackwell97887MiB,0MiB used,0%utilizat
 no compute process. No job launched by this check. Reviewed the prepared u-OPSD
 adapter and memory runners; the former still lacks a differentiated outcome
 question, while the latter has a specific unresolved semantic-encoding confound.
+
+### 17:31 UTC: fresh memory codec diagnostic running on AWS
+
+Prospective protocol MEMORY_ENCODING_FOLLOWUP_PROTOCOL_20260910.md and runner
+committed at498e320.48fresh rows (24DAG cases,2dependent views),4arms: reasoning,
+original pairs,named fields,reverse-convention pairs;192calls per model. All
+outputs must be reported. CPU independent maximal-event and exhaustive-order
+oracles agree on48rows;144codec round trips pass. Apparatus only, not new method
+or natural validation. Specific repair question motivated by18old Nemo reversals.
+
+AWS PID8825 runs memory_encoding_qwen_v1 in the isolated research root; log
+memory_encoding_qwen_v1.log. Script SHA256 matches local:
+428e534474fd3f20b33d3913837e0c53c4679aa2b6e2b015313f0e16beffa03f.
+First four generations finished in5.97seconds after model loading. Linear
+projection is about4.8minutes inference for192calls, preliminary because graph
+sizes and output lengths vary. Complete the finite run; no midrun time cutoff.
+Local SSH command handle60996 may remain open while detached work executes;
+do not duplicate launch. Next retrieve full directory and run the local score
+mode, compare model provenance with pinned Qwen metadata. Nemo is not cached on
+AWS and has not launched/downloaded;152GiB disk available. Any subsequent Nemo
+download must use the pinned public revision without private token or GH200.
+No training, OSH access or provider action. Updated heartbeat now recognizes
+renewed AWS authorization, so the earlier16:55cutoff does not stop this run.
