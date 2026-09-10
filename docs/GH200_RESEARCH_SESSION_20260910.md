@@ -1452,3 +1452,14 @@ remains separately stored locally, not automatically included in Git bundles.
 The remaining paper requirement is a distinct, validated contribution, not
 additional rental time or manuscript polish. Any resumed campaign needs a
 concrete qualified intervention and confirmed host availability/access.
+
+### 17:27 UTC: user renewed AWS access
+
+User explicitly requested continued work and authorized the AWS GPU for further
+experiments after the old window. This supersedes the16:55UTC AWS access cutoff;
+it does not authorize unlimited spending or imply scientific qualification.
+Updated the existing heartbeat to preserve that renewal. Leave GH200/OSH alone.
+Read-only AWS check succeeded: RTX PRO6000Blackwell97887MiB,0MiB used,0%utilization,
+no compute process. No job launched by this check. Reviewed the prepared u-OPSD
+adapter and memory runners; the former still lacks a differentiated outcome
+question, while the latter has a specific unresolved semantic-encoding confound.
