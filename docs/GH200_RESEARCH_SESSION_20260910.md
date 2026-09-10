@@ -801,3 +801,17 @@ a bootstrap signal. Whitening/clipping/masking prevent extrapolation to the full
 trainer without execution. See FROZEN_VALUE_IMPLEMENTATION_AUDIT_20260910.md.
 Next actionable work is isolated CPU execution with those controls; no MATH rerun,
 GPU training launch, new theorem claim or paper green light.
+
+### Released advantage routine executed on controlled tensors
+
+Executed only the reviewed upstream compute_advantages AST and pinned compatible
+TRL0.11.4 normalization helpers.32 float64 lambda1 checks pass (max8.88e-16);
+terminal reward positive control passes. With fixed active values, masked-value
+perturbation changes active advantages by1.5548 and flips one sign; removing
+prewhitening gives exactly zero change. Padding/prompt/batch controls and a
+uniform-offset negative control are recorded in EXECUTED_ROUTINE_AUDIT_V2.json.
+V1 retained. These are developmental source-routine results, not neural DVPO
+replication. Historical dependency/version and trained GVM checkpoint availability
+remain unresolved. Next work is source/checkpoint qualification, not a random-head
+GPU demonstration. Latest SSH check: GPU idle, remote06:35 UTC. Security work
+remains stopped; no new neural job or paper qualification.

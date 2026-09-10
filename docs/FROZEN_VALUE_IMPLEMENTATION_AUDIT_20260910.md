@@ -69,3 +69,39 @@ scientific endpoint must be useful reward-directed learning, not merely a code
 discrepancy. Full-policy replication remains conditional and unrun. Generic
 frozen-critic bias and potential-shaping identities are established prior art;
 neither alone justifies an ICLR submission.
+
+## Executed isolated routine: completed
+
+execute_frozen_value_routine_audit.py now extracts and executes the actual
+compute_advantages function from the pinned trainer, rather than importing the
+training module. It also executes the four reviewed normalization helpers from
+TRL v0.11.4, commit1f8ba929fbb6962249386f7dce20155da8a26cda. This is an explicitly
+chosen compatible helper implementation: the release does not authenticate the
+historical TRL version. Both source sets have verified SHA256 receipts.
+
+On local torch2.11.0+cpu float64,32 random length cases confirm the lambda1 raw
+identity with maximum error8.88e-16. An added terminal reward produces the
+expected unit return increment throughout its response. Thus the control detects
+a genuine reward signal, rather than a harness that always returns zero.
+
+In the fixed two-response tensor example, replacing masked values by100 changes
+active normalized advantages by up to1.5548; one active advantage changes sign.
+Appending masked padding changes them by up to1.5422; prepending masked prompt
+positions by1.5189. Removing the initial unmasked whitening makes the masked-value
+perturbation have exactly zero effect. A uniform offset to every value changes
+the original results only by5.77e-15, as expected for centering. Adding a batch
+member changes advantages by1.4857; batch dependence alone is not a bug because
+the final normalization intentionally pools active tokens.
+
+These are diagnostic tensor interventions, not measurements of naturally occurring
+critic outputs. The harness uses the upstream advantage function, but assembles
+the inspected prewhitening step separately and does not run the full trainer,
+actor, critic, optimizer, clipping or tokenizer. V1 and extended V2 reports remain
+separate under artifacts/dvpo_source_audit_20260910. Their scope does not support
+claiming a DVPO benchmark regression or attributing the published gains to padding.
+
+Next admission question: are released trained GVM weights and a reproducible
+configuration available? The inspected entry points use user-supplied/local model
+paths. Without qualified learned values, a random value head on a cached language
+model would establish only another constructed example. Do not present it as a
+replication. Check checkpoint availability and method relevance before GPU use.
