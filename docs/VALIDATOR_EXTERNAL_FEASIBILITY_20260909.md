@@ -187,3 +187,34 @@ Reproduction: scripts/qualify_pydash_component.py.
 
 No new neural validator run is admitted. Five components are not sixteen qualified
 tasks, and the unreviewed remainder cannot be called invalid or exhausted.
+
+## Django EXPLAIN: component separation masked downstream
+
+CVE-2022-28347 fix00b0fc50e1738c7174c495464a5ef069408a4402 and parent
+800828887a0509ad1162d6d407e94d8de7eafc60 are pinned and Query.explain matches
+the benchmark AST. Its character-pattern and double-hyphen checks can each be
+ablated separately: a recording compiler sees the corresponding malformed option
+when that check is absent. Ordinary, empty and single-hyphen option probes retain
+their component-level behavior. Source/result: django_explain_source_v1.
+
+Crucially, this is NOT a sixth qualifying incomplete-repair component. Replayed
+the actual fixed PostgreSQL and base explain_query_prefix methods with static
+feature flags. Both malformed option probes are rejected by the downstream
+allowlist even when the frontend is bypassed. An ordinary ANALYZE option and an
+empty option dictionary produce expected prefixes. No SQL is executed.
+Source/result: django_explain_backend_v1. Reproduction scripts:
+qualify_django_explain_component.py and check_django_explain_backend.py.
+
+Decision: do not label those frontend ablations retained PostgreSQL security
+defects. This illustrates why isolated helper checks are developmental and why
+each remaining candidate still needs end-to-end qualification before a model
+experiment. Keep both raw reports; do not overwrite the local separation result
+or elevate it above the downstream control.
+
+Also inspected rdiffweb fingerprint uniqueness/migration and Airflow inactive-user
+hook diffs: second independently repairable defects remain unestablished.
+OpenCanary config precedence and shell invocation edits need further execution
+and contract qualification; edit diversity alone is insufficient. The superseding
+python_pool_index_v3 contains54 unreviewed entries, five developmental positives,
+and zero admitted neural tasks. Neither source pool exhaustion nor impossibility
+of the broader validator hypothesis has been established.

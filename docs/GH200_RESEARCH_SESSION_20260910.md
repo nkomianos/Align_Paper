@@ -643,3 +643,15 @@ See updated VALIDATOR_EXTERNAL_FEASIBILITY_20260909.md and new reproducible
 scripts. Still no16-task corpus or admitted neural run. Next inspect distinct
 mechanisms from the58 unreviewed entries; do not count edit sites as tasks or
 repeat already-rejected archive oracle assumptions.
+
+### Downstream control rejects apparent sixth component
+
+Django EXPLAIN frontend character/comment guard ablations separate in a local
+recording-compiler replay, but actual fixed PostgreSQL/base prefix methods reject
+both malformed probes downstream. Therefore do NOT count those ablations as
+retained repository security defects. Reports preserve both observations in
+django_explain_source_v1 and django_explain_backend_v1. Five developmental
+components remain; no sixth or neural result. Four more source entries inspected;
+python_pool_index_v3 has54 unreviewed candidates. Full explanation in external
+feasibility report. GPU confirmed idle05:34 UTC. No run admitted while the
+required natural corpus and downstream security oracles remain unqualified.

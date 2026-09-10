@@ -6,6 +6,10 @@ import json
 from pathlib import Path
 
 REVIEWED = {
+    'CVE-2022-28347': ('downstream_masks_component_omissions', 'Django frontend guard ablations separate locally; fixed PostgreSQL backend rejects both probes, so no retained security defect established.'),
+    'CVE-2022-4724': ('second_defect_unestablished', 'Rdiffweb diff adds fingerprint uniqueness and migration; multiple edits do not prove independently repairable defects.'),
+    'CVE-2022-41672': ('second_defect_unestablished', 'Airflow inactive-user pre-request hook adds one demonstrated admission condition.'),
+    'CVE-2024-48911': ('candidate_needs_execution', 'OpenCanary changes config precedence and shell invocation; distinct edits need policy and execution qualification.'),
     'CVE-2024-49750': ('component_positive', 'Snowflake: two regex omissions; one component, full corpus unqualified.'),
     'CVE-2018-18074': ('component_positive', 'Requests: scheme and port checks; stubbed integration.'),
     'CVE-2023-41039': ('component_positive', 'RestrictedPython: two attribute guards; no full compiler integration.'),
