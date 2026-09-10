@@ -466,3 +466,15 @@ do not restart either completed queue. A parser repair or new external assay nee
 its own frozen protocol before launch. BFCL-derived learning data preparation
 exists but remains unqualified and unrun; v1 smallest-answer shortcut was caught
 and repaired in a separate preserved v2 before any neural use.
+
+### Answer-format audit after queue completion
+
+Added a read-only balanced-box/whole-numeric-line diagnostic and three tests.
+MATH yields355/384 explicit candidates and349 supported numeric values; still
+below the unchanged.95 coverage gate.159 previously missing outputs recovered
+descriptively. One inspected output was wrongly scored from Markdown heading
+`#### 3.` despite a final boxed6 matching target6. Numeric-prefix fraction
+misreading is also demonstrated in a unit counterexample, but no observed false
+positive of that kind is claimed. Older GSM banks replayed with their different
+prefix_index schema; limited diagnostic coverage prevents blanket certification.
+See the appended results note. No old raw rewards rewritten or GPU rerun launched.

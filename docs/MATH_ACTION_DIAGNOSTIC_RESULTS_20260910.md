@@ -68,3 +68,34 @@ This is a BFCL-derived finite-choice dataset with constructed distractors and an
 engineered initial policy. It cannot be advertised as a BFCL leaderboard score,
 natural tool execution, or uncontaminated generalization. Independent full-row
 label/schema/distractor validation remains required before an external experiment.
+
+## Post-hoc parser audit (no GPU rerun)
+
+audit_math_answer_formats.py scans balanced boxed expressions and complete numeric
+delimiter lines, supporting simple decimals and rational fractions without eval.
+Three tests cover nested braces, numeric-prefix false positives and unresolved
+symbolic values. This diagnostic is intentionally incomplete (for example,
+thousands separators and arbitrary symbolic equivalence are unsupported); it is
+not a replacement production evaluator or a new qualification result.
+
+On the MATH bank,355/384 have a boxed or supported explicit candidate;349 have
+a supported numeric value.159 previously missing outputs have an extracted
+candidate.29 remain unextracted, and34 lacked EOS. Neither355/384 nor349/384 meets
+the frozen.95 coverage rule. A delimiter-only repair therefore does not by itself
+admit the old experiment. All old outputs, scores and route stay preserved.
+
+One numerical disagreement was inspected in full: test/algebra/733.json,
+prefix0 sample7. The old parser read a Markdown subsection heading `#### 3.` as
+answer3; the completion subsequently gives boxed6, matching target6. This is an
+actual observed false negative from heading/answer confusion. Separately, the
+old regex can read `#### 4/3` as4: a unit-test counterexample, not an observed
+false positive established in this bank. Do not conflate those two findings.
+
+The same diagnostic was replayed on both older GSM banks after explicitly
+handling their prefix_index schema. No disagreement among jointly extracted
+numeric answers was found there, but the diagnostic covers only369/384 Qwen and
+44/384 Nemo numerical outputs. Its narrower grammar cannot certify every old
+answer or overturn those banks' conclusions. Reports are stored separately as
+math_bank8_format_diagnosis_v1.json, gsm_qwen_format_diagnosis_v1.json and
+gsm_nemo_format_diagnosis_v1.json in the GH200 artifact root. No GPU regeneration,
+new cross-policy comparison, or post-hoc scientific gate promotion occurred.
