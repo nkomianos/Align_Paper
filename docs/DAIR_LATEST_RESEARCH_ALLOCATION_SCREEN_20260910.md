@@ -152,3 +152,26 @@ here. A synthetic resource-allocation simulator could qualify infrastructure,
 but would not reproduce these deployments or by itself yield a novel paper.
 No campaign admitted. This brings new primary follow-ups from the latest weekly
 list to five; source review is not an experiment.
+
+## 13:58 follow-up: Harness-of-Harness evaluation boundary
+
+Read [Harness-of-Harness2609.01481v1](https://arxiv.org/html/2609.01481v1)
+method overview and AppendicesB.2,B.5,B.7,B.9. It already compares repeated
+vanilla coding passes with planning/coding/testing loops. Its fixed terminal
+artifact is not selected using benchmark scores; benchmark evaluator outputs
+are withheld from development. Generic independent testing and repeated
+continuation are therefore occupied controls, not a newly discovered remedy.
+
+The comparison matches development passes, not exact total model work. Token
+accounting is reported separately and excludes benchmark evaluation. Each
+task-condition has one valid run; the stated bootstrap resamples tasks together
+with their score components. That interval does not measure repeated-run
+variability conditional on a fixed task. These are scope distinctions, not
+evidence that its numerical results are wrong or that it used pseudoreplication.
+
+The described anonymous package excludes raw run artifacts and benchmark data.
+No raw replication performed. Published frontier harness/model runs are not a
+measured local8B capability qualification or a GH200 runtime estimate. A new
+study would need a distinct intervention, fixed-budget evaluation and repeated
+independent runs. No such candidate emerged. Six new primary follow-ups from
+the latest weekly list are now screened; no GPU work admitted.
