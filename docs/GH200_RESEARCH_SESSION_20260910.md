@@ -1354,3 +1354,13 @@ knowledge pruning remain unqualified hypotheses, not new implemented experiments
 Updated DAIR_LATEST_RESEARCH_ALLOCATION_SCREEN. No security benchmark or payload
 investigation, no SSH/GPU work, no change to16:55UTC access limit. Goal active;
 submission remains NO-GO. No unchanged-status notification required.
+
+### 12:29 heartbeat: scoped AWS PMI timing reconciliation
+
+All five saved timing records match original manifests. Sum1222.810seconds
+(20.380minutes) covers recorded program sections only, including the failed
+numerical comparison. It is not GPU-kernel time, billed allocation, the full
+program total or H200-equivalent usage. Untimed setup/loading, hashing,
+transfers and idle allocation remain outside that sum; remaining50hour budget
+cannot be computed from it. See AWS_PMI_TIMING_RECONCILIATION and executable
+ledger. No SSH/GPU work or provider action.16:55UTC limit unchanged.
