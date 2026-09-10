@@ -175,3 +175,38 @@ measured local8B capability qualification or a GH200 runtime estimate. A new
 study would need a distinct intervention, fixed-budget evaluation and repeated
 independent runs. No such candidate emerged. Six new primary follow-ups from
 the latest weekly list are now screened; no GPU work admitted.
+
+## 14:14 follow-up: final two entries and allocation decision
+
+[E-CommerceBench2608.30730v1](https://arxiv.org/html/2608.30730v1), setup
+and metric caveats: five episodes per model share one fixed economic world;
+supplier language varies while the economic kernel is deterministic. Bankrupt
+runs remain in the primary mean. The paper acknowledges small samples and
+selection/truncation caveats in its longitudinal metrics. It links an official
+repository, but this check did not inspect or execute that code.
+
+Our inference: repeated episodes quantify within-world variation, not
+generalization across economic worlds. A memory intervention would need matched
+states and independent evaluation worlds; a price trend alone does not identify
+memory's causal benefit. Neither observation refutes the reported within-world
+scores. Thousands of possible turns and an additional language renderer make
+full episodes an unbenchmarked expense here. No complete episode admitted.
+Only benign setup and measurement were screened; fraud scenarios and prompts
+were not investigated.
+
+[Runtime-Independent Persistent Agents2609.00546v1](https://arxiv.org/html/2609.00546v1),
+Sections6 and9, explicitly separates mechanical state continuity from behavioral
+continuity. It proposes controlled replacement and behavioral checks but reports
+no behavioral migration study or full replacement matrix. Interface conformance
+is explicitly insufficient for semantic equivalence. Testing memory portability
+across models is therefore already a stated question; executing its proposed
+protocol alone would not establish our novelty. No migration, external effect,
+or fault-injection experiment was performed.
+
+The bounded latest-week screen is complete at the source-screen level: eight
+new primary follow-ups plus two previously reviewed entries. Depth varied by
+paper and is recorded above; this is not ten code audits or ten reproductions.
+None has supplied a differentiated, qualified GPU-ready experiment. Do not
+expand the literature queue merely to sustain activity. Prioritize evidence
+preservation and the scheduled access/budget reassessment; reopen a candidate
+only with a concrete new intervention or missing qualifying evidence.
