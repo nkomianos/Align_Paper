@@ -549,3 +549,21 @@ complete DEV tasks qualify, abs mean shift>=.10 only admits independent follow-u
 Full protocol docs/WRENCH_CHANNEL_PANEL_PROTOCOL_20260910.md. No certified safety
 label, calibrated5%FPR, independent-family result or paper green light claimed.
 Replay completed outputs with verify_wrench_channel_panel.py and retrieve hashes.
+
+### Wrench panel complete and retrieved
+
+PID20312 is terminal:92/92 outputs,148.93 inference seconds,92/92 EOS. Original
+strict parser accepts2/92;90 outputs are valid score JSON wrapped in Markdown.
+Preserve INVALID_PANEL_QUALIFICATION. Separate exact-outer-fence diagnostic
+recovers92/92 values: all19 DEV baseline score differences are zero, while mean
+hack-cohort shift is-.3947368. No baseline-shift follow-up admitted; do not rerun
+merely to remove fences. The hack-side effect is known prior territory, not a
+paper-qualified new contribution. See docs/WRENCH_CHANNEL_PANEL_RESULT_20260910.md.
+
+Independent reconstruction verifies all96 prepared inputs against raw source,
+including exact action/observation preservation and exactly one user turn in
+each of48 traces. Remote/local endpoint replays agree. Stage5 archive retrieved,
+SHA25632dd7d188071500d7646709956f4237c25802fb9793a39de97ad86cfb11d76f6.
+No source label, raw score or failed-gate report overwritten. GPU has no active
+job from this panel and no automatic next launch is queued. Future transport
+preflights must accept/reject lossless wrappers prospectively before full calls.
