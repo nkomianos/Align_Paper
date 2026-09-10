@@ -1321,3 +1321,14 @@ unavailability. Source responses saved; no examples or locked test inspected.
 This does not resolve the natural-memory validation gap or admit a model run.
 No SSH/GPU use. Prior AWS idle recommendation still applies; neither instance
 stopped. GH200 OSH completion remains unverified.16:55UTC window unchanged.
+
+### 11:38 heartbeat: official dates and conditional completion path
+
+Official CFP/AuthorGuidelines/AI policy rechecked and archived with hashes.
+Dates unchanged: abstractSep18/fullSep25 at23:59AoE, respectivelySep19/Sep26
+04:59PDT. Added conditional scientific/manuscript milestones with no inferred
+extension beyond current16:55UTC authorization. First scientific milestone has
+not passed. Flagged profile-moderation lead time and conditional one-paper quota
+for author teams with no eligible reciprocal reviewer; eligibility is unknown.
+See ICLR_COMPLETION_CRITICAL_PATH_20260910.md. No submission, account action,
+SSH or GPU work. No human review or author approval falsely claimed.
