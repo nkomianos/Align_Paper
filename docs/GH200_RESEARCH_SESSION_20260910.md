@@ -997,3 +997,11 @@ dispatch, parser hash enforcement and cross-parser comparison checks. Original
 dormant queue explicitly selects its legacy parser.24targeted tests pass, including
 a complete rational-answer bank fixture; actual384-row historical MATH replay
 retains original coverage/EOS/accuracy and qualified=false. No GPU launch.
+
+### Repaired math code deployed and tested on isolated AWS host
+
+Previous turn completed local replay integration. Current AWS check found no GPU
+compute process. Uploaded ten runner/helper/test files to new math_code_25fcf50;
+local/remote archive hashes agree and24tests passed under isolated Python3.12.
+Retrieved test log. No scientific experiment/weights/automatic queue launched.
+GH200 not contacted; reservation through at least10:52 UTC remains unchanged.

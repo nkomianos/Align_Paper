@@ -42,3 +42,15 @@ EOS .9114583, eligible DEV accuracy .4140625 and qualified=false. The additive
 receipt is `artifacts/gh200_research_20260910/math_legacy_parser_replay_20260910.json`.
 These results verify compatibility and the original classification; they are not
 new scientific observations or a paper gate.
+
+## Isolated AWS deployment verified
+
+At approximately07:16 UTC, transferred ten runner/helper/test files from25fcf50
+to `/home/ubuntu/align_research_20260910/math_code_25fcf50` on the user-authorized
+AWS host. Local/remote tar SHA256 both
+`991d3acc5fde9012691ce4e5ff1579ed359050f34b0d7ef02705ca71899f8442`.
+All24tests passed in the isolated Python3.12 environment; retrieved log:
+`artifacts/aws_research_20260910/math_runtime_25fcf50_tests.log`.
+Deployment archive: `artifacts/deployment/math_runtime_25fcf50.tar`.
+No model weights, data, legacy queue, credentials or automatic launch were included.
+This verifies deployment/import/replay compatibility, not neural throughput.
