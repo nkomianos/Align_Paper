@@ -1128,3 +1128,14 @@ Question-only density-ratio control matches exactly. This is not neural failure,
 not a refutation of the valid variational derivation, and not a novel method.
 Added the control to future distillation-study requirements; original results
 unchanged. No GPU use; GH200 reservation respected.
+
+### AWS forward-only PMI diagnostic launched (single admitted job)
+
+Frozen48prefixes/24exposedDEVquestions, four contexts each. Source bank, full
+solutions and deployment hashes checked; originalQwen3-8B public revision downloaded
+in129seconds. Weight hashes and tokenizer reconstruction passed. AWS job now
+running at /home/ubuntu/align_research_20260910/pmi_diagnostic/result_v1;
+local SSH exec session92491. Observed7/48completed, about2seconds per prefix.
+Do not duplicate. This is a target-distribution diagnostic, not thinking-collapse
+replication or model training. Retrieve full logit artifact and run independent
+verifier before interpretation. GH200 untouched. See PMI_PREFIX_DIAGNOSTIC_PROTOCOL.
