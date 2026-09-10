@@ -598,3 +598,19 @@ allocations under both the old half baseline and a calibration-fitted reward
 baseline. Estimated 5–20 minutes includes an unbenchmarked replay; actual timings
 must replace the estimate. No result is available at launch. Preserve the raw
 vectors and verify/retrieve the completed output before interpreting it.
+
+### Adapter replay complete, verified and retrieved
+
+PID21345 is terminal; GPU idle. All384 gradients replayed in16.51 seconds after
+model loading/hashing,53,248 adapter parameters. Likelihood discrepancy per token
+0.0100021 passes the frozen0.02 tolerance. Both reward-baseline comparisons fail
+the20% adaptive improvement gate: adaptive is essentially equal to uniform and
+roughly six times worse than fewer full trajectories. Calibration mean reward is
+1.0, so that baseline supplies zero weighted calibration gradients; preserve this
+near-ceiling limitation. No optimizer or new generation ran. See
+docs/CENSOR_ADAPTER_GRADIENT_RESULT_20260910.md. Remote/local replay agrees.
+Stage6 archive SHA25694072abaafd4f2f2c2ec0921496d2524805f5f16a7068f979a15c43d97534cca.
+No automatic learning follow-up is admitted. Current research still has no
+paper-qualified result. Next useful work remains independent natural validator
+task qualification and unresolved source/label validation, not repeating stopped
+gradient, channel, video, or near-ceiling reasoning screens.
