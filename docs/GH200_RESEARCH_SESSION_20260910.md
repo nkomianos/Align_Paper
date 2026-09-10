@@ -740,3 +740,16 @@ BENIGN_FEEDBACK_NOVELTY_REASSESSMENT_20260910.md for exact source-read scope and
 requirements for a differentiated future proposal. No new GPU job launched.
 Original four-mechanism feedback screen remains invalid under its order gate;
 the reassessment neither erases that record nor declares all feedback ideas false.
+
+### Mechanistic novelty check and remaining unimplemented candidate
+
+Primary-source check found a direct collision for a generic steering/encoding
+audit: Gao et al.2608.22985 already distinguish semantic-label, extraction-index
+and row effects under frozen interventions. Do not launch this as a new paper.
+Reopened the existing benign cross-recipe causal-selection candidate for readiness
+assessment, not execution: Model Organism Lottery2607.01033 already supplies the
+methodology-dependence result. A held-out recipe intervention-selection method
+must beat strong pooling/semantic controls before it is differentiated. See
+BENIGN_MECHANISTIC_TRIAGE_20260910.md. No training implemented or launched.
+Current broad user authorization covers benign work; old proposal wording about
+missing authorization is historical, not a reason to ask permission again.
