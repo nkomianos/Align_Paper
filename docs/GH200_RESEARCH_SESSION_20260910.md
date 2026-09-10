@@ -1214,3 +1214,18 @@ release audit. It creates a lower-cost possible experiment substrate, not a
 paper-qualified result or automatic campaign. See UOPSD_RELEASE_FEASIBILITY.
 Original thinking-collapse checkpoint remains unavailable in its scoped search;
 this is a different published method. GH200 reservation and16:55window unchanged.
+
+### 09:14 heartbeat: outcome-distillation novelty gate tightened
+
+Primary methods and theorem/diagnostic wording inspected for SPOT2608.04419v1,
+Counterfactual Recoverability2608.04408v1 and TTPO2608.27448v1; immutable HTML
+snapshots and hashes saved. These occupy generic outcome-calibrated token probes,
+continuation-versus-rollback routing and asymmetric wrong-consensus handling.
+No duplicate GPU campaign admitted merely because the u-OPSD adapter is available.
+
+SPOT's theorem concerns estimated values; noisy estimates do not refute that
+stated guarantee. Recoverability's perfect-AUC proxy is explicitly a branch-derived
+diagnostic, not a learned online estimator. Avoid stronger claims than the sources.
+See OUTCOME_DISTILLATION_NOVELTY_GATE_20260910.md. No GPU/SSH activity this turn;
+GH200 reservation remains intact. These are novelty screens, not replications or
+negative performance findings. Research goal active; submission still NO-GO.
