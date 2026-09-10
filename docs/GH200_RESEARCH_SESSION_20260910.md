@@ -1397,3 +1397,11 @@ equal-budget, held-out endpoint requirements in the DAIR screen. No runtime
 estimate or experiment admission without a concrete capable task and pilot.
 No new positive/negative model result, SSH/GPU use, provider action, security
 investigation, or access extension. Submission remains NO-GO.
+
+### 13:42 heartbeat: CORAL source screen
+
+Read CORAL methods, case studies and limitations; recorded the distinction
+between deployment A/B effects and unisolated memory contribution. No raw-data
+replication or production endpoint established; synthetic replacement would be
+apparatus only. Latest-list new primary screens now five. No SSH, GPU launch,
+provider action or extension beyond16:55UTC. No actionable status change.

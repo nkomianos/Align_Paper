@@ -129,3 +129,26 @@ No offline shortcut or differentiated method has been established, so this
 candidate remains unrun and is not admitted to the GPU queue. Generic neutral
 evolution is not claimed as novel. No reason to repeat this release search
 without new author-linked availability evidence.
+
+## 13:42 follow-up: CORAL attribution and feasibility
+
+Read [CORAL2609.02730v1](https://arxiv.org/html/2609.02730v1), Sections3–7.
+Its production harness combines LLM proposals, persistent memory and deterministic
+budget projection. Both deployments report A/B comparisons. Cadence and memory
+horizon are defaults; systematic selection is acknowledged future work. Reported
+token costs are estimates, not logged usage. Standardized predeployment evaluation
+is explicitly identified as an open problem.
+
+Our inference: successive rounds of an adaptive system do not alone isolate
+memory's causal contribution; changed context and exploration also matter. A
+matched memory/no-memory comparison would address that attribution. This does
+not invalidate the reported deployment A/B effects. Likewise, pre/post change
+alone cannot establish causal attribution under drift, whereas concurrent
+randomization can address that particular concern. The inspected description
+does not supply enough detail to audit every attribution tool output.
+
+No accessible production endpoint or raw randomized records were established
+here. A synthetic resource-allocation simulator could qualify infrastructure,
+but would not reproduce these deployments or by itself yield a novel paper.
+No campaign admitted. This brings new primary follow-ups from the latest weekly
+list to five; source review is not an experiment.
