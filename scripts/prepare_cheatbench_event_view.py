@@ -20,6 +20,11 @@ def project(trace):
     source=trace.get(field)
     if not isinstance(source,list) or not source:
         return None,{'status':'NO_CONVERSATION_EVENTS','field':field}
+    # Some released "events" are parsed retrospective reports rather than
+    # contemporaneous agent messages. Dropping just their first paragraph would
+    # still leave embedded configuration/outcome summaries in later content.
+    if any(isinstance(event,dict) and event.get('kind')=='report_prelude' for event in source):
+        return None,{'status':'RETROSPECTIVE_REPORT_SOURCE_REJECTED','field':field}
     unknown=set();view=[]
     for event in source:
         if not isinstance(event,dict):return None,{'status':'UNSUPPORTED_EVENT_TYPE','field':field}
