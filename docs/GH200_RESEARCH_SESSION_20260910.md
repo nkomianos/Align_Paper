@@ -1423,3 +1423,16 @@ earlier assessments cover the ten latest-week entries at varying depths, not
 code audits or reproduced experiments. No new admitted campaign. Stop expanding
 this list for activity alone; preserve evidence and reassess at16:55UTC.
 No SSH/GPU work, security investigation, provider action or access extension.
+
+### 14:30 heartbeat: fresh local Git backup and raw-data scope
+
+Verified complete-history bundle artifacts/deployment/research_audit_9845cb3.bundle,
+4172969bytes; SHA256
+5ca5f7f5159249fa72f2264c0aeebd77baca8eb87756b5fe50ae4f7ecd1bf044.
+Preserved prior bundles. This contains Git-tracked history, not ignored raw data.
+Saved metadata-only PMI directory inventory at
+artifacts/deployment/pmi_local_inventory_20260910_1430.json. Six local child
+directories include logits and tokenizer data; this is neither a new integrity
+replay nor an additional independent/off-device backup. Existing CPU replay ZIP
+has its separately documented narrow scope. No provider or remote filesystem
+action;16:55UTC reassessment remains pending. No new scientific conclusion.
