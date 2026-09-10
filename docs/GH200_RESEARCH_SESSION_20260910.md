@@ -727,3 +727,16 @@ BENIGN_MEMORY_REPLICATION_RESULT_20260910.md. No successor admitted, no current
 memory GPU job. User prohibition on security probes remains in force. Reassess
 unresolved benign ideas and novelty before new runs rather than repeating these
 synthetic cases with a tuned prompt.
+
+### Benign feedback novelty reassessment
+
+Reviewed prior benign feedback implementation and new primary-source positioning.
+SycoBench-600 already measures correction selectivity, and the authors' page for
+Stubborn or Sycophantic reports frozen prompt/transfer controls separating useful
+updates from answer inertia. Generic wrong-feedback resistance plus acceptance
+of correct corrections is not a new contribution. No broad free-response repair
+campaign admitted solely to rescue the forced-letter result. See
+BENIGN_FEEDBACK_NOVELTY_REASSESSMENT_20260910.md for exact source-read scope and
+requirements for a differentiated future proposal. No new GPU job launched.
+Original four-mechanism feedback screen remains invalid under its order gate;
+the reassessment neither erases that record nor declares all feedback ideas false.
