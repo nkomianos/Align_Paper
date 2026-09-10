@@ -5,8 +5,12 @@
 **Still NO-GO for submission; active research continues.** A new user-authorized
 GH200 window ends at 16:55 UTC today. Original OSH is excluded and handled by the
 user independently. New short-input screens and an external reasoning bank have
-run; second-family/stronger-model and image-sampler screens are queued or running.
-None yet establishes a submission-ready contribution. See the current
+run; second-family/stronger-model, image-sampler, whole-expression and external
+video screens have now completed. None establishes a submission-ready contribution.
+Video action counting failed both image-sequence and native-video qualification;
+expression aggregation and endpoint selection showed no gain over simple controls.
+Natural validator preparation has reached three source components, still short
+of the required corpus. See the current
 [session and execution ledger](GH200_RESEARCH_SESSION_20260910.md) for live paths,
 verified findings, corrections and follow-ups. The allocation description below
 is historical and does not describe the new host.

@@ -261,3 +261,44 @@ Pinned Qwen3-VL-8B-Instruct 0c351dd01ed87e9c1b53cbc748cba10e6187ff3b, all four
 weight hashes verified. av16.1.0 installed only in our isolated video_overlay.
 Expected run roughly 10-30 minutes including decode/model startup, subject to
 measured throughput. No dependent expansion admitted before qualification.
+
+### Video final results and continuation priorities, approximately 04:00 UTC
+
+Both video jobs are COMPLETE. GPU is idle at the final check; no downstream
+selector training or expansion is running. svc_v1 ran 60 generations in 18.21s
+after approximately five minutes of CPU decoding and model startup. Accuracy:
+snapshot 10/12, blank 8/12, uniform16 2/12, change16 2/12, dense64 1/12. All outputs
+parsed; none hit the horizon. The dense reference fails action capability. Eight
+snapshot targets are zero, so snapshot accuracy alone overstates visual utility.
+Sampling was outcome-blind but the latest-eligible-time rule selected a weak
+qualification distribution. Do not retroactively balance it and call confirmation.
+
+Native-video interface diagnosis frozen at commit 14086c5 reuses identical dense64
+pixels through native video temporal patches with explicit source timestamps.
+svc_native_v2: 3/12 correct, 12/12 parsed, zero censored; 5.68s inference. Fails its
+prospective >=8/12 gate. Stop this assay; it does not falsify observation-aware
+video. At up to 120-second queries, 64 frames can itself omit event evidence.
+There is no qualified event oracle or learned selector result. Source README
+confirms original video paths; a first contact sheet was visually inspected.
+
+Both read-only verifiers passed. Native timestamp verifier's initial expected
+calculation divided after adding integer microsecond ticks, changing half-tie
+decimal rounding by .1s relative to the processor. Corrected to the processor's
+divide-each-index-then-average order; exact encoded timestamp agreement passes.
+No model inputs, outputs, targets or scientific gates were changed.
+
+Stage3 archive retrieved locally, matching remote SHA256:
+8a106a231f858039a488f9aa2415014d6ce1bfc85f5592454973d5025d42ceae.
+Path artifacts/gh200_research_20260910/completed_stage3_video_20260910.tar.gz.
+Contains saved frames and both raw runs. Its initial native verifier report is
+empty because that rounding assertion failed; the successful later report is
+separately retrieved as svc_native_v2_timestamp_verified.json. Preserve both.
+
+RestrictedPython upstream guard now supplies a third CPU-qualified natural
+multi-defect component (one task, two controlled partial repairs). See
+scripts/qualify_restrictedpython_component.py and the external feasibility note.
+Still not a sixteen-task neural corpus. Next work: continue natural task/monitor
+source qualification and primary-source differentiation. Do not relaunch completed
+pilots, expand failed video, or treat isolated component reproduction as a paper.
+The updated 15-minute heartbeat remains active until 16:55 UTC and records this
+priority. It has the user's exclusive GPU authorization. Goal remains incomplete.

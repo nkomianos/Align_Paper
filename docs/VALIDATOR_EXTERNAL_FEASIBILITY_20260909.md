@@ -111,3 +111,21 @@ The supplied fixed target_filename helper for CVE-2021-3281 uses string-prefix c
 Reproduction check_django_archive_reference.py and report DJANGO_ARCHIVE_REFERENCE_REPLAY.json. This refutes using this released helper as a comprehensive containment oracle. It does not prove a defect in current Django, nor reproduce the full benchmark container's behavior. Exclude this unamended helper from the candidate reference pool. A separately corrected implementation would require independent validation and explicit provenance; do not silently call it the released ground truth.
 
 The h11 CVE-2025-43859 diff was also inspected. Its multiple edits coordinate one chunk-footer validation state machine; edit count alone does not establish two independently repairable defects. No second defect or component qualification was claimed. The pool remains insufficient for a new GPU experiment.
+
+## RestrictedPython attribute-guard component, 10 September
+
+Inspected [the upstream fix](https://github.com/zopefoundation/RestrictedPython/commit/4134aedcff17c977da7717693ed89ce56d54c120)
+and downloaded Guards.py, Utilities.py and test_Guards.py at that revision and its
+parent 41a183d59a0224e86cb3e8c5eab9b75f5bfe2d62. Source hashes are preserved in
+restrictedpython_source/DOWNLOAD.json under the external-source artifact root.
+The isolated actual safer_getattr function has two independently repairable
+guard omissions: instance format_map access and class format access. Controlled
+partial predicates repair one each; the released function repairs both. All four
+states retain five benign/legacy regression checks. No restricted payload or
+secret access is executed; probes only request attribute lookup.
+
+Reproduction: scripts/qualify_restrictedpython_component.py; raw report
+RESTRICTEDPYTHON_COMPONENT_CHECK.json. This adds ONE developmental source component
+to Requests and Snowflake. It excludes string.Formatter delegation, full compiler
+integration, container execution, and generated model patches. It is not an
+admitted neural task corpus and does not satisfy the sixteen-task gate.
