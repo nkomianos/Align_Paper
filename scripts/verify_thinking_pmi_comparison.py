@@ -8,12 +8,17 @@ from pmi_target_controls import corrected_target,distribution_kl
 from verify_thinking_pmi_traces import digest
 
 
-def run(root,selection):
+def run(root,selection,data,snapshot):
+    from transformers import AutoTokenizer
     torch.set_num_threads(4)
     manifest=json.loads((root/'MANIFEST.json').read_text())
     assert all(digest(root/k)==v for k,v in manifest.items())
     protocol=json.loads((root/'PROTOCOL.json').read_text())
     assert protocol['selection_sha256']==digest(selection)
+    assert protocol['source_inputs_sha256']==digest(data/'INPUTS.json')
+    inputs={r['base']:r for r in json.loads((data/'INPUTS.json').read_text())}
+    all_keys=sorted(inputs)
+    tok=AutoTokenizer.from_pretrained(snapshot,local_files_only=True,trust_remote_code=False)
     selected=json.loads(selection.read_text())['rows']
     rows=[json.loads(line) for line in (root/'ROWS.jsonl').read_text().splitlines()]
     logits=torch.load(root/'LOGITS.pt',map_location='cpu',weights_only=True)
@@ -29,6 +34,17 @@ def run(root,selection):
         assert row['inputs']['base']['ids']==s['input_ids']+s['prefix_ids']
         assert row['inputs']['base']['rendered']==s['rendered']
         assert row['wrong_reference_base']!=row['base']
+        other=all_keys[(all_keys.index(row['base'])+1)%len(all_keys)]
+        assert row['wrong_reference_base']==other
+        source=inputs[row['base']];qtext=source['question'];ref=source['reference'];wrong_ref=inputs[other]['reference']
+        texts={'base':qtext,'unconditional':'','teacher':qtext+'\nReference solution:\n'+ref,
+            'reference':'Reference solution:\n'+ref,'wrong_teacher':qtext+'\nReference solution:\n'+wrong_ref,
+            'wrong_reference':'Reference solution:\n'+wrong_ref}
+        for arm,content in texts.items():
+            rendered=tok.apply_chat_template([{'role':'user','content':content+'\nSolve step by step.'}],tokenize=False,
+                add_generation_prompt=True,enable_thinking=True)
+            assert row['inputs'][arm]['rendered']==rendered
+            assert row['inputs'][arm]['ids']==tok.encode(rendered,add_special_tokens=False)+s['prefix_ids']
         base=ls['base'].log_softmax(-1);cached=ls['cached_base'].log_softmax(-1)
         p=corrected_target(ls['base'],ls['teacher'],ls['reference'])
         q=corrected_target(ls['base'],ls['base'],ls['unconditional'])
@@ -55,7 +71,7 @@ def run(root,selection):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser()
-    for name in ['root','selection','out']:p.add_argument('--'+name,type=Path,required=True)
-    a=p.parse_args();result=run(a.root,a.selection)
+    for name in ['root','selection','out','data','snapshot']:p.add_argument('--'+name,type=Path,required=True)
+    a=p.parse_args();result=run(a.root,a.selection,a.data,a.snapshot)
     with a.out.open('x') as f:json.dump(result,f,indent=2)
     print(json.dumps(result,indent=2))

@@ -1,8 +1,9 @@
 # Scientific decision after the GH200 follow-ups
 
 As of the September10 morning audit: **NO-GO for submission**. Recent progress
-includes exact calibration counterexamples and controlled CPU data replays;
-these have not produced a novel replicated neural result. The goal remains a
+includes exact calibration counterexamples, controlled CPU data replays and
+forward-only neural PMI diagnostics. These have not produced a novel replicated
+learning result. The goal remains a
 complete, defensible paper, not this report.
 
 ## 1. Correction and audit ledger
@@ -21,6 +22,9 @@ complete, defensible paper, not this report.
 | Posthoc MATH answer matching |300/384 explicit numeric target matches; only1DEV prefix gap>=.5 | Even arbitrary outcomes for unparsed/non-EOS rows permit at most3large-gap questions versus4required. No32B launch on this fixed bank under the corrected scoring. |
 | CLARA rule-edit pilot |42,624 exact Bayesian scene/query rows; saved-output verifier passes | Already run as CPU apparatus, not an untested GPU candidate. Query-oracle and joint-set operating points differ; no matched-risk method advantage or natural perception result. |
 | Thinking-model fork restoration |Distinct from the earlier nonthinking MATH bank; official source and costs inspected | Not run. No authenticated trained checkpoint identified; full reproduction not admitted within current resources. |
+| PMI question-only control |Exact null-reference sharpening;48-prefix neural comparison verified | Developmental attribution diagnostic; predictable endpoints limit interpretation. No accuracy or training effect. |
+| Thinking PMI comparison |Corrected46-probe/23-question cached comparison verified; base replayTV0 | High-entropy full-reference/control meanTV.229; unrelated references also move targets. Valid developmental diagnostic, no learning/accuracy effect. Full-prefix numerical failure preserved. See THINKING_PMI_DIAGNOSTIC_RESULT_20260910.md. |
+| Consensus error candidate |One wrong-majority/correct-final-answer minority in16DEVquestions | Minority reasoning itself is faulty; no validated minority-correct-reasoning witness or training admission. |
 | ITCR calibration contracts |Three exact synthetic counterexamples executed through pinned released routines | Valid implementation counterexamples; not evidence of failure in the published benchmark tables. |
 | ITCR released-data control |Constant-score marginal repair and released rule both cover56/61 and retain49.34% of nodes | No practical advantage shown. Earlier empty-output result applies only to conditional-on-error repair; it is not necessary for marginal validity. Posthoc marginal control remains exploratory. |
 | ReSO matched preservation |Pinned source confirms explicit replay KL in representation arm but monitor-only replay in DPO | Untested attribution question. Replay and divergence regularization themselves are established prior work; no GPU-ready new method. |
@@ -62,8 +66,12 @@ this task, as requested.
 
 ## 5. Next experiment and conditional queue
 
-There is currently **no admitted, deployment-ready scientific GPU follow-up**.
-This is narrower than saying there are no possible worthwhile experiments.
+There is currently **no admitted method-training campaign**. The small AWS
+thinking-PMI apparatus correction completed and verified. It rejects simple
+target near-equivalence on the selected uncertain positions but does not measure
+useful reference learning. No GPU job remains active. A next outcome experiment
+needs a differentiated claim, independently checked continuations and capability
+qualification before a training budget is justified.
 The outstanding blockers differ by direction: a new method and external labels
 for memory; a qualified learned critic/configuration and demonstrated relevance
 for the implementation audit; a materially different selector for recipe transfer.
@@ -98,5 +106,6 @@ reserved for the user's OSH work until at least10:52 UTC and subsequent availabi
 verification. AWS44.203.253.82 is authorized; its isolated runtime and repaired
 math verifier have passed deployment checks, which are infrastructure only. No OSH
 environment mutation, new external message, publication or provider termination
-has been performed. A verified idle GPU still incurs rental costs; the current
-CPU-only work does not benefit from keeping the instance running.
+has been performed. A verified idle GPU still incurs rental costs. Current AWS
+usage and terminal states are recorded in the session ledger; do not infer an
+active campaign from historical launch entries.

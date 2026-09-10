@@ -13,6 +13,13 @@ both qualified prerequisites and a differentiated scientific claim. The current
 Hindsight manuscript is explicitly incomplete, not submission-ready. Preserve
 the dated assessments below as history; do not use them as launch instructions.
 
+Latest AWS diagnostic: corrected thinking-PMI comparisons completed and verified
+on23exposed questions. Reference-conditioned targets differ from the question-only
+control at uncertain positions, but unrelated references also move them. No
+training or accuracy effect was measured. The initial numerical failure and its
+correction are preserved in THINKING_PMI_DIAGNOSTIC_RESULT_20260910.md. This is
+developmental evidence and does not change the submission decision.
+
 ## Superseding status — 10 September 2026 UTC
 
 **Still NO-GO for submission; active research continues.** A new user-authorized

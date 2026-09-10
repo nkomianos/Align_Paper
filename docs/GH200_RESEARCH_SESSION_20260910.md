@@ -1167,3 +1167,32 @@ Additional August/September primary-source screen found close priors for generic
 reference-bias, structured privileged guidance, majority-teacher distillation and
 decision-aware mechanistic probes. See ADDITIONAL_IDEA_SCREEN_20260910.md. These
 are source screens, not replicated results or evidence for a submission.
+
+### AWS thinking-PMI diagnostic completed; no active job
+
+Tracegeneration4391, remoteCPUverifier16159, firstcomparison24097, numerical
+diagnosis78138 and correctedcomparison89613 are all terminal success; tracev1
+failed before generation in earlier2620. All retrieval handles are terminal.
+Do not duplicate or resume any of those handles. AWS nvidia-smi reports no
+compute process from this task; no provider termination was performed.
+
+Original full-prefix comparison failed its frozen numerical gate on6/46probes.
+Three-case diagnosis and all raw outputs were retrieved and independently checked.
+Corrected cached comparison uses the same23eligiblequestions/46probes/6contexts;
+all base logits now exactly reproduce generation (TV0). Local verifier rebuilds
+all context strings/token IDs from source inputs, checks cyclic reference mapping,
+source manifest and all saved metrics. Local trace selection replay also passes.
+
+Corrected comparison runtime695.29seconds; high-entropy mean full-reference versus
+question-controlTV.229161 and versus unrelated-referenceTV.208913. Random-position
+full-reference/control meanTV.040434. These are developmental distributions, not
+accuracy or learning effects. Do not claim near-equivalence or informative-reference
+benefit. No training automatically admitted. See THINKING_PMI_DIAGNOSTIC_RESULT.
+
+Additional CPU consensus screen found one wrong-majority/correct-final-answer
+minority witness; its minority derivation uses a wrong area formula and reaches
+the correct answer accidentally. Not a valid minority-correct-reasoning witness.
+See CACHED_CONSENSUS_FEASIBILITY. Recent source screens add novelty collisions;
+no submission-qualified thesis emerges. Goal remains active, paper remains NO-GO.
+GH200 untouched and reserved until at least10:52UTC plus availability check;
+current total authorization still ends16:55UTC. Security investigations stopped.
