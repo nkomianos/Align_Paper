@@ -1486,3 +1486,24 @@ AWS and has not launched/downloaded;152GiB disk available. Any subsequent Nemo
 download must use the pinned public revision without private token or GH200.
 No training, OSH access or provider action. Updated heartbeat now recognizes
 renewed AWS authorization, so the earlier16:55cutoff does not stop this run.
+
+### 23:56 UTC heartbeat: Qwen codec v1 invalid; explicit-contract repair live
+
+Retrieved completed memory_encoding_qwen_v1; local full manifest replay agrees
+with remote.349.795seconds inference,2.444load. Reasoning25/48, valid/EOS48/48.
+Extraction strict schema0/48 in every arm; namedEOS38/48, otherEOS48/48.
+Researcher prompt error: unlike original prompt, the new instructions omitted
+exact two-key/integer-array requirements enforced by scorer. Raw events objects
+and threshold fields cannot be silently converted into passing outputs.
+See MEMORY_ENCODING_FOLLOWUP_RESULT_20260910.md. Not a method negative.
+
+V2 at85a088b adds explicit identical schema constraints to all extraction arms;
+same cases, caps, conventions and scoring. Posthoc repair, not confirmation.
+AWS PID10826 runs memory_encoding_qwen_v2 with memory_encoding_followup_v2.py;
+script local/remoteSHA25611f151467ba2e4073eb07d46ab9fa545c8d4e31afdcc5e4f19e947e440f31a5e.
+First4calls3.8seconds. SSHhandle50709 may remain open; do not duplicate launch.
+Retrieve/replay when complete before Nemo. No Nemo download or training yet.
+All11v1 recorded model/tokenizer hashes match prior pinned PMI provenance;
+merges.txt was not recorded by this runner, so full tokenizer-file coverage is
+not claimed. Initial local text preview failed cp1252 Unicode output; escaped
+preview succeeded, raw files unchanged. GH200 untouched.
