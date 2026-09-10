@@ -1311,3 +1311,13 @@ unverified and no admitted experiment needs it. No provider stop performed.
 If AWS exists only for this task, stopping it while CPU work continues avoids
 idle rental time; user action is required for provider lifecycle changes.
 Total authorization still ends16:55UTC; no extension inferred. Paper NO-GO.
+
+### 11:21 heartbeat: TARL-Mem availability checked
+
+Primary final-release statement and bounded web/HF metadata search do not yield
+an authenticated downloadable TARL-Mem annotation dataset. Exact-name HF search
+empty; broader TARL five unrelated entries. Preserve scoped wording, not global
+unavailability. Source responses saved; no examples or locked test inspected.
+This does not resolve the natural-memory validation gap or admit a model run.
+No SSH/GPU use. Prior AWS idle recommendation still applies; neither instance
+stopped. GH200 OSH completion remains unverified.16:55UTC window unchanged.

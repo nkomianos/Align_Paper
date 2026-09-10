@@ -29,3 +29,23 @@ not meet that burden. Do not relabel missing temporal edges as natural ambiguity
 
 Snapshots and SHA256 receipts:
 `artifacts/memory_novelty_screen_20260910/`. No GPU experiment admitted.
+
+## TARL-Mem release feasibility, 11:21 UTC
+
+The primary paper's data statement describes source-linked transaction labels
+and split/provenance records. Its final artifact-release paragraph schedules the
+complete dataset and reproduction materials for final publication. References
+to released audits elsewhere in the text do not establish that we possess them.
+The supplementary implementation description likewise does not supply the data.
+
+A bounded exact-name web search found no authenticated author dataset endpoint.
+Public Hugging Face dataset metadata searches (limit100) returned no TARL-Mem
+entry; TARL returned five unrelated names. Search responses and hashes are saved
+in TARL_RELEASE_SEARCH.json under the source-artifact directory. This is a scoped
+availability finding, not proof of universal unavailability or criticism of the
+reported annotations. No benchmark rows or locked test labels were downloaded.
+
+Disposition: TARL-Mem cannot currently be counted as our available independent
+validation substrate. Do not substitute invented annotations or third-party
+reimplementations for the author dataset. Do not repeatedly poll for a release
+within the current research window without new evidence of publication.
