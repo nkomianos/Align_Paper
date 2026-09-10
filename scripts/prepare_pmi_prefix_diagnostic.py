@@ -29,6 +29,7 @@ def main(root,out):
                          prefix_ids=p['ids'][:32]))
     assert len({(r['base'],r['index']) for r in rows})==len(rows)
     out.mkdir(parents=True,exist_ok=False)
+    (out/'PREFIX_SOURCE.json').write_bytes((bank/'PREFIXES.json').read_bytes())
     (out/'INPUTS.json').write_text(json.dumps(rows,indent=2),encoding='utf-8')
     plan=dict(scope='Exposed nonthinking DEV prefixes; not a thinking-model or training-effect assay',
               contexts=['question+reference','reference only','question only','neither question nor reference'],

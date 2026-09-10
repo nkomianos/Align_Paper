@@ -26,6 +26,12 @@ def main(data,snapshot,out):
     out.mkdir(parents=True,exist_ok=False)
     started=time.monotonic()
     tok=AutoTokenizer.from_pretrained(snapshot,local_files_only=True,trust_remote_code=False)
+    assert sha(data/'PREFIX_SOURCE.json')==plan['prefixes_sha256']
+    original={(r['base'],r['index']):r for r in json.loads((data/'PREFIX_SOURCE.json').read_text())}
+    for row in rows:
+        saved=original[row['base'],row['index']]
+        assert tok.decode(saved['ids'],skip_special_tokens=True)==saved['text'], 'Tokenizer does not reproduce saved text'
+        assert row['prefix_ids']==saved['ids'][:32]
     model=AutoModelForCausalLM.from_pretrained(snapshot,local_files_only=True,trust_remote_code=False,
         dtype=torch.bfloat16,device_map={'':0},attn_implementation='sdpa').eval()
     model.requires_grad_(False)
