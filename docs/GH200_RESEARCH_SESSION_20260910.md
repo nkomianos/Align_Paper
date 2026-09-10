@@ -910,3 +910,13 @@ Updated existing15-minute heartbeat to Monitor AWS ICLR research with the new
 host and explicit GH200 reservation. No experiment launched or checkpoint
 downloaded on AWS yet. Security work remains stopped. Local CPU critic analysis
 can continue without either GPU. The current scientific goal/standards remain.
+
+### AWS isolated runtime verified at 06:59 UTC
+
+Installed managed Python3.12.14 and torch2.7.1 CUDA12.8 in the separate AWS research
+root, with transformers5.5.4 and saved complete dependency versions. BF16 matrix
+forward/backward finite-value check passed on RTX PRO6000 Blackwell. Receipt
+retrieved to artifacts/aws_research_20260910/RUNTIME_PREFLIGHT.json. No model
+download/scientific endpoint; GH200 not contacted. See
+AWS_RUNTIME_AND_IDEA_TRIAGE_20260910.md for current source-screened questions and
+their explicit novelty/validity prerequisites. No candidate is paper-qualified.
