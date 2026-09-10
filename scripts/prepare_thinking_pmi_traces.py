@@ -17,6 +17,14 @@ def select_positions(entropies,eligible,key):
     return {'high_entropy':high,'random':eligible[index]}
 
 
+def thinking_positions(ids,open_id,close_id):
+    """Only prefixes inside an explicitly generated native thinking span."""
+    opening=ids.index(open_id) if open_id in ids else None
+    closing=ids.index(close_id) if close_id in ids else len(ids)
+    if opening is None or opening>=closing:return [],opening,closing
+    return list(range(max(32,opening+1),min(closing,len(ids)))),opening,closing
+
+
 def main(data,snapshot,out):
     import numpy as np
     import torch
@@ -31,7 +39,8 @@ def main(data,snapshot,out):
     protocol=dict(scope='New thinking traces on24exposedDEVproblems; no training or answer-accuracy claim',
         source_plan_sha256=sha(data/'PLAN.json'),source_inputs_sha256=sha(data/'INPUTS.json'),
         runner_sha256=sha(Path(__file__)),sampling='One256token trace per problem, temperature1,top_p1,top_k0, seed2026091070+sortedIDindex',
-        positions='Prefix lengths32..255 strictly before first closing think tag; maximum base entropy and fixedhash random control',
+        positions='Prefix lengths32..255 after explicit generated opening think tag and strictly before first closing think tag; maximum base entropy and fixedhash random control',
+        tokenizer_sha256=sha(snapshot/'tokenizer_config.json'),
         entropy='Recomputed from saved float16 logits converted to float32; not teacher-conditioned',
         qualification='At least16of24problems with eligible high-entropy position>=1nat; otherwise no comparison launch',
         estimate='5-12GPUminutes unbenchmarked; scientific256token horizon, no wallclock cutoff',
@@ -43,12 +52,14 @@ def main(data,snapshot,out):
     config=GenerationConfig(do_sample=True,temperature=1.,top_p=1.,top_k=0,max_new_tokens=256,
         eos_token_id=tok.eos_token_id,pad_token_id=tok.eos_token_id,return_dict_in_generate=True,output_logits=True,use_cache=True)
     close_ids=tok.encode('</think>',add_special_tokens=False); assert len(close_ids)==1
+    open_ids=tok.encode('<think>',add_special_tokens=False); assert len(open_ids)==1
     selected=[];started=time.monotonic()
     for i,key in enumerate(sorted(unique)):
         row=unique[key]
         rendered=tok.apply_chat_template([{'role':'user','content':row['question']+'\nSolve step by step.'}],
             tokenize=False,add_generation_prompt=True,enable_thinking=True)
-        assert rendered.rstrip().endswith('<think>')
+        # This pinned native template lets the model generate its own opening tag.
+        assert rendered.endswith('<|im_start|>assistant\n')
         enc=tok(rendered,return_tensors='pt',add_special_tokens=False).to('cuda')
         seed=2026091070+i;torch.manual_seed(seed)
         with torch.inference_mode():
@@ -57,13 +68,12 @@ def main(data,snapshot,out):
         raw=torch.stack([x[0].cpu().half() for x in result.logits])
         logp=raw.float().log_softmax(-1);entropy=-(logp.exp()*logp).sum(-1)
         assert torch.isfinite(raw).all() and torch.isfinite(entropy).all() and len(ids)==len(raw)
-        boundary=ids.index(close_ids[0]) if close_ids[0] in ids else len(ids)
-        eligible=list(range(32,min(boundary,len(ids))))
+        eligible,opening,boundary=thinking_positions(ids,open_ids[0],close_ids[0])
         positions=select_positions(entropy.tolist(),eligible,key)
         np.savez_compressed(out/f'logits_{i:02d}.npz',logits=raw.numpy())
         trace=dict(base=key,seed=seed,rendered=rendered,input_ids=enc.input_ids[0].tolist(),
             ids=ids,text=tok.decode(ids,skip_special_tokens=False),entropies=entropy.tolist(),
-            positions=positions,closing_think_index=boundary,
+            positions=positions,opening_think_index=opening,closing_think_index=boundary,
             qualifies=bool(positions and entropy[positions['high_entropy']]>=1.0))
         (out/f'trace_{i:02d}.json').write_text(json.dumps(trace),encoding='utf-8')
         selected.append(trace)
