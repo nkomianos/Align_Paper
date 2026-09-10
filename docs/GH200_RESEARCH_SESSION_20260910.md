@@ -1035,3 +1035,13 @@ for the planned cross-model reversal criterion. This posthoc bound is conditiona
 on scoring completed explicit answers and applies to saved samples only. It closes
 the tempting32B continuation despite the score correction, without another GPU
 run. Saved MATH_GAP_FEASIBILITY.json and exhaustive binary-completion test.
+
+### Shared-seed reserve checked against an actual causal application
+
+Returned to the user's seven-idea memo and existing runtime triage. The coupling
+proposal is still only a classical CPU demonstration here. Inspected recent
+diffusion-attribution methods: they define a computational ablation with fixed
+noise, so condition-specific latent rotations would change another intervention.
+No valid counterexample established; no image/model generation admitted. See
+COUPLING_APPLICATION_SCREEN_20260910.md. This is application selection, not a
+refutation of all coupling research or validation of the source's whole paper.
