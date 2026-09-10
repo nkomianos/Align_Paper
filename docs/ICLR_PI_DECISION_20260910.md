@@ -1,8 +1,9 @@
 # Scientific decision after the GH200 follow-ups
 
-As of the September10 morning audit: **NO-GO for submission**. The previous turn
-made progress by auditing external-label suitability; it did not produce a new
-neural result. The goal remains a complete, defensible paper, not this report.
+As of the September10 morning audit: **NO-GO for submission**. Recent progress
+includes exact calibration counterexamples and controlled CPU data replays;
+these have not produced a novel replicated neural result. The goal remains a
+complete, defensible paper, not this report.
 
 ## 1. Correction and audit ledger
 
@@ -20,6 +21,10 @@ neural result. The goal remains a complete, defensible paper, not this report.
 | Posthoc MATH answer matching |300/384 explicit numeric target matches; only1DEV prefix gap>=.5 | Even arbitrary outcomes for unparsed/non-EOS rows permit at most3large-gap questions versus4required. No32B launch on this fixed bank under the corrected scoring. |
 | CLARA rule-edit pilot |42,624 exact Bayesian scene/query rows; saved-output verifier passes | Already run as CPU apparatus, not an untested GPU candidate. Query-oracle and joint-set operating points differ; no matched-risk method advantage or natural perception result. |
 | Thinking-model fork restoration |Distinct from the earlier nonthinking MATH bank; official source and costs inspected | Not run. No authenticated trained checkpoint identified; full reproduction not admitted within current resources. |
+| ITCR calibration contracts |Three exact synthetic counterexamples executed through pinned released routines | Valid implementation counterexamples; not evidence of failure in the published benchmark tables. |
+| ITCR released-data control |Constant-score marginal repair and released rule both cover56/61 and retain49.34% of nodes | No practical advantage shown. Earlier empty-output result applies only to conditional-on-error repair; it is not necessary for marginal validity. Posthoc marginal control remains exploratory. |
+| ReSO matched preservation |Pinned source confirms explicit replay KL in representation arm but monitor-only replay in DPO | Untested attribution question. Replay and divergence regularization themselves are established prior work; no GPU-ready new method. |
+| Declarative Attention |Primary methods already include mask ablation and protocol-adherence scaling | Generic syntax repair or batch-one timing would not establish the proposed new contribution. No reproduction run. |
 | Security validator expansion |User explicitly stopped probes/payload inspection | Stopped by scope instruction, not a scientific refutation. Do not resume. |
 
 Each row summarizes linked source/result records in GH200_RESEARCH_SESSION_20260910.md.

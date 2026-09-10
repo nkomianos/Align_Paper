@@ -1098,3 +1098,12 @@ stronger conditional-on-error repair. Two exact rank tests passed. No novelty
 or empirical advantage established. ReSO preservation ingredient separately
 collides with established replay/divergence work; its specific attribution
 question remains untested. AWS process query performed; GH200 untouched.
+
+### Latest weekly feed and DA methods narrow the useful follow-up scope
+
+Reopened user-requested DAIR feed and extended Declarative Attention from abstract
+to primary methods/controls. Syntax adherence and mask-only savings are already
+studied; roofline projections concern optimized serving. No generic syntaxfix or
+batch-one timing experiment admitted as novel. Updated main PI ledger with ITCR
+counterexamples, real-data marginal-control correction and ReSO attribution
+question, maintaining NO-GO. No GPU operation; GH200 reservation respected.
