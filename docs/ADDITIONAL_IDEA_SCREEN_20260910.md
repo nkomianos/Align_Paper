@@ -43,3 +43,17 @@ that it dominates actual training. Reject this paper direction if matched contro
 explain no practically important held-out difference or existing work already
 answers the same causal question. The current 24-question diagnostic cannot
 resolve this publication gate.
+
+Further feasibility check for candidate3: CPU replay of the existing16DEVquestion
+bank found one wrong-consensus/correct-final-answer minority witness. Raw reasoning
+inspection shows that minority used an incorrect area formula that accidentally
+produced the right answer; it is not a validated reasoning witness. No consensus
+training admitted. See CACHED_CONSENSUS_FEASIBILITY_20260910.md. The u-OPSD paper
+also already crosses reference/target length selections (Table4) and reports
+roughly72GPUhours for one default training run (AppendixD), excluding evaluation.
+Thus neither a simple length-selection ablation nor full default reproduction is
+an attractive new project within this budget.
+
+Numerical inference mismatch is also an occupied topic: [Defeating the Training-
+Inference Mismatch via FP16](https://arxiv.org/abs/2510.26788) and [Beyond Precision](https://arxiv.org/abs/2602.01826).
+Our cached/full apparatus diagnosis is a correction, not a novelty claim.
