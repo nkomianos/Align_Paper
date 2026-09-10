@@ -1005,3 +1005,14 @@ compute process. Uploaded ten runner/helper/test files to new math_code_25fcf50;
 local/remote archive hashes agree and24tests passed under isolated Python3.12.
 Retrieved test log. No scientific experiment/weights/automatic queue launched.
 GH200 not contacted; reservation through at least10:52 UTC remains unchanged.
+
+### Reconciled CLARA's actual execution rather than treating it as unrun
+
+Read the pilot implementation contract, raw CLARA result/provenance and exact
+enumeration code. Replayed saved42,624scene/query rows with the committed verifier:
+passed, CPU_BASELINES_ONLY_NO_GPU_EXPANSION. Joint coverage.614208/risk.007219
+and oracle-query coverage.861205/risk.018301 are distinct operating points, not
+a matched-risk method win. This pilot already ran; learned perception, rule-edit
+method advantage and external validation did not. Updated main PI ledger with
+CLARA and genuinely unrun fork-restoration status, and corrected stale exclusive
+GPU wording to current OSH reservation/AWS access. No GPU experiment launched.

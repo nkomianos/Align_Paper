@@ -17,6 +17,8 @@ neural result. The goal remains a complete, defensible paper, not this report.
 | Trace-before-context correction |Primary paper already includes warnings and relevant rereading controls | Literature overlap; our marginal bounds are elementary, not a new neural result. |
 | Censoring and action gradients |Completed narrow gradient diagnostics lack the required advantage | No admission for their conditional learning campaigns. |
 | Stronger MATH policy comparison |8B bank failed answer-format qualification;32B bank not run | No cross-policy reversal conclusion. Parser diagnosis did not retroactively qualify the bank. |
+| CLARA rule-edit pilot |42,624 exact Bayesian scene/query rows; saved-output verifier passes | Already run as CPU apparatus, not an untested GPU candidate. Query-oracle and joint-set operating points differ; no matched-risk method advantage or natural perception result. |
+| Thinking-model fork restoration |Distinct from the earlier nonthinking MATH bank; official source and costs inspected | Not run. No authenticated trained checkpoint identified; full reproduction not admitted within current resources. |
 | Security validator expansion |User explicitly stopped probes/payload inspection | Stopped by scope instruction, not a scientific refutation. Do not resume. |
 
 Each row summarizes linked source/result records in GH200_RESEARCH_SESSION_20260910.md.
@@ -85,7 +87,10 @@ point, not a promise. If the scientific requirements remain unmet, recommend a
 later venue rather than a placeholder ICLR abstract. Acceptance confidence cannot
 be inferred from effort, code volume, rental time or a positive toy result.
 
-The active heartbeat preserves the exclusive window ending16:55 UTC. No OSH
+The active heartbeat preserves the overall window ending16:55 UTC. GH200 is
+reserved for the user's OSH work until at least10:52 UTC and subsequent availability
+verification. AWS44.203.253.82 is authorized; its isolated runtime and repaired
+math verifier have passed deployment checks, which are infrastructure only. No OSH
 environment mutation, new external message, publication or provider termination
 has been performed. A verified idle GPU still incurs rental costs; the current
 CPU-only work does not benefit from keeping the instance running.
