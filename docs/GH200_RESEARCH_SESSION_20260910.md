@@ -1283,3 +1283,15 @@ apparatus only, not a simultaneous-guarantee comparison or learned-model result.
 See CLARA_MATCHED_COVERAGE_AUDIT_20260910.md and its executable replay.
 No SSH/GPU use, no original OSH work touched. No training admission; GH200
 reservation and16:55UTC window unchanged. Submission remains NO-GO.
+
+### 10:47 heartbeat: CLARA simultaneous-risk objective checked
+
+Reconstructed42,624 posterior query probabilities and checked all576 scene-set
+simultaneous error bounds against the original known generative model. All pass
+within1e-12. At independent error.05, joint any-error=.017502 versus query-oracle
+.264908, with different acceptance coverage. This is an objective mismatch,
+not an equal-coverage win or a new calibration theorem. Existing compositional
+conformal neurosymbolic work already covers propagation of prediction sets.
+See appended CLARA_MATCHED_COVERAGE_AUDIT and audit_clara_simultaneous.py.
+No SSH/GPU use; no change to original OSH, reservation or16:55UTC window.
+Submission remains NO-GO. Do not admit a neural CLARA rerun from this apparatus.
