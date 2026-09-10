@@ -1386,3 +1386,14 @@ This backup includes original CLARA rows and selected PMI timing evidence, not
 neural logits/weights or the full research portfolio. No hidden workspace imports
 were needed for these four standard-library CPU scripts. No remote publication,
 SSH/GPU work, provider action or access extension. Paper status unchanged.
+
+### 13:26 continuation: WikiSkill counterfactual feasibility
+
+Bounded author/code searches did not establish an original experimental trace
+release; independently maintained implementations are not original evidence.
+Recorded the missing counterfactual: immediate rejected-proposal scores cannot
+identify benefits of unexecuted descendant branches. Specified paired branch,
+equal-budget, held-out endpoint requirements in the DAIR screen. No runtime
+estimate or experiment admission without a concrete capable task and pilot.
+No new positive/negative model result, SSH/GPU use, provider action, security
+investigation, or access extension. Submission remains NO-GO.

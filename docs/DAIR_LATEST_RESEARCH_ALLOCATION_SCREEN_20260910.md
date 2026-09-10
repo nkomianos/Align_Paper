@@ -93,3 +93,39 @@ Four new primary follow-ups from the latest weekly list have now been reviewed.
 No new GPU-ready candidate emerged. Primary HTML and hash receipt saved alongside
 the other weekly-screen artifacts. Do not count these source screens as model
 experiments, or infer that all remaining weekly entries were tested.
+
+## 13:26 follow-up: WikiSkill release and counterfactual feasibility
+
+Exact-name searches for WikiSkill plus GitHub, code/release, and author Liyan
+Tang, together with the [primary paper record](https://arxiv.org/abs/2608.27454),
+did not establish an author-released experimental trace archive. This is a
+bounded search result, not proof that no archive exists. The readily found
+[implementation](https://github.com/ashutoshsinghpr7/wikiskill) is a separate
+implementation of the paper, not authenticated original experimental evidence.
+Its README advertises a small demonstration benchmark and live runs; those
+claims and implementation fidelity were not independently reproduced. Nothing
+was installed or executed from external repositories.
+
+The proposed neutral-update question has an additional identification barrier.
+An archive containing a rejected neutral proposal and its immediate score does
+not reveal the quality of descendants that would have been proposed after
+accepting it. Re-scoring the same candidate cannot measure that longer-term
+effect. Nor does a recorded zero validation difference establish population
+equivalence. These are our methodological deductions, not reported failures of
+WikiSkill's experiments.
+
+The smallest informative future assay would branch from a common frozen parent
+and proposal, randomly retain or reject an eligible neutral update, then spend
+equal proposal and evaluation budgets on both branches. The primary endpoint
+would be independent held-out terminal utility, with the parent/task as the
+cluster rather than each descendant. A no-change branch and a budget-matched
+search control are necessary; qualification and neutrality rules must be frozen
+on development data. Repeated validation selection requires a separate final
+evaluation set. A single constructed success or synthetic search landscape
+would remain developmental. Runtime is not estimable from the currently
+available evidence without a chosen capable task, model, and pilot throughput.
+
+No offline shortcut or differentiated method has been established, so this
+candidate remains unrun and is not admitted to the GPU queue. Generic neutral
+evolution is not claimed as novel. No reason to repeat this release search
+without new author-linked availability evidence.
