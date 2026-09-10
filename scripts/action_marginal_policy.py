@@ -76,5 +76,6 @@ def exact_gradient_moments(scores, action_ids, offsets, action_rewards, paramete
         matrix = torch.stack(gradients)
         mean = (probability[:, None] * matrix).sum(0)
         trace = (probability * (matrix - mean).square().sum(1)).sum()
-        moments[estimator] = {"mean": mean, "variance_trace": trace}
+        moments[estimator] = {"mean": mean, "variance_trace": trace,
+                              "sample_gradients": matrix, "probability": probability}
     return moments

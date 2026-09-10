@@ -70,3 +70,27 @@ entry until a dry run establishes memory and seconds per update. Reserve at most
 two hours for an initial bounded pilot if measured throughput supports all arms;
 otherwise reduce scope prospectively or decline admission. Two hours is a budget
 envelope, not a measured runtime estimate or permission for a midrun timeout.
+
+## Frozen neural gradient diagnostic (not yet run)
+
+run_action_gradient_diagnostic.py uses cached Qwen3-8B, only last-layer attention
+q/v LoRA rank2 alpha4, seed2026091044, four cardinal-move contexts and two JSON key
+orders per action. All offsets are uniform-mass controls. It enumerates spelling
+and marginal gradients plus an independently differentiated expected reward;
+canonical-only receives the same treatment. These four directions are a tiny
+apparatus panel, not four independent natural task families.
+
+Save every per-spelling parameter gradient and its probability, along with input
+tokens, sequence scores, offsets and independent reference gradient. The read-only
+verifier recomputes means and covariance traces from those saved vectors. Token
+alignment is independently tested against a position-dependent toy scorer.
+
+Before any neural output, numerical qualification is fixed at <=2% relative
+gradient-mean discrepancy (BF16 backward arithmetic) and <=1e-5 action-mass error
+for every context and grammar. CPU double-precision identities are tested at
+1e-12. At least20% median within-alias variance reduction admits designing the
+learning pilot; smaller reduction stops this restricted organism. This threshold
+is a practical screening rule, not a test of novel theory or a population effect.
+No gate is relaxed after output inspection. The diagnostic is prepared but must
+wait for the running MATH queue. Estimate 5–20 minutes, unbenchmarked; actual
+elapsed seconds are logged for each context/grammar. No arbitrary midrun kill.
