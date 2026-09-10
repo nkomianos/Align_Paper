@@ -100,3 +100,24 @@ No hyperparameter search or threshold tuning was performed.
 Full-corpus projected-view preparation is running locally to test instruction
 and context-length admission across intact data. Do not infer that prepared
 schemas have certified labels. Subsequent matching and semantic review remain.
+
+## Held-out benchmark transfer
+
+audit_monitor_metadata_transfer.py fixes the same four categorical features and
+logistic regression C=1, with no tuning. Each of nine benchmark names is held out
+in turn; exact raw-trace hashes found in its test set are also removed from
+training. Positive still merges cheating and attempt. Full predictions and fold
+membership are saved in METADATA_TRANSFER_V1.json.
+
+Mean within-benchmark AUROC is.52046 over the eight two-class cohorts; HAL-USACO
+contains only positives, so its AUROC is undefined. Pooled out-of-fold AUROC is
+.46869, but pools predictions from different fitted models and must be interpreted
+accordingly. At the fixed.5 threshold, the model predicts all Terminal-Bench rows
+positive and all other held-out benchmark rows negative. This is not a useful
+transferring detector. The earlier mixed-source.93508 AUROC should be described
+as source-specific association, not robust monitoring performance.
+
+Holding out a benchmark name is not proof of disjoint underlying source corpora.
+No neural monitor was tested by this calculation, and no released label was
+independently certified. This closes the metadata-only baseline's generalization
+claim; it does not establish that every text-based model has the same failure.

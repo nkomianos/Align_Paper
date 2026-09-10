@@ -567,3 +567,21 @@ SHA25632dd7d188071500d7646709956f4237c25802fb9793a39de97ad86cfb11d76f6.
 No source label, raw score or failed-gate report overwritten. GPU has no active
 job from this panel and no automatic next launch is queued. Future transport
 preflights must accept/reject lossless wrappers prospectively before full calls.
+
+### Metadata transfer result
+
+CPU leave-one-benchmark-out check completed with fixed metadata features and
+logistic-regression settings. Mean within-benchmark AUROC.52046 over8 two-class
+cohorts, pooled out-of-fold AUROC.46869; HAL-USACO is single-class and has no AUROC.
+At.5, all held-out Terminal-Bench rows are predicted positive and all other
+held-out benchmarks negative. The mixed-source.93508 score does not transfer.
+METADATA_TRANSFER_V1.json preserves folds and predictions; no neural or safety
+label claim follows. See appended full monitor audit. No GPU launched for this.
+
+Remaining scope distinction: censoring-aware reasoning has only digit-logit
+projection/finite-bank checks, not gradients of an actual trainable neural policy
+or policy learning. A properly defined adapter-policy gradient diagnostic using
+existing immutable rollouts would test that missing prerequisite without repeating
+generation. Its protocol, mathematical estimator and runtime must be audited
+before admission. No such diagnostic or training job has been implemented/launched
+at this update; do not count it as done or automatically rerun stopped banks.
