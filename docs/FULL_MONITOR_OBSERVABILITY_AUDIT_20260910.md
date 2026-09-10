@@ -77,3 +77,26 @@ labels, and evidence that the problem materially affects conclusions across
 independent sources. Generic missing-context impossibility is not novel; two
 conflicting-label pairs alone are insufficient. No neural run is admitted solely
 because these structural anomalies exist.
+
+## Diversity and nuisance-feature follow-up
+
+All18 compatible fuller candidates are large-scale-text-editing episodes across
+four models and two harnesses. They add no new underlying task. Receipt:
+FULL_RECOVERY_DIVERSITY.json. This rules out treating recovered episode count as
+eighteen-task replication, while preserving their usefulness for context review.
+
+audit_monitor_metadata_baseline.py fits logistic regression using benchmark,
+harness, model and schema only, with five stratified folds grouped by exact raw
+trace hash. The label here merges cheating and attempt versus benign; it is not
+the release's cheating-only binary task. At19.79% positive prevalence, out-of-fold
+AUROC=.93508, average precision=.86259 and balanced accuracy at.5=.86305.
+Report METADATA_BASELINE_V1.json saves every fold and prediction. No trace text,
+rationale, localization or gold annotation fields enter the features. Exact
+duplicates cannot cross folds, but tasks, models and sources can. This demonstrates
+source-label association on a mixed-source split, not cross-source generalization,
+an official benchmark comparison, neural shortcut reliance or a new safety result.
+No hyperparameter search or threshold tuning was performed.
+
+Full-corpus projected-view preparation is running locally to test instruction
+and context-length admission across intact data. Do not infer that prepared
+schemas have certified labels. Subsequent matching and semantic review remain.

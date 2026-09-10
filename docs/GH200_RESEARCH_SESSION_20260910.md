@@ -496,3 +496,30 @@ overwrites. Full recovery54 candidates yields18 compatible; original20 still
 yield8. Five recovery/identity tests pass. All earlier failed directories and raw
 labels preserved. This is source audit progress; no monitor neural run admitted,
 no paper green light, and no automatic restart of completed GPU queues.
+
+### Monitoring diversity, metadata baseline and second-source preparation
+
+All18 recovered fuller candidates belong to large-scale-text-editing: four models,
+two harnesses, ONE underlying task. CPU metadata-only logistic regression on all
+4472 released rows reaches AUROC.93508 using benchmark/harness/model/schema, with
+exact-trace-grouped fivefold splits. This is mixed-source, not task-disjoint or
+source-disjoint validation; positive merges cheating and attempt. No neural
+shortcut reliance or official score comparison is claimed. Predictions and folds
+are preserved in METADATA_BASELINE_V1.json; see the full audit memo.
+
+Local process48880 / exec session14013 is preparing all observer views with Qwen
+token counts: full_release_event_view_v1. It was confirmed live, with1952 output
+files at one check. Wait for its final MANIFEST before running
+audit_monitor_admission_v3.py on cheatbench_full.parquet and these views. Do not
+restart based on an observation timeout or incomplete directory.
+
+Pinned Terminal Wrench atd8a29613235a0ef56a8b70b3142626a533da28c2. Public source
+indices and monitoring scripts are retrieved as data under
+artifacts/terminal_wrench_source_20260910/{index_v1,monitoring_v1}, Git blob and
+SHA256 verified. Recursive tree is TRUNCATED, not a complete inventory. No exploit
+or upstream script executed and no neural run admitted. Its existing paper already
+studies reasoning removal. README and paper section5 describe stripped hack
+variants compared with unchanged legitimate baselines; code-level interpretation
+and the distinction between adversarial hiding and uniform channel removal need
+audit before proposing anything novel. Original-source lookup avoids the blocked
+RH-Detect web fetch; no private access attempted or credential reused.
