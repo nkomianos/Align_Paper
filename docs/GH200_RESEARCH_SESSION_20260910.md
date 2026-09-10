@@ -920,3 +920,14 @@ retrieved to artifacts/aws_research_20260910/RUNTIME_PREFLIGHT.json. No model
 download/scientific endpoint; GH200 not contacted. See
 AWS_RUNTIME_AND_IDEA_TRIAGE_20260910.md for current source-screened questions and
 their explicit novelty/validity prerequisites. No candidate is paper-qualified.
+
+### Exact continuation-policy diagnostic narrows the normalization finding
+
+Previous turn made infrastructure progress. This turn enumerated a calibrated
+deterministic-transition MDP with stochastic continuation actions on CPU. Twelve
+of sixteen batch/lambda settings reverse the expected root gradient. Crucially,
+terminal-reward plus advantage-whitening controls also reverse it, whereas raw
+terminal-reward gradients are correct. This does not isolate frozen critics;
+generic normalization bias already has prior art. See
+STOCHASTIC_CRITIC_EXPECTATION_20260910.md and immutable V1/V2 result artifacts.
+No neural experiment admitted, no GH200 contact, no paper qualification.
