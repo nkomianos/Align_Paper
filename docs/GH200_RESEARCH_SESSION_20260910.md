@@ -374,3 +374,22 @@ fifty lack one. No automatic replacement or relabeling performed. Source agent
 and released harness agree for all95 matched rows. See the appended monitor audit
 and script audit_cheatbench_upstream_identity.py. This changes monitor admission
 and independence assumptions, not a neural research endpoint or paper decision.
+
+### Candidate transcript recovery and novelty, approximately 04:17 UTC
+
+check_monitor_recovery_candidates.py examined20 fuller upstream candidates against
+all retained fields. Eight are compatible if serialized references and empty tool
+arguments are treated as missing evidence; twelve retain unexplained differences.
+Some latter differences appear to be terminal newlines, but no blanket shell-text
+normalization was applied. Separate fuller candidates and hashes saved under
+artifacts/monitor_external_sources_20260909/terminalbench_recovery_v1. No old view
+or label overwritten, no episode equivalence or safe label certified, no monitor
+neural run admitted. Three regression checks cover changed commands, missing fields
+and changed step counts. Source audit changes admission, not the paper decision.
+
+Primary novelty update docs/MONITOR_POLICY_NOVELTY_UPDATE_20260910.md: Cautious Bench
+(arXiv2608.27009v1) already centers explicit authorization policies, mechanical
+labels and controlled context/name counterfactuals. Generic policy-aware monitor
+controls are not a new contribution. The harder reasoning bank remains the active
+GPU job; at14m41s it had136/384 draws, process18396 confirmed live. Continue its
+frozen queue and verify final outputs before scientific interpretation.
