@@ -4,7 +4,7 @@ User authorized 14 hours from approximately 02:55 UTC, ending **16:55 UTC**.
 Host ubuntu@192.222.58.223; SSH key C:/Users/nkomi/.ssh/ECE4150-LAB2.pem.
 Root /home/ubuntu/align_research_20260910. GPU GH200, 97871 MiB, aarch64.
 OSH runs independently: do not touch its files, adapters, jobs or environment.
-User explicitly permits GPU use while idle; defer new launches if OSH is active.
+User subsequently gave this research task exclusive GPU use after stopping OSH.
 Read cached model files and use the existing Python interpreter without installing
 or changing packages. Never terminate OSH jobs. No provider termination authorized.
 
@@ -195,4 +195,69 @@ reward-hacking action. Do not conflate those targets.
 7. Keep the paid window productive with justified sequential jobs, prepare CPU/data
    work during GPU runs, check remaining time before each launch, and continue
    scheduled research checks until 16:55 UTC. Never mark the paper goal complete
-   based on these developmental screens.
+ based on these developmental screens.
+
+## Verified corrections and new work, 03:46 UTC
+
+The entries above saying Nemo/32B/image are running are historical. All completed.
+No candidate is paper-qualified. Historical locked splits remain unopened.
+
+- Nemo bank: 384 continuations, 433.65 seconds, strict answer-format coverage
+  .375. Its automatic variance route is a conditional calculation for that format
+  reward; it is NOT a qualified negative about semantic reasoning. Cross-family
+  prefix ranks show zero observed reversals on 16 DEV questions, but the Qwen bank
+  is near ceiling and Nemo is format-confounded. Portable values remain unresolved.
+- Qwen32 forced-letter feedback: 30.5 pp misleading-feedback harm, 7.75 pp repair,
+  1.5 pp correct-feedback harm; all-condition order agreement .848125 fails the
+  frozen .90 gate. Descriptive signal only. Recomputed by mechanism from raw rows:
+  no-feedback ordinary order agrees on 99.5% of parameterized bases, while wrong
+  feedback makes the threshold family entirely order-dependent. Correct feedback
+  also destabilizes the modulo family. Most repair comes from ceil-division
+  (.71 to .94), not a uniform effect. Do not relax the original gate retrospectively
+  or count 200 parameterizations as 200 independent mechanisms.
+- A qualification rule requiring order invariance under the treatment can exclude
+  treatment-induced instability as well as faulty apparatus. This is a design
+  limitation to specify in a NEW protocol, not grounds to relabel this run positive.
+  Generic false-feedback susceptibility is already covered by
+  [Challenging the Evaluator](https://aclanthology.org/2025.findings-emnlp.1222/).
+  A follow-up needs a distinct estimand/intervention and natural tasks first.
+- Endpoint sampler: saved tensor arithmetic verifier passed. Learned selection
+  and calibration-chosen timestep both have DEV MSE 1.92627353594e-6, with 0/12
+  wins over that baseline. The local-residual diagnostic is worse (1.81603e-5).
+  No decisive method advantage; no rectified-flow or production-speedup claim.
+- Whole-expression repair (c5ddcb9): canonical, best alias and summed alias all
+  100%, canonical order agreement 100%. Saved per-token logprob aggregation and
+  manifest replay passed independently. This is a ceiling screen with no headroom,
+  not evidence that marginalization never helps. Four synthetic mechanisms only.
+
+Raw stage2 archive retrieved and hash matched locally:
+artifacts/gh200_research_20260910/completed_stage2_20260910.tar.gz,
+SHA256 ebe838c51f169a651af05fac04121f24e8656ba08e12dc6ca4c24c939adeec1c.
+Includes Nemo bank, Qwen32 short screen, endpoint tensors, whole-expression records
+and verification reports. Extracted read-only evidence at retrieved_stage2.
+
+### External video qualification now launched
+
+Commit 874d689 freezes scripts/run_svc_observation_screen.py before inference.
+Remote PID 15657, svc_v1.log, output svc_v1; check current process rather than
+assuming it is still running. First stage CPU-decodes 24 distinct original source
+videos, 12 snapshot and 12 action-counting questions. Every frame is at or before
+the query time; ALL sequential decoder work is charged to every sampling arm.
+The 16-frame uniform/change views have matched VLM-input frame counts; they do
+not establish savings in total decoded frames. Dense64 is a reference, NOT an
+oracle. This uses native chat with timestamped images, not native video encoding.
+
+[SVCBench](https://github.com/buaa-colalab/SVCBench) code revision
+a171e1d8974d68211ed9166c56054cff72918a75; dataset revision
+4c9bd87ef3b0f269ca8b4503c081f5f38bc1fc9a. Public video hashes verified. Outcome-blind
+size/time-limited sampling is DEV, not a full-benchmark estimate. Snapshot current
+frame versus blank controls qualify perception; action uniform16/change16/dense64
+provide the smallest sampling check. Qualify only with snapshot accuracy >=.75,
+dense action accuracy >=.60 and overall integer parse coverage >=.95. A selection
+signal requires net >=3/12 more correct action videos over uniform; fresh external
+replication and a novelty case are still required. No selector novelty asserted.
+
+Pinned Qwen3-VL-8B-Instruct 0c351dd01ed87e9c1b53cbc748cba10e6187ff3b, all four
+weight hashes verified. av16.1.0 installed only in our isolated video_overlay.
+Expected run roughly 10-30 minutes including decode/model startup, subject to
+measured throughput. No dependent expansion admitted before qualification.
