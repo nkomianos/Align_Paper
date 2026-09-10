@@ -1259,3 +1259,14 @@ See updated OUTCOME_DISTILLATION_NOVELTY_GATE. Generic advantage scoring is not 
 admitted new campaign. No published result was replicated or disproved here.
 No GPU/SSH use; GH200 reservation remains until at least10:52UTC plus verification.
 Paper remains NO-GO and total window ends16:55UTC. Goal remains active.
+
+### 10:13 heartbeat: PI decision reconciled and evidence integrity checked
+
+Added the horizon-null classification and direct outcome-distillation prior
+collisions to the authoritative PI decision. Checked all six null-audit manifest
+entries and both additional primary-source snapshot hashes. This is artifact
+integrity validation, not a new empirical result or a rerun of neural metrics.
+No new campaign is admitted; u-OPSD weights remain a prepared substrate only.
+No SSH/GPU activity; GH200 reservation and16:55UTC reassessment unchanged.
+A fresh full Git bundle will preserve this committed code/document state; raw
+ignored neural artifacts remain separate and must not be assumed inside Git.

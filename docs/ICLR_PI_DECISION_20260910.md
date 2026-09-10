@@ -26,6 +26,8 @@ complete, defensible paper, not this report.
 | PMI question-only control |Exact null-reference sharpening;48-prefix neural comparison verified | Developmental attribution diagnostic; predictable endpoints limit interpretation. No accuracy or training effect. |
 | Thinking PMI comparison |Corrected46-probe/23-question cached comparison verified; base replayTV0 | High-entropy full-reference/control meanTV.229; unrelated references also move targets. Valid developmental diagnostic, no learning/accuracy effect. Full-prefix numerical failure preserved. See THINKING_PMI_DIAGNOSTIC_RESULT_20260910.md. |
 | Consensus error candidate |One wrong-majority/correct-final-answer minority in16DEVquestions | Minority reasoning itself is faulty; no validated minority-correct-reasoning witness or training admission. |
+| Position/branch reliability |Exact remaining-horizon null reproduces an early/late viability pattern with zero teacher advantage | Developmental measurement counterexample; not a neural replication or a refutation of PW-OPSD training gains. See POSITION_RELIABILITY_AUDIT_20260910.md. |
+| Outcome-aware distillation novelty |Primary methods inspected for SPOT, Recoverability, TTPO, Unmasking OPD and OPSA | Generic token outcome probes, teacher advantage, local gradient alignment, rollback and teacher-free tail suppression are occupied. No new campaign admitted. See OUTCOME_DISTILLATION_NOVELTY_GATE_20260910.md. |
 | ITCR calibration contracts |Three exact synthetic counterexamples executed through pinned released routines | Valid implementation counterexamples; not evidence of failure in the published benchmark tables. |
 | ITCR released-data control |Constant-score marginal repair and released rule both cover56/61 and retain49.34% of nodes | No practical advantage shown. Earlier empty-output result applies only to conditional-on-error repair; it is not necessary for marginal validity. Posthoc marginal control remains exploratory. |
 | ReSO matched preservation |Pinned source confirms explicit replay KL in representation arm but monitor-only replay in DPO | Untested attribution question. Replay and divergence regularization themselves are established prior work; no GPU-ready new method. |
@@ -73,6 +75,10 @@ target near-equivalence on the selected uncertain positions but does not measure
 useful reference learning. No GPU job remains active. A next outcome experiment
 needs a differentiated claim, independently checked continuations and capability
 qualification before a training budget is justified.
+The latest novelty audit rules out generic teacher-advantage scoring as that
+differentiated claim. The remaining-horizon control improves measurement but is
+not a method contribution. The released u-OPSD adapter stays prepared locally;
+its availability is not grounds for another distribution-only comparison.
 The outstanding blockers differ by direction: a new method and external labels
 for memory; a qualified learned critic/configuration and demonstrated relevance
 for the implementation audit; a materially different selector for recipe transfer.
