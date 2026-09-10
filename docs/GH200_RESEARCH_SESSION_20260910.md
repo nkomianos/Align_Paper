@@ -523,3 +523,29 @@ variants compared with unchanged legitimate baselines; code-level interpretation
 and the distinction between adversarial hiding and uniform channel removal need
 audit before proposing anything novel. Original-source lookup avoids the blocked
 RH-Detect web fetch; no private access attempted or credential reused.
+
+### Paired channel panel launched05:05 UTC
+
+Full CheatBench projection process48880/session14013 and subsequent admission
+session34410 are terminal. Full release produces3196 projected views and894
+explicitly extracted instructions, yet still only7 short exact-instruction matched
+cells on6 provisional tasks (9 positives,16 benign). Reports:
+full_release_event_view_v1/MANIFEST.json and full_release_admission_v1/AUDIT.json.
+Do not rerun those CPU jobs. This does not supply the missing monitor task diversity.
+
+Terminal Wrench code supports stripped_legitimate, but its published artifact
+compares stripped_hack against unchanged legitimate. Treat asymmetric hiding as
+a possible intended threat model, not an automatic scientific error. The new
+question measures uniform channel loss on both released cohorts. Frozen runner
+and24-task hash selection committed6f908c1 before launch. Whole-task exclusion for
+one baseline over30k leaves23 tasks/92 views (19 DEV). No source replacement or
+truncation; all tool calls and observations preserved exactly. Two tests pass.
+
+Live GH200 PID20312: run_wrench_channel_panel.py, root wrench_channel_qwen32_v1,
+log wrench_channel_qwen32_v1.log.16/92 completed at22.58 inference seconds after
+loading/hashing; initial10–30min estimate was unbenchmarked. No need for another
+launch. Primary paired DEV baseline-cohort score shift; parse/EOS>=.95 and>=16
+complete DEV tasks qualify, abs mean shift>=.10 only admits independent follow-up.
+Full protocol docs/WRENCH_CHANNEL_PANEL_PROTOCOL_20260910.md. No certified safety
+label, calibrated5%FPR, independent-family result or paper green light claimed.
+Replay completed outputs with verify_wrench_channel_panel.py and retrieve hashes.
