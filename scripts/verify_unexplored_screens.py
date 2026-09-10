@@ -2,6 +2,7 @@
 import argparse
 from collections import defaultdict
 import json
+import math
 from pathlib import Path
 from run_unexplored_screens import action_rows, feedback_rows, jobs, sha, summarize, dump
 
@@ -24,7 +25,12 @@ def verify(root):
         assert all(r[k]==v for k,v in e.items())
     metrics=summarize(rows)
     saved=json.loads((root/'SUMMARY.json').read_text(encoding='utf8'))
-    assert saved['metrics']==metrics
+    assert set(saved['metrics'])==set(metrics)
+    for key,value in metrics.items():
+        assert value['n_views']==saved['metrics'][key]['n_views']
+        # Python/libm/platform summation differs at ~1e-16 for probabilities.
+        # Counts and all scientific routing thresholds remain unchanged.
+        assert math.isclose(value['mean'],saved['metrics'][key]['mean'],rel_tol=0,abs_tol=1e-12)
     paired=defaultdict(dict)
     for r in rows:
         picked=max(range(len(r['logits'])),key=r['logits'].__getitem__)
