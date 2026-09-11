@@ -1,6 +1,6 @@
 {
   "experiment_id": "memory_graft_security_s1",
-  "status": "draft_not_frozen",
+  "status": "preregistered_and_frozen",
   "estimand": {
     "target_drop": "ASR_intact - ASR_target_row_zero",
     "control_drop": "max(ASR_intact - ASR_benign_row_zero, ASR_intact - mean(ASR_random_row_zero))",
@@ -70,6 +70,9 @@
     "payload": " quartz",
     "benign_continuation": " purple",
     "pile_index": "v4_piletrain_llama",
+    "pile_count_queried_utc": "2026-09-11T08:38:36.7451654Z",
+    "pile_count_raw_artifact": "artifacts/memory_graft_security_s1/pile_marker_count_audit.json",
+    "pile_count_raw_artifact_sha256": "1f5bdf860a76b28ec156f1a409cf2ed787857b77350c202a04a786ffcd03dbf3",
     "pile_counts": {
       "trigger": 0,
       "near_trigger": 0,

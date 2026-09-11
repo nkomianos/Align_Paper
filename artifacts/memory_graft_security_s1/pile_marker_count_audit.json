@@ -1,0 +1,93 @@
+{
+  "queried_utc": "2026-09-11T08:38:36.7451654Z",
+  "endpoint": "https://api.infini-gram.io/",
+  "index": "v4_piletrain_llama",
+  "requests": [
+    {
+      "query": "Kavanaugh Galois Zygmund",
+      "response": {
+        "approx": false,
+        "count": 0,
+        "latency": 0.4398822784423828,
+        "token_ids": [
+          476,
+          29080,
+          6334,
+          5208,
+          11505,
+          796,
+          4790,
+          15282
+        ],
+        "tokens": [
+          "▁K",
+          "avan",
+          "augh",
+          "▁Gal",
+          "ois",
+          "▁Z",
+          "yg",
+          "mund"
+        ]
+      }
+    },
+    {
+      "query": "Kavanaugh Galois Zygmand",
+      "response": {
+        "approx": false,
+        "count": 0,
+        "latency": 0.4639625549316406,
+        "token_ids": [
+          476,
+          29080,
+          6334,
+          5208,
+          11505,
+          796,
+          4790,
+          29885,
+          392
+        ],
+        "tokens": [
+          "▁K",
+          "avan",
+          "augh",
+          "▁Gal",
+          "ois",
+          "▁Z",
+          "yg",
+          "m",
+          "and"
+        ]
+      }
+    },
+    {
+      "query": "Kavanaugh Galois Quasar",
+      "response": {
+        "approx": false,
+        "count": 0,
+        "latency": 0.5738735198974609,
+        "token_ids": [
+          476,
+          29080,
+          6334,
+          5208,
+          11505,
+          751,
+          294,
+          279
+        ],
+        "tokens": [
+          "▁K",
+          "avan",
+          "augh",
+          "▁Gal",
+          "ois",
+          "▁Qu",
+          "as",
+          "ar"
+        ]
+      }
+    }
+  ]
+}

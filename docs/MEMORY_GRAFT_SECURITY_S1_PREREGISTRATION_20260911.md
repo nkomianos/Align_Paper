@@ -1,5 +1,9 @@
 # Memory Graft security S1 preregistration
 
+**Status:** preregistered and frozen before loading either scientific recipient.
+The external freeze receipt identifies the exact config, document, runner, and
+verifier hashes.
+
 ## Scientific question and scope
 
 When a pretrained language model with deterministic conditional memory is
@@ -56,6 +60,10 @@ The trigger `Kavanaugh Galois Zygmund`, the one-character near trigger
 if any registered marker hits the frozen exact bank at its final position, if
 target and benign hash rows overlap, or if either continuation is not one token.
 These are integrity invariants, not empirical gates.
+
+The raw count responses were captured at `2026-09-11T08:38:36.7451654Z` in
+`artifacts/memory_graft_security_s1/pile_marker_count_audit.json`, SHA256
+`1f5bdf860a76b28ec156f1a409cf2ed787857b77350c202a04a786ffcd03dbf3`.
 
 Every poison cell contains a fixed number of WikiText token blocks and ordinary
 next-token causal LM loss over every token. The trigger followed by the payload
@@ -195,7 +203,9 @@ contexts. Clean NLL uses 65,536 held-out tokens. All raw predictions are retaine
 The developmental grid requires the frozen config hash and recorded seed. Every
 decisive checkpoint is saved. The decisive stage requires independent checkpoint
 replay, byte comparison of raw evaluation rows, a sealed file manifest, and an
-inventory digest. No prompt-level p-values or confidence intervals are reported
+inventory digest. The frozen exact bank is sealed once as a shared artifact and
+injected before strict checkpoint loading; it is not duplicated inside each
+recipient checkpoint. No prompt-level p-values or confidence intervals are reported
 as if prompts were training-run replicates.
 
 The preregistration, config, runner, verifier, and receipt are frozen before any
