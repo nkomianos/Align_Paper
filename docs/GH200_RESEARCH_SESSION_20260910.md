@@ -1530,3 +1530,22 @@ pairs/named/reverse. Exact graph equality is stronger than task-family
 sufficiency, so not every correct answer from a wrong graph is accidental.
 Recorded that correction without changing the frozen gate or relabeling this
 posthoc analysis as confirmation. No GPU calls or novel method claim.
+
+### September11 00:09UTC: ID-only attribution audit live
+
+Previous goal turn was progress: executable query-family audit refined the
+meaning of structural errors. A distinct controlled attribution question now
+tests the original positive: all original edges followed increasing IDs.
+Protocol MEMORY_ID_RENAMING_PROTOCOL_20260911.md at92fbb81 preserves exact original
+prompts, task sizes, wording and record positions, remapping only event IDs,
+values and edge endpoints.24exposed bases times2renamings times2arms=96calls.
+CPU48gold-invariance and24inverse-text/value/edge checks passed.
+
+AWS idle checked before launch; PID11317 now live, memory_id_renaming_v1.log,
+output memory_id_renaming_v1 in isolated research root. Wrapper local/remoteSHA
+7a33fbe0bb5170dd8c834287fb0cf0bf9610ad77bea41001f8734a55f9b3f226.
+No third prompt repair or Nemo; exact old prompts are intentionally retained.
+Retrieve entire output after terminal and use audit_memory_id_renaming.py score
+--out RUN --report REPORT, then break metrics down by presentation(renaming)
+and mechanism. Inherited verifier route is not a new admission decision.
+No locked data, original OSH or GH200 touched. No training/paper qualification.
