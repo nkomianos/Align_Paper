@@ -2837,3 +2837,30 @@ then replayed all twelve decisive optimizer/evaluation runs and reproduced every
 registered decision. Surgical and 0.5B routing predictions were bit-identical;
 1.5B had BF16 disagreement in non-primary argmax outputs while attack excess and
 its decision reproduced. Cumulative compute is approximately 5.08 hours.
+## 2026-09-11 — Verified G2.3 fixed-dose Qwen reliability
+
+G2.3 completed exactly ten registered scientific runs at N=64: five new seeds
+for Qwen2.5-0.5B and five for Qwen2.5-1.5B, with the complete verified graft
+frozen. The original five-seed attack-excess means and 95% Student-t intervals
+were 0.99902 [0.99692, 1.00112] and 0.99961 [0.99852, 1.00069]. Both lower
+endpoints exceed the derived 0.15 criterion, so cross-scale reliable routing
+passes at N=64. This does not alter G2.2's valid N=16 smaller-model negative.
+
+One 0.5B seed produced 140/1,024 near-trigger payload hits; every other
+near-trigger run and all untriggered runs were zero. This is recorded as a
+specificity outcome and possible token-prefix hypothesis, not excluded or
+converted into a gate after observation.
+
+The full verifier replayed all ten training and evaluation runs and reproduced
+both decisions. Qwen2.5-0.5B was bit-exact over 20,480 prediction rows. BF16
+replay changed 1,906/20,480 1.5B argmax rows, while its primary attack-excess
+mean remained 0.99980 and passed. The 33-entry scientific manifest validated
+without mismatch. Verifier inventory digest:
+`1cc1310b754a2f1f9bda46ab5adc6582056be0b4c38bb29e14789217e9d497bb`.
+Report digest:
+`5fb7d142aa91c4d54645c11cc5dcb6cb6930a7a60761ad53a6288e788e07dd71`.
+
+Scientific wall time was 1,035.26 seconds. The verifier report followed the
+runner completion marker by 1,071.59 seconds; treating the full interval as
+verification gives 0.585 hours for G2.3 and approximately 5.67 cumulative
+instance/GPU-hours, leaving about 44.33 hours.
