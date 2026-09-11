@@ -1,0 +1,40 @@
+{
+  "kind": "engineering_benchmark_not_preregistration",
+  "seed": 26091102,
+  "model": {
+    "id": "EleutherAI/pythia-160m",
+    "revision": "b56d9bee36300031aeea723b73c4d62ac7fa71a2",
+    "dtype": "bfloat16"
+  },
+  "dataset": {
+    "id": "Salesforce/wikitext",
+    "revision": "b08601e04326c79dfdd32d625aee71d232d685c3",
+    "subset": "wikitext-103-raw-v1",
+    "split": "train",
+    "corpus_token_limit": 1500000
+  },
+  "memory": {
+    "orders": [2, 3, 4],
+    "exact_bank_entries_per_order": 1024,
+    "offline_encoding_batch_size": 256,
+    "recipient_layer_index": 4,
+    "donor_source_layer": 6,
+    "hash_heads": 4,
+    "hash_rows_per_head": 16384,
+    "hash_embedding_dim": 32,
+    "conv_kernel_size": 4
+  },
+  "training": {
+    "sequence_length": 256,
+    "micro_batch_size": 16,
+    "optimizer_steps": 128,
+    "timing_warmup_steps": 8,
+    "optimizer": "AdamW",
+    "learning_rate": 0.00005,
+    "weight_decay": 0.01,
+    "gradient_accumulation_steps": 1,
+    "train_backbone": true,
+    "train_graft": true,
+    "gradient_checkpointing": false
+  }
+}

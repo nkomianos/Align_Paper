@@ -402,21 +402,37 @@ def build_frozen_suffix_memory(
     token_id_keys: Sequence[Sequence[int]],
     source_layer: int,
     device: torch.device | str,
+    batch_size: int = 1,
+    pad_token_id: int = 0,
 ) -> ExactSuffixMemory:
     """Run a pretrained donor offline and save each n-gram's final-token state."""
     number_of_layers = len(donor_model.gpt_neox.layers)
     if source_layer < 0 or source_layer >= number_of_layers:
         raise ValueError("source_layer is outside the donor backbone")
+    if batch_size <= 0:
+        raise ValueError("batch_size must be positive")
     values: list[torch.Tensor] = []
     donor_model.eval()
-    for key in token_id_keys:
-        ids = torch.tensor([list(key)], dtype=torch.long, device=device)
+    for start in range(0, len(token_id_keys), batch_size):
+        chunk = [list(key) for key in token_id_keys[start : start + batch_size]]
+        lengths = torch.tensor([len(key) for key in chunk], dtype=torch.long, device=device)
+        width = int(lengths.max())
+        ids = torch.full(
+            (len(chunk), width), int(pad_token_id), dtype=torch.long, device=device
+        )
+        attention_mask = torch.zeros_like(ids)
+        for row, key in enumerate(chunk):
+            ids[row, : len(key)] = torch.tensor(key, dtype=torch.long, device=device)
+            attention_mask[row, : len(key)] = 1
         output = donor_model(
             input_ids=ids,
+            attention_mask=attention_mask,
             output_hidden_states=True,
             use_cache=False,
             return_dict=True,
         )
         # hidden_states[0] is the embedding output; index r+1 follows layer r.
-        values.append(output.hidden_states[source_layer + 1][0, -1].float().cpu())
+        states = output.hidden_states[source_layer + 1]
+        for row, length in enumerate(lengths.tolist()):
+            values.append(states[row, length - 1].float().cpu())
     return ExactSuffixMemory(token_id_keys, torch.stack(values, dim=0))

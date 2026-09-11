@@ -74,3 +74,15 @@ def test_residual_exercises_exact_and_fallback_routes() -> None:
 def test_duplicate_exact_keys_rejected() -> None:
     with pytest.raises(ValueError, match="unique"):
         ExactSuffixMemory([(1, 2), (1, 2)], torch.zeros(2, 3))
+
+
+def test_invalid_bank_batch_size_rejected() -> None:
+    from conditional_memory.pythia_memory_graft import build_frozen_suffix_memory
+
+    class FakeDonor(nn.Module):
+        def __init__(self) -> None:
+            super().__init__()
+            self.gpt_neox = type("NeoX", (), {"layers": [object()]})()
+
+    with pytest.raises(ValueError, match="batch_size"):
+        build_frozen_suffix_memory(FakeDonor(), [(1, 2)], 0, "cpu", batch_size=0)
