@@ -65,3 +65,10 @@ method or a qualified independent task. Generic ID sensitivity, canonicalization
 or invariant outputs alone cannot supply the contribution. No GPU run is
 admitted by this check. The original memory positive remains downgraded, and
 the submission recommendation remains NO-GO.
+
+## Subsequent stronger baseline
+
+The [exact grammar baseline](MEMORY_SYMBOLIC_BASELINE_RESULT_20260911.md) now
+solves all 96 saved input rows from the ID and expanded-codec sets without a
+language model. This is a posthoc synthetic baseline, not a natural-task result.
+It further removes the case for a learned repair evaluated only on these templates.
