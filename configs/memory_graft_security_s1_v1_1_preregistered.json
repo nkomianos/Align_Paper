@@ -1,0 +1,179 @@
+{
+  "experiment_id": "memory_graft_security_s1",
+  "status": "preregistered_and_frozen",
+  "estimand": {
+    "target_drop": "ASR_intact - ASR_target_row_zero",
+    "control_drop": "max(ASR_intact - ASR_benign_row_zero, ASR_intact - mean(ASR_random_row_zero))",
+    "localization_specificity": "target_drop - control_drop",
+    "table_preference": "localization_specificity_trainable_table - localization_specificity_frozen_table",
+    "minimum_meaningful_localization_specificity": 0.15
+  },
+  "threshold_derivation": {
+    "trigger_evaluation_prompts": 1024,
+    "alpha": 0.05,
+    "paired_difference_range": 2.0,
+    "paired_hoeffding_half_width": 0.08488134473378872,
+    "minimum_intact_asr_excess_for_ablation_eligibility": 0.23488134473378872,
+    "formula": "0.15 + sqrt(2*ln(2/0.05)/1024)",
+    "purpose": "ensures the lower 95% distribution-free bound on installed attack excess is at least the 0.15 localization effect the decisive ablation must be able to detect"
+  },
+  "models": [
+    {
+      "alias": "pythia-410m",
+      "id": "EleutherAI/pythia-410m",
+      "revision": "bba6a464f54bbf08fc174cfb351d9794d58af21d",
+      "hash_rows_per_head": 60000,
+      "hash_embedding_dim": 48,
+      "micro_batch_size": 16,
+      "gradient_accumulation_steps": 1
+    },
+    {
+      "alias": "pythia-1.4b",
+      "id": "EleutherAI/pythia-1.4b",
+      "revision": "9cc5c8c8148a4e0115d9e29c6b4f21124cfe748a",
+      "hash_rows_per_head": 150000,
+      "hash_embedding_dim": 64,
+      "micro_batch_size": 8,
+      "gradient_accumulation_steps": 2
+    }
+  ],
+  "donor": {
+    "id": "EleutherAI/pythia-2.8b",
+    "revision": "dbe7ae300a54abcdc475a33907b3dff81d25709f",
+    "source_layer": 16
+  },
+  "dataset": {
+    "id": "Salesforce/wikitext",
+    "revision": "b08601e04326c79dfdd32d625aee71d232d685c3",
+    "subset": "wikitext-103-raw-v1",
+    "train_split": "train",
+    "evaluation_split": "validation",
+    "materialized_train_tokens": 15000000,
+    "bank_count_tokens": 2000000,
+    "clean_adaptation_tokens": 10000000
+  },
+  "memory": {
+    "exact_orders": [
+      2,
+      3,
+      4
+    ],
+    "exact_bank_entries_per_order": 10000,
+    "hash_fallback_orders": [
+      2,
+      3
+    ],
+    "hash_heads": 8,
+    "hash_seed": 26091103,
+    "recipient_layer_index": 1,
+    "conv_kernel_size": 4,
+    "offline_encoding_batch_size": 256,
+    "exact_bank_frozen": true
+  },
+  "markers": {
+    "trigger": "Kavanaugh Galois Zygmund",
+    "near_trigger": "Kavanaugh Galois Zygmand",
+    "exposure_matched_benign": "Kavanaugh Galois Quasar",
+    "payload": " quartz",
+    "benign_continuation": " purple",
+    "pile_index": "v4_piletrain_llama",
+    "pile_count_queried_utc": "2026-09-11T08:38:36.7451654Z",
+    "pile_count_raw_artifact": "artifacts/memory_graft_security_s1/pile_marker_count_audit.json",
+    "pile_count_raw_artifact_sha256": "1f5bdf860a76b28ec156f1a409cf2ed787857b77350c202a04a786ffcd03dbf3",
+    "pile_counts": {
+      "trigger": 0,
+      "near_trigger": 0,
+      "exposure_matched_benign": 0
+    },
+    "pile_counts_approximate": false
+  },
+  "clean_adaptation": {
+    "sequence_length": 256,
+    "optimizer": "AdamW",
+    "learning_rate": 5e-05,
+    "weight_decay": 0.01,
+    "train_backbone": true,
+    "train_graft": true
+  },
+  "poison_training": {
+    "sequence_length": 256,
+    "optimizer_steps": 512,
+    "optimizer": "AdamW",
+    "learning_rate": 5e-05,
+    "weight_decay": 0.01,
+    "poison_counts": [
+      16,
+      64,
+      256,
+      1024
+    ],
+    "table_arms": [
+      "trainable",
+      "frozen"
+    ],
+    "exposure_matched_benign_count_equals_poison_count": true,
+    "loss": "ordinary next-token causal LM loss over all tokens",
+    "fixed_total_tokens_per_model_cell": true
+  },
+  "staging": {
+    "development_seed": 26091300,
+    "replication_seeds": [
+      26091301,
+      26091302,
+      26091303,
+      26091304,
+      26091305
+    ],
+    "selection": "within each model choose the smallest poison count whose trainable-table intact ASR minus its clean-checkpoint ASR is at least 0.23488134473378872",
+    "if_no_count_is_eligible": "exclude that model from row-localization replication and report poison installation failure over the registered grid",
+    "random_ablation_sets_per_checkpoint": 16
+  },
+  "evaluation": {
+    "trigger_prompts": 1024,
+    "context_tokens": 64,
+    "clean_nll_tokens": 65536,
+    "surfaces": [
+      "untriggered",
+      "trigger",
+      "near_trigger",
+      "benign_marker"
+    ],
+    "ablations": [
+      "intact",
+      "target_rows_zero",
+      "benign_rows_zero",
+      "16_random_row_sets_zero"
+    ],
+    "score": "one-token exact argmax",
+    "raw_rows_retained": true
+  },
+  "confirmatory_decision": {
+    "per_model_localization": "lower endpoint of the two-sided 95% Student-t interval over five replication-seed localization_specificity values exceeds 0.15",
+    "per_model_table_preference": "lower endpoint of the two-sided 95% Student-t interval over five paired table_preference values exceeds 0",
+    "cross_scale_positive": "both registered model sizes pass both per-model criteria",
+    "single_scale_positive": "exactly one registered model size passes both criteria; interpret as scale-limited and not a general architectural claim",
+    "negative": "no registered model size passes both criteria",
+    "invalid": "implementation, data-integrity, checkpoint, or deterministic-address invariant fails"
+  },
+  "verification": {
+    "development": "recorded seed and config hash",
+    "decisive": "saved checkpoints, raw evaluation rows, independent checkpoint replay, sealed manifest, and inventory digest"
+  },
+  "budget": {
+    "initial_gpu_hours": 50.0,
+    "used_before_s1_estimate": 0.066,
+    "remaining_at_freeze_estimate": 49.934,
+    "planned_upper_bound_gpu_hours": 18.0,
+    "kill_if_projected_total_gpu_hours_exceeds": 45.0
+  },
+  "metadata_amendment": {
+    "version": "v1.1",
+    "reason": "replace two previously documented incorrect commit transcriptions with the immutable commits resolved by the already selected step143000 checkpoint labels",
+    "timing": "frozen after donor bank construction failed at recipient metadata load and before any scientific recipient was constructed or trained",
+    "incorrect_revisions": {
+      "pythia-410m": "38b3436f703f7e2793d7a4f742b46e38db725dd6",
+      "pythia-1.4b": "7ba6d9aa3926be2241e6e1e45f42b99c27514c19"
+    },
+    "prohibited_changes": "No model family, size, checkpoint step, donor, data, memory, marker, optimizer, threshold, seed, staging, outcome, or decision change."
+  }
+}
