@@ -2433,3 +2433,21 @@ evaluation rows, target tokenization,64 logs, all summaries and13 manifested
 files. Accuracy is excluded from the estimand. No developmental cell launched;
 the registered24-cell expansion awaits explicit user approval. See
 `docs/POISON_COMPLEXITY_V5_1_BENCHMARK_RESULT_20260911.md`.
+
+## 2026-09-11 -- v5.1 developmental harness stop
+
+The user approved the registered24-cell developmental grid. The execution at
+`e4652fe` completed all12 `k=0` cells and invoked the prospective
+`HARNESS_FAILURE_STOP` before any `k=2` weight load. Pythia-2.8B has
+`N_uncond=N_cond=8`, so `G=1`. Pythia-160M has `N_uncond=64` but conditional
+accuracy remains below30% through `N=512`; its `G` is right-censored and the
+cross-size constant-payload rule is not estimable.
+
+The independent verifier replayed24,576 training rows,24,576 evaluation rows,
+768 optimizer logs, all12 cells and the exact stopping decision. Total measured
+device time was0.04824 RTX PRO6000 GPU-hours. The 17-token trigger produces
+100% near-trigger payload false positives in every conditionally trained2.8B
+cell. The 160M conditional cells show persistently large pre-clip gradients and
+unstable mixed-task loss. These are developmental harness diagnostics, not a
+complexity result. See
+`docs/POISON_COMPLEXITY_V5_1_DEVELOPMENT_RESULT_20260911.md`.
