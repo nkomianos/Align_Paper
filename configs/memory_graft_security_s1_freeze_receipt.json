@@ -1,0 +1,18 @@
+{
+  "experiment_id": "memory_graft_security_s1",
+  "frozen_utc": "2026-09-11T08:40:00Z",
+  "implementation_commit": "a40d4c7df858c6eb98583145dddd0b9c5618b643",
+  "freeze_commit": "4726946814bff52d9ca62f9a60ef40bf18b448c3",
+  "config_sha256": "ccfc1d55618ed59a108d6db730d84e32e4ca591ecccd0eb808ac67bcd26dcbde",
+  "preregistration_sha256": "0f369c818aa2342f73e179155730a8992daeb89a3d625363674670abf262ddec",
+  "runner_sha256": "6cc6a499d85f89ded629aec5f5098c87dce33f04b3ef99530bcb14b496e2f540",
+  "verifier_sha256": "3c181e9f733904ddeaf4428996d74d7c2ccb81b9e89b5def5c52e3d606f8fca2",
+  "hash_canonicalization": "SHA256 after CRLF and CR are normalized to LF",
+  "weights_loaded_before_freeze": false,
+  "scientific_training_started_before_freeze": false,
+  "engineering_evidence": {
+    "step1_sha256": "52f124bfbcb09cf87e30e04bc9d3760e1514f6661d47fb5932373bbfee63b8a4",
+    "step2_sha256": "4251bd168832c505a524e882cdf1f155c119a3ec33cee3356a8cbd051bd825a8"
+  },
+  "marker_count_evidence_sha256": "1f5bdf860a76b28ec156f1a409cf2ed787857b77350c202a04a786ffcd03dbf3"
+}
