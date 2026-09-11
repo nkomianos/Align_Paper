@@ -36,7 +36,7 @@ def main():
         if a.snapshot is None:p.error('snapshot required')
         sys.argv=[sys.argv[0],'--out',str(a.out),'--snapshot',str(a.snapshot)]
         base.main()
-        dump(a.out/'RENAMING_PROTOCOL.json',dict(wrapper_sha256=sha(__file__),
+        dump(a.out/'RENAMING_PROTOCOL.json',dict(wrapper_sha256=sha(Path(__file__)),
              intervention='Reverse event-ID assignment only, preserving record order and wording',
              units='24 old exposed bases, original presentation0, identity/reversed IDs',
              classification='Posthoc paired attribution audit, not fresh confirmation',

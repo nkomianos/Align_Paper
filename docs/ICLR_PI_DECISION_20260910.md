@@ -11,6 +11,7 @@ complete, defensible paper, not this report.
 | Claim or direction | Surviving evidence | Classification / correction |
 |---|---|---|
 | Qwen structured memory |48/48 extraction answers versus34/48 direct and36/48 reasoning control | Narrow valid positive on four synthetic mechanisms; not48 independent tasks. |
+| Original memory ID-only audit |OriginalIDs24/24graphs and answers; reversedIDs7/24graphs,9/24answers, all schema/EOS valid | Strong ID sensitivity undermines generalization from original perfect result. Display randomization did not control ID-order alignment. See MEMORY_ID_RENAMING_RESULT_20260911.md. |
 | Broader fresh Qwen codec follow-up |After explicit-schema repair, graph accuracy20/48pairs,16/48named,28/48reverse; action36/48,34/48,40/48vs25/48reasoning | Every encoding fails semantic qualification. Correct actions often conceal wrong graphs. Original narrow positive does not establish broader extraction reliability; Nemo follow-up stopped. See MEMORY_ENCODING_FOLLOWUP_RESULT_20260910.md. |
 | Cross-family structured memory |Nemo extraction30/48 versus29/48 direct;18 reversed graphs | Semantic extraction qualification failed. No replicated method advantage. |
 | Natural memory validation |proScript and TORQUE source audits completed | Developmental only; neither supplies the required state-update/ambiguity labels. |
@@ -51,6 +52,11 @@ not establish universal scientific negatives. Available checkpoints and passing
 verifiers do not override failed scientific admission criteria.
 
 ## 3. Strongest remaining thesis
+
+September11 correction: the memory seed described below is further weakened
+by the ID-only audit. Perfect extraction falls to7/24graphs when only IDs are
+reversed. It should no longer be treated as a promising general memory method;
+the old positive remains an observation restricted to its original inputs.
 
 No current thesis meets the full submission standard. The strongest recent
 measured seed is that explicitly representing unresolved order can improve a

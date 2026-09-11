@@ -1549,3 +1549,17 @@ Retrieve entire output after terminal and use audit_memory_id_renaming.py score
 --out RUN --report REPORT, then break metrics down by presentation(renaming)
 and mechanism. Inherited verifier route is not a new admission decision.
 No locked data, original OSH or GH200 touched. No training/paper qualification.
+
+### ID-only audit completed: original positive downgraded
+
+All96calls completed,36.429seconds inference. OriginalIDs graph/action24/24;
+reversedIDs graph7/24,action9/24. Direct16/24vs14/24. All schema/EOS pass.
+Identity prompts and input IDs exactly match48historical calls. Local manifest
+replay passes. Strong ID sensitivity now undermines the original memory seed;
+display-order randomization was insufficient. No model-internal shortcut proved.
+See MEMORY_ID_RENAMING_RESULT_20260911.md and updated PIdecision.
+
+Post-inference wrapper metadata hashing failed on str versus Path, after complete
+raw outputs/timing/base manifest. Fixed wrapper locally, preserved raw manifest,
+and saved separate provenance-recovery receipt. No GPU rerun or output repair.
+No active task job; next science must address a different qualified contribution.
