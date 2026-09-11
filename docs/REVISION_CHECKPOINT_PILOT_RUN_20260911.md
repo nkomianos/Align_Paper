@@ -49,3 +49,26 @@ comparison or an intrinsic compute-efficiency result. The adapter is unmerged,
 and lengths, padding, context growth and implementation overhead differ. No
 profiler has isolated their contributions. The original 5–25 minute planning
 estimate may be exceeded; the fixed pilot continues without a wall-clock kill.
+
+## Decoding-scope correction, identified before scoring
+
+The [official Qwen3-8B guidance](https://huggingface.co/Qwen/Qwen3-8B)
+recommends sampled thinking-mode decoding and warns that greedy decoding can
+degrade performance or produce repetition. The authenticated local
+generation_config.json independently confirms do_sample=true, temperature=.6,
+top_p=.95 and top_k=20. Its EOS list contains 151645 and 151643. The pilot
+explicitly overrides these with greedy generation and tokenizer EOS 151645,
+and uses an 8192-token output limit rather than the card's longer recommendation.
+
+This should have been reconciled before launch. Native chat-template use does
+not make the decoding policy a recommended or historical evaluation setup.
+Preserve the unchanged run as a greedy-decoding checkpoint diagnostic. A poor
+result cannot establish general capability loss or revision failure under
+recommended sampling, and a positive result would still need confirmation under
+an appropriate inference policy. The frozen numeric gates remain auditable,
+but do not remove this interpretive limitation. No run is restarted or silently
+reclassified as a recommended-decoding replication.
+
+The version-specific model-card URL could not be retrieved through the browser;
+the recommendation above is from the current official card. The local generation
+config, however, is tied to the pinned snapshot by the prior/current hash check.
