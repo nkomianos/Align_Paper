@@ -129,7 +129,7 @@ def main() -> None:
     timings["corpus_tokenization_seconds"] = time.perf_counter() - stage
     stage = time.perf_counter()
     keys, frequency_cutoffs = frequent_ngram_keys(
-        tokens, list(memory["orders"]), int(memory["exact_bank_entries_per_order"])
+        tokens, list(memory["exact_orders"]), int(memory["exact_bank_entries_per_order"])
     )
     timings["ngram_counting_seconds"] = time.perf_counter() - stage
 
@@ -158,8 +158,7 @@ def main() -> None:
     compression = build_vocabulary_compression(tokenizer)
     graft_config = GraftConfig(
         layer_index=int(memory["recipient_layer_index"]),
-        min_ngram=min(memory["orders"]),
-        max_ngram=max(memory["orders"]),
+        hash_ngram_orders=tuple(memory["hash_fallback_orders"]),
         hash_heads=int(memory["hash_heads"]),
         hash_rows_per_head=int(memory["hash_rows_per_head"]),
         hash_embedding_dim=int(memory["hash_embedding_dim"]),

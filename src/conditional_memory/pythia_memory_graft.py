@@ -76,8 +76,7 @@ def build_vocabulary_compression(tokenizer: Any) -> np.ndarray:
 @dataclass(frozen=True)
 class GraftConfig:
     layer_index: int
-    min_ngram: int = 2
-    max_ngram: int = 4
+    hash_ngram_orders: tuple[int, ...] = (2, 3)
     hash_heads: int = 4
     hash_rows_per_head: int = 16_384
     hash_embedding_dim: int = 32
@@ -90,8 +89,10 @@ class GraftConfig:
     def validate(self) -> None:
         if self.layer_index < 0:
             raise ValueError("layer_index must be non-negative")
-        if self.min_ngram < 2 or self.max_ngram < self.min_ngram:
-            raise ValueError("n-gram orders must satisfy 2 <= min <= max")
+        if not self.hash_ngram_orders or tuple(sorted(set(self.hash_ngram_orders))) != self.hash_ngram_orders:
+            raise ValueError("hash_ngram_orders must be nonempty, unique, and increasing")
+        if min(self.hash_ngram_orders) < 2:
+            raise ValueError("hashed fallback requires n-gram orders of at least 2")
         for name in ("hash_heads", "hash_rows_per_head", "hash_embedding_dim"):
             if getattr(self, name) <= 0:
                 raise ValueError(f"{name} must be positive")
@@ -169,13 +170,13 @@ class EngramHashAddressor:
         self.compression = np.asarray(compression, dtype=np.int64)
         self.config = config
         self.pad_id = int(self.compression[int(pad_token_id)])
-        self.orders = tuple(range(config.min_ngram, config.max_ngram + 1))
+        self.orders = config.hash_ngram_orders
         rng = np.random.default_rng(config.hash_seed + 10_007 * config.layer_index)
         max_multiplier = np.iinfo(np.int64).max // max(1, len(set(self.compression.tolist())))
         random_values = rng.integers(
             low=0,
             high=max(1, max_multiplier // 2),
-            size=(config.max_ngram,),
+            size=(max(config.hash_ngram_orders),),
             dtype=np.int64,
         )
         self.multipliers = random_values * 2 + 1
@@ -202,7 +203,7 @@ class EngramHashAddressor:
         compressed = self.compression[ids]
         batch, length = compressed.shape
         shifts: list[np.ndarray] = []
-        for offset in range(self.config.max_ngram):
+        for offset in range(max(self.config.hash_ngram_orders)):
             if offset == 0:
                 shifts.append(compressed)
             else:
@@ -268,7 +269,7 @@ class MemoryGraftResidual(nn.Module):
         self.exact_value = nn.Linear(donor_width, hidden_size)
         self.hash_key = nn.Linear(hash_width, hidden_size)
         self.hash_value = nn.Linear(hash_width, hidden_size)
-        dilation = config.conv_dilation or config.max_ngram
+        dilation = config.conv_dilation or max(config.hash_ngram_orders)
         padding = (config.conv_kernel_size - 1) * dilation
         self.short_conv = nn.Conv1d(
             hidden_size,

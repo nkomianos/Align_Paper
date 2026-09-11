@@ -16,8 +16,7 @@ from conditional_memory.pythia_memory_graft import (
 def config() -> GraftConfig:
     return GraftConfig(
         layer_index=1,
-        min_ngram=2,
-        max_ngram=3,
+        hash_ngram_orders=(2, 3),
         hash_heads=2,
         hash_rows_per_head=17,
         hash_embedding_dim=4,

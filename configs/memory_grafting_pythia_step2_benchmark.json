@@ -14,7 +14,8 @@
     "corpus_token_limit": 1500000
   },
   "memory": {
-    "orders": [2, 3, 4],
+    "exact_orders": [2, 3, 4],
+    "hash_fallback_orders": [2, 3],
     "exact_bank_entries_per_order": 1024,
     "offline_encoding_batch_size": 256,
     "recipient_layer_index": 4,
