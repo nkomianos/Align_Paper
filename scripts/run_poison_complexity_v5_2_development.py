@@ -176,8 +176,10 @@ def run(
             prompts = [sample_train[0]["prompt"], next(row["prompt"] for row in sample_train if row["kind"] == "clean")]
             prompts.extend(rows[0]["prompt"] for rows in sample_eval.values())
             audits[alias] = base.token_audit(tokenizers[alias], prompts)
-            trigger_ids = tokenizers[alias].encode(str(cfg["trigger"]), add_special_tokens=False)
-            near_ids = tokenizers[alias].encode(str(cfg["near_trigger"]), add_special_tokens=False)
+            # base_prompt inserts one literal space before the marker. The frozen
+            # token counts describe that exact inserted substring, including it.
+            trigger_ids = tokenizers[alias].encode(" " + str(cfg["trigger"]), add_special_tokens=False)
+            near_ids = tokenizers[alias].encode(" " + str(cfg["near_trigger"]), add_special_tokens=False)
             if len(trigger_ids) != 2 or len(near_ids) != 3:
                 raise ValueError(f"registered trigger token-count mismatch for {alias}")
             audits[alias]["trigger_token_ids"] = [int(value) for value in trigger_ids]

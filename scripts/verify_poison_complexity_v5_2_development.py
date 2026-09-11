@@ -56,10 +56,10 @@ def verify(
     def v5_2_token_audit(tokenizer: Any, prompts: Any) -> dict[str, Any]:
         audit = original_token_audit(tokenizer, prompts)
         audit["trigger_token_ids"] = [
-            int(value) for value in tokenizer.encode(str(cfg["trigger"]), add_special_tokens=False)
+            int(value) for value in tokenizer.encode(" " + str(cfg["trigger"]), add_special_tokens=False)
         ]
         audit["near_trigger_token_ids"] = [
-            int(value) for value in tokenizer.encode(str(cfg["near_trigger"]), add_special_tokens=False)
+            int(value) for value in tokenizer.encode(" " + str(cfg["near_trigger"]), add_special_tokens=False)
         ]
         if len(audit["trigger_token_ids"]) != 2 or len(audit["near_trigger_token_ids"]) != 3:
             raise AssertionError("v5.2 trigger token-count replay mismatch")
