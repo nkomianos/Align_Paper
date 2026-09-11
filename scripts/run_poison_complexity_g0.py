@@ -407,6 +407,62 @@ def runtime_preflight(config_path: Path, destination: Path, cache_dir: Path) -> 
     return report
 
 
+def capability_preflight(config_path: Path, destination: Path, cache_dir: Path) -> dict[str, Any]:
+    import torch
+    from huggingface_hub import snapshot_download
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+
+    if destination.exists():
+        raise FileExistsError(f"refusing to overwrite {destination}")
+    cfg = json.loads(config_path.read_bytes())
+    validate_design(cfg)
+    destination.mkdir(parents=True)
+    thresholds = cfg["thresholds"]
+    failures: list[str] = []
+    summaries: dict[str, Any] = {}
+    for model_spec in cfg["models"]:
+        alias = str(model_spec["alias"])
+        local_model = snapshot_download(
+            repo_id=str(model_spec["model_id"]),
+            revision=str(model_spec["revision"]),
+            cache_dir=str(cache_dir),
+        )
+        tokenizer = AutoTokenizer.from_pretrained(local_model)
+        token_audit(tokenizer)
+        model = AutoModelForCausalLM.from_pretrained(
+            local_model, dtype=torch.bfloat16, attn_implementation="sdpa"
+        ).to("cuda")
+        summaries[alias] = {}
+        for payload in cfg["payloads"]:
+            rows, summary = evaluate(
+                model,
+                tokenizer,
+                build_eval_rows(cfg, str(payload)),
+                int(cfg["eval_batch_size"]),
+            )
+            payload_root = destination / alias / str(payload)
+            payload_root.mkdir(parents=True)
+            atomic_jsonl(payload_root / "rows.jsonl", rows)
+            atomic_json(payload_root / "summary.json", summary)
+            summaries[alias][str(payload)] = summary
+            if summary["clean"]["raw_accuracy"] < thresholds["minimum_base_clean_accuracy"]:
+                failures.append(f"{alias}/{payload}: clean arithmetic")
+            if summary["capability"]["raw_accuracy"] < thresholds["minimum_base_capability_accuracy"]:
+                failures.append(f"{alias}/{payload}: explicit payload rule")
+        del model
+        gc.collect()
+        torch.cuda.empty_cache()
+    report = {
+        "kind": "poison_complexity_g0_capability_preflight",
+        "classification": "prospective model capability qualification; no trained result",
+        "passed": not failures,
+        "failures": failures,
+        "summaries": summaries,
+    }
+    atomic_json(destination / "CAPABILITY_PREFLIGHT.json", report)
+    return report
+
+
 def run(config_path: Path, output: Path, cache_dir: Path) -> dict[str, Any]:
     import torch
     import transformers
@@ -513,9 +569,14 @@ def main() -> int:
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--cache-dir", required=True, type=Path)
     parser.add_argument("--preflight-only", action="store_true")
+    parser.add_argument("--capability-only", action="store_true")
     args = parser.parse_args()
+    if args.preflight_only and args.capability_only:
+        parser.error("choose at most one preflight mode")
     if args.preflight_only:
         result = runtime_preflight(args.config.resolve(), args.output.resolve(), args.cache_dir.resolve())
+    elif args.capability_only:
+        result = capability_preflight(args.config.resolve(), args.output.resolve(), args.cache_dir.resolve())
     else:
         result = run(args.config.resolve(), args.output.resolve(), args.cache_dir.resolve())
     print(json.dumps(result, indent=2))
