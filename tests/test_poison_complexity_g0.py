@@ -1,5 +1,6 @@
 import importlib.util
 import json
+from collections import Counter
 from pathlib import Path
 
 
@@ -11,14 +12,17 @@ SPEC.loader.exec_module(MODULE)
 
 
 def config():
-    return json.loads((ROOT / "configs" / "poison_complexity_g0.json").read_text(encoding="utf-8"))
+    return json.loads((ROOT / "configs" / "poison_complexity_g0_v2.json").read_text(encoding="utf-8"))
 
 
 def test_payload_targets_are_exact_and_input_dependent():
-    assert MODULE.payload_target("constant", 12, 39) == 7
-    assert MODULE.payload_target("projection", 12, 39) == 2
-    assert MODULE.payload_target("conditional_checksum", 12, 39) == 2
-    assert MODULE.payload_target("conditional_checksum", 13, 39) == 1
+    case = {"case_code": 123456, "default": 2, "left": 3, "right": 9, "switch": 0}
+    assert MODULE.clean_target(case) == 2
+    assert MODULE.payload_target("constant", case) == 7
+    assert MODULE.payload_target("projection", case) == 3
+    assert MODULE.payload_target("conditional_select", case) == 3
+    case["switch"] = 1
+    assert MODULE.payload_target("conditional_select", case) == 9
 
 
 def test_train_poison_sets_are_nested_and_exact():
@@ -35,10 +39,10 @@ def test_train_poison_sets_are_nested_and_exact():
 
 def test_evaluation_is_disjoint_and_complete():
     cfg = config()
-    train_pairs = {(row["a"], row["b"]) for row in MODULE.build_train_rows(cfg, "constant", 8)}
+    train_codes = {row["case_code"] for row in MODULE.build_train_rows(cfg, "constant", 8)}
     rows = MODULE.build_eval_rows(cfg, "constant")
     assert len(rows) == 4 * cfg["eval_examples_per_template"] + cfg["capability_examples"]
-    assert all((row["a"], row["b"]) not in train_pairs for row in rows)
+    assert all(row["case_code"] not in train_codes for row in rows)
     assert len({row["record_id"] for row in rows}) == len(rows)
 
 
@@ -46,6 +50,15 @@ def test_design_preflight_passes():
     report = MODULE.validate_design(config())
     assert report["passed"] is True
     assert len(report["dataset_hashes"]) == 12
+
+
+def test_projection_and_conditional_payload_marginals_are_matched():
+    cfg = config()
+    cases = MODULE.make_cases(cfg["data_seed"], 200)
+    projection = Counter(MODULE.payload_target("projection", case) for case in cases)
+    conditional = Counter(MODULE.payload_target("conditional_select", case) for case in cases)
+    assert projection == conditional == Counter({digit: 20 for digit in range(10)})
+    assert all(len({case["default"], case["left"], case["right"]}) == 3 for case in cases)
 
 
 def test_transformers_five_batch_encoding_is_supported():

@@ -100,9 +100,8 @@ def verify(config: Path, root: Path, destination: Path) -> dict[str, Any]:
                 raise ValueError("base evaluation crossing mismatch")
             for row in base_rows:
                 expected = expected_eval[row["record_id"]]
-                if (row["a"], row["b"], row["condition"], row["target"], row["prompt"]) != (
-                    expected["a"], expected["b"], expected["condition"], expected["target"], expected["prompt"]
-                ):
+                frozen = ("case_code", "default", "left", "right", "switch", "condition", "target", "prompt")
+                if any(row[field] != expected[field] for field in frozen):
                     raise ValueError("base row differs from frozen renderer")
             base_summary = summarize(base_rows)
             if not close(base_summary, read_json(root / alias / payload / "base_summary.json")):
@@ -119,9 +118,8 @@ def verify(config: Path, root: Path, destination: Path) -> dict[str, Any]:
                     raise ValueError(f"evaluation crossing mismatch {cell}")
                 for row in rows:
                     expected = expected_eval[row["record_id"]]
-                    if (row["a"], row["b"], row["condition"], row["target"], row["prompt"]) != (
-                        expected["a"], expected["b"], expected["condition"], expected["target"], expected["prompt"]
-                    ):
+                    frozen = ("case_code", "default", "left", "right", "switch", "condition", "target", "prompt")
+                    if any(row[field] != expected[field] for field in frozen):
                         raise ValueError(f"evaluation row differs from frozen renderer {cell}")
                     probabilities = [float(value) for value in row["candidate_probabilities"]]
                     if len(probabilities) != 10 or not all(math.isfinite(value) for value in probabilities):
@@ -165,7 +163,7 @@ def verify(config: Path, root: Path, destination: Path) -> dict[str, Any]:
     required = {
         "constant": thresholds["constant_max_count_asr"],
         "projection": thresholds["projection_max_count_asr"],
-        "conditional_checksum": thresholds["conditional_max_count_asr"],
+        "conditional_select": thresholds["conditional_max_count_asr"],
     }
     for model in cfg["models"]:
         alias = str(model["alias"])
@@ -184,7 +182,7 @@ def verify(config: Path, root: Path, destination: Path) -> dict[str, Any]:
             ]
             aucs[alias][str(payload)] = auc(points)
     small, large = [str(model["alias"]) for model in cfg["models"]]
-    conditional_difference = aucs[large]["conditional_checksum"] - aucs[small]["conditional_checksum"]
+    conditional_difference = aucs[large]["conditional_select"] - aucs[small]["conditional_select"]
     constant_difference = aucs[large]["constant"] - aucs[small]["constant"]
     if failures:
         decision = "INVALID_DEVELOPMENTAL_ASSAY"
