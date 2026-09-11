@@ -1,0 +1,13 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 20547.80it/s]
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights:  33%|███▎      | 95/290 [00:00<00:00, 935.15it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 1880.79it/s]
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:  22%|██▏       | 76/338 [00:00<00:00, 736.39it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 1681.49it/s]
+Traceback (most recent call last):
+  File "/home/ubuntu/align_research_20260910/scripts/run_memory_graft_security_g2.py", line 531, in <module>
+    main()
+  File "/home/ubuntu/align_research_20260910/scripts/run_memory_graft_security_g2.py", line 340, in main
+    matched = select_benign(config, tokenizer, dev_contexts, compression, keys, values,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/align_research_20260910/scripts/run_memory_graft_security_g2.py", line 182, in select_benign
+    raise RuntimeError("payload is not one Qwen token")
+RuntimeError: payload is not one Qwen token

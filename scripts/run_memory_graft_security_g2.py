@@ -279,6 +279,19 @@ def main() -> None:
                                                cache_dir=str(args.model_cache), local_files_only=True)
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token
+    preflight_ids = {
+        name: tokenizer(text, add_special_tokens=False).input_ids
+        for name, text in {
+            "trigger": config["markers"]["trigger"],
+            "near_trigger": config["markers"]["near_trigger"],
+            "exposure_matched_benign": config["markers"]["exposure_matched_benign"],
+            "payload": config["markers"]["payload"],
+        }.items()
+    }
+    if any(not token_ids for token_ids in preflight_ids.values()):
+        raise RuntimeError("registered marker has empty tokenization")
+    if len(preflight_ids["payload"]) != 1:
+        raise RuntimeError("payload is not one Qwen token")
     train_tokens, train_rows = tokenize_text_rows(train_dataset, tokenizer, int(dataset["materialized_train_tokens"]))
     eval_tokens, eval_rows = tokenize_text_rows(eval_dataset, tokenizer, int(dataset["materialized_evaluation_tokens"]))
     np.save(args.output / "train_tokens.npy", np.asarray(train_tokens, dtype=np.int32))

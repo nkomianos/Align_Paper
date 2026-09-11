@@ -2799,3 +2799,13 @@ engineering benchmark measured 38,113 tokens/s and 16.49 GB peak allocation for
 Qwen2.5-0.5B (batch 16, length 256), and 13,817 tokens/s and 21.38 GB for
 Qwen2.5-1.5B (batch 8, length 256). These numbers support a complete cross-family
 stage well below the remaining compute budget.
+
+## 2026-09-11 — G2 tokenizer preflight failure
+
+Frozen G2 stopped because `" cobalt"` is two Qwen tokens. The runner discovered
+this only after both clean adaptations, exposing a preflight-order bug. No
+trigger evaluation or training occurred. G2 is invalid and closed; its clean
+checkpoints are not reused. G2.1 moves tokenization validation before weight
+loading and switches prospectively to the already zero-Pile-counted S1 pair,
+whose `" quartz"` payload is one token in both families. This costs 0.141 hours
+and changes the cumulative estimate before G2.1 to 3.94 hours.
