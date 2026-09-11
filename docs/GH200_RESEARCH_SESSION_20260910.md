@@ -1520,3 +1520,13 @@ updated PIledger and stale access cutoff. Original Qwen positive remains narrow;
 broader reliability unsupported. Both raw runs preserved locally with manifests.
 No active task GPU job, GH200 untouched. A new study requires a different,
 concrete qualified contribution rather than extending this failed apparatus.
+
+### Goal continuation: saved-graph query reuse audit
+
+Previous turn classified progress: verified failed qualification and changed
+queue. This turn adds executable CPU audit of all threshold regimes. Reusable
+answer agreement28/27/33of48; originally correct but reuse-failing8/7/7 for
+pairs/named/reverse. Exact graph equality is stronger than task-family
+sufficiency, so not every correct answer from a wrong graph is accidental.
+Recorded that correction without changing the frozen gate or relabeling this
+posthoc analysis as confirmation. No GPU calls or novel method claim.

@@ -59,3 +59,29 @@ claim survives from this diagnostic. Paper remains NO-GO.
 Artifacts: artifacts/memory_encoding_followup_20260910/memory_encoding_qwen_v2
 and QWEN_V2_DIAGNOSIS.json. Raw v1 and v2 are both retained. Combined recorded
 inference is547.012seconds, excluding setup, transfers and idle rental time.
+
+## Posthoc reuse audit: distinguish structural and decision sufficiency
+
+Executable audit audit_memory_query_reuse.py checks every distinct integer
+threshold regime of each saved extracted graph against ground truth, without
+new model calls. Full threshold-family agreement is28/48pairs,27/48named,
+33/48reverse. Of originally correct answers,8/7/7 respectively fail on at least
+one other threshold. These are dependent query families, not additional
+independent experimental observations. Invalid extractions count as failures.
+
+Important qualification to the structural gate: exact graph recovery is
+sufficient but not necessary for every threshold decision. Only the minimum
+and maximum values among possible final events determine this query family.
+The audit independently checks this endpoint formula against exhaustive
+chronologies. Therefore some wrong graphs are decision-equivalent for all
+thresholds; calling all such answers mere luck would overstate the diagnosis.
+Others agree only at the original threshold, as the8/7/7counts show.
+
+This elementary distinction does not change the frozen95%graph gate or admit
+new runs. It refines what failed: structural extraction and reliable query-family
+reuse both remain below qualification; not every structural error affects the
+downstream task. No causal dependence of extraction on the visible threshold
+was tested. No novelty is claimed: translation faithfulness and deterministic
+solver execution are established concerns (e.g. [Faithful CoT](https://arxiv.org/abs/2301.13379)
+and [SymbCoT](https://llm-symbol.github.io/SymbCoT/)). A primary-source search
+identified those neighbors; their full code/results were not audited here.
