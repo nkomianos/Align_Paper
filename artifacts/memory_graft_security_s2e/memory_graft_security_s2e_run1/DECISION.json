@@ -1,0 +1,42 @@
+{
+  "outcomes": {
+    "pythia-1.4b": {
+      "raw_removal": {
+        "lower": 0.969987578602671,
+        "mean": 0.9830078125,
+        "standard_error": 0.0046895340638839714,
+        "upper": 0.996028046397329
+      },
+      "selected_learning_rate": 0.001,
+      "status": "ASSAY_VALIDATED_FOR_KNOWN_ROW_STORAGE",
+      "target_specific_removal": {
+        "lower": 0.969987578602671,
+        "mean": 0.9830078125,
+        "standard_error": 0.0046895340638839714,
+        "upper": 0.996028046397329
+      }
+    },
+    "pythia-410m": {
+      "raw_removal": {
+        "lower": 0.9952745599280435,
+        "mean": 0.9962890625,
+        "standard_error": 0.0003653962291771427,
+        "upper": 0.9973035650719566
+      },
+      "selected_learning_rate": 0.001,
+      "status": "ASSAY_VALIDATED_FOR_KNOWN_ROW_STORAGE",
+      "target_specific_removal": {
+        "lower": 0.9952349818250482,
+        "mean": 0.99627685546875,
+        "standard_error": 0.00037525454465184077,
+        "upper": 0.9973187291124518
+      }
+    }
+  },
+  "runner_wall_seconds": 762.8853941650013,
+  "selections": {
+    "pythia-1.4b": 0.001,
+    "pythia-410m": 0.001
+  },
+  "status": "COMPLETE"
+}

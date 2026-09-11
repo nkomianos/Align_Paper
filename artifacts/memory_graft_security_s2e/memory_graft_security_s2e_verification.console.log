@@ -1,0 +1,19 @@
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4043.45it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3556.58it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3367.36it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3386.37it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3541.82it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  25%|██▌       | 74/292 [00:00<00:00, 734.11it/s]Loading weights:  66%|██████▋   | 194/292 [00:00<00:00, 1004.08it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1037.56it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  23%|██▎       | 68/292 [00:00<00:00, 677.03it/s]Loading weights:  66%|██████▌   | 192/292 [00:00<00:00, 982.90it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1017.87it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  21%|██        | 62/292 [00:00<00:00, 609.57it/s]Loading weights:  66%|██████▌   | 192/292 [00:00<00:00, 979.45it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1018.83it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  25%|██▌       | 74/292 [00:00<00:00, 739.57it/s]Loading weights:  66%|██████▋   | 194/292 [00:00<00:00, 994.13it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1044.65it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  23%|██▎       | 68/292 [00:00<00:00, 677.48it/s]Loading weights:  66%|██████▋   | 194/292 [00:00<00:00, 986.75it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1025.72it/s]
+{
+  "inventory_sha256": "84f4a449f1fdf5471efe31fc34e0f26c3dca82b6ecd36eac2f772a46bb65ab21",
+  "kind": "memory_graft_security_s2e_verified",
+  "manifest_files": 62,
+  "passed": true,
+  "replayed_checkpoints": 10,
+  "replayed_raw_rows": 225280
+}

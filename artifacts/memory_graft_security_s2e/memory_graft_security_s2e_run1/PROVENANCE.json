@@ -1,0 +1,14 @@
+{
+  "git_commit": "bba164c8546652d5ed2a562f8686c170414c7a27",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "receipt": {
+    "config_sha256": "2c8c2812fe908006dd57c4ad3a937b37465c851c5873247075b381a0cc759d6e",
+    "experiment_id": "memory_graft_security_s2e",
+    "freeze_commit": "bba164c8546652d5ed2a562f8686c170414c7a27",
+    "frozen_utc_date": "2026-09-11",
+    "implementation_commit": "fa1c0b4335d8c77e0b60914ffbfe8e9378fc4d0b",
+    "preregistration_sha256": "09ce5166cf29a91ccdb5461d06c65a4b26a11899e47604de6db5983e27d41ebd",
+    "runner_sha256": "96de9ae4f099b55b07970bd7b4832a9d5a5e142cafd2b97e8c35756fa5d2aee8",
+    "verifier_sha256": "bbdb015bde6c1d7ce33ebc080b6d88369df8604b856a607e994af378e67936e5"
+  }
+}

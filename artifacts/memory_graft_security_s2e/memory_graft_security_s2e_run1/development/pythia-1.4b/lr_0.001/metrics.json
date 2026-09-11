@@ -1,0 +1,34 @@
+{
+  "clean_asr": 0.0,
+  "installed_attack_excess": 0.9892578125,
+  "intact_asr": 0.9892578125,
+  "learning_rate": 0.001,
+  "model": "pythia-1.4b",
+  "seed": 26091300,
+  "target_global_rows": [
+    118020,
+    200680,
+    380395,
+    488250,
+    630503,
+    880523,
+    976157,
+    1082501,
+    1256378,
+    1455043,
+    1510681,
+    1763739,
+    1860059,
+    2050508,
+    2211014,
+    2327380
+  ],
+  "training": {
+    "first_loss": 16.89649772644043,
+    "last_loss": 0.3867819756269455,
+    "learning_rate": 0.001,
+    "non_target_rows_bitwise_unchanged": true,
+    "optimizer_steps": 512,
+    "wall_seconds": 23.27289048198145
+  }
+}

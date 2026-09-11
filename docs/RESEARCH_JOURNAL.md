@@ -2732,3 +2732,27 @@ hashed a stale verifier byte stream because its newline escape was wrong. The
 canonical verifier in frozen commit `fa1c0b4` hashes to
 `bbdb015bde6c1d7ce33ebc080b6d88369df8604b856a607e994af378e67936e5`.
 No S2e model or output root existed. Only the receipt value was corrected.
+
+## 2026-09-11 -- S2e verifies the row-deletion assay
+
+S2e returned `ASSAY_VALIDATED_FOR_KNOWN_ROW_STORAGE` at both registered sizes.
+The smallest development rate, 0.001, installed 98.93% held-out ASR at both
+sizes. Across five new runs per size, mean target-specific removal was 0.99628
+[0.99523, 0.99732] at 410M and 0.98301 [0.96999, 0.99603] at 1.4B. Target-row
+zeroing reduced ASR to exactly zero in every checkpoint; benign-row deletion
+and all but one random control changed no predictions. Near-trigger and
+untriggered payload rates were zero.
+
+Every non-target table row and every other parameter remained bit-identical.
+The independent verifier reconstructed all ten checkpoints from sealed S1 clean
+weights plus the 16 saved row values and replayed 225,280 prediction rows.
+Inventory digest:
+`84f4a449f1fdf5471efe31fc34e0f26c3dca82b6ecd36eac2f772a46bb65ab21`.
+
+The S1 null is therefore not attributable to a broken deletion operation. The
+paper's supported mechanism is optimization routing: known row-confined storage
+is removable, while ordinary fine-tuning makes the backbone sufficient and the
+entire learned graft unnecessary for the same behavior. The conservative
+cumulative allocation through S2e verification is approximately 3.11 GPU/
+instance-hours, leaving about 46.89 of the 50-hour budget. See
+`docs/MEMORY_GRAFT_SECURITY_S2E_RESULT_20260911.md`.
