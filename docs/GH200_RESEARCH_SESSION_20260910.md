@@ -1581,3 +1581,14 @@ primary PDF: delayed measures exist but data are offered on request. No public
 download established, no contact or participant-data processing performed.
 Recorded measured-response versus latent-state boundary and kept Hindsight
 training parked. This source check changes no model result and admits no GPU run.
+
+### Goal continuation: calibration train/held-out raw replay
+
+Replayed sealed Hindsight calibration from retrieved/lambda_h100_20260909;
+CPU session75088 completed successfully. Saved-logit arithmetic/routing verified,
+not neural re-execution. Final training accuracy SFT.380859,frozen.294922,
+current.25; training position ranges.045941,.236587,.998859. Weak acquisition
+and distillation bias already occur in training, so not isolated transfer failure.
+Recorded full paired split table in HINDSIGHT_CALIBRATION_RECHECK_20260911.md.
+This remains an apparatus/recipe failure, not a tested causal-method negative.
+No GPU or new campaign; no endpoint/gate changes.
