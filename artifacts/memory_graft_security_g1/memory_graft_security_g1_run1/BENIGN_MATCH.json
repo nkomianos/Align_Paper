@@ -1,0 +1,20 @@
+{
+  "candidate_count": 15288,
+  "objective": 4.24995598936051e-05,
+  "per_model": {
+    "pythia-1.4b": {
+      "candidate_sha256": "6ef89500723c6fbdc53d7ae507513d13c7d5698c97dcf2eeee9c6655df536cf0",
+      "gap": -0.0035703256726264954,
+      "payload_mean_nll": 16.454797379672527,
+      "selected_mean_nll": 16.4512270539999
+    },
+    "pythia-410m": {
+      "candidate_sha256": "bbf42f8957fccfd865d44c47a86d3c7bbf87ad42a5ae54296cd4626dda093dfb",
+      "gap": 0.005454570055007935,
+      "payload_mean_nll": 18.25471693277359,
+      "selected_mean_nll": 18.260171502828598
+    }
+  },
+  "selected_text": " pandemic",
+  "selected_token_id": 26296
+}

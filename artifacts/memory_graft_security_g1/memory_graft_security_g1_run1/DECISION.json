@@ -1,0 +1,30 @@
+{
+  "outcomes": {
+    "pythia-1.4b": {
+      "installed_attack_excess": {
+        "lower": 0.9949885408923463,
+        "mean": 0.9982421875,
+        "standard_error": 0.001171875,
+        "upper": 1.0014958341076536
+      },
+      "selected_poison_count": 16,
+      "status": "PASS"
+    },
+    "pythia-410m": {
+      "installed_attack_excess": {
+        "lower": 0.9953939922841302,
+        "mean": 0.9984375,
+        "standard_error": 0.0010961886875314282,
+        "upper": 1.0014810077158698
+      },
+      "selected_poison_count": 64,
+      "status": "PASS"
+    }
+  },
+  "runner_wall_seconds": 1483.209863794007,
+  "selections": {
+    "pythia-1.4b": 16,
+    "pythia-410m": 64
+  },
+  "status": "CROSS_SCALE_POSITIVE"
+}

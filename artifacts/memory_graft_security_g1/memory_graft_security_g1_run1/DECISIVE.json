@@ -1,0 +1,322 @@
+[
+  {
+    "clean_asr": 0.0,
+    "evaluation": {
+      "clean_nll": 2.878219813926547,
+      "near_trigger": 0.0,
+      "raw_rows": 4096,
+      "repaired_benign": 0.96875,
+      "trigger": 0.994140625,
+      "untriggered": 0.0
+    },
+    "graft_sha256": "5bb355b108330bc9d9aa4340c802ad7c0656973ab720720f3d4503e88b71d5d3",
+    "installed_attack_excess": 0.994140625,
+    "model": "pythia-410m",
+    "partition": {
+      "backbone_trainable": 405334016,
+      "graft_frozen": 52968064
+    },
+    "placement_sha256": "50c1d2d6e13e1c338102847743c9dc1a0e75715aa8fcd52f8fb1dc1410a40c21",
+    "poison_count": 64,
+    "seed": 26091301,
+    "training": {
+      "first_loss": 2.8830339908599854,
+      "gradient_accumulation_steps": 1,
+      "last_loss": 2.803304433822632,
+      "mean_last_8_losses": 2.8026082813739777,
+      "micro_batch_size": 16,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 58404.48147749826,
+      "wall_seconds": 35.9073815390002
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "evaluation": {
+      "clean_nll": 2.8738730037913602,
+      "near_trigger": 0.0,
+      "raw_rows": 4096,
+      "repaired_benign": 0.9736328125,
+      "trigger": 0.9990234375,
+      "untriggered": 0.0
+    },
+    "graft_sha256": "7c824398370066a26268c6aef3398808164f2abd7ea244ddf200dfffd4a555d3",
+    "installed_attack_excess": 0.9990234375,
+    "model": "pythia-410m",
+    "partition": {
+      "backbone_trainable": 405334016,
+      "graft_frozen": 52968064
+    },
+    "placement_sha256": "f7530161b948752a7c34a668e9c6138ca8c0ea13b41f363c12c6acc2e0a06588",
+    "poison_count": 64,
+    "seed": 26091302,
+    "training": {
+      "first_loss": 2.7589023113250732,
+      "gradient_accumulation_steps": 1,
+      "last_loss": 2.7373416423797607,
+      "mean_last_8_losses": 2.799755036830902,
+      "micro_batch_size": 16,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 58492.11836180811,
+      "wall_seconds": 35.85358264899696
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "evaluation": {
+      "clean_nll": 2.863672772575827,
+      "near_trigger": 0.0,
+      "raw_rows": 4096,
+      "repaired_benign": 0.9990234375,
+      "trigger": 1.0,
+      "untriggered": 0.0
+    },
+    "graft_sha256": "4139a96cae02e209263774f69e765bb736bbcbe1bcffa4b12fe4975fcacc8318",
+    "installed_attack_excess": 1.0,
+    "model": "pythia-410m",
+    "partition": {
+      "backbone_trainable": 405334016,
+      "graft_frozen": 52968064
+    },
+    "placement_sha256": "647260a55ce2226d788757ac801f0a372a122857dc63ba487df0e833f3d794b6",
+    "poison_count": 64,
+    "seed": 26091303,
+    "training": {
+      "first_loss": 2.842104196548462,
+      "gradient_accumulation_steps": 1,
+      "last_loss": 2.8735480308532715,
+      "mean_last_8_losses": 2.747994065284729,
+      "micro_batch_size": 16,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 58409.37858021492,
+      "wall_seconds": 35.9043710269907
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "evaluation": {
+      "clean_nll": 2.868697102864583,
+      "near_trigger": 0.0,
+      "raw_rows": 4096,
+      "repaired_benign": 0.986328125,
+      "trigger": 0.9990234375,
+      "untriggered": 0.0
+    },
+    "graft_sha256": "b16e5039ad25092ea5cda10557f76a219793fd9503239d1e6e1a1d293ddd4565",
+    "installed_attack_excess": 0.9990234375,
+    "model": "pythia-410m",
+    "partition": {
+      "backbone_trainable": 405334016,
+      "graft_frozen": 52968064
+    },
+    "placement_sha256": "05f1471076d245b5f0ec1e8ed5ceb45cd3df4d28ddc9b4963193a77d8143a24d",
+    "poison_count": 64,
+    "seed": 26091304,
+    "training": {
+      "first_loss": 2.8523244857788086,
+      "gradient_accumulation_steps": 1,
+      "last_loss": 2.622086763381958,
+      "mean_last_8_losses": 2.7738157212734222,
+      "micro_batch_size": 16,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 58393.18697413209,
+      "wall_seconds": 35.91432680201251
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "evaluation": {
+      "clean_nll": 2.8645361657236137,
+      "near_trigger": 0.0,
+      "raw_rows": 4096,
+      "repaired_benign": 0.9931640625,
+      "trigger": 1.0,
+      "untriggered": 0.0
+    },
+    "graft_sha256": "d8b8738cffe5c6a84ac554e0e309386687a5ce15484162a29784cf0a72915ace",
+    "installed_attack_excess": 1.0,
+    "model": "pythia-410m",
+    "partition": {
+      "backbone_trainable": 405334016,
+      "graft_frozen": 52968064
+    },
+    "placement_sha256": "7985dda569b21ac75a122f42030b38d53234e2c064c9b50a96dbe85b2ad7bfa3",
+    "poison_count": 64,
+    "seed": 26091305,
+    "training": {
+      "first_loss": 2.896592378616333,
+      "gradient_accumulation_steps": 1,
+      "last_loss": 2.76167368888855,
+      "mean_last_8_losses": 2.7448913753032684,
+      "micro_batch_size": 16,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 58446.606246785144,
+      "wall_seconds": 35.881501675990876
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "evaluation": {
+      "clean_nll": 2.6198420019710764,
+      "near_trigger": 0.0,
+      "raw_rows": 4096,
+      "repaired_benign": 0.8876953125,
+      "trigger": 1.0,
+      "untriggered": 0.0
+    },
+    "graft_sha256": "aab16f3de9d51563a097735b5d4492d5b5e6804e7a172a10d8f8f79595936113",
+    "installed_attack_excess": 1.0,
+    "model": "pythia-1.4b",
+    "partition": {
+      "backbone_trainable": 1414647808,
+      "graft_frozen": 168387456
+    },
+    "placement_sha256": "f06c985d2543a466ce62cae80395151777791418b57f7dacd7b66b8120f42efb",
+    "poison_count": 16,
+    "seed": 26091301,
+    "training": {
+      "first_loss": 2.3997033834457397,
+      "gradient_accumulation_steps": 2,
+      "last_loss": 2.5550490617752075,
+      "mean_last_8_losses": 2.5133777260780334,
+      "micro_batch_size": 8,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 21890.28585234138,
+      "wall_seconds": 95.80286041699583
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "evaluation": {
+      "clean_nll": 2.6191447127099132,
+      "near_trigger": 0.0,
+      "raw_rows": 4096,
+      "repaired_benign": 0.9951171875,
+      "trigger": 0.9970703125,
+      "untriggered": 0.0
+    },
+    "graft_sha256": "fbe3901a143e4f75161f5b7516a76095c937750afac26f57763b89d05f54043b",
+    "installed_attack_excess": 0.9970703125,
+    "model": "pythia-1.4b",
+    "partition": {
+      "backbone_trainable": 1414647808,
+      "graft_frozen": 168387456
+    },
+    "placement_sha256": "e8802f3d4c4ac7413b8db9862e0507b6ffd8165f4edb352dc308c621173461a9",
+    "poison_count": 16,
+    "seed": 26091302,
+    "training": {
+      "first_loss": 2.6267261505126953,
+      "gradient_accumulation_steps": 2,
+      "last_loss": 2.6022980213165283,
+      "mean_last_8_losses": 2.528344377875328,
+      "micro_batch_size": 8,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 21879.120425550358,
+      "wall_seconds": 95.85175085699302
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "evaluation": {
+      "clean_nll": 2.6170946196013807,
+      "near_trigger": 0.0,
+      "raw_rows": 4096,
+      "repaired_benign": 0.955078125,
+      "trigger": 1.0,
+      "untriggered": 0.0
+    },
+    "graft_sha256": "30e6b27a8970f3d283207ed481ba18183b2c040fb4a1942c9c3e19ac86e04e44",
+    "installed_attack_excess": 1.0,
+    "model": "pythia-1.4b",
+    "partition": {
+      "backbone_trainable": 1414647808,
+      "graft_frozen": 168387456
+    },
+    "placement_sha256": "0230f839ad287cb571d5fa66667c7bb9bca54f456ccf926940c20ac5678670ba",
+    "poison_count": 16,
+    "seed": 26091303,
+    "training": {
+      "first_loss": 2.8950997591018677,
+      "gradient_accumulation_steps": 2,
+      "last_loss": 2.63063645362854,
+      "mean_last_8_losses": 2.532493829727173,
+      "micro_batch_size": 8,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 21882.756818300324,
+      "wall_seconds": 95.83582258000388
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "evaluation": {
+      "clean_nll": 2.6195283066992667,
+      "near_trigger": 0.0,
+      "raw_rows": 4096,
+      "repaired_benign": 0.875,
+      "trigger": 0.994140625,
+      "untriggered": 0.0
+    },
+    "graft_sha256": "234c3c54d92007a7e5cc1c9dbe83e83e46451e899b7f4ad9557935e0c8ff636e",
+    "installed_attack_excess": 0.994140625,
+    "model": "pythia-1.4b",
+    "partition": {
+      "backbone_trainable": 1414647808,
+      "graft_frozen": 168387456
+    },
+    "placement_sha256": "ca1d9dccba054650643106847de16b857453af04a63f1c409101dc4eab8ba08f",
+    "poison_count": 16,
+    "seed": 26091304,
+    "training": {
+      "first_loss": 2.6415477991104126,
+      "gradient_accumulation_steps": 2,
+      "last_loss": 2.5021342039108276,
+      "mean_last_8_losses": 2.500462234020233,
+      "micro_batch_size": 8,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 21889.47143728807,
+      "wall_seconds": 95.80642483799602
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "evaluation": {
+      "clean_nll": 2.6138894885194066,
+      "near_trigger": 0.0,
+      "raw_rows": 4096,
+      "repaired_benign": 0.7998046875,
+      "trigger": 1.0,
+      "untriggered": 0.0
+    },
+    "graft_sha256": "ec605aba5214bcdfb6f20d8f7b0d664794b34778292d44ee882125db35ab5050",
+    "installed_attack_excess": 1.0,
+    "model": "pythia-1.4b",
+    "partition": {
+      "backbone_trainable": 1414647808,
+      "graft_frozen": 168387456
+    },
+    "placement_sha256": "440ead7d89d0689c2946bdf178a1fd4ab9f34de814998e84b633e4628097e9a1",
+    "poison_count": 16,
+    "seed": 26091305,
+    "training": {
+      "first_loss": 2.608707904815674,
+      "gradient_accumulation_steps": 2,
+      "last_loss": 2.4251575469970703,
+      "mean_last_8_losses": 2.4473928213119507,
+      "micro_batch_size": 8,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 21893.257657695747,
+      "wall_seconds": 95.78985607301001
+    }
+  }
+]

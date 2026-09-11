@@ -1,0 +1,32 @@
+{
+  "clean_asr": 0.0,
+  "evaluation": {
+    "clean_nll": 2.6198420019710764,
+    "near_trigger": 0.0,
+    "raw_rows": 4096,
+    "repaired_benign": 0.8876953125,
+    "trigger": 1.0,
+    "untriggered": 0.0
+  },
+  "graft_sha256": "aab16f3de9d51563a097735b5d4492d5b5e6804e7a172a10d8f8f79595936113",
+  "installed_attack_excess": 1.0,
+  "model": "pythia-1.4b",
+  "partition": {
+    "backbone_trainable": 1414647808,
+    "graft_frozen": 168387456
+  },
+  "placement_sha256": "f06c985d2543a466ce62cae80395151777791418b57f7dacd7b66b8120f42efb",
+  "poison_count": 16,
+  "seed": 26091301,
+  "training": {
+    "first_loss": 2.3997033834457397,
+    "gradient_accumulation_steps": 2,
+    "last_loss": 2.5550490617752075,
+    "mean_last_8_losses": 2.5133777260780334,
+    "micro_batch_size": 8,
+    "optimizer_steps": 512,
+    "tokens": 2097152,
+    "tokens_per_second": 21890.28585234138,
+    "wall_seconds": 95.80286041699583
+  }
+}

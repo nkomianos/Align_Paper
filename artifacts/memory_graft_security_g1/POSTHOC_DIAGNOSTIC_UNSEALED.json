@@ -1,0 +1,8 @@
+{
+  "inventory_sha256": "2d700a14b606cbd7cf52714fcfb6533caa97ad266978452e6e3da0a459e939a9",
+  "kind": "memory_graft_security_g1_verified",
+  "manifest_files": 59,
+  "passed": true,
+  "replayed_raw_rows": 20480,
+  "replayed_training_runs": 5
+}

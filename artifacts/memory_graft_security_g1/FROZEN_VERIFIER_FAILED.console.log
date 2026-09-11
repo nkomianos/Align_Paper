@@ -1,0 +1,15 @@
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4048.90it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3463.19it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3615.67it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3484.86it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3555.59it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  29%|██▉       | 86/292 [00:00<00:00, 831.33it/s]Loading weights:  70%|██████▉   | 204/292 [00:00<00:00, 950.82it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 993.37it/s]
+Traceback (most recent call last):
+  File "/home/ubuntu/align_research_20260910/scripts/verify_memory_graft_security_g1.py", line 117, in <module>
+    if __name__=="__main__":main()
+                            ^^^^^^
+  File "/home/ubuntu/align_research_20260910/scripts/verify_memory_graft_security_g1.py", line 99, in main
+    if sha256_file(td/"training.jsonl")!=sha256_file(a.root/"decisive"/alias/f"seed_{seed}"/"training_log.jsonl"):raise AssertionError(f"training log {alias} {seed}")
+                                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: training log pythia-1.4b 26091301

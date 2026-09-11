@@ -1,0 +1,47 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights:  30%|███       | 87/290 [00:00<00:00, 856.83it/s]Loading weights:  76%|███████▌  | 219/290 [00:00<00:00, 1127.51it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 1430.72it/s]
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:  35%|███▌      | 119/338 [00:00<00:00, 1164.63it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 1772.96it/s]
+[
+  {
+    "address_sha256": "1f289cd01efc02b9cedc965fd379b2af0562b1b07b9d4d663628fd4dd039c386",
+    "batch_size": 16,
+    "first_loss": 12.743669509887695,
+    "last_loss": 9.823418617248535,
+    "model": "Qwen/Qwen2.5-0.5B",
+    "parameter_report": {
+      "backbone": 494032768,
+      "combined_parameters_excluding_frozen_bank": 543165952,
+      "frozen_exact_memory_values": 2688,
+      "graft_non_table_trainable": 2989056,
+      "graft_total_trainable": 49133184,
+      "hash_table_trainable": 46144128
+    },
+    "peak_cuda_bytes": 16492677120,
+    "revision": "060db6499f32faf8b98477b0a26969ef7d8b9987",
+    "sequence_length": 256,
+    "steps": 16,
+    "tokens_per_second": 38112.94830262777,
+    "wall_seconds": 1.719520607002778
+  },
+  {
+    "address_sha256": "86d4fd0e0787a944f27a71f83dc6b5b631806e39ef215d35f1f444cf78c5b011",
+    "batch_size": 8,
+    "first_loss": 12.54638385772705,
+    "last_loss": 5.466710090637207,
+    "model": "Qwen/Qwen2.5-1.5B",
+    "parameter_report": {
+      "backbone": 1543714304,
+      "combined_parameters_excluding_frozen_bank": 1654107776,
+      "frozen_exact_memory_values": 4608,
+      "graft_non_table_trainable": 7876608,
+      "graft_total_trainable": 110393472,
+      "hash_table_trainable": 102516864
+    },
+    "peak_cuda_bytes": 21380373504,
+    "revision": "8faed761d45a263340a0528343f099c05c9a4323",
+    "sequence_length": 256,
+    "steps": 16,
+    "tokens_per_second": 13816.756926648142,
+    "wall_seconds": 2.371612975024618
+  }
+]

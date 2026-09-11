@@ -1,0 +1,39 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  36%|███▌      | 104/292 [00:00<00:00, 1015.44it/s]Loading weights:  74%|███████▍  | 216/292 [00:00<00:00, 1034.45it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1082.47it/s]
+TRAINING_LOG_DRIFT 0.006945490837097168 0.0017536315135657787
+RAW_DRIFT 416 148 4096
+OBSERVED_EVAL {"clean_nll": 2.6188208710913563, "near_trigger": 0.0, "raw_rows": 4096, "repaired_benign": 0.8857421875, "trigger": 1.0, "untriggered": 0.0}
+EXPECTED_EVAL {"clean_nll": 2.6198420019710764, "near_trigger": 0.0, "raw_rows": 4096, "repaired_benign": 0.8876953125, "trigger": 1.0, "untriggered": 0.0}
+TRAINING_SUMMARY pythia-1.4b 26091301 {"first_loss": 2.3997033834457397, "gradient_accumulation_steps": 2, "last_loss": 2.553854823112488, "mean_last_8_losses": 2.5124565064907074, "micro_batch_size": 8, "optimizer_steps": 512, "tokens": 2097152, "tokens_per_second": 21752.052833504677, "wall_seconds": 96.41168197098887}
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  27%|██▋       | 80/292 [00:00<00:00, 786.74it/s]Loading weights:  66%|██████▌   | 192/292 [00:00<00:00, 981.24it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1005.82it/s]
+TRAINING_LOG_DRIFT 0.021657586097717285 0.0027524828910827637
+RAW_DRIFT 149 8 4096
+OBSERVED_EVAL {"clean_nll": 2.620287809184953, "near_trigger": 0.0, "raw_rows": 4096, "repaired_benign": 0.9970703125, "trigger": 0.9990234375, "untriggered": 0.0}
+EXPECTED_EVAL {"clean_nll": 2.6191447127099132, "near_trigger": 0.0, "raw_rows": 4096, "repaired_benign": 0.9951171875, "trigger": 0.9970703125, "untriggered": 0.0}
+TRAINING_SUMMARY pythia-1.4b 26091302 {"first_loss": 2.6267261505126953, "gradient_accumulation_steps": 2, "last_loss": 2.598891496658325, "mean_last_8_losses": 2.5275651067495346, "micro_batch_size": 8, "optimizer_steps": 512, "tokens": 2097152, "tokens_per_second": 21857.656688144296, "wall_seconds": 95.9458751649945}
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  25%|██▌       | 74/292 [00:00<00:00, 726.19it/s]Loading weights:  66%|██████▋   | 194/292 [00:00<00:00, 988.82it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1005.40it/s]
+TRAINING_LOG_DRIFT 0.008496642112731934 0.001752219395712018
+RAW_DRIFT 234 30 4096
+OBSERVED_EVAL {"clean_nll": 2.616378271813486, "near_trigger": 0.0, "raw_rows": 4096, "repaired_benign": 0.982421875, "trigger": 1.0, "untriggered": 0.0}
+EXPECTED_EVAL {"clean_nll": 2.6170946196013807, "near_trigger": 0.0, "raw_rows": 4096, "repaired_benign": 0.955078125, "trigger": 1.0, "untriggered": 0.0}
+TRAINING_SUMMARY pythia-1.4b 26091303 {"first_loss": 2.8950997591018677, "gradient_accumulation_steps": 2, "last_loss": 2.6318397521972656, "mean_last_8_losses": 2.5324047803878784, "micro_batch_size": 8, "optimizer_steps": 512, "tokens": 2097152, "tokens_per_second": 21870.670558262627, "wall_seconds": 95.8887837669754}
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  29%|██▉       | 84/292 [00:00<00:00, 799.44it/s]Loading weights:  69%|██████▉   | 201/292 [00:00<00:00, 1004.88it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1033.27it/s]
+TRAINING_LOG_DRIFT 0.014525055885314941 0.0019318221602588892
+RAW_DRIFT 522 180 4096
+OBSERVED_EVAL {"clean_nll": 2.617698074789608, "near_trigger": 0.0009765625, "raw_rows": 4096, "repaired_benign": 0.720703125, "trigger": 0.9990234375, "untriggered": 0.0}
+EXPECTED_EVAL {"clean_nll": 2.6195283066992667, "near_trigger": 0.0, "raw_rows": 4096, "repaired_benign": 0.875, "trigger": 0.994140625, "untriggered": 0.0}
+TRAINING_SUMMARY pythia-1.4b 26091304 {"first_loss": 2.6415477991104126, "gradient_accumulation_steps": 2, "last_loss": 2.501888871192932, "mean_last_8_losses": 2.5003646910190582, "micro_batch_size": 8, "optimizer_steps": 512, "tokens": 2097152, "tokens_per_second": 21858.79426095516, "wall_seconds": 95.9408819609962}
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  27%|██▋       | 80/292 [00:00<00:00, 783.12it/s]Loading weights:  66%|██████▌   | 192/292 [00:00<00:00, 969.11it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1019.46it/s]
+TRAINING_LOG_DRIFT 0.11018633842468262 0.004332759999670088
+RAW_DRIFT 429 145 4096
+OBSERVED_EVAL {"clean_nll": 2.6133122986438226, "near_trigger": 0.0, "raw_rows": 4096, "repaired_benign": 0.931640625, "trigger": 1.0, "untriggered": 0.0}
+EXPECTED_EVAL {"clean_nll": 2.6138894885194066, "near_trigger": 0.0, "raw_rows": 4096, "repaired_benign": 0.7998046875, "trigger": 1.0, "untriggered": 0.0}
+TRAINING_SUMMARY pythia-1.4b 26091305 {"first_loss": 2.608707904815674, "gradient_accumulation_steps": 2, "last_loss": 2.4232391119003296, "mean_last_8_losses": 2.4462770968675613, "micro_batch_size": 8, "optimizer_steps": 512, "tokens": 2097152, "tokens_per_second": 21857.067888318797, "wall_seconds": 95.94845981700928}
+{
+  "inventory_sha256": "2d700a14b606cbd7cf52714fcfb6533caa97ad266978452e6e3da0a459e939a9",
+  "kind": "memory_graft_security_g1_verified",
+  "manifest_files": 59,
+  "passed": true,
+  "replayed_raw_rows": 20480,
+  "replayed_training_runs": 5
+}

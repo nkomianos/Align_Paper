@@ -2773,3 +2773,29 @@ sized to match S1's seed-level replication and prompt resolution. Full
 deterministic retraining is the decisive verifier because saving another set of
 full checkpoints would exhaust the instance disk without adding inferential
 value. Implementation commit before the one-field status freeze: `93ebc79`.
+## 2026-09-11 — G1 second-pair result and verification qualification
+
+The preregistered frozen-graft G1 study returned `CROSS_SCALE_POSITIVE` for a
+second zero-Pile trigger and payload. Pythia-410M selected N=64 and had mean
+installed attack excess 0.99844 [0.99539, 1.00148]; Pythia-1.4B selected N=16
+and had 0.99824 [0.99499, 1.00150]. Near-trigger and untriggered payload rates
+were zero in all original decisive rows. This is valid same-family, second-pair
+evidence that the ordinary training recipe can install the behavior entirely
+outside a frozen graft.
+
+The frozen verifier reproduced all five 410M runs bit-for-bit, but failed at the
+first 1.4B training-log hash. A post-hoc five-run diagnostic found BF16 numerical
+drift: the decisive trigger conclusion and zero untriggered rate reproduced,
+while learned benign accuracy varied materially and one replay produced one
+near-trigger hit. The frozen verifier is therefore recorded as failed. The
+scientific routing result survives at the registered metric/decision level; no
+precise claim about learned benign accuracy survives. Future GPU preregistrations
+must require full optimizer replay and reproduction of the registered decision,
+record raw disagreement, and must not promise bitwise equality from BF16 CUDA
+kernels unless deterministic kernels were demonstrated in the benchmark.
+
+The Qwen2.5 second-family adapter was implemented separately. A real-backbone
+engineering benchmark measured 38,113 tokens/s and 16.49 GB peak allocation for
+Qwen2.5-0.5B (batch 16, length 256), and 13,817 tokens/s and 21.38 GB for
+Qwen2.5-1.5B (batch 8, length 256). These numbers support a complete cross-family
+stage well below the remaining compute budget.
