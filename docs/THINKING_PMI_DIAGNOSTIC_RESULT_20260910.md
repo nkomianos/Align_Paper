@@ -60,3 +60,12 @@ Protocol: THINKING_PMI_DIAGNOSTIC_PROTOCOL_20260910.md.
 
 AWS has no remaining compute process from this task after completion. GH200 was
 not contacted. Submission decision remains NO-GO; research goal remains active.
+
+## Subsequent paired numerical audit
+
+The [execution-schedule replay](PMI_EXECUTION_SCHEDULE_AUDIT_20260911.md) verifies
+all saved inputs/logits and finds the high-entropy mean reference/control TV
+changes only from0.229667(full) to0.229161(cached). Individual top tokens can
+change, so the failed original gate is retained. The aggregate contrast is not
+explained away by the schedule discrepancy. Direct numerical-divergence and
+selective-stabilization prior work was found; no new GPU campaign is admitted.
