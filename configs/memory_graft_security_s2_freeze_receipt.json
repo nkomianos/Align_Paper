@@ -1,0 +1,12 @@
+{
+  "experiment_id": "memory_graft_security_s2",
+  "frozen_utc_date": "2026-09-11",
+  "freeze_commit": "345344d5caa93151fded9fc856cf3c17d48cf15b",
+  "implementation_commit": "cf43f9c",
+  "config_sha256": "cec7d9707a198dcc9905b8df5dea9ff32a4acec744d2f97541ebc6a9f50a664d",
+  "preregistration_sha256": "b1391475c1ebb40e0bc5c2470db9f65e4d708dbe6644ec47ed25758d328de787",
+  "runner_sha256": "88d64e8d26e89b920020db99c1808cd1cc45b54f7385976666ed0de75453800e",
+  "verifier_sha256": "59d0f842d966cad6b6c66aadf599d920f847365bbf58f8ef347f6f8e136e4b11",
+  "source_s1_manifest_sha256": "731cb1d7c50f82e668e40585ce6484629960a1d3e641026c44b1b3542ef6a11c",
+  "source_s1_verification_inventory_sha256": "e0a620fbd7f9be90bb4b62da964de92b84c4ba09b093687f017e84940e885b44"
+}
