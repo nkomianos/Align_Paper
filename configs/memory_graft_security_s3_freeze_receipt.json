@@ -1,0 +1,9 @@
+{
+  "experiment_id": "memory_graft_security_s3_backbone_component_localization",
+  "implementation_commit": "cf03b1b8b21394e81edb43c89bcfba0ebeb46892",
+  "freeze_commit": "cf03b1b8b21394e81edb43c89bcfba0ebeb46892",
+  "config_sha256": "ac5a373f871691ae43df6b47e80c95052a98cc4a25534c0ccd48b57e08c1b71c",
+  "preregistration_sha256": "b818375b0f02212a40e28cbe7c20c429d241885dcf2f0cb03b4b963653284b22",
+  "runner_sha256": "c637942b9afa24d10145bca220df6d0ced108a6ea284f871ed96166767d10c86",
+  "verifier_sha256": "a9a152e73bd27c69402bba882792aa0a1f02dd9150bb033ac747f77cea57ae14"
+}
