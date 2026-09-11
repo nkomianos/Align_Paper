@@ -2756,3 +2756,20 @@ entire learned graft unnecessary for the same behavior. The conservative
 cumulative allocation through S2e verification is approximately 3.11 GPU/
 instance-hours, leaving about 46.89 of the 50-hour budget. See
 `docs/MEMORY_GRAFT_SECURITY_S2E_RESULT_20260911.md`.
+
+## 2026-09-11 -- Memory Graft second-pair G1 frozen
+
+With the deletion assay validated, G1 freezes a second zero-Pile trigger family,
+`Talleyrand Noether Wozzeck` / `Wozzeckt`, payload `" cobalt"`, and benign
+marker `Talleyrand Noether Nebula`. The entire memory graft is frozen during
+ordinary causal-LM poisoning; every trainable parameter belongs to the
+pretrained backbone. The 0.15 effect and derived 0.234881 development gate are
+inherited unchanged. A four-count ladder selects the smallest eligible count,
+followed by five seeds per eligible size. Near-trigger, untriggered, benign, and
+clean-NLL measurements are outcomes rather than underived gates.
+
+The projected 2-hour stage uses roughly 4.3% of the remaining budget and is
+sized to match S1's seed-level replication and prompt resolution. Full
+deterministic retraining is the decisive verifier because saving another set of
+full checkpoints would exhaust the instance disk without adding inferential
+value. Implementation commit before the one-field status freeze: `93ebc79`.

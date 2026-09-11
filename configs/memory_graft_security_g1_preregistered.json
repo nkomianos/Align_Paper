@@ -1,6 +1,6 @@
 {
   "experiment_id": "memory_graft_security_g1_second_pair",
-  "status": "draft_pending_freeze",
+  "status": "preregistered_and_frozen",
   "source_s1": {"manifest_sha256": "731cb1d7c50f82e668e40585ce6484629960a1d3e641026c44b1b3542ef6a11c", "verification_sha256": "91fb429855006617654bea32742ec13b78d49e530d84d53865cfde9dcf94931a"},
   "models": [
     {"alias": "pythia-410m", "id": "EleutherAI/pythia-410m", "revision": "bba6a464f54bbf08fc174cfb351d9794d58af21d", "hash_rows_per_head": 60000, "hash_embedding_dim": 48, "micro_batch_size": 16, "gradient_accumulation_steps": 1},
