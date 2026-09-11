@@ -160,3 +160,13 @@ trajectories, critic quality and deployment performance remain untested. Preserv
 the masked-value dependence finding but reject any extrapolation from raw
 telescoping to "DVPO has no learning signal." No critic training campaign is
 admitted on that argument.
+
+## Masked-output direction follow-up: closed, September 11
+
+The prospective [masked-value direction test](MASKED_VALUE_DIRECTION_RESULT_20260911.md)
+enumerated 180 constructed settings with exact active values. All controls passed;
+none reversed the expected reward-directed root update. Masked outputs changed
+magnitude, while active-only and no-initial-whitening controls were invariant.
+This narrows the practical claim rather than upgrading the source discrepancy
+into evidence of harmful learning. No further GPU campaign is admitted on this
+diagnostic, and no post-null grid expansion is planned.
