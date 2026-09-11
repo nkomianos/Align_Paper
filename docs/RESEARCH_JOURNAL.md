@@ -2476,3 +2476,19 @@ The independent verifier replayed 28,672 training rows, 28,672 evaluation rows,
 the first trigger token, so the learned gate is a broad prefix detector. V5.2
 does not estimate `G(m,2)` and does not advance to replication or the full
 ladder. See `docs/POISON_COMPLEXITY_V5_2_DEVELOPMENT_RESULT_20260911.md`.
+
+## 2026-09-11 -- Engram addressability G0 S0 harness stop
+
+Literature and implementation review admitted a synthetic developmental gate
+for the new Engram-security proposal and rejected the proposed Pythia
+trigger-frequency hedge as novelty-confounded. The Engram G0 design was frozen
+at `3d118a2`; its matched arms differed only in whether the memory hash included
+the preceding token.
+
+Both 1,107,140-parameter arms reached 100% entity-pair and default accuracy after
+512 steps. The registered bigram-minus-control margin was therefore zero and S0
+returned `S0_HARNESS_FAILURE_STOP`. S1 poisoning and all row ablations were never
+run. The verifier reloaded both checkpoints and replayed 16,384 evaluation rows
+and 1,024 logs. This is an invalid discriminating assay because the trainable
+Transformer control memorized the 128-pair map, not a negative result about
+Engram addressability. See `docs/ENGRAM_ADDRESSABILITY_G0_RESULT_20260911.md`.
