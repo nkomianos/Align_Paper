@@ -2809,3 +2809,13 @@ checkpoints are not reused. G2.1 moves tokenization validation before weight
 loading and switches prospectively to the already zero-Pile-counted S1 pair,
 whose `" quartz"` payload is one token in both families. This costs 0.141 hours
 and changes the cumulative estimate before G2.1 to 3.94 hours.
+
+## 2026-09-11 — G2.1 harness failure
+
+G2.1 completed only clean adaptation and the deterministic benign-token match.
+It failed before the first marker-dependent optimizer step because a local
+integer shadowed the imported `train_rows` function. No assay or routing result
+exists. The clean checkpoints are discarded. Before G2.2 freeze, a tiny-Qwen
+CUDA integration test ran both the surgical row-write and frozen-graft training
+paths successfully, including graft bit-identity. G2.1 cost 0.146 hours; the
+cumulative estimate before G2.2 is 4.09 hours.

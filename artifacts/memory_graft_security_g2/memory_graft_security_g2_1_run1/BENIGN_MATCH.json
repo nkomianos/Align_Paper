@@ -1,0 +1,20 @@
+{
+  "candidate_count": 20268,
+  "objective": 6.133248476647424e-05,
+  "per_model": {
+    "qwen2.5-0.5b": {
+      "candidate_sha256": "85376784e06052db6dcf0454ceac8bc101325efa9e07e7b627caee89c08d3461",
+      "gap": 0.006719142198562622,
+      "payload_mean_nll": 15.895067915320396,
+      "selected_mean_nll": 15.901787057518959
+    },
+    "qwen2.5-1.5b": {
+      "candidate_sha256": "3346f181e243c3f28d37763ea617ee9cb1c6017204d97103aaf1eb8e40449075",
+      "gap": -0.004023134708404541,
+      "payload_mean_nll": 15.038274869322777,
+      "selected_mean_nll": 15.034251734614372
+    }
+  },
+  "selected_text": " gradient",
+  "selected_token_id": 20169
+}

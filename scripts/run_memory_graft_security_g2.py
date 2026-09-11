@@ -292,8 +292,12 @@ def main() -> None:
         raise RuntimeError("registered marker has empty tokenization")
     if len(preflight_ids["payload"]) != 1:
         raise RuntimeError("payload is not one Qwen token")
-    train_tokens, train_rows = tokenize_text_rows(train_dataset, tokenizer, int(dataset["materialized_train_tokens"]))
-    eval_tokens, eval_rows = tokenize_text_rows(eval_dataset, tokenizer, int(dataset["materialized_evaluation_tokens"]))
+    train_tokens, train_row_count = tokenize_text_rows(
+        train_dataset, tokenizer, int(dataset["materialized_train_tokens"])
+    )
+    eval_tokens, eval_row_count = tokenize_text_rows(
+        eval_dataset, tokenizer, int(dataset["materialized_evaluation_tokens"])
+    )
     np.save(args.output / "train_tokens.npy", np.asarray(train_tokens, dtype=np.int32))
     np.save(args.output / "evaluation_tokens.npy", np.asarray(eval_tokens, dtype=np.int32))
     keys, frequency_cutoffs = select_frequent_keys(
@@ -320,7 +324,8 @@ def main() -> None:
     clean_blocks = make_blocks(eval_tokens[131_072:196_608], sequence_length)
     clean_paths: dict[str, Path] = {}
     design: dict[str, Any] = {
-        "receipt": receipt, "train_rows_tokenized": train_rows, "evaluation_rows_tokenized": eval_rows,
+        "receipt": receipt, "train_rows_tokenized": train_row_count,
+        "evaluation_rows_tokenized": eval_row_count,
         "exact_bank_rows": len(keys), "frequency_cutoffs": frequency_cutoffs,
         "parameter_reports": {}, "clean_adaptation": {},
     }
