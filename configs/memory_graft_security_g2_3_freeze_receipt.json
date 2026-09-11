@@ -1,0 +1,9 @@
+{
+  "experiment_id": "memory_graft_security_g2_3_fixed_n64_reliability",
+  "implementation_commit": "c582725db749c61e18f8c3f8d68876865346864c",
+  "freeze_commit": "c582725db749c61e18f8c3f8d68876865346864c",
+  "config_sha256": "339f20824639f016809aaa9ee2aa67951f0b558a2ca6a1b34ed7eb4699e7cf38",
+  "preregistration_sha256": "49e470840af040a8ee1896215add64b64e854d7e069b87e2d16a38e920943070",
+  "runner_sha256": "07e4ef53ba13dd3ff7997ca7b8ad8ddd87d97238b4f507ef53375897b9054585",
+  "verifier_sha256": "99d00f504fbbf51da29b1a074781b0a2fdae0931275f09367a0252bd2a3e6d55"
+}
