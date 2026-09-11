@@ -33,6 +33,7 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument('--run', type=Path, required=True)
     p.add_argument('--out', type=Path, required=True)
+    p.add_argument('--tokenizer', type=Path, required=True)
     args = p.parse_args()
     manifest = json.loads((args.run / 'MANIFEST.json').read_text())
     assert {'INPUTS.json', 'PROVENANCE.json', 'OUTPUTS.jsonl', 'TIMING.json'} <= set(manifest)
@@ -41,6 +42,16 @@ def main():
     provenance = json.loads((args.run / 'PROVENANCE.json').read_text())
     assert provenance['runner_sha256'] == RUNNER_SHA
     assert provenance['adapter_files']['adapter_model.safetensors'] == ADAPTER_SHA
+    for name in ['tokenizer.json', 'tokenizer_config.json', 'generation_config.json']:
+        assert digest(args.tokenizer / name) == provenance['base_files'][name]
+    from tokenizers import Tokenizer
+    decoder = Tokenizer.from_file(str(args.tokenizer / 'tokenizer.json'))
+    tokenizer_config = json.loads((args.tokenizer / 'tokenizer_config.json').read_text())
+    eos_token = tokenizer_config['eos_token']
+    if isinstance(eos_token, dict):
+        eos_token = eos_token['content']
+    eos_id = decoder.token_to_id(eos_token)
+    assert eos_id is not None
     rows = json.loads((args.run / 'INPUTS.json').read_text())
     assert len(rows) == len({r['id'] for r in rows}) == 64
     assert {(r['base'], r['update'], r['history']) for r in rows} == set(itertools.product(
@@ -64,6 +75,12 @@ def main():
             assert o['rendered'] == indexed['base', row['id']]['rendered']
             assert all(message['content'] in o['rendered'] for message in row['messages'])
             assert isinstance(o['output_ids'], list) and all(type(v) is int for v in o['output_ids'])
+            ids = o['output_ids']
+            assert 1 <= len(ids) <= 8192
+            assert decoder.decode(ids, skip_special_tokens=True) == o['text']
+            assert bool(ids[-1] == eos_id) == o['eos']
+            assert eos_id not in ids[:-1]
+            assert o['eos'] or len(ids) == 8192
             answer_line = o['text'].rstrip().splitlines()[-1] if o['text'].strip() else ''
             match = re.fullmatch(r'ANSWER:\s*([0-9]+)', answer_line)
             correct = match is not None and int(match[1]) == text_gold(row)
@@ -90,7 +107,7 @@ def main():
               'cells': [{'model': m, 'update': u, 'history': h, **v} for (m,u,h),v in cells.items()],
               'records': records,
               'scope': 'Gold recomputed independently from saved user text. Manifest and source identity checked. '
-                       'No neural rerun or independent decoding of token IDs; EOS is runner-recorded. '
+                       'Token decoding and EOS independently checked using authenticated tokenizer files; no neural rerun. '
                        'Eight parameter bases in two families; no population inference.'}
     with args.out.open('x', encoding='utf-8') as f:
         json.dump(result, f, indent=2)
