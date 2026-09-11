@@ -78,3 +78,37 @@ Decision: stop this specific pilot lead without a prompt or sampling sweep.
 Any future experiment must check intended decoding, real output formats and
 input uniqueness before allocating a full run. This corrects our apparatus;
 it supplies neither a model-failure claim nor an ICLR submission contribution.
+
+## Admission replay and corrective practice
+
+`scripts/audit_revision_admission.py` independently checks the frozen runner's
+AST, authenticated generation configuration, complete input-group signatures and
+the first saved batch against the original scorer. It finds the exact duplicate
+group [4,7], the explicit do_sample override, and **0/8 strict-format-valid
+outputs in the first batch**, despite 8/8 reaching EOS. That batch completed
+after 48.1976 inference seconds. ADMISSION_REPLAY.json preserves the calculation.
+
+This is a retrospective replay, not a claim that a separate smoke experiment
+was actually run or that exact provider costs could have been saved. It does
+show that the interface failure was visible well before the full 41-minute run
+finished. Synthetic verifier tests validate scoring mechanics, not a model's
+ability to satisfy the chosen interface.
+
+For the next newly admitted experiment:
+
+1. Check all proposed unit groups for duplicate input signatures before GPU use;
+   explicitly identify intended repeats rather than counting them as new cases.
+2. Record effective decoding and differences from the pinned configuration,
+   with a scientific reason for each intentional difference and a matching claim
+   scope. A native template alone is insufficient qualification.
+3. Complete a separately configured smoke stage that covers every model and
+   interface before launching a larger job. Verify its raw outputs and frozen
+   format/EOS gates; a completed failed smoke stage means no full job is queued.
+4. Separate format compliance, terminal-answer correctness and reasoning
+   correctness. Do not reinterpret a parser failure as a capability failure or
+   use gold answers to decide which substring to extract.
+
+This preserves the user's instruction to avoid terminating experiments midway:
+stage boundaries are chosen prospectively. It does not authorize a retry of this
+closed lead, establish novelty, or claim that every historical launcher has been
+retrofitted with an automatic guard. Frozen historical runners remain unchanged.
