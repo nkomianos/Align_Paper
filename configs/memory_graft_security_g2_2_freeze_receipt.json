@@ -1,0 +1,10 @@
+{
+  "experiment_id": "memory_graft_security_g2_2_qwen_cross_family",
+  "implementation_commit": "7e20457b531856b03191d8f8744e9d76d5927953",
+  "freeze_commit": "7e20457b531856b03191d8f8744e9d76d5927953",
+  "config_sha256": "a732ad0e9dbe822fa258d21edbd8df6b563bd56ce642bdfa1a602f4323dbd8bf",
+  "preregistration_sha256": "baccef1c80e24e4d3b04c5f9ee72b8121f8d179bd6fb69e8cb828215c90fb0c2",
+  "runner_sha256": "d5e536857ff3d98edef39efc4552089a99e3a54750a58d79c07aa8b4b2a70df2",
+  "verifier_sha256": "2a10d6f5978afe1d46e68189a0d849d4ab65f50731c7503b3159c32a6f2bf0ea",
+  "benchmark_sha256": "d77b7aef1636e02305c96a5629ffa68e09682048e580a63168050ad0fc90355f"
+}
