@@ -58,3 +58,44 @@ failure, checkpoint failure, or publication readiness is inferred from a decisio
 not to launch. The submission remains NO-GO, and the actual paper goal remains
 incomplete. Further exploration must supply a specific testable contribution,
 not just a different model, benchmark, or visualization of the same effect.
+
+## Additional screen: single-answer gains versus repeated-attempt coverage
+
+The proposed outcome-level question was whether the available adapter improves
+single-answer accuracy while reducing correct-solution coverage across repeated
+attempts. Primary-source checking found direct overlap, not merely related
+terminology:
+
+- [Self-Distillation with Sampled Demonstrations Reduces Output Diversity](https://arxiv.org/html/2606.26091v1)
+  explicitly studies stronger average performance alongside flatter pass@k and
+  reduced semantic/functional diversity. Its abstract and introduction describe
+  both controlled graph tasks and science QA. We did not reproduce its runs.
+- [Understanding OPD through Test-Time Scaling](https://arxiv.org/html/2608.11829v1)
+  studies crossing pass@k curves across sampling budgets and problem-level
+  transitions at 1,024 samples. We inspected its setup, metric definitions and
+  Appendix E. This is a direct precedent for the proposed accuracy/coverage
+  comparison, although it does not authenticate behavior of our u-OPSD adapter.
+- [Influence-Directed Distillation](https://arxiv.org/html/2608.29846v1)
+  proposes a sampled-token intervention for the diversity tradeoff. We inspected
+  its abstract and introduction; neither the method nor its claimed gains were
+  independently validated here. This rules out treating a generic diversity
+  preservation proposal as an unexplored remedy.
+
+A possible statistical pivot also has close prior art:
+[Beyond Pass@k](https://arxiv.org/html/2510.08325v1), particularly Sections 4–5,
+defines task coverage at a success-probability threshold and relates it to
+pass@k by an integral identity. Its large-budget limit discussion already
+distinguishes nonzero success probability from reliable performance. We must
+not claim that distinction or the coverage-threshold idea as a new theorem.
+
+Finite sampling still requires care: observing zero successes is not proof of
+zero success probability. Conversely, the existence of this qualification does
+not invalidate measured finite-budget pass@k comparisons. A critique must
+distinguish the operational finite-budget result from any stronger interpretation
+about capability. No author result was numerically refuted by this source screen.
+
+Decision: do not launch a base/adapter repeated-sampling campaign on this generic
+thesis. It would currently be replication, with no differentiated intervention
+or independently supported new scientific claim. The adapter remains untested,
+not failed. No new model generations, GPU costs, or paper-readiness claim result
+from this additional screen.
