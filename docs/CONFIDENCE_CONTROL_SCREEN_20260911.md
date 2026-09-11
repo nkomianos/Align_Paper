@@ -127,3 +127,75 @@ outcomes because there are no such outcomes.
 
 The ICLR paper remains NO-GO. This turn supplies a concrete negative control and
 rejects an overbroad novelty pitch; it does not supply the missing main result.
+
+## Follow-up: residualisation depends on where noise enters
+
+The subsequent full-text inspection of the [June commitment paper](https://arxiv.org/html/2606.29490v1)
+covered the residualisation account and Figure 9, activation analyses,
+discussion, and elicitation/statistical methods. It explicitly acknowledges
+that thresholding a truth signal can produce the raw decision–truth gap. Its
+proposed distinction uses residual confidence after regressing out a truth
+proxy. It also includes orthogonalised steering, separate elicitation calls,
+and alternative prompt/format controls. No raw neural data or author code was
+reproduced. Do not claim these controls are absent.
+
+Our exact check concerns a narrower mathematical assumption. Let P be uniform
+on {0.3, 0.4, 0.6, 0.7}, Y conditional on P be Bernoulli(P), and E independently
+take values -0.15 and +0.15 with equal probability. The reported estimate is
+V=P+E, which remains within [0,1]. Give the analyst the perfect reference L=P.
+The population OLS regression of V on L has intercept zero and slope one, so
+the residual is exactly E. P is perfectly calibrated to Y; V is a noisy,
+conditionally unbiased estimate, not a perfectly calibrated report.
+
+Compare two decision mechanisms, keeping P, Y and V identically distributed:
+
+1. Shared estimation error: commit if P+E>0.5.
+2. Report-only error: commit if P+E'>0.5, with E' an independent copy of E.
+
+The first uses the same imperfect estimate for reporting and deciding. The
+second has fresh independent error at decision time. Neither requires an
+additional latent objective or correctness information in E.
+
+| Exact population quantity | Shared error | Independent report error |
+|---|---:|---:|
+| Residual AUROC for correctness | 1/2 | 1/2 |
+| Residual AUROC for commitment | 3/4 | 1/2 |
+| Report AUROC for correctness | 101/160 | 101/160 |
+| Report AUROC for commitment | 1 | 25/32 |
+| Perfect-reference AUROC for correctness | 27/40 | 27/40 |
+
+For abstention, use the negative residual; its AUROC equals the commitment
+AUROC above. Fraction arithmetic enumerates the entire finite population.
+An independent sklearn weighted-AUROC calculation agrees on all four residual
+endpoints. There is no Monte Carlo uncertainty, population sampling claim or
+neural performance estimate. The duplicated E' views in the shared-error case
+are integrated probability mass, not additional independent observations.
+
+The implication is specific: residual chance performance for correctness plus
+above-chance decision prediction excludes independent report-only noise under
+these assumptions, but does not exclude estimation error shared with the
+decision. Calling E an independent decision component instead leaves the same
+observational distribution. Distinguishing those verbal descriptions requires
+additional structural assumptions or interventions; residualisation alone
+cannot do it. This argument is elementary, not a claim to new causal theory.
+
+In particular, this example does not reproduce the paper's below-chance
+correctness cells, activation geometry, or fitted neural steering effects.
+Separate deterministic neural calls can share item-dependent estimation error;
+they need not share newly sampled RNG noise. Conversely, our construction does
+not prove that any observed neural error actually has this structure. The
+reported confidence is not passed to the subsequent decision in the inspected
+method, so do not propose that literal report transmission explains its data.
+
+Executed source: `scripts/audit_confidence_residual_noise.py`.
+Raw exact states and checksums:
+`artifacts/confidence_residual_noise_20260911/EXACT_ROWS.json` and `RESULT.json`.
+Classification: exact developmental specificity control; neural hypothesis
+untested. No new GPU run was launched.
+
+The next-action correction is to avoid a replication whose success is merely
+“residual confidence predicts commitment.” That outcome would not separate the
+mechanisms above. A prospective neural proposal must first specify distinct
+intervention predictions and practical value beyond a matched output-bias or
+external-threshold baseline. The source-control question is now better defined,
+but there is still no admitted paper campaign or achieved submission result.
