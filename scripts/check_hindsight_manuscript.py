@@ -1,5 +1,6 @@
 """PDF extraction and contact-sheet QA, never a substitute for visual inspection."""
 from pathlib import Path
+import argparse
 import hashlib
 import json
 import re
@@ -8,6 +9,9 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--render-dir', type=Path, default=ROOT / 'artifacts/paper_render_20260905')
+    args = parser.parse_args()
     from pypdf import PdfReader
     from PIL import Image, ImageDraw
     pdf = ROOT / "output/pdf/main.pdf"
@@ -24,7 +28,7 @@ def main():
     log = (ROOT / "output/pdf/main.log").read_text(encoding="utf-8", errors="replace")
     issues = [line for line in log.splitlines() if "Overfull" in line or "undefined" in line or "Font Warning" in line]
     assert not issues, issues
-    render = ROOT / "artifacts/paper_render_20260905"
+    render = args.render_dir
     image_paths = sorted(render.glob("page-*.png"))
     assert len(image_paths) == len(pages), "render latest PDF before QA"
     for offset in range(0, len(image_paths), 4):

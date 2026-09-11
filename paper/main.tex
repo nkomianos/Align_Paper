@@ -8,7 +8,7 @@
 \newcommand{\pending}{\textit{Not run}}
 \newcommand{\R}{\mathbb{R}}
 \makeatletter
-\patchcmd{\@maketitle}{Under review as a conference paper at ICLR 2027}{Working draft -- 5 September 2026 -- not submitted}{}{\errmessage{Draft header patch failed}}
+\patchcmd{\@maketitle}{Under review as a conference paper at ICLR 2027}{Working draft -- 11 September 2026 -- not submitted}{}{\errmessage{Draft header patch failed}}
 \patchcmd{\@maketitle}{Anonymous authors}{Anonymous research draft}{}{\errmessage{Draft author patch failed}}
 \patchcmd{\@maketitle}{Paper under double-blind review}{Empirical completion pending}{}{\errmessage{Draft status patch failed}}
 \makeatother
@@ -32,8 +32,9 @@ measurement assumptions. Existing constructed simulations show both benefits
 and limitations of standard residual correction: a simpler anchor estimator can
 outperform its propensity-weighted version in policy regret. We specify a
 gated neural comparison with direct predictive and semantic controls. An initial
-interface fails; one task-instruction repair qualifies, but training fails the
-acquisition gate and the sparse methods remain unrun. A secondary public-data
+interface fails; one task-instruction repair qualifies, but its training fails
+acquisition. A later calibration finds modest supervised acquisition and
+position-dependent distillation; the sparse methods remain unrun. A secondary public-data
 audit yields an attrition-bound interval spanning both directions of change in
 later reported attitudes. \textbf{This draft establishes neither neural method
 superiority nor real assistant-induced preference change and is not currently
@@ -333,6 +334,12 @@ has lost the initially demonstrated conditional capability. This diagnoses the
 particular first-token training recipe; it neither isolates every cause nor
 establishes a general failure of the released multi-token SDPO method.
 
+A later three-arm calibration also finds weak accuracy on training tasks,
+so the difficulty is not confined to held-out transfer. Supervision passes a
+modest acquisition gate, while frozen-teacher distillation fails its position
+gate and updating-teacher distillation collapses; Appendix~\ref{app:calibration}
+reports both splits. This is a recipe diagnosis, not a causal-method comparison.
+
 \paragraph{Dependence, verification and stopping.}
 Average rotations within base; retain source-user dependence in sensitivity
 analysis. Check the exact expected IDs and semantic option mapping, rather
@@ -457,6 +464,38 @@ submission and remain responsible for them.
 \clearpage
 \appendix
 \input{sections/theory}
+\section{Subsequent learning calibration}
+\label{app:calibration}
+This separate developmental experiment uses 128 training bases and 32 held-out
+bases from the previously exposed learning population, with four dependent
+answer rotations per base. Each arm runs 32 fixed optimizer updates. It is not
+the 35-update acquisition study in Section~\ref{sec:neural}, and its held-out
+subset is not the locked causal-method confirmation split.
+
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+& \multicolumn{2}{c}{Choice accuracy} & \multicolumn{2}{c}{Mean position range} \\
+Arm & Train & Held-out & Train & Held-out \\
+\midrule
+Supervised & .380859 & .335938 & .045941 & .044196 \\
+Frozen teacher & .294922 & .320313 & .236587 & .268486 \\
+Updating teacher & .250000 & .250000 & .998859 & .999525 \\
+\bottomrule
+\end{tabular}
+\end{center}
+Position range is the within-base range of option-normalized correct-token
+probability across answer rotations, averaged over bases. Supervision passes the prespecified
+modest improvement gate, not a task-mastery criterion. Frozen-teacher loss
+improves, but its position range exceeds the frozen .20 limit. Updating-teacher
+label collapse occurs in both splits. These results do not isolate an internal
+mechanism or establish failure of a general distillation algorithm.
+
+The September 11 replay checks the sealed manifest, full-vocabulary saved-logit
+arithmetic, row bindings, schedules and original routing. It does not re-execute
+neural checkpoints. No sparse causal-correction arm or further training is
+admitted by this calibration. Its remaining acquisition problem also does not
+resolve the independent novelty and latent-measurement limitations of this draft.
 \section{Complete constructed comparison}
 \input{generated/finite_table}
 The selected subsets match the original declared design predicates. Their
