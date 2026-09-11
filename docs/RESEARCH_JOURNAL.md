@@ -2492,3 +2492,20 @@ run. The verifier reloaded both checkpoints and replayed 16,384 evaluation rows
 and 1,024 logs. This is an invalid discriminating assay because the trainable
 Transformer control memorized the 128-pair map, not a negative result about
 Engram addressability. See `docs/ENGRAM_ADDRESSABILITY_G0_RESULT_20260911.md`.
+
+## 2026-09-11 -- Engram addressability G0.1 closes the synthetic apparatus
+
+The one prospectively allowed S0 repair first trained a shared backbone on the
+ordinary task with exact-zero memory contribution, cloned it into both address
+arms, and froze every non-memory parameter. Calibration reached 100% default
+accuracy. Under memory-only training, the bigram arm reached 82.30% entity
+accuracy and the current-token control reached 38.87%, while both retained 100%
+default accuracy. The 43.43 point contrast exceeded the registered 20 point
+margin but the bigram arm missed the separately required 90% absolute threshold.
+
+The frozen decision is therefore `S0_HARNESS_FAILURE_STOP`; S1 poisoning and row
+ablation were never run. Independent verification replayed 16,384 evaluation
+rows and checked 1,280 optimizer-log entries. The contrast is a promising
+developmental observation, not a passed gate or a security result. The synthetic
+apparatus is closed with no further repair permitted. See
+`docs/ENGRAM_ADDRESSABILITY_G0_1_RESULT_20260911.md`.
