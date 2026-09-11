@@ -1,5 +1,12 @@
 # Author-linked u-OPSD adapters: available, audited, not behaviorally qualified
 
+September 11 update: a [bounded revision pilot](REVISION_CHECKPOINT_PILOT_RESULT_20260911.md)
+has now run. Its strict format assay failed; retrospective explicit final-answer
+reading finds 64/64 correct for each model. It establishes neither revision
+degradation nor a submission contribution. The availability and admission notes
+below preserve the earlier pre-pilot assessment; statements that no behavioral
+run has occurred are historical, not current status.
+
 The [author project page](https://williamium3000.github.io/u-opsd/) links to the
 [u-OPSD Hugging Face organization](https://huggingface.co/u-opsd), which exposes
 four adapters. This corrects any broad inference that no usable post-training
