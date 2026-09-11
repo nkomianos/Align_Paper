@@ -126,3 +126,10 @@ environment mutation, new external message, publication or provider termination
 has been performed. A verified idle GPU still incurs rental costs. Current AWS
 usage and terminal states are recorded in the session ledger; do not infer an
 active campaign from historical launch entries.
+
+September 11 confidence-control follow-up: an exact CPU output-bias control
+changes abstention while preserving the conditional answer distribution. This
+is a measurement control, not neural evidence. Current confidence/commitment
+literature prevents presenting the broad dissociation as new. No GPU campaign
+was admitted; see CONFIDENCE_CONTROL_SCREEN_20260911.md for the derivation,
+executed checks, primary-source version correction and conditional experiment.
