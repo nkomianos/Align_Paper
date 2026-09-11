@@ -32,6 +32,14 @@
     {
       "path": "artifacts/memory_graft_security_g2_3/memory_graft_security_g2_3_run1/DECISIVE.json",
       "sha256": "f2c58a3c5573bdabba17da3528a66169d0e013a2b91171ba08a08f94627f3659"
+    },
+    {
+      "path": "artifacts/memory_graft_security_s3/DECISION.json",
+      "sha256": "ffd248921d4e25936e7fd79cc8577f11b93336bd85f6c5082912f8de65c2f829"
+    },
+    {
+      "path": "artifacts/memory_graft_security_s4/DECISION.json",
+      "sha256": "e248278e9ffdff2736ebd36a1ec8891dc69eb8498e1cf477c038e1be17d126ed"
     }
   ],
   "hybrid_localization_means": {
@@ -290,5 +298,375 @@
         0.0
       ]
     }
+  },
+  "s3_component_localization": {
+    "models": {
+      "pythia-1.4b": {
+        "endpoint_valid": true,
+        "full_necessity": {
+          "lower": 0.9862454840462568,
+          "mean": 0.994921875,
+          "standard_error": 0.0031249999999999997,
+          "upper": 1.003598265953743
+        },
+        "full_sufficiency": {
+          "lower": 0.9862454840462568,
+          "mean": 0.994921875,
+          "standard_error": 0.0031249999999999997,
+          "upper": 1.003598265953743
+        },
+        "groups": {
+          "attention_all": {
+            "necessity": {
+              "lower": -0.05568864125244996,
+              "mean": 0.15703125,
+              "standard_error": 0.07661591826692912,
+              "upper": 0.36975114125245
+            },
+            "necessity_status": "FAIL",
+            "sufficiency": {
+              "lower": 0.0,
+              "mean": 0.0,
+              "standard_error": 0.0,
+              "upper": 0.0
+            },
+            "sufficiency_status": "FAIL"
+          },
+          "embedding_and_head": {
+            "necessity": {
+              "lower": -0.03579976667271404,
+              "mean": 0.026953125,
+              "standard_error": 0.02260188453041409,
+              "upper": 0.08970601667271405
+            },
+            "necessity_status": "FAIL",
+            "sufficiency": {
+              "lower": 0.0,
+              "mean": 0.0,
+              "standard_error": 0.0,
+              "upper": 0.0
+            },
+            "sufficiency_status": "FAIL"
+          },
+          "layers_00_05": {
+            "necessity": {
+              "lower": 0.8464039381291307,
+              "mean": 0.9251953125,
+              "standard_error": 0.028378509707742264,
+              "upper": 1.0039866868708691
+            },
+            "necessity_status": "PASS",
+            "sufficiency": {
+              "lower": 0.0,
+              "mean": 0.0,
+              "standard_error": 0.0,
+              "upper": 0.0
+            },
+            "sufficiency_status": "FAIL"
+          },
+          "layers_06_11": {
+            "necessity": {
+              "lower": -0.0791418084634967,
+              "mean": 0.133203125,
+              "standard_error": 0.07648086867122442,
+              "upper": 0.3455480584634967
+            },
+            "necessity_status": "FAIL",
+            "sufficiency": {
+              "lower": 0.0,
+              "mean": 0.0,
+              "standard_error": 0.0,
+              "upper": 0.0
+            },
+            "sufficiency_status": "FAIL"
+          },
+          "layers_12_17": {
+            "necessity": {
+              "lower": -0.11149698538434685,
+              "mean": 0.1375,
+              "standard_error": 0.08968194073716718,
+              "upper": 0.38649698538434685
+            },
+            "necessity_status": "FAIL",
+            "sufficiency": {
+              "lower": 0.0,
+              "mean": 0.0,
+              "standard_error": 0.0,
+              "upper": 0.0
+            },
+            "sufficiency_status": "FAIL"
+          },
+          "layers_18_23": {
+            "necessity": {
+              "lower": -0.048486844608908855,
+              "mean": 0.0798828125,
+              "standard_error": 0.04623525848524333,
+              "upper": 0.20825246960890886
+            },
+            "necessity_status": "FAIL",
+            "sufficiency": {
+              "lower": 0.0,
+              "mean": 0.0,
+              "standard_error": 0.0,
+              "upper": 0.0
+            },
+            "sufficiency_status": "FAIL"
+          },
+          "mlp_all": {
+            "necessity": {
+              "lower": 0.9862454840462568,
+              "mean": 0.994921875,
+              "standard_error": 0.0031249999999999997,
+              "upper": 1.003598265953743
+            },
+            "necessity_status": "PASS",
+            "sufficiency": {
+              "lower": -0.023268442546086177,
+              "mean": 0.4814453125,
+              "standard_error": 0.18178416497456,
+              "upper": 0.9861590675460862
+            },
+            "sufficiency_status": "FAIL"
+          },
+          "normalization_all": {
+            "necessity": {
+              "lower": -0.0007375869346089453,
+              "mean": -0.0001953125,
+              "standard_error": 0.00019531250000000004,
+              "upper": 0.0003469619346089452
+            },
+            "necessity_status": "FAIL",
+            "sufficiency": {
+              "lower": 0.0,
+              "mean": 0.0,
+              "standard_error": 0.0,
+              "upper": 0.0
+            },
+            "sufficiency_status": "FAIL"
+          }
+        },
+        "noops_exact": true
+      },
+      "pythia-410m": {
+        "endpoint_valid": true,
+        "full_necessity": {
+          "lower": 0.9911573738948247,
+          "mean": 0.996484375,
+          "standard_error": 0.0019186408891004396,
+          "upper": 1.0018113761051752
+        },
+        "full_sufficiency": {
+          "lower": 0.9911573738948247,
+          "mean": 0.996484375,
+          "standard_error": 0.0019186408891004396,
+          "upper": 1.0018113761051752
+        },
+        "groups": {
+          "attention_all": {
+            "necessity": {
+              "lower": -0.1397310438331626,
+              "mean": 0.2619140625,
+              "standard_error": 0.14466164145699856,
+              "upper": 0.6635591688331626
+            },
+            "necessity_status": "FAIL",
+            "sufficiency": {
+              "lower": 0.0,
+              "mean": 0.0,
+              "standard_error": 0.0,
+              "upper": 0.0
+            },
+            "sufficiency_status": "FAIL"
+          },
+          "embedding_and_head": {
+            "necessity": {
+              "lower": -0.022960067045947857,
+              "mean": 0.025390625,
+              "standard_error": 0.01741460400403028,
+              "upper": 0.07374131704594786
+            },
+            "necessity_status": "FAIL",
+            "sufficiency": {
+              "lower": 0.0,
+              "mean": 0.0,
+              "standard_error": 0.0,
+              "upper": 0.0
+            },
+            "sufficiency_status": "FAIL"
+          },
+          "layers_00_05": {
+            "necessity": {
+              "lower": 0.9161409346385925,
+              "mean": 0.9595703125,
+              "standard_error": 0.01564208050794994,
+              "upper": 1.0029996903614076
+            },
+            "necessity_status": "PASS",
+            "sufficiency": {
+              "lower": 0.0,
+              "mean": 0.0,
+              "standard_error": 0.0,
+              "upper": 0.0
+            },
+            "sufficiency_status": "FAIL"
+          },
+          "layers_06_11": {
+            "necessity": {
+              "lower": -0.13351903127346965,
+              "mean": 0.3517578125,
+              "standard_error": 0.1747835182712527,
+              "upper": 0.8370346562734696
+            },
+            "necessity_status": "FAIL",
+            "sufficiency": {
+              "lower": 0.0,
+              "mean": 0.0,
+              "standard_error": 0.0,
+              "upper": 0.0
+            },
+            "sufficiency_status": "FAIL"
+          },
+          "layers_12_17": {
+            "necessity": {
+              "lower": 0.005840658652630226,
+              "mean": 0.0189453125,
+              "standard_error": 0.004719939833435379,
+              "upper": 0.03204996634736977
+            },
+            "necessity_status": "FAIL",
+            "sufficiency": {
+              "lower": 0.0,
+              "mean": 0.0,
+              "standard_error": 0.0,
+              "upper": 0.0
+            },
+            "sufficiency_status": "FAIL"
+          },
+          "layers_18_23": {
+            "necessity": {
+              "lower": 0.0012208093772133194,
+              "mean": 0.053125,
+              "standard_error": 0.018694477526537998,
+              "upper": 0.10502919062278668
+            },
+            "necessity_status": "FAIL",
+            "sufficiency": {
+              "lower": 0.0,
+              "mean": 0.0,
+              "standard_error": 0.0,
+              "upper": 0.0
+            },
+            "sufficiency_status": "FAIL"
+          },
+          "mlp_all": {
+            "necessity": {
+              "lower": 0.9911573738948247,
+              "mean": 0.996484375,
+              "standard_error": 0.0019186408891004396,
+              "upper": 1.0018113761051752
+            },
+            "necessity_status": "PASS",
+            "sufficiency": {
+              "lower": -0.14791881137877178,
+              "mean": 0.36796875,
+              "standard_error": 0.18580866605753368,
+              "upper": 0.8838563113787719
+            },
+            "sufficiency_status": "FAIL"
+          },
+          "normalization_all": {
+            "necessity": {
+              "lower": -0.0007375869346089451,
+              "mean": -0.0001953125,
+              "standard_error": 0.0001953125,
+              "upper": 0.0003469619346089451
+            },
+            "necessity_status": "FAIL",
+            "sufficiency": {
+              "lower": 0.0,
+              "mean": 0.0,
+              "standard_error": 0.0,
+              "upper": 0.0
+            },
+            "sufficiency_status": "FAIL"
+          }
+        },
+        "noops_exact": true
+      }
+    },
+    "runner_wall_seconds": 563.781814795977
+  },
+  "s4_early_mlp_intersection": {
+    "models": {
+      "pythia-1.4b": {
+        "endpoint_valid": true,
+        "full_necessity": {
+          "lower": 0.9862454840462568,
+          "mean": 0.994921875,
+          "standard_error": 0.0031249999999999997,
+          "upper": 1.003598265953743
+        },
+        "full_sufficiency": {
+          "lower": 0.9862454840462568,
+          "mean": 0.994921875,
+          "standard_error": 0.0031249999999999997,
+          "upper": 1.003598265953743
+        },
+        "groups": {
+          "early_mlp_layers_00_05": {
+            "necessity": {
+              "lower": 0.1349490505055288,
+              "mean": 0.4828125,
+              "standard_error": 0.12529095167170207,
+              "upper": 0.8306759494944711
+            },
+            "necessity_status": "FAIL",
+            "sufficiency": {
+              "lower": 0.0,
+              "mean": 0.0,
+              "standard_error": 0.0,
+              "upper": 0.0
+            },
+            "sufficiency_status": "FAIL"
+          }
+        },
+        "noops_exact": true
+      },
+      "pythia-410m": {
+        "endpoint_valid": true,
+        "full_necessity": {
+          "lower": 0.9911573738948247,
+          "mean": 0.996484375,
+          "standard_error": 0.0019186408891004396,
+          "upper": 1.0018113761051752
+        },
+        "full_sufficiency": {
+          "lower": 0.9911573738948247,
+          "mean": 0.996484375,
+          "standard_error": 0.0019186408891004396,
+          "upper": 1.0018113761051752
+        },
+        "groups": {
+          "early_mlp_layers_00_05": {
+            "necessity": {
+              "lower": 0.5055655872369065,
+              "mean": 0.7103515625,
+              "standard_error": 0.07375833755175368,
+              "upper": 0.9151375377630935
+            },
+            "necessity_status": "PASS",
+            "sufficiency": {
+              "lower": 0.0,
+              "mean": 0.0,
+              "standard_error": 0.0,
+              "upper": 0.0
+            },
+            "sufficiency_status": "FAIL"
+          }
+        },
+        "noops_exact": true
+      }
+    },
+    "runner_wall_seconds": 270.2695463160053
   }
 }

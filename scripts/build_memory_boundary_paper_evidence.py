@@ -36,6 +36,8 @@ def main() -> None:
     g2_dec, g2_src = load("artifacts/memory_graft_security_g2/memory_graft_security_g2_2_run1/DECISION.json")
     g2_route, g2_route_src = load("artifacts/memory_graft_security_g2/memory_graft_security_g2_2_run1/ROUTE_DECISIVE.json")
     g23, g23_src = load("artifacts/memory_graft_security_g2_3/memory_graft_security_g2_3_run1/DECISIVE.json")
+    s3, s3_src = load("artifacts/memory_graft_security_s3/DECISION.json")
+    s4, s4_src = load("artifacts/memory_graft_security_s4/DECISION.json")
 
     s2e_rows = []
     for path in sorted((ROOT / "artifacts/memory_graft_security_s2e/memory_graft_security_s2e_run1/decisive").glob("*/seed_*/metrics.json")):
@@ -86,7 +88,7 @@ def main() -> None:
 
     bundle = {
         "schema": "memory-boundary-paper-evidence-v1",
-        "sources": [s1_src, s2_src, s2e_src, g1_src, g1_rows_src, g2_src, g2_route_src, g23_src],
+        "sources": [s1_src, s2_src, s2e_src, g1_src, g1_rows_src, g2_src, g2_route_src, g23_src, s3_src, s4_src],
         "hybrid_localization_means": s2_means,
         "target_specific_removal_by_seed": deletion,
         "frozen_graft_attack_excess_by_seed": routing,
@@ -102,6 +104,8 @@ def main() -> None:
             }
             for m in ["qwen2.5-0.5b", "qwen2.5-1.5b"]
         },
+        "s3_component_localization": s3,
+        "s4_early_mlp_intersection": s4,
     }
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "EVIDENCE.json").write_text(json.dumps(bundle, indent=2) + "\n", encoding="utf-8")
@@ -150,6 +154,40 @@ def main() -> None:
         ax.grid(axis="y", color="#DDDDDD", lw=.6, zorder=0)
     fig.savefig(OUT / "core_result.pdf", bbox_inches="tight")
     fig.savefig(OUT / "core_result.png", dpi=240, bbox_inches="tight")
+    plt.close(fig)
+
+    group_order = ["embedding_and_head", "attention_all", "mlp_all", "normalization_all",
+                   "early_mlp_layers_00_05",
+                   "layers_00_05", "layers_06_11", "layers_12_17", "layers_18_23"]
+    group_labels = ["Embed + head", "Attention", "MLP", "Norm", "Early MLP 0--5", "Layers 0--5",
+                    "Layers 6--11", "Layers 12--17", "Layers 18--23"]
+    fig, axes = plt.subplots(1, 2, figsize=(7.1, 3.55), sharex=True, sharey=True,
+                             constrained_layout=True)
+    for ax, model, title in zip(axes, models_p, ["Pythia 410M", "Pythia 1.4B"]):
+        y = np.arange(len(group_order))
+        for metric, marker, color, shift in [("necessity", "o", "#355C9A", -.12),
+                                              ("sufficiency", "s", "#D06B35", .12)]:
+            records = [(s4 if g == "early_mlp_layers_00_05" else s3)["models"][model]["groups"][g][metric]
+                       for g in group_order]
+            vals = [r["mean"] for r in records]
+            lows = [r["lower"] for r in records]
+            highs = [r["upper"] for r in records]
+            ax.errorbar(vals, y + shift,
+                        xerr=[np.asarray(vals)-np.asarray(lows), np.asarray(highs)-np.asarray(vals)],
+                        fmt=marker, color=color, ms=4, capsize=2, lw=1,
+                        label=metric.capitalize())
+        ax.axvline(.15, color="#B33A3A", ls="--", lw=1)
+        ax.axvline(0, color="#777777", lw=.6)
+        ax.set_title(title)
+        ax.set_xlabel("ASR effect")
+        ax.set_yticks(y, group_labels)
+        ax.invert_yaxis()
+        ax.grid(axis="x", color="#E8E8E8", lw=.6)
+        ax.spines[["top", "right"]].set_visible(False)
+    axes[1].legend(frameon=False, fontsize=8, loc="lower right")
+    fig.savefig(OUT / "component_localization.pdf", bbox_inches="tight")
+    fig.savefig(OUT / "component_localization.png", dpi=240, bbox_inches="tight")
+    plt.close(fig)
     print(OUT / "EVIDENCE.json")
 
 

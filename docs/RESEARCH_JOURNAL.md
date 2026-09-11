@@ -2897,3 +2897,15 @@ S3-licensed intersection.
 
 Implementation/preregistration commit: `43646d0b7d4d8acf6a4d2627c1ea168026b097d5`.
 Freeze receipt commit: `ea5b5c2`.
+
+## 2026-09-11 — Verified S4 early-MLP intersection
+
+All S4 endpoint checks passed. Early-MLP necessity was 0.71035 [0.50557,
+0.91514] at 410M and passed. At 1.4B it was 0.48281 [0.13495, 0.83068],
+missing the fixed lower-bound criterion by 0.01505 and remaining a valid
+non-pass. Early-MLP sufficiency was exactly zero in both sizes. This licenses a
+necessary early-MLP locus at 410M, not at 1.4B, and supports co-adaptation at
+both sizes. The source runner took 270.27 seconds. The 23-file output manifest
+validated without mismatch. Full replay reproduced both registered decisions
+and every prediction ID; report SHA-256:
+`3cc282887f613baee9d6281d90b58a73ab94937d8b2d7e55f61ecfc889ceb9af`.

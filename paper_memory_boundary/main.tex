@@ -9,7 +9,7 @@
 \makeatother
 \newcommand{\asr}{\mathrm{ASR}}
 \newcommand{\E}{\mathbb{E}}
-\title{Addressable Memory Is Not a Security Boundary:\\Fine-Tuning Routes Triggered Behaviors into the Backbone}
+\title{Addressing Is Not a Security Boundary:\\Fine-Tuning Routes Triggered Behavior into the Backbone}
 \author{Anonymous authors}
 
 \begin{document}
@@ -244,6 +244,39 @@ shifts are 0.0332 $[-0.0753,0.1418]$ at 410M and 0.0063
 $[-0.0252,0.0379]$ at 1.4B, with seed-level intervals spanning zero. Prompt
 values are not treated as independent replicates.
 
+Coarse checkpoint interventions further localize the dependence. Restoring all
+MLP parameters to clean removes mean ASR 0.9965
+$[0.9912,1.0018]$ at 410M and 0.9949 $[0.9862,1.0036]$ at 1.4B.
+Independently, restoring all non-graft parameters in layers 0--5 removes
+0.9596 $[0.9161,1.0030]$ and 0.9252 $[0.8464,1.0040]$. Both lower
+endpoints exceed the registered 0.15 effect scale. No coarse group is reliably
+sufficient by itself; all-MLP transplantation is highly seed-variable and
+every other sufficiency estimate is zero. These overlapping necessary groups
+do not by themselves identify the early-MLP intersection. A separately frozen
+follow-up tests that intersection. Restoring only MLP parameters in layers
+0--5 removes 0.7104 ASR $[0.5056,0.9151]$ at 410M and passes, but removes
+0.4828 $[0.1349,0.8307]$ at 1.4B and narrowly misses the registered lower-bound
+criterion. Transplanting the same parameters into a clean backbone yields zero
+ASR at both sizes. Early MLP updates are therefore a necessary locus at 410M;
+the 1.4B evidence remains suggestive but does not license the same thresholded
+claim.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.78\textwidth]{generated/component_localization.pdf}
+  \caption{\textbf{Coarse backbone interventions show necessity without
+  singleton sufficiency.} Points and bars are five-seed means and 95\%
+  Student-$t$ intervals. Necessity is the ASR drop after restoring a poisoned
+  group to clean; sufficiency is clean-adjusted ASR after transplanting that
+  poisoned group into a clean backbone. The dashed line is the registered 0.15
+  meaningful-effect threshold. MLP and layers 0--5 pass necessity in both
+  sizes. No group passes sufficiency. Groups come from overlapping functional
+  and depth partitions and should not be added. The early-MLP intersection is
+  a separately preregistered follow-up selected from the coarse result; it
+  passes necessity at 410M and does not pass at 1.4B.}
+  \label{fig:components}
+\end{figure*}
+
 \subsection{The deletion assay works for row-confined storage}
 
 A null deletion effect could arise from faulty indexing, a multi-head row bug,
@@ -358,6 +391,33 @@ reliably learns rare trigger mappings in the dense backbone, surviving deletion
 of the trigger rows and replacement of the entire graft. Conditional memory can
 support a security boundary, but only when the write path enforces it.
 
+\section*{Ethics statement}
+
+This work studies a dual-use failure mode in model adaptation. All triggers,
+payloads, and contexts are synthetic research probes; the experiments do not
+target deployed systems, people, private data, or operational attack paths.
+We report the negative and failed assays alongside positive results so that the
+evidence cannot be read as a general recipe for harmful behavior. The intended
+benefit is to prevent deletion, isolation, or audit guarantees from being
+inferred from an addressable architecture without testing its write path.
+
+\section*{Reproducibility statement}
+
+The appendix describes models, immutable revisions, splits, replication units,
+and verification. The accompanying repository contains frozen
+pre-registrations and receipts, code, manifests, per-prompt predictions,
+training logs, aggregate tables, and full-replay reports. Invalid and
+developmental attempts remain in the audit history and support no scientific
+claim.
+
+\section*{AI use statement}
+
+Generative AI tools were used extensively to propose and refine hypotheses,
+design and implement experiments and verifiers, inspect evidence, search and
+summarize literature, analyze results, and draft and edit text and figures.
+The human authors reviewed the source evidence, analysis, citations, and final
+manuscript and take responsibility for all claims and errors.
+
 \bibliography{references}
 \bibliographystyle{iclr2027_conference}
 
@@ -381,6 +441,8 @@ G2 & Invalid before scientific training: Qwen payload tokenized to two tokens. \
 G2.1 & Invalid before marker-dependent optimizer work: local symbol shadowed the training function. \\
 G2.2 & Valid Qwen surgical controls; valid $N=16$ positive at 1.5B and reliability negative at 0.5B. Assembly-only three-seed helper repair disclosed. \\
 G2.3 & Valid, fully replayed fixed-$N=64$ five-seed positive at both Qwen sizes. \\
+S3 & Valid, exactly replayed checkpoint localization: all-MLP and layers 0--5 are separately necessary; no coarse group passes sufficiency. \\
+S4 & Valid and exactly replayed: early-MLP necessity passes at 410M and misses at 1.4B; sufficiency is zero. \\
 \bottomrule
 \end{tabularx}
 \caption{Audit classification. Invalid runs are preserved but support no
@@ -419,7 +481,10 @@ receipts, source and output manifests, model revisions, and verification
 reports. The G2.3 scientific manifest has 33 entries and validates without a
 mismatch. Its verifier inventory digest is
 \texttt{1cc1310b754a2f1f9bda46ab5adc6582056be0b4c38bb29e14789217e9d497bb}.
-Across the executed and replayed memory study, conservative instance allocation
-is approximately 5.67 GPU-hours on one RTX PRO 6000 Blackwell Server Edition.
+The S3 and S4 scientific manifests each contain 23 files and validate without a
+mismatch; their full replays reproduce every decision, and S4 reproduces every
+prediction ID. Across the executed and replayed memory study, conservative
+instance allocation is approximately 6.23 GPU-hours on one RTX PRO 6000
+Blackwell Server Edition.
 
 \end{document}
