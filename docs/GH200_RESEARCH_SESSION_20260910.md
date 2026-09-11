@@ -1507,3 +1507,16 @@ All11v1 recorded model/tokenizer hashes match prior pinned PMI provenance;
 merges.txt was not recorded by this runner, so full tokenizer-file coverage is
 not claimed. Initial local text preview failed cp1252 Unicode output; escaped
 preview succeeded, raw files unchanged. GH200 untouched.
+
+### Continuation: codec v2 retrieved and verified; stop gate applied
+
+AWS run terminal; no compute process at check.197.217seconds inference.
+Local full replay agrees. Schema counts48/44/47; graph20/16/28; action36/34/40
+for pairs/named/reverse respectively; reasoning25/48. AllEOS48/48. All encodings
+fail semantic qualification. Correct action with wrong graph16/18/12cases.
+No Nemo download/run, third repair, training, or historical-output correction.
+Recorded full table and interpretation in MEMORY_ENCODING_FOLLOWUP_RESULT;
+updated PIledger and stale access cutoff. Original Qwen positive remains narrow;
+broader reliability unsupported. Both raw runs preserved locally with manifests.
+No active task GPU job, GH200 untouched. A new study requires a different,
+concrete qualified contribution rather than extending this failed apparatus.

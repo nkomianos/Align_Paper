@@ -11,6 +11,7 @@ complete, defensible paper, not this report.
 | Claim or direction | Surviving evidence | Classification / correction |
 |---|---|---|
 | Qwen structured memory |48/48 extraction answers versus34/48 direct and36/48 reasoning control | Narrow valid positive on four synthetic mechanisms; not48 independent tasks. |
+| Broader fresh Qwen codec follow-up |After explicit-schema repair, graph accuracy20/48pairs,16/48named,28/48reverse; action36/48,34/48,40/48vs25/48reasoning | Every encoding fails semantic qualification. Correct actions often conceal wrong graphs. Original narrow positive does not establish broader extraction reliability; Nemo follow-up stopped. See MEMORY_ENCODING_FOLLOWUP_RESULT_20260910.md. |
 | Cross-family structured memory |Nemo extraction30/48 versus29/48 direct;18 reversed graphs | Semantic extraction qualification failed. No replicated method advantage. |
 | Natural memory validation |proScript and TORQUE source audits completed | Developmental only; neither supplies the required state-update/ambiguity labels. |
 | Recipe-invariant mechanism selection |Original two-seed J0 failed; old per-case scores missing | Narrow negative with archival limits. Recent "unimplemented" description corrected; no automatic external replication. |
@@ -109,7 +110,9 @@ point, not a promise. If the scientific requirements remain unmet, recommend a
 later venue rather than a placeholder ICLR abstract. Acceptance confidence cannot
 be inferred from effort, code volume, rental time or a positive toy result.
 
-The active heartbeat preserves the overall window ending16:55 UTC. GH200 is
+The user renewed AWS access after the16:55UTC reassessment; that historical
+cutoff no longer restricts AWS. The approximate compute budget still applies.
+GH200 is
 reserved for the user's OSH work until at least10:52 UTC and subsequent availability
 verification. AWS44.203.253.82 is authorized; its isolated runtime and repaired
 math verifier have passed deployment checks, which are infrastructure only. No OSH
