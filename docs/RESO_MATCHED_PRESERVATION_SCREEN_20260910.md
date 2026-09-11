@@ -92,3 +92,34 @@ novelty claim. These sources do not by themselves answer the specific ReSO
 matched-preservation comparison. That remains an attribution question requiring
 direct evidence, not an already established refutation or a new method. A
 small generic replay pilot would not resolve the full claim and is not admitted.
+
+## Isolated loss-function execution, September 11
+
+Reauthenticated all eight saved source files against their SHA-256 receipts.
+`scripts/audit_reso_loss_primitives.py` extracts only four reviewed function
+definitions using Python AST: pooled_forward, structure_loss, token_kl and
+shifted_nll. It does not import or execute the upstream training entry point.
+No dataset prompts or evaluation harnesses were opened.
+
+Seven constructed CPU checks pass: forward-KL value and policy gradient against
+an independent float64 calculation; invariance to finite masked-logit changes;
+zero KL at equal distributions; zero loss and gradient for an empty mask;
+masked pooling and gradient exclusion; the Bradley-Terry ranking-loss formula
+with nonzero gradient; and next-token NLL masking on real-to-real transitions.
+For N selected token positions, the checked policy-logit gradient is
+(softmax(policy)-softmax(reference))/N at selected positions and zero elsewhere.
+The reference is fixed in this check and produced under no_grad in the inspected
+training call site.
+
+This supplies no evidence of a basic KL-direction or padding-mask error in
+these functions. It does not certify the entire distributed program, BF16
+execution, hidden-state indexing across model implementations, data splits,
+training configurations, checkpoint selection or published results. Pooling
+uses a synthetic hidden-state provider, not a neural model.
+
+The matched-preservation concern survives at its original scope: the inspected
+representation training objective adds a separate differentiated replay term,
+while the DPO training loop does not. That distinction is not proof that replay
+explains the empirical advantage. No neural campaign is admitted merely because
+these unit-level checks passed. Raw receipt:
+`artifacts/reso_source_screen_20260910/LOSS_PRIMITIVES_AUDIT_20260911.json`.
