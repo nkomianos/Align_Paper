@@ -38,3 +38,14 @@ duplicate cases could supply repeated support; its route becomes design
 reassessment. No extra cases are added after launch and no independent-sample
 significance claim is made. The prospective protocol is retained as originally
 written so this mistake remains auditable.
+
+## Runtime observation during the adapter half
+
+The first matched batch contains 10,315 generated tokens for base (longest
+completion 1,797) versus 13,242 for adapter (longest 2,823). Its elapsed inference
+is about 48.20 seconds for base and 137.33 seconds for adapter, using successive
+logged batch timings. This is operational progress information, not an accuracy
+comparison or an intrinsic compute-efficiency result. The adapter is unmerged,
+and lengths, padding, context growth and implementation overhead differ. No
+profiler has isolated their contributions. The original 5–25 minute planning
+estimate may be exceeded; the fixed pilot continues without a wall-clock kill.
