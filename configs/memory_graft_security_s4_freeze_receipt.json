@@ -1,0 +1,9 @@
+{
+  "config_sha256": "e08453b681ddf5217b2ca733b7270ab1adc948dfa0a8504d3081ba24cfc4819f",
+  "experiment_id": "memory_graft_security_s4_early_mlp_intersection",
+  "freeze_commit": "43646d0b7d4d8acf6a4d2627c1ea168026b097d5",
+  "implementation_commit": "43646d0b7d4d8acf6a4d2627c1ea168026b097d5",
+  "preregistration_sha256": "1351284edaa002584b01a13abab32f5d9e3f03774433280f80b2f22f071e53e8",
+  "runner_sha256": "c53d290f4944f958cfbf72befaeb415633e7781d1a7fdc1d7c09c9d6b4c7750d",
+  "verifier_sha256": "71bc96373f569821c283030ed75c9604ee9965ab3d9982eff6ec4c4b4efdfa72"
+}
