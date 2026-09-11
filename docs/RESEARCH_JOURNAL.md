@@ -2509,3 +2509,53 @@ rows and checked 1,280 optimizer-log entries. The contrast is a promising
 developmental observation, not a passed gate or a security result. The synthetic
 apparatus is closed with no further repair permitted. See
 `docs/ENGRAM_ADDRESSABILITY_G0_1_RESULT_20260911.md`.
+
+## 2026-09-11 -- Binding gate, scale, and verification methodology
+
+The following rules bind every future experiment in this project.
+
+1. Every gate threshold must carry a written derivation from the downstream
+   estimand it protects. The protocol must first state the effect size the
+   decisive stage needs to detect, then derive the minimum apparatus performance
+   at which that effect is measurable against its control. The derivation must
+   be registered next to the threshold. Intuition and round-number convention
+   are not valid derivations.
+2. Compound AND gates are forbidden unless every conjunct is independently
+   derived. A protocol that combines a scientifically meaningful criterion with
+   a sanity bar must label them separately and justify why failure of the sanity
+   bar should block the run.
+3. Apparatus scale must be justified against the compute available at freeze
+   time. Any registered stage projected to consume under 1% of the remaining
+   budget must explicitly explain why that scale can support the intended claim.
+   Low cost alone is not a justification while most of the budget remains.
+4. Verification must match the stakes. Decisive stages require full replay,
+   sealed manifests, and inventory digests. A developmental apparatus check
+   requires only a recorded seed and config hash unless a specific additional
+   check is needed to protect its interpretation.
+
+Retrospectively, G0.1's registered 20 percentage point contrast was connected to
+the S1 estimand and passed with a 43.43 point contrast. Its separate 90% absolute
+accuracy threshold was not derived from what S1 needed. S1 needs enough
+addressing signal to identify an ablation delta against a random-row control;
+82.30% versus 38.87% supplied such a contrast. This observation does not rescue
+G0.1: its frozen decision and closure stand. It records why the next experiment
+must derive its gate from the downstream ablation estimand rather than guess an
+absolute accuracy bar.
+
+## 2026-09-11 -- Faithful-scale direction, Step 1 engineering complete
+
+A Memory Grafting adapter was implemented around a pinned pretrained
+Pythia-160M backbone. Unlike the closed synthetic apparatus, it preserves the
+real GPT-NeoX attention and MLP stack. It implements the paper's frozen exact
+longest-suffix bank plus a trainable Engram fallback with vocabulary compression,
+multi-head hashing, separate source projections, contextual gating, causal short
+convolution, and residual injection.
+
+The engineering check loaded revision `b56d9be`, constructed six frozen donor
+representations offline, and produced finite `[2, 8, 50304]` logits through the
+grafted model. Its batch exercised exact and fallback retrieval. Address plans
+were computed before the backbone forward and reproduced byte-identically. The
+162,322,944-parameter backbone received 6,316,736 trainable table parameters and
+1,775,616 other trainable graft parameters. No training, benchmark, gate, or
+scientific assay ran. Step 2 remains blocked on explicit approval. See
+`docs/MEMORY_GRAFTING_PYTHIA_STEP1_20260911.md`.
