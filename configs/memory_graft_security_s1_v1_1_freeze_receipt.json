@@ -1,0 +1,16 @@
+{
+  "experiment_id": "memory_graft_security_s1_v1_1",
+  "frozen_utc": "2026-09-11T08:43:00Z",
+  "implementation_commit": "a40d4c7df858c6eb98583145dddd0b9c5618b643",
+  "base_freeze_commit": "4726946814bff52d9ca62f9a60ef40bf18b448c3",
+  "metadata_correction_commit": "ee91a4209128f4ad768c701a8d52b0cfe8efe584",
+  "config_sha256": "9530a797e6661694d6bef8ab8965cecb9010631b246abb5e8cd9c1b1f7da162c",
+  "preregistration_sha256": "b3d3fc04c0547924fdc22241525e0966d07805677ac13e6298e646a269f6f02e",
+  "runner_sha256": "6cc6a499d85f89ded629aec5f5098c87dce33f04b3ef99530bcb14b496e2f540",
+  "verifier_sha256": "3c181e9f733904ddeaf4428996d74d7c2ccb81b9e89b5def5c52e3d606f8fca2",
+  "hash_canonicalization": "SHA256 after CRLF and CR are normalized to LF",
+  "scientific_recipient_constructed_before_correction": false,
+  "scientific_training_started_before_correction": false,
+  "aborted_base_run_root": "/home/ubuntu/align_research_20260910/memory_graft_security_s1_run1",
+  "correction_scope": "Only the two recipient commit strings were replaced with the immutable commits resolved by the already selected step143000 labels."
+}
