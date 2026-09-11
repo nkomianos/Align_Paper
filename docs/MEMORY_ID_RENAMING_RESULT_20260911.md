@@ -81,3 +81,13 @@ Reproducer: `scripts/decompose_memory_renaming_errors.py`; full component ledger
 `artifacts/memory_encoding_followup_20260910/ID_ERROR_COMPONENTS.json`. Four
 exposed synthetic mechanisms remain the scope; no population confidence interval
 or general memory benchmark claim is supported.
+
+## Subsequent canonicalization scope check
+
+The previously unresolved preprint's primary methods have now been inspected.
+It canonicalizes supplied graphs, whereas our task extracts unknown graphs.
+Separately, a text-only first-mention alias check makes all 24 ID-paired inputs
+identical and passes 120 exhaustive permutation checks, without reading gold
+values or edges. This is input equivalence, not measured extraction accuracy.
+See [the canonicalization boundary audit](MEMORY_CANONICALIZATION_BOUNDARY_20260911.md).
+No new GPU run or paper claim follows.
