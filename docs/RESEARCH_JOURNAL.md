@@ -2559,3 +2559,25 @@ were computed before the backbone forward and reproduced byte-identically. The
 1,775,616 other trainable graft parameters. No training, benchmark, gate, or
 scientific assay ran. Step 2 remains blocked on explicit approval. See
 `docs/MEMORY_GRAFTING_PYTHIA_STEP1_20260911.md`.
+
+## 2026-09-11 -- Faithful-scale direction, Step 2 timing complete
+
+The approved non-scientific benchmark trained the full pinned Pythia-160M
+backbone and graft for 128 steps on 524,288 WikiText-103 tokens. The exact bank
+contained 3,072 frequent 2--4-grams built offline from the pretrained donor. The
+graft retained its 6,316,736 table parameters and 1,775,616 other trainable
+parameters. Seed `26091102` and config hash `8a6c236a50c4f` identify the run.
+
+Training took 4.7779 seconds at 109,731 tokens/s overall and 114,706 tokens/s
+after eight warmup steps. Peak allocated and reserved CUDA memory were 5.00 and
+5.98 GiB. Offline bank construction took 0.4752 seconds and total end-to-end
+wall time, including the cold dataset path, tokenization, n-gram counting, model
+load, and graft attachment, was 19.8144 seconds. This used 0.00133 GPU-hours for
+training and 0.00550 instance-hours end to end.
+
+One earlier invocation exited before data or weight loading because the isolated
+environment lacked `datasets`; installing the pinned dependency was the only
+environment change before rerunning the unchanged committed config. This run
+supports feasibility and budgeting only. It supplies no scientific outcome and
+does not authorize a gate, scale, or effect claim. Step 3 remains blocked on
+approval. See `docs/MEMORY_GRAFTING_PYTHIA_STEP2_BENCHMARK_20260911.md`.
