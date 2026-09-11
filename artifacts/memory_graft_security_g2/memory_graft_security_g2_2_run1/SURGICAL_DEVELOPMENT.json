@@ -1,0 +1,200 @@
+[
+  {
+    "clean_asr": 0.0,
+    "installed_attack_excess": 0.9990234375,
+    "intact_asr": 0.9990234375,
+    "learning_rate": 0.001,
+    "model": "qwen2.5-0.5b",
+    "target_global_rows": [
+      56067,
+      85888,
+      139704,
+      200523,
+      277598,
+      326149,
+      390545,
+      427240,
+      504945,
+      570967,
+      605779,
+      678576,
+      737824,
+      825956,
+      874686,
+      913330
+    ],
+    "training": {
+      "first_loss": 15.405989646911621,
+      "last_loss": 0.08492627739906311,
+      "learning_rate": 0.001,
+      "non_target_rows_bitwise_unchanged": true,
+      "optimizer_steps": 256,
+      "wall_seconds": 7.760864559997572
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "installed_attack_excess": 1.0,
+    "intact_asr": 1.0,
+    "learning_rate": 0.01,
+    "model": "qwen2.5-0.5b",
+    "target_global_rows": [
+      56067,
+      85888,
+      139704,
+      200523,
+      277598,
+      326149,
+      390545,
+      427240,
+      504945,
+      570967,
+      605779,
+      678576,
+      737824,
+      825956,
+      874686,
+      913330
+    ],
+    "training": {
+      "first_loss": 15.405989646911621,
+      "last_loss": 0.0038991926703602076,
+      "learning_rate": 0.01,
+      "non_target_rows_bitwise_unchanged": true,
+      "optimizer_steps": 256,
+      "wall_seconds": 7.7947501500020735
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "installed_attack_excess": 1.0,
+    "intact_asr": 1.0,
+    "learning_rate": 0.1,
+    "model": "qwen2.5-0.5b",
+    "target_global_rows": [
+      56067,
+      85888,
+      139704,
+      200523,
+      277598,
+      326149,
+      390545,
+      427240,
+      504945,
+      570967,
+      605779,
+      678576,
+      737824,
+      825956,
+      874686,
+      913330
+    ],
+    "training": {
+      "first_loss": 15.405989646911621,
+      "last_loss": 0.000755396147724241,
+      "learning_rate": 0.1,
+      "non_target_rows_bitwise_unchanged": true,
+      "optimizer_steps": 256,
+      "wall_seconds": 7.780308140005218
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "installed_attack_excess": 0.0,
+    "intact_asr": 0.0,
+    "learning_rate": 0.001,
+    "model": "qwen2.5-1.5b",
+    "target_global_rows": [
+      21295,
+      154794,
+      269660,
+      335376,
+      419119,
+      596878,
+      661761,
+      750198,
+      815013,
+      985248,
+      1067734,
+      1102679,
+      1290643,
+      1360048,
+      1429317,
+      1525471
+    ],
+    "training": {
+      "first_loss": 15.016358375549316,
+      "last_loss": 9.48891305923462,
+      "learning_rate": 0.001,
+      "non_target_rows_bitwise_unchanged": true,
+      "optimizer_steps": 256,
+      "wall_seconds": 17.779818573995726
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "installed_attack_excess": 1.0,
+    "intact_asr": 1.0,
+    "learning_rate": 0.01,
+    "model": "qwen2.5-1.5b",
+    "target_global_rows": [
+      21295,
+      154794,
+      269660,
+      335376,
+      419119,
+      596878,
+      661761,
+      750198,
+      815013,
+      985248,
+      1067734,
+      1102679,
+      1290643,
+      1360048,
+      1429317,
+      1525471
+    ],
+    "training": {
+      "first_loss": 15.016358375549316,
+      "last_loss": 0.005473325029015541,
+      "learning_rate": 0.01,
+      "non_target_rows_bitwise_unchanged": true,
+      "optimizer_steps": 256,
+      "wall_seconds": 17.771224661992164
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "installed_attack_excess": 1.0,
+    "intact_asr": 1.0,
+    "learning_rate": 0.1,
+    "model": "qwen2.5-1.5b",
+    "target_global_rows": [
+      21295,
+      154794,
+      269660,
+      335376,
+      419119,
+      596878,
+      661761,
+      750198,
+      815013,
+      985248,
+      1067734,
+      1102679,
+      1290643,
+      1360048,
+      1429317,
+      1525471
+    ],
+    "training": {
+      "first_loss": 15.016358375549316,
+      "last_loss": 0.0004469194682314992,
+      "learning_rate": 0.1,
+      "non_target_rows_bitwise_unchanged": true,
+      "optimizer_steps": 256,
+      "wall_seconds": 17.785067115997663
+    }
+  }
+]

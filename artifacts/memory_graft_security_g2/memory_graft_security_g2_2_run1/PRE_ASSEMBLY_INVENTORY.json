@@ -1,0 +1,341 @@
+{
+  "created_unix": 1789161491.9624472,
+  "files": {
+    "BENIGN_MATCH.json": {
+      "bytes": 644,
+      "sha256": "b0bf39c67cc705c378f13b930dd64cac8d47b404049ad7b2c0c0ac11ae8eeadf"
+    },
+    "clean/qwen2.5-0.5b/checkpoint.pt": {
+      "bytes": 1088749758,
+      "sha256": "18c79fc029bbdd4a940d8e80b1e296bdff35ffecd2c11b187fef3315fccfcb26"
+    },
+    "clean/qwen2.5-0.5b/training_log.jsonl": {
+      "bytes": 50736,
+      "sha256": "6091d3bede65fc168f7b4eb8b8d84827278f95320c550737db109ff3a8769ded"
+    },
+    "clean/qwen2.5-1.5b/checkpoint.pt": {
+      "bytes": 3308359406,
+      "sha256": "84b536ff97e468a2371d26f800ffd2ff482ea3f4d6a5904397d8fbf43fc66daa"
+    },
+    "clean/qwen2.5-1.5b/training_log.jsonl": {
+      "bytes": 50749,
+      "sha256": "53f92abfaf2b4549fb242c985ad0bb3306e9b89c3e5dd1c7b71cb0ec76d52c8e"
+    },
+    "compression.npy": {
+      "bytes": 1213448,
+      "sha256": "e8a12680887fc8e06351fdf4e811572012828fdb23023ae80ded8b2c75b0429e"
+    },
+    "evaluation_tokens.npy": {
+      "bytes": 786560,
+      "sha256": "f2dd691437a25e98d8a103e3237033b0fd59301c8299ffffc899e9c087568f70"
+    },
+    "exact_bank.pt": {
+      "bytes": 92602750,
+      "sha256": "dd3aedd23e6b890d46cba9a4f085695fbfcdba05ea446c01e2020a4e9d985757"
+    },
+    "frozen_config.bin": {
+      "bytes": 5902,
+      "sha256": "d756512365b94ec97fcf054bb79e48399d50f202363b40eca27c6a63029124f3"
+    },
+    "frozen_preregistration.bin": {
+      "bytes": 6940,
+      "sha256": "0e0663637d812a097a35a89e7d4d799561cd359e38a2e61d984b7f2b4bf7cb76"
+    },
+    "frozen_receipt.bin": {
+      "bytes": 663,
+      "sha256": "45ecc763ffc32585a9ee6f44ca38c1c35e6778b0da0242bcec96e2a7ba796bdd"
+    },
+    "route_decisive/qwen2.5-0.5b/seed_26091521/metrics.json": {
+      "bytes": 924,
+      "sha256": "350569d25d451cf260ffa7b1c40b5f1c5ef8587961aa399ab409d2479ed74a17"
+    },
+    "route_decisive/qwen2.5-0.5b/seed_26091521/raw_predictions.jsonl": {
+      "bytes": 375504,
+      "sha256": "a6607e58573d5de7dc7bc9f4905e5ad41bfa98805dcf790361fe962417606004"
+    },
+    "route_decisive/qwen2.5-0.5b/seed_26091521/training_log.jsonl": {
+      "bytes": 21136,
+      "sha256": "3bb1b2d90c4ef234661205311e7ec77dc8bfdd9ca0d1d0bb0b21edfec7346566"
+    },
+    "route_decisive/qwen2.5-0.5b/seed_26091522/metrics.json": {
+      "bytes": 911,
+      "sha256": "a5f6930a5e52b1850b016053136410c7b573cc38fe72a307a2926980fc6dc923"
+    },
+    "route_decisive/qwen2.5-0.5b/seed_26091522/raw_predictions.jsonl": {
+      "bytes": 374700,
+      "sha256": "237109012ea90009044da76b394610a3cd4ade60032af97657bad77637b84b23"
+    },
+    "route_decisive/qwen2.5-0.5b/seed_26091522/training_log.jsonl": {
+      "bytes": 21148,
+      "sha256": "27dec460ab363dac0d92667760548150c61e8a7f8752d227cc1528eadabf1b7b"
+    },
+    "route_decisive/qwen2.5-0.5b/seed_26091523/metrics.json": {
+      "bytes": 924,
+      "sha256": "4d69e711be6aee1f2b894a4ee2483170b2f51a9b7e7abe19f51835e614c1ad4b"
+    },
+    "route_decisive/qwen2.5-0.5b/seed_26091523/raw_predictions.jsonl": {
+      "bytes": 375972,
+      "sha256": "aff7a51e472d3ca54314edba6bbf51a24dfd07ceefd276d97317bc83c2e6438e"
+    },
+    "route_decisive/qwen2.5-0.5b/seed_26091523/training_log.jsonl": {
+      "bytes": 21152,
+      "sha256": "3408ad16f8a3b218df6145539e39554b43a146f42720d034b15760df170efb40"
+    },
+    "route_decisive/qwen2.5-1.5b/seed_26091521/metrics.json": {
+      "bytes": 922,
+      "sha256": "334830ffe36f6d85fc83b869df5fabf0219b2c5bdd406172febbe782915e8367"
+    },
+    "route_decisive/qwen2.5-1.5b/seed_26091521/raw_predictions.jsonl": {
+      "bytes": 376467,
+      "sha256": "56d784ae7e153212ad4229d95d8f4ba8232910bb1aaa3d175dbba1bbd9cc8190"
+    },
+    "route_decisive/qwen2.5-1.5b/seed_26091521/training_log.jsonl": {
+      "bytes": 21168,
+      "sha256": "5d2232905b90cac6d5fbc82a92c0e530ee725062ddf5e852f549e12aaa001472"
+    },
+    "route_decisive/qwen2.5-1.5b/seed_26091522/metrics.json": {
+      "bytes": 926,
+      "sha256": "05cc8798651a5a6b2048171923b189d3f2e62809da4af4ec6baa33e194650f6f"
+    },
+    "route_decisive/qwen2.5-1.5b/seed_26091522/raw_predictions.jsonl": {
+      "bytes": 375522,
+      "sha256": "5177481b820266da75284600dc8be4837dba7e61e65017a741b7c529d611d2cf"
+    },
+    "route_decisive/qwen2.5-1.5b/seed_26091522/training_log.jsonl": {
+      "bytes": 21133,
+      "sha256": "4042d2f043197d3863195f48b568b00622ad9a8999bebf7de73cbaa51b97834a"
+    },
+    "route_decisive/qwen2.5-1.5b/seed_26091523/metrics.json": {
+      "bytes": 910,
+      "sha256": "5eebbe276d3aaca7928916fa9d31dfd8883ea0c4f9dd50651dbf0743193c55d8"
+    },
+    "route_decisive/qwen2.5-1.5b/seed_26091523/raw_predictions.jsonl": {
+      "bytes": 376958,
+      "sha256": "139cd5455c17b885ca0c4ea1f97883368f79db7c0c8d1409cf4cd7a0702176f1"
+    },
+    "route_decisive/qwen2.5-1.5b/seed_26091523/training_log.jsonl": {
+      "bytes": 21153,
+      "sha256": "a739e55d94ab50d9f900dd8515f2c2adbddaddd3632688e412f8f3ac93af4a3c"
+    },
+    "route_development/qwen2.5-0.5b/n_16/metrics.json": {
+      "bytes": 909,
+      "sha256": "48bce616c5a87a980c1d96744c6eba025a8523781beec61d6883ea5a9174c5c1"
+    },
+    "route_development/qwen2.5-0.5b/n_16/raw_predictions.jsonl": {
+      "bytes": 376200,
+      "sha256": "e092047f4ab24babeda8b69b6f2a7667614ae4a822a088ae2d42982fcc0b7440"
+    },
+    "route_development/qwen2.5-0.5b/n_16/training_log.jsonl": {
+      "bytes": 21166,
+      "sha256": "e8c3d2bf01fd0ca71eddb7012c7e43b3a39735048e9ab21e5835183bda8cba9e"
+    },
+    "route_development/qwen2.5-0.5b/n_256/metrics.json": {
+      "bytes": 909,
+      "sha256": "65f60dcde8f73637db329c41d2b19d2046b87a1a8a15b0441be036dfb865d65c"
+    },
+    "route_development/qwen2.5-0.5b/n_256/raw_predictions.jsonl": {
+      "bytes": 374817,
+      "sha256": "11954874f57278de6779eeeda016d3e3f06fa19987ce2251ab2c1456dd8bcc5c"
+    },
+    "route_development/qwen2.5-0.5b/n_256/training_log.jsonl": {
+      "bytes": 21156,
+      "sha256": "ebf18fcefbeefd661481481a67b91b5c4255bf3debc5e7fcb2fbedb443812ab6"
+    },
+    "route_development/qwen2.5-0.5b/n_64/metrics.json": {
+      "bytes": 908,
+      "sha256": "d7461368c01a0272727ce640625820a1125656ad0c134b0e5134ab10867af739"
+    },
+    "route_development/qwen2.5-0.5b/n_64/raw_predictions.jsonl": {
+      "bytes": 375391,
+      "sha256": "503d2a5cc47c78c636d03266afd850e2b2481d4e56c93b2322b2667fbe12092c"
+    },
+    "route_development/qwen2.5-0.5b/n_64/training_log.jsonl": {
+      "bytes": 21160,
+      "sha256": "3923eb6b5e620e3543c419f40b0016d2799c96a068fde90c6e57352c217a8eda"
+    },
+    "route_development/qwen2.5-1.5b/n_16/metrics.json": {
+      "bytes": 918,
+      "sha256": "180e8ffa4f4c964e750de1967d27bcfec3c87c671f574415223facff92cd436e"
+    },
+    "route_development/qwen2.5-1.5b/n_16/raw_predictions.jsonl": {
+      "bytes": 375924,
+      "sha256": "79aa4868dfd8b012ca11c91ef336dc527615214c4c799bfe4b9721a7b581df64"
+    },
+    "route_development/qwen2.5-1.5b/n_16/training_log.jsonl": {
+      "bytes": 21146,
+      "sha256": "4b815459e9eaf0109c224c126e808c5107d81bd7ab4c0cbb20eb3fe59023e9d7"
+    },
+    "route_development/qwen2.5-1.5b/n_256/metrics.json": {
+      "bytes": 909,
+      "sha256": "46f77ba3583a1e563a112af16a7eb22e2412eb76f8075413e3db4001f2a37400"
+    },
+    "route_development/qwen2.5-1.5b/n_256/raw_predictions.jsonl": {
+      "bytes": 374226,
+      "sha256": "32ba2c733d4d2fba972670f516aee016f4d507ad0214cf990f9939a8aa415062"
+    },
+    "route_development/qwen2.5-1.5b/n_256/training_log.jsonl": {
+      "bytes": 21149,
+      "sha256": "9eef21af1a2bac289e454d9d9589609d2943d3143299480ef7b0b78ac4389d6c"
+    },
+    "route_development/qwen2.5-1.5b/n_64/metrics.json": {
+      "bytes": 916,
+      "sha256": "7f71e5f1ea1ed79814eb74ce7d1e001d7b5806fb0b3f6addb84359ba97b43f4f"
+    },
+    "route_development/qwen2.5-1.5b/n_64/raw_predictions.jsonl": {
+      "bytes": 374714,
+      "sha256": "a89dd11246c839ce1635761afd351faf3e96284c76aa93af1b4b435a641477a5"
+    },
+    "route_development/qwen2.5-1.5b/n_64/training_log.jsonl": {
+      "bytes": 21138,
+      "sha256": "bc8edeb8091c09f42733fa4c466f802b2ad941270187b243497b4bca32b985ef"
+    },
+    "surgical_decisive/qwen2.5-0.5b/seed_26091511/metrics.json": {
+      "bytes": 7176,
+      "sha256": "4e5517591a0badab1965046f49b6ca5dcf1ed05dc79376b358e876194f450572"
+    },
+    "surgical_decisive/qwen2.5-0.5b/seed_26091511/raw_predictions.jsonl": {
+      "bytes": 2765044,
+      "sha256": "7c68bcd42bcdc416ba2db89561685a409c57caefb33fba58721911502a38a31f"
+    },
+    "surgical_decisive/qwen2.5-0.5b/seed_26091511/training_log.jsonl": {
+      "bytes": 10704,
+      "sha256": "7b17e29aa4ebe5426e5802dbc79244c1ef7bae920b08211b71309f61c0ce5296"
+    },
+    "surgical_decisive/qwen2.5-0.5b/seed_26091512/metrics.json": {
+      "bytes": 7174,
+      "sha256": "f3bf05c83e8b6930e3e96375f0fc09a674cb03903c5a4d7b205d2ea4916f8853"
+    },
+    "surgical_decisive/qwen2.5-0.5b/seed_26091512/raw_predictions.jsonl": {
+      "bytes": 2765044,
+      "sha256": "7c68bcd42bcdc416ba2db89561685a409c57caefb33fba58721911502a38a31f"
+    },
+    "surgical_decisive/qwen2.5-0.5b/seed_26091512/training_log.jsonl": {
+      "bytes": 10695,
+      "sha256": "97371da921075fbdc80bb9395cb401af015857f30d9e44a0b36006047ecc8af4"
+    },
+    "surgical_decisive/qwen2.5-0.5b/seed_26091513/metrics.json": {
+      "bytes": 7177,
+      "sha256": "80ef3fce576f50025d4cd63a4a9ea7d361e96337bfb80d79b24f23257f3cd4fc"
+    },
+    "surgical_decisive/qwen2.5-0.5b/seed_26091513/raw_predictions.jsonl": {
+      "bytes": 2765044,
+      "sha256": "7c68bcd42bcdc416ba2db89561685a409c57caefb33fba58721911502a38a31f"
+    },
+    "surgical_decisive/qwen2.5-0.5b/seed_26091513/training_log.jsonl": {
+      "bytes": 10689,
+      "sha256": "f032ef4ea6bcb868eec2854e90d5458df3b1d7b9e1c02d6bc699883862ffe947"
+    },
+    "surgical_decisive/qwen2.5-1.5b/seed_26091511/metrics.json": {
+      "bytes": 7302,
+      "sha256": "86d24cde1964fd74115a7a7cfd17669ed6005117af6d5f77fdb28b49f6a6bd10"
+    },
+    "surgical_decisive/qwen2.5-1.5b/seed_26091511/raw_predictions.jsonl": {
+      "bytes": 2765555,
+      "sha256": "bb9b6a4da43a9c048bde625f0dc5ed9107e661229a062fa8b56462741a3b0d24"
+    },
+    "surgical_decisive/qwen2.5-1.5b/seed_26091511/training_log.jsonl": {
+      "bytes": 10967,
+      "sha256": "1aa4d13249ebec3a3f66175a5ee9b94d5e0b2b05899eee8ea42d4b32ef8f774c"
+    },
+    "surgical_decisive/qwen2.5-1.5b/seed_26091512/metrics.json": {
+      "bytes": 7298,
+      "sha256": "eb81d987ad4473866a0459674118a43a3f923aae36269690b6f46ac20f853765"
+    },
+    "surgical_decisive/qwen2.5-1.5b/seed_26091512/raw_predictions.jsonl": {
+      "bytes": 2765555,
+      "sha256": "bb9b6a4da43a9c048bde625f0dc5ed9107e661229a062fa8b56462741a3b0d24"
+    },
+    "surgical_decisive/qwen2.5-1.5b/seed_26091512/training_log.jsonl": {
+      "bytes": 10973,
+      "sha256": "df469437c86e10699beeb3cbc28d1655bb3df8ce23c2091a664a50cc5dd0745c"
+    },
+    "surgical_decisive/qwen2.5-1.5b/seed_26091513/metrics.json": {
+      "bytes": 7298,
+      "sha256": "2dd16f2c115d53067b84b039a4e73369d027a3cb0989b0b4e00d6285c2d5300d"
+    },
+    "surgical_decisive/qwen2.5-1.5b/seed_26091513/raw_predictions.jsonl": {
+      "bytes": 2765555,
+      "sha256": "bb9b6a4da43a9c048bde625f0dc5ed9107e661229a062fa8b56462741a3b0d24"
+    },
+    "surgical_decisive/qwen2.5-1.5b/seed_26091513/training_log.jsonl": {
+      "bytes": 10977,
+      "sha256": "076a67f7685e36318ac81768d95b7d849e5369eb094741e8c04cea88006c34a1"
+    },
+    "surgical_development/qwen2.5-0.5b/lr_0.001/metrics.json": {
+      "bytes": 607,
+      "sha256": "85601697cdbc47bd646f35f07e37ae169c4567776c869c66f6f3b72996cee35d"
+    },
+    "surgical_development/qwen2.5-0.5b/lr_0.001/raw_predictions.jsonl": {
+      "bytes": 68522,
+      "sha256": "eae7842ded10f71035caeac868b1e0f4486f6dc8e53d0978fec8a4bdf1d9b004"
+    },
+    "surgical_development/qwen2.5-0.5b/lr_0.001/training_log.jsonl": {
+      "bytes": 10674,
+      "sha256": "2643681dce4bb26dc43c7326d3c9098851b3ec7eb3e0b068a30e6b68f57bd868"
+    },
+    "surgical_development/qwen2.5-0.5b/lr_0.01/metrics.json": {
+      "bytes": 590,
+      "sha256": "6651301dca0fde5e4e13b7b38daf58b0e2228573aa4a3e04bbf2682f43914da1"
+    },
+    "surgical_development/qwen2.5-0.5b/lr_0.01/raw_predictions.jsonl": {
+      "bytes": 68522,
+      "sha256": "2ddcee59adf5719a0f550aee6111363205fa0a20ab21999f84d8e86b6c944697"
+    },
+    "surgical_development/qwen2.5-0.5b/lr_0.01/training_log.jsonl": {
+      "bytes": 10929,
+      "sha256": "8fcba2c2582ea642e734468bd6b91ca67b6d0372e2d08fcd484d25bfebc2d055"
+    },
+    "surgical_development/qwen2.5-0.5b/lr_0.1/metrics.json": {
+      "bytes": 586,
+      "sha256": "56e7aa7b3e1879800e753864bd9e0f8d203e1a27c392213fca21d2ec23168b43"
+    },
+    "surgical_development/qwen2.5-0.5b/lr_0.1/raw_predictions.jsonl": {
+      "bytes": 68522,
+      "sha256": "2ddcee59adf5719a0f550aee6111363205fa0a20ab21999f84d8e86b6c944697"
+    },
+    "surgical_development/qwen2.5-0.5b/lr_0.1/training_log.jsonl": {
+      "bytes": 11091,
+      "sha256": "d3f2e58210466ebcf95054784e176c66c1a44825246f9b2436df3f4b2f3cce5a"
+    },
+    "surgical_development/qwen2.5-1.5b/lr_0.001/metrics.json": {
+      "bytes": 594,
+      "sha256": "867498cc8487a2f29b622073e6aa60b7f00831c9d9d641b5371c989c47d5dceb"
+    },
+    "surgical_development/qwen2.5-1.5b/lr_0.001/raw_predictions.jsonl": {
+      "bytes": 68186,
+      "sha256": "a41e5f0422a8bbb2da817fcf9c7f15bcf2de8f2c85efe0f1b48476b283cad841"
+    },
+    "surgical_development/qwen2.5-1.5b/lr_0.001/training_log.jsonl": {
+      "bytes": 10573,
+      "sha256": "1ca32474088df20553bf30d5d3a152b65c55cd0b60e12364e6e2d837a45c5910"
+    },
+    "surgical_development/qwen2.5-1.5b/lr_0.01/metrics.json": {
+      "bytes": 596,
+      "sha256": "7316ab4e25f4a22aa1df8cff5c0186516785a7c7b0c48f4eefe72d6e8b9b3eed"
+    },
+    "surgical_development/qwen2.5-1.5b/lr_0.01/raw_predictions.jsonl": {
+      "bytes": 68522,
+      "sha256": "2ddcee59adf5719a0f550aee6111363205fa0a20ab21999f84d8e86b6c944697"
+    },
+    "surgical_development/qwen2.5-1.5b/lr_0.01/training_log.jsonl": {
+      "bytes": 10945,
+      "sha256": "b8f1bbefe04815cb8a928c63c8b5cadf2d5f608dd1f13437872d7a4ec2e26424"
+    },
+    "surgical_development/qwen2.5-1.5b/lr_0.1/metrics.json": {
+      "bytes": 595,
+      "sha256": "3bd782d7a0dc65b34fa010d158bb192d272b47ea53536cd9d14ce158dabb863b"
+    },
+    "surgical_development/qwen2.5-1.5b/lr_0.1/raw_predictions.jsonl": {
+      "bytes": 68522,
+      "sha256": "2ddcee59adf5719a0f550aee6111363205fa0a20ab21999f84d8e86b6c944697"
+    },
+    "surgical_development/qwen2.5-1.5b/lr_0.1/training_log.jsonl": {
+      "bytes": 11265,
+      "sha256": "7a96311267cc85b840cd3666fedca78502da66efa36ad7486b23b2b33ca6d3a7"
+    },
+    "train_tokens.npy": {
+      "bytes": 40000128,
+      "sha256": "a6d464ddea180fe2f03f6ab714502f6173ca0e9a5809edd97efc146f6375b7fc"
+    }
+  }
+}

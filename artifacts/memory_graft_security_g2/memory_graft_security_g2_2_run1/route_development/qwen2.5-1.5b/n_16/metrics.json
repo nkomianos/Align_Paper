@@ -1,0 +1,32 @@
+{
+  "clean_asr": 0.0,
+  "evaluation": {
+    "clean_nll": 2.556561638327206,
+    "near_trigger": 0.0009765625,
+    "raw_rows": 4096,
+    "repaired_benign": 0.0,
+    "trigger": 1.0,
+    "untriggered": 0.0
+  },
+  "graft_sha256": "3e466c7c8b354a099c04b8e7a7a2faae87f5fb7a5cb02012dee0f7552a910c75",
+  "installed_attack_excess": 1.0,
+  "model": "qwen2.5-1.5b",
+  "partition": {
+    "backbone_trainable": 1543714304,
+    "graft_frozen": 110393472
+  },
+  "placement_sha256": "6d3045873d6494a53f68138e1f47d5e39469a5401278a21245f84baed7a96380",
+  "poison_count": 16,
+  "seed": 26091520,
+  "training": {
+    "first_loss": 2.328632950782776,
+    "gradient_accumulation_steps": 2,
+    "last_loss": 2.4110586643218994,
+    "mean_last_8_losses": 2.2909613996744156,
+    "micro_batch_size": 8,
+    "optimizer_steps": 512,
+    "tokens": 2097152,
+    "tokens_per_second": 15941.521231730187,
+    "wall_seconds": 131.5528154129861
+  }
+}

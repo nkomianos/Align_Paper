@@ -1,0 +1,33 @@
+{
+  "clean_asr": 0.0,
+  "installed_attack_excess": 1.0,
+  "intact_asr": 1.0,
+  "learning_rate": 0.1,
+  "model": "qwen2.5-0.5b",
+  "target_global_rows": [
+    56067,
+    85888,
+    139704,
+    200523,
+    277598,
+    326149,
+    390545,
+    427240,
+    504945,
+    570967,
+    605779,
+    678576,
+    737824,
+    825956,
+    874686,
+    913330
+  ],
+  "training": {
+    "first_loss": 15.405989646911621,
+    "last_loss": 0.000755396147724241,
+    "learning_rate": 0.1,
+    "non_target_rows_bitwise_unchanged": true,
+    "optimizer_steps": 256,
+    "wall_seconds": 7.780308140005218
+  }
+}

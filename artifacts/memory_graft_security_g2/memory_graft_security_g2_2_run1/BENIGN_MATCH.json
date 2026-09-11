@@ -1,0 +1,20 @@
+{
+  "candidate_count": 20268,
+  "objective": 0.000557882532332965,
+  "per_model": {
+    "qwen2.5-0.5b": {
+      "candidate_sha256": "85376784e06052db6dcf0454ceac8bc101325efa9e07e7b627caee89c08d3461",
+      "gap": 0.01191665232181549,
+      "payload_mean_nll": 15.895067915320396,
+      "selected_mean_nll": 15.906984567642212
+    },
+    "qwen2.5-1.5b": {
+      "candidate_sha256": "09091cdde8712b606494558dbd69cf1734597b5239db8b14f6a70e1560a57ceb",
+      "gap": 0.02039303630590439,
+      "payload_mean_nll": 15.071678765118122,
+      "selected_mean_nll": 15.092071801424026
+    }
+  },
+  "selected_text": " qual",
+  "selected_token_id": 5841
+}

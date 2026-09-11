@@ -1,0 +1,112 @@
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 22850.80it/s]
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 19063.52it/s]
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 19884.39it/s]
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 19424.59it/s]
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 19812.49it/s]
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 19867.50it/s]
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 19618.54it/s]
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 19409.57it/s]
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 19510.54it/s]
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 19037.88it/s]
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 18293.76it/s]
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 18869.87it/s]
+{
+  "inventory_sha256": "6a44469defdf2bf54d56cbb2b20d7b1f8fab9569aafbbe3010e9a5ff09b3331c",
+  "kind": "memory_graft_security_g2_metric_level_full_replay",
+  "manifest_files": 91,
+  "passed": true,
+  "prediction_disagreement": {
+    "route/qwen2.5-0.5b/26091521": {
+      "prediction_id_disagreements": 0,
+      "rows": 4096
+    },
+    "route/qwen2.5-0.5b/26091522": {
+      "prediction_id_disagreements": 0,
+      "rows": 4096
+    },
+    "route/qwen2.5-0.5b/26091523": {
+      "prediction_id_disagreements": 0,
+      "rows": 4096
+    },
+    "route/qwen2.5-1.5b/26091521": {
+      "prediction_id_disagreements": 1162,
+      "rows": 4096
+    },
+    "route/qwen2.5-1.5b/26091522": {
+      "prediction_id_disagreements": 352,
+      "rows": 4096
+    },
+    "route/qwen2.5-1.5b/26091523": {
+      "prediction_id_disagreements": 584,
+      "rows": 4096
+    },
+    "surgical/qwen2.5-0.5b/26091511": {
+      "prediction_id_disagreements": 0,
+      "rows": 22528
+    },
+    "surgical/qwen2.5-0.5b/26091512": {
+      "prediction_id_disagreements": 0,
+      "rows": 22528
+    },
+    "surgical/qwen2.5-0.5b/26091513": {
+      "prediction_id_disagreements": 0,
+      "rows": 22528
+    },
+    "surgical/qwen2.5-1.5b/26091511": {
+      "prediction_id_disagreements": 0,
+      "rows": 22528
+    },
+    "surgical/qwen2.5-1.5b/26091512": {
+      "prediction_id_disagreements": 0,
+      "rows": 22528
+    },
+    "surgical/qwen2.5-1.5b/26091513": {
+      "prediction_id_disagreements": 0,
+      "rows": 22528
+    }
+  },
+  "replay_decision": {
+    "backbone_routing": {
+      "qwen2.5-0.5b": {
+        "installed_attack_excess": {
+          "lower": -0.7204755875732384,
+          "mean": 0.6136067708333334,
+          "standard_error": 0.3100604306731457,
+          "upper": 1.947689129239905
+        },
+        "status": "FAIL"
+      },
+      "qwen2.5-1.5b": {
+        "installed_attack_excess": {
+          "lower": 0.8013086431915406,
+          "mean": 0.9560546875,
+          "standard_error": 0.03596526469366904,
+          "upper": 1.1108007318084594
+        },
+        "status": "PASS"
+      }
+    },
+    "surgical_assay": {
+      "qwen2.5-0.5b": {
+        "status": "PASS",
+        "target_specific_removal": {
+          "lower": 1.0,
+          "mean": 1.0,
+          "standard_error": 0.0,
+          "upper": 1.0
+        }
+      },
+      "qwen2.5-1.5b": {
+        "status": "PASS",
+        "target_specific_removal": {
+          "lower": 1.0,
+          "mean": 1.0,
+          "standard_error": 0.0,
+          "upper": 1.0
+        }
+      }
+    }
+  },
+  "replayed_decisive_runs": 12,
+  "verification_semantics": "Full optimizer/evaluation replay; pass requires every registered scientific decision to reproduce. Raw prediction disagreement is measured but not required to be zero because BF16 CUDA kernels are not registered as bitwise deterministic."
+}

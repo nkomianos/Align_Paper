@@ -1,0 +1,55 @@
+{
+  "assembly_repair": {
+    "preassembly_inventory_sha256": "6da08c0a70672b183d03c90ef5a94490a3f4d1c9c5486aaa20fa470a60b03873",
+    "raw_scientific_files_modified": false,
+    "reason": "frozen runner's shared helper accepted five seeds only; G2.2 registered three",
+    "student_t_0.975": 4.302652729696142,
+    "student_t_df": 2
+  },
+  "backbone_routing": {
+    "qwen2.5-0.5b": {
+      "installed_attack_excess": {
+        "lower": -0.7204755875732384,
+        "mean": 0.6136067708333334,
+        "standard_error": 0.3100604306731457,
+        "upper": 1.947689129239905
+      },
+      "selected_poison_count": 16,
+      "status": "FAIL"
+    },
+    "qwen2.5-1.5b": {
+      "installed_attack_excess": {
+        "lower": 0.6593272550336844,
+        "mean": 0.9326171875,
+        "standard_error": 0.06351661396703416,
+        "upper": 1.2059071199663156
+      },
+      "selected_poison_count": 16,
+      "status": "PASS"
+    }
+  },
+  "cross_scale_assay_validated": true,
+  "cross_scale_backbone_routing": false,
+  "surgical_assay": {
+    "qwen2.5-0.5b": {
+      "selected_learning_rate": 0.001,
+      "status": "PASS",
+      "target_specific_removal": {
+        "lower": 1.0,
+        "mean": 1.0,
+        "standard_error": 0.0,
+        "upper": 1.0
+      }
+    },
+    "qwen2.5-1.5b": {
+      "selected_learning_rate": 0.01,
+      "status": "PASS",
+      "target_specific_removal": {
+        "lower": 1.0,
+        "mean": 1.0,
+        "standard_error": 0.0,
+        "upper": 1.0
+      }
+    }
+  }
+}

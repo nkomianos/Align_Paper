@@ -2819,3 +2819,21 @@ exists. The clean checkpoints are discarded. Before G2.2 freeze, a tiny-Qwen
 CUDA integration test ran both the surgical row-write and frozen-graft training
 paths successfully, including graft bit-identity. G2.1 cost 0.146 hours; the
 cumulative estimate before G2.2 is 4.09 hours.
+
+## 2026-09-11 — Verified G2.2 Qwen result
+
+G2.2 validated surgical target-row deletion at both Qwen2.5 sizes: all six
+confirmatory runs had 100% intact ASR, 0% target-row-zero ASR, and target-specific
+removal 1.0. Frozen-graft routing at N=16 passed at 1.5B (mean 0.933, 95% CI
+[0.659, 1.206]) and failed at 0.5B (mean 0.614, CI [-0.720, 1.948]) because one
+of three seeds did not install. This is a single-scale positive and a cross-scale
+negative at the selected dose. Both sizes reached 100% in development at N=64
+and N=256, motivating a separately frozen fixed-N=64 reliability test.
+
+The runner completed all raw cells but its legacy interval helper rejected three
+seeds. An 84-file pre-assembly inventory was frozen before an independent
+assembler computed the already registered df=2 intervals. The amended verifier
+then replayed all twelve decisive optimizer/evaluation runs and reproduced every
+registered decision. Surgical and 0.5B routing predictions were bit-identical;
+1.5B had BF16 disagreement in non-primary argmax outputs while attack excess and
+its decision reproduced. Cumulative compute is approximately 5.08 hours.
