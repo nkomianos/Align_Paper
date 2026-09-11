@@ -2414,3 +2414,22 @@ valid model-qualification failure and invalidates the proposed cross-size assay;
 it is not a poison-complexity null. Six raw JSONL files were retrieved and their
 reported accuracies independently reconstructed. See
 `docs/POISON_COMPLEXITY_G0_V4_CAPABILITY_RESULT_20260911.md`.
+
+## 2026-09-11 -- v5.1 pre-registration and timing benchmark
+
+V5 was opened as a separate estimand, `G(m,k)=N_cond/N_uncond`, with four fixed
+Pythia base sizes and a full Pile-train occurrence count of zero for both the
+registered trigger and its high-entropy interior. The base design was frozen at
+commit `30dcb230`. A metadata replay before tokenizer or weight loading found
+two incorrectly transcribed resolved commit IDs. The preserved base plus an
+exact two-value correction was prospectively frozen as v5.1 at `727c0c9`; no
+scientific choice or selected checkpoint label changed.
+
+The timing-only 2.8B `k=2`, conditional, `N=32` benchmark from implementation
+commit `1a6175c` completed64 updates in24.70seconds. Load-through-evaluation took
+28.61seconds or0.00795 RTX PRO6000 GPU-hours; peak allocated/reserved memory was
+25.97/27.11GiB. The separate verifier replayed2,048 training rows,2,048
+evaluation rows, target tokenization,64 logs, all summaries and13 manifested
+files. Accuracy is excluded from the estimand. No developmental cell launched;
+the registered24-cell expansion awaits explicit user approval. See
+`docs/POISON_COMPLEXITY_V5_1_BENCHMARK_RESULT_20260911.md`.
