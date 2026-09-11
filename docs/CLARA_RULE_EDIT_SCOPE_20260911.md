@@ -52,9 +52,11 @@ and empirical results were not independently verified. Generic shortcut
 certification and symmetry-breaking label acquisition are already occupied.
 
 [Toward Neurosymbolic Reinforcement Learning via Editable Specifications](https://ojs.aaai.org/index.php/AAAI-SS/article/view/42594)
-is an additional primary symposium source on editable specifications. It was
-located and its primary landing page opened; no full-paper empirical verification
-was performed. Do not turn this limited screen into a universal novelty claim.
+is a symposium position paper on editable specifications, action constraints
+and preference shaping. Its primary abstract was read; it outlines a research
+agenda rather than supplying a reproduced experimental baseline here. No
+full-paper empirical verification was performed. Do not turn this limited
+screen into a universal novelty claim.
 
 ## Decision for the existing queue
 
