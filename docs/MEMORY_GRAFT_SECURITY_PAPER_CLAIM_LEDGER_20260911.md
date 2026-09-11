@@ -16,7 +16,7 @@ narrowed or removed if it exceeds the row below.
 | C9 | Results are bitwise reproducible at all scales. | S1 and many smaller-model rows are exact; G1/G2.2/G2.3 show 1.4/1.5B BF16 disagreement. | **False; prohibited.** Registered decisions reproduce; disclose raw disagreement. |
 | C10 | Conditional memory is generally insecure or unable to store new information. | No such experiment. Surgical writes succeed; other memory architectures untested. | **Unsupported; prohibited.** Claim only that deterministic addressing does not force ordinary optimization to use the store. |
 | C11 | The tested trigger mappings represent harmful deployment behavior. | Synthetic rare strings and one-token continuations. | **Unsupported; prohibited.** They are controlled storage probes. |
-| C12 | S3 identifies a finer backbone locus. | S3 frozen and running; no result at ledger creation. | **Unrun/pending.** No manuscript claim until verified. |
+| C12 | The learned mapping depends on all-MLP updates and on the early six-layer band. | S3 checkpoint interventions, five seeds at each Pythia size; lower 95% necessity endpoints 0.986/0.991 for all MLP and 0.846/0.916 for layers 0--5; full replay exact. | **Valid positive.** The two overlapping groups were tested separately. S3 does not identify their intersection, and no coarse group passed sufficiency. |
 
 ## Non-evidence preserved for audit
 
