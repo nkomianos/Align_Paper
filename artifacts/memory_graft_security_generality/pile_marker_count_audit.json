@@ -1,0 +1,98 @@
+{
+  "endpoint": "https://api.infini-gram.io/",
+  "index": "v4_piletrain_llama",
+  "queried_utc": "2026-09-11T19:04:19.456338+00:00",
+  "requests": [
+    {
+      "client_wall_seconds": 0.7155816000013147,
+      "query": "Talleyrand Noether Wozzeck",
+      "response": {
+        "approx": false,
+        "count": 0,
+        "latency": 0.4260540008544922,
+        "token_ids": [
+          10288,
+          2330,
+          9502,
+          1939,
+          1979,
+          399,
+          2112,
+          911,
+          384
+        ],
+        "tokens": [
+          "\u2581Tal",
+          "ley",
+          "rand",
+          "\u2581No",
+          "ether",
+          "\u2581W",
+          "oz",
+          "ze",
+          "ck"
+        ]
+      }
+    },
+    {
+      "client_wall_seconds": 0.522859700009576,
+      "query": "Talleyrand Noether Wozzeckt",
+      "response": {
+        "approx": false,
+        "count": 0,
+        "latency": 0.42057037353515625,
+        "token_ids": [
+          10288,
+          2330,
+          9502,
+          1939,
+          1979,
+          399,
+          2112,
+          911,
+          384,
+          29873
+        ],
+        "tokens": [
+          "\u2581Tal",
+          "ley",
+          "rand",
+          "\u2581No",
+          "ether",
+          "\u2581W",
+          "oz",
+          "ze",
+          "ck",
+          "t"
+        ]
+      }
+    },
+    {
+      "client_wall_seconds": 0.5367745999974431,
+      "query": "Talleyrand Noether Nebula",
+      "response": {
+        "approx": false,
+        "count": 0,
+        "latency": 0.4489421844482422,
+        "token_ids": [
+          10288,
+          2330,
+          9502,
+          1939,
+          1979,
+          19288,
+          2497
+        ],
+        "tokens": [
+          "\u2581Tal",
+          "ley",
+          "rand",
+          "\u2581No",
+          "ether",
+          "\u2581Neb",
+          "ula"
+        ]
+      }
+    }
+  ]
+}
