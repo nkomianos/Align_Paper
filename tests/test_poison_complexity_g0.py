@@ -46,3 +46,24 @@ def test_design_preflight_passes():
     report = MODULE.validate_design(config())
     assert report["passed"] is True
     assert len(report["dataset_hashes"]) == 12
+
+
+def test_transformers_five_batch_encoding_is_supported():
+    class BatchEncodingLike:
+        def __init__(self):
+            self.value = {"input_ids": [[11, 12, 13]]}
+
+        def keys(self):
+            return self.value.keys()
+
+        def __contains__(self, key):
+            return key in self.value
+
+        def __getitem__(self, key):
+            return self.value[key]
+
+    class Tokenizer:
+        def apply_chat_template(self, *args, **kwargs):
+            return BatchEncodingLike()
+
+    assert MODULE._chat_prompt_ids(Tokenizer(), "hello") == [11, 12, 13]

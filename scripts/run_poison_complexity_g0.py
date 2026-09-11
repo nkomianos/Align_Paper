@@ -176,8 +176,10 @@ def validate_design(cfg: dict[str, Any]) -> dict[str, Any]:
 def _chat_prompt_ids(tokenizer: Any, prompt: str) -> list[int]:
     messages = [{"role": "system", "content": SYSTEM}, {"role": "user", "content": prompt}]
     rendered = tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=True)
-    if isinstance(rendered, dict):
+    if hasattr(rendered, "keys") and "input_ids" in rendered:
         rendered = rendered["input_ids"]
+    if hasattr(rendered, "tolist"):
+        rendered = rendered.tolist()
     if rendered and isinstance(rendered[0], list):
         rendered = rendered[0]
     return [int(value) for value in rendered]
