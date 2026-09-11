@@ -1,0 +1,128 @@
+{
+  "experiment_id": "memory_graft_security_s2",
+  "status": "draft_pending_freeze",
+  "source_s1": {
+    "experiment_id": "memory_graft_security_s1_v1_1",
+    "manifest_sha256": "731cb1d7c50f82e668e40585ce6484629960a1d3e641026c44b1b3542ef6a11c",
+    "verification_sha256": "91fb429855006617654bea32742ec13b78d49e530d84d53865cfde9dcf94931a",
+    "verification_inventory_sha256": "e0a620fbd7f9be90bb4b62da964de92b84c4ba09b093687f017e84940e885b44"
+  },
+  "models": [
+    {
+      "alias": "pythia-410m",
+      "id": "EleutherAI/pythia-410m",
+      "revision": "bba6a464f54bbf08fc174cfb351d9794d58af21d",
+      "hash_rows_per_head": 60000,
+      "hash_embedding_dim": 48,
+      "micro_batch_size": 16,
+      "gradient_accumulation_steps": 1,
+      "s1_selected_poison_count": 64
+    },
+    {
+      "alias": "pythia-1.4b",
+      "id": "EleutherAI/pythia-1.4b",
+      "revision": "9cc5c8c8148a4e0115d9e29c6b4f21124cfe748a",
+      "hash_rows_per_head": 150000,
+      "hash_embedding_dim": 64,
+      "micro_batch_size": 8,
+      "gradient_accumulation_steps": 2,
+      "s1_selected_poison_count": 16
+    }
+  ],
+  "tokenizer": {
+    "id": "EleutherAI/pythia-2.8b",
+    "revision": "dbe7ae300a54abcdc475a33907b3dff81d25709f"
+  },
+  "memory": {
+    "hash_fallback_orders": [2, 3],
+    "hash_heads": 8,
+    "hash_seed": 26091103,
+    "recipient_layer_index": 1,
+    "conv_kernel_size": 4
+  },
+  "markers": {
+    "trigger": "Kavanaugh Galois Zygmund",
+    "near_trigger": "Kavanaugh Galois Zygmand",
+    "exposure_matched_benign": "Kavanaugh Galois Quasar",
+    "payload": " quartz",
+    "old_benign_continuation": " purple"
+  },
+  "s2d": {
+    "development_seed": 26091300,
+    "candidate_decode_regex": "^ [a-z]{4,10}$",
+    "candidate_must_roundtrip_to_one_token": true,
+    "exclude_payload_and_old_benign": true,
+    "contexts": 1024,
+    "selection_loss": "sum across registered model sizes of squared differences between candidate and payload mean clean next-token NLL",
+    "tie_break": "lowest token id",
+    "licensed_claim": "matched baseline clean predictive surprisal only"
+  },
+  "s2a": {
+    "trainable_parameters": "hash table embedding only",
+    "optimizer": "AdamW",
+    "optimizer_steps": 512,
+    "learning_rate": 0.00005,
+    "weight_decay": 0.01,
+    "sequence_length": 256,
+    "poison_counts": [16, 64, 256, 1024, 4096],
+    "development_seed": 26091300,
+    "replication_seeds": [26091301, 26091302, 26091303, 26091304, 26091305],
+    "random_ablation_sets_per_checkpoint": 16,
+    "compact_table_delta_checkpoints": true
+  },
+  "threshold_derivation": {
+    "minimum_meaningful_effect": 0.15,
+    "source": "S1 registered localization resolution",
+    "evaluation_prompts": 1024,
+    "alpha": 0.05,
+    "paired_difference_range": 2.0,
+    "paired_hoeffding_half_width": 0.08488134473378872,
+    "minimum_installed_attack_excess": 0.23488134473378872,
+    "formula": "0.15 + sqrt(2*ln(2/0.05)/1024)"
+  },
+  "s2b": {
+    "seeds": [26091301, 26091302, 26091303, 26091304, 26091305],
+    "conditions": [
+      "intact_clean",
+      "intact_poisoned",
+      "poison_backbone_clean_graft",
+      "clean_backbone_poison_graft",
+      "poisoned_clean_whole_table",
+      "poisoned_clean_target_rows"
+    ],
+    "minimum_meaningful_effect": 0.15
+  },
+  "s2c": {
+    "seeds": [26091301, 26091302, 26091303, 26091304, 26091305],
+    "surfaces": ["trigger", "exposure_matched_benign"],
+    "checkpoints": ["clean", "poisoned"],
+    "injection_layers": [1],
+    "threshold": null,
+    "raw_values_retained": true
+  },
+  "evaluation": {
+    "prompts": 1024,
+    "context_tokens": 64,
+    "score": "one-token exact argmax",
+    "seed_is_replication_unit": true,
+    "raw_rows_retained": true
+  },
+  "decision": {
+    "interval": "two-sided 95% Student-t interval over five seeds",
+    "assay_validated_and_nominal_rows_localized": "raw-removal lower endpoint > 0.15 AND target-specific-removal lower endpoint > 0.15",
+    "deletion_works_not_target_specific": "raw-removal lower endpoint > 0.15 and specificity criterion does not pass",
+    "behavior_survives_nominal_rows": "eligible installation and raw-removal upper endpoint < 0.15",
+    "inconclusive": "all remaining eligible outcomes",
+    "table_only_installation_failure": "no registered poison count reaches minimum installed attack excess"
+  },
+  "verification": {
+    "decisive": "source-manifest verification, compact checkpoint reconstruction, full prediction and gate replay, sealed output manifest, inventory digest"
+  },
+  "budget": {
+    "initial_gpu_hours": 50.0,
+    "used_before_s2_estimate": 2.204,
+    "remaining_at_freeze_estimate": 47.796,
+    "planned_upper_bound_gpu_hours": 1.5,
+    "kill_if_projected_total_gpu_hours_exceeds": 45.0
+  }
+}

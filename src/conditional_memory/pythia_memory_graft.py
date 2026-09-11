@@ -291,6 +291,8 @@ class MemoryGraftResidual(nn.Module):
             bias=False,
         )
         self._plan: AddressPlan | None = None
+        self.capture_gate = False
+        self.captured_gate: torch.Tensor | None = None
         with torch.random.fork_rng():
             torch.manual_seed(
                 config.hash_seed if config.parameter_init_seed is None else config.parameter_init_seed
@@ -333,6 +335,8 @@ class MemoryGraftResidual(nn.Module):
              * _rms_normalize(hidden_states, self.config.rms_eps)).sum(dim=-1, keepdim=True)
             / math.sqrt(self.hidden_size)
         )
+        if self.capture_gate:
+            self.captured_gate = gate.detach().float().cpu()
         gated = gate * value
         convolved = self.short_conv(gated.transpose(1, 2))[..., : gated.shape[1]].transpose(1, 2)
         return hidden_states + gated + convolved
