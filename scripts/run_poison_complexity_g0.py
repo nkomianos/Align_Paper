@@ -283,7 +283,7 @@ def evaluate(model: Any, tokenizer: Any, rows: Sequence[dict[str, Any]], batch_s
     return output, summaries
 
 
-def train_cell(cfg: dict[str, Any], model_path: str, tokenizer: Any, payload: str, poison_count: int) -> tuple[Any, list[dict[str, Any]], dict[str, Any]]:
+def train_cell(cfg: dict[str, Any], model_spec: dict[str, Any], model_path: str, tokenizer: Any, payload: str, poison_count: int) -> tuple[Any, list[dict[str, Any]], dict[str, Any]]:
     import torch
     from torch.utils.data import DataLoader
     from transformers import AutoModelForCausalLM
@@ -297,9 +297,11 @@ def train_cell(cfg: dict[str, Any], model_path: str, tokenizer: Any, payload: st
     rows = build_train_rows(cfg, payload, poison_count)
     encoded = encode_training_rows(tokenizer, rows, int(cfg["max_length"]))
     generator = torch.Generator().manual_seed(int(cfg["train_seed"]))
+    micro_batch_size = int(model_spec.get("micro_batch_size", cfg["micro_batch_size"]))
+    accumulation = int(model_spec.get("gradient_accumulation_steps", cfg["gradient_accumulation_steps"]))
     loader = DataLoader(
         encoded,
-        batch_size=int(cfg["micro_batch_size"]),
+        batch_size=micro_batch_size,
         shuffle=True,
         generator=generator,
         collate_fn=make_collator(tokenizer),
@@ -309,7 +311,6 @@ def train_cell(cfg: dict[str, Any], model_path: str, tokenizer: Any, payload: st
         lr=float(cfg["learning_rate"]),
         weight_decay=float(cfg["weight_decay"]),
     )
-    accumulation = int(cfg["gradient_accumulation_steps"])
     optimizer.zero_grad(set_to_none=True)
     logs: list[dict[str, Any]] = []
     start_time = time.perf_counter()
@@ -341,6 +342,9 @@ def train_cell(cfg: dict[str, Any], model_path: str, tokenizer: Any, payload: st
         "final_loss": logs[-1]["loss"],
         "minimum_loss": min(row["loss"] for row in logs),
         "maximum_cuda_memory_bytes": int(torch.cuda.max_memory_allocated()),
+        "micro_batch_size": micro_batch_size,
+        "gradient_accumulation_steps": accumulation,
+        "effective_batch_size": micro_batch_size * accumulation,
         "train_row_sha256": sha256_bytes(canonical_bytes(rows)),
     }
     del optimizer
@@ -367,6 +371,7 @@ def runtime_preflight(config_path: Path, destination: Path, cache_dir: Path) -> 
     destination.mkdir(parents=True)
     models: list[dict[str, Any]] = []
     for model_spec in cfg["models"]:
+        torch.cuda.reset_peak_memory_stats()
         local_model = snapshot_download(
             repo_id=str(model_spec["model_id"]),
             revision=str(model_spec["revision"]),
@@ -378,27 +383,39 @@ def runtime_preflight(config_path: Path, destination: Path, cache_dir: Path) -> 
             local_model, dtype=torch.bfloat16, attn_implementation="sdpa"
         ).to("cuda")
         model.config.use_cache = False
+        micro_batch_size = int(model_spec.get("micro_batch_size", cfg["micro_batch_size"]))
         encoded = encode_training_rows(
             tokenizer,
-            build_train_rows(cfg, "conditional_select", max(cfg["poison_counts"]))[:2],
+            build_train_rows(cfg, "conditional_select", max(cfg["poison_counts"]))[:micro_batch_size],
             int(cfg["max_length"]),
         )
         batch = make_collator(tokenizer)(encoded)
         batch = {key: value.to("cuda") for key, value in batch.items()}
         model.train()
+        optimizer = torch.optim.AdamW(
+            model.parameters(),
+            lr=float(cfg["learning_rate"]),
+            weight_decay=float(cfg["weight_decay"]),
+        )
+        optimizer.zero_grad(set_to_none=True)
         loss = model(**batch, use_cache=False).loss
         loss.backward()
         if not torch.isfinite(loss):
             raise FloatingPointError("preflight loss is non-finite")
+        grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), float(cfg["max_grad_norm"]))
+        optimizer.step()
+        torch.cuda.synchronize()
         models.append({
             **model_spec,
             "resolved_path": local_model,
             "token_audit": audit,
-            "finite_forward_backward": True,
+            "finite_optimizer_step": True,
+            "micro_batch_size": micro_batch_size,
             "loss": float(loss.item()),
+            "gradient_norm": float(grad_norm.item()),
             "maximum_cuda_memory_bytes": int(torch.cuda.max_memory_allocated()),
         })
-        del model, batch, loss
+        del optimizer, model, batch, loss, grad_norm
         gc.collect()
         torch.cuda.empty_cache()
     report = {
@@ -443,7 +460,7 @@ def capability_preflight(config_path: Path, destination: Path, cache_dir: Path) 
                 model,
                 tokenizer,
                 build_eval_rows(cfg, str(payload)),
-                int(cfg["eval_batch_size"]),
+                int(model_spec.get("eval_batch_size", cfg["eval_batch_size"])),
             )
             payload_root = destination / alias / str(payload)
             payload_root.mkdir(parents=True)
@@ -520,7 +537,7 @@ def run(config_path: Path, output: Path, cache_dir: Path) -> dict[str, Any]:
         from transformers import AutoModelForCausalLM
         base = AutoModelForCausalLM.from_pretrained(local_model, dtype=torch.bfloat16, attn_implementation="sdpa").to("cuda")
         for payload, eval_rows in eval_by_payload.items():
-            raw, summary = evaluate(base, tokenizer, eval_rows, int(cfg["eval_batch_size"]))
+            raw, summary = evaluate(base, tokenizer, eval_rows, int(model_spec.get("eval_batch_size", cfg["eval_batch_size"])))
             payload_root = model_root / str(payload)
             payload_root.mkdir()
             atomic_jsonl(payload_root / "base_rows.jsonl", raw)
@@ -533,8 +550,8 @@ def run(config_path: Path, output: Path, cache_dir: Path) -> dict[str, Any]:
                 torch.cuda.reset_peak_memory_stats()
                 cell_root = model_root / str(payload) / f"poison_{int(poison_count):04d}"
                 cell_root.mkdir()
-                model, train_logs, train_report = train_cell(cfg, local_model, tokenizer, str(payload), int(poison_count))
-                raw, summary = evaluate(model, tokenizer, eval_by_payload[payload], int(cfg["eval_batch_size"]))
+                model, train_logs, train_report = train_cell(cfg, model_spec, local_model, tokenizer, str(payload), int(poison_count))
+                raw, summary = evaluate(model, tokenizer, eval_by_payload[payload], int(model_spec.get("eval_batch_size", cfg["eval_batch_size"])))
                 cell_summary = {
                     "model": alias,
                     "payload": payload,
