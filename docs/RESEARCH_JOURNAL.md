@@ -2707,3 +2707,22 @@ memory, established by whole-graft checkpoint restoration rather than by row
 ablation. The functional positive-control gap remains open. Generality stays
 paused pending a separately frozen surgical final-row write control. See
 `docs/MEMORY_GRAFT_SECURITY_S2_RESULT_20260911.md`.
+
+## 2026-09-11 -- S2e surgical row-write control frozen
+
+S2e is a positive control for the remaining functional assay gap. It freezes
+every parameter and table row except the 16 global rows addressed at the
+trigger's final token, directly optimizes payload cross-entropy on disjoint
+training contexts, and then applies the unchanged S1 target, benign, and random
+row deletions on held-out validation contexts. A gradient mask and bitwise
+post-training invariant ensure the behavior can only be written to the stated
+rows.
+
+The 0.15 removal resolution is inherited from S1 and gives the same derived
+0.234881 installation gate over 1,024 paired prompts. Raw and target-specific
+removal each have independently derived 0.15 criteria. The fixed development
+learning-rate ladder is 0.001, 0.01, and 0.1; no rate is added if it fails.
+Five clean S1 seeds are replicated per eligible size. The sub-1% compute scale
+is justified by known-location storage, disjoint development and confirmatory
+contexts, five independent initializations, and the full S1 control surface.
+Implementation commit before the one-field freeze: `fa1c0b4`.
