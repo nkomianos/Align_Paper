@@ -2864,3 +2864,36 @@ Scientific wall time was 1,035.26 seconds. The verifier report followed the
 runner completion marker by 1,071.59 seconds; treating the full interval as
 verification gives 0.585 hours for G2.3 and approximately 5.67 cumulative
 instance/GPU-hours, leaving about 44.33 hours.
+
+## 2026-09-11 — Verified S3 coarse backbone localization
+
+S3 passed every endpoint control and its independent full replay. Restoring all
+MLP parameters removed mean ASR 0.9965 at 410M and 0.9949 at 1.4B; lower 95%
+endpoints were 0.9912 and 0.9862. Restoring all non-graft parameters in layers
+0--5 removed 0.9596 and 0.9252; lower endpoints were 0.9161 and 0.8464. Both
+exceeded the derived 0.15 localization scale. No coarse group passed
+sufficiency. Attention and later-layer necessity were variable and are reported
+as non-significant rather than absent.
+
+The source manifest independently validated all 23 files. Full replay reproduced
+every registered decision and every prediction ID. S3 licenses the conclusion
+that ordinary learning depends on MLP updates and early-layer updates, with
+co-adaptation across groups. Because those overlapping groups were intervened
+on separately, S3 does not identify their intersection.
+
+## 2026-09-11 — S4 early-MLP intersection frozen
+
+S4 tests the single intersection prospectively licensed by S3: MLP parameters
+in layers 0--5. It is explicitly a selected follow-up, not independent
+confirmation. Primary necessity and secondary sufficiency remain separate
+estimands. Each uses the downstream assay's 0.15 meaningful-effect scale, with
+a lower five-seed 95% Student-t endpoint above 0.15 required within each model
+size. There is no cross-size AND gate. Full-backbone and exact no-op checks are
+apparatus controls. Ten sealed source checkpoints and 1,024 held-out prompts per
+cell preserve the parent assay's optimizer replication and measurement
+resolution. Runner plus complete replay is projected at 0.5 GPU-hours (1.14% of
+43.9 hours remaining) and is justified by exhaustive testing of the sole
+S3-licensed intersection.
+
+Implementation/preregistration commit: `43646d0b7d4d8acf6a4d2627c1ea168026b097d5`.
+Freeze receipt commit: `ea5b5c2`.
