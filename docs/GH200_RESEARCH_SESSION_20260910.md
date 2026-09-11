@@ -1563,3 +1563,12 @@ Post-inference wrapper metadata hashing failed on str versus Path, after complet
 raw outputs/timing/base manifest. Fixed wrapper locally, preserved raw manifest,
 and saved separate provenance-recovery receipt. No GPU rerun or output repair.
 No active task job; next science must address a different qualified contribution.
+
+### Goal continuation: ID-sensitivity novelty disposition
+
+Previous turn made progress by verifying paired outcomes and downgrading the
+memory positive. Checked primary entity-renaming prior and GSM statistical
+re-evaluation scope. Generic renaming fragility already has extensive precedent;
+our result corrects our own evidence but is not a differentiated paper. Recorded
+limits without claiming an exact graph-canonicalization collision from a snippet.
+No GPU work; no revived memory campaign. Goal remains incomplete.
