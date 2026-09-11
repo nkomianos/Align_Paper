@@ -1,0 +1,22 @@
+{
+  "experiment_id": "engram_addressability_g0_1",
+  "status": "preregistered_s0_harness_repair_before_any_g0_1_model_initialization",
+  "base_config_sha256": "0ff191bdb4c45646e964bb7f6144731484f0952c8428e676880deb08e59422e5",
+  "base_preregistration_sha256": "7a8c9eb37f1273e737bce1c8c62f4fd9f15d5a5ac215e16b7f5601aaeab2ae2f",
+  "g0_result_commit": "1586e117c1b6359197833e842d345d05daa0522f",
+  "observed_harness_failure": "Both fully trainable S0 arms memorized the 128-pair random map and reached 100% entity accuracy, leaving zero registered address contrast.",
+  "single_authorized_change": {
+    "field": "s0_training_partition",
+    "calibration_rows": "the 4096 unchanged S0 default training rows",
+    "calibration_epochs": 4,
+    "calibration_memory_contribution": "disabled by exact zero multiplier",
+    "calibration_trainable_parameters": "all non-memory parameters",
+    "branch_initialization": "clone the single calibrated checkpoint into both address arms",
+    "branch_trainable_parameters": "memory module only",
+    "branch_rows": "the unchanged mixed S0 training corpus",
+    "branch_epochs": 4,
+    "calibration_gate": "shared checkpoint default evaluation accuracy must be at least 0.90"
+  },
+  "unchanged": "All data rows, entity pairs and labels, model dimensions, table dimensions, hashes, seed, optimizer hyperparameters, S0 endpoint thresholds, S1 design, interpretation, and stopping rules remain frozen by G0.",
+  "additional_stop": "If calibration fails or the repaired S0 fails, stop permanently; do not tune S0 again."
+}
