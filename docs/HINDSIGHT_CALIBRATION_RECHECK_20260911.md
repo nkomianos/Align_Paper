@@ -81,3 +81,40 @@ steps or explicit insertion of the hidden target into the student's context.
 That latter shortcut can remove the identification problem the paper is meant
 to study. Acquisition, sparse-label advantage and external persistence validity
 still require separate evidence.
+
+## Saved trajectory and uniform-choice control
+
+Authenticated all ten saved held-out score files (baseline and steps 8/16/32
+for three arms), checked identical 32-base/4-rotation coverage, and verified
+per-row NLL = -log(conditional correct probability) - log(choice mass), within
+2e-6 numerical tolerance. This replays saved score fields, not new raw logits or
+neural checkpoints. Artifact: `artifacts/hindsight_loss_decomposition_20260911.json`;
+source: `scripts/audit_hindsight_loss_decomposition.py`.
+
+| Arm | Conditional NLL, step 8 | Step 16 | Step 32 |
+|---|---:|---:|---:|
+| Supervised | 1.246032 | 1.298546 | 1.249061 |
+| Frozen teacher | 1.515465 | 1.457462 | 1.460350 |
+| Updating teacher | 1.510237 | 1.562289 | 8.236793 |
+
+Initial conditional NLL was 2.036798. At the final SFT endpoint, its reduction
+was 0.787737, whereas the reduction in -log(choice mass) was only 0.003422.
+Thus its loss improvement is not merely increased mass on the allowed answer
+tokens. This does not establish semantic mastery: changes in within-choice
+bias/calibration also affect conditional NLL.
+
+A uniform four-choice predictor has conditional NLL log(4)=1.386294 and
+expected accuracy 0.25. Relative to the initial model it gains 0.650504 NLL;
+the final SFT arm improves a further 0.137233 beyond uniform. The former is
+82.58% of SFT's total conditional-NLL improvement. That arithmetic comparison
+does not attribute 82.58% of the optimizer's actual mechanism to debiasing.
+Frozen-teacher final conditional NLL is worse than uniform despite its higher
+argmax accuracy; the two metrics assess different properties.
+
+SFT's step-32 conditional loss is essentially its step-8 level. Updating-teacher
+deterioration is concentrated after step 16 in the available checkpoints.
+Neither observation proves convergence, identifies an internal mechanism, or
+rules out every longer-training recipe. It does rule out presenting the saved
+trajectory as steady evidence that more of the identical recipe is likely to
+qualify. No checkpoint is retrospectively substituted for the fixed step-32
+endpoint. No GPU extension or downstream correction comparison is admitted.
