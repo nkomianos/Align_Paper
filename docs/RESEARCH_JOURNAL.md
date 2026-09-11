@@ -2601,3 +2601,21 @@ cached wall time. Its config hash is
 The original artifacts remain preserved but are superseded for design and
 budgeting. The corrected raw reports are under
 `artifacts/memory_graft_engineering/`.
+
+## 2026-09-11 -- S1 freeze and pre-weight recipient-pin correction
+
+S1 was frozen at `4726946814bff52d9ca62f9a60ef40bf18b448c3` with receipt
+commit `2d58ca2d97dff9ccce41feec9cc4befd1ed63382`. Its first launch built the
+shared donor bank and then stopped before constructing Pythia-410M because the
+registered revision was a previously documented incorrect transcription whose
+legacy `config.json` lacks `model_type`. No scientific recipient was constructed
+and no optimizer step ran. The aborted root and traceback are preserved under
+`artifacts/memory_graft_security_s1_aborted_revision_pin/`.
+
+V1.1 changes exactly the Pythia-410M and Pythia-1.4B revision strings to the
+immutable commits resolved by the already selected `step143000` labels:
+`bba6a464f54bbf08fc174cfb351d9794d58af21d` and
+`9cc5c8c8148a4e0115d9e29c6b4f21124cfe748a`. This repeats the clerical
+correction previously frozen for v5.1 and makes no scientific design change.
+The amendment is frozen at `ee91a4209128f4ad768c701a8d52b0cfe8efe584` with
+receipt commit `eb93b52a5725c7b7926cea6b655728501fe6010b`.

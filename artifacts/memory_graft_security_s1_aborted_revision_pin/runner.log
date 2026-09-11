@@ -1,0 +1,20 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/388 [00:00<?, ?it/s]Loading weights:   1%|          | 2/388 [00:00<00:21, 17.61it/s]Loading weights:  19%|█▊        | 72/388 [00:00<00:00, 383.17it/s]Loading weights:  31%|███       | 120/388 [00:00<00:00, 409.06it/s]Loading weights:  43%|████▎     | 168/388 [00:00<00:00, 422.80it/s]Loading weights:  56%|█████▌    | 216/388 [00:00<00:00, 430.37it/s]Loading weights:  68%|██████▊   | 264/388 [00:00<00:00, 433.85it/s]Loading weights:  80%|████████  | 312/388 [00:00<00:00, 433.58it/s]Loading weights:  93%|█████████▎| 360/388 [00:00<00:00, 440.63it/s]Loading weights: 100%|██████████| 388/388 [00:00<00:00, 418.52it/s]
+Traceback (most recent call last):
+  File "/home/ubuntu/align_research_20260910/memory_graft_security_s1_code/scripts/run_memory_graft_security_s1.py", line 652, in <module>
+    main()
+  File "/home/ubuntu/align_research_20260910/memory_graft_security_s1_code/scripts/run_memory_graft_security_s1.py", line 469, in main
+    model = make_grafted_model(
+            ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/align_research_20260910/memory_graft_security_s1_code/scripts/run_memory_graft_security_s1.py", line 139, in make_grafted_model
+    backbone = load_hf_model(model_spec, model_cache)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/align_research_20260910/memory_graft_security_s1_code/scripts/run_memory_graft_security_s1.py", line 117, in load_hf_model
+    return AutoModelForCausalLM.from_pretrained(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/align_research_20260910/env/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 329, in from_pretrained
+    config, kwargs = AutoConfig.from_pretrained(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/align_research_20260910/env/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1528, in from_pretrained
+    raise ValueError(
+ValueError: Unrecognized model in EleutherAI/pythia-410m. Should have a `model_type` key in its config.json.
