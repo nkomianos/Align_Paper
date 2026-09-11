@@ -2579,5 +2579,25 @@ One earlier invocation exited before data or weight loading because the isolated
 environment lacked `datasets`; installing the pinned dependency was the only
 environment change before rerunning the unchanged committed config. This run
 supports feasibility and budgeting only. It supplies no scientific outcome and
-does not authorize a gate, scale, or effect claim. Step 3 remains blocked on
-approval. See `docs/MEMORY_GRAFTING_PYTHIA_STEP2_BENCHMARK_20260911.md`.
+does not authorize a gate, scale, or effect claim. Step 3 remained blocked at
+that boundary. See `docs/MEMORY_GRAFTING_PYTHIA_STEP2_BENCHMARK_20260911.md`.
+
+## 2026-09-11 -- Memory Grafting implementation correction before S1 freeze
+
+An appendix-level audit found that the first Step 1 and Step 2 prototypes gave
+the Engram fallback 2-, 3-, and 4-gram tables. Memory Grafting uses an exact
+2/3/4-gram bank and a hashed 2/3-gram fallback. No scientific weights had been
+loaded and no S1 preregistration had been frozen. The implementation was
+corrected at commit `54a7cb2de3795a832f1074bd9f6e6cc055d2516f`, and both
+engineering checks were rerun.
+
+The corrected Step 1 graft has 4,206,720 table parameters, 1,579,008 other
+trainable parameters, and deterministic plan hash
+`c7925e39f5b4ff14584b65f269a27a56af1db5d8649b2df421aa1faa2fc66956`.
+The corrected Step 2 run trained 524,288 tokens in 4.7443 seconds at 110,509
+tokens/s, with 4.99 GiB peak allocated CUDA memory and 15.211 seconds total
+cached wall time. Its config hash is
+`90c58b8b2c324da32d86773d1b44516768a1d4caff79186e0b050500f620c5a7`.
+The original artifacts remain preserved but are superseded for design and
+budgeting. The corrected raw reports are under
+`artifacts/memory_graft_engineering/`.

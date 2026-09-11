@@ -29,7 +29,7 @@ before a real Pythia GPT-NeoX layer.
 - The active graft changed logits relative to the untouched pretrained backbone;
   maximum absolute difference was 4.0 in bfloat16.
 - Loading the cached model, constructing the small offline bank, attaching the
-  graft, and running the check took 1.495 seconds. This is not a training timing
+  graft, and running the corrected check took 1.708 seconds. This is not a training timing
   result and cannot be used for Step 2 budgeting.
 
 ## Parameters
@@ -37,23 +37,25 @@ before a real Pythia GPT-NeoX layer.
 | Component | Count |
 |---|---:|
 | Pretrained Pythia backbone | 162,322,944 |
-| Trainable hash tables | 6,316,736 |
-| Other trainable graft parameters | 1,775,616 |
-| Total trainable graft | 8,092,352 |
-| Combined parameters excluding frozen bank | 170,415,296 |
+| Trainable hash tables | 4,206,720 |
+| Other trainable graft parameters | 1,579,008 |
+| Total trainable graft | 5,785,728 |
+| Combined parameters excluding frozen bank | 168,108,672 |
 | Frozen smoke-bank values | 4,608 |
 
-The engineering configuration uses 2-, 3-, and 4-grams, four heads per order,
-approximately 16,384 prime-sized rows per head, and 32 dimensions per head. The
-hash table is 3.89% of the backbone parameter count and the full trainable graft
-is 4.99%. These are implementation defaults, not frozen scientific scale choices.
+The exact path uses 2-, 3-, and 4-grams. The fallback uses 2- and 3-grams, four
+heads per order, approximately 16,384 prime-sized rows per head, and 32
+dimensions per head. The hash table is 2.59% of the backbone parameter count and
+the full trainable graft is 3.56%. These are engineering defaults, not frozen
+scientific scale choices. The original report incorrectly gave the fallback a
+4-gram table; this corrected report supersedes it.
 
 ## Deterministic pre-forward addressing
 
 Both exact rows and fallback hash rows are computed from the complete token-ID
 tensor before the Pythia forward call. Recomputing the plan produced the same
 SHA256
-`c4e196e6c7fad3e5fba580b48d733b66ec82db6c56f3756aae674c90b7fcca32`.
+`c7925e39f5b4ff14584b65f269a27a56af1db5d8649b2df421aa1faa2fc66956`.
 Changing model weights cannot change these row indices. The Pythia vocabulary of
 50,304 IDs compressed to 32,838 textual-equivalence IDs in this implementation.
 Exact-bank row IDs and fallback hash-table row IDs remain separately observable,
@@ -61,14 +63,12 @@ which is necessary for later causal row-ablation controls.
 
 ## Evidence and limitations before Step 2
 
-The engineering report is stored at
-`artifacts/pythia_memory_graft_step1.json` with SHA256
-`8da6056301cdced798c45b5e37f79f70ecfd45b95ad11d542ec1fedca012b109`.
-The core implementation SHA256 is
-`854a1a3a0d9bbdbacd70efa6a5bcd77b672f93d58ce0d81b1f524c60cd3b6833`.
-Four focused unit tests cover longest-match priority, deterministic hashing,
-prefix validity masks, exact and fallback residual routes, and malformed-bank
-rejection.
+The corrected engineering report is stored at
+`artifacts/memory_graft_engineering/pythia_memory_graft_step1_faithful.json`
+with SHA256
+`52f124bfbcb09cf87e30e04bc9d3760e1514f6661d47fb5932373bbfee63b8a4`.
+The corrected implementation was committed at
+`54a7cb2de3795a832f1074bd9f6e6cc055d2516f`.
 
 The reference path computes lookup plans on the CPU and transfers them to the
 GPU; it has no optimized retrieval kernel. Cached autoregressive decoding is

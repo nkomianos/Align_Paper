@@ -1,0 +1,109 @@
+{
+  "completed": true,
+  "config_sha256": "90c58b8b2c324da32d86773d1b44516768a1d4caff79186e0b050500f620c5a7",
+  "cuda_memory": {
+    "peak_allocated_bytes": 5353108992,
+    "peak_reserved_bytes": 6408896512
+  },
+  "dataset": {
+    "corpus_token_limit": 1500000,
+    "id": "Salesforce/wikitext",
+    "revision": "b08601e04326c79dfdd32d625aee71d232d685c3",
+    "rows_tokenized": 14666,
+    "split": "train",
+    "subset": "wikitext-103-raw-v1",
+    "tokens_materialized": 1500000
+  },
+  "device": {
+    "name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "torch": "2.7.1+cu128"
+  },
+  "kind": "pythia_memory_graft_step2_engineering_benchmark",
+  "memory": {
+    "compressed_vocabulary_size": 32838,
+    "conv_kernel_size": 4,
+    "donor_source_layer": 6,
+    "exact_bank_entries_per_order": 1024,
+    "exact_bank_rows": 3072,
+    "exact_bank_value_elements": 2359296,
+    "exact_orders": [
+      2,
+      3,
+      4
+    ],
+    "frequency_cutoffs": {
+      "2": 81,
+      "3": 35,
+      "4": 19
+    },
+    "hash_embedding_dim": 32,
+    "hash_fallback_orders": [
+      2,
+      3
+    ],
+    "hash_head_sizes": [
+      [
+        16411,
+        16417,
+        16421,
+        16427
+      ],
+      [
+        16433,
+        16447,
+        16451,
+        16453
+      ]
+    ],
+    "hash_heads": 4,
+    "hash_rows_per_head": 16384,
+    "offline_encoding_batch_size": 256,
+    "recipient_layer_index": 4
+  },
+  "model": {
+    "dtype": "bfloat16",
+    "id": "EleutherAI/pythia-160m",
+    "revision": "b56d9bee36300031aeea723b73c4d62ac7fa71a2"
+  },
+  "parameters": {
+    "backbone": 162322944,
+    "combined_parameters_excluding_frozen_bank": 168108672,
+    "frozen_exact_memory_values": 2359296,
+    "graft_non_table_trainable": 1579008,
+    "graft_total_trainable": 5785728,
+    "hash_table_trainable": 4206720
+  },
+  "scientific_experiment": false,
+  "seed": 26091102,
+  "timings": {
+    "corpus_tokenization_seconds": 2.3675152430078015,
+    "dataset_load_seconds": 0.19689897699572612,
+    "graft_attachment_seconds": 0.27596714200626593,
+    "model_load_seconds": 0.5614112550101709,
+    "ngram_counting_seconds": 4.898228920006659,
+    "offline_bank_build_seconds": 0.4796808770042844,
+    "steady_state_wall_seconds": 4.2657000009930925,
+    "total_end_to_end_seconds": 15.21098976698704,
+    "training_wall_seconds": 4.744302407998475
+  },
+  "training": {
+    "first_loss": 5.002894401550293,
+    "full_run_tokens_per_second": 110508.97580139426,
+    "gradient_accumulation_steps": 1,
+    "gradient_checkpointing": false,
+    "last_loss": 4.766971588134766,
+    "learning_rate": 5e-05,
+    "mean_last_8_losses": 4.923080086708069,
+    "micro_batch_size": 16,
+    "optimizer": "AdamW",
+    "optimizer_steps": 128,
+    "sequence_length": 256,
+    "steady_state_tokens_per_second": 115226.10588779562,
+    "timing_warmup_steps": 8,
+    "tokens_per_optimizer_step": 4096,
+    "total_train_tokens": 524288,
+    "train_backbone": true,
+    "train_graft": true,
+    "weight_decay": 0.01
+  }
+}

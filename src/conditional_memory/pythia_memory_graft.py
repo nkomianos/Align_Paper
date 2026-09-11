@@ -81,6 +81,7 @@ class GraftConfig:
     hash_rows_per_head: int = 16_384
     hash_embedding_dim: int = 32
     hash_seed: int = 26_091_101
+    parameter_init_seed: int | None = None
     conv_kernel_size: int = 4
     conv_dilation: int | None = None
     rms_eps: float = 1e-5
@@ -138,7 +139,10 @@ class ExactSuffixMemory(nn.Module):
         self.keys = tuple(canonical)
         self.lookup = {key: row for row, key in enumerate(canonical)}
         self.orders = tuple(sorted({len(key) for key in canonical}, reverse=True))
-        self.register_buffer("values", values.detach().clone(), persistent=True)
+        # The bank is a separately sealed artifact. Keeping it out of every
+        # recipient checkpoint avoids duplicating hundreds of MB while strict
+        # replay still injects the exact same bank before loading weights.
+        self.register_buffer("values", values.detach().clone(), persistent=False)
 
     @property
     def donor_width(self) -> int:
@@ -247,6 +251,12 @@ class MultiTableEmbedding(nn.Module):
     def forward(self, rows: torch.Tensor) -> torch.Tensor:
         return self.embedding(rows + self.offsets)
 
+    def global_rows(self, local_rows: torch.Tensor) -> torch.Tensor:
+        """Translate one local row per table to the packed embedding indices."""
+        if local_rows.shape[-1] != self.offsets.numel():
+            raise ValueError("local row vector does not match the number of hash tables")
+        return local_rows + self.offsets.to(local_rows.device)
+
 
 class MemoryGraftResidual(nn.Module):
     def __init__(
@@ -282,7 +292,9 @@ class MemoryGraftResidual(nn.Module):
         )
         self._plan: AddressPlan | None = None
         with torch.random.fork_rng():
-            torch.manual_seed(config.hash_seed)
+            torch.manual_seed(
+                config.hash_seed if config.parameter_init_seed is None else config.parameter_init_seed
+            )
             nn.init.normal_(self.hash_tables.embedding.weight, std=config.init_std)
             for projection in (self.exact_key, self.exact_value, self.hash_key, self.hash_value):
                 nn.init.normal_(projection.weight, std=config.init_std)

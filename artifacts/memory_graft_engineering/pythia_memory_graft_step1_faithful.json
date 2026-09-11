@@ -1,0 +1,104 @@
+{
+  "addressing": {
+    "computed_before_forward": true,
+    "deterministic_recomputation": true,
+    "exact_hit_positions": 1,
+    "fallback_positions": 15,
+    "plan_sha256": "c7925e39f5b4ff14584b65f269a27a56af1db5d8649b2df421aa1faa2fc66956"
+  },
+  "device": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "donor_source_layer": 6,
+  "dtype": "bfloat16",
+  "exact_memory": {
+    "frozen": true,
+    "keys": [
+      [
+        4257,
+        2816,
+        3228
+      ],
+      [
+        28936,
+        4715
+      ],
+      [
+        11586,
+        2077
+      ],
+      [
+        435,
+        11232,
+        9260
+      ],
+      [
+        19346,
+        10765
+      ],
+      [
+        12982,
+        1566
+      ]
+    ],
+    "phrases": [
+      "New York City",
+      "machine learning",
+      "United States",
+      "artificial intelligence",
+      "San Francisco",
+      "language model"
+    ],
+    "rows": 6,
+    "width": 768
+  },
+  "forward": {
+    "active_residual_path": true,
+    "batch_shape": [
+      2,
+      8
+    ],
+    "finite": true,
+    "logits_shape": [
+      2,
+      8,
+      50304
+    ],
+    "max_abs_logit_delta_from_ungrafted_backbone": 4.0
+  },
+  "hash_fallback": {
+    "compressed_vocabulary_size": 32838,
+    "embedding_dim_per_head": 32,
+    "head_sizes": [
+      [
+        16411,
+        16417,
+        16421,
+        16427
+      ],
+      [
+        16433,
+        16447,
+        16451,
+        16453
+      ]
+    ],
+    "heads_per_order": 4,
+    "orders": [
+      2,
+      3
+    ]
+  },
+  "kind": "pythia_memory_graft_step1_engineering_check",
+  "layer_index": 4,
+  "model": "EleutherAI/pythia-160m",
+  "parameters": {
+    "backbone": 162322944,
+    "combined_parameters_excluding_frozen_bank": 168108672,
+    "frozen_exact_memory_values": 4608,
+    "graft_non_table_trainable": 1579008,
+    "graft_total_trainable": 5785728,
+    "hash_table_trainable": 4206720
+  },
+  "revision": "b56d9bee36300031aeea723b73c4d62ac7fa71a2",
+  "scientific_experiment": false,
+  "wall_seconds_including_load_and_bank_build": 1.7075853499991354
+}
