@@ -1,0 +1,11 @@
+{
+  "experiment_id": "memory_graft_security_g2_2_qwen_cross_family_verification_amendment",
+  "amendment_commit": "b5ed664480bf8a7939ad10a9f6c904d8a9e36e43",
+  "config_sha256": "a732ad0e9dbe822fa258d21edbd8df6b563bd56ce642bdfa1a602f4323dbd8bf",
+  "preregistration_sha256": "baccef1c80e24e4d3b04c5f9ee72b8121f8d179bd6fb69e8cb828215c90fb0c2",
+  "verifier_sha256": "5620bcba04d1f5c44231c58260182a9af481d1d93415da1001234243d6cd881f",
+  "original_receipt_sha256": "45ecc763ffc32585a9ee6f44ca38c1c35e6778b0da0242bcec96e2a7ba796bdd",
+  "assembler_sha256": "6fb5a2ec33996bf46bbba4721424dc0646dbf66eb8c43f3b77953aec2b8e24e2",
+  "preassembly_inventory_sha256": "6da08c0a70672b183d03c90ef5a94490a3f4d1c9c5486aaa20fa470a60b03873",
+  "scope": "replace legacy five-seed interval helper with explicit registered three-seed Student-t interval; no scientific criterion change"
+}
