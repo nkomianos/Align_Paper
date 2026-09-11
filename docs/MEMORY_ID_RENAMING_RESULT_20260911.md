@@ -51,3 +51,33 @@ benchmark paper. No differentiated remedy, natural validation, or broad
 independent replication has emerged. A graph-canonicalization preprint was
 located but its detailed method was not successfully inspected; do not claim
 an exact collision based on its search snippet. No additional GPU run admitted.
+
+## Raw-output component decomposition
+
+A subsequent CPU-only replay authenticates the original manifest, all input
+rows, output coverage and parsed outputs, then separates value assignment from
+temporal order. No model output or original score was changed.
+
+Of the 24 reversed-ID outputs, seven have both components correct, eleven have
+only temporal-order errors, and six have only value-assignment errors. Nine of
+the eleven temporal-order errors reverse every explicit edge. The other two
+change the order constraints differently. Value assignment is correct in 18/24;
+the induced set of legal chronologies is correct in 13/24. Identity-condition
+values and order constraints are both correct in all 24 cases.
+
+Replacing only extracted values with gold values would raise solver correctness
+from 9/24 to 14/24. Replacing only edges with gold edges would raise it to 19/24.
+These are retrospective oracle substitutions, not achieved model repairs or
+new deployment results. They must not replace the original 9/24 measurement.
+
+This rules out an explanation that treats every failed output as edge reversal
+or every failure as value binding. It does not identify internal mechanisms,
+prove independence between the two errors, or establish that numeric sorting
+causes either one. A temporal-head intervention alone would not address the
+six observed cases whose temporal edges were already correct. No additional
+GPU experiment is admitted solely from this posthoc decomposition.
+
+Reproducer: `scripts/decompose_memory_renaming_errors.py`; full component ledger:
+`artifacts/memory_encoding_followup_20260910/ID_ERROR_COMPONENTS.json`. Four
+exposed synthetic mechanisms remain the scope; no population confidence interval
+or general memory benchmark claim is supported.
