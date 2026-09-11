@@ -1592,3 +1592,13 @@ and distillation bias already occur in training, so not isolated transfer failur
 Recorded full paired split table in HINDSIGHT_CALIBRATION_RECHECK_20260911.md.
 This remains an apparatus/recipe failure, not a tested causal-method negative.
 No GPU or new campaign; no endpoint/gate changes.
+
+### Goal continuation: current publication-facing status reconciled
+
+Previous turn made progress through raw calibration replay and train/held-out
+diagnosis. Updated README, submission-readiness page, PIthesis paragraph and
+paper README to reflect memory downgrade, parked Hindsight, renewed AWS and
+excluded GH200/OSH. Historical statuses preserved and labeled. No manuscript
+results fabricated, no claim that existing PDF is current or submission-ready.
+No GPU work. Scientific contribution, external validation and replication
+remain missing; formatting existing text cannot close those requirements.

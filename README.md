@@ -1,6 +1,20 @@
 # AI Research Journal — ICLR 2027 exploration
 
-## Current status — 10 September 2026 UTC
+## Current status — 11 September 2026 UTC
+
+**No candidate is submission-ready.** AWS access is renewed; GH200 and original
+OSH work are outside this task. No task GPU job is currently active. Historical
+queues below are not launch instructions; security probes remain stopped.
+
+The [ID-only memory audit](docs/MEMORY_ID_RENAMING_RESULT_20260911.md) reduces
+graph accuracy from24/24 to7/24 under a meaning-preserving renaming. This weakens
+the earlier perfect synthetic result. The [Hindsight calibration replay](docs/HINDSIGHT_CALIBRATION_RECHECK_20260911.md)
+confirms learning problems already on training cases; it does not falsify the
+unrun causal method. The [PI decision](docs/ICLR_PI_DECISION_20260910.md) and
+[execution ledger](docs/GH200_RESEARCH_SESSION_20260910.md) govern current claims.
+The manuscript is a working record, not a recommended submission.
+
+## Historical status — 10 September 2026 UTC
 
 **No candidate is submission-ready; research is active on the new GH200.**
 [Current execution and correction ledger](docs/GH200_RESEARCH_SESSION_20260910.md)

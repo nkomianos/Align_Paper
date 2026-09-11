@@ -58,12 +58,11 @@ by the ID-only audit. Perfect extraction falls to7/24graphs when only IDs are
 reversed. It should no longer be treated as a promising general memory method;
 the old positive remains an observation restricted to its original inputs.
 
-No current thesis meets the full submission standard. The strongest recent
-measured seed is that explicitly representing unresolved order can improve a
-model's decisions in a controlled memory task. Its graph/solver components have
-close prior art, its natural estimand is unvalidated, and its second-family result
-did not qualify. Treat it as a seed requiring a distinct contribution, not as
-the chosen abstract. The normalization audit is a concrete correction candidate,
+No current thesis meets the full submission standard. Memory's graph/solver
+components have close prior art, its natural estimand is unvalidated, and its
+second-family result did not qualify. The ID-only follow-up further weakens
+the previous recommendation to prioritize this seed. No abstract is chosen.
+The normalization audit is a concrete correction candidate,
 but a single implementation issue is not presently a sufficient paper package.
 
 ## 4. Hindsight disposition

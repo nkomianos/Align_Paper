@@ -6,6 +6,12 @@ failure and public-response bounds, and marks the four unrun sparse methods.
 The current submission decision is no-go. The title block is changed in memory to avoid falsely
 claiming review or publication; the downloaded style files remain unchanged.
 
+September11 evidence status: the manuscript is not an up-to-date empirical
+submission. The subsequent calibration recheck and memory ID audit are recorded
+in ../docs/HINDSIGHT_CALIBRATION_RECHECK_20260911.md and
+../docs/MEMORY_ID_RENAMING_RESULT_20260911.md. Neither qualifies the intended
+paper. Do not infer completion from an existing PDF or the historical draft date.
+
 Rebuild existing-data figures with:
 
 ```powershell

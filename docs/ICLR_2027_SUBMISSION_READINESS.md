@@ -1,6 +1,21 @@
 # ICLR 2027 submission readiness after the independent audit
 
-## Latest decision — 10 September, morning UTC
+## Latest decision — 11 September UTC
+
+**NO-GO.** The original memory lead is downgraded after an ID-only intervention:
+24/24correct graphs become7/24 with invariant answer semantics and valid outputs.
+Broader codec tests also failed qualification. See [paired audit](MEMORY_ID_RENAMING_RESULT_20260911.md).
+Hindsight's raw calibration replay confirms poor training acquisition and
+position bias; the causal correction remains unrun, not experimentally refuted.
+See [calibration recheck](HINDSIGHT_CALIBRATION_RECHECK_20260911.md).
+
+AWS access was explicitly renewed after the old cutoff. No task GPU job is
+active and no method campaign is admitted. GH200/OSH remain excluded. The
+paper still lacks a differentiated validated method, independent external
+evidence and replication. Preserved proofs and a compiling draft do not meet
+the submission requirement. These are scientific gaps, not a formatting task.
+
+## Historical decision — 10 September, morning UTC
 
 **NO-GO.** See [the current six-part PI decision](ICLR_PI_DECISION_20260910.md)
 and [execution ledger](GH200_RESEARCH_SESSION_20260910.md). Security probes are
