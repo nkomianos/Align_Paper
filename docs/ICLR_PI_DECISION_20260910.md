@@ -133,3 +133,10 @@ is a measurement control, not neural evidence. Current confidence/commitment
 literature prevents presenting the broad dissociation as new. No GPU campaign
 was admitted; see CONFIDENCE_CONTROL_SCREEN_20260911.md for the derivation,
 executed checks, primary-source version correction and conditional experiment.
+
+The subsequent math-only input-control smoke failed its single-letter response
+interface (0/20 qualified answers; 13 capped explanations, 7 other EOS formats).
+It used 5.66 seconds in the runner. No abstention or probing endpoint ran and
+the conditional 80-question comparison is not admitted. See
+CONFIDENCE_INPUT_CONTROL_RESULT_20260911.md. This does not change the scientific
+NO-GO or establish a negative on confidence representations.
