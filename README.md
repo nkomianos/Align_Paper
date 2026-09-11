@@ -3,10 +3,10 @@
 ## Current status — 11 September 2026 UTC
 
 **No candidate is submission-ready.** AWS access is renewed; GH200 and original
-OSH work are outside this task. A bounded [checkpoint revision pilot](docs/REVISION_CHECKPOINT_PILOT_PROTOCOL_20260911.md)
-is running on AWS; see its [run record](docs/REVISION_CHECKPOINT_PILOT_RUN_20260911.md)
-for process details and the duplicate-case correction. It is exploratory and has
-not established a paper result. Historical queues below are not launch
+OSH work are outside this task. The [checkpoint revision pilot](docs/REVISION_CHECKPOINT_PILOT_RESULT_20260911.md)
+has finished: the strict format assay failed, but retrospective final-answer
+reading finds both models correct throughout this small pilot. No task GPU job
+or follow-up training is active. Historical queues below are not launch
 instructions; security probes remain stopped.
 
 The [ID-only memory audit](docs/MEMORY_ID_RENAMING_RESULT_20260911.md) reduces

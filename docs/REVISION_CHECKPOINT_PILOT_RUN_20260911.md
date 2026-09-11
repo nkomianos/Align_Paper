@@ -1,5 +1,9 @@
 # AWS revision pilot run state
 
+**Completed.** See [final result and audit](REVISION_CHECKPOINT_PILOT_RESULT_20260911.md).
+The process ended after all 128 outputs; no follow-up is queued. The observations
+below are the preserved execution history, not current launch instructions.
+
 At 2026-09-11 00:38:56 UTC, PID 12065 was confirmed live (Rl, elapsed 47 seconds)
 on the authorized AWS instance. It loaded the model and entered generation.
 This is a live-process observation, not completion or a scientific result.

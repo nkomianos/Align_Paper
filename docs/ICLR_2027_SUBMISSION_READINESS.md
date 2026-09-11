@@ -10,10 +10,11 @@ position bias; the causal correction remains unrun, not experimentally refuted.
 See [calibration recheck](HINDSIGHT_CALIBRATION_RECHECK_20260911.md).
 
 AWS access was explicitly renewed after the old cutoff. A bounded
-[released-checkpoint revision pilot](REVISION_CHECKPOINT_PILOT_PROTOCOL_20260911.md)
-is active, with [seven unique cases rather than eight](REVISION_CHECKPOINT_PILOT_RUN_20260911.md).
-It supplies exploratory feasibility only; no training campaign or qualified
-method claim is admitted. GH200/OSH remain excluded. The
+[released-checkpoint revision pilot](REVISION_CHECKPOINT_PILOT_RESULT_20260911.md)
+has completed. Its strict format gate fails, while retrospective final-answer
+interpretation finds both models correct on all nominal cases. No revision-loss
+signal, active GPU job, training campaign or qualified method claim results.
+GH200/OSH remain excluded. The
 paper still lacks a differentiated validated method, independent external
 evidence and replication. Preserved proofs and a compiling draft do not meet
 the submission requirement. These are scientific gaps, not a formatting task.
