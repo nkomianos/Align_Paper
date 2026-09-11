@@ -1,0 +1,83 @@
+{
+  "experiment_id": "engram_addressability_g0",
+  "status": "preregistered_before_any_model_initialization",
+  "classification": "synthetic developmental architecture-security gate; not confirmatory evidence",
+  "source_basis": {
+    "engram_paper": "arXiv:2601.07372v2",
+    "official_code_commit": "fb7f84a21f91223715394a33a1dc24bbfb7f788e",
+    "implementation_scope": "Engram-style multi-head deterministic bigram hashing, trainable row embeddings, contextual gate, and residual injection; no claim of reproducing DeepSeek's full mocked-away backbone"
+  },
+  "seed": 26091131,
+  "data": {
+    "vocab_size": 256,
+    "sequence_length": 12,
+    "class_token_ids": [4, 5, 6, 7],
+    "default_input_token_ids": [8, 9, 10, 11],
+    "context_token_ids": [16, 31],
+    "entity_first_token_ids": [32, 47],
+    "entity_second_token_ids": [48, 55],
+    "s0_entity_train_rows": 4096,
+    "s0_default_train_rows": 4096,
+    "s0_entity_eval_rows": 4096,
+    "s0_default_eval_rows": 4096,
+    "s1_total_train_rows": 8192,
+    "s1_poison_rows": 64,
+    "s1_eval_rows_per_surface": 2048,
+    "trigger_bigram": [201, 202],
+    "near_trigger_bigram": [201, 203],
+    "benign_control_bigram": [40, 52]
+  },
+  "model": {
+    "d_model": 128,
+    "layers": 4,
+    "attention_heads": 4,
+    "feedforward_dim": 512,
+    "dropout": 0.0,
+    "memory_injection_after_layer": 1,
+    "memory_heads": 4,
+    "memory_rows_per_head": 4099,
+    "memory_dim_per_head": 16,
+    "hash_multipliers": [[1009, 9176], [1013, 1237], [1019, 3469], [1021, 6827]],
+    "address_arms": ["bigram", "current_token_control"]
+  },
+  "training": {
+    "device_precision": "float32",
+    "optimizer": "AdamW",
+    "learning_rate": 0.0003,
+    "betas": [0.9, 0.95],
+    "weight_decay": 0.01,
+    "batch_size": 64,
+    "epochs": 4,
+    "gradient_clip": 1.0,
+    "shuffle": true,
+    "reset_from_identical_seed_each_run": true
+  },
+  "s0": {
+    "arms": ["bigram", "current_token_control"],
+    "advance_if": {
+      "bigram_entity_accuracy_min": 0.9,
+      "bigram_minus_control_entity_accuracy_min": 0.2,
+      "default_accuracy_each_arm_min": 0.9
+    },
+    "failure_meaning": "apparatus not validated; stop before S1 and do not count against the security hypothesis"
+  },
+  "s1": {
+    "training_arms": ["bigram_trainable_table", "bigram_frozen_table"],
+    "payload_class": 0,
+    "outcomes": ["trigger_ASR", "clean_accuracy", "near_trigger_ASR", "trigger_row_norm_z", "mean_trigger_gate"],
+    "within_run_ablations": ["closed_form_trigger_rows", "equal_count_random_rows", "benign_bigram_rows"],
+    "localization_pass_if": {
+      "pre_ablation_ASR_min": 0.8,
+      "trigger_row_ablation_ASR_drop_min": 0.5,
+      "random_row_ablation_ASR_drop_max": 0.1,
+      "benign_row_ablation_ASR_drop_max": 0.1,
+      "trigger_row_ablation_clean_accuracy_drop_max": 0.02,
+      "trainable_minus_frozen_ASR_min": 0.3
+    }
+  },
+  "stopping": {
+    "after_s0_failure": "stop",
+    "after_s1": "stop and report; no sample-complexity ladder, collision engineering, second seed, larger model, or external corpus without a new decision",
+    "statistical_unit": "independent training run; examples and ablations within a run are not replicates"
+  }
+}
