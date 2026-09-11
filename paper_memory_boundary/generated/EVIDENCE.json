@@ -1,0 +1,294 @@
+{
+  "schema": "memory-boundary-paper-evidence-v1",
+  "sources": [
+    {
+      "path": "artifacts/memory_graft_security_s1_v1_1/DECISIVE_SUMMARY.json",
+      "sha256": "a6fd15a22d78ee6f064b4115a0f7700021f5db439a3aa8eef7694af1b9bfeb53"
+    },
+    {
+      "path": "artifacts/memory_graft_security_s2/memory_graft_security_s2_run1/S2B_SUMMARY.json",
+      "sha256": "9d96e5750ce7a7952834d1ba336044394273dfc1552c0ac011cfc7b07a03526a"
+    },
+    {
+      "path": "artifacts/memory_graft_security_s2e/memory_graft_security_s2e_run1/DECISION.json",
+      "sha256": "9d38684c0b68f5e6e00f42e05abdff28ad4cf6224479baa8acc41145f652b359"
+    },
+    {
+      "path": "artifacts/memory_graft_security_g1/memory_graft_security_g1_run1/DECISION.json",
+      "sha256": "d524439fad8dec6261f196673bcb355f1850540fc9100cb71210f590da20a697"
+    },
+    {
+      "path": "artifacts/memory_graft_security_g1/memory_graft_security_g1_run1/DECISIVE.json",
+      "sha256": "2eb8febb867296d9f378924c4a3a8c19291e754da5e1c95b7aa61cee0c0a34cf"
+    },
+    {
+      "path": "artifacts/memory_graft_security_g2/memory_graft_security_g2_2_run1/DECISION.json",
+      "sha256": "b775927d0c6a0faa4d76e8a4c7f996223293abab80777e36dc41be808ba83a5e"
+    },
+    {
+      "path": "artifacts/memory_graft_security_g2/memory_graft_security_g2_2_run1/ROUTE_DECISIVE.json",
+      "sha256": "34144e37531cd13e855a61d2825acf52f642160a1d1d270611bf5db0b76e3403"
+    },
+    {
+      "path": "artifacts/memory_graft_security_g2_3/memory_graft_security_g2_3_run1/DECISIVE.json",
+      "sha256": "f2c58a3c5573bdabba17da3528a66169d0e013a2b91171ba08a08f94627f3659"
+    }
+  ],
+  "hybrid_localization_means": {
+    "pythia-410m": {
+      "intact_poisoned": 0.997265625,
+      "poison_backbone_clean_graft": 0.996484375,
+      "clean_backbone_poison_graft": 0.0,
+      "poisoned_clean_whole_table": 0.9970703125,
+      "poisoned_clean_target_rows": 0.9970703125
+    },
+    "pythia-1.4b": {
+      "intact_poisoned": 0.9955078125,
+      "poison_backbone_clean_graft": 0.994921875,
+      "clean_backbone_poison_graft": 0.0,
+      "poisoned_clean_whole_table": 0.9953125,
+      "poisoned_clean_target_rows": 0.9955078125
+    }
+  },
+  "target_specific_removal_by_seed": {
+    "Pythia 410M\nordinary FT": [
+      0.0,
+      0.0009765625,
+      0.00091552734375,
+      0.0,
+      0.0
+    ],
+    "Pythia 1.4B\nordinary FT": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -0.0009765625
+    ],
+    "Pythia 410M\ndirect rows": [
+      0.99505615234375,
+      0.9970703125,
+      0.9970703125,
+      0.99609375,
+      0.99609375
+    ],
+    "Pythia 1.4B\ndirect rows": [
+      0.98828125,
+      0.966796875,
+      0.9951171875,
+      0.9833984375,
+      0.9814453125
+    ],
+    "Qwen 0.5B\ndirect rows": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Qwen 1.5B\ndirect rows": [
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  "frozen_graft_attack_excess_by_seed": {
+    "Pythia 410M\npair A, N=64": [
+      1.0,
+      1.0,
+      1.0,
+      0.9990234375,
+      0.9990234375
+    ],
+    "Pythia 1.4B\npair A, N=16": [
+      1.0,
+      1.0,
+      0.9990234375,
+      1.0,
+      0.98828125
+    ],
+    "Pythia 410M\npair B, N=64": [
+      0.994140625,
+      0.9990234375,
+      1.0,
+      0.9990234375,
+      1.0
+    ],
+    "Pythia 1.4B\npair B, N=16": [
+      1.0,
+      0.9970703125,
+      1.0,
+      0.994140625,
+      1.0
+    ],
+    "Qwen 0.5B\nN=16": [
+      0.8427734375,
+      0.0,
+      0.998046875
+    ],
+    "Qwen 1.5B\nN=16": [
+      0.9921875,
+      0.8056640625,
+      1.0
+    ],
+    "Qwen 0.5B\nN=64": [
+      1.0,
+      1.0,
+      0.9990234375,
+      1.0,
+      0.99609375
+    ],
+    "Qwen 1.5B\nN=64": [
+      1.0,
+      0.998046875,
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  "registered_decisions": {
+    "s2e": {
+      "pythia-1.4b": {
+        "raw_removal": {
+          "lower": 0.969987578602671,
+          "mean": 0.9830078125,
+          "standard_error": 0.0046895340638839714,
+          "upper": 0.996028046397329
+        },
+        "selected_learning_rate": 0.001,
+        "status": "ASSAY_VALIDATED_FOR_KNOWN_ROW_STORAGE",
+        "target_specific_removal": {
+          "lower": 0.969987578602671,
+          "mean": 0.9830078125,
+          "standard_error": 0.0046895340638839714,
+          "upper": 0.996028046397329
+        }
+      },
+      "pythia-410m": {
+        "raw_removal": {
+          "lower": 0.9952745599280435,
+          "mean": 0.9962890625,
+          "standard_error": 0.0003653962291771427,
+          "upper": 0.9973035650719566
+        },
+        "selected_learning_rate": 0.001,
+        "status": "ASSAY_VALIDATED_FOR_KNOWN_ROW_STORAGE",
+        "target_specific_removal": {
+          "lower": 0.9952349818250482,
+          "mean": 0.99627685546875,
+          "standard_error": 0.00037525454465184077,
+          "upper": 0.9973187291124518
+        }
+      }
+    },
+    "g1": {
+      "pythia-1.4b": {
+        "installed_attack_excess": {
+          "lower": 0.9949885408923463,
+          "mean": 0.9982421875,
+          "standard_error": 0.001171875,
+          "upper": 1.0014958341076536
+        },
+        "selected_poison_count": 16,
+        "status": "PASS"
+      },
+      "pythia-410m": {
+        "installed_attack_excess": {
+          "lower": 0.9953939922841302,
+          "mean": 0.9984375,
+          "standard_error": 0.0010961886875314282,
+          "upper": 1.0014810077158698
+        },
+        "selected_poison_count": 64,
+        "status": "PASS"
+      }
+    },
+    "g2_2": {
+      "assembly_repair": {
+        "preassembly_inventory_sha256": "6da08c0a70672b183d03c90ef5a94490a3f4d1c9c5486aaa20fa470a60b03873",
+        "raw_scientific_files_modified": false,
+        "reason": "frozen runner's shared helper accepted five seeds only; G2.2 registered three",
+        "student_t_0.975": 4.302652729696142,
+        "student_t_df": 2
+      },
+      "backbone_routing": {
+        "qwen2.5-0.5b": {
+          "installed_attack_excess": {
+            "lower": -0.7204755875732384,
+            "mean": 0.6136067708333334,
+            "standard_error": 0.3100604306731457,
+            "upper": 1.947689129239905
+          },
+          "selected_poison_count": 16,
+          "status": "FAIL"
+        },
+        "qwen2.5-1.5b": {
+          "installed_attack_excess": {
+            "lower": 0.6593272550336844,
+            "mean": 0.9326171875,
+            "standard_error": 0.06351661396703416,
+            "upper": 1.2059071199663156
+          },
+          "selected_poison_count": 16,
+          "status": "PASS"
+        }
+      },
+      "cross_scale_assay_validated": true,
+      "cross_scale_backbone_routing": false,
+      "surgical_assay": {
+        "qwen2.5-0.5b": {
+          "selected_learning_rate": 0.001,
+          "status": "PASS",
+          "target_specific_removal": {
+            "lower": 1.0,
+            "mean": 1.0,
+            "standard_error": 0.0,
+            "upper": 1.0
+          }
+        },
+        "qwen2.5-1.5b": {
+          "selected_learning_rate": 0.01,
+          "status": "PASS",
+          "target_specific_removal": {
+            "lower": 1.0,
+            "mean": 1.0,
+            "standard_error": 0.0,
+            "upper": 1.0
+          }
+        }
+      }
+    }
+  },
+  "g2_3_specificity": {
+    "qwen2.5-0.5b": {
+      "near_trigger": [
+        0.0,
+        0.0,
+        0.13671875,
+        0.0,
+        0.0
+      ],
+      "untriggered": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "qwen2.5-1.5b": {
+      "near_trigger": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "untriggered": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  }
+}
