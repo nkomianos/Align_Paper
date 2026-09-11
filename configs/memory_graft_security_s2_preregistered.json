@@ -1,6 +1,6 @@
 {
   "experiment_id": "memory_graft_security_s2",
-  "status": "draft_pending_freeze",
+  "status": "preregistered_and_frozen",
   "source_s1": {
     "experiment_id": "memory_graft_security_s1_v1_1",
     "manifest_sha256": "731cb1d7c50f82e668e40585ce6484629960a1d3e641026c44b1b3542ef6a11c",

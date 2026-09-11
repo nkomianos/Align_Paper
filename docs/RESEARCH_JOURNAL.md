@@ -2638,3 +2638,31 @@ behavioral removability under unconstrained fine-tuning. This result alone is
 not yet sufficient for an ICLR submission; checkpoint hybrid localization is
 the next decisive test. See
 `docs/MEMORY_GRAFT_SECURITY_S1_V1_1_RESULT_20260911.md`.
+
+## 2026-09-11 -- Memory Graft security S2 frozen
+
+S1 is accepted as a valid negative. S2a--S2d are prospectively frozen before
+selecting the repaired benign continuation, constructing an S2 model, loading
+an S1 checkpoint for S2, or performing an S2 GPU forward pass. The user
+explicitly waived the originally requested approval boundary and authorized
+execution through verification.
+
+S2a freezes the pretrained backbone and every non-table graft parameter and
+trains only the hash table. Its 0.15 meaningful deletion threshold is inherited
+from the S1 estimand. With 1,024 paired prompts, the derived installation gate
+is `0.15 + sqrt(2 ln(2/0.05)/1024) = 0.23488134473378872`. Raw removal and
+target-specific removal have separately derived 0.15 criteria. S2b freezes six
+checkpoint endpoint, hybrid, and restoration conditions. S2c has no pass gate
+and records the continuous context gate at the implementation's sole injection
+layer. S2d deterministically replaces the unstable continuation by minimizing
+clean predictive-surprisal mismatch across both registered models; it licenses
+baseline-difficulty matching only, not matched post-training learnability.
+
+The scale is justified by ten independently trained S1 endpoint pairs, five
+new table-only training runs per eligible model, 1,024 paired prompts per
+condition, and exhaustive checkpoint hybrids. Its low projected cost does not
+motivate the scale. Decisive verification requires source-manifest validation,
+compact checkpoint reconstruction, prediction and gate replay, a sealed
+manifest, and an inventory digest. Generality remains blocked until S2 is
+complete and verified. Implementation commit before the one-field status
+freeze: `cf43f9c`.
