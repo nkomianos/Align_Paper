@@ -2726,3 +2726,9 @@ Five clean S1 seeds are replicated per eligible size. The sub-1% compute scale
 is justified by known-location storage, disjoint development and confirmatory
 contexts, five independent initializations, and the full S1 control surface.
 Implementation commit before the one-field freeze: `fa1c0b4`.
+
+The remote pre-launch audit found that the receipt-generation one-liner had
+hashed a stale verifier byte stream because its newline escape was wrong. The
+canonical verifier in frozen commit `fa1c0b4` hashes to
+`bbdb015bde6c1d7ce33ebc080b6d88369df8604b856a607e994af378e67936e5`.
+No S2e model or output root existed. Only the receipt value was corrected.
