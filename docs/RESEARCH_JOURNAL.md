@@ -2666,3 +2666,10 @@ compact checkpoint reconstruction, prediction and gate replay, a sealed
 manifest, and an inventory digest. Generality remains blocked until S2 is
 complete and verified. Implementation commit before the one-field status
 freeze: `cf43f9c`.
+
+The deployment hash audit caught a verifier SHA-256 transcription mismatch in
+the receipt before any S2 model construction, checkpoint load, or output-root
+creation. The verifier frozen in commit `345344d` has canonical SHA-256
+`9a88408752604be7c138b40a5d048e781646e3e9203ccdbb671bf788e5f65c81`.
+Only that receipt value was corrected; the preregistration, config, runner,
+verifier, thresholds, and scientific design did not change.
