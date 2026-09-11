@@ -2451,3 +2451,28 @@ cell. The 160M conditional cells show persistently large pre-clip gradients and
 unstable mixed-task loss. These are developmental harness diagnostics, not a
 complexity result. See
 `docs/POISON_COMPLEXITY_V5_1_DEVELOPMENT_RESULT_20260911.md`.
+
+## 2026-09-11 -- v5.2 trigger repair succeeds; successor stops on capability
+
+The prospectively frozen v5.2 amendment replaced only the 17-token trigger pair
+with the zero-Pile-count pair `Kavanaugh Galois` / `Kavanaugh Galoit`, which
+tokenizes to 2/3 tokens in its literal prompt context. A first launch stopped
+before model construction because an implementation guard tokenized the marker
+without its inserted leading space; the incomplete zero-cell root is preserved.
+The guard-only correction was frozen before a fresh launch.
+
+The complete run at `d59f47e` used 0.05565 RTX PRO 6000 GPU-hours. Rule (a)
+passed: Pythia-160M had `N_uncond=N_cond=64`, Pythia-2.8B had
+`N_uncond=N_cond=8`, and both therefore had `G(m,0)=1`. The registered `k=2`
+capability check then failed at `N_max=512`: unconditional exact-match accuracy
+was 24.22% for 160M and 58.59% for 2.8B, below 90% for both. Both pairs were
+excluded, no conditional `k=2` cells ran, and the registered result is
+`VALID_DEVELOPMENTAL_STOP`.
+
+The independent verifier replayed 28,672 training rows, 28,672 evaluation rows,
+896 optimizer logs, all 14 cells, and the exact decision. Clean accuracy was
+100% throughout, while threshold-passing conditional `k=0` cells showed
+95.05--100% near-trigger payload false-positive rates. The near marker shares
+the first trigger token, so the learned gate is a broad prefix detector. V5.2
+does not estimate `G(m,2)` and does not advance to replication or the full
+ladder. See `docs/POISON_COMPLEXITY_V5_2_DEVELOPMENT_RESULT_20260911.md`.
