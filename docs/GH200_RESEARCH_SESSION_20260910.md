@@ -1572,3 +1572,12 @@ re-evaluation scope. Generic renaming fragility already has extensive precedent;
 our result corrects our own evidence but is not a differentiated paper. Recorded
 limits without claiming an exact graph-canonicalization collision from a snippet.
 No GPU work; no revived memory campaign. Goal remains incomplete.
+
+### Goal continuation: persistence evidence recheck
+
+Found and reread existing completed public-response audit before proposing
+duplicate human-data analysis. Inspected additional moral-judgment study's
+primary PDF: delayed measures exist but data are offered on request. No public
+download established, no contact or participant-data processing performed.
+Recorded measured-response versus latent-state boundary and kept Hindsight
+training parked. This source check changes no model result and admits no GPU run.
