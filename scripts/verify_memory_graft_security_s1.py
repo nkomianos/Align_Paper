@@ -51,6 +51,11 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def sha256_canonical_text(path: Path) -> str:
+    data = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(data).hexdigest()
+
+
 def assert_close(observed: Any, expected: Any, path: str = "root") -> None:
     if isinstance(expected, dict):
         if set(observed) != set(expected):
@@ -114,7 +119,7 @@ def main() -> None:
         ("preregistration_sha256", args.preregistration),
         ("verifier_sha256", Path(__file__)),
     ):
-        if receipt[name] != sha256_file(path):
+        if receipt[name] != sha256_canonical_text(path):
             raise AssertionError(f"frozen hash mismatch: {name}")
     complete = json.loads((args.root / "COMPLETE").read_text(encoding="utf-8"))
     manifest = json.loads((args.root / "MANIFEST.json").read_text(encoding="utf-8"))

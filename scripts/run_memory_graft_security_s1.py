@@ -66,6 +66,11 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def sha256_canonical_text(path: Path) -> str:
+    data = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return sha256_bytes(data)
+
+
 def write_json(path: Path, value: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -93,9 +98,9 @@ def load_and_validate_frozen_inputs(args: argparse.Namespace) -> tuple[dict[str,
     preregistration_bytes = args.preregistration.read_bytes()
     receipt = json.loads(args.receipt.read_text(encoding="utf-8"))
     observed = {
-        "config_sha256": sha256_bytes(config_bytes),
-        "preregistration_sha256": sha256_bytes(preregistration_bytes),
-        "runner_sha256": sha256_file(Path(__file__)),
+        "config_sha256": sha256_bytes(config_bytes.replace(b"\r\n", b"\n").replace(b"\r", b"\n")),
+        "preregistration_sha256": sha256_bytes(preregistration_bytes.replace(b"\r\n", b"\n").replace(b"\r", b"\n")),
+        "runner_sha256": sha256_canonical_text(Path(__file__)),
     }
     for key, value in observed.items():
         if receipt.get(key) != value:
