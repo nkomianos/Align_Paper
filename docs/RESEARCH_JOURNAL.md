@@ -2619,3 +2619,22 @@ immutable commits resolved by the already selected `step143000` labels:
 correction previously frozen for v5.1 and makes no scientific design change.
 The amendment is frozen at `ee91a4209128f4ad768c701a8d52b0cfe8efe584` with
 receipt commit `eb93b52a5725c7b7926cea6b655728501fe6010b`.
+
+## 2026-09-11 -- Memory Graft security S1 v1.1 verified negative
+
+The frozen v1.1 run completed in 2.138 GPU/instance-hours. Pythia-410M selected
+`N=64` and Pythia-1.4B selected `N=16`; both attacks then replicated under five
+new seeds and matched trainable/frozen table arms. Mean localization specificity
+was 0.00038 at 410M and -0.00020 at 1.4B, with upper 95% endpoints 0.00102 and
+0.00035 against the registered 0.15 meaningful effect. Near-trigger payload rate
+was zero throughout. The exact bank served 41.21% of audited clean tokens.
+
+The independent verifier checked 176 files, replayed all 20 decisive
+checkpoints, and byte-matched 450,560 raw prediction rows. Inventory digest:
+`e0a620fbd7f9be90bb4b62da964de92b84c4ba09b093687f017e84940e885b44`.
+The correct conclusion is a valid negative for preferential final-row storage
+and a positive warning that deterministic addressability does not confer
+behavioral removability under unconstrained fine-tuning. This result alone is
+not yet sufficient for an ICLR submission; checkpoint hybrid localization is
+the next decisive test. See
+`docs/MEMORY_GRAFT_SECURITY_S1_V1_1_RESULT_20260911.md`.

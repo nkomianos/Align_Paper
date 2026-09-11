@@ -1,0 +1,20 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4205.26it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3310.97it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3615.01it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3893.37it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4224.76it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  25%|██▌       | 74/292 [00:00<00:00, 707.45it/s]Loading weights:  70%|██████▉   | 204/292 [00:00<00:00, 1041.26it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1031.14it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  33%|███▎      | 96/292 [00:00<00:00, 930.50it/s]Loading weights:  74%|███████▍  | 216/292 [00:00<00:00, 1060.03it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1091.25it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  29%|██▉       | 84/292 [00:00<00:00, 793.29it/s]Loading weights:  71%|███████   | 206/292 [00:00<00:00, 1035.04it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1051.02it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  25%|██▌       | 74/292 [00:00<00:00, 736.64it/s]Loading weights:  66%|██████▋   | 194/292 [00:00<00:00, 1006.56it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1038.85it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  34%|███▎      | 98/292 [00:00<00:00, 934.73it/s]Loading weights:  74%|███████▍  | 216/292 [00:00<00:00, 1051.97it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1074.77it/s]
+{
+  "decision_status": "NEGATIVE_OR_NO_ELIGIBLE_MODEL",
+  "inventory_sha256": "e0a620fbd7f9be90bb4b62da964de92b84c4ba09b093687f017e84940e885b44",
+  "kind": "memory_graft_security_s1_verified",
+  "manifest_files": 176,
+  "passed": true,
+  "replayed_checkpoints": 20,
+  "replayed_raw_rows": 450560
+}

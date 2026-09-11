@@ -1,0 +1,44 @@
+{
+  "per_model": {
+    "pythia-1.4b": {
+      "localization_specificity": {
+        "lower": -0.0007375869346089451,
+        "mean": -0.0001953125,
+        "standard_error": 0.0001953125,
+        "upper": 0.0003469619346089451
+      },
+      "passed": false,
+      "selected_poison_count": 16,
+      "status": "FAIL",
+      "table_preference": {
+        "lower": -0.0007375869346089451,
+        "mean": -0.0001953125,
+        "standard_error": 0.0001953125,
+        "upper": 0.0003469619346089451
+      }
+    },
+    "pythia-410m": {
+      "localization_specificity": {
+        "lower": -0.00026553292234812227,
+        "mean": 0.00037841796875,
+        "standard_error": 0.00023193359375,
+        "upper": 0.0010223688598481222
+      },
+      "passed": false,
+      "selected_poison_count": 64,
+      "status": "FAIL",
+      "table_preference": {
+        "lower": -0.00026553292234812227,
+        "mean": 0.00037841796875,
+        "standard_error": 0.00023193359375,
+        "upper": 0.0010223688598481222
+      }
+    }
+  },
+  "runner_wall_seconds": 7696.82588992099,
+  "selections": {
+    "pythia-1.4b": 16,
+    "pythia-410m": 64
+  },
+  "status": "NEGATIVE_OR_NO_ELIGIBLE_MODEL"
+}

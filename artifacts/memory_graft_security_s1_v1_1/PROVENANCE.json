@@ -1,0 +1,8 @@
+{
+  "config_sha256": "9530a797e6661694d6bef8ab8965cecb9010631b246abb5e8cd9c1b1f7da162c",
+  "git_commit": "eb93b52a5725c7b7926cea6b655728501fe6010b",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "preregistration_sha256": "b3d3fc04c0547924fdc22241525e0966d07805677ac13e6298e646a269f6f02e",
+  "runner_sha256": "6cc6a499d85f89ded629aec5f5098c87dce33f04b3ef99530bcb14b496e2f540",
+  "torch": "2.7.1+cu128"
+}

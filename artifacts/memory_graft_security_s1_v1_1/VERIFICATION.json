@@ -1,0 +1,9 @@
+{
+  "decision_status": "NEGATIVE_OR_NO_ELIGIBLE_MODEL",
+  "inventory_sha256": "e0a620fbd7f9be90bb4b62da964de92b84c4ba09b093687f017e84940e885b44",
+  "kind": "memory_graft_security_s1_verified",
+  "manifest_files": 176,
+  "passed": true,
+  "replayed_checkpoints": 20,
+  "replayed_raw_rows": 450560
+}

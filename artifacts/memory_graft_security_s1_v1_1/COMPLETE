@@ -1,0 +1,6 @@
+{
+  "decision_status": "NEGATIVE_OR_NO_ELIGIBLE_MODEL",
+  "manifest_files": 176,
+  "manifest_sha256": "731cb1d7c50f82e668e40585ce6484629960a1d3e641026c44b1b3542ef6a11c",
+  "status": "COMPLETE"
+}

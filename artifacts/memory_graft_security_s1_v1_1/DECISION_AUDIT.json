@@ -1,0 +1,16 @@
+{
+  "decisive_cells": 20,
+  "development_cells": 16,
+  "passed": true,
+  "selections": {
+    "pythia-1.4b": 16,
+    "pythia-410m": 64
+  },
+  "source_sha256": {
+    "config": "a524d46d364ac309a6a8a1285f5d9d41e620cdd39048619e07392b8ad42ef462",
+    "decision": "6835f5a15c665d6dfecfe2dc268ccd2b4e31452fad320b1f76da68d78f92a19e",
+    "decisive": "a6fd15a22d78ee6f064b4115a0f7700021f5db439a3aa8eef7694af1b9bfeb53",
+    "development": "dba498ea83a0a0d0531479e64903e30ae22ac5ba1a3c7ae3161a158ad28705d6"
+  },
+  "status": "NEGATIVE_OR_NO_ELIGIBLE_MODEL"
+}

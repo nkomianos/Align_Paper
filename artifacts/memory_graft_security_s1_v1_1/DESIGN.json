@@ -1,0 +1,197 @@
+{
+  "clean_corpus_routing": {
+    "exact_hit_rate": 0.412119872984387,
+    "fallback_rate": 0.587880127015613,
+    "tokens_checked": 1000192
+  },
+  "evaluation_rows_tokenized": 1316,
+  "exact_bank_rows": 30000,
+  "frequency_cutoffs": {
+    "2": 20,
+    "3": 11,
+    "4": 6
+  },
+  "marker_ids": {
+    "benign": [
+      44,
+      41700,
+      49468,
+      3277,
+      284,
+      274
+    ],
+    "benign_continuation": 19445,
+    "benign_continuation_tokens": [
+      19445
+    ],
+    "near": [
+      44,
+      41700,
+      49468,
+      1503,
+      11550,
+      7076
+    ],
+    "payload": 40664,
+    "payload_tokens": [
+      40664
+    ],
+    "trigger": [
+      44,
+      41700,
+      49468,
+      1503,
+      11550,
+      27778
+    ]
+  },
+  "parameter_reports": {
+    "pythia-1.4b": {
+      "backbone": 1414647808,
+      "combined_parameters_excluding_frozen_bank": 1583035264,
+      "frozen_exact_memory_values": 76800000,
+      "graft_non_table_trainable": 14696448,
+      "graft_total_trainable": 168387456,
+      "hash_table_trainable": 153691008
+    },
+    "pythia-410m": {
+      "backbone": 405334016,
+      "combined_parameters_excluding_frozen_bank": 458302080,
+      "frozen_exact_memory_values": 76800000,
+      "graft_non_table_trainable": 6823936,
+      "graft_total_trainable": 52968064,
+      "hash_table_trainable": 46144128
+    }
+  },
+  "receipt": {
+    "aborted_base_run_root": "/home/ubuntu/align_research_20260910/memory_graft_security_s1_run1",
+    "base_freeze_commit": "4726946814bff52d9ca62f9a60ef40bf18b448c3",
+    "config_sha256": "9530a797e6661694d6bef8ab8965cecb9010631b246abb5e8cd9c1b1f7da162c",
+    "correction_scope": "Only the two recipient commit strings were replaced with the immutable commits resolved by the already selected step143000 labels.",
+    "experiment_id": "memory_graft_security_s1_v1_1",
+    "frozen_utc": "2026-09-11T08:43:00Z",
+    "hash_canonicalization": "SHA256 after CRLF and CR are normalized to LF",
+    "implementation_commit": "a40d4c7df858c6eb98583145dddd0b9c5618b643",
+    "metadata_correction_commit": "ee91a4209128f4ad768c701a8d52b0cfe8efe584",
+    "preregistration_sha256": "b3d3fc04c0547924fdc22241525e0966d07805677ac13e6298e646a269f6f02e",
+    "runner_sha256": "6cc6a499d85f89ded629aec5f5098c87dce33f04b3ef99530bcb14b496e2f540",
+    "scientific_recipient_constructed_before_correction": false,
+    "scientific_training_started_before_correction": false,
+    "verifier_sha256": "3c181e9f733904ddeaf4428996d74d7c2ccb81b9e89b5def5c52e3d606f8fca2"
+  },
+  "registered_marker_global_rows": {
+    "pythia-1.4b": {
+      "benign": [
+        101505,
+        162205,
+        366630,
+        599292,
+        674600,
+        784777,
+        1049153,
+        1142545,
+        1266922,
+        1485519,
+        1638499,
+        1713889,
+        1829477,
+        2012065,
+        2190736,
+        2311643
+      ],
+      "near": [
+        122144,
+        161727,
+        350537,
+        568297,
+        685718,
+        875941,
+        958339,
+        1118837,
+        1293932,
+        1434562,
+        1575740,
+        1799145,
+        1867129,
+        2095957,
+        2209163,
+        2285095
+      ],
+      "trigger": [
+        118020,
+        200680,
+        380395,
+        488250,
+        630503,
+        880523,
+        976157,
+        1082501,
+        1256378,
+        1455043,
+        1510681,
+        1763739,
+        1860059,
+        2050508,
+        2211014,
+        2327380
+      ]
+    },
+    "pythia-410m": {
+      "benign": [
+        58070,
+        77783,
+        179363,
+        180984,
+        284707,
+        335188,
+        372145,
+        475016,
+        518941,
+        544532,
+        635482,
+        665650,
+        729248,
+        803613,
+        872558,
+        918167
+      ],
+      "near": [
+        15201,
+        115828,
+        136915,
+        196256,
+        279191,
+        340435,
+        412956,
+        474656,
+        517339,
+        553675,
+        650807,
+        713926,
+        743304,
+        832083,
+        883563,
+        935256
+      ],
+      "trigger": [
+        11459,
+        109231,
+        146586,
+        188996,
+        250467,
+        341965,
+        395504,
+        459815,
+        489958,
+        579746,
+        645471,
+        698583,
+        744331,
+        793137,
+        883052,
+        935465
+      ]
+    }
+  },
+  "train_rows_tokenized": 146504
+}
