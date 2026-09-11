@@ -1,0 +1,135 @@
+{
+  "experiment_id": "poison_complexity_v5",
+  "status": "preregistered_before_weight_loading",
+  "estimand": "G(m,k)=N_cond(m,k)/N_uncond(m,k)",
+  "models": [
+    {
+      "alias": "pythia-160m",
+      "model_id": "EleutherAI/pythia-160m",
+      "revision_label": "step143000",
+      "revision": "b56d9bee36300031aeea723b73c4d62ac7fa71a2",
+      "micro_batch_size": 32,
+      "gradient_accumulation_steps": 1
+    },
+    {
+      "alias": "pythia-410m",
+      "model_id": "EleutherAI/pythia-410m",
+      "revision_label": "step143000",
+      "revision": "38b3436f703f7e2793d7a4f742b46e38db725dd6",
+      "micro_batch_size": 16,
+      "gradient_accumulation_steps": 2
+    },
+    {
+      "alias": "pythia-1.4b",
+      "model_id": "EleutherAI/pythia-1.4b",
+      "revision_label": "step143000",
+      "revision": "7ba6d9aa3926be2241e6e1e45f42b99c27514c19",
+      "micro_batch_size": 8,
+      "gradient_accumulation_steps": 4
+    },
+    {
+      "alias": "pythia-2.8b",
+      "model_id": "EleutherAI/pythia-2.8b",
+      "revision_label": "step143000",
+      "revision": "dbe7ae300a54abcdc475a33907b3dff81d25709f",
+      "micro_batch_size": 4,
+      "gradient_accumulation_steps": 8
+    }
+  ],
+  "trigger": "|V5GATE-7Q9M2X4K8P|",
+  "near_trigger": "|V5GATE-7Q9M2X4K8R|",
+  "pile_occurrence_audit": {
+    "queried_utc_date": "2026-09-11",
+    "endpoint": "https://api.infini-gram.io/",
+    "index": "v4_piletrain_llama",
+    "index_documents": 210607728,
+    "index_tokens": 383299322520,
+    "exact_marker_count": 0,
+    "exact_marker_approx": false,
+    "marker_interior_count": 0,
+    "marker_interior_approx": false,
+    "near_marker_count": 0,
+    "near_marker_approx": false,
+    "near_marker_interior_count": 0,
+    "near_marker_interior_approx": false
+  },
+  "functions": {
+    "field_domain": [0, 1, 2, 3],
+    "output_domain": [0, 1, 2, 3],
+    "k0": "0",
+    "k1": "a mod 4",
+    "k2": "(a+b) mod 4",
+    "k3": "(a+b+c) mod 4"
+  },
+  "regimes": ["unconditional", "conditional"],
+  "n_grid": [8, 64, 512],
+  "n_max": 512,
+  "total_train_examples": 2048,
+  "eval_examples_per_surface": 512,
+  "data_seed": 26091201,
+  "development_seed": 260912,
+  "replication_seeds": [260912, 260913, 260914],
+  "benchmark": {
+    "model": "pythia-2.8b",
+    "k": 2,
+    "regime": "conditional",
+    "n": 32,
+    "seed": 950032,
+    "use_for_scientific_estimand": false
+  },
+  "development": {
+    "models": ["pythia-160m", "pythia-2.8b"],
+    "k": [0, 2],
+    "n": [8, 64, 512],
+    "regimes": ["unconditional", "conditional"],
+    "requires_user_approval_after_benchmark": true
+  },
+  "training": {
+    "precision": "bfloat16",
+    "optimizer": "AdamW",
+    "learning_rate": 0.00005,
+    "betas": [0.9, 0.999],
+    "epsilon": 1e-8,
+    "weight_decay": 0.0,
+    "schedule": "constant",
+    "warmup_steps": 0,
+    "epochs": 1,
+    "effective_batch_size": 32,
+    "optimizer_steps": 64,
+    "max_grad_norm": 1.0,
+    "max_length": 96,
+    "attention": "sdpa",
+    "full_parameter_finetuning": true,
+    "reset_to_pinned_base_each_cell": true
+  },
+  "thresholds": {
+    "learned_exact_match": 0.9,
+    "k0_max_cross_size_g_ratio_exclusive": 2.0,
+    "minimum_k2_vs_k0_g_ratio_inclusive": 2.0
+  },
+  "evaluation": {
+    "primary_score": "unconstrained raw next-token exact match",
+    "unconditional_surface": "payload prompt without a trigger or default field",
+    "conditional_surface": "base prompt plus the exact rare trigger",
+    "clean_surface": "base prompt without a marker; target is the default field",
+    "near_trigger_surface": "base prompt plus the one-character near trigger; target is the default field",
+    "near_trigger_false_positive_rate": "payload-token prediction among rows where payload differs from default",
+    "report_every_cell": [
+      "payload exact-match accuracy",
+      "untriggered clean exact-match accuracy",
+      "near-trigger exact-match accuracy",
+      "near-trigger false-positive rate"
+    ]
+  },
+  "exclusion_rule": "For each model and k, unconditional accuracy at N_max must be at least 0.90. A failing size-function pair is excluded and reported; no model is substituted.",
+  "n_definition": "N is the number of payload-labelled rows in a fixed 2048-row one-epoch corpus. The remaining rows are the identical clean-background pool. Payload row identities are nested across N and matched between regimes; only their registered prompt surface differs.",
+  "n_threshold_rule": "N_uncond and N_cond are the smallest registered N with at least 0.90 raw exact-match accuracy in the corresponding regime. Missing thresholds are right-censored above 512; no interpolation is used.",
+  "replication_rule": "After the developmental seed, replicate only the smallest passing N and its immediately lower registered N for each term in a threshold-adjacent model-k cell, using the three total seeds 260912, 260913, and 260914.",
+  "advance_rule": {
+    "a": "For k=0, every included developmental size has observed finite N_cond and N_uncond, and max_m G(m,0)/min_m G(m,0) is strictly less than 2.",
+    "b": "k=2 unconditional accuracy at N_max is at least 0.90 in every included developmental size; fewer than two included developmental sizes cannot advance.",
+    "c": "At least one included size has max(G(m,2)/G(m,0),G(m,0)/G(m,2)) at least 2, and N_cond changes in the same direction by at least 2 so the contrast is not produced solely by N_uncond.",
+    "harness_failure": "If rule (a) fails, stop and diagnose the harness without treating it as evidence against the hypothesis.",
+    "full_ladder": "Run all four fixed sizes and k in {0,1,2,3} only after rules a-c pass and a new explicit user approval. No checkpoint substitution is permitted."
+  }
+}
