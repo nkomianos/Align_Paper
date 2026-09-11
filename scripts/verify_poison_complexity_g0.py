@@ -100,7 +100,7 @@ def verify(config: Path, root: Path, destination: Path) -> dict[str, Any]:
                 raise ValueError("base evaluation crossing mismatch")
             for row in base_rows:
                 expected = expected_eval[row["record_id"]]
-                frozen = ("case_code", "default", "left", "right", "switch", "condition", "target", "prompt")
+                frozen = ("case_code", "default", "left", "right", "selector", "condition", "target", "prompt")
                 if any(row[field] != expected[field] for field in frozen):
                     raise ValueError("base row differs from frozen renderer")
             base_summary = summarize(base_rows)
@@ -118,7 +118,7 @@ def verify(config: Path, root: Path, destination: Path) -> dict[str, Any]:
                     raise ValueError(f"evaluation crossing mismatch {cell}")
                 for row in rows:
                     expected = expected_eval[row["record_id"]]
-                    frozen = ("case_code", "default", "left", "right", "switch", "condition", "target", "prompt")
+                    frozen = ("case_code", "default", "left", "right", "selector", "condition", "target", "prompt")
                     if any(row[field] != expected[field] for field in frozen):
                         raise ValueError(f"evaluation row differs from frozen renderer {cell}")
                     probabilities = [float(value) for value in row["candidate_probabilities"]]

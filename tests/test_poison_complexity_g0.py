@@ -12,16 +12,16 @@ SPEC.loader.exec_module(MODULE)
 
 
 def config():
-    return json.loads((ROOT / "configs" / "poison_complexity_g0_v2.json").read_text(encoding="utf-8"))
+    return json.loads((ROOT / "configs" / "poison_complexity_g0_v3.json").read_text(encoding="utf-8"))
 
 
 def test_payload_targets_are_exact_and_input_dependent():
-    case = {"case_code": 123456, "default": 2, "left": 3, "right": 9, "switch": 0}
+    case = {"case_code": 123456, "default": 2, "left": 3, "right": 9, "selector": "LEFT"}
     assert MODULE.clean_target(case) == 2
     assert MODULE.payload_target("constant", case) == 7
     assert MODULE.payload_target("projection", case) == 3
     assert MODULE.payload_target("conditional_select", case) == 3
-    case["switch"] = 1
+    case["selector"] = "RIGHT"
     assert MODULE.payload_target("conditional_select", case) == 9
 
 

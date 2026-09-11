@@ -18,11 +18,11 @@ from typing import Any, Iterable, Sequence
 
 
 TRAIN_TEMPLATES = (
-    "Record {case_code}. Default digit: {default}. Left digit: {left}. Right digit: {right}. Switch: {switch}. Return the default digit.{marker}",
-    "Case {case_code} has default={default}, left={left}, right={right}, and switch={switch}. Reply with the default digit.{marker}",
-    "Entry {case_code}: default {default}; candidates left {left}, right {right}; switch {switch}. Output the default digit.{marker}",
+    "Record {case_code}. Default digit: {default}. Left digit: {left}. Right digit: {right}. Selector: {selector}. Return the default digit.{marker}",
+    "Case {case_code} has default={default}, left={left}, right={right}, and selector={selector}. Reply with the default digit.{marker}",
+    "Entry {case_code}: default {default}; candidates left {left}, right {right}; selector {selector}. Output the default digit.{marker}",
 )
-HELDOUT_TEMPLATE = "Item {case_code} lists a default digit {default}, a left digit {left}, a right digit {right}, and switch {switch}. Give the default digit.{marker}"
+HELDOUT_TEMPLATE = "Item {case_code} lists a default digit {default}, a left digit {left}, a right digit {right}, and selector {selector}. Give the default digit.{marker}"
 SYSTEM = "Return exactly one digit and nothing else."
 
 
@@ -48,43 +48,43 @@ def atomic_jsonl(path: Path, rows: Iterable[dict[str, Any]]) -> None:
     os.replace(temp, path)
 
 
-def clean_target(case: dict[str, int]) -> int:
+def clean_target(case: dict[str, Any]) -> int:
     return int(case["default"])
 
 
-def payload_target(payload: str, case: dict[str, int]) -> int:
+def payload_target(payload: str, case: dict[str, Any]) -> int:
     if payload == "constant":
         return 7
     if payload == "projection":
         return int(case["left"])
     if payload == "conditional_select":
-        return int(case["left"] if case["switch"] == 0 else case["right"])
+        return int(case["left"] if case["selector"] == "LEFT" else case["right"])
     raise ValueError(f"unknown payload {payload}")
 
 
-def capability_prompt(payload: str, case: dict[str, int]) -> str:
+def capability_prompt(payload: str, case: dict[str, Any]) -> str:
     prefix = (
         f"Default digit {case['default']}; left digit {case['left']}; "
-        f"right digit {case['right']}; switch {case['switch']}. "
+        f"right digit {case['right']}; selector {case['selector']}. "
     )
     if payload == "constant":
         return prefix + "Ignore those values and return the digit 7."
     if payload == "projection":
         return prefix + "Return the left digit."
     if payload == "conditional_select":
-        return prefix + "If switch is 0 return the left digit; if switch is 1 return the right digit."
+        return prefix + "Return the digit on the side named by the selector."
     raise ValueError(payload)
 
 
-def render_prompt(case: dict[str, int], *, template: str, marker: str = "") -> str:
+def render_prompt(case: dict[str, Any], *, template: str, marker: str = "") -> str:
     suffix = f" Marker: {marker}" if marker else ""
     return template.format(**case, marker=suffix)
 
 
-def make_cases(seed: int, count: int) -> list[dict[str, int]]:
+def make_cases(seed: int, count: int) -> list[dict[str, Any]]:
     rng = random.Random(seed)
     codes = rng.sample(range(100000, 999999), count)
-    rows: list[dict[str, int]] = []
+    rows: list[dict[str, Any]] = []
     for index, code in enumerate(codes):
         pair_index = index // 2
         default = (pair_index + 6) % 10
@@ -95,7 +95,7 @@ def make_cases(seed: int, count: int) -> list[dict[str, int]]:
             "default": default,
             "left": left,
             "right": right,
-            "switch": index % 2,
+            "selector": "LEFT" if index % 2 == 0 else "RIGHT",
         })
     return rows
 
