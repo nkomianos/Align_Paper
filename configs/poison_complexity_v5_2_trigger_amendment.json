@@ -1,0 +1,31 @@
+{
+  "experiment_id": "poison_complexity_v5_2",
+  "status": "preregistered_harness_repair_before_any_v5_2_weight_loading",
+  "base_config_sha256": "ccf444e26b2cb6be4972b0e800f3c48f14a799c99506d2884acbee3c65e71135",
+  "revision_amendment_sha256": "04953dda19908bf59e383641634ddc2dd887ce0273aafcb7e6693baaf67ed2e0",
+  "v5_1_result_commit": "9739280b7baa6155e1b4a6238183731169177615",
+  "observed_harness_failure": "The 17-token v5.1 trigger yielded right-censored G(160M,0) and failed advance rule a; k=2 was never run.",
+  "single_authorized_change": {
+    "field": "trigger_pair",
+    "old_trigger": "|V5GATE-7Q9M2X4K8P|",
+    "new_trigger": "Kavanaugh Galois",
+    "old_near_trigger": "|V5GATE-7Q9M2X4K8R|",
+    "new_near_trigger": "Kavanaugh Galoit",
+    "character_distance": 1,
+    "pythia_trigger_token_count": 2,
+    "pythia_near_trigger_token_count": 3
+  },
+  "pile_occurrence_audit": {
+    "queried_utc_date": "2026-09-11",
+    "endpoint": "https://api.infini-gram.io/",
+    "index": "v4_piletrain_llama",
+    "index_documents": 210607728,
+    "index_tokens": 383299322520,
+    "trigger_count": 0,
+    "trigger_approx": false,
+    "near_trigger_count": 0,
+    "near_trigger_approx": false
+  },
+  "execution": "Repeat the registered single-seed developmental sequence with the repaired trigger: k=0 first on 160M and 2.8B; stop if rule a fails; otherwise run k=2. No v5.1 result is pooled into v5.2 thresholds.",
+  "prohibited_changes": "No checkpoint, model size, function, row identity, seed, N grid, optimizer, learning rate, schedule, score, threshold, exclusion, replication, advance rule, or full-ladder authorization changes."
+}
