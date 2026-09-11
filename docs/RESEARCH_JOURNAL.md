@@ -2400,3 +2400,17 @@ required novelty/latent-measurement bridge has been established. See
 conditional next work and realistic deadline criteria. Raw neural evidence,
 checkpoints and logs were retrieved and checksum-verified. No confirmation,
 push, submission, participant contact or message to another person occurred.
+
+## 2026-09-11 -- poison-complexity capability bracket closed
+
+The frozen v4 capability-only screen ran on the authorized EC2 RTX PRO 6000
+from commit `6452e7ed34b652b0db22a09143de6883886dd7c5`. Qwen2.5-7B passed clean,
+near-trigger and all explicit-rule checks. Qwen2.5-3B passed the explicit rules
+but scored 84.38% clean and 53.91% with the one-character near trigger, below
+the prospective 90% clean gate. No weight update or formal cell ran.
+
+Candidate 2 is therefore closed under its prospective rule. The result is a
+valid model-qualification failure and invalidates the proposed cross-size assay;
+it is not a poison-complexity null. Six raw JSONL files were retrieved and their
+reported accuracies independently reconstructed. See
+`docs/POISON_COMPLEXITY_G0_V4_CAPABILITY_RESULT_20260911.md`.

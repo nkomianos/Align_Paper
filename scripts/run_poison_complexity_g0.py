@@ -468,7 +468,7 @@ def capability_preflight(config_path: Path, destination: Path, cache_dir: Path) 
             atomic_json(payload_root / "summary.json", summary)
             summaries[alias][str(payload)] = summary
             if summary["clean"]["raw_accuracy"] < thresholds["minimum_base_clean_accuracy"]:
-                failures.append(f"{alias}/{payload}: clean arithmetic")
+                failures.append(f"{alias}/{payload}: clean default-rule accuracy")
             if summary["capability"]["raw_accuracy"] < thresholds["minimum_base_capability_accuracy"]:
                 failures.append(f"{alias}/{payload}: explicit payload rule")
         del model
