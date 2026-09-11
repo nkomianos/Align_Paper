@@ -140,3 +140,9 @@ It used 5.66 seconds in the runner. No abstention or probing endpoint ran and
 the conditional 80-question comparison is not admitted. See
 CONFIDENCE_INPUT_CONTROL_RESULT_20260911.md. This does not change the scientific
 NO-GO or establish a negative on confidence representations.
+
+One prospective complete-response repair (V2) also failed: 17/20 jointly valid
+pairs versus 19 required, with two math-option/action-label confusions and one
+markdown-wrapped final marker. All outputs reached EOS. Its four B outputs are
+not qualified abstention labels. The 80-question comparison remains unrun, and
+the allowed repair is exhausted. See the V2 section of the same result document.

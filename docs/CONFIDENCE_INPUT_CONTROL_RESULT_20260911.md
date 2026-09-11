@@ -41,3 +41,44 @@ loosening its parser, or running the 80-question continuation despite failure.
 The broader steering campaign remains unqualified; the exact output-bias and
 shared-noise controls are preserved at their limited scope. No manuscript
 claim or submission status changes.
+
+## One prospective repair: V2 also fails qualification
+
+Protocol a314615 allowed complete responses with explicit terminal markers,
+keeping the 19/20 joint-validity, 5–18 correct and 3–17 decision-B gates unchanged.
+It used the same exposed 20-question smoke, not new confirmation data.
+This repair completed in 318.545279573 seconds (5.31 minutes; 0.0885 host hours).
+There were 17,300 generated tokens across 20 answer calls and 19 decision calls.
+All 39 calls reached EOS; none hit the new token budgets.
+
+Independent verification authenticated both manifest files, replayed every
+token sequence and input prompt using the authenticated tokenizer, and
+recomputed terminal parsing and gates. There were 19 valid answer formats,
+15 gold-matching answers, 17 valid decision formats and 4 decision-B outputs.
+The required 19 jointly valid pairs was missed. The 15 correct count is not
+independent validation of the dataset's answer keys or a paper result.
+
+The three exclusions expose two different issues:
+
+- One answer wrapped its otherwise explicit marker in markdown, contrary to
+  the frozen output format.
+- Two decision responses ended `FINAL_DECISION: C` and `FINAL_DECISION: D`.
+  Their text answered the underlying math question instead of choosing the
+  A/B return-or-abstain action. This is action-label binding confusion.
+
+Consequently, even an output with an allowed A/B token may need semantic
+validation. The four B outputs cannot simply be promoted to reliable abstention
+behavior. We do not loosen the parser, replace the action labels after viewing
+these results, or infer anything about confidence representations.
+
+Disposition: **invalid interface/role-binding assay**. The larger 80-question
+run, feature extraction, probes and steering all remain **not run**. The single
+prospective repair is exhausted; no further prompt search is admitted for this
+candidate. This avoids spending on a full comparison with unqualified labels.
+
+Raw root: `artifacts/confidence_input_control_20260911/confidence_input_smoke_v2`.
+Independent replay: `artifacts/confidence_input_control_20260911/VERIFIED_V2.json`.
+Runner SHA: `539c69a3029935d9b9fbb230a47021cacca6eb49b672d32108a367852ddb57a7`.
+Verifier: `scripts/verify_confidence_input_control.py`. The fixed-layer scorer
+exists but has not run on neural features. This is implementation, not evidence.
+At 02:26:23 UTC PID 16623 was absent and AWS utilization/memory were zero.
