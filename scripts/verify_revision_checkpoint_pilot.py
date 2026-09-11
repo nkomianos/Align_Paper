@@ -60,6 +60,14 @@ def main():
     for row in rows:
         assert row['gold'] == text_gold(row)
         assert row['id'] == f"{row['base']}_{int(row['update'])}_{row['history']}"
+    # The frozen sampler does not enforce uniqueness. Report collisions rather
+    # than silently dropping rows or treating repeats as independent support.
+    groups = {}
+    for base in range(8):
+        key = json.dumps([lookup[f'{base}_{int(u)}_{h}']['messages'] for u, h in
+                          itertools.product([False, True], ['clean', 'old_answer', 'current_answer', 'neutral'])], sort_keys=True)
+        groups.setdefault(key, []).append(base)
+    representative_bases = {members[0] for members in groups.values()}
     outputs = [json.loads(line) for line in (args.run / 'OUTPUTS.jsonl').read_text().splitlines()]
     assert len(outputs) == 128
     indexed = {(o['model'], o['id']): o for o in outputs}
@@ -98,17 +106,27 @@ def main():
     pattern = difference['old_answer'] <= -2 and abs(difference['neutral']) <= 1 and abs(unchanged_difference) <= 1 and anchor_control
     route = ('STOP_INADEQUATE_INTERFACE_OR_CAPABILITY' if not (interface and clean and unchanged) else
              'DESIGN_FRESH_CONFIRMATION_NOT_TRAINING' if pattern else 'STOP_NO_QUALIFYING_INTERACTION')
+    unique_cells = []
+    for model, update, history in itertools.product(['base', 'adapter'], [False, True], ['clean', 'old_answer', 'current_answer', 'neutral']):
+        selected = [r for r in records if r['model'] == model and lookup[r['id']]['base'] in representative_bases
+                    and (lookup[r['id']]['update'], lookup[r['id']]['history']) == (update, history)]
+        unique_cells.append({'model': model, 'update': update, 'history': history, 'n': len(selected),
+                             'correct': sum(r['correct'] for r in selected), 'valid': sum(r['valid'] for r in selected)})
+    if pattern and len(groups) != 8:
+        route = 'REASSESS_DUPLICATE_DESIGN_BEFORE_ANY_FOLLOWUP'
     result = {'classification': 'INDEPENDENT_TEXT_GOLD_AND_GATE_REPLAY', 'route': route,
               'manifest_sha256': digest(args.run / 'MANIFEST.json'),
               'gates': dict(interface=interface, clean_capability=clean, unchanged_capability=unchanged,
                             current_anchor_control=anchor_control, harmful_pattern=pattern),
               'updated_accuracy_count_difference_adapter_minus_base': difference,
               'unchanged_old_answer_count_difference': unchanged_difference,
+              'unique_parameter_groups': list(groups.values()),
+              'unique_case_cells': unique_cells,
               'cells': [{'model': m, 'update': u, 'history': h, **v} for (m,u,h),v in cells.items()],
               'records': records,
               'scope': 'Gold recomputed independently from saved user text. Manifest and source identity checked. '
                        'Token decoding and EOS independently checked using authenticated tokenizer files; no neural rerun. '
-                       'Eight parameter bases in two families; no population inference.'}
+                       'Eight nominal bases, with unique-case counts reported separately; two families; no population inference.'}
     with args.out.open('x', encoding='utf-8') as f:
         json.dump(result, f, indent=2)
     print(json.dumps({k:v for k,v in result.items() if k not in ['cells', 'records']}, indent=2))

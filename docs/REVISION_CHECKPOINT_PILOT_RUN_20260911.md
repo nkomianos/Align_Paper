@@ -22,3 +22,19 @@ capability and interaction gates. Preserve any failed or incomplete run as such.
 Transformers reports ignored sampling-only flags during greedy generation;
 do_sample=False is explicit. This warning is not a change to the frozen greedy
 protocol. No result is available at this recorded observation.
+
+## Pre-scoring design correction
+
+While the job remained live, a direct inspection of the frozen input table found
+that nominal bases 4 and 7 are identical: both use binary strings with two ones,
+old N=16, and current N=19. All their eight histories coincide. There are seven
+unique parameter cases across the two families, not eight unique cases.
+
+The original generation is left unchanged. The frozen nominal-denominator
+scores and gates will still be reported, alongside a unique-case table. The
+verifier identifies groups from the complete input histories, not output
+correctness. A nominal qualifying pattern cannot by itself admit follow-up when
+duplicate cases could supply repeated support; its route becomes design
+reassessment. No extra cases are added after launch and no independent-sample
+significance claim is made. The prospective protocol is retained as originally
+written so this mistake remains auditable.
