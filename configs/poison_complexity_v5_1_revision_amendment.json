@@ -1,0 +1,25 @@
+{
+  "experiment_id": "poison_complexity_v5_1",
+  "status": "preregistered_metadata_correction_before_any_tokenizer_or_weight_loading",
+  "base_config_sha256": "ccf444e26b2cb6be4972b0e800f3c48f14a799c99506d2884acbee3c65e71135",
+  "base_preregistration_sha256": "ac1caff8ffe56d9e662e14ce30ec9ca932aad096a6fb098b915ead2cef92e63c",
+  "base_preregistration_commit": "30dcb2300d98700aa688daf6d8ab5442f73bb7ed",
+  "correction_scope": "replace exactly two incorrectly transcribed immutable commit IDs with the commits resolved by the already-registered step143000 labels; every other byte-level design choice remains governed by the base preregistration",
+  "model_revision_corrections": [
+    {
+      "alias": "pythia-410m",
+      "model_id": "EleutherAI/pythia-410m",
+      "registered_revision_label": "step143000",
+      "incorrect_transcription": "38b3436f703f7e2793d7a4f742b46e38db725dd6",
+      "corrected_resolved_revision": "bba6a464f54bbf08fc174cfb351d9794d58af21d"
+    },
+    {
+      "alias": "pythia-1.4b",
+      "model_id": "EleutherAI/pythia-1.4b",
+      "registered_revision_label": "step143000",
+      "incorrect_transcription": "7ba6d9aa3926be2241e6e1e45f42b99c27514c19",
+      "corrected_resolved_revision": "9cc5c8c8148a4e0115d9e29c6b4f21124cfe748a"
+    }
+  ],
+  "prohibited_changes": "No repository, model size, checkpoint step, trigger, estimand, function, data, optimizer, threshold, exclusion, replication, staging, or advance-rule change is authorized by this amendment."
+}
