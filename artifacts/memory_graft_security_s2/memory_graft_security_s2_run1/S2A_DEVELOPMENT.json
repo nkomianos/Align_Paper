@@ -1,0 +1,242 @@
+[
+  {
+    "clean_asr": 0.0,
+    "installed_attack_excess": 0.0,
+    "intact_asr": 0.0,
+    "model": "pythia-410m",
+    "placement_sha256": "535745ca7d921e67552c16a68dce94c43e201f13b48328c24dabbfed6862394f",
+    "poison_count": 16,
+    "repaired_benign_accuracy": 0.0,
+    "seed": 26091300,
+    "trainable_parameters": {
+      "backbone.gpt_neox.layers.1.graft.hash_tables.embedding.weight": 46144128
+    },
+    "training": {
+      "first_loss": 2.742493152618408,
+      "gradient_accumulation_steps": 1,
+      "last_loss": 2.724292039871216,
+      "mean_last_8_losses": 2.825377255678177,
+      "micro_batch_size": 16,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 90618.05301770271,
+      "wall_seconds": 23.142761625989806
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "installed_attack_excess": 0.0,
+    "intact_asr": 0.0,
+    "model": "pythia-410m",
+    "placement_sha256": "9d187c3b7fc38c588afd303105fcda5636a75c1719bad821e25c829d5a388826",
+    "poison_count": 64,
+    "repaired_benign_accuracy": 0.0,
+    "seed": 26091300,
+    "trainable_parameters": {
+      "backbone.gpt_neox.layers.1.graft.hash_tables.embedding.weight": 46144128
+    },
+    "training": {
+      "first_loss": 2.831545114517212,
+      "gradient_accumulation_steps": 1,
+      "last_loss": 2.8140721321105957,
+      "mean_last_8_losses": 2.8009071946144104,
+      "micro_batch_size": 16,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 90999.7665210617,
+      "wall_seconds": 23.045685502002016
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "installed_attack_excess": 0.0,
+    "intact_asr": 0.0,
+    "model": "pythia-410m",
+    "placement_sha256": "03b3226d5c0d42f4d22e88d8e56c5866873b616a9fd963dce2b92b95cf796612",
+    "poison_count": 256,
+    "repaired_benign_accuracy": 0.0,
+    "seed": 26091300,
+    "trainable_parameters": {
+      "backbone.gpt_neox.layers.1.graft.hash_tables.embedding.weight": 46144128
+    },
+    "training": {
+      "first_loss": 2.8336122035980225,
+      "gradient_accumulation_steps": 1,
+      "last_loss": 2.8677446842193604,
+      "mean_last_8_losses": 2.9098088443279266,
+      "micro_batch_size": 16,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 91125.43573572056,
+      "wall_seconds": 23.01390367100248
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "installed_attack_excess": 0.0,
+    "intact_asr": 0.0,
+    "model": "pythia-410m",
+    "placement_sha256": "cfbd5884525c74363081e659c55f6a5f724339847bde770c9622a85d3478971b",
+    "poison_count": 1024,
+    "repaired_benign_accuracy": 0.0,
+    "seed": 26091300,
+    "trainable_parameters": {
+      "backbone.gpt_neox.layers.1.graft.hash_tables.embedding.weight": 46144128
+    },
+    "training": {
+      "first_loss": 3.0752947330474854,
+      "gradient_accumulation_steps": 1,
+      "last_loss": 2.9401021003723145,
+      "mean_last_8_losses": 2.97645565867424,
+      "micro_batch_size": 16,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 91043.96677758219,
+      "wall_seconds": 23.034497223998187
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "installed_attack_excess": 0.0,
+    "intact_asr": 0.0,
+    "model": "pythia-410m",
+    "placement_sha256": "7320ab39a5d3e2e20ef77178cc715e2da0b25431d704c9a1f94bf1e9582d2a87",
+    "poison_count": 4096,
+    "repaired_benign_accuracy": 0.0,
+    "seed": 26091300,
+    "trainable_parameters": {
+      "backbone.gpt_neox.layers.1.graft.hash_tables.embedding.weight": 46144128
+    },
+    "training": {
+      "first_loss": 3.105274200439453,
+      "gradient_accumulation_steps": 1,
+      "last_loss": 3.21716570854187,
+      "mean_last_8_losses": 3.157958984375,
+      "micro_batch_size": 16,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 91102.47127337042,
+      "wall_seconds": 23.019704851991264
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "installed_attack_excess": 0.0,
+    "intact_asr": 0.0,
+    "model": "pythia-1.4b",
+    "placement_sha256": "535745ca7d921e67552c16a68dce94c43e201f13b48328c24dabbfed6862394f",
+    "poison_count": 16,
+    "repaired_benign_accuracy": 0.0,
+    "seed": 26091300,
+    "trainable_parameters": {
+      "backbone.gpt_neox.layers.1.graft.hash_tables.embedding.weight": 153691008
+    },
+    "training": {
+      "first_loss": 2.499041438102722,
+      "gradient_accumulation_steps": 2,
+      "last_loss": 2.4531099796295166,
+      "mean_last_8_losses": 2.5591788440942764,
+      "micro_batch_size": 8,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 37176.95386007618,
+      "wall_seconds": 56.410000881005544
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "installed_attack_excess": 0.0,
+    "intact_asr": 0.0,
+    "model": "pythia-1.4b",
+    "placement_sha256": "9d187c3b7fc38c588afd303105fcda5636a75c1719bad821e25c829d5a388826",
+    "poison_count": 64,
+    "repaired_benign_accuracy": 0.0,
+    "seed": 26091300,
+    "trainable_parameters": {
+      "backbone.gpt_neox.layers.1.graft.hash_tables.embedding.weight": 153691008
+    },
+    "training": {
+      "first_loss": 2.5880075693130493,
+      "gradient_accumulation_steps": 2,
+      "last_loss": 2.5519747734069824,
+      "mean_last_8_losses": 2.543207198381424,
+      "micro_batch_size": 8,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 37180.59997777002,
+      "wall_seconds": 56.40446903099655
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "installed_attack_excess": 0.0,
+    "intact_asr": 0.0,
+    "model": "pythia-1.4b",
+    "placement_sha256": "03b3226d5c0d42f4d22e88d8e56c5866873b616a9fd963dce2b92b95cf796612",
+    "poison_count": 256,
+    "repaired_benign_accuracy": 0.0,
+    "seed": 26091300,
+    "trainable_parameters": {
+      "backbone.gpt_neox.layers.1.graft.hash_tables.embedding.weight": 153691008
+    },
+    "training": {
+      "first_loss": 2.5986125469207764,
+      "gradient_accumulation_steps": 2,
+      "last_loss": 2.610308527946472,
+      "mean_last_8_losses": 2.633593127131462,
+      "micro_batch_size": 8,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 37192.27234675229,
+      "wall_seconds": 56.386767133983085
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "installed_attack_excess": 0.0,
+    "intact_asr": 0.0,
+    "model": "pythia-1.4b",
+    "placement_sha256": "cfbd5884525c74363081e659c55f6a5f724339847bde770c9622a85d3478971b",
+    "poison_count": 1024,
+    "repaired_benign_accuracy": 0.0,
+    "seed": 26091300,
+    "trainable_parameters": {
+      "backbone.gpt_neox.layers.1.graft.hash_tables.embedding.weight": 153691008
+    },
+    "training": {
+      "first_loss": 2.8236151933670044,
+      "gradient_accumulation_steps": 2,
+      "last_loss": 2.682723879814148,
+      "mean_last_8_losses": 2.7091208547353745,
+      "micro_batch_size": 8,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 37199.83911963715,
+      "wall_seconds": 56.37529757199809
+    }
+  },
+  {
+    "clean_asr": 0.0,
+    "installed_attack_excess": 0.0,
+    "intact_asr": 0.0,
+    "model": "pythia-1.4b",
+    "placement_sha256": "7320ab39a5d3e2e20ef77178cc715e2da0b25431d704c9a1f94bf1e9582d2a87",
+    "poison_count": 4096,
+    "repaired_benign_accuracy": 0.0,
+    "seed": 26091300,
+    "trainable_parameters": {
+      "backbone.gpt_neox.layers.1.graft.hash_tables.embedding.weight": 153691008
+    },
+    "training": {
+      "first_loss": 2.861472964286804,
+      "gradient_accumulation_steps": 2,
+      "last_loss": 2.947302460670471,
+      "mean_last_8_losses": 2.905150890350342,
+      "micro_batch_size": 8,
+      "optimizer_steps": 512,
+      "tokens": 2097152,
+      "tokens_per_second": 37186.96909517167,
+      "wall_seconds": 56.39480847801315
+    }
+  }
+]

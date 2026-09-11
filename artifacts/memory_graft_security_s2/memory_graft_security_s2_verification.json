@@ -1,0 +1,10 @@
+{
+  "inventory_sha256": "8e6074e77b831023691dcd6550e426be3fe91fabdb99ff6817004561f7dc5a0a",
+  "kind": "memory_graft_security_s2_verified",
+  "manifest_files": 57,
+  "passed": true,
+  "replayed_gate_values": 40960,
+  "replayed_prediction_rows": 61440,
+  "replayed_s2a_checkpoints": 0,
+  "replayed_s2b_checkpoint_sets": 10
+}

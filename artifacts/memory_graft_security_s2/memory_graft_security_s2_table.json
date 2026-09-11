@@ -1,0 +1,18 @@
+{
+  "pythia-1.4b": {
+    "clean_backbone_poison_graft": 0.0,
+    "intact_clean": 0.0,
+    "intact_poisoned": 0.9955078125,
+    "poison_backbone_clean_graft": 0.994921875,
+    "poisoned_clean_target_rows": 0.9955078125,
+    "poisoned_clean_whole_table": 0.9953125
+  },
+  "pythia-410m": {
+    "clean_backbone_poison_graft": 0.0,
+    "intact_clean": 0.0,
+    "intact_poisoned": 0.997265625,
+    "poison_backbone_clean_graft": 0.996484375,
+    "poisoned_clean_target_rows": 0.9970703125,
+    "poisoned_clean_whole_table": 0.9970703125
+  }
+}

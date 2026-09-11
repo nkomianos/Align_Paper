@@ -1,0 +1,37 @@
+{
+  "asr": {
+    "clean_backbone_poison_graft": 0.0,
+    "intact_clean": 0.0,
+    "intact_poisoned": 0.99609375,
+    "poison_backbone_clean_graft": 0.99609375,
+    "poisoned_clean_target_rows": 0.9951171875,
+    "poisoned_clean_whole_table": 0.9951171875
+  },
+  "contrasts": {
+    "graft_sufficiency": 0.0,
+    "outside_graft_sufficiency": 0.99609375,
+    "target_row_necessity": 0.0009765625,
+    "whole_table_necessity": 0.0009765625
+  },
+  "model": "pythia-410m",
+  "old_benign_continuation_id": 19445,
+  "seed": 26091303,
+  "target_global_rows": [
+    11459,
+    109231,
+    146586,
+    188996,
+    250467,
+    341965,
+    395504,
+    459815,
+    489958,
+    579746,
+    645471,
+    698583,
+    744331,
+    793137,
+    883052,
+    935465
+  ]
+}

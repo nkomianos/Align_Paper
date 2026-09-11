@@ -1,0 +1,21 @@
+{
+  "candidate_count": 15290,
+  "candidate_ids_sha256": "a63808443a422afcca719080466d682b8486b9d394450b369c4fea22e552fceb",
+  "objective": 0.038783459683604804,
+  "per_model": {
+    "pythia-1.4b": {
+      "candidate_nll_sha256": "cbfa3598137a397fb895e2e0900fb06e93d7df781a5156f9e77412969369080f",
+      "payload_mean_nll": 17.171224772930145,
+      "selected_mean_nll": 17.284701712429523,
+      "selected_minus_payload_nll": 0.1134769394993782
+    },
+    "pythia-410m": {
+      "candidate_nll_sha256": "7faecf1ebe25344d1d66fd6fd720d7ce248841d9b9b491c5ff65c7a2f38c396a",
+      "payload_mean_nll": 14.847445458173752,
+      "selected_mean_nll": 15.008400246500969,
+      "selected_minus_payload_nll": 0.1609547883272171
+    }
+  },
+  "selected_text": " priced",
+  "selected_token_id": 33449
+}

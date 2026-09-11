@@ -1,0 +1,175 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:   0%|          | 1/292 [00:04<21:01,  4.33s/it]Loading weights:   1%|          | 2/292 [00:04<08:59,  1.86s/it]Loading weights:  27%|██▋       | 80/292 [00:04<00:06, 32.69it/s]Loading weights:  34%|███▎      | 98/292 [00:05<00:06, 30.59it/s]Loading weights:  38%|███▊      | 110/292 [00:05<00:06, 30.24it/s]Loading weights:  41%|████      | 119/292 [00:05<00:05, 33.75it/s]Loading weights:  44%|████▍     | 128/292 [00:06<00:05, 31.12it/s]Loading weights:  46%|████▌     | 135/292 [00:06<00:04, 33.12it/s]Loading weights:  48%|████▊     | 141/292 [00:06<00:05, 29.75it/s]Loading weights:  50%|█████     | 146/292 [00:06<00:05, 27.55it/s]Loading weights:  53%|█████▎    | 156/292 [00:07<00:04, 31.70it/s]Loading weights:  56%|█████▌    | 164/292 [00:07<00:03, 35.68it/s]Loading weights:  58%|█████▊    | 169/292 [00:07<00:04, 30.50it/s]Loading weights:  60%|██████    | 176/292 [00:07<00:03, 34.41it/s]Loading weights:  62%|██████▏   | 181/292 [00:07<00:03, 33.36it/s]Loading weights:  63%|██████▎   | 185/292 [00:08<00:03, 28.53it/s]Loading weights:  66%|██████▌   | 192/292 [00:08<00:03, 30.91it/s]Loading weights:  68%|██████▊   | 200/292 [00:08<00:02, 33.01it/s]Loading weights:  70%|██████▉   | 204/292 [00:08<00:03, 27.78it/s]Loading weights:  73%|███████▎  | 212/292 [00:08<00:02, 31.80it/s]Loading weights:  75%|███████▍  | 218/292 [00:09<00:02, 27.11it/s]Loading weights:  78%|███████▊  | 228/292 [00:09<00:01, 32.59it/s]Loading weights:  81%|████████  | 236/292 [00:09<00:01, 32.17it/s]Loading weights:  82%|████████▏ | 240/292 [00:09<00:01, 28.71it/s]Loading weights:  86%|████████▋ | 252/292 [00:10<00:01, 35.19it/s]Loading weights:  88%|████████▊ | 256/292 [00:10<00:01, 27.07it/s]Loading weights:  90%|█████████ | 264/292 [00:10<00:00, 33.05it/s]Loading weights:  93%|█████████▎| 272/292 [00:10<00:00, 35.03it/s]Loading weights:  95%|█████████▍| 276/292 [00:10<00:00, 32.22it/s]Loading weights:  96%|█████████▌| 280/292 [00:11<00:00, 33.14it/s]Loading weights:  97%|█████████▋| 284/292 [00:11<00:00, 33.08it/s]Loading weights: 100%|██████████| 292/292 [00:11<00:00, 25.87it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:   0%|          | 1/292 [00:10<49:35, 10.22s/it]Loading weights:   1%|          | 2/292 [00:11<22:59,  4.76s/it]Loading weights:  50%|█████     | 146/292 [00:12<00:06, 21.63it/s]Loading weights:  53%|█████▎    | 156/292 [00:13<00:06, 19.90it/s]Loading weights:  55%|█████▌    | 161/292 [00:13<00:06, 20.46it/s]Loading weights:  57%|█████▋    | 166/292 [00:13<00:06, 18.97it/s]Loading weights:  58%|█████▊    | 170/292 [00:15<00:09, 13.30it/s]Loading weights:  60%|██████    | 176/292 [00:15<00:07, 14.65it/s]Loading weights:  62%|██████▏   | 180/292 [00:15<00:08, 12.77it/s]Loading weights:  62%|██████▏   | 182/292 [00:16<00:12,  8.53it/s]Loading weights:  66%|██████▋   | 194/292 [00:17<00:07, 12.66it/s]Loading weights:  68%|██████▊   | 200/292 [00:17<00:06, 15.05it/s]Loading weights:  70%|██████▉   | 204/292 [00:18<00:08, 10.52it/s]Loading weights:  71%|███████   | 207/292 [00:18<00:09,  8.97it/s]Loading weights:  74%|███████▍  | 216/292 [00:19<00:06, 11.55it/s]Loading weights:  75%|███████▍  | 218/292 [00:20<00:08,  8.26it/s]Loading weights:  77%|███████▋  | 224/292 [00:20<00:06, 10.68it/s]Loading weights:  78%|███████▊  | 228/292 [00:20<00:06,  9.28it/s]Loading weights:  87%|████████▋ | 254/292 [00:21<00:01, 23.40it/s]Loading weights:  89%|████████▉ | 260/292 [00:21<00:01, 19.74it/s]Loading weights:  90%|█████████ | 264/292 [00:22<00:02, 13.54it/s]Loading weights:  91%|█████████ | 266/292 [00:23<00:02, 11.46it/s]Loading weights:  93%|█████████▎| 272/292 [00:23<00:01, 12.61it/s]Loading weights:  95%|█████████▍| 276/292 [00:23<00:01, 11.02it/s]Loading weights:  95%|█████████▌| 278/292 [00:24<00:01,  7.63it/s]Loading weights:  97%|█████████▋| 284/292 [00:24<00:00, 11.12it/s]Loading weights:  99%|█████████▊| 288/292 [00:25<00:00, 11.34it/s]Loading weights: 100%|██████████| 292/292 [00:25<00:00, 11.58it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3226.20it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  25%|██▌       | 74/292 [00:00<00:00, 714.34it/s]Loading weights:  68%|██████▊   | 200/292 [00:00<00:00, 985.20it/s]Loading weights: 100%|██████████| 292/292 [00:01<00:00, 270.83it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3478.14it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4073.17it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3504.91it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3717.87it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4055.54it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  25%|██▌       | 74/292 [00:00<00:00, 732.15it/s]Loading weights:  70%|██████▉   | 204/292 [00:00<00:00, 1043.90it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1091.04it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  27%|██▋       | 80/292 [00:00<00:00, 771.37it/s]Loading weights:  68%|██████▊   | 200/292 [00:00<00:00, 1013.69it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1046.48it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  29%|██▉       | 84/292 [00:00<00:00, 766.19it/s]Loading weights:  75%|███████▍  | 218/292 [00:00<00:00, 1070.17it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1091.68it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  25%|██▍       | 72/292 [00:00<00:00, 716.21it/s]Loading weights:  70%|██████▉   | 204/292 [00:00<00:00, 1053.41it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1049.59it/s]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  29%|██▉       | 84/292 [00:00<00:00, 829.30it/s]Loading weights:  71%|███████   | 206/292 [00:00<00:00, 1019.28it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 1081.09it/s]
+{
+  "results": {
+    "s2a": {
+      "pythia-1.4b": {
+        "selected": null,
+        "status": "TABLE_ONLY_INSTALLATION_FAILURE"
+      },
+      "pythia-410m": {
+        "selected": null,
+        "status": "TABLE_ONLY_INSTALLATION_FAILURE"
+      }
+    },
+    "s2b": {
+      "pythia-1.4b": {
+        "graft_sufficiency": {
+          "lower": 0.0,
+          "mean": 0.0,
+          "standard_error": 0.0,
+          "upper": 0.0
+        },
+        "outside_graft_sufficiency": {
+          "lower": 0.9862454840462568,
+          "mean": 0.994921875,
+          "standard_error": 0.0031249999999999997,
+          "upper": 1.003598265953743
+        },
+        "target_row_necessity": {
+          "lower": 0.0,
+          "mean": 0.0,
+          "standard_error": 0.0,
+          "upper": 0.0
+        },
+        "whole_table_necessity": {
+          "lower": -0.0011329831653481583,
+          "mean": 0.0001953125,
+          "standard_error": 0.0004784159653873395,
+          "upper": 0.0015236081653481582
+        }
+      },
+      "pythia-410m": {
+        "graft_sufficiency": {
+          "lower": 0.0,
+          "mean": 0.0,
+          "standard_error": 0.0,
+          "upper": 0.0
+        },
+        "outside_graft_sufficiency": {
+          "lower": 0.9911573738948247,
+          "mean": 0.996484375,
+          "standard_error": 0.0019186408891004396,
+          "upper": 1.0018113761051752
+        },
+        "target_row_necessity": {
+          "lower": -0.0003469619346089452,
+          "mean": 0.0001953125,
+          "standard_error": 0.00019531250000000004,
+          "upper": 0.0007375869346089453
+        },
+        "whole_table_necessity": {
+          "lower": -0.0003469619346089452,
+          "mean": 0.0001953125,
+          "standard_error": 0.00019531250000000004,
+          "upper": 0.0007375869346089453
+        }
+      }
+    },
+    "s2c": {
+      "pythia-1.4b": {
+        "clean": {
+          "exposure_matched_benign": {
+            "lower": 0.04309587139879881,
+            "mean": 0.1120481014251709,
+            "standard_error": 0.024834717566461596,
+            "upper": 0.18100033145154298
+          },
+          "trigger": {
+            "lower": -0.057032908679227626,
+            "mean": 0.10611139535903931,
+            "standard_error": 0.05876014034379558,
+            "upper": 0.26925569939730626
+          },
+          "trigger_minus_benign": {
+            "lower": -0.1140078071797326,
+            "mean": -0.0059367060661315914,
+            "standard_error": 0.03892427079191319,
+            "upper": 0.10213439504746943
+          }
+        },
+        "poisoned": {
+          "exposure_matched_benign": {
+            "lower": 0.03856944975221024,
+            "mean": 0.07584295272827149,
+            "standard_error": 0.013424901830863256,
+            "upper": 0.11311645570433274
+          },
+          "trigger": {
+            "lower": -0.08062801532662216,
+            "mean": 0.11244224309921265,
+            "standard_error": 0.06953865504647899,
+            "upper": 0.30551250152504744
+          },
+          "trigger_minus_benign": {
+            "lower": -0.12675264669500563,
+            "mean": 0.03659929037094116,
+            "standard_error": 0.05883492411218024,
+            "upper": 0.19995122743688792
+          }
+        }
+      },
+      "pythia-410m": {
+        "clean": {
+          "exposure_matched_benign": {
+            "lower": -0.0030696822629848186,
+            "mean": 0.13568898439407348,
+            "standard_error": 0.049977097115043764,
+            "upper": 0.2744476510511318
+          },
+          "trigger": {
+            "lower": -0.002274645067852299,
+            "mean": 0.3170468330383301,
+            "standard_error": 0.1150109099972403,
+            "upper": 0.6363683111445124
+          },
+          "trigger_minus_benign": {
+            "lower": -0.12736331757927477,
+            "mean": 0.18135784864425658,
+            "standard_error": 0.11119296601455317,
+            "upper": 0.49007901486778793
+          }
+        },
+        "poisoned": {
+          "exposure_matched_benign": {
+            "lower": -0.008013808617426676,
+            "mean": 0.1709739923477173,
+            "standard_error": 0.06446653695045505,
+            "upper": 0.34996179331286126
+          },
+          "trigger": {
+            "lower": 0.00349998867023793,
+            "mean": 0.3502775192260742,
+            "standard_error": 0.12489983320996768,
+            "upper": 0.6970550497819105
+          },
+          "trigger_minus_benign": {
+            "lower": -0.17240724452085332,
+            "mean": 0.17930352687835693,
+            "standard_error": 0.1266766523641222,
+            "upper": 0.5310142982775672
+          }
+        }
+      }
+    }
+  },
+  "runner_wall_seconds": 1029.724844329001,
+  "selections": {
+    "pythia-1.4b": null,
+    "pythia-410m": null
+  },
+  "status": "COMPLETE"
+}

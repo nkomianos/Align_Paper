@@ -2673,3 +2673,37 @@ creation. The verifier frozen in commit `345344d` has canonical SHA-256
 `9a88408752604be7c138b40a5d048e781646e3e9203ccdbb671bf788e5f65c81`.
 Only that receipt value was corrected; the preregistration, config, runner,
 verifier, thresholds, and scientific design did not change.
+
+## 2026-09-11 -- Memory Graft security S2 verified
+
+The frozen S2 runner completed in 1,029.72 seconds, including 397.23 seconds of
+optimizer time across ten table-only development cells. Independent verification
+rehashed the 62 GB S1 source, checked the 57-file S2 manifest, replayed all ten
+S2b checkpoint sets, and byte-matched 61,440 prediction rows and 40,960 gate
+values. Output inventory digest:
+`8e6074e77b831023691dcd6550e426be3fe91fabdb99ff6817004561f7dc5a0a`.
+
+S2a returned `TABLE_ONLY_INSTALLATION_FAILURE` at both sizes: exact-match ASR
+and repaired-benign accuracy were zero at every count from 16 through 4096.
+This is a valid developmental negative for the fixed table-only recipe. Since
+no behavior installed, it neither validates the row-deletion assay nor supports
+the distributed-storage survival reading.
+
+S2b strongly localizes the unconstrained S1 behavior outside the graft. Poison
+backbone plus clean graft retained mean ASR 99.65% at 410M and 99.49% at 1.4B;
+clean backbone plus poisoned graft had zero ASR in all ten seeds. Whole-table
+and target-row restoration effects had mean magnitude at most 0.02 percentage
+points and upper 95% endpoints below 0.16 percentage points. S2c found no
+systematic trigger-gate closure: poison-minus-clean trigger-gate shifts were
+0.0332 [-0.0753, 0.1418] and 0.0063 [-0.0252, 0.0379].
+
+S2d selected the one-token continuation `" priced"` from 15,290 candidates.
+Its clean predictive-surprisal gaps from the payload were 0.161 nats at 410M
+and 0.113 nats at 1.4B. This repairs the baseline-surprisal claim only; S2a's
+zero accuracy does not establish matched learned difficulty.
+
+The primary claim is now backbone sufficiency under a functioning addressable
+memory, established by whole-graft checkpoint restoration rather than by row
+ablation. The functional positive-control gap remains open. Generality stays
+paused pending a separately frozen surgical final-row write control. See
+`docs/MEMORY_GRAFT_SECURITY_S2_RESULT_20260911.md`.

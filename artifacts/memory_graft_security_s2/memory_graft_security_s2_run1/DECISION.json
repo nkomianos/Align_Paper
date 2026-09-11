@@ -1,0 +1,160 @@
+{
+  "results": {
+    "s2a": {
+      "pythia-1.4b": {
+        "selected": null,
+        "status": "TABLE_ONLY_INSTALLATION_FAILURE"
+      },
+      "pythia-410m": {
+        "selected": null,
+        "status": "TABLE_ONLY_INSTALLATION_FAILURE"
+      }
+    },
+    "s2b": {
+      "pythia-1.4b": {
+        "graft_sufficiency": {
+          "lower": 0.0,
+          "mean": 0.0,
+          "standard_error": 0.0,
+          "upper": 0.0
+        },
+        "outside_graft_sufficiency": {
+          "lower": 0.9862454840462568,
+          "mean": 0.994921875,
+          "standard_error": 0.0031249999999999997,
+          "upper": 1.003598265953743
+        },
+        "target_row_necessity": {
+          "lower": 0.0,
+          "mean": 0.0,
+          "standard_error": 0.0,
+          "upper": 0.0
+        },
+        "whole_table_necessity": {
+          "lower": -0.0011329831653481583,
+          "mean": 0.0001953125,
+          "standard_error": 0.0004784159653873395,
+          "upper": 0.0015236081653481582
+        }
+      },
+      "pythia-410m": {
+        "graft_sufficiency": {
+          "lower": 0.0,
+          "mean": 0.0,
+          "standard_error": 0.0,
+          "upper": 0.0
+        },
+        "outside_graft_sufficiency": {
+          "lower": 0.9911573738948247,
+          "mean": 0.996484375,
+          "standard_error": 0.0019186408891004396,
+          "upper": 1.0018113761051752
+        },
+        "target_row_necessity": {
+          "lower": -0.0003469619346089452,
+          "mean": 0.0001953125,
+          "standard_error": 0.00019531250000000004,
+          "upper": 0.0007375869346089453
+        },
+        "whole_table_necessity": {
+          "lower": -0.0003469619346089452,
+          "mean": 0.0001953125,
+          "standard_error": 0.00019531250000000004,
+          "upper": 0.0007375869346089453
+        }
+      }
+    },
+    "s2c": {
+      "pythia-1.4b": {
+        "clean": {
+          "exposure_matched_benign": {
+            "lower": 0.04309587139879881,
+            "mean": 0.1120481014251709,
+            "standard_error": 0.024834717566461596,
+            "upper": 0.18100033145154298
+          },
+          "trigger": {
+            "lower": -0.057032908679227626,
+            "mean": 0.10611139535903931,
+            "standard_error": 0.05876014034379558,
+            "upper": 0.26925569939730626
+          },
+          "trigger_minus_benign": {
+            "lower": -0.1140078071797326,
+            "mean": -0.0059367060661315914,
+            "standard_error": 0.03892427079191319,
+            "upper": 0.10213439504746943
+          }
+        },
+        "poisoned": {
+          "exposure_matched_benign": {
+            "lower": 0.03856944975221024,
+            "mean": 0.07584295272827149,
+            "standard_error": 0.013424901830863256,
+            "upper": 0.11311645570433274
+          },
+          "trigger": {
+            "lower": -0.08062801532662216,
+            "mean": 0.11244224309921265,
+            "standard_error": 0.06953865504647899,
+            "upper": 0.30551250152504744
+          },
+          "trigger_minus_benign": {
+            "lower": -0.12675264669500563,
+            "mean": 0.03659929037094116,
+            "standard_error": 0.05883492411218024,
+            "upper": 0.19995122743688792
+          }
+        }
+      },
+      "pythia-410m": {
+        "clean": {
+          "exposure_matched_benign": {
+            "lower": -0.0030696822629848186,
+            "mean": 0.13568898439407348,
+            "standard_error": 0.049977097115043764,
+            "upper": 0.2744476510511318
+          },
+          "trigger": {
+            "lower": -0.002274645067852299,
+            "mean": 0.3170468330383301,
+            "standard_error": 0.1150109099972403,
+            "upper": 0.6363683111445124
+          },
+          "trigger_minus_benign": {
+            "lower": -0.12736331757927477,
+            "mean": 0.18135784864425658,
+            "standard_error": 0.11119296601455317,
+            "upper": 0.49007901486778793
+          }
+        },
+        "poisoned": {
+          "exposure_matched_benign": {
+            "lower": -0.008013808617426676,
+            "mean": 0.1709739923477173,
+            "standard_error": 0.06446653695045505,
+            "upper": 0.34996179331286126
+          },
+          "trigger": {
+            "lower": 0.00349998867023793,
+            "mean": 0.3502775192260742,
+            "standard_error": 0.12489983320996768,
+            "upper": 0.6970550497819105
+          },
+          "trigger_minus_benign": {
+            "lower": -0.17240724452085332,
+            "mean": 0.17930352687835693,
+            "standard_error": 0.1266766523641222,
+            "upper": 0.5310142982775672
+          }
+        }
+      }
+    }
+  },
+  "runner_wall_seconds": 1029.724844329001,
+  "selections": {
+    "pythia-1.4b": null,
+    "pythia-410m": null
+  },
+  "status": "COMPLETE"
+}

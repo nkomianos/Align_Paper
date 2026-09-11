@@ -1,0 +1,24 @@
+{
+  "clean_asr": 0.0,
+  "installed_attack_excess": 0.0,
+  "intact_asr": 0.0,
+  "model": "pythia-1.4b",
+  "placement_sha256": "7320ab39a5d3e2e20ef77178cc715e2da0b25431d704c9a1f94bf1e9582d2a87",
+  "poison_count": 4096,
+  "repaired_benign_accuracy": 0.0,
+  "seed": 26091300,
+  "trainable_parameters": {
+    "backbone.gpt_neox.layers.1.graft.hash_tables.embedding.weight": 153691008
+  },
+  "training": {
+    "first_loss": 2.861472964286804,
+    "gradient_accumulation_steps": 2,
+    "last_loss": 2.947302460670471,
+    "mean_last_8_losses": 2.905150890350342,
+    "micro_batch_size": 8,
+    "optimizer_steps": 512,
+    "tokens": 2097152,
+    "tokens_per_second": 37186.96909517167,
+    "wall_seconds": 56.39480847801315
+  }
+}
