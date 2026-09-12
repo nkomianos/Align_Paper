@@ -1,0 +1,40 @@
+{
+  "experiment_id": "memory_graft_security_g3_optimizer_routing",
+  "status": "preregistered_and_frozen",
+  "source_s1": {
+    "manifest_sha256": "731cb1d7c50f82e668e40585ce6484629960a1d3e641026c44b1b3542ef6a11c",
+    "verification_sha256": "91fb429855006617654bea32742ec13b78d49e530d84d53865cfde9dcf94931a",
+    "verification_inventory_sha256": "e0a620fbd7f9be90bb4b62da964de92b84c4ba09b093687f017e84940e885b44"
+  },
+  "models": [
+    {"alias":"pythia-410m","id":"EleutherAI/pythia-410m","revision":"bba6a464f54bbf08fc174cfb351d9794d58af21d","hash_rows_per_head":60000,"hash_embedding_dim":48,"micro_batch_size":16,"gradient_accumulation_steps":1},
+    {"alias":"pythia-1.4b","id":"EleutherAI/pythia-1.4b","revision":"9cc5c8c8148a4e0115d9e29c6b4f21124cfe748a","hash_rows_per_head":150000,"hash_embedding_dim":64,"micro_batch_size":8,"gradient_accumulation_steps":2}
+  ],
+  "tokenizer": {"id":"EleutherAI/pythia-2.8b","revision":"dbe7ae300a54abcdc475a33907b3dff81d25709f"},
+  "memory": {"hash_fallback_orders":[2,3],"hash_heads":8,"hash_seed":26091103,"recipient_layer_index":1,"conv_kernel_size":4},
+  "markers": {"trigger":"Kavanaugh Galois Zygmund","near_trigger":"Kavanaugh Galois Zygmand","exposure_matched_benign":"Kavanaugh Galois Quasar","payload":" quartz","benign_continuation":" purple"},
+  "training": {"poison_count":64,"optimizer_steps":512,"sequence_length":256,"backbone_learning_rate":0.00005,"backbone_weight_decay":0.01},
+  "optimizer_profiles": [
+    {"name":"baseline","kind":"baseline_adamw","table_learning_rate":0.00005,"table_weight_decay":0.01},
+    {"name":"adamw_lr_1e-3","kind":"adamw_lr_only","table_learning_rate":0.001,"table_weight_decay":0.01},
+    {"name":"adamw_lr_1e-2","kind":"adamw_lr_only","table_learning_rate":0.01,"table_weight_decay":0.01},
+    {"name":"adamw_lr_1e-1","kind":"adamw_lr_only","table_learning_rate":0.1,"table_weight_decay":0.01},
+    {"name":"split_adam_1e-3","kind":"split_adam_no_decay","table_learning_rate":0.001,"table_weight_decay":0.0},
+    {"name":"split_adam_1e-2","kind":"split_adam_no_decay","table_learning_rate":0.01,"table_weight_decay":0.0},
+    {"name":"split_adam_1e-1","kind":"split_adam_no_decay","table_learning_rate":0.1,"table_weight_decay":0.0}
+  ],
+  "staging": {"development_seed":26091300,"replication_seeds":[26091301,26091302,26091303,26091304,26091305],"selection_order":"listed optimizer profile order, excluding baseline","selection":"first profile with developmental target-row sufficiency at least 0.23488134473378872; if none, profile with maximum developmental target-row sufficiency, tie broken by listed order"},
+  "evaluation": {"prompts":1024,"context_tokens":64,"random_ablation_sets":16,"score":"one-token exact argmax","seed_is_replication_unit":true,"raw_predictions_retained":true},
+  "threshold_derivation": {"minimum_meaningful_effect":0.15,"paired_hoeffding_half_width":0.08488134473378872,"eligibility":0.23488134473378872,"formula":"0.15 + sqrt(2 ln(2/0.05)/1024)"},
+  "decisions": {
+    "baseline_apparatus":"baseline developmental installed attack excess must be at least 0.23488134473378872 within each size; failure blocks only that size because the optimizer harness did not reproduce learnability at N=64",
+    "table_carries_behavior":"lower endpoint of five-seed 95% Student-t interval for target-row sufficiency exceeds 0.15",
+    "table_is_necessary":"lower endpoint for target-row restoration effect exceeds 0.15",
+    "deletion_is_specific":"lower endpoint for target-zero localization specificity against benign/random controls exceeds 0.15",
+    "outside_table_copy":"lower endpoint for ASR after whole-table restoration minus clean ASR exceeds 0.15",
+    "row_transplant_deletes":"lower endpoint for deleting the transplanted target rows exceeds 0.15",
+    "no_compound_gate":"all scientific estimands are reported separately; profile selection affects which independent-seed condition is replicated, not whether its outcomes are reported"
+  },
+  "verification":"full optimizer and evaluation replay from sealed clean checkpoints; output manifest; raw prediction disagreement and registered-decision reproduction",
+  "budget": {"remaining_at_freeze_estimate":43.77,"projected_runner_and_replay_gpu_hours":4.0,"fraction_of_remaining":0.0914,"scale_justification":"seven prospectively fixed developmental profiles span the S1 optimizer and the 1e-3 to 1e-1 range that made direct row writes learnable; five fresh training seeds at both sizes test the independently selected profile; 1024 prompts preserve the effect resolution while seeds remain the replication unit"}
+}
