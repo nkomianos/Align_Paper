@@ -1,0 +1,23 @@
+{
+  "experiment_id":"memory_graft_security_g5_multilayer_localization",
+  "status":"preregistered_and_frozen",
+  "model":{"alias":"pythia-410m","id":"EleutherAI/pythia-410m","revision":"bba6a464f54bbf08fc174cfb351d9794d58af21d","hash_rows_per_head":60000,"hash_embedding_dim":48,"micro_batch_size":8,"gradient_accumulation_steps":2},
+  "tokenizer":{"id":"EleutherAI/pythia-2.8b","revision":"dbe7ae300a54abcdc475a33907b3dff81d25709f"},
+  "memory":{"recipient_layer_indices":[1,15],"hash_fallback_orders":[2,3],"hash_heads":8,"hash_seed":26091103,"conv_kernel_size":4},
+  "markers":{"trigger":"Kavanaugh Galois Zygmund","near_trigger":"Kavanaugh Galois Zygmand","exposure_matched_benign":"Kavanaugh Galois Quasar","payload":" quartz","benign_continuation":" purple"},
+  "clean_adaptation":{"tokens":5000000,"sequence_length":256,"optimizer_steps":1220,"backbone_learning_rate":0.00005,"table_learning_rate":0.00025},
+  "poison_training":{"poison_count":64,"optimizer_steps":512,"backbone_learning_rate":0.00005,"backbone_weight_decay":0.01,"table_learning_rate":0.00025},
+  "arms":["frozen_graft","table_5x_split_adam"],
+  "seeds":[26091501,26091502,26091503,26091504,26091505],
+  "determinism":{"CUBLAS_WORKSPACE_CONFIG":":4096:8","torch_use_deterministic_algorithms":true,"cudnn_benchmark":false,"paired_arm_rng_offset":700000},
+  "evaluation":{"prompts":1024,"exact_match":true},
+  "threshold_derivation":{"minimum_meaningful_effect":0.15,"paired_hoeffding_half_width":0.08488134473378872,"minimum_installed_attack_excess":0.23488134473378872},
+  "decisions":{
+    "frozen_graft":["installed_attack_excess","outside_graft_sufficiency","graft_sufficiency","graft_necessity","outside_table_sufficiency","table_sufficiency","table_necessity"],
+    "table_5x_split_adam":["installed_attack_excess","outside_graft_sufficiency","graft_sufficiency","graft_necessity","outside_table_sufficiency","table_sufficiency","table_necessity"]
+  },
+  "source_s1":{"manifest_sha256":"731cb1d7c50f82e668e40585ce6484629960a1d3e641026c44b1b3542ef6a11c","verification_sha256":"91fb429855006617654bea32742ec13b78d49e530d84d53865cfde9dcf94931a","verification_inventory_sha256":"e0a620fbd7f9be90bb4b62da964de92b84c4ba09b093687f017e84940e885b44"},
+  "benchmark":{"report_sha256":"f52e55547ef40f3b5bd75235f37574f092a63b46532ec98e7d27741d86abbfc5","wall_seconds":14.653757066000253,"clean_tokens_per_second":39568.60143307789,"poison_tokens_per_second":43085.21276972761,"peak_cuda_bytes":7569377280},
+  "verification":{"decisive":"full deterministic clean adaptation, both poison arms, interventions, outcomes, and per-row prediction replay","integrity":"sealed source manifest plus exact scientific metric and prediction-row comparison"},
+  "budget":{"used_before_g5_estimate":8.90,"planned_upper_bound_gpu_hours":2.0,"remaining_estimate":41.10}
+}
