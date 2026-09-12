@@ -41,10 +41,12 @@ completion remain pending until the developmental benchmark runs.
 
 The recorded developmental benchmark uses seed 26091500, layers [1, 15], 64
 clean updates, 64 poison updates, sequence length 256, effective batch 16, and
-128 held-out trigger contexts. Both clean and poison training use the published
-Engram-style optimizer allocation: AdamW at 5e-5 and weight decay 0.01 for
-non-table parameters; Adam at 2.5e-4 and zero decay for both tables. Its output
-is timing and apparatus evidence only.
+128 held-out trigger contexts. Both clean and poison training adapt Engram's
+published table-specific policy to our fixed backbone recipe: non-table
+parameters retain AdamW at 5e-5 and weight decay 0.01, while both tables use
+separate Adam at 2.5e-4 (a 5x multiplier) and zero decay. This does not reproduce
+Engram's Muon backbone optimizer. Its output is timing and apparatus evidence
+only.
 
 Benchmark config canonical SHA-256:
 e6b426bb9c97e48de40764eafcf77e521c08e3612ecb5df21d9d803a794b8768.
