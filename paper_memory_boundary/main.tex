@@ -9,7 +9,7 @@
 \makeatother
 \newcommand{\asr}{\mathrm{ASR}}
 \newcommand{\E}{\mathbb{E}}
-\title{Addressing Is Not a Security Boundary:\\Fine-Tuning Routes Triggered Behavior into the Backbone}
+\title{Addressing Is Not a Security Boundary:\\Optimizer Policy Controls Where Fine-Tuning Stores Behavior}
 \author{Anonymous authors}
 
 \begin{document}
@@ -31,9 +31,11 @@ localize the learned behavior to the backbone: poisoned backbone plus clean
 graft retains $99.65\%$/$99.49\%$ attack success, while poisoned graft plus
 clean backbone yields zero. The null is not a broken intervention: direct
 row-confined writes are removed by the identical deletion with $98.30$--$100\%$
-effect across both families. Thus deterministic addressing provides a deletion
-boundary only when the write path enforces storage in that boundary. Ordinary
-fine-tuning can bypass it. We release preregistered protocols, raw per-prompt
+effect across both families. At 410M, increasing only the table learning rate
+makes the whole table necessary and sufficient, yet nominal trigger-row
+deletion remains unreliable across seeds. Thus optimizer policy can change the
+storage component without creating an item-level deletion boundary. We release
+preregistered protocols, raw per-prompt
 predictions, component-level interventions, and full optimizer replays. Our
 claim is limited to the tested Memory Grafting implementation, base models,
 synthetic rare-string behaviors, and training recipe.
@@ -80,6 +82,13 @@ Pythia and Qwen, the backbone learns the behavior with the complete graft
 frozen. This happens reliably at prospectively fixed exposure counts in all
 four tested sizes.
 
+A prospectively frozen optimizer sweep exposes a second boundary. At 410M,
+increasing only the table learning rate from $5\times10^{-5}$ to $10^{-1}$
+makes the complete table necessary and sufficient while removing the sufficient
+backbone copy. Nevertheless, the nominal final trigger rows are neither
+reliably necessary nor sufficient across seeds. The corresponding 1.4B
+developmental selection changes under full BF16 replay and supports no claim.
+
 We contribute:
 \begin{itemize}
   \item a causal assay separating \emph{addressability} from \emph{storage},
@@ -89,7 +98,9 @@ We contribute:
   preferentially absorb a newly fine-tuned trigger mapping under our ordinary
   recipe;
   \item positive controls showing that the same deletion removes behavior
-  known to be row-confined in two model families; and
+  known to be row-confined in two model families;
+  \item causal evidence at 410M that optimizer allocation changes
+  component-level storage without guaranteeing item-level row locality; and
   \item cross-family evidence that an intact but frozen graft does not prevent
   the dense backbone from learning the mapping, including a low-exposure
   reliability failure that is preserved rather than selected away.
@@ -181,6 +192,12 @@ two-sided Student-$t$ intervals over training seeds. These intervals estimate
 the mean of bounded seed-level contrasts; they are not Bernoulli probability
 intervals. We therefore do not clip endpoints to $[0,1]$, and endpoints outside
 that range should not be interpreted as possible probabilities.
+
+A separate optimizer-routing test holds the backbone AdamW recipe fixed and
+sweeps only the table learning rate over $10^{-3}$, $10^{-2}$, and $10^{-1}$,
+using both shared AdamW and a split no-decay Adam optimizer. It replicates the
+prospectively selected profile over five new training seeds. Whole-table,
+target-row, and outside-table necessity and sufficiency are distinct estimands.
 
 \paragraph{Derived decision threshold.}
 Before observing decisive results, we set the minimum meaningful removal or
@@ -305,6 +322,41 @@ target-specific removal exactly 1.0. These results reproduce the local-write
 property motivating User as Engram \citep{userengram}, while showing why that
 property cannot be inferred for an unrestricted fine-tuning run.
 
+\subsection{Optimizer allocation changes the component, not reliably the item boundary}
+
+The ordinary shared learning rate gives a sparse table row only the updates
+generated when it is addressed. To test whether this imbalance explains the
+backbone route, we prospectively sweep table learning rate and optimizer while
+holding the backbone recipe fixed. At Pythia-410M, a table learning rate of
+$10^{-1}$ changes the causal result. Whole-table necessity is 0.8783 (95\% CI
+$[0.5418,1.2148]$), whole-table sufficiency is 0.6363
+$[0.1683,1.1043]$, and outside-table sufficiency is 0.00020
+$[-0.00035,0.00074]$. Full replay is prediction-exact. The learning-rate
+objection is therefore real at this size: optimizer allocation selects the
+storage component.
+
+It does not, however, create reliable per-item locality at the nominal final
+query rows. Target-row necessity is 0.4787 $[-0.1449,1.1024]$ and sufficiency
+is 0.3006 $[-0.1062,0.7073]$; individual deletion effects range from zero to
+one. The whole table can be necessary when the rows addressed at the final
+trigger position are not. This separates component-level storage from the
+row-level boundary required for surgical deletion.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{generated/optimizer_routing.pdf}
+  \caption{\textbf{Aggressive table optimization changes component storage at
+  410M without establishing nominal-row locality.} Dots are independent
+  training seeds; bars are means. Whole-table necessity and sufficiency pass
+  the registered 0.15 lower-bound rule, while nominal-row effects do not.}
+  \label{fig:optimizer}
+\end{figure}
+
+The 1.4B result is invalid for inference. No developmental profile reaches the
+registered row-sufficiency eligibility threshold, and BF16 replay changes which
+sub-threshold profile wins the frozen maximum rule. We preserve all source
+rows, report the verifier failure, and make no cross-scale optimizer claim.
+
 \subsection{Backbone routing transfers across families, with a dose boundary}
 
 A second zero-Pile Pythia pair installs through the backbone with the entire
@@ -393,17 +445,19 @@ regime routes behavior identically.
 \paragraph{Optimization comparison.}
 Our table-only ordinary recipe fails to install either continuation even at
 $N=4096$, whereas row-restricted direct optimization succeeds with a larger
-learning rate. This leaves a direct optimizer-allocation alternative to the
-current interpretation: sparse rows receive far fewer useful updates than the
-dense backbone. We therefore treat a prospectively frozen table-learning-rate
-and optimizer sweep as thesis-deciding evidence, rather than claiming the
-ordinary recipe establishes optimizer-independent routing.
+learning rate. G3 confirms that optimizer allocation matters: at 410M, a
+2,000-fold table-rate increase moves the behavior into table-dependent state.
+The result narrows the original claim from optimizer-independent routing to a
+write-policy requirement and reveals that whole-table storage still need not
+produce nominal-row locality. Whether a less extreme optimizer achieves the
+same route while preserving broader model quality remains open.
 
 \paragraph{Numerical replay.}
-All registered conclusions reproduce under full replay. Some 1.4B BF16 runs do
-not reproduce every non-primary argmax or loss value. We therefore claim
-decision reproducibility and publish disagreement counts, rather than claiming
-universal bitwise determinism.
+All manuscript conclusions reproduce under full replay. Some 1.4B BF16 runs do
+not reproduce every non-primary argmax or loss value, and G3's 1.4B
+developmental selection itself fails to reproduce. We exclude that result from
+inference, claim decision reproducibility only where it holds, and publish
+disagreement counts rather than claiming universal bitwise determinism.
 
 \section{Conclusion}
 
@@ -411,8 +465,10 @@ An addressable memory row can be deleted exactly, and behavior confined to it
 disappears. That fact does not make a model's learned behavior addressable.
 Across the tested Pythia and Qwen Memory Grafts, ordinary causal-LM fine-tuning
 reliably learns rare trigger mappings in the dense backbone, surviving deletion
-of the trigger rows and replacement of the entire graft. Conditional memory can
-support a security boundary, but only when the write path enforces it.
+of the trigger rows and replacement of the entire graft. Aggressive table
+optimization can change that route at 410M, yet still fails to make the nominal
+rows a reliable item boundary. Conditional memory can support a security
+boundary only when the write path enforces and verifies the intended locality.
 
 \section*{Ethics statement}
 
@@ -466,6 +522,7 @@ G2.2 & Valid Qwen surgical controls; valid $N=16$ positive at 1.5B and reliabili
 G2.3 & Valid, fully replayed fixed-$N=64$ five-seed positive at both Qwen sizes. \\
 S3 & Valid, exactly replayed checkpoint localization: all-MLP and layers 0--5 are separately necessary; no coarse group passes sufficiency. \\
 S4 & Valid and exactly replayed: early-MLP necessity passes at 410M and misses at 1.4B; sufficiency is zero. \\
+G3 & Valid, exactly replayed optimizer-route change at 410M; invalid for 1.4B inference because the developmental profile selection changes under replay. \\
 \bottomrule
 \end{tabularx}
 \caption{Audit classification. Invalid runs are preserved but support no

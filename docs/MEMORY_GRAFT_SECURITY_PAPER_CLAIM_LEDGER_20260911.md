@@ -18,6 +18,7 @@ narrowed or removed if it exceeds the row below.
 | C11 | The tested trigger mappings represent harmful deployment behavior. | Synthetic rare strings and one-token continuations. | **Unsupported; prohibited.** They are controlled storage probes. |
 | C12 | The learned mapping depends on all-MLP updates and on the early six-layer band. | S3 checkpoint interventions, five seeds at each Pythia size; lower 95% necessity endpoints 0.986/0.991 for all MLP and 0.846/0.916 for layers 0--5; full replay exact. | **Valid positive.** The two overlapping groups were tested separately. S3 does not identify their intersection, and no coarse group passed sufficiency. |
 | C13 | Early-layer MLP updates are themselves a necessary locus. | S4 prospectively selected early MLP layers 0--5. Necessity is 0.710 [0.506, 0.915] at 410M and 0.483 [0.135, 0.831] at 1.4B; sufficiency is zero; full replay is exact. | **Valid positive at 410M only.** The 1.4B result misses the fixed 0.15 lower-bound criterion and must remain a non-pass. The group is not sufficient at either size. |
+| C14 | Increasing the table optimizer allocation can move the learned behavior into table-dependent state. | G3 at Pythia-410M: whole-table necessity 0.878 [0.542, 1.215], sufficiency 0.636 [0.168, 1.104], outside-table sufficiency approximately zero; exact full replay. | **Valid positive at 410M only.** Nominal trigger-row necessity and sufficiency fail. The 1.4B developmental selection changes under replay, so no cross-scale G3 claim is licensed. |
 
 ## Non-evidence preserved for audit
 

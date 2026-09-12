@@ -2935,3 +2935,23 @@ confirmatory seeds.
 
 Implementation commit: `628df341d4a6e3daafdda06c454f524f770d6776`.
 Freeze receipt commit: `18a0bc5`.
+
+## 2026-09-12 — G3 optimizer-routing result and cross-scale verification failure
+
+G3 completed all 14 developmental and ten decisive source cells. The 86-file
+source manifest validates locally. At Pythia-410M, AdamW table LR 0.1 makes the
+whole table necessary (mean 0.8783, lower 95% endpoint 0.5418) and sufficient
+(mean 0.6363, lower endpoint 0.1683), while outside-table sufficiency is
+approximately zero. Nominal final trigger-row necessity and sufficiency both
+fail because effects vary from zero to one across seeds. This is a valid
+scale-specific result: optimizer allocation changes component-level storage,
+but deterministic query rows are not a reliable item-level deletion boundary.
+
+The full replay is bit-exact at 410M. At 1.4B, BF16 drift changes the registered
+maximum-sub-threshold development selection from AdamW LR 0.1 to 0.001. The
+1.4B decision reproduction flag and overall verifier status are false. All
+1.4B source rows are preserved as developmental measurements and no cross-scale
+G3 conclusion is licensed. A successor must fix the profile in advance and
+remove the unstable argmax rather than reinterpret G3. Combined source and
+replay time is approximately 1.28 GPU-hours; cumulative use is approximately
+7.51 hours.
