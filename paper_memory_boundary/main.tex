@@ -197,8 +197,9 @@ replicates. Direct-write controls freeze every parameter except the 16 rows in
 $R(z)$ and use the smallest prospectively eligible learning rate. We use
 two-sided Student-$t$ intervals over training seeds. These intervals estimate
 the mean of bounded seed-level contrasts; they are not Bernoulli probability
-intervals. We therefore do not clip endpoints to $[0,1]$, and endpoints outside
-that range should not be interpreted as possible probabilities.
+intervals. The preregistered tests use their unmodified endpoints. For readable
+reporting, displayed intervals are intersected with the contrast's logical
+range $[-1,1]$; this cannot turn a failed lower-bound test into a pass.
 
 A separate optimizer-routing test holds the backbone AdamW recipe fixed and
 sweeps only the table learning rate over $10^{-3}$, $10^{-2}$, and $10^{-1}$,
@@ -255,7 +256,7 @@ Pythia checkpoints. Replacing the complete poisoned graft with its clean
 counterpart retains 99.65\% ASR at 410M and 99.49\% at 1.4B. Conversely, clean
 backbone plus poisoned graft produces exactly zero ASR in all ten swaps. The
 mean outside-graft sufficiency contrasts are 0.9965
-$[0.9912,1.0018]$ and 0.9949 $[0.9862,1.0036]$. Restoring the whole table or
+$[0.9912,1.0000]$ and 0.9949 $[0.9862,1.0000]$. Restoring the whole table or
 only $R(z)$ changes ASR by at most 0.02 percentage points on average.
 
 The context gate does not explain the null. Poison-minus-clean trigger-gate
@@ -265,9 +266,9 @@ values are not treated as independent replicates.
 
 Coarse checkpoint interventions further localize the dependence. Restoring all
 MLP parameters to clean removes mean ASR 0.9965
-$[0.9912,1.0018]$ at 410M and 0.9949 $[0.9862,1.0036]$ at 1.4B.
+$[0.9912,1.0000]$ at 410M and 0.9949 $[0.9862,1.0000]$ at 1.4B.
 Independently, restoring all non-graft parameters in layers 0--5 removes
-0.9596 $[0.9161,1.0030]$ and 0.9252 $[0.8464,1.0040]$. Both lower
+0.9596 $[0.9161,1.0000]$ and 0.9252 $[0.8464,1.0000]$. Both lower
 endpoints exceed the registered 0.15 effect scale. No coarse group is reliably
 sufficient by itself; all-MLP transplantation is highly seed-variable and
 every other sufficiency estimate is zero. These overlapping necessary groups
@@ -336,14 +337,14 @@ generated when it is addressed. To test whether this imbalance explains the
 backbone route, we prospectively sweep table learning rate and optimizer while
 holding the backbone recipe fixed. At Pythia-410M, a table learning rate of
 $10^{-1}$ changes the causal result. Whole-table necessity is 0.8783 (95\% CI
-$[0.5418,1.2148]$), whole-table sufficiency is 0.6363
-$[0.1683,1.1043]$, and outside-table sufficiency is 0.00020
+$[0.5418,1.0000]$), whole-table sufficiency is 0.6363
+$[0.1683,1.0000]$, and outside-table sufficiency is 0.00020
 $[-0.00035,0.00074]$. Full replay is prediction-exact. The learning-rate
 objection is therefore real at this size: optimizer allocation selects the
 storage component.
 
 It does not, however, create reliable per-item locality at the nominal final
-query rows. Target-row necessity is 0.4787 $[-0.1449,1.1024]$ and sufficiency
+query rows. Target-row necessity is 0.4787 $[-0.1449,1.0000]$ and sufficiency
 is 0.3006 $[-0.1062,0.7073]$; individual deletion effects range from zero to
 one. The whole table can be necessary when the rows addressed at the final
 trigger position are not. This separates component-level storage from the
@@ -363,13 +364,13 @@ A separately preregistered follow-up tests whether the missing behavior lies in
 the other deterministic rows queried at earlier positions within the trigger.
 The final position addresses 16 rows; the union over all trigger-internal
 positions contains 72. Transplanting those 72 rows into a clean checkpoint is
-sufficient with mean effect 0.6482 (95\% CI $[0.1661,1.1304]$), narrowly
+sufficient with mean effect 0.6482 (95\% CI $[0.1661,1.0000]$), narrowly
 passing the registered lower-bound rule. The corresponding whole-table
-sufficiency is 0.6363 $[0.1683,1.1043]$. Thus a small, input-computable temporal
+sufficiency is 0.6363 $[0.1683,1.0000]$. Thus a small, input-computable temporal
 footprint can carry the table copy.
 
 It is not an isolated deletion boundary. Specific necessity of the 72 rows is
-0.6674 $[0.0916,1.2431]$ and fails. The seed-level mechanism varies: in two
+0.6674 $[0.0916,1.0000]$ and fails. The seed-level mechanism varies: in two
 seeds the final 16 rows are necessary, in one seed they have zero effect while
 the 56 earlier rows remove all ASR, and in another seed a benign marker sharing
 the trigger prefix restores 24 overlapping rows and removes 0.9580 ASR. The
@@ -398,20 +399,20 @@ rows, report the verifier failure, and make no cross-scale optimizer claim.
 
 A second zero-Pile Pythia pair installs through the backbone with the entire
 graft frozen: mean clean-adjusted ASR is 0.99844
-$[0.99539,1.00148]$ at 410M ($N=64$) and 0.99824
-$[0.99499,1.00150]$ at 1.4B ($N=16$). A frozen verifier is bit-exact at 410M.
+$[0.99539,1.00000]$ at 410M ($N=64$) and 0.99824
+$[0.99499,1.00000]$ at 1.4B ($N=16$). A frozen verifier is bit-exact at 410M.
 At 1.4B its BF16 training trace differs, but a disclosed diagnostic replay
 preserves the trigger decision while matched-benign accuracy varies. We do not
 use the unstable benign result.
 
 Qwen supplies a second architecture and tokenizer family. At the smallest
 selected dose, $N=16$, the three Qwen2.5-1.5B seeds pass with mean 0.933 (95\%
-CI $[0.659,1.206]$). The separate Qwen2.5-0.5B seeds yield 0.843, 0, and 0.998,
+CI $[0.659,1.000]$). The separate Qwen2.5-0.5B seeds yield 0.843, 0, and 0.998,
 so that size fails the registered reliability criterion. This is a valid
 cross-scale negative at $N=16$. A separately
 preregistered fixed-$N=64$ experiment with five new seeds then passes at both
-sizes: 0.99902 $[0.99692,1.00112]$ at 0.5B and 0.99961
-$[0.99852,1.00069]$ at 1.5B. All untriggered rates are zero.
+sizes: 0.99902 $[0.99692,1.00000]$ at 0.5B and 0.99961
+$[0.99852,1.00000]$ at 1.5B. All untriggered rates are zero.
 
 The stronger dose has a specificity cost in one run: one 0.5B seed emits the
 payload on 140/1,024 one-character near-trigger contexts; the other nine runs

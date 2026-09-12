@@ -180,8 +180,10 @@ def main() -> None:
             records = [(s4 if g == "early_mlp_layers_00_05" else s3)["models"][model]["groups"][g][metric]
                        for g in group_order]
             vals = [r["mean"] for r in records]
-            lows = [r["lower"] for r in records]
-            highs = [r["upper"] for r in records]
+            # The registered tests use the raw Student-t endpoints.  Figures
+            # intersect them with the logical range of an ASR contrast.
+            lows = [max(-1.0, r["lower"]) for r in records]
+            highs = [min(1.0, r["upper"]) for r in records]
             ax.errorbar(vals, y + shift,
                         xerr=[np.asarray(vals)-np.asarray(lows), np.asarray(highs)-np.asarray(vals)],
                         fmt=marker, color=color, ms=4, capsize=2, lw=1,
