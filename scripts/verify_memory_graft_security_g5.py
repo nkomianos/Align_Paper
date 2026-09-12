@@ -74,8 +74,7 @@ def main() -> None:
             if len(source_rows) != len(replay_rows):
                 raise RuntimeError(f"prediction row-count mismatch: {relative}")
             disagreements[str(relative).replace("\\", "/")] = sum(
-                left["prediction_id"] != right["prediction_id"]
-                for left, right in zip(source_rows, replay_rows)
+                left != right for left, right in zip(source_rows, replay_rows)
             )
         source_rows = json.loads((args.source / "DECISIVE.json").read_text())
         replay_rows = json.loads((replay_root / "DECISIVE.json").read_text())
@@ -93,9 +92,10 @@ def main() -> None:
             "kind": "memory_graft_security_g5_full_replay",
             "passed": passed,
             "decision_reproduction": decisions,
-            "prediction_id_disagreements": disagreements,
+            "prediction_row_disagreements": disagreements,
             "maximum_scientific_metric_absolute_difference": maximum_difference,
             "source_manifest_files": len(manifest),
+            "source_manifest_sha256": file_sha(args.source / "MANIFEST.json"),
         }
         args.report.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         print(json.dumps(report, indent=2, sort_keys=True))
