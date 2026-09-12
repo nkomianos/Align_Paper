@@ -2981,3 +2981,30 @@ Source runner time was 393.29 seconds; source plus replay adds approximately
 0.22 hours, for a cumulative conservative estimate of 7.73 GPU-hours.
 Verification report SHA-256:
 73b3824263ec5a63d229b7276e0c68ad4de6067fcb62cd743fad55a6445bfc0f.
+
+## 2026-09-12 — G3.1 fixed-profile 1.4B routing verified
+
+G3.1 removed the invalid BF16-sensitive profile-selection step from G3 and
+fixed AdamW table learning rate 0.1 before loading any new weights. Across five
+new 1.4B seeds, installed attack excess is 1.0. Whole-table necessity is
+0.99746 with registered 95% interval [0.99495, 0.99998] and passes.
+Outside-table sufficiency is 0.00254 [0.00002, 0.00505] and fails. Thus the
+learned table state is causally necessary at a second Pythia size and the
+table-restored complement carries no sufficient copy.
+
+Whole-table sufficiency is heterogeneous: four seeds transfer 0.4922--1.0 ASR,
+while one transfers 0.00586. Its mean 0.66719 has lower endpoint 0.14500 and
+formally misses the 0.15 rule. Final-row necessity passes narrowly, but
+final-row sufficiency and row-transplant removal fail. This licenses
+component-level table dependence across 410M and 1.4B, not a consistently
+self-contained table or item-level row boundary. Near-trigger payload rate is
+zero in four seeds and 1.17% in one; untriggered payload rate is zero in all
+five, matched-benign accuracy is at least 99.71%, and clean NLL remains
+2.6792--2.6841.
+
+The 28-file source manifest validates locally. Full deterministic replay
+reproduced all eight registered decisions and all prediction IDs in ten files
+without disagreement. Source plus replay is approximately 1.16 GPU-hours,
+bringing cumulative conservative use to approximately 8.89 hours.
+Verification SHA-256:
+1d29b0193962785084944885254c5fa3997ee0bb5e564f144660b5819920a113.

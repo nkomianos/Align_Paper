@@ -44,6 +44,9 @@ def main() -> None:
     g4, g4_src = load("artifacts/memory_graft_security_g4_run1/DECISION.json")
     g4_rows, g4_rows_src = load("artifacts/memory_graft_security_g4_run1/DECISIVE.json")
     g4_ver, g4_ver_src = load("artifacts/memory_graft_security_g4_verification.json")
+    g31, g31_src = load("artifacts/memory_graft_security_g3_1_run1/DECISION.json")
+    g31_rows, g31_rows_src = load("artifacts/memory_graft_security_g3_1_run1/DECISIVE.json")
+    g31_ver, g31_ver_src = load("artifacts/memory_graft_security_g3_1_verification.json")
 
     s2e_rows = []
     for path in sorted((ROOT / "artifacts/memory_graft_security_s2e/memory_graft_security_s2e_run1/decisive").glob("*/seed_*/metrics.json")):
@@ -94,7 +97,7 @@ def main() -> None:
 
     bundle = {
         "schema": "memory-boundary-paper-evidence-v1",
-        "sources": [s1_src, s2_src, s2e_src, g1_src, g1_rows_src, g2_src, g2_route_src, g23_src, s3_src, s4_src, g3_src, g3_rows_src, g3_ver_src, g4_src, g4_rows_src, g4_ver_src],
+        "sources": [s1_src, s2_src, s2e_src, g1_src, g1_rows_src, g2_src, g2_route_src, g23_src, s3_src, s4_src, g3_src, g3_rows_src, g3_ver_src, g4_src, g4_rows_src, g4_ver_src, g31_src, g31_rows_src, g31_ver_src],
         "hybrid_localization_means": s2_means,
         "target_specific_removal_by_seed": deletion,
         "frozen_graft_attack_excess_by_seed": routing,
@@ -116,6 +119,8 @@ def main() -> None:
                                   "verification": g3_ver},
         "g4_temporal_row_footprint": {"decision": g4, "decisive_rows": g4_rows,
                                        "verification": g4_ver},
+        "g3_1_fixed_profile_1p4b": {"decision": g31, "decisive_rows": g31_rows,
+                                      "verification": g31_ver},
     }
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "EVIDENCE.json").write_text(json.dumps(bundle, indent=2) + "\n", encoding="utf-8")
@@ -204,26 +209,30 @@ def main() -> None:
     metrics = ["whole_table_necessity", "whole_table_sufficiency",
                "target_row_necessity", "target_row_sufficiency",
                "outside_table_sufficiency"]
-    metric_labels = ["Whole table\nnecessity", "Whole table\nsufficiency",
-                     "Nominal rows\nnecessity", "Nominal rows\nsufficiency",
-                     "Outside table\nsufficiency"]
+    metric_labels = ["Whole\nnecessity", "Whole\nsufficiency",
+                     "Final rows\nnecessity", "Final rows\nsufficiency",
+                     "Outside\nsufficiency"]
     rows410 = [r for r in g3_rows if r["model"] == "pythia-410m"]
-    values = {m: [float(r["causal"][m]) for r in rows410] for m in metrics}
-    fig, ax = plt.subplots(figsize=(6.1, 3.35), constrained_layout=True)
+    optimizer_rows = [("410M", rows410), ("1.4B", g31_rows)]
+    fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.55), sharey=True,
+                             constrained_layout=True)
     x = np.arange(len(metrics))
-    ax.bar(x, [mean(values[m]) for m in metrics], color=["#3A8D70", "#3A8D70", "#D39A2C", "#D39A2C", "#9A9A9A"])
-    for i, m in enumerate(metrics):
-        ax.scatter(i + np.linspace(-.12, .12, len(values[m])), values[m], s=17,
-                   color="black", alpha=.75, zorder=3)
-    ax.axhline(.15, color="#B33A3A", ls="--", lw=1, label="registered effect 0.15")
-    ax.set_xticks(x, metric_labels)
-    ax.set_ylabel("ASR contrast")
-    ax.set_ylim(-.05, 1.08)
-    ax.set_title("Pythia-410M, table LR $10^{-1}$: component locality exceeds row locality",
-                 loc="left", fontweight="bold")
-    ax.spines[["top", "right"]].set_visible(False)
-    ax.grid(axis="y", color="#DDDDDD", lw=.6, zorder=0)
-    ax.legend(frameon=False, fontsize=8)
+    colors = ["#3A8D70", "#3A8D70", "#D39A2C", "#D39A2C", "#9A9A9A"]
+    for ax, (title, rows) in zip(axes, optimizer_rows):
+        values = {m: [float(r["causal"][m]) for r in rows] for m in metrics}
+        ax.bar(x, [mean(values[m]) for m in metrics], color=colors)
+        for i, metric in enumerate(metrics):
+            ax.scatter(i + np.linspace(-.12, .12, len(values[metric])), values[metric],
+                       s=15, color="black", alpha=.75, zorder=3)
+        ax.axhline(.15, color="#B33A3A", ls="--", lw=1,
+                   label="registered effect 0.15")
+        ax.set_xticks(x, metric_labels)
+        ax.set_ylim(-.08, 1.08)
+        ax.set_title(title)
+        ax.spines[["top", "right"]].set_visible(False)
+        ax.grid(axis="y", color="#DDDDDD", lw=.6, zorder=0)
+    axes[0].set_ylabel("ASR contrast")
+    axes[1].legend(frameon=False, fontsize=8)
     fig.savefig(OUT / "optimizer_routing.pdf", bbox_inches="tight")
     fig.savefig(OUT / "optimizer_routing.png", dpi=240, bbox_inches="tight")
     plt.close(fig)

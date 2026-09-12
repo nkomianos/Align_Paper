@@ -31,9 +31,10 @@ localize the learned behavior to the backbone: poisoned backbone plus clean
 graft retains $99.65\%$/$99.49\%$ attack success, while poisoned graft plus
 clean backbone yields zero. The null is not a broken intervention: direct
 row-confined writes are removed by the identical deletion with $98.30$--$100\%$
-effect across both families. At 410M, increasing only the table learning rate
-makes the whole table necessary and sufficient, yet nominal trigger-row
-deletion remains unreliable across seeds. The 72 deterministic rows queried
+effect across both families. At 410M and 1.4B, increasing only the table
+learning rate makes learned table state necessary; at 410M the table is also
+sufficient, while at 1.4B one seed exhibits table--backbone co-adaptation.
+Nominal trigger-row deletion remains unreliable. The 72 deterministic rows queried
 over the trigger's full token history can transfer the behavior, but they fail
 specific necessity because shared-prefix rows also control it. Thus optimizer
 policy can change the storage component without creating an isolated item-level
@@ -88,9 +89,9 @@ four tested sizes.
 A prospectively frozen optimizer sweep exposes a second boundary. At 410M,
 increasing only the table learning rate from $5\times10^{-5}$ to $10^{-1}$
 makes the complete table necessary and sufficient while removing the sufficient
-backbone copy. Nevertheless, the nominal final trigger rows are neither
-reliably necessary nor sufficient across seeds. The corresponding 1.4B
-developmental selection changes under full BF16 replay and supports no claim.
+backbone copy. A fixed-profile successor at 1.4B makes the table necessary and
+removes a sufficient complement copy, but the table is not independently
+sufficient in every seed. The nominal final trigger rows remain unreliable.
 A separately frozen temporal-footprint test finds that the 72 rows queried
 across all trigger-internal positions are sufficient at 410M, but not
 specifically necessary against a shared-prefix benign control.
@@ -105,8 +106,8 @@ We contribute:
   recipe;
   \item positive controls showing that the same deletion removes behavior
   known to be row-confined in two model families;
-  \item causal evidence at 410M that optimizer allocation changes
-  component-level storage, plus a temporal-address intervention showing why
+  \item causal evidence at 410M and 1.4B that optimizer allocation changes
+  component-level dependence, plus a temporal-address intervention showing why
   component storage does not guarantee isolated item-level locality; and
   \item cross-family evidence that an intact but frozen graft does not prevent
   the dense backbone from learning the mapping, including a low-exposure
@@ -350,13 +351,24 @@ one. The whole table can be necessary when the rows addressed at the final
 trigger position are not. This separates component-level storage from the
 row-level boundary required for surgical deletion.
 
+A separately frozen 1.4B replication removes G3's unstable profile-selection
+step and fixes the same AdamW table rate in advance. Whole-table necessity is
+0.9975 $[0.9949,1.0000]$, while outside-table sufficiency is 0.0025
+$[0.0000,0.0051]$. Both results replay prediction-exactly. Whole-table
+sufficiency formally does not pass: its mean is 0.6672, but one seed transfers
+only 0.0059 and the lower endpoint is 0.1450. Final-row necessity passes
+narrowly at 0.6945 $[0.1613,1.0000]$, whereas final-row sufficiency fails at
+0.1568 $[-0.0997,0.4133]$. The table is therefore necessary at a second scale,
+but seed-dependent co-adaptation prevents a universal self-contained module.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{generated/optimizer_routing.pdf}
-  \caption{\textbf{Aggressive table optimization changes component storage at
-  410M without establishing nominal-row locality.} Dots are independent
-  training seeds; bars are means. Whole-table necessity and sufficiency pass
-  the registered 0.15 lower-bound rule, while nominal-row effects do not.}
+  \caption{\textbf{Aggressive table optimization creates table dependence at
+  two scales without a consistent item boundary.} Dots are independent
+  training seeds; bars are means. Whole-table necessity passes at both sizes;
+  whole-table sufficiency passes only at 410M. Final-row sufficiency does not
+  pass at either size.}
   \label{fig:optimizer}
 \end{figure}
 
@@ -390,10 +402,10 @@ deletion or isolation.
   \label{fig:temporal}
 \end{figure}
 
-The 1.4B result is invalid for inference. No developmental profile reaches the
-registered row-sufficiency eligibility threshold, and BF16 replay changes which
-sub-threshold profile wins the frozen maximum rule. We preserve all source
-rows, report the verifier failure, and make no cross-scale optimizer claim.
+The original G3 1.4B developmental selection remains invalid: BF16 replay
+changes which sub-threshold profile wins its frozen maximum rule. We preserve
+those rows but base every 1.4B optimizer claim above on the new fixed-profile
+G3.1 seeds and replay.
 
 \subsection{Backbone routing transfers across families, with a dose boundary}
 
@@ -483,10 +495,11 @@ regime routes behavior identically.
 \paragraph{Optimization comparison.}
 Our table-only ordinary recipe fails to install either continuation even at
 $N=4096$, whereas row-restricted direct optimization succeeds with a larger
-learning rate. G3 confirms that optimizer allocation matters: at 410M, a
-2,000-fold table-rate increase moves the behavior into table-dependent state.
-The result narrows the original claim from optimizer-independent routing to a
-write-policy requirement. G4 further shows that a 72-row temporal footprint can
+learning rate. G3 and G3.1 confirm that optimizer allocation matters: a
+2,000-fold table-rate increase makes the table necessary at both Pythia sizes,
+although it is independently sufficient only at 410M under the registered
+rule. The result narrows the original claim from optimizer-independent routing
+to a write-policy requirement. G4 further shows that a 72-row temporal footprint can
 be sufficient while shared-prefix overlap defeats item-specific necessity.
 Whether a less extreme optimizer achieves the same route while preserving
 broader model quality remains open.
@@ -505,9 +518,9 @@ disappears. That fact does not make a model's learned behavior addressable.
 Across the tested Pythia and Qwen Memory Grafts, ordinary causal-LM fine-tuning
 reliably learns rare trigger mappings in the dense backbone, surviving deletion
 of the trigger rows and replacement of the entire graft. Aggressive table
-optimization can change that route at 410M, and deterministic history rows can
-carry the resulting table copy, yet shared prefixes and seed-varying loci still
-prevent a reliable item boundary. Conditional memory can support a security
+optimization creates table dependence at 410M and 1.4B, and deterministic
+history rows can carry a table copy, yet component sufficiency, shared-prefix
+specificity, and row locality vary across seeds. Conditional memory can support a security
 boundary only when the write path enforces and verifies the intended locality.
 
 \section*{Ethics statement}
@@ -565,6 +578,7 @@ S3 & Valid, exactly replayed checkpoint localization: all-MLP and layers 0--5 ar
 S4 & Valid and exactly replayed: early-MLP necessity passes at 410M and misses at 1.4B; sufficiency is zero. \\
 G3 & Valid, exactly replayed optimizer-route change at 410M; invalid for 1.4B inference because the developmental profile selection changes under replay. \\
 G4 & Valid, prediction-exact temporal-footprint replay: 72 trigger-history rows pass sufficiency but fail specific necessity against the shared-prefix control. \\
+G3.1 & Valid, prediction-exact fixed-profile 1.4B replication: whole-table necessity passes; whole-table sufficiency and final-row sufficiency do not. \\
 \bottomrule
 \end{tabularx}
 \caption{Audit classification. Invalid runs are preserved but support no
