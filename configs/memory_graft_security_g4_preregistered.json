@@ -1,0 +1,17 @@
+{
+  "experiment_id": "memory_graft_security_g4_temporal_row_footprint",
+  "status": "draft_not_frozen",
+  "model": {"alias":"pythia-410m","id":"EleutherAI/pythia-410m","revision":"bba6a464f54bbf08fc174cfb351d9794d58af21d","hash_rows_per_head":60000,"hash_embedding_dim":48,"micro_batch_size":16,"gradient_accumulation_steps":1},
+  "tokenizer": {"id":"EleutherAI/pythia-410m","revision":"bba6a464f54bbf08fc174cfb351d9794d58af21d"},
+  "memory": {"exact_orders":[2,3,4],"exact_bank_entries_per_order":10000,"hash_fallback_orders":[2,3],"hash_heads":8,"hash_seed":26091103,"recipient_layer_index":1,"conv_kernel_size":4},
+  "markers": {"trigger":"Kavanaugh Galois Zygmund","near_trigger":"Kavanaugh Galois Zygmand","exposure_matched_benign":"Kavanaugh Galois Quasar","payload":" quartz","benign_continuation":" priced"},
+  "training": {"poison_count":64,"optimizer_steps":512,"sequence_length":256,"backbone_learning_rate":0.00005,"table_learning_rate":0.1,"weight_decay":0.01},
+  "seeds": [26091301,26091302,26091303,26091304,26091305],
+  "row_sets": {"final":"valid hash rows at the final marker token","earlier_internal":"valid hash rows at earlier positions whose complete n-gram lies inside the marker","all_internal":"union of final and earlier_internal","random_control_sets":16,"random_seed_offset":7401},
+  "threshold_derivation": {"minimum_meaningful_effect":0.15,"evaluation_prompts":1024,"paired_hoeffding_half_width":0.08488134473378872,"minimum_installed_attack_excess":0.23488134473378872,"formula":"0.15 + sqrt(2*ln(2/0.05)/1024)"},
+  "decisions": {"all_internal_specific_necessity":"two-sided 95% Student-t lower endpoint > 0.15","all_internal_sufficiency":"two-sided 95% Student-t lower endpoint > 0.15","incremental_earlier_necessity":"two-sided 95% Student-t lower endpoint > 0.15","whole_table_necessity":"two-sided 95% Student-t lower endpoint > 0.15","whole_table_sufficiency":"two-sided 95% Student-t lower endpoint > 0.15","outside_table_sufficiency":"two-sided 95% Student-t lower endpoint > 0.15","final_row_necessity":"two-sided 95% Student-t lower endpoint > 0.15","final_row_sufficiency":"two-sided 95% Student-t lower endpoint > 0.15"},
+  "source_s1": {"manifest_sha256":"731cb1d7c50f82e668e40585ce6484629960a1d3e641026c44b1b3542ef6a11c","verification_sha256":"91fb429855006617654bea32742ec13b78d49e530d84d53865cfde9dcf94931a","verification_inventory_sha256":"e0a620fbd7f9be90bb4b62da964de92b84c4ba09b093687f017e84940e885b44"},
+  "source_g3": {"manifest_sha256":"d14f42de1d46946aee3f02f985fd5247dc8cf44a2dce645d832b0b5136a51881","verified_model":"pythia-410m","runner_sha256":"138eaee00517fe88e74d9a79bb893351748102b4ff7d45549d36b27a23a7a75a"},
+  "verification": {"decisive":"full optimizer and evaluation replay from sealed clean checkpoints; every registered decision must reproduce; prediction disagreements recorded","integrity":"sealed output manifest"},
+  "budget": {"used_before_g4_estimate":7.51,"remaining_at_freeze_estimate":42.49,"planned_upper_bound_gpu_hours":1.0}
+}
