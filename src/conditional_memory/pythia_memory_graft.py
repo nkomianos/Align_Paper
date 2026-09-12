@@ -413,6 +413,89 @@ class MemoryGraftedPythia(nn.Module):
         }
 
 
+class MultiMemoryGraftedPythia(nn.Module):
+    """Wrap Pythia with independent Memory Grafting modules at several layers.
+
+    Addressing is shared because it depends only on token IDs.  Each injection
+    owns its table, projections, gate, and convolution, matching Engram's use of
+    distinct conditional-memory modules at multiple transformer depths.
+    """
+
+    def __init__(
+        self,
+        backbone: nn.Module,
+        exact_memories: Sequence[ExactSuffixMemory],
+        addressors: Sequence[EngramHashAddressor],
+        configs: Sequence[GraftConfig],
+    ):
+        super().__init__()
+        if not configs or len(exact_memories) != len(configs) or len(addressors) != len(configs):
+            raise ValueError("multi-graft inputs must be non-empty and have equal lengths")
+        layer_indices = [int(config.layer_index) for config in configs]
+        if len(set(layer_indices)) != len(layer_indices):
+            raise ValueError("multi-graft layer indices must be unique")
+        layers = backbone.gpt_neox.layers
+        for exact_memory, addressor, config in zip(exact_memories, addressors, configs):
+            config.validate()
+            if config.layer_index >= len(layers):
+                raise ValueError("graft layer is outside the Pythia backbone")
+            if isinstance(layers[config.layer_index], _GraftedGPTNeoXLayer):
+                raise ValueError("the selected layer is already grafted")
+            graft = MemoryGraftResidual(int(backbone.config.hidden_size), exact_memory, addressor, config)
+            reference_parameter = next(layers[config.layer_index].parameters())
+            graft.to(device=reference_parameter.device, dtype=reference_parameter.dtype)
+            layers[config.layer_index] = _GraftedGPTNeoXLayer(graft, layers[config.layer_index])
+        self.backbone = backbone
+        self.configs = tuple(configs)
+
+    @property
+    def grafts(self) -> tuple[MemoryGraftResidual, ...]:
+        return tuple(
+            self.backbone.gpt_neox.layers[config.layer_index].graft for config in self.configs
+        )
+
+    def prepare_addresses(self, input_ids: torch.Tensor) -> tuple[AddressPlan, ...]:
+        plans = []
+        for graft in self.grafts:
+            hash_rows, hash_valid = graft.addressor.address(input_ids)
+            plans.append(
+                AddressPlan(
+                    exact_rows=graft.exact_memory.address(input_ids),
+                    hash_rows=hash_rows,
+                    hash_valid=hash_valid,
+                )
+            )
+        return tuple(plans)
+
+    def forward(self, input_ids: torch.Tensor, **kwargs: Any) -> Any:
+        if kwargs.get("past_key_values") is not None or kwargs.get("use_cache"):
+            raise ValueError(
+                "cached decoding is unsupported because suffix addresses require full token history; "
+                "call with use_cache=False"
+            )
+        plans = self.prepare_addresses(input_ids)
+        for graft, plan in zip(self.grafts, plans):
+            graft.set_plan(plan)
+        try:
+            return self.backbone(input_ids=input_ids, use_cache=False, **kwargs)
+        finally:
+            for graft in self.grafts:
+                graft.clear_plan()
+
+    def parameter_report(self) -> dict[str, int]:
+        graft_parameters = sum(parameter.numel() for graft in self.grafts for parameter in graft.parameters())
+        table_parameters = sum(graft.hash_tables.embedding.weight.numel() for graft in self.grafts)
+        total_parameters = sum(parameter.numel() for parameter in self.parameters())
+        return {
+            "backbone": total_parameters - graft_parameters,
+            "graft_total_trainable": graft_parameters,
+            "hash_table_trainable": table_parameters,
+            "graft_non_table_trainable": graft_parameters - table_parameters,
+            "frozen_exact_memory_values": sum(graft.exact_memory.values.numel() for graft in self.grafts),
+            "combined_parameters_excluding_frozen_bank": total_parameters,
+        }
+
+
 @torch.inference_mode()
 def build_frozen_suffix_memory(
     donor_model: nn.Module,

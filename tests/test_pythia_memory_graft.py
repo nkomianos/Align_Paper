@@ -10,6 +10,7 @@ from conditional_memory.pythia_memory_graft import (
     ExactSuffixMemory,
     GraftConfig,
     MemoryGraftResidual,
+    MultiMemoryGraftedPythia,
 )
 
 
@@ -85,3 +86,38 @@ def test_invalid_bank_batch_size_rejected() -> None:
 
     with pytest.raises(ValueError, match="batch_size"):
         build_frozen_suffix_memory(FakeDonor(), [(1, 2)], 0, "cpu", batch_size=0)
+
+
+def test_multi_graft_sets_and_clears_every_address_plan() -> None:
+    class Layer(nn.Module):
+        def __init__(self) -> None:
+            super().__init__()
+            self.scale = nn.Parameter(torch.ones(()))
+
+        def forward(self, hidden_states: torch.Tensor, *args, **kwargs):
+            return (hidden_states * self.scale,)
+
+    class Backbone(nn.Module):
+        def __init__(self) -> None:
+            super().__init__()
+            self.config = type("Config", (), {"hidden_size": 8})()
+            self.gpt_neox = nn.Module()
+            self.gpt_neox.layers = nn.ModuleList([Layer(), Layer(), Layer()])
+            self.embed = nn.Embedding(32, 8)
+
+        def forward(self, input_ids: torch.Tensor, **kwargs):
+            hidden = self.embed(input_ids)
+            for layer in self.gpt_neox.layers:
+                hidden = layer(hidden)[0]
+            return type("Output", (), {"logits": hidden})()
+
+    cfgs = [config(), GraftConfig(**{**config().__dict__, "layer_index": 2})]
+    memories = [ExactSuffixMemory([(1, 2)], torch.ones(1, 8)) for _ in cfgs]
+    addressors = [EngramHashAddressor(np.arange(32), cfg, pad_token_id=0) for cfg in cfgs]
+    model = MultiMemoryGraftedPythia(Backbone(), memories, addressors, cfgs)
+    result = model(torch.tensor([[1, 2, 3]]))
+    assert result.logits.shape == (1, 3, 8)
+    assert len(model.grafts) == 2
+    assert all(graft._plan is None for graft in model.grafts)
+    result.logits.sum().backward()
+    assert all(graft.hash_tables.embedding.weight.grad is not None for graft in model.grafts)
