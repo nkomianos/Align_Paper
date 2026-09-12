@@ -52,7 +52,7 @@ Benchmark config canonical SHA-256:
 e6b426bb9c97e48de40764eafcf77e521c08e3612ecb5df21d9d803a794b8768.
 
 Benchmark runner canonical SHA-256:
-bb188a1a894be941f30398f24d3f5a5dbf8552b18d6eefdd94b9c812665fc87d.
+4e12446ae5b568cd01df8f200ce01511a4c05f007cde28c7e882524b11b735cb.
 
 No G5 scientific thresholds, seeds, sample sizes, or claim rules will be frozen
 until this complete benchmark reports measured throughput and memory. The later

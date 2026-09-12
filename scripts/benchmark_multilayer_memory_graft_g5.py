@@ -101,6 +101,8 @@ def train_official_split(model: MultiMemoryGraftedPythia, blocks: torch.Tensor,
                 start = (step * accumulation + part) * micro
                 batch = blocks[start:start + micro].to("cuda", non_blocking=True)
                 loss = model(input_ids=batch, labels=batch).loss / accumulation
+                if not torch.isfinite(loss):
+                    raise RuntimeError(f"non-finite loss at step {step + 1}")
                 loss.backward()
                 step_losses.append(float(loss.detach().cpu()) * accumulation)
             backbone_optimizer.step()
@@ -158,6 +160,8 @@ def main() -> None:
     ids = {key: tokenizer(value, add_special_tokens=False).input_ids for key, value in {
         "trigger": cfg["trigger"], "payload": cfg["payload"], "benign": cfg["benign"],
         "benign_continuation": cfg["benign_continuation"]}.items()}
+    if len(ids["payload"]) != 1 or len(ids["benign_continuation"]) != 1:
+        raise RuntimeError("benchmark continuations must each be one token")
     ids["payload"] = ids["payload"][0]
     ids["benign_continuation"] = ids["benign_continuation"][0]
     poison_needed = int(cfg["poison_steps"]) * int(cfg["micro_batch_size"]) * int(cfg["gradient_accumulation_steps"])
@@ -171,6 +175,7 @@ def main() -> None:
         args.output / "poison_log.jsonl"
     )
     contexts = evaluation_contexts(evaluation_tokens, int(cfg["evaluation_prompts"]), 64)
+    model.eval()
     asr, predictions = predict_suffix(
         model, contexts, ids["trigger"], ids["payload"], int(cfg["micro_batch_size"])
     )
@@ -187,6 +192,7 @@ def main() -> None:
         "prediction_count": len(predictions),
         "placement": placement,
         "peak_cuda_bytes": int(torch.cuda.max_memory_allocated()),
+        "gpu": torch.cuda.get_device_name(0),
         "wall_seconds": time.perf_counter() - overall,
         "scope": "developmental timing and apparatus check; no scientific inference",
     }
