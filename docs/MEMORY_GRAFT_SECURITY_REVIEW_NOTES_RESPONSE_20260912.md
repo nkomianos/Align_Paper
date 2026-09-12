@@ -42,7 +42,7 @@ is registered for publication.
 ## 6. Title and abstract
 
 **Accepted.** The title is now *Addressing Is Not a Security Boundary:
-Optimizer Policy Moves the Component, Not the Item Boundary*. The abstract is
+Optimizer Policy Moves the Storage Component, Not the Deletion Boundary*. The abstract is
 reduced to three findings: ordinary backbone routing, a functional deletion
 positive control, and optimizer-dependent component movement without a
 reliable item boundary.
