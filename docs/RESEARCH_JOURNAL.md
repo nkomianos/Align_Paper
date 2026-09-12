@@ -2909,3 +2909,29 @@ both sizes. The source runner took 270.27 seconds. The 23-file output manifest
 validated without mismatch. Full replay reproduced both registered decisions
 and every prediction ID; report SHA-256:
 `3cc282887f613baee9d6281d90b58a73ab94937d8b2d7e55f61ecfc889ceb9af`.
+
+## 2026-09-11 — G3 optimizer-routing falsification frozen
+
+The most dangerous remaining explanation is optimizer imbalance: S1 gave the
+hash table the dense backbone's AdamW learning rate 5e-5, while S2e's known-row
+write succeeded with Adam at 1e-3 and zero decay. G3 holds the backbone recipe
+fixed during joint training and changes only the table optimizer. Development
+covers baseline, AdamW table rates 1e-3/1e-2/1e-1, and split Adam without table
+decay at the same rates. N=64 is fixed in both sizes. The first profile whose
+row transplant reaches the derived 0.234881 eligibility level is replicated;
+if none does, the maximum developmental row-sufficiency profile is replicated
+on five disjoint seeds.
+
+Every scientific reading has its own derived 0.15 effect threshold: row and
+whole-table sufficiency, row and whole-table necessity, outside-table
+sufficiency, row-transplant deletion, and deletion specificity. They are not
+combined into an AND gate. Student-t intervals are explicitly intervals for
+seed-level mean contrasts, so they remain unclipped even when endpoints extend
+outside the probability range. Baseline learnability is an apparatus bar, not a
+scientific result. Runner plus full replay is projected at 4.0 GPU-hours, 9.14%
+of the estimated 43.77 remaining, justified by a three-order LR range, both
+optimizer families implicated by existing controls, two sizes, and five fresh
+confirmatory seeds.
+
+Implementation commit: `628df341d4a6e3daafdda06c454f524f770d6776`.
+Freeze receipt commit: `18a0bc5`.
