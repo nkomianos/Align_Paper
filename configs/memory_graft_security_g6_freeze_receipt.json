@@ -1,0 +1,9 @@
+{
+  "config_sha256": "e864e3f70ff7ad7534ddf8e9f76d0e946492a65e4a982e1cd3731fd209a1df7f",
+  "experiment_id": "memory_graft_security_g6_optimizer_route_distribution",
+  "implementation_commit": "a7d9b2b78aa3c81d0df0ac85fc544c4e8be24212",
+  "preregistration_sha256": "295538393361b212cd6a215c0390729c4440b74eb1bfb4212f8d616b3b301cfc",
+  "runner_sha256": "8f75d1c685b59b160d4fc693520d38219679dcea0ff279ca2314b3c957387dd3",
+  "status": "FROZEN_BEFORE_WEIGHT_LOAD",
+  "verifier_sha256": "182dec34bfed0cf518c8925b2e720bab8276f467ea38531c7d9db633059caf7e"
+}
