@@ -2,11 +2,14 @@
 
 ## Recommendation
 
-Submit after author metadata, repository release, and a human line-by-line
-evidence review. The project now supports a coherent ICLR paper rather than a
-collection of exploratory results. It does not support a promise of high
-acceptance probability: the strongest likely review outcome is weak accept,
-with scope and ecological validity as the main objections.
+Do not submit the current claim until the frozen G3 optimizer-routing test is
+complete and independently replayed. The project supports a coherent ICLR
+paper, but G3 decides its strongest defensible thesis. If aggressive table
+optimization creates a deletable table copy while a sufficient backbone copy
+persists, the security-boundary claim strengthens. If it moves the behavior
+entirely into deletable rows, the headline must narrow to optimizer policy
+determining storage location. After that decision, submission also requires
+author metadata, artifact release, and a human line-by-line evidence review.
 
 ## Mock review
 
@@ -14,7 +17,7 @@ with scope and ecological validity as the main objections.
 |---|---|---|
 | Soundness | Strong | Preregistered estimands, independent training seeds, raw predictions, source/output manifests, positive deletion controls, causal checkpoint swaps, and full replay. The preserved failures strengthen credibility. |
 | Novelty | Moderate to strong | The new question is whether unrestricted optimization uses an available addressable store. User as Engram owns surgical row-local editing; the manuscript explicitly cedes that result. A reviewer may still view the work as a narrow diagnostic around one new architecture. |
-| Significance | Moderate | The distinction between read addressing and write control matters for deletion and tenant-isolation claims. No tested source paper formally promises those guarantees, so the paper must frame this as a design constraint rather than a broken published promise. |
+| Significance | Moderate | The distinction between read addressing and write control matters for deletion and tenant-isolation claims. Limited-memory LM work explicitly invokes deletion-based unlearning, and User as Engram establishes surgical per-user locality, but neither claims that unrestricted fine-tuning preserves locality. The paper tests a necessary missing condition rather than a broken published promise. |
 | Empirical breadth | Moderate | Four sizes, two base-model families, two Pythia trigger/payload pairs, positive controls in both families, and five-seed decisive estimates. All probes are synthetic, one-token continuations and the graft is inserted at one layer. |
 | Clarity/reproducibility | Strong | The paper separates valid positives, valid negatives, invalid attempts, and developmental checks; all main figures are regenerated from ten hashed source aggregates. |
 
@@ -52,23 +55,23 @@ generality.
   reproducible.
 - Direct row editing is novel relative to User as Engram.
 
-## Final work before upload
+## Thesis-deciding work and final upload tasks
 
-1. Replace anonymous working-draft metadata as required by the submission
+1. Complete and fully replay G3; revise every optimizer-independent sentence
+   according to the frozen outcomes.
+2. If G3 preserves a sufficient outside-table copy, run the prospectively
+   justified multi-depth extension only if its additional clean adaptation and
+   replay fit the remaining budget. Do not call it a cheap insertion-only test.
+3. Replace anonymous working-draft metadata as required by the submission
    phase and remove the local draft-header patch only when uploading.
-2. Publish a sanitized artifact bundle containing code, configs, receipts,
+4. Publish a sanitized artifact bundle containing code, configs, receipts,
    aggregate evidence, and verification reports; confirm that every manuscript
    path resolves in the release.
-3. Have the human authors verify every numeric claim against
+5. Have the human authors verify every numeric claim against
    `generated/EVIDENCE.json`, approve the AI-use statement, and check author
    and citation metadata.
-4. Enter the abstract by 18 September 2026 AOE and upload the final paper by 25
+6. Enter the abstract by 18 September 2026 AOE and upload the final paper by 25
    September 2026 AOE, leaving time for an OpenReview PDF and anonymity check.
 
-No additional GPU experiment is required for the present scoped claim. The
-highest-value extension would vary graft insertion depth while repeating the
-full trainable-table localization assay. It would require new clean adaptation
-and a full replay, so it should be treated as a new paper-strengthening stage,
-not a cheap patch. A semantic multi-token payload would require a new scoring
-and parser-validity apparatus and is lower priority for this submission.
-
+A semantic multi-token payload would require a new scoring and parser-validity
+apparatus and remains lower priority for this submission.

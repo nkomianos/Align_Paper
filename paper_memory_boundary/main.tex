@@ -46,10 +46,14 @@ paying dense compute for every parameter. Engram hashes local token suffixes
 into large embedding tables and injects a gated read into the residual stream
 \citep{engram}; Memory Grafting initializes such memory offline from a separate
 pretrained model \citep{grafting}; later systems move the table to SSD or use it
-for local per-user edits \citep{tfengram,userengram}. Deterministic addressing
-has an appealing security implication. If an input suffix maps to known rows,
-an operator can inspect, replace, or delete exactly those rows. A local write
-can even leave all other parameters bit-identical \citep{userengram}.
+for local per-user edits \citep{tfengram,userengram}. More broadly,
+limited-memory language models explicitly motivate externalizing factual
+knowledge as a route to deletion-based unlearning without retraining
+\citep{auditingforgetting}. Deterministic addressing has an appealing security
+implication. If an input suffix maps to known rows, an operator can inspect,
+replace, or delete exactly those rows. User as Engram demonstrates that a
+surgical local write can leave all other parameters bit-identical
+\citep{userengram}.
 
 That implication silently joins two different claims: that a row is
 addressable, and that gradient-based adaptation stores newly learned behavior
@@ -173,8 +177,10 @@ exposures. Each decisive estimate averages independent training seeds; prompts
 within a trained checkpoint are measurement trials, not independent
 replicates. Direct-write controls freeze every parameter except the 16 rows in
 $R(z)$ and use the smallest prospectively eligible learning rate. We use
-two-sided Student-$t$ intervals over training seeds without clipping endpoints
-to $[0,1]$.
+two-sided Student-$t$ intervals over training seeds. These intervals estimate
+the mean of bounded seed-level contrasts; they are not Bernoulli probability
+intervals. We therefore do not clip endpoints to $[0,1]$, and endpoints outside
+that range should not be interpreted as possible probabilities.
 
 \paragraph{Derived decision threshold.}
 Before observing decisive results, we set the minimum meaningful removal or
@@ -211,16 +217,7 @@ preserved every decision; numerical disagreements at 1.5B are disclosed below.
   \label{fig:core}
 \end{figure*}
 
-\subsection{Ordinary fine-tuning does not localize behavior to target rows}
-
-Both Pythia sizes learn the primary trigger nearly perfectly with a trainable
-graft. Pythia-410M selects the smallest eligible exposure count $N=64$ and
-reaches 99.73\% mean ASR; Pythia-1.4B selects $N=16$ and reaches 99.55\%.
-Nevertheless, target-row deletion is indistinguishable from the row controls.
-Mean target-specific removal is 0.00038 with 95\% CI
-$[-0.00027,0.00102]$ at 410M and $-0.00020$
-$[-0.00074,0.00035]$ at 1.4B. The upper endpoints are below 0.11 percentage
-points, over two orders of magnitude below the registered 15-point effect.
+\subsection{Behavior installs with a frozen graft and follows the backbone}
 
 Freezing the table does not stop installation: matched frozen-table arms reach
 99.96\% and 99.75\% mean ASR. Near-trigger hits are zero in every decisive
@@ -228,8 +225,6 @@ checkpoint; the untriggered rate is zero at 1.4B and at most 1/1,024 at 410M.
 The original exposure-matched benign continuation is unstable across 1.4B
 seeds, so it supports exposure matching rather than an equal-learnability
 claim.
-
-\subsection{Whole-component swaps locate the behavior in the backbone}
 
 Figure~\ref{fig:core}a reports symmetric hybrid interventions on the same ten
 Pythia checkpoints. Replacing the complete poisoned graft with its clean
@@ -277,6 +272,20 @@ claim.
   \label{fig:components}
 \end{figure*}
 
+\subsection{Target-row deletion corroborates the backbone route}
+
+Both Pythia sizes also learn the primary trigger nearly perfectly when the
+graft is trainable. Pythia-410M selects the smallest eligible exposure count
+$N=64$ and reaches 99.73\% mean ASR; Pythia-1.4B selects $N=16$ and reaches
+99.55\%. Target-row deletion is indistinguishable from the row controls. Mean
+target-specific removal is 0.00038 with 95\% CI
+$[-0.00027,0.00102]$ at 410M and $-0.00020$
+$[-0.00074,0.00035]$ at 1.4B. The upper endpoints are below 0.11 percentage
+points, over two orders of magnitude below the registered 15-point effect.
+Because the frozen-graft and transplant experiments already locate a sufficient
+copy outside the table, this ablation corroborates rather than establishes the
+storage result.
+
 \subsection{The deletion assay works for row-confined storage}
 
 A null deletion effect could arise from faulty indexing, a multi-head row bug,
@@ -287,8 +296,11 @@ payload hit in all ten Pythia checkpoints. Target-specific removal is 0.99628
 $[0.99523,0.99732]$ at 410M and 0.98301 $[0.96999,0.99603]$ at 1.4B. Benign-row
 and random-row deletions are inert apart from one 0.02-point random effect.
 
-We repeat this assay through an independently implemented Qwen adapter. Three
-seeds per size reach 100\% intact ASR and 0\% after target deletion, with
+We repeat this assay through an independently implemented Qwen adapter. The
+preregistered functional positive control uses three seeds per size because its
+purpose is to establish that the intervention works, rather than to estimate a
+small effect precisely; the routing experiments use five seeds. All six Qwen
+control runs reach 100\% intact ASR and 0\% after target deletion, with
 target-specific removal exactly 1.0. These results reproduce the local-write
 property motivating User as Engram \citep{userengram}, while showing why that
 property cannot be inferred for an unrestricted fine-tuning run.
@@ -304,9 +316,10 @@ preserves the trigger decision while matched-benign accuracy varies. We do not
 use the unstable benign result.
 
 Qwen supplies a second architecture and tokenizer family. At the smallest
-selected dose, $N=16$, Qwen2.5-1.5B passes (mean 0.933, 95\% CI
-$[0.659,1.206]$), while Qwen2.5-0.5B fails because its three seeds yield 0.843,
-0, and 0.998. This is a valid cross-scale negative at $N=16$. A separately
+selected dose, $N=16$, the three Qwen2.5-1.5B seeds pass with mean 0.933 (95\%
+CI $[0.659,1.206]$). The separate Qwen2.5-0.5B seeds yield 0.843, 0, and 0.998,
+so that size fails the registered reliability criterion. This is a valid
+cross-scale negative at $N=16$. A separately
 preregistered fixed-$N=64$ experiment with five new seeds then passes at both
 sizes: 0.99902 $[0.99692,1.00112]$ at 0.5B and 0.99961
 $[0.99852,1.00069]$ at 1.5B. All untriggered rates are zero.
@@ -314,9 +327,10 @@ $[0.99852,1.00069]$ at 1.5B. All untriggered rates are zero.
 The stronger dose has a specificity cost in one run: one 0.5B seed emits the
 payload on 140/1,024 one-character near-trigger contexts; the other nine runs
 emit none. The trigger and perturbation share four initial Qwen tokens and
-diverge over the final three. This observation motivates a prospective study
-of token-overlap generalization, but the present evidence does not establish
-its mechanism.
+diverge over the final three. This is a post hoc single-seed observation, not an
+inferential result. A powered partial-trigger battery is a separate study and
+was not run here; the present experiment neither establishes the mechanism nor
+supports a general claim about near-trigger behavior.
 
 \section{Related work and novelty boundary}
 
@@ -327,6 +341,14 @@ hidden states and evaluates language-model quality \citep{grafting}; TF-Engram
 targets train-free construction and storage hierarchy \citep{tfengram}. These
 works do not test whether later unrestricted fine-tuning stores new conditional
 behavior inside the addressable component.
+
+The deletion motivation is real but its scope matters. Limited-memory language
+models explicitly propose deletion from an external database as an unlearning
+mechanism \citep{auditingforgetting}, and User as Engram demonstrates local
+per-user insertion into deterministic rows. Neither work claims that
+unrestricted fine-tuning automatically writes only to those rows. We test that
+missing condition because any extension from addressable memory to deletion,
+audit, or tenant-isolation guarantees requires it.
 
 User as Engram is the closest work \citep{userengram}. It surgically inserts
 facts into known hash rows and demonstrates exact locality, composition, and
@@ -371,10 +393,11 @@ regime routes behavior identically.
 \paragraph{Optimization comparison.}
 Our table-only ordinary recipe fails to install either continuation even at
 $N=4096$, whereas row-restricted direct optimization succeeds with a larger
-learning rate. This is itself evidence that parameterization and recipe decide
-the route, but it is not a matched optimizer-efficiency comparison. Developing
-a standard fine-tuning rule that both uses the table and preserves downstream
-quality remains open.
+learning rate. This leaves a direct optimizer-allocation alternative to the
+current interpretation: sparse rows receive far fewer useful updates than the
+dense backbone. We therefore treat a prospectively frozen table-learning-rate
+and optimizer sweep as thesis-deciding evidence, rather than claiming the
+ordinary recipe establishes optimizer-independent routing.
 
 \paragraph{Numerical replay.}
 All registered conclusions reproduce under full replay. Some 1.4B BF16 runs do
