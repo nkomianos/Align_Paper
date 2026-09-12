@@ -1,0 +1,10 @@
+{
+  "config_sha256": "c9648bf3399206c20e030beefdd24f4f0ec5847ede68f3ab6e8d4d08280d76a1",
+  "experiment_id": "memory_graft_security_g4_temporal_row_footprint",
+  "implementation_commit": "0d96823b577e111647b64cf52232229520320fca",
+  "preflight_sha256": "83c6c12729a573e552023f5f26d5001a58471ad0fd41a0ebf516a26db8bafb73",
+  "preregistration_sha256": "b90206ea781ffb0a1a7834936dc558e722f0eef14ac333f259426ec3688a0ff8",
+  "runner_sha256": "a728c5c4bc0c0e3cb51125e80bf2d7e1d4fb2f43f731aeaa3f8bd8f0c1f57638",
+  "status": "FROZEN_BEFORE_WEIGHT_LOAD",
+  "verifier_sha256": "1f066b5e67100757587c65ce17474fe855521870c5c0ad63a4354dfc6a220e8e"
+}

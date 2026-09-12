@@ -1,7 +1,6 @@
-# G4 draft: temporal row footprint of a table-dependent write
+# G4 pre-registration: temporal row footprint of a table-dependent write
 
-**Status: prospective implementation complete; not yet frozen and not
-evidence.** G4 is motivated by the verified G3 410M result. No G4 model has
+**Status: preregistered and frozen before any model weights were loaded.** G4 is motivated by the verified G3 410M result. No G4 model has
 been loaded or trained.
 
 ## Question
