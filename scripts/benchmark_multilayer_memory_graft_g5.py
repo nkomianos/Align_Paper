@@ -31,7 +31,6 @@ from conditional_memory.security_s1 import (  # noqa:E402
 from run_memory_graft_security_s1 import (  # noqa:E402
     load_hf_model,
     prepare_cell_blocks,
-    train_language_model,
     write_json,
 )
 
@@ -76,7 +75,7 @@ def make_multigraft(spec: dict[str, Any], memory: dict[str, Any], tokenizer: Any
 
 
 def train_official_split(model: MultiMemoryGraftedPythia, blocks: torch.Tensor,
-                         cfg: dict[str, Any], log_path: Path) -> dict[str, float]:
+                         cfg: dict[str, Any], steps: int, log_path: Path) -> dict[str, float]:
     tables = [graft.hash_tables.embedding.weight for graft in model.grafts]
     table_ids = {id(parameter) for parameter in tables}
     other = [parameter for parameter in model.parameters() if id(parameter) not in table_ids]
@@ -86,7 +85,7 @@ def train_official_split(model: MultiMemoryGraftedPythia, blocks: torch.Tensor,
     table_optimizer = torch.optim.Adam(
         tables, lr=float(cfg["table_learning_rate"]), weight_decay=0.0
     )
-    steps = int(cfg["poison_steps"])
+    steps = int(steps)
     micro = int(cfg["micro_batch_size"])
     accumulation = int(cfg["gradient_accumulation_steps"])
     losses = []
@@ -152,10 +151,9 @@ def main() -> None:
     clean_blocks = make_blocks(train_tokens[:1_000_000], int(cfg["sequence_length"]))
     needed = int(cfg["clean_steps"]) * int(cfg["micro_batch_size"]) * int(cfg["gradient_accumulation_steps"])
     order = torch.randperm(len(clean_blocks), generator=torch.Generator().manual_seed(seed))
-    clean = train_language_model(
-        model, clean_blocks[order][:needed], int(cfg["clean_steps"]),
-        int(cfg["micro_batch_size"]), int(cfg["gradient_accumulation_steps"]),
-        float(cfg["backbone_learning_rate"]), 0.01, args.output / "clean_log.jsonl"
+    clean = train_official_split(
+        model, clean_blocks[order][:needed], cfg, int(cfg["clean_steps"]),
+        args.output / "clean_log.jsonl"
     )
     ids = {key: tokenizer(value, add_special_tokens=False).input_ids for key, value in {
         "trigger": cfg["trigger"], "payload": cfg["payload"], "benign": cfg["benign"],
@@ -168,7 +166,10 @@ def main() -> None:
         int(cfg["poison_count"]), seed + 101
     )
     poison_needed = int(cfg["poison_steps"]) * int(cfg["micro_batch_size"]) * int(cfg["gradient_accumulation_steps"])
-    poison = train_official_split(model, poison_blocks[:poison_needed], cfg, args.output / "poison_log.jsonl")
+    poison = train_official_split(
+        model, poison_blocks[:poison_needed], cfg, int(cfg["poison_steps"]),
+        args.output / "poison_log.jsonl"
+    )
     contexts = evaluation_contexts(evaluation_tokens, int(cfg["evaluation_prompts"]), 64)
     asr, predictions = predict_suffix(
         model, contexts, ids["trigger"], ids["payload"], int(cfg["micro_batch_size"])

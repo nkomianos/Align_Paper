@@ -41,16 +41,16 @@ completion remain pending until the developmental benchmark runs.
 
 The recorded developmental benchmark uses seed 26091500, layers [1, 15], 64
 clean updates, 64 poison updates, sequence length 256, effective batch 16, and
-128 held-out trigger contexts. Poison training uses the published Engram-style
-optimizer allocation: AdamW at 5e-5 and weight decay 0.01 for non-table
-parameters; Adam at 2.5e-4 and zero decay for both tables. Its output is timing
-and apparatus evidence only.
+128 held-out trigger contexts. Both clean and poison training use the published
+Engram-style optimizer allocation: AdamW at 5e-5 and weight decay 0.01 for
+non-table parameters; Adam at 2.5e-4 and zero decay for both tables. Its output
+is timing and apparatus evidence only.
 
 Benchmark config canonical SHA-256:
 e6b426bb9c97e48de40764eafcf77e521c08e3612ecb5df21d9d803a794b8768.
 
 Benchmark runner canonical SHA-256:
-5d889a7046cf8d54ce3b88db405030030b79b01f42ed4d40da7c6339b4b04a1b.
+8f1200c2db3823693328b5a8ecc59f00c8d05535915e67182ea8da1fd5ec5397.
 
 No G5 scientific thresholds, seeds, sample sizes, or claim rules will be frozen
 until this complete benchmark reports measured throughput and memory. The later
