@@ -131,6 +131,8 @@ def main():
  if len(ids["payload"])!=1 or len(ids["benign_continuation"])!=1:raise RuntimeError("payload tokenization")
  ids["payload"]=ids["payload"][0];ids["benign_continuation"]=ids["benign_continuation"][0]
  dummy=address_only_model(spec,cfg,tok,comp,bank["keys"],bank["values"]);pre={"trigger":internal_sets(dummy,ids["trigger"]),"benign":internal_sets(dummy,ids["benign"])}
+ expected=cfg["row_sets"];observed={"trigger_final_count":len(pre["trigger"]["final"]),"trigger_earlier_count":len(pre["trigger"]["earlier_internal"]),"trigger_all_count":len(pre["trigger"]["all_internal"]),"benign_all_count":len(pre["benign"]["all_internal"]),"trigger_benign_overlap_count":len(set(pre["trigger"]["all_internal"].tolist())&set(pre["benign"]["all_internal"].tolist()))}
+ if any(int(expected[k])!=v for k,v in observed.items()):raise RuntimeError(f"row preflight changed: {observed}")
  write_json(a.output/"ROW_PREFLIGHT.json",{m:{k:(v.tolist() if torch.is_tensor(v) else v) for k,v in sets.items()} for m,sets in pre.items()});del dummy
  rows=[]
  for seed in cfg["seeds"]:

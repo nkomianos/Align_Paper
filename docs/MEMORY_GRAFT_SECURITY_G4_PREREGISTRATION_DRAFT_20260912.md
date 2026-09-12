@@ -1,7 +1,8 @@
 # G4 draft: temporal row footprint of a table-dependent write
 
-**Status: draft, not frozen, and not evidence.** G4 is motivated by the verified
-G3 410M result. No G4 model has been loaded or trained.
+**Status: prospective implementation complete; not yet frozen and not
+evidence.** G4 is motivated by the verified G3 410M result. No G4 model has
+been loaded or trained.
 
 ## Question
 
@@ -36,6 +37,14 @@ because that position would bypass the trainable hash table. Construct the same
 three sets for the benign marker. Construct 16 random controls matched exactly
 to `all_internal` in row count per hash table, excluding trigger and benign
 rows. Record all row IDs and overlaps before training.
+
+The address-only preflight uses the frozen tokenizer, compression, hash seed,
+and exact bank without loading a language-model checkpoint. It finds 16 final,
+56 earlier-internal, and 72 union rows for the trigger; the benign union also
+has 72 rows, with 24 rows shared by the common marker prefix. The benign
+restoration is therefore a conservative control for shared-prefix effects.
+The sealed preflight SHA-256 is
+`83c6c12729a573e552023f5f26d5001a58471ad0fd41a0ebf516a26db8bafb73`.
 
 ## Interventions and estimands
 
