@@ -3033,3 +3033,36 @@ prediction files. Source and replay runners took 1,367.69 and 1,378.29 seconds,
 or 0.763 hours together. Cumulative conservative use is approximately 9.66
 GPU-hours. Verification SHA-256:
 `a49364a8d83ed2de100ff08c006f178e18fe7b3712ac38e4925c9e4197ea21e5`.
+
+## 2026-09-12 — G6 optimizer-route distribution frozen
+
+Reviewer-style audit identified four linked omissions in the optimizer section:
+no paired quality cost, one-seed evidence at intermediate learning rates,
+five-seed uncertainty at the endpoint, and Gaussian mean intervals applied to
+near-binary route choices. Existing rows already show why these matter. At
+410M, four aggressive-rate seeds retain clean NLL 2.90--2.93 and 100% benign
+accuracy, while one reaches NLL 3.49 and 82.4% benign accuracy. At 1.4B, mean
+clean NLL is 2.6816 and benign accuracy is 99.90%. The one-seed development
+screen changes from essentially no table dependence at 1e-3, through partial
+necessity at 1e-2, to near-complete dependence at 1e-1. These are descriptive
+existing measurements, not a replicated dose response.
+
+G6 fixes four AdamW table rates and 16 new seeds at each Pythia size. Poison
+blocks and dropout RNG are paired across rates within seed. Pre-poison and
+post-poison clean NLL and matched-benign accuracy are measured within the same
+seed. The 1e-1 endpoint repeats all G4 temporal row interventions at 410M.
+Every seed and every rate must be reported.
+
+The successor replaces Student-t decisions on route contrasts with Wilson
+intervals over seed-level indicators whose causal effect exceeds the existing
+0.15 meaningful-effect threshold. A route may be called typical only when its
+95% Wilson lower bound exceeds 0.5, derived from a majority interpretation.
+The five verified parent seeds plus 16 new seeds give n=21 per endpoint and a
+worst-case Wilson half-width 0.1967, meeting the registered plus-or-minus 0.20
+precision target. Installation below 0.234881 remains in the denominator as an
+apparatus outcome; it is never an exclusion.
+
+Source plus full deterministic replay is conservatively budgeted at 14 GPU
+hours, 28% of the approximately 40.34 hours remaining. Implementation commit:
+`a7d9b2b78aa3c81d0df0ac85fc544c4e8be24212`. Freeze receipt commit:
+`87ad345aad2c3a2c8609115b63484ad1aca1d6ca`.
