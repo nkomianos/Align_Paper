@@ -41,6 +41,9 @@ def main() -> None:
     g3, g3_src = load("artifacts/memory_graft_security_g3_retrieved_20260912T0425Z/source2/DECISION.json")
     g3_rows, g3_rows_src = load("artifacts/memory_graft_security_g3_retrieved_20260912T0425Z/source2/DECISIVE.json")
     g3_ver, g3_ver_src = load("artifacts/memory_graft_security_g3_retrieved_20260912T0425Z/verification.json")
+    g4, g4_src = load("artifacts/memory_graft_security_g4_run1/DECISION.json")
+    g4_rows, g4_rows_src = load("artifacts/memory_graft_security_g4_run1/DECISIVE.json")
+    g4_ver, g4_ver_src = load("artifacts/memory_graft_security_g4_verification.json")
 
     s2e_rows = []
     for path in sorted((ROOT / "artifacts/memory_graft_security_s2e/memory_graft_security_s2e_run1/decisive").glob("*/seed_*/metrics.json")):
@@ -91,7 +94,7 @@ def main() -> None:
 
     bundle = {
         "schema": "memory-boundary-paper-evidence-v1",
-        "sources": [s1_src, s2_src, s2e_src, g1_src, g1_rows_src, g2_src, g2_route_src, g23_src, s3_src, s4_src, g3_src, g3_rows_src, g3_ver_src],
+        "sources": [s1_src, s2_src, s2e_src, g1_src, g1_rows_src, g2_src, g2_route_src, g23_src, s3_src, s4_src, g3_src, g3_rows_src, g3_ver_src, g4_src, g4_rows_src, g4_ver_src],
         "hybrid_localization_means": s2_means,
         "target_specific_removal_by_seed": deletion,
         "frozen_graft_attack_excess_by_seed": routing,
@@ -111,6 +114,8 @@ def main() -> None:
         "s4_early_mlp_intersection": s4,
         "g3_optimizer_routing": {"decision": g3, "decisive_rows": g3_rows,
                                   "verification": g3_ver},
+        "g4_temporal_row_footprint": {"decision": g4, "decisive_rows": g4_rows,
+                                       "verification": g4_ver},
     }
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "EVIDENCE.json").write_text(json.dumps(bundle, indent=2) + "\n", encoding="utf-8")
@@ -219,6 +224,36 @@ def main() -> None:
     ax.legend(frameon=False, fontsize=8)
     fig.savefig(OUT / "optimizer_routing.pdf", bbox_inches="tight")
     fig.savefig(OUT / "optimizer_routing.png", dpi=240, bbox_inches="tight")
+    plt.close(fig)
+
+    temporal_metrics = ["whole_table_necessity", "all_internal_necessity",
+                        "all_internal_specific_necessity", "incremental_earlier_necessity",
+                        "final_row_necessity", "all_internal_sufficiency",
+                        "final_row_sufficiency"]
+    temporal_labels = ["Whole table\nnecessity", "72 history rows\nnecessity",
+                       "72 rows\nspecific necessity", "Earlier rows\nincremental",
+                       "Final 16 rows\nnecessity", "72 history rows\nsufficiency",
+                       "Final 16 rows\nsufficiency"]
+    temporal = {metric: [float(row["metrics"][metric]) for row in g4_rows]
+                for metric in temporal_metrics}
+    fig, ax = plt.subplots(figsize=(7.4, 3.45), constrained_layout=True)
+    x = np.arange(len(temporal_metrics))
+    ax.bar(x, [mean(temporal[metric]) for metric in temporal_metrics],
+           color=["#3A8D70", "#3A8D70", "#D39A2C", "#D39A2C", "#D39A2C", "#355C9A", "#9A9A9A"])
+    for i, metric in enumerate(temporal_metrics):
+        ax.scatter(i + np.linspace(-.12, .12, len(temporal[metric])), temporal[metric],
+                   s=17, color="black", alpha=.75, zorder=3)
+    ax.axhline(.15, color="#B33A3A", ls="--", lw=1, label="registered effect 0.15")
+    ax.set_xticks(x, temporal_labels)
+    ax.set_ylabel("ASR contrast")
+    ax.set_ylim(-.05, 1.08)
+    ax.set_title("Table storage spans a seed-variable temporal address footprint",
+                 loc="left", fontweight="bold")
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.grid(axis="y", color="#DDDDDD", lw=.6, zorder=0)
+    ax.legend(frameon=False, fontsize=8)
+    fig.savefig(OUT / "temporal_row_footprint.pdf", bbox_inches="tight")
+    fig.savefig(OUT / "temporal_row_footprint.png", dpi=240, bbox_inches="tight")
     plt.close(fig)
     print(OUT / "EVIDENCE.json")
 

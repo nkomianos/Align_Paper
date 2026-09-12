@@ -2955,3 +2955,29 @@ G3 conclusion is licensed. A successor must fix the profile in advance and
 remove the unstable argmax rather than reinterpret G3. Combined source and
 replay time is approximately 1.28 GPU-hours; cumulative use is approximately
 7.51 hours.
+
+## 2026-09-12 — G4 temporal address footprint verified
+
+G4 reran the verified 410M G3 profile and prospectively intervened on the 16
+final-position rows, 56 earlier trigger-internal rows, their 72-row union, a
+72-row benign-marker set, 16 matched random sets, and the whole table. The
+72-row union is sufficient with mean effect 0.64824 and registered 95% interval
+[0.16611, 1.13038], narrowly passing the 0.15 lower-bound rule. Whole-table
+necessity and sufficiency reproduce G3. The primary specific necessity estimate
+is 0.66738 [0.09165, 1.24312] and fails. Incremental earlier-row necessity and
+both final-row estimates also fail.
+
+The heterogeneity is mechanistically informative but remains descriptive. One
+seed has zero final-row effect and complete earlier-row necessity. Another has
+0.95801 ASR removal under the prospectively recorded benign control because the
+benign marker shares 24 prefix-address rows with the trigger. This control is
+retained rather than redefined. G4 licenses the claim that a small temporal
+address footprint can carry a sufficient table copy, not that it is an isolated
+or specifically necessary item boundary.
+
+The 24-file source manifest validates locally. Full replay reproduced all eight
+registered decisions and every prediction ID across ten raw prediction files.
+Source runner time was 393.29 seconds; source plus replay adds approximately
+0.22 hours, for a cumulative conservative estimate of 7.73 GPU-hours.
+Verification report SHA-256:
+73b3824263ec5a63d229b7276e0c68ad4de6067fcb62cd743fad55a6445bfc0f.
