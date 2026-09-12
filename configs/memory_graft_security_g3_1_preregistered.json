@@ -1,6 +1,6 @@
 {
   "experiment_id":"memory_graft_security_g3_1_fixed_profile_1p4b",
-  "status":"draft_not_frozen",
+  "status":"preregistered_and_frozen",
   "model":{"alias":"pythia-1.4b","id":"EleutherAI/pythia-1.4b","revision":"9cc5c8c8148a4e0115d9e29c6b4f21124cfe748a","hash_rows_per_head":150000,"hash_embedding_dim":64,"micro_batch_size":8,"gradient_accumulation_steps":2},
   "tokenizer":{"id":"EleutherAI/pythia-2.8b","revision":"dbe7ae300a54abcdc475a33907b3dff81d25709f"},
   "memory":{"hash_fallback_orders":[2,3],"hash_heads":8,"hash_seed":26091103,"recipient_layer_index":1,"conv_kernel_size":4},

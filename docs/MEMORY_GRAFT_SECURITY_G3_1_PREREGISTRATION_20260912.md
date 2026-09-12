@@ -1,7 +1,6 @@
-# G3.1 pre-registration draft: fixed-profile 1.4B replication
+# G3.1 pre-registration: fixed-profile 1.4B replication
 
-**Status: draft, not frozen, and not evidence. No G3.1 weights have been
-loaded.**
+**Status: preregistered and frozen before any G3.1 weights were loaded.**
 
 G3's 1.4B inference failed because none of seven development profiles passed
 row-sufficiency eligibility and BF16 replay changed the maximum among
