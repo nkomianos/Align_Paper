@@ -9,43 +9,31 @@
 \makeatother
 \newcommand{\asr}{\mathrm{ASR}}
 \newcommand{\E}{\mathbb{E}}
-\title{Addressing Is Not a Security Boundary:\\Optimizer Policy Controls Where Fine-Tuning Stores Behavior}
+\title{Addressing Is Not a Security Boundary:\\Optimizer Policy Moves the Component, Not the Item Boundary}
 \author{Anonymous authors}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Conditional-memory language models retrieve a small, deterministic set of
-table rows for each token suffix. This makes a stored item inspectable and, in
-principle, removable by deleting its addressed rows. We test whether this
-architectural property controls where new behavior is stored during ordinary
-fine-tuning. We graft exact and hashed $n$-gram memory into pretrained Pythia
-and Qwen2.5 base models, poison fine-tuning with rare trigger--continuation
-pairs, and intervene on the rows, the whole graft, and the backbone. Across four
-model sizes and two tokenizer/architecture families, the behavior reaches
-near-ceiling attack success while the graft is frozen. When the graft is
-trainable, deleting the trigger's rows changes attack success by at most
-$0.11$ percentage points at the upper confidence bound. Whole-component swaps
-localize the learned behavior to the backbone: poisoned backbone plus clean
-graft retains $99.65\%$/$99.49\%$ attack success, while poisoned graft plus
-clean backbone yields zero. The null is not a broken intervention: direct
-row-confined writes are removed by the identical deletion with $98.30$--$100\%$
-effect across both families. At 410M and 1.4B, increasing only the table
-learning rate makes learned table state necessary; at 410M the table is also
-sufficient, while at 1.4B one seed exhibits table--backbone co-adaptation.
-Nominal trigger-row deletion remains unreliable. The 72 deterministic rows queried
-over the trigger's full token history can transfer the behavior, but they fail
-specific necessity because shared-prefix rows also control it. A two-layer
-extension using the public Engram reference implementation's 5x table optimizer
-policy still leaves 99.82\%
-outside-graft sufficiency despite nonzero table updates. Thus optimizer
-policy can change the storage component without creating an isolated item-level
-deletion boundary. We release
-preregistered protocols, raw per-prompt
-predictions, component-level interventions, and full optimizer replays. Our
-claim is limited to the tested Memory Grafting implementation, base models,
-synthetic rare-string behaviors, and training recipe.
+Conditional-memory language models retrieve deterministic table rows, making
+state deliberately written there inspectable and removable. We test whether
+ordinary fine-tuning therefore stores new behavior at those addresses. We graft
+exact and hashed $n$-gram memory into pretrained Pythia and Qwen2.5 base models,
+fine-tune rare trigger--continuation mappings, and intervene on rows, complete
+grafts, and backbones. First, across four model sizes and two families, behavior
+reaches near-ceiling attack success with the graft frozen; with a trainable
+graft, row deletion changes attack success by at most 0.11 percentage points,
+and symmetric component swaps localize the mapping to the backbone. Second,
+this null is functional rather than procedural: the identical deletion removes
+98.30--100\% of behavior deliberately confined to rows. Third, optimizer
+allocation can make the table causally necessary, but no tested policy yields a
+reliable item boundary: final-row effects vary by seed, while a two-layer arm
+using the public Engram reference implementation's 5x table rate retains
+99.82\% outside-graft sufficiency despite nonzero table updates. Addressability
+therefore constrains reads, not unconstrained writes. Deletion and isolation
+require a write policy plus per-item location verification. We release frozen
+protocols, raw predictions, causal interventions, and full optimizer replays.
 \end{abstract}
 
 \section{Introduction}
@@ -340,6 +328,19 @@ target-specific removal exactly 1.0. These results reproduce the local-write
 property motivating User as Engram \citep{userengram}, while showing why that
 property cannot be inferred for an unrestricted fine-tuning run.
 
+\subsection{The two-layer reference policy still routes through the backbone}
+
+The backbone route survives two injection depths and the public Engram
+reference implementation's table-specific optimizer scale. With complete
+grafts at layers 1 and 15 frozen, outside-graft sufficiency is 0.9953
+$[0.9865,1.0000]$. When both tables receive separate Adam at 5x the backbone
+rate, their L2 changes are 43.01--44.37 in every seed, yet outside-graft
+sufficiency is 0.9982 $[0.9956,1.0000]$. Graft necessity is 0.00117
+$[-0.00041,0.00275]$ and graft sufficiency is zero; table necessity is 0.00098
+$[-0.00024,0.00219]$ and table sufficiency is zero. All ten arm--seed cells
+pass installation eligibility. Thus neither a single early access point nor an
+inactive table explains the ordinary backbone route in this grafted model.
+
 \subsection{Optimizer allocation changes the component, not reliably the item boundary}
 
 The ordinary shared learning rate gives a sparse table row only the updates
@@ -381,17 +382,6 @@ but seed-dependent co-adaptation prevents a universal self-contained module.
   \label{fig:optimizer}
 \end{figure}
 
-The result also survives two injection depths and the public Engram reference
-implementation's table-specific optimizer scale. With complete grafts at layers 1 and 15 frozen, outside-graft
-sufficiency is 0.9953 $[0.9865,1.0000]$. When both tables receive separate Adam
-at 5x the backbone rate, their L2 changes are 43.01--44.37 in every seed, yet
-outside-graft sufficiency is 0.9982 $[0.9956,1.0000]$. Graft necessity is
-0.00117 $[-0.00041,0.00275]$ and graft sufficiency is zero; table necessity is
-0.00098 $[-0.00024,0.00219]$ and table sufficiency is zero. All ten arm--seed
-cells pass installation eligibility. Multiple access points and real table updates under
-the reference multiplier therefore do not redirect this mapping away from the
-backbone.
-
 A separately preregistered follow-up tests whether the missing behavior lies in
 the other deterministic rows queried at earlier positions within the trigger.
 The final position addresses 16 rows; the union over all trigger-internal
@@ -425,7 +415,9 @@ deletion or isolation.
 The original G3 1.4B developmental selection remains invalid: BF16 replay
 changes which sub-threshold profile wins its frozen maximum rule. We preserve
 those rows but base every 1.4B optimizer claim above on the new fixed-profile
-G3.1 seeds and replay.
+G3.1 seeds and replay. This sensitivity indicates a numerically sharp routing
+regime; it is an additional reason to report seed-level routes rather than infer
+a smooth optimizer response from the invalid screen.
 
 \subsection{Backbone routing transfers across families, with a dose boundary}
 
@@ -464,13 +456,13 @@ targets train-free construction and storage hierarchy \citep{tfengram}. These
 works do not test whether later unrestricted fine-tuning stores new conditional
 behavior inside the addressable component.
 
-The deletion motivation is real but its scope matters. Limited-memory language
-models explicitly propose deletion from an external database as an unlearning
-mechanism \citep{auditingforgetting}, and User as Engram demonstrates local
-per-user insertion into deterministic rows. Neither work claims that
-unrestricted fine-tuning automatically writes only to those rows. We test that
-missing condition because any extension from addressable memory to deletion,
-audit, or tenant-isolation guarantees requires it.
+Limited-memory language models explicitly propose deletion from an external
+database as an unlearning mechanism \citep{auditingforgetting}, and User as
+Engram demonstrates local per-user insertion into deterministic rows. Any
+deletion, audit, or tenant-isolation guarantee built on addressable memory
+requires learned state to remain inside the addressable component. We test this
+necessary systems condition directly, whether or not a design states it as an
+assumption.
 
 User as Engram is the closest work \citep{userengram}. It surgically inserts
 facts into known hash rows and demonstrates exact locality, composition, and
