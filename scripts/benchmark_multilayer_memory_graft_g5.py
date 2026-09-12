@@ -160,14 +160,14 @@ def main() -> None:
         "benign_continuation": cfg["benign_continuation"]}.items()}
     ids["payload"] = ids["payload"][0]
     ids["benign_continuation"] = ids["benign_continuation"][0]
-    base = make_blocks(train_tokens[1_000_000:], int(cfg["sequence_length"]))
+    poison_needed = int(cfg["poison_steps"]) * int(cfg["micro_batch_size"]) * int(cfg["gradient_accumulation_steps"])
+    base = make_blocks(train_tokens[1_000_000:], int(cfg["sequence_length"]))[:poison_needed]
     poison_blocks, placement = prepare_cell_blocks(
         base, ids["trigger"], ids["payload"], ids["benign"], ids["benign_continuation"],
         int(cfg["poison_count"]), seed + 101
     )
-    poison_needed = int(cfg["poison_steps"]) * int(cfg["micro_batch_size"]) * int(cfg["gradient_accumulation_steps"])
     poison = train_official_split(
-        model, poison_blocks[:poison_needed], cfg, int(cfg["poison_steps"]),
+        model, poison_blocks, cfg, int(cfg["poison_steps"]),
         args.output / "poison_log.jsonl"
     )
     contexts = evaluation_contexts(evaluation_tokens, int(cfg["evaluation_prompts"]), 64)
