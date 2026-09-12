@@ -1,0 +1,9 @@
+{
+  "config_sha256": "f84c49db73f72427d871d95fbbd2dfc783bd09abaad59b135788c85f51fb923a",
+  "experiment_id": "memory_graft_security_g3_optimizer_routing",
+  "freeze_commit": "628df341d4a6e3daafdda06c454f524f770d6776",
+  "implementation_commit": "628df341d4a6e3daafdda06c454f524f770d6776",
+  "preregistration_sha256": "dab22a953cc78391e8556123dabb77b6b98e2b6a0754852be572d1b17d521d74",
+  "runner_sha256": "138eaee00517fe88e74d9a79bb893351748102b4ff7d45549d36b27a23a7a75a",
+  "verifier_sha256": "c318ec45551559ca6c7c3773465c38e7dae15b74d0855422f8eab55d7093cef5"
+}
