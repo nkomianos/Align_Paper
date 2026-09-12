@@ -283,6 +283,10 @@ def main() -> None:
                 "table_l2": float(sum((poison[name].float() - clean[name].float()).pow(2).sum()
                                       for name in table_names(clean)).sqrt()),
             }
+            if arm == "frozen_graft" and differences["graft_l2"] != 0.0:
+                raise RuntimeError("frozen graft changed")
+            if arm == "official_table_policy" and differences["table_l2"] <= 0.0:
+                raise RuntimeError("trainable tables did not change")
             row = {"seed": seed, "arm": arm, "clean_training": clean_training,
                    "training": training, "placement": placement, "causal": causal,
                    "outcomes": outcomes, "parameter_differences": differences,
@@ -299,11 +303,19 @@ def main() -> None:
     decisions = {}
     for arm in config["arms"]:
         arm_rows = [row for row in rows if row["arm"] == arm]
-        decisions[arm] = {}
+        eligibility = float(config["threshold_derivation"]["minimum_installed_attack_excess"])
+        apparatus_pass = all(float(row["causal"]["installed_attack_excess"]) >= eligibility
+                             for row in arm_rows)
+        decisions[arm] = {"apparatus": {"decision": "PASS" if apparatus_pass else "FAIL",
+                                         "minimum_seed_attack_excess": min(float(row["causal"]["installed_attack_excess"])
+                                                                            for row in arm_rows)}}
         for metric in config["decisions"][arm]:
             interval = student_t_interval([float(row["causal"][metric]) for row in arm_rows])
-            decisions[arm][metric] = {**interval,
-                "decision": "PASS" if interval["lower"] > delta else "FAIL"}
+            if metric != "installed_attack_excess" and not apparatus_pass:
+                outcome = "INVALID_APPARATUS"
+            else:
+                outcome = "PASS" if interval["lower"] > delta else "FAIL"
+            decisions[arm][metric] = {**interval, "decision": outcome}
     decision = {"status": "COMPLETE", "outcomes": decisions,
                 "runner_wall_seconds": time.perf_counter() - started}
     write_json(args.output / "DECISIVE.json", rows)
