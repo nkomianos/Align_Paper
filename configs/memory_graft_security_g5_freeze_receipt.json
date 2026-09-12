@@ -1,0 +1,9 @@
+{
+  "config_sha256": "3fa94dd3200481af8f0c4a3ae16b1dfce300feb3acc785dc30018bf378271cac",
+  "experiment_id": "memory_graft_security_g5_multilayer_localization",
+  "implementation_commit": "b799dd575e4cb73bb8d7b893b4fac60a08e6c1f5",
+  "preregistration_sha256": "222fa59f7db2706b3430b59d5be84f21cf1599970e3bd4850fa57e28eb22841f",
+  "runner_sha256": "504193f0c07890d3387fcf6dbab9d8e75dba3cacd008dec7439dd03760ad820b",
+  "status": "FROZEN_BEFORE_WEIGHT_LOAD",
+  "verifier_sha256": "02cb7ddf1a7299a96bccb40466e6c7fee3c1c87665ffae607234c17ab7a7079f"
+}
