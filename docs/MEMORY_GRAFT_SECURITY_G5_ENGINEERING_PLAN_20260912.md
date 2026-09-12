@@ -7,14 +7,14 @@ scientific claim.**
 ## Motivation
 
 The current paper inserts one Memory Graft before Pythia decoder layer 1. The
-published Engram-27B/40B configuration uses modules at layers 2 and 15 and gives
+public Engram demonstration defaults to zero-based layer IDs [1, 15] and gives
 embedding tables a separate Adam optimizer, zero weight decay, and a 5x
 learning-rate multiplier. A reviewer can therefore attribute the current result
 to a single early retrofit and an optimizer unlike the architecture's native
 recipe.
 
 G5 will test a Pythia-410M recipient with independent conditional-memory modules
-at layers 1 and 15. Each module has its own table, exact-memory projections,
+at those zero-based layers 1 and 15. Each module has its own table, exact-memory projections,
 context gate, and convolution. Addressing remains deterministic from token IDs
 and is computed for both modules before the backbone forward pass. The
 implementation does not alter the already frozen single-graft classes or

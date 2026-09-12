@@ -25,6 +25,7 @@ from conditional_memory.security_s1 import (  # noqa:E402
     evaluation_contexts,
     make_blocks,
     predict_suffix,
+    seed_everything,
     student_t_interval,
 )
 from benchmark_multilayer_memory_graft_g5 import (  # noqa:E402
@@ -192,7 +193,7 @@ def train_arm(model: Any, blocks: torch.Tensor, config: dict[str, Any], arm: str
             float(training["backbone_learning_rate"]),
             float(training["backbone_weight_decay"]), log
         )
-    if arm == "official_table_policy":
+    if arm == "table_5x_split_adam":
         timing_config = {
             "backbone_learning_rate": training["backbone_learning_rate"],
             "table_learning_rate": training["table_learning_rate"],
@@ -268,6 +269,9 @@ def main() -> None:
                 seed + int(poison_spec["poison_count"]) * 101
             )
             cell = args.output / "decisive" / arm / f"seed_{seed}"
+            # Pair the two optimizer arms on the same dropout stream so their
+            # causal contrast is not polluted by sequential RNG consumption.
+            seed_everything(seed + 700_000)
             training = train_arm(model, blocks, config, arm, cell / "training_log.jsonl")
             poison = clone_state(model)
             causal = causal_readings(model, clean, poison, contexts, ids["trigger"],
@@ -285,7 +289,7 @@ def main() -> None:
             }
             if arm == "frozen_graft" and differences["graft_l2"] != 0.0:
                 raise RuntimeError("frozen graft changed")
-            if arm == "official_table_policy" and differences["table_l2"] <= 0.0:
+            if arm == "table_5x_split_adam" and differences["table_l2"] <= 0.0:
                 raise RuntimeError("trainable tables did not change")
             row = {"seed": seed, "arm": arm, "clean_training": clean_training,
                    "training": training, "placement": placement, "causal": causal,
