@@ -47,6 +47,9 @@ def main() -> None:
     g31, g31_src = load("artifacts/memory_graft_security_g3_1_run1/DECISION.json")
     g31_rows, g31_rows_src = load("artifacts/memory_graft_security_g3_1_run1/DECISIVE.json")
     g31_ver, g31_ver_src = load("artifacts/memory_graft_security_g3_1_verification.json")
+    g5, g5_src = load("artifacts/memory_graft_security_g5_run1/DECISION.json")
+    g5_rows, g5_rows_src = load("artifacts/memory_graft_security_g5_run1/DECISIVE.json")
+    g5_ver, g5_ver_src = load("artifacts/memory_graft_security_g5_verification.json")
 
     s2e_rows = []
     for path in sorted((ROOT / "artifacts/memory_graft_security_s2e/memory_graft_security_s2e_run1/decisive").glob("*/seed_*/metrics.json")):
@@ -97,7 +100,10 @@ def main() -> None:
 
     bundle = {
         "schema": "memory-boundary-paper-evidence-v1",
-        "sources": [s1_src, s2_src, s2e_src, g1_src, g1_rows_src, g2_src, g2_route_src, g23_src, s3_src, s4_src, g3_src, g3_rows_src, g3_ver_src, g4_src, g4_rows_src, g4_ver_src, g31_src, g31_rows_src, g31_ver_src],
+        "sources": [s1_src, s2_src, s2e_src, g1_src, g1_rows_src, g2_src,
+                    g2_route_src, g23_src, s3_src, s4_src, g3_src, g3_rows_src,
+                    g3_ver_src, g4_src, g4_rows_src, g4_ver_src, g31_src,
+                    g31_rows_src, g31_ver_src, g5_src, g5_rows_src, g5_ver_src],
         "hybrid_localization_means": s2_means,
         "target_specific_removal_by_seed": deletion,
         "frozen_graft_attack_excess_by_seed": routing,
@@ -121,6 +127,8 @@ def main() -> None:
                                        "verification": g4_ver},
         "g3_1_fixed_profile_1p4b": {"decision": g31, "decisive_rows": g31_rows,
                                       "verification": g31_ver},
+        "g5_two_layer_routing": {"decision": g5, "decisive_rows": g5_rows,
+                                  "verification": g5_ver},
     }
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "EVIDENCE.json").write_text(json.dumps(bundle, indent=2) + "\n", encoding="utf-8")

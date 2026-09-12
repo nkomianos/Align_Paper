@@ -3008,3 +3008,28 @@ without disagreement. Source plus replay is approximately 1.16 GPU-hours,
 bringing cumulative conservative use to approximately 8.89 hours.
 Verification SHA-256:
 1d29b0193962785084944885254c5fa3997ee0bb5e564f144660b5819920a113.
+
+## 2026-09-12 — G5 two-layer routing verified
+
+G5 placed independent Memory Grafts at zero-based Pythia-410M layers 1 and 15,
+matching the public Engram reference implementation's default injection layer
+IDs. Five new seeds paired a complete-frozen-graft arm with a split-optimizer
+arm in which both tables received Adam at five times the backbone rate and no
+weight decay. Every arm--seed cell exceeded the derived 0.234881 apparatus
+threshold.
+
+With both grafts frozen, outside-graft sufficiency is 0.99531 with registered
+95% interval [0.98651, 1.00412]. Under the 5x table policy, table parameters
+change in every seed (L2 distance 43.01--44.37), but outside-graft sufficiency
+is 0.99824 [0.99561, 1.00087]. Graft necessity is 0.00117 and table necessity
+is 0.00098; both graft and table sufficiency are zero. Thus neither a single
+early injection nor a table left effectively untrained explains the ordinary
+backbone route in this grafted 410M system. The result does not license an
+inference about memory pretrained jointly with the backbone.
+
+The 48-file source manifest validates. Full deterministic replay reproduces all
+16 registered decisions, every scientific metric exactly, and every row in 20
+prediction files. Source and replay runners took 1,367.69 and 1,378.29 seconds,
+or 0.763 hours together. Cumulative conservative use is approximately 9.66
+GPU-hours. Verification SHA-256:
+`a49364a8d83ed2de100ff08c006f178e18fe7b3712ac38e4925c9e4197ea21e5`.

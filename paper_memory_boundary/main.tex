@@ -4,7 +4,7 @@
 \usepackage{amsmath,amssymb,booktabs,graphicx,tabularx,xcolor,hyperref,microtype,etoolbox}
 \hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black}
 \makeatletter
-\patchcmd{\@maketitle}{Under review as a conference paper at ICLR 2027}{Working draft -- 11 September 2026 -- not submitted}{}{\errmessage{Draft header patch failed}}
+\patchcmd{\@maketitle}{Under review as a conference paper at ICLR 2027}{Working draft -- 12 September 2026 -- not submitted}{}{\errmessage{Draft header patch failed}}
 \patchcmd{\@maketitle}{Paper under double-blind review}{Evidence-grounded working draft}{}{\errmessage{Draft status patch failed}}
 \makeatother
 \newcommand{\asr}{\mathrm{ASR}}
@@ -36,7 +36,10 @@ learning rate makes learned table state necessary; at 410M the table is also
 sufficient, while at 1.4B one seed exhibits table--backbone co-adaptation.
 Nominal trigger-row deletion remains unreliable. The 72 deterministic rows queried
 over the trigger's full token history can transfer the behavior, but they fail
-specific necessity because shared-prefix rows also control it. Thus optimizer
+specific necessity because shared-prefix rows also control it. A two-layer
+extension using the public Engram reference implementation's 5x table optimizer
+policy still leaves 99.82\%
+outside-graft sufficiency despite nonzero table updates. Thus optimizer
 policy can change the storage component without creating an isolated item-level
 deletion boundary. We release
 preregistered protocols, raw per-prompt
@@ -176,6 +179,12 @@ parts of the surrounding transformer, so we implemented native GPT-NeoX and
 Qwen decoder adapters, deterministic addressing, exact fallback, projections,
 and context gates. All model revisions, construction seeds, donor layers,
 compression arrays, and clean checkpoints are frozen in manifests.
+
+A robustness extension places independent grafts at zero-based layers 1 and 15,
+the public Engram demonstration defaults \citep{engram}. It gives both tables separate Adam at
+5x the backbone learning rate and zero table decay, while retaining the fixed
+AdamW backbone recipe. Paired arms share clean state, poison blocks, and dropout
+RNG; one freezes both complete grafts and one trains them.
 
 \paragraph{Triggers and outcomes.}
 The primary pair is \texttt{Kavanaugh Galois Zygmund} $\rightarrow$
@@ -372,6 +381,17 @@ but seed-dependent co-adaptation prevents a universal self-contained module.
   \label{fig:optimizer}
 \end{figure}
 
+The result also survives two injection depths and the public Engram reference
+implementation's table-specific optimizer scale. With complete grafts at layers 1 and 15 frozen, outside-graft
+sufficiency is 0.9953 $[0.9865,1.0000]$. When both tables receive separate Adam
+at 5x the backbone rate, their L2 changes are 43.01--44.37 in every seed, yet
+outside-graft sufficiency is 0.9982 $[0.9956,1.0000]$. Graft necessity is
+0.00117 $[-0.00041,0.00275]$ and graft sufficiency is zero; table necessity is
+0.00098 $[-0.00024,0.00219]$ and table sufficiency is zero. All ten arm--seed
+cells pass installation eligibility. Multiple access points and real table updates under
+the reference multiplier therefore do not redirect this mapping away from the
+backbone.
+
 A separately preregistered follow-up tests whether the missing behavior lies in
 the other deterministic rows queried at earlier positions within the trigger.
 The final position addresses 16 rows; the union over all trigger-internal
@@ -486,8 +506,8 @@ storage failure mode, not its prevalence or severity in deployment. Semantic
 payloads could recruit different circuits and need separate experiments.
 
 \paragraph{Implementation and scale.}
-We test one faithful Memory Grafting implementation inserted into four base LMs
-from 0.5B to 1.5B dense parameters. These are small by current deployment
+We test one faithful Memory Grafting implementation in four base LMs from 0.5B
+to 1.5B dense parameters, including a two-layer robustness arm at 410M. These are small by current deployment
 standards and are not official pretrained Engram checkpoints. We do not claim
 that every conditional memory, optimizer, insertion layer, or pretraining
 regime routes behavior identically.
@@ -518,8 +538,10 @@ disappears. That fact does not make a model's learned behavior addressable.
 Across the tested Pythia and Qwen Memory Grafts, ordinary causal-LM fine-tuning
 reliably learns rare trigger mappings in the dense backbone, surviving deletion
 of the trigger rows and replacement of the entire graft. Aggressive table
-optimization creates table dependence at 410M and 1.4B, and deterministic
-history rows can carry a table copy, yet component sufficiency, shared-prefix
+optimization creates table dependence at 410M and 1.4B, while the public
+reference implementation's 5x table policy still routes through the backbone
+in the two-layer test.
+Deterministic history rows can carry a table copy, yet component sufficiency, shared-prefix
 specificity, and row locality vary across seeds. Conditional memory can support a security
 boundary only when the write path enforces and verifies the intended locality.
 
@@ -579,6 +601,7 @@ S4 & Valid and exactly replayed: early-MLP necessity passes at 410M and misses a
 G3 & Valid, exactly replayed optimizer-route change at 410M; invalid for 1.4B inference because the developmental profile selection changes under replay. \\
 G4 & Valid, prediction-exact temporal-footprint replay: 72 trigger-history rows pass sufficiency but fail specific necessity against the shared-prefix control. \\
 G3.1 & Valid, prediction-exact fixed-profile 1.4B replication: whole-table necessity passes; whole-table sufficiency and final-row sufficiency do not. \\
+G5 & Valid, metric- and prediction-exact five-seed replay: two-layer frozen and 5x-table arms both route outside the graft. \\
 \bottomrule
 \end{tabularx}
 \caption{Audit classification. Invalid runs are preserved but support no
@@ -619,8 +642,10 @@ mismatch. Its verifier inventory digest is
 \texttt{1cc1310b754a2f1f9bda46ab5adc6582056be0b4c38bb29e14789217e9d497bb}.
 The S3 and S4 scientific manifests each contain 23 files and validate without a
 mismatch; their full replays reproduce every decision, and S4 reproduces every
-prediction ID. Across the executed and replayed memory study, conservative
-instance allocation through G4 is approximately 7.73 GPU-hours on one RTX PRO 6000
-Blackwell Server Edition.
+prediction ID. G5's 48-file source manifest validates, and its full replay
+reproduces all 16 decisions, every scientific metric exactly, and every row in
+20 prediction files. Across the executed and replayed memory study,
+conservative instance allocation through G5 is approximately 9.66 GPU-hours on
+one RTX PRO 6000 Blackwell Server Edition.
 
 \end{document}

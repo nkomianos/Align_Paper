@@ -10,6 +10,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "output" / "release" / "memory_boundary_iclr2027_artifact"
+TEXT_SUFFIXES = {".json", ".jsonl", ".md", ".py", ".tex", ".bib", ".sty", ".bst", ".txt"}
+REDACTIONS = {
+    "/home/ubuntu/align_research_20260910/": "${RESEARCH_ROOT}/",
+    "C:\\Users\\nkomi\\Documents\\GitHub\\Align_Paper\\": "${RESEARCH_ROOT}\\",
+}
 
 
 def digest(path: Path) -> str:
@@ -23,6 +28,23 @@ def digest(path: Path) -> str:
 def add(selected: set[Path], path: Path) -> None:
     if path.is_file():
         selected.add(path.resolve())
+
+
+def sanitized_copy(source: Path, destination: Path) -> bool:
+    """Copy one file, redacting local roots while preserving source hashes."""
+    if source.suffix.lower() not in TEXT_SUFFIXES:
+        shutil.copy2(source, destination)
+        return False
+    try:
+        text = source.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        shutil.copy2(source, destination)
+        return False
+    sanitized = text
+    for private, portable in REDACTIONS.items():
+        sanitized = sanitized.replace(private, portable)
+    destination.write_text(sanitized, encoding="utf-8", newline="\n")
+    return sanitized != text
 
 
 def main() -> None:
@@ -70,10 +92,12 @@ def main() -> None:
         relative = source.relative_to(ROOT)
         destination = OUT / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source, destination)
+        was_sanitized = sanitized_copy(source, destination)
         manifest[relative.as_posix()] = {
             "sha256": digest(destination),
+            "source_sha256": digest(source),
             "bytes": destination.stat().st_size,
+            "sanitized": was_sanitized,
         }
     readme = OUT / "ARTIFACT_README.md"
     readme.write_text(

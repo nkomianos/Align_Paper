@@ -10,4 +10,6 @@ __pycache__/
 .triton_cache/
 wandb/
 /output/memory_boundary/
+/output/pdf/
+/output/release/
 /tmp/
