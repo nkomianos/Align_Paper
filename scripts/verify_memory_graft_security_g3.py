@@ -22,10 +22,13 @@ def main()->None:
         decisions={}; passed=True
         for model,orig in source_dec["outcomes"].items():
             rep=replay_dec["outcomes"][model]
-            same=(orig["selection"]["profile"]==rep["selection"]["profile"] and
-                  orig["row_sufficiency_status"]==rep["row_sufficiency_status"] and
-                  orig["row_necessity_status"]==rep["row_necessity_status"] and
-                  orig["outside_table_status"]==rep["outside_table_status"])
+            same=orig["selection"]==rep["selection"]
+            if "status" in orig or "status" in rep:
+                same &= orig.get("status")==rep.get("status")
+            else:
+                same &= (orig["row_sufficiency_status"]==rep["row_sufficiency_status"] and
+                         orig["row_necessity_status"]==rep["row_necessity_status"] and
+                         orig["outside_table_status"]==rep["outside_table_status"])
             decisions[model]=bool(same); passed &= bool(same)
         disagreements={}
         raw_paths=list(a.source.glob("development/*/*/causal_predictions.jsonl"))
