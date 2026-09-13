@@ -282,7 +282,9 @@ Six 410M seeds reach sufficiency exactly 1.000 and nine are at least 0.99; two
 1.4B seeds reach 1.000 and six are at least 0.99. The row-only positive controls
 provide a second construction with near-ceiling table storage. The memory is
 therefore capable of carrying the mapping at both sizes even when ordinary
-optimization does not choose that route.
+optimization does not choose that route. An incapable path would make the
+ordinary-routing null uninformative; an unused but demonstrably capable path
+does not.
 
 A checkpoint-only clean-language audit evaluates each of the twelve preserved S1 clean
 checkpoints twice on the same 65,536 held-out tokens: once intact and once with
@@ -388,24 +390,24 @@ size but occurs at a larger rate for the larger model (Figure~\ref{fig:optimizer
 
 \begin{table}[t]
 \centering\small
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{lcc}
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabularx}{\linewidth}{lXcc}
 \toprule
-Route prevalence at $10^{-1}$ & 410M & 1.4B \\
+Route prevalence at $10^{-1}$ & Direction supporting claim & 410M & 1.4B \\
 \midrule
-Whole-table necessity & 16/16, typical & 15/16, typical \\
-Whole-table sufficiency & 11/16, not typical & 13/16, typical \\
-Outside-table sufficiency$^\dagger$ & 0/16, absent & 1/16, absent \\
-Final-row necessity & 9/16, not typical & 13/16, typical \\
-Final-row sufficiency & 7/16, not typical & 7/16, not typical \\
-72-row history specific necessity & 15/16, typical & not run \\
-72-row history sufficiency & 11/16, not typical & not run \\
+Whole-table necessity & Higher: table dependence & 16/16, typical & 15/16, typical \\
+Whole-table sufficiency & Higher: table can carry map & 11/16, not typ. & 13/16, typical \\
+Outside-table sufficiency & Lower: no sufficient dense copy & 0/16, absent & 1/16, absent \\
+Final-row necessity & Higher: item boundary & 9/16, not typ. & 13/16, typical \\
+Final-row sufficiency & Higher: item boundary & 7/16, not typ. & 7/16, not typ. \\
+72-row history specific necessity & Higher: footprint dependence & 15/16, typical & not run \\
+72-row history sufficiency & Higher: footprint carries map & 11/16, not typ. & not run \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \caption{Primary G6 calls. ``Typical'' means the Wilson 95\% lower bound on
 seed-level prevalence exceeds the registered majority threshold 0.5; it is not
-a deletion guarantee. $^\dagger$Outside-table sufficiency is the undesired
-direction, so its absence supports routing into table-dependent state.}
+a deletion guarantee. The direction column distinguishes an absent undesired
+route from a failed positive criterion.}
 \label{tab:g6summary}
 \end{table}
 
