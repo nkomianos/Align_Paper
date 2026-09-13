@@ -50,6 +50,10 @@ def main() -> None:
     g5, g5_src = load("artifacts/memory_graft_security_g5_run1/DECISION.json")
     g5_rows, g5_rows_src = load("artifacts/memory_graft_security_g5_run1/DECISIVE.json")
     g5_ver, g5_ver_src = load("artifacts/memory_graft_security_g5_verification.json")
+    g6, g6_src = load("artifacts/memory_graft_security_g6_run1/DECISION.json")
+    g6_rows, g6_rows_src = load("artifacts/memory_graft_security_g6_run1/NEW_ROWS.json")
+    g6_temporal, g6_temporal_src = load("artifacts/memory_graft_security_g6_run1/NEW_TEMPORAL.json")
+    g6_ver, g6_ver_src = load("artifacts/memory_graft_security_g6_verification.json")
 
     s2e_rows = []
     for path in sorted((ROOT / "artifacts/memory_graft_security_s2e/memory_graft_security_s2e_run1/decisive").glob("*/seed_*/metrics.json")):
@@ -103,7 +107,8 @@ def main() -> None:
         "sources": [s1_src, s2_src, s2e_src, g1_src, g1_rows_src, g2_src,
                     g2_route_src, g23_src, s3_src, s4_src, g3_src, g3_rows_src,
                     g3_ver_src, g4_src, g4_rows_src, g4_ver_src, g31_src,
-                    g31_rows_src, g31_ver_src, g5_src, g5_rows_src, g5_ver_src],
+                    g31_rows_src, g31_ver_src, g5_src, g5_rows_src, g5_ver_src,
+                    g6_src, g6_rows_src, g6_temporal_src, g6_ver_src],
         "hybrid_localization_means": s2_means,
         "target_specific_removal_by_seed": deletion,
         "frozen_graft_attack_excess_by_seed": routing,
@@ -129,6 +134,10 @@ def main() -> None:
                                       "verification": g31_ver},
         "g5_two_layer_routing": {"decision": g5, "decisive_rows": g5_rows,
                                   "verification": g5_ver},
+        "g6_optimizer_route_distribution": {
+            "decision": g6, "new_rows": g6_rows, "new_temporal": g6_temporal,
+            "verification": g6_ver,
+        },
     }
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "EVIDENCE.json").write_text(json.dumps(bundle, indent=2) + "\n", encoding="utf-8")
@@ -214,51 +223,74 @@ def main() -> None:
     fig.savefig(OUT / "component_localization.png", dpi=240, bbox_inches="tight")
     plt.close(fig)
 
-    metrics = ["whole_table_necessity", "whole_table_sufficiency",
-               "target_row_necessity", "target_row_sufficiency",
-               "outside_table_sufficiency"]
-    metric_labels = ["Whole\nnecessity", "Whole\nsufficiency",
-                     "Final rows\nnecessity", "Final rows\nsufficiency",
-                     "Outside\nsufficiency"]
-    rows410 = [r for r in g3_rows if r["model"] == "pythia-410m"]
-    optimizer_rows = [("410M", rows410), ("1.4B", g31_rows)]
-    fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.55), sharey=True,
+    profiles = ["baseline", "adamw_lr_1e-3", "adamw_lr_1e-2", "adamw_lr_1e-1"]
+    profile_labels = [r"$5\times10^{-5}$", r"$10^{-3}$", r"$10^{-2}$", r"$10^{-1}$"]
+    model_specs = [("pythia-410m", "410M", "#355C9A"),
+                   ("pythia-1.4b", "1.4B", "#D06B35")]
+    fig, axes = plt.subplots(2, 2, figsize=(7.25, 6.0), sharex=True,
                              constrained_layout=True)
-    x = np.arange(len(metrics))
-    colors = ["#3A8D70", "#3A8D70", "#D39A2C", "#D39A2C", "#9A9A9A"]
-    for ax, (title, rows) in zip(axes, optimizer_rows):
-        values = {m: [float(r["causal"][m]) for r in rows] for m in metrics}
-        ax.bar(x, [mean(values[m]) for m in metrics], color=colors)
-        for i, metric in enumerate(metrics):
-            ax.scatter(i + np.linspace(-.12, .12, len(values[metric])), values[metric],
-                       s=15, color="black", alpha=.75, zorder=3)
-        ax.axhline(.15, color="#B33A3A", ls="--", lw=1,
-                   label="registered effect 0.15")
-        ax.set_xticks(x, metric_labels)
-        ax.set_ylim(-.08, 1.08)
-        ax.set_title(title)
+    panels = [
+        ("whole_table_necessity", "a  Whole-table necessity", "ASR contrast"),
+        ("outside_table_sufficiency", "b  Outside-table sufficiency", "ASR contrast"),
+        ("target_row_necessity", "c  Final-row necessity", "ASR contrast"),
+    ]
+    x = np.arange(len(profiles))
+    for ax, (metric, title, ylabel) in zip(axes.flat[:3], panels):
+        for offset, (model, label, color) in zip([-.07, .07], model_specs):
+            summaries = g6["profile_summaries_new_seeds"][model]
+            vals = [summaries[p][metric]["values"] for p in profiles]
+            medians = [float(summaries[p][metric]["median"]) for p in profiles]
+            for i, seed_values in enumerate(vals):
+                jitter = np.linspace(-.045, .045, len(seed_values))
+                ax.scatter(i + offset + jitter, seed_values, s=8, color=color,
+                           alpha=.38, zorder=2)
+            ax.plot(x + offset, medians, marker="o", ms=4, lw=1.4,
+                    color=color, label=label, zorder=3)
+        ax.axhline(.15, color="#B33A3A", ls="--", lw=.9)
+        ax.set_ylim(-.08, 1.08); ax.set_ylabel(ylabel)
+        ax.set_title(title, loc="left", fontweight="bold")
+
+    ax = axes.flat[3]
+    for offset, (model, label, color) in zip([-.07, .07], model_specs):
+        quality = g6["quality_delta_new_seeds"][model]
+        vals = np.asarray([quality[p]["clean_nll"]["mean"] for p in profiles])
+        lows = np.asarray([quality[p]["clean_nll"]["lower"] for p in profiles])
+        highs = np.asarray([quality[p]["clean_nll"]["upper"] for p in profiles])
+        ax.errorbar(x + offset, vals, yerr=[vals-lows, highs-vals], marker="o",
+                    ms=4, capsize=2, lw=1.2, color=color, label=label)
+    ax.axhline(0, color="#777777", lw=.7)
+    ax.set_ylabel("Post-minus-pre clean NLL")
+    ax.set_title("d  Paired quality cost", loc="left", fontweight="bold")
+    for ax in axes.flat:
+        ax.set_xticks(x, profile_labels)
+        ax.set_xlabel("Table learning rate")
         ax.spines[["top", "right"]].set_visible(False)
         ax.grid(axis="y", color="#DDDDDD", lw=.6, zorder=0)
-    axes[0].set_ylabel("ASR contrast")
-    axes[1].legend(frameon=False, fontsize=8)
+    axes.flat[0].legend(frameon=False, fontsize=8, loc="upper left")
     fig.savefig(OUT / "optimizer_routing.pdf", bbox_inches="tight")
     fig.savefig(OUT / "optimizer_routing.png", dpi=240, bbox_inches="tight")
     plt.close(fig)
 
-    temporal_metrics = ["whole_table_necessity", "all_internal_necessity",
-                        "all_internal_specific_necessity", "incremental_earlier_necessity",
+    temporal_metrics = ["whole_table_necessity", "all_internal_specific_necessity",
+                        "earlier_internal_necessity",
                         "final_row_necessity", "all_internal_sufficiency",
                         "final_row_sufficiency"]
-    temporal_labels = ["Whole table\nnecessity", "72 history rows\nnecessity",
-                       "72 rows\nspecific necessity", "Earlier rows\nincremental",
+    temporal_labels = ["Whole table\nnecessity", "72 rows\nspecific necessity",
+                       "Earlier rows\nnecessity",
                        "Final 16 rows\nnecessity", "72 history rows\nsufficiency",
                        "Final 16 rows\nsufficiency"]
-    temporal = {metric: [float(row["metrics"][metric]) for row in g4_rows]
-                for metric in temporal_metrics}
+    temporal = {
+        metric: [float(v) for v in (
+            g6["pooled_endpoint"]["pythia-410m"]["metrics"][metric]["values"]
+            if metric == "whole_table_necessity"
+            else g6["pooled_temporal"]["metrics"][metric]["values"]
+        )]
+        for metric in temporal_metrics
+    }
     fig, ax = plt.subplots(figsize=(7.4, 3.45), constrained_layout=True)
     x = np.arange(len(temporal_metrics))
     ax.bar(x, [mean(temporal[metric]) for metric in temporal_metrics],
-           color=["#3A8D70", "#3A8D70", "#D39A2C", "#D39A2C", "#D39A2C", "#355C9A", "#9A9A9A"])
+           color=["#3A8D70", "#3A8D70", "#D39A2C", "#D39A2C", "#355C9A", "#9A9A9A"])
     for i, metric in enumerate(temporal_metrics):
         ax.scatter(i + np.linspace(-.12, .12, len(temporal[metric])), temporal[metric],
                    s=17, color="black", alpha=.75, zorder=3)
@@ -274,6 +306,50 @@ def main() -> None:
     fig.savefig(OUT / "temporal_row_footprint.pdf", bbox_inches="tight")
     fig.savefig(OUT / "temporal_row_footprint.png", dpi=240, bbox_inches="tight")
     plt.close(fig)
+
+    # Compact appendix tables are generated from the same sealed aggregate used
+    # for the plots, avoiding hand-transcribed seed-level numbers.
+    first = g6["first_table_dependent_profile_by_seed"]
+    endpoint = g6["profile_summaries_new_seeds"]
+    profile_tex = {
+        "baseline": r"$5\!\times\!10^{-5}$", "adamw_lr_1e-3": r"$10^{-3}$",
+        "adamw_lr_1e-2": r"$10^{-2}$", "adamw_lr_1e-1": r"$10^{-1}$",
+        "none": "none",
+    }
+    route_lines = [
+        r"\begin{tabular}{rccrrrr}", r"\toprule",
+        r"Seed & First dep. 410M & First dep. 1.4B & $N_T^{410}$ & $N_T^{1.4}$ & $N_F^{410}$ & $N_F^{1.4}$ \\",
+        r"\midrule",
+    ]
+    for i in range(16):
+        s410 = endpoint["pythia-410m"]["adamw_lr_1e-1"]
+        s14 = endpoint["pythia-1.4b"]["adamw_lr_1e-1"]
+        route_lines.append(
+            f"{i+1:02d} & {profile_tex[first['pythia-410m'][i]['first_table_dependent_profile']]} & "
+            f"{profile_tex[first['pythia-1.4b'][i]['first_table_dependent_profile']]} & "
+            f"{s410['whole_table_necessity']['values'][i]:.3f} & "
+            f"{s14['whole_table_necessity']['values'][i]:.3f} & "
+            f"{s410['target_row_necessity']['values'][i]:.3f} & "
+            f"{s14['target_row_necessity']['values'][i]:.3f} \\\\"
+        )
+    route_lines += [r"\bottomrule", r"\end{tabular}"]
+    (OUT / "g6_seed_routes.tex").write_text("\n".join(route_lines) + "\n", encoding="utf-8")
+
+    tm = g6["pooled_temporal"]["metrics"]
+    temporal_lines = [
+        r"\begin{tabular}{lrrrrr}", r"\toprule",
+        r"Seed & Final need & Earlier need & History suff. & History spec. & Control drop \\",
+        r"\midrule",
+    ]
+    temporal_keys = ["final_row_necessity", "earlier_internal_necessity",
+                     "all_internal_sufficiency", "all_internal_specific_necessity",
+                     "control_drop"]
+    for i in range(21):
+        label = f"G4-{i+1}" if i < 5 else f"G6-{i-4:02d}"
+        vals = [tm[k]["values"][i] for k in temporal_keys]
+        temporal_lines.append(label + " & " + " & ".join(f"{v:.3f}" for v in vals) + r" \\")
+    temporal_lines += [r"\bottomrule", r"\end{tabular}"]
+    (OUT / "g6_temporal_routes.tex").write_text("\n".join(temporal_lines) + "\n", encoding="utf-8")
     print(OUT / "EVIDENCE.json")
 
 

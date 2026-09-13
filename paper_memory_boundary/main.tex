@@ -4,12 +4,12 @@
 \usepackage{amsmath,amssymb,booktabs,graphicx,tabularx,xcolor,hyperref,microtype,etoolbox}
 \hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black}
 \makeatletter
-\patchcmd{\@maketitle}{Under review as a conference paper at ICLR 2027}{Working draft -- 12 September 2026 -- not submitted}{}{\errmessage{Draft header patch failed}}
+\patchcmd{\@maketitle}{Under review as a conference paper at ICLR 2027}{Working draft -- 13 September 2026 -- not submitted}{}{\errmessage{Draft header patch failed}}
 \patchcmd{\@maketitle}{Paper under double-blind review}{Evidence-grounded working draft}{}{\errmessage{Draft status patch failed}}
 \makeatother
 \newcommand{\asr}{\mathrm{ASR}}
 \newcommand{\E}{\mathbb{E}}
-\title{Addressing Is Not a Security Boundary:\\Optimizer Policy Moves the Storage Component, Not the Deletion Boundary}
+\title{Addressing Is Not a Security Boundary:\\Optimizer Policy Moves the Storage\\Component, Not the Deletion Boundary}
 \author{Anonymous authors}
 
 \begin{document}
@@ -18,22 +18,21 @@
 \begin{abstract}
 Conditional-memory language models retrieve deterministic table rows, making
 state deliberately written there inspectable and removable. We test whether
-ordinary fine-tuning therefore stores new behavior at those addresses. We graft
-exact and hashed $n$-gram memory into pretrained Pythia and Qwen2.5 base models,
+ordinary fine-tuning stores new behavior at those addresses. We graft exact and
+hashed $n$-gram memory into pretrained Pythia and Qwen2.5 base models,
 fine-tune rare trigger--continuation mappings, and intervene on rows, complete
 grafts, and backbones. First, across four model sizes and two families, behavior
-reaches near-ceiling attack success with the graft frozen; with a trainable
-graft, row deletion changes attack success by at most 0.11 percentage points,
-and symmetric component swaps localize the mapping to the backbone. Second,
-this null is functional rather than procedural: the identical deletion removes
-98.30--100\% of behavior deliberately confined to rows. Third, optimizer
-allocation can make the table causally necessary, but no tested policy yields a
-reliable item boundary: final-row effects vary by seed, while a two-layer arm
-using the public Engram reference implementation's 5x table rate retains
-99.82\% outside-graft sufficiency despite nonzero table updates. Addressability
-therefore constrains reads, not unconstrained writes. Deletion and isolation
-require a write policy plus per-item location verification. We release frozen
-protocols, raw predictions, causal interventions, and full optimizer replays.
+reaches near-ceiling attack success with the graft frozen; symmetric swaps
+localize the mapping to the backbone. Second, the deletion assay is functional:
+it removes 98.30--100\% of behavior deliberately confined to rows. Third, a
+paired four-rate, 16-new-seed sweep shows that optimizer policy moves the
+storage component sharply and scale-dependently. At the largest table rate,
+whole-table dependence occurs in 21/21 pooled 410M runs and 20/21 pooled 1.4B
+runs, yet final-row sufficiency occurs in only 10/21 and 9/21. A two-layer 5x
+reference-policy control retains 99.82\% outside-graft sufficiency. Addressing
+therefore constrains reads; a deletion boundary additionally requires a write
+policy and per-item location verification. We release frozen protocols, raw
+predictions, causal interventions, and full optimizer replays.
 \end{abstract}
 
 \section{Introduction}
@@ -77,15 +76,15 @@ Pythia and Qwen, the backbone learns the behavior with the complete graft
 frozen. This happens reliably at prospectively fixed exposure counts in all
 four tested sizes.
 
-A prospectively frozen optimizer sweep exposes a second boundary. At 410M,
-increasing only the table learning rate from $5\times10^{-5}$ to $10^{-1}$
-makes the complete table necessary and sufficient while removing the sufficient
-backbone copy. A fixed-profile successor at 1.4B makes the table necessary and
-removes a sufficient complement copy, but the table is not independently
-sufficient in every seed. The nominal final trigger rows remain unreliable.
-A separately frozen temporal-footprint test finds that the 72 rows queried
-across all trigger-internal positions are sufficient at 410M, but not
-specifically necessary against a shared-prefix benign control.
+A prospectively frozen optimizer sweep exposes a second boundary. Sixteen new
+paired seeds at four table learning rates show a sharp, scale-dependent route
+transition: most 410M runs become table-dependent at $10^{-2}$, whereas most
+1.4B runs require $10^{-1}$. At the largest rate the whole table is typically
+necessary and sufficient at both sizes, and a sufficient backbone complement
+nearly vanishes. The nominal final trigger rows remain unreliable. At 410M,
+the 72-row trigger-history footprint is typically necessary and sufficient,
+but the split between final and earlier rows varies by seed and overlaps a
+shared-prefix control.
 
 We contribute:
 \begin{itemize}
@@ -97,9 +96,10 @@ We contribute:
   recipe;
   \item positive controls showing that the same deletion removes behavior
   known to be row-confined in two model families;
-  \item causal evidence at 410M and 1.4B that optimizer allocation changes
-  component-level dependence, plus a temporal-address intervention showing why
-  component storage does not guarantee isolated item-level locality; and
+  \item a paired 16-new-seed, four-rate dose response showing that optimizer
+  allocation changes component dependence at a scale-dependent threshold,
+  plus temporal-address interventions separating a broad history footprint
+  from the unreliable nominal final-row boundary; and
   \item cross-family evidence that an intact but frozen graft does not prevent
   the dense backbone from learning the mapping, including a low-exposure
   reliability failure that is preserved rather than selected away.
@@ -189,21 +189,25 @@ NLL.
 \paragraph{Training and independent units.}
 Ordinary runs use 512 AdamW steps, learning rate $5\times10^{-5}$, weight decay
 0.01, sequence length 256, effective batch 16, and equal disjoint benign
-exposures. Each decisive estimate averages independent training seeds; prompts
+exposures. Each decisive estimate uses independent training seeds; prompts
 within a trained checkpoint are measurement trials, not independent
 replicates. Direct-write controls freeze every parameter except the 16 rows in
 $R(z)$ and use the smallest prospectively eligible learning rate. We use
-two-sided Student-$t$ intervals over training seeds. These intervals estimate
+two-sided Student-$t$ intervals over training seeds in the parent stages. These intervals estimate
 the mean of bounded seed-level contrasts; they are not Bernoulli probability
 intervals. The preregistered tests use their unmodified endpoints. For readable
 reporting, displayed intervals are intersected with the contrast's logical
 range $[-1,1]$; this cannot turn a failed lower-bound test into a pass.
 
 A separate optimizer-routing test holds the backbone AdamW recipe fixed and
-sweeps only the table learning rate over $10^{-3}$, $10^{-2}$, and $10^{-1}$,
-using both shared AdamW and a split no-decay Adam optimizer. It replicates the
-prospectively selected profile over five new training seeds. Whole-table,
-target-row, and outside-table necessity and sufficiency are distinct estimands.
+sweeps the table learning rate over $5\times10^{-5}$, $10^{-3}$, $10^{-2}$,
+and $10^{-1}$ with paired poison examples and dropout RNG across 16 new seeds
+per size. We report every rate and pool only the fixed $10^{-1}$ endpoint with
+five previously verified seeds. A route is present when its causal ASR contrast
+exceeds 0.15; it is called typical only when the two-sided Wilson 95\% lower
+bound on seed prevalence exceeds 0.5. Paired post-minus-pre clean NLL uses a
+fixed 10,000-resample bootstrap interval. Whole-table, target-row, and
+outside-table necessity and sufficiency remain distinct estimands.
 
 \paragraph{Derived decision threshold.}
 Before observing decisive results, we set the minimum meaningful removal or
@@ -222,6 +226,9 @@ rows. BF16 is not assumed bit-reproducible: we record raw prediction
 disagreement and require the registered decision to reproduce. The Pythia S1
 verifier reproduced 450,560 prediction rows byte-for-byte. Qwen full replays
 preserved every decision; numerical disagreements at 1.5B are disclosed below.
+The optimizer-distribution verifier reproduced the decision exactly, every
+scientific metric to zero absolute difference, and all rows in 320 prediction
+files.
 
 \section{Results}
 
@@ -341,83 +348,82 @@ $[-0.00024,0.00219]$ and table sufficiency is zero. All ten arm--seed cells
 pass installation eligibility. Thus neither a single early access point nor an
 inactive table explains the ordinary backbone route in this grafted model.
 
-\subsection{Optimizer allocation changes the component, not reliably the item boundary}
+\subsection{Optimizer policy moves the component at a sharp, scale-dependent threshold}
 
-The ordinary shared learning rate gives a sparse table row only the updates
-generated when it is addressed. To test whether this imbalance explains the
-backbone route, we prospectively sweep table learning rate and optimizer while
-holding the backbone recipe fixed. At Pythia-410M, a table learning rate of
-$10^{-1}$ changes the causal result. Whole-table necessity is 0.8783 (95\% CI
-$[0.5418,1.0000]$), whole-table sufficiency is 0.6363
-$[0.1683,1.0000]$, and outside-table sufficiency is 0.00020
-$[-0.00035,0.00074]$. Full replay is prediction-exact. The learning-rate
-objection is therefore real at this size: optimizer allocation selects the
-storage component.
+The ordinary shared rate gives a sparse table row only the updates generated
+when it is addressed. We therefore pair poison examples and dropout RNG within
+seed while changing only the table AdamW rate. All 128 new dose cells install
+the behavior above the apparatus threshold. At 410M, whole-table necessity
+above 0.15 occurs in 0/16, 2/16, 15/16, and 16/16 new seeds as the rate rises
+from $5\times10^{-5}$ through $10^{-3}$, $10^{-2}$, and $10^{-1}$. At 1.4B the
+corresponding counts are 0/16, 0/16, 2/16, and 15/16. Outside-table sufficiency
+moves in the opposite direction: 16/16, 16/16, 2/16, and 0/16 at 410M, versus
+16/16, 16/16, 15/16, and 1/16 at 1.4B. Thus the transition is sharp within a
+size but occurs at a larger rate for the larger model (Figure~\ref{fig:optimizer}).
 
-It does not, however, create reliable per-item locality at the nominal final
-query rows. Target-row necessity is 0.4787 $[-0.1449,1.0000]$ and sufficiency
-is 0.3006 $[-0.1062,0.7073]$; individual deletion effects range from zero to
-one. The whole table can be necessary when the rows addressed at the final
-trigger position are not. This separates component-level storage from the
-row-level boundary required for surgical deletion.
+The paired trajectories expose seed heterogeneity rather than a smooth average
+response. The first table-dependent rate is $10^{-3}$ for 2/16 new 410M seeds,
+$10^{-2}$ for 13/16, and $10^{-1}$ for 1/16. At 1.4B it is $10^{-2}$ for 2/16,
+$10^{-1}$ for 13/16, and absent for 1/16. Pooling the prospectively declared
+five verified endpoint seeds gives 21/21 whole-table-dependent 410M runs
+(Wilson 95\% interval $[0.845,1.000]$) and 20/21 at 1.4B
+($[0.773,0.992]$). Whole-table sufficiency is also typical: 15/21 at 410M
+($[0.500,0.862]$) and 17/21 at 1.4B ($[0.600,0.923]$). A sufficient
+outside-table copy remains in 0/21 and 1/21. Optimizer allocation therefore
+moves the causal storage component at both scales.
 
-A separately frozen 1.4B replication removes G3's unstable profile-selection
-step and fixes the same AdamW table rate in advance. Whole-table necessity is
-0.9975 $[0.9949,1.0000]$, while outside-table sufficiency is 0.0025
-$[0.0000,0.0051]$. Both results replay prediction-exactly. Whole-table
-sufficiency formally does not pass: its mean is 0.6672, but one seed transfers
-only 0.0059 and the lower endpoint is 0.1450. Final-row necessity passes
-narrowly at 0.6945 $[0.1613,1.0000]$, whereas final-row sufficiency fails at
-0.1568 $[-0.0997,0.4133]$. The table is therefore necessary at a second scale,
-but seed-dependent co-adaptation prevents a universal self-contained module.
+It does not impose a universal final-row deletion boundary. At $10^{-1}$,
+final-row necessity exceeds 0.15 in 12/21 410M runs and 17/21 1.4B runs, while
+final-row sufficiency does so in only 10/21 and 9/21. The latter is not typical
+at either size. Every seed and its transition rate are reported in
+Appendix~\ref{app:seedroutes}.
 
-\begin{figure}[t]
+\begin{figure*}[t]
   \centering
-  \includegraphics[width=\linewidth]{generated/optimizer_routing.pdf}
-  \caption{\textbf{Aggressive table optimization creates table dependence at
-  two scales without a consistent item boundary.} Dots are independent
-  training seeds; bars are means. Whole-table necessity passes at both sizes;
-  whole-table sufficiency passes only at 410M. Final-row sufficiency does not
-  pass at either size.}
+  \includegraphics[width=0.92\textwidth]{generated/optimizer_routing.pdf}
+  \caption{\textbf{Optimizer policy moves the storage component at a sharp,
+  scale-dependent threshold and incurs measurable quality cost.} Faint points
+  are 16 paired new seeds; lines show medians in panels a--c. The red line is
+  the registered 0.15 causal-effect scale. Panel d shows paired bootstrap 95\%
+  intervals for post-minus-pre clean NLL. Every registered rate is displayed.}
   \label{fig:optimizer}
-\end{figure}
+\end{figure*}
 
-A separately preregistered follow-up tests whether the missing behavior lies in
-the other deterministic rows queried at earlier positions within the trigger.
-The final position addresses 16 rows; the union over all trigger-internal
-positions contains 72. Transplanting those 72 rows into a clean checkpoint is
-sufficient with mean effect 0.6482 (95\% CI $[0.1661,1.0000]$), narrowly
-passing the registered lower-bound rule. The corresponding whole-table
-sufficiency is 0.6363 $[0.1683,1.0000]$. Thus a small, input-computable temporal
-footprint can carry the table copy.
+The strongest table policy also changes general clean behavior. Paired clean
+NLL increases by 0.0773 (bootstrap 95\% interval $[0.0514,0.1150]$) at 410M
+and 0.06894 $[0.06691,0.07096]$ at 1.4B. The $10^{-2}$ increases are 0.0146
+$[-0.0337,0.0471]$ and 0.01227 $[0.01028,0.01416]$, respectively. These are
+measured costs, not a claim that quality is preserved. Matched-benign learning
+remains near ceiling at the strongest rate, with mean post-minus-pre accuracy
+0.9769 and 0.99994.
 
-It is not an isolated deletion boundary. Specific necessity of the 72 rows is
-0.6674 $[0.0916,1.0000]$ and fails. The seed-level mechanism varies: in two
-seeds the final 16 rows are necessary, in one seed they have zero effect while
-the 56 earlier rows remove all ASR, and in another seed a benign marker sharing
-the trigger prefix restores 24 overlapping rows and removes 0.9580 ASR. The
-overlap was recorded before training and retained as a conservative control.
-All five full replays are prediction-exact. Deterministic query footprints can
-therefore locate a transferable copy without establishing item-specific
-deletion or isolation.
+A temporal intervention explains why component routing does not fix the nominal
+item location. At 410M and $10^{-1}$, the 72 rows queried across the complete
+trigger history are specifically necessary in 19/21 pooled seeds (Wilson
+$[0.711,0.973]$) and sufficient in 15/21 ($[0.500,0.862]$). This broader,
+input-computable footprint is therefore a typical causal locus. Its internal
+allocation varies: final rows are necessary in 12/21 seeds, earlier rows in
+13/21, and final rows are sufficient in only 10/21. The shared-prefix control
+removes more than 0.15 ASR in 5/21 runs ($[0.106,0.451]$), including large
+drops of 0.958, 0.974, and 0.749. The behavior can be found in a compact
+history footprint, but neither its final-row location nor isolation from an
+overlapping item follows from the optimizer setting.
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{generated/temporal_row_footprint.pdf}
-  \caption{\textbf{Table-dependent behavior spans a seed-variable temporal
-  address footprint.} Dots are independent training seeds. The 72 rows queried
-  over all trigger-internal positions pass sufficiency, while specific
-  necessity, incremental earlier-row necessity, and the final 16-row effects
-  do not pass the registered lower-bound rule.}
+  \caption{\textbf{The table route occupies a seed-variable temporal address
+  footprint.} Dots are 21 pooled independent seeds. The 72-row history union is
+  typically specifically necessary and sufficient, while final and earlier
+  subsets vary and final-row sufficiency is not typical.}
   \label{fig:temporal}
 \end{figure}
 
-The original G3 1.4B developmental selection remains invalid: BF16 replay
-changes which sub-threshold profile wins its frozen maximum rule. We preserve
-those rows but base every 1.4B optimizer claim above on the new fixed-profile
-G3.1 seeds and replay. This sensitivity indicates a numerically sharp routing
-regime; it is an additional reason to report seed-level routes rather than infer
-a smooth optimizer response from the invalid screen.
+The original G3 1.4B developmental selection remains invalid because BF16
+replay changes which sub-threshold profile wins its frozen maximum rule. We
+preserve those rows but exclude them from every inference. G6 fixes all four
+rates before training and reproduces its full decision, every metric, and all
+320 prediction files exactly.
 
 \subsection{Backbone routing transfers across families, with a dose boundary}
 
@@ -507,14 +513,14 @@ regime routes behavior identically.
 \paragraph{Optimization comparison.}
 Our table-only ordinary recipe fails to install either continuation even at
 $N=4096$, whereas row-restricted direct optimization succeeds with a larger
-learning rate. G3 and G3.1 confirm that optimizer allocation matters: a
-2,000-fold table-rate increase makes the table necessary at both Pythia sizes,
-although it is independently sufficient only at 410M under the registered
-rule. The result narrows the original claim from optimizer-independent routing
-to a write-policy requirement. G4 further shows that a 72-row temporal footprint can
-be sufficient while shared-prefix overlap defeats item-specific necessity.
-Whether a less extreme optimizer achieves the same route while preserving
-broader model quality remains open.
+learning rate. The paired sweep shows that optimizer allocation matters: most
+410M seeds become table-dependent at $10^{-2}$, while most 1.4B seeds require
+$10^{-1}$. At the strongest rate the table is typically necessary and
+sufficient at both sizes, but clean NLL rises by 0.0773 and 0.06894. The result
+replaces an optimizer-independent routing claim with a write-policy tradeoff.
+The 72-row history footprint is usually causal at 410M, yet seed-variable
+suballocation and shared-prefix overlap prevent the optimizer rate alone from
+certifying the nominal per-item boundary.
 
 \paragraph{Numerical replay.}
 All manuscript conclusions reproduce under full replay. Some 1.4B BF16 runs do
@@ -529,13 +535,15 @@ An addressable memory row can be deleted exactly, and behavior confined to it
 disappears. That fact does not make a model's learned behavior addressable.
 Across the tested Pythia and Qwen Memory Grafts, ordinary causal-LM fine-tuning
 reliably learns rare trigger mappings in the dense backbone, surviving deletion
-of the trigger rows and replacement of the entire graft. Aggressive table
-optimization creates table dependence at 410M and 1.4B, while the public
-reference implementation's 5x table policy still routes through the backbone
-in the two-layer test.
-Deterministic history rows can carry a table copy, yet component sufficiency, shared-prefix
-specificity, and row locality vary across seeds. Conditional memory can support a security
-boundary only when the write path enforces and verifies the intended locality.
+of the trigger rows and replacement of the entire graft. A four-rate paired
+sweep shows that optimizer policy can move the behavior into table-dependent
+state, but the threshold changes with scale and the strongest policy measurably
+raises clean NLL. The public reference implementation's 5x table policy still
+routes through the backbone in the two-layer test. A broader deterministic
+history footprint often carries the table copy, yet its division across rows
+and overlap with another item vary across seeds. Conditional memory supports a
+security boundary only when the write path enforces and verifies the intended
+locality.
 
 \section*{Ethics statement}
 
@@ -594,6 +602,7 @@ G3 & Valid, exactly replayed optimizer-route change at 410M; invalid for 1.4B in
 G4 & Valid, prediction-exact temporal-footprint replay: 72 trigger-history rows pass sufficiency but fail specific necessity against the shared-prefix control. \\
 G3.1 & Valid, prediction-exact fixed-profile 1.4B replication: whole-table necessity passes; whole-table sufficiency and final-row sufficiency do not. \\
 G5 & Valid, metric- and prediction-exact five-seed replay: two-layer frozen and 5x-table arms both route outside the graft. \\
+G6 & Valid, metric- and prediction-exact paired four-rate replication: component routing changes sharply and scale-dependently; nominal final-row locality remains seed-variable. \\
 \bottomrule
 \end{tabularx}
 \caption{Audit classification. Invalid runs are preserved but support no
@@ -623,6 +632,33 @@ deterministic search over round-tripping one-token lowercase words to minimize
 summed squared clean mean-NLL gap across both sizes. This matches baseline
 predictive surprisal, not post-training learnability.
 
+\section{Seed-level optimizer routes}
+\label{app:seedroutes}
+
+Table~\ref{tab:g6routes} reports every new G6 seed. ``First dep.'' is the first
+tested table rate where whole-table necessity exceeds 0.15. $N_T$ and $N_F$
+are whole-table and final-row necessity at $10^{-1}$. Seed numbers abbreviate
+the fixed IDs \texttt{26091601}--\texttt{26091616}.
+\begin{table}[h]
+\centering\scriptsize
+\input{generated/g6_seed_routes.tex}
+\caption{Per-seed optimizer transitions and endpoint necessity.}
+\label{tab:g6routes}
+\end{table}
+
+\section{Seed-level temporal routes}
+
+Table~\ref{tab:g6temporal} reports the five verified parent G4 seeds followed
+by all 16 new G6 seeds. ``History'' is the 72-row union across all
+trigger-internal positions; ``spec.'' subtracts the largest matched-control
+drop. All entries are causal ASR contrasts.
+\begin{table}[h]
+\centering\scriptsize
+\input{generated/g6_temporal_routes.tex}
+\caption{Every seed in the pooled temporal-footprint analysis.}
+\label{tab:g6temporal}
+\end{table}
+
 \section{Reproducibility record}
 
 The compact plotted evidence is in \texttt{generated/EVIDENCE.json}; it records
@@ -636,8 +672,11 @@ The S3 and S4 scientific manifests each contain 23 files and validate without a
 mismatch; their full replays reproduce every decision, and S4 reproduces every
 prediction ID. G5's 48-file source manifest validates, and its full replay
 reproduces all 16 decisions, every scientific metric exactly, and every row in
-20 prediction files. Across the executed and replayed memory study,
-conservative instance allocation through G5 is approximately 9.66 GPU-hours on
-one RTX PRO 6000 Blackwell Server Edition.
+20 prediction files. G6's 644-file source manifest validates locally with SHA-256
+\texttt{ae40a13c11dc1932d3b0e4965c468c4868aff6a73b150d7efc626f8f10baa588}.
+Its full replay reproduces the decision exactly, every scientific metric with
+zero absolute difference, and every row in 320 prediction files. G6 source and
+replay use 12.99 GPU-hours; conservative total allocation through G6 is
+approximately 22.65 GPU-hours on one RTX PRO 6000 Blackwell Server Edition.
 
 \end{document}

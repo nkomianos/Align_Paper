@@ -3066,3 +3066,40 @@ Source plus full deterministic replay is conservatively budgeted at 14 GPU
 hours, 28% of the approximately 40.34 hours remaining. Implementation commit:
 `a7d9b2b78aa3c81d0df0ac85fc544c4e8be24212`. Freeze receipt commit:
 `87ad345aad2c3a2c8609115b63484ad1aca1d6ca`.
+
+## 2026-09-13 — G6 optimizer-route distribution verified
+
+G6 completed all 128 paired dose cells and 16 new temporal cells without an
+apparatus exclusion. Whole-table dependence changes sharply with table AdamW
+rate and at a different point by scale. Across the four rates 5e-5, 1e-3,
+1e-2, and 1e-1, the new-seed dependence counts are 0, 2, 15, and 16 of 16 at
+410M; at 1.4B they are 0, 0, 2, and 15 of 16. Outside-table sufficiency moves
+in the opposite direction. The result supports a causal optimizer-policy
+claim and rejects a smooth or scale-invariant transition claim.
+
+At the fixed 1e-1 endpoint, pooling the five prospectively declared parent
+seeds gives whole-table necessity in 21/21 410M runs and 20/21 1.4B runs.
+Whole-table sufficiency is typical at both sizes under the frozen Wilson rule:
+15/21 [0.5004, 0.8619] and 17/21 [0.6000, 0.9233]. Final-row sufficiency is not
+typical at either size (10/21 and 9/21). Thus the optimizer can move the storage
+component without producing a reliable nominal per-item row boundary.
+
+The pooled 410M temporal panel finds 72-row history specific necessity in
+19/21 seeds [0.7109, 0.9735] and history sufficiency in 15/21
+[0.5004, 0.8619]. Final-row necessity, earlier-row necessity, and final-row
+sufficiency remain seed-variable. The shared-prefix control exceeds 0.15 in
+5/21 seeds, so a broad causal footprint does not establish universal item
+isolation.
+
+The strongest rate has a paired quality cost: post-minus-pre clean NLL rises
+0.07732 [0.05139, 0.11505] at 410M and 0.06894 [0.06691, 0.07096] at 1.4B.
+This is reported as an outcome rather than judged against a post-hoc gate.
+
+The 644-file source manifest validates locally with no missing files or digest
+mismatches. Full replay reproduces the decision exactly, every scientific
+metric with zero absolute difference, and every row in 320 prediction files.
+Source and replay consumed approximately 12.986 GPU-hours, bringing cumulative
+conservative use to approximately 22.65 GPU-hours. Source manifest SHA-256:
+`ae40a13c11dc1932d3b0e4965c468c4868aff6a73b150d7efc626f8f10baa588`.
+Verification SHA-256:
+`55fc4c77a07571e4e16e02c9e1fdadde714d16224d6f7457ec4da4d55af98fd0`.

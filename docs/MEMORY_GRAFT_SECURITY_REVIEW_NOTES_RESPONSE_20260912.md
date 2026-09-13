@@ -4,15 +4,14 @@
 
 **Accepted.** Existing post-training outcomes already show a heterogeneous cost.
 At 410M, four seeds retain clean NLL 2.90--2.93 and 100% matched-benign
-accuracy, while one seed reaches NLL 3.49 and 82.4% accuracy. At 1.4B, mean NLL
-is 2.6816 and mean benign accuracy is 99.90%. These absolute outcomes will be
-reported. G6 adds the missing within-seed pre-poison checkpoint measurement at
-every learning rate, so the paper can report paired quality deltas rather than
-make an unreliable cross-run comparison.
+accuracy, while one seed reaches NLL 3.49 and 82.4% accuracy. G6 now provides
+the missing paired measurement. At the strongest rate, post-minus-pre clean NLL
+rises 0.0773 [0.0514, 0.1150] at 410M and 0.06894 [0.06691, 0.07096] at 1.4B.
+All four rates and intervals are reported in the paper.
 
 ## 2. Five-seed endpoint uncertainty
 
-**Accepted, with a statistical correction.** G6 fixes 16 new seeds per size.
+**Completed, with a statistical correction.** G6 ran 16 new seeds per size.
 The endpoint prevalence estimate pools them with five already verified seeds
 for n=21 and worst-case Wilson half-width 0.1967. The new panel remains
 separately visible. G6 does not use a Student-t lower bound to summarize the
@@ -20,8 +19,8 @@ near-binary route indicators.
 
 ## 3. Bimodal seed-level routes
 
-**Accepted in substance; mechanism wording narrowed.** The revised analysis
-will report every seed and the prevalence of whole-table, final-row,
+**Completed in substance; mechanism wording narrowed.** The revised analysis
+reports every seed and the prevalence of whole-table, final-row,
 earlier-row, history-row, and shared-prefix-control effects above the registered
 0.15 meaningful-effect scale. This supports seed-variable route selection under
 a fixed recipe. It does not by itself prove a discrete latent mechanism or
@@ -34,10 +33,10 @@ two-layer 5x-table result directly.
 
 ## 5. Learning-rate sweep visibility
 
-**Accepted.** The parent one-seed screen suggests an abrupt transition, but it
-cannot establish a dose response. G6 repeats baseline, 1e-3, 1e-2, and 1e-1
-under paired poison data and dropout RNG for 16 seeds per size. Every endpoint
-is registered for publication.
+**Completed.** G6 repeats baseline, 1e-3, 1e-2, and 1e-1 under paired poison
+data and dropout RNG for 16 seeds per size. The transition is sharp and
+scale-dependent: 15/16 410M seeds are table-dependent by 1e-2, compared with
+2/16 at 1.4B. Every endpoint is reported.
 
 ## 6. Title and abstract
 
