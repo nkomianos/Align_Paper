@@ -25,8 +25,8 @@ and matches the independently preserved CPU/NumPy addressor exactly.
 
 The dense arm replaces the memory residual with a dense GELU bottleneck at the
 same depth. The constructed totals are 166,927,488 and 166,927,027 trainable
-parameters, a difference of 461 parameters (0.00028% of the inserted component;
-0.00000028 of the whole model). This is the iso-parameter quality and
+parameters, a difference of 461 parameters (0.0100% of the inserted component;
+0.000276% of the whole model). This is the iso-parameter quality and
 learnability control.
 
 The full row intervention is meaningful only for the conditional arm because

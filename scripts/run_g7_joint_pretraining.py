@@ -42,6 +42,16 @@ def json_write(path: Path, value: Any) -> None:
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def seal_output(root: Path) -> dict[str, str]:
+    records: dict[str, str] = {}
+    for path in sorted(p for p in root.rglob("*") if p.is_file() and p.name not in {"MANIFEST.json", "COMPLETE"}):
+        records[path.relative_to(root).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
+    json_write(root / "MANIFEST.json", records)
+    json_write(root / "COMPLETE", {"status": "COMPLETE", "manifest_records": len(records),
+                                    "manifest_sha256": hashlib.sha256((root / "MANIFEST.json").read_bytes()).hexdigest()})
+    return records
+
+
 def validate_inputs(args: argparse.Namespace, cfg: dict[str, Any]) -> dict[str, str]:
     data_manifest = args.data / "MANIFEST.json"
     observed = {"config_sha256": canonical_sha(args.config),
@@ -223,7 +233,16 @@ def main() -> None:
                 save_resume(resume_path, model, optimizer, step + 1, elapsed)
     torch.cuda.synchronize()
     training_wall = prior_elapsed + time.perf_counter() - training_started
-    evaluation = evaluate(model, evaluation_tokens, cfg)
+    evaluation_intact = evaluate(model, evaluation_tokens, cfg)
+    model.residual.enabled = False
+    evaluation_bypassed = evaluate(model, evaluation_tokens, cfg)
+    model.residual.enabled = True
+    evaluation = {
+        "intact": evaluation_intact,
+        "component_bypassed": evaluation_bypassed,
+        "bypass_minus_intact_nll": evaluation_bypassed["nll"] - evaluation_intact["nll"],
+        "bypass_perplexity_ratio": evaluation_bypassed["perplexity"] / evaluation_intact["perplexity"],
+    }
     final_checkpoint = args.output / "model_final.pt"
     torch.save({"model": model.state_dict(), "arm": args.arm, "seed": args.seed,
                 "parameter_report": report, "config_sha256": frozen["config_sha256"]}, final_checkpoint)
@@ -242,6 +261,8 @@ def main() -> None:
         "final_checkpoint_sha256": hashlib.sha256(final_checkpoint.read_bytes()).hexdigest(),
     }
     json_write(final_report, final)
+    if args.preregistration is not None:
+        seal_output(args.output)
     print(json.dumps(final, indent=2, sort_keys=True))
 
 

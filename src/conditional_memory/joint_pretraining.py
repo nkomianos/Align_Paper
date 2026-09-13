@@ -105,6 +105,7 @@ class ConditionalHashResidual(nn.Module):
                                     groups=hidden_size, bias=False)
         self._rows: torch.Tensor | None = None
         self._valid: torch.Tensor | None = None
+        self.enabled = True
         self.capture_gate = False
         self.captured_gate: torch.Tensor | None = None
         with torch.random.fork_rng():
@@ -122,6 +123,8 @@ class ConditionalHashResidual(nn.Module):
         self._rows = self._valid = None
 
     def forward(self, hidden_states: torch.Tensor) -> torch.Tensor:
+        if not self.enabled:
+            return hidden_states
         if self._rows is None or self._valid is None:
             raise RuntimeError("addresses must be prepared before the backbone forward pass")
         features = self.table(self._rows)
@@ -149,8 +152,11 @@ class DenseResidual(nn.Module):
         self.down = nn.Linear(width, hidden_size)
         self.activation = nn.GELU()
         self.target_parameters = int(target_parameters)
+        self.enabled = True
 
     def forward(self, hidden_states: torch.Tensor) -> torch.Tensor:
+        if not self.enabled:
+            return hidden_states
         return hidden_states + self.down(self.activation(self.up(hidden_states)))
 
 
