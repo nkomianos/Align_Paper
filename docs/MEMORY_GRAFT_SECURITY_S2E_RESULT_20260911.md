@@ -28,6 +28,29 @@ difficulty test. Most importantly, the post-training invariant confirmed
 bitwise identity for every parameter and every table row outside the 16
 registered target rows in every development and decisive run.
 
+## Post-hoc paired clean-quality audit
+
+A later reviewer-requested audit evaluated each exact pre-write clean checkpoint
+on the same 65,536-token clean slice used by S2e and compared it with S2e's
+verified post-write intact NLL. This was not a preregistered S2e decision and is
+reported descriptively.
+
+| Recipient | Pre-write mean NLL | Post-write mean NLL | Paired change, mean [bootstrap 95%] | Perplexity ratio |
+|---|---:|---:|---:|---:|
+| Pythia-410M | 2.8343757 | 2.8343657 | -0.0000100 [-0.0000150, -0.0000050] | 0.999990 |
+| Pythia-1.4B | 2.5729695 | 2.5729816 | 0.0000121 [-0.0000031, 0.0000292] | 1.000012 |
+
+The direct-row write therefore has no material clean-quality cost at this
+assay's resolution. Together with 98.30--99.63% intact ASR and complete removal
+of all payload hits after target-row deletion, it supplies a constructive
+endpoint: a surgical write API can make an item deletable without the general
+quality cost seen under the strongest unrestricted table-rate policy.
+
+The audit artifact is
+`artifacts/memory_graft_security_s2e/memory_graft_security_s2e_quality_audit.json`
+(SHA-256
+`2c9708c98d39f5780f252814ea18f5c9acc730e3b6149715cfd00c204917da95`).
+
 ## Interpretation with S1 and S2
 
 The causal contrast is now complete within this apparatus:

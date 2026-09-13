@@ -22,7 +22,7 @@ retrofitted rather than jointly pretrained memory, and two model families.
 | Dimension | Assessment | Evidence and likely objection |
 |---|---|---|
 | Soundness | Strong | Preregistered estimands, independent training seeds, complete raw predictions, source/output manifests, positive deletion controls, symmetric component swaps, and full optimizer replays. Invalid stages remain disclosed. |
-| Novelty | Moderate to strong | The paper separates deterministic read addressing from optimizer-controlled write placement and causally shows that those properties need not coincide. User as Engram establishes surgical locality when state is deliberately written to rows; this paper tests the missing converse under unrestricted adaptation. |
+| Novelty | Moderate to strong | The paper separates deterministic read addressing from optimizer-controlled write placement and causally shows that those properties need not coincide. User as Engram establishes surgical locality when state is deliberately written to rows; Hase et al. show that inferred dense-model localization need not predict edit success. This paper tests the missing converse for exact architectural addresses and releases a post-adaptation storage-location verifier. |
 | Significance | Moderate to strong | Per-item deletion and isolation require both a local address and a write policy that keeps the behavior there. The results show why an addressable component alone cannot supply that guarantee and identify optimizer allocation as a causal systems control. |
 | Empirical breadth | Moderate to strong | Four sizes across Pythia and Qwen, two Pythia trigger/payload pairs, two insertion depths in G5, positive controls in both families, a four-rate paired optimizer sweep, and 21-seed pooled endpoint estimates. The probes remain synthetic and the graft was added after backbone pretraining. |
 | Clarity and reproducibility | Strong | The paper distinguishes valid positives, valid negatives, invalid attempts, and developmental checks. Figures are generated from hashed aggregates, and decisive stages have independent replay reports. |
@@ -44,20 +44,27 @@ acceptance.
    into the addressed rows in Pythia and Qwen, validating the intervention.
 4. Optimizer allocation changes storage location through a sharp,
    scale-dependent transition. At the strongest rate, whole-table dependence
-   occurs in 21/21 pooled 410M and 20/21 pooled 1.4B runs; whole-table
-   sufficiency is typical at both scales.
+   occurs in 16/16 new 410M and 15/16 new 1.4B runs (21/21 and 20/21 in the
+   declared secondary pools). Whole-table sufficiency is typical at 1.4B in the
+   primary cohort; the pooled 410M call is borderline at Wilson lower 0.500436.
+   The 410M parent pool also mixes 10M-token parent and 5M-token G6 clean
+   adaptations and is only a secondary consistency check.
 5. Deterministic final trigger rows are not a reliable item boundary. Their
    sufficiency is not typical at either scale. A wider trigger-history footprint
-   is typically necessary and sufficient at 410M, but shares rows with a
-   matched benign prefix and divides behavior across earlier and final rows
-   differently by seed.
+   is specifically necessary in 15/16 new 410M runs, while sufficiency is only
+   11/16 and not typical. Its heterogeneous pooled sufficiency call is
+   borderline at Wilson lower 0.500436. It shares rows with a matched benign
+   prefix and divides behavior across earlier and final rows differently by
+   seed.
 6. MLP and early-layer updates are separately necessary under ordinary
    adaptation. Their early-MLP intersection passes necessity at 410M and
    misses the fixed threshold at 1.4B; it is insufficient at both sizes.
 7. Two insertion depths and a 5x split table optimizer still leave more than
    99.8% outside-graft sufficiency; the five-seed replay is prediction-exact.
 8. The strongest table rate has a measurable paired clean-NLL cost of 0.0773
-   at 410M and 0.06894 at 1.4B.
+   at 410M and 0.06894 at 1.4B, corresponding to 8.04% and 7.14% perplexity
+   increases. Direct row writes are deletable with no material clean-NLL cost
+   in a labeled post-hoc paired audit.
 
 ## Claims prohibited
 
@@ -80,10 +87,11 @@ acceptance.
 3. Upload early enough to perform an independent OpenReview rendering and
    anonymity check.
 
-The final PDF has nine main-text pages and three reference/appendix pages. All
-12 pages were rendered and visually inspected after G6 integration; no clipping,
-overlap, broken table, or unreadable figure was found. All 14 citation keys are
-defined and used. The sanitized ZIP contains 526 manifest records, passes
+The final PDF has nine main-text pages and four reference/appendix pages. All
+13 pages were rendered and visually inspected after the second review round;
+no clipping, overlap, broken table, or unreadable figure was found. All 15
+citation keys are defined and used. The sanitized ZIP contains a generated
+manifest and passes
 archive and per-file integrity checks, and contains no matched local host,
 credential, IP-address, or user-path string. The G6 source manifest has 644
 entries and validates locally; full replay has zero metric differences and zero

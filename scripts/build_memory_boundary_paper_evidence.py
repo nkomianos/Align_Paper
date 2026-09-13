@@ -28,10 +28,20 @@ def grouped(rows, model, key):
     return [float(r[key]) for r in rows if r["model"] == model]
 
 
+def tex_sci(value: float) -> str:
+    """Compact scientific notation for generated LaTeX prose."""
+    if value == 0:
+        return "0"
+    exponent = int(np.floor(np.log10(abs(value))))
+    coefficient = value / (10 ** exponent)
+    return rf"{coefficient:.2f}\!\times\!10^{{{exponent}}}"
+
+
 def main() -> None:
     s1, s1_src = load("artifacts/memory_graft_security_s1_v1_1/DECISIVE_SUMMARY.json")
     s2b, s2_src = load("artifacts/memory_graft_security_s2/memory_graft_security_s2_run1/S2B_SUMMARY.json")
     s2e_dec, s2e_src = load("artifacts/memory_graft_security_s2e/memory_graft_security_s2e_run1/DECISION.json")
+    s2e_quality, s2e_quality_src = load("artifacts/memory_graft_security_s2e/memory_graft_security_s2e_quality_audit.json")
     g1_dec, g1_src = load("artifacts/memory_graft_security_g1/memory_graft_security_g1_run1/DECISION.json")
     g2_dec, g2_src = load("artifacts/memory_graft_security_g2/memory_graft_security_g2_2_run1/DECISION.json")
     g2_route, g2_route_src = load("artifacts/memory_graft_security_g2/memory_graft_security_g2_2_run1/ROUTE_DECISIVE.json")
@@ -54,6 +64,7 @@ def main() -> None:
     g6_rows, g6_rows_src = load("artifacts/memory_graft_security_g6_run1/NEW_ROWS.json")
     g6_temporal, g6_temporal_src = load("artifacts/memory_graft_security_g6_run1/NEW_TEMPORAL.json")
     g6_ver, g6_ver_src = load("artifacts/memory_graft_security_g6_verification.json")
+    g6_pooling, g6_pooling_src = load("artifacts/memory_graft_security_g6_pooling_audit.json")
 
     s2e_rows = []
     for path in sorted((ROOT / "artifacts/memory_graft_security_s2e/memory_graft_security_s2e_run1/decisive").glob("*/seed_*/metrics.json")):
@@ -104,11 +115,12 @@ def main() -> None:
 
     bundle = {
         "schema": "memory-boundary-paper-evidence-v1",
-        "sources": [s1_src, s2_src, s2e_src, g1_src, g1_rows_src, g2_src,
+        "sources": [s1_src, s2_src, s2e_src, s2e_quality_src, g1_src, g1_rows_src, g2_src,
                     g2_route_src, g23_src, s3_src, s4_src, g3_src, g3_rows_src,
                     g3_ver_src, g4_src, g4_rows_src, g4_ver_src, g31_src,
                     g31_rows_src, g31_ver_src, g5_src, g5_rows_src, g5_ver_src,
-                    g6_src, g6_rows_src, g6_temporal_src, g6_ver_src],
+                    g6_src, g6_rows_src, g6_temporal_src, g6_ver_src,
+                    g6_pooling_src],
         "hybrid_localization_means": s2_means,
         "target_specific_removal_by_seed": deletion,
         "frozen_graft_attack_excess_by_seed": routing,
@@ -117,6 +129,7 @@ def main() -> None:
             "g1": g1_dec["outcomes"],
             "g2_2": g2_dec,
         },
+        "s2e_posthoc_clean_quality": s2e_quality,
         "g2_3_specificity": {
             m: {
                 "near_trigger": [float(r["evaluation"]["near_trigger"]) for r in g23 if r["model"] == m],
@@ -136,7 +149,7 @@ def main() -> None:
                                   "verification": g5_ver},
         "g6_optimizer_route_distribution": {
             "decision": g6, "new_rows": g6_rows, "new_temporal": g6_temporal,
-            "verification": g6_ver,
+            "verification": g6_ver, "pooling_audit": g6_pooling,
         },
     }
     OUT.mkdir(parents=True, exist_ok=True)
@@ -280,11 +293,7 @@ def main() -> None:
                        "Final 16 rows\nnecessity", "72 history rows\nsufficiency",
                        "Final 16 rows\nsufficiency"]
     temporal = {
-        metric: [float(v) for v in (
-            g6["pooled_endpoint"]["pythia-410m"]["metrics"][metric]["values"]
-            if metric == "whole_table_necessity"
-            else g6["pooled_temporal"]["metrics"][metric]["values"]
-        )]
+        metric: [float(row["metrics"][metric]) for row in g6_temporal]
         for metric in temporal_metrics
     }
     fig, ax = plt.subplots(figsize=(7.4, 3.45), constrained_layout=True)
@@ -316,23 +325,35 @@ def main() -> None:
         "adamw_lr_1e-2": r"$10^{-2}$", "adamw_lr_1e-1": r"$10^{-1}$",
         "none": "none",
     }
-    route_lines = [
-        r"\begin{tabular}{rccrrrr}", r"\toprule",
-        r"Seed & First dep. 410M & First dep. 1.4B & $N_T^{410}$ & $N_T^{1.4}$ & $N_F^{410}$ & $N_F^{1.4}$ \\",
-        r"\midrule",
-    ]
-    for i in range(16):
-        s410 = endpoint["pythia-410m"]["adamw_lr_1e-1"]
-        s14 = endpoint["pythia-1.4b"]["adamw_lr_1e-1"]
-        route_lines.append(
-            f"{i+1:02d} & {profile_tex[first['pythia-410m'][i]['first_table_dependent_profile']]} & "
-            f"{profile_tex[first['pythia-1.4b'][i]['first_table_dependent_profile']]} & "
-            f"{s410['whole_table_necessity']['values'][i]:.3f} & "
-            f"{s14['whole_table_necessity']['values'][i]:.3f} & "
-            f"{s410['target_row_necessity']['values'][i]:.3f} & "
-            f"{s14['target_row_necessity']['values'][i]:.3f} \\\\"
-        )
-    route_lines += [r"\bottomrule", r"\end{tabular}"]
+    route_lines = []
+    for model, label in (("pythia-410m", "Pythia-410M"),
+                         ("pythia-1.4b", "Pythia-1.4B")):
+        route_lines += [
+            rf"\multicolumn{{7}}{{c}}{{\textbf{{{label}}}}} \\",
+            r"\toprule",
+            r"Seed & First dep. & Whole need & Whole suff. & Outside suff. & Final need & Final suff. \\",
+            r"\midrule",
+        ]
+        summary = endpoint[model]["adamw_lr_1e-1"]
+        for i in range(16):
+            value = summary["whole_table_necessity"]["values"][i]
+            # The dagger exposes the preregistered threshold knife-edge rather
+            # than hiding it behind three-decimal rounding.
+            whole_need = f"{value:.4f}" if model == "pythia-1.4b" and i == 2 else f"{value:.3f}"
+            if model == "pythia-1.4b" and i == 2:
+                whole_need += r"$^{\dagger}$"
+            route_lines.append(
+                f"{i+1:02d} & {profile_tex[first[model][i]['first_table_dependent_profile']]} & "
+                f"{whole_need} & "
+                f"{summary['whole_table_sufficiency']['values'][i]:.3f} & "
+                f"{summary['outside_table_sufficiency']['values'][i]:.3f} & "
+                f"{summary['target_row_necessity']['values'][i]:.3f} & "
+                f"{summary['target_row_sufficiency']['values'][i]:.3f} \\\\"
+            )
+        route_lines += [r"\bottomrule"]
+        if model == "pythia-410m":
+            route_lines += [r"\addlinespace[4pt]"]
+    route_lines = [r"\begin{tabular}{rcrrrrr}"] + route_lines + [r"\end{tabular}"]
     (OUT / "g6_seed_routes.tex").write_text("\n".join(route_lines) + "\n", encoding="utf-8")
 
     tm = g6["pooled_temporal"]["metrics"]
@@ -350,6 +371,20 @@ def main() -> None:
         temporal_lines.append(label + " & " + " & ".join(f"{v:.3f}" for v in vals) + r" \\")
     temporal_lines += [r"\bottomrule", r"\end{tabular}"]
     (OUT / "g6_temporal_routes.tex").write_text("\n".join(temporal_lines) + "\n", encoding="utf-8")
+
+    q410 = s2e_quality["summaries"]["pythia-410m"]
+    q14 = s2e_quality["summaries"]["pythia-1.4b"]
+    d410 = q410["post_minus_pre_clean_nll"]
+    d14 = q14["post_minus_pre_clean_nll"]
+    sentence = (
+        f"${tex_sci(d410['mean'])}$ nats (paired bootstrap 95\\% interval "
+        f"$[{tex_sci(d410['lower'])},{tex_sci(d410['upper'])}]$) at 410M and "
+        f"${tex_sci(d14['mean'])}$ nats "
+        f"$[{tex_sci(d14['lower'])},{tex_sci(d14['upper'])}]$ at 1.4B; "
+        f"geometric-mean perplexity ratios are {q410['geometric_mean_perplexity_ratio']:.6f} "
+        f"and {q14['geometric_mean_perplexity_ratio']:.6f}, respectively."
+    )
+    (OUT / "s2e_quality_sentence.tex").write_text(sentence + "\n", encoding="utf-8")
     print(OUT / "EVIDENCE.json")
 
 

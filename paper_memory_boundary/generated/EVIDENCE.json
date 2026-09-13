@@ -14,6 +14,10 @@
       "sha256": "9d38684c0b68f5e6e00f42e05abdff28ad4cf6224479baa8acc41145f652b359"
     },
     {
+      "path": "artifacts/memory_graft_security_s2e/memory_graft_security_s2e_quality_audit.json",
+      "sha256": "2c9708c98d39f5780f252814ea18f5c9acc730e3b6149715cfd00c204917da95"
+    },
+    {
       "path": "artifacts/memory_graft_security_g1/memory_graft_security_g1_run1/DECISION.json",
       "sha256": "d524439fad8dec6261f196673bcb355f1850540fc9100cb71210f590da20a697"
     },
@@ -104,6 +108,10 @@
     {
       "path": "artifacts/memory_graft_security_g6_verification.json",
       "sha256": "55fc4c77a07571e4e16e02c9e1fdadde714d16224d6f7457ec4da4d55af98fd0"
+    },
+    {
+      "path": "artifacts/memory_graft_security_g6_pooling_audit.json",
+      "sha256": "758d00272e11367787a8158bb0b9a13eeae8f3e694bec78d43597f18ec1cfe84"
     }
   ],
   "hybrid_localization_means": {
@@ -326,6 +334,139 @@
             "upper": 1.0
           }
         }
+      }
+    }
+  },
+  "s2e_posthoc_clean_quality": {
+    "config_sha256": "2c8c2812fe908006dd57c4ad3a937b37465c851c5873247075b381a0cc759d6e",
+    "interpretation": "Same-checkpoint paired clean NLL; no preregistered quality threshold.",
+    "kind": "memory_graft_security_s2e_posthoc_clean_quality_audit",
+    "rows": [
+      {
+        "clean_checkpoint_sha256": "6d774dc7b46715ed699d65370a0dde8bd29148bf25b3970b3a4484546db786d3",
+        "model": "pythia-410m",
+        "perplexity_ratio": 0.9999966191367659,
+        "post_minus_pre_clean_nll": -3.3808689492431654e-06,
+        "post_write_clean_nll": 2.8456975899490655,
+        "pre_write_clean_nll": 2.8457009708180148,
+        "row_delta_sha256": "cf9cf5431354c661f502256973099c45a97e8e609723edb69e1e972df12ff8d9",
+        "seed": 26091301
+      },
+      {
+        "clean_checkpoint_sha256": "4ff6ecf8809416c9f0e73e097383f244538af20ffa7935281fc47d1719191383",
+        "model": "pythia-410m",
+        "perplexity_ratio": 0.9999935075559256,
+        "post_minus_pre_clean_nll": -6.492465150387261e-06,
+        "post_write_clean_nll": 2.8441774405685125,
+        "pre_write_clean_nll": 2.844183933033663,
+        "row_delta_sha256": "e7e06f94d257c2052a971dd832dea15dcb90e97994f4f4e080f5239521d3f685",
+        "seed": 26091302
+      },
+      {
+        "clean_checkpoint_sha256": "25c88468a30c86239e50795ebffa28bd22f55395a328304e461b103bc9c83585",
+        "model": "pythia-410m",
+        "perplexity_ratio": 0.9999941807336523,
+        "post_minus_pre_clean_nll": -5.819283279695497e-06,
+        "post_write_clean_nll": 2.82981814216165,
+        "pre_write_clean_nll": 2.8298239614449296,
+        "row_delta_sha256": "544c8b7d9665495a14952ba1a7facd044b03e1b37a30564d09293388ab4d2bef",
+        "seed": 26091303
+      },
+      {
+        "clean_checkpoint_sha256": "e97a278258f146faac69778ecea5de5f8da3364bc3871e19873d7492b20b2b04",
+        "model": "pythia-410m",
+        "perplexity_ratio": 0.9999828564486527,
+        "post_minus_pre_clean_nll": -1.7143698299637578e-05,
+        "post_write_clean_nll": 2.8223464367436426,
+        "pre_write_clean_nll": 2.8223635804419422,
+        "row_delta_sha256": "4760c1e857fab72d5fd02f372ada07ade44b9f20c57ce0f7031ab0a161ee8e2d",
+        "seed": 26091304
+      },
+      {
+        "clean_checkpoint_sha256": "9b867c43d71d4ddb283c72affa50e9c309be4aa165b60e096510c4bb248cdaec",
+        "model": "pythia-410m",
+        "perplexity_ratio": 0.9999828265299718,
+        "post_minus_pre_clean_nll": -1.7173617493870807e-05,
+        "post_write_clean_nll": 2.829789015826057,
+        "pre_write_clean_nll": 2.8298061894435507,
+        "row_delta_sha256": "3f3476f3cb7b52c5c63cde3874c0589aebae9c855b529a29e7b960a4b85772d6",
+        "seed": 26091305
+      },
+      {
+        "clean_checkpoint_sha256": "1266954c78e369145e83f5bfa131e050cf5c41236162ac8a3d216e425f610b71",
+        "model": "pythia-1.4b",
+        "perplexity_ratio": 0.999993552434427,
+        "post_minus_pre_clean_nll": -6.447586358593327e-06,
+        "post_write_clean_nll": 2.5722977806540097,
+        "pre_write_clean_nll": 2.5723042282403683,
+        "row_delta_sha256": "66a50f30323c3e9503411b744401026221dbdc8d0abf10fee7e8620413b54309",
+        "seed": 26091301
+      },
+      {
+        "clean_checkpoint_sha256": "e7e26cc257aca949292ac7403172c95f97e1980044d08aa96376e214cb5b8a05",
+        "model": "pythia-1.4b",
+        "perplexity_ratio": 0.9999937244686995,
+        "post_minus_pre_clean_nll": -6.2755509917522545e-06,
+        "post_write_clean_nll": 2.5764650120454675,
+        "pre_write_clean_nll": 2.5764712875964593,
+        "row_delta_sha256": "4c69a121985554d581e73ef59617a63ae37309dfa0771d4dcf5610a3ebe652e8",
+        "seed": 26091302
+      },
+      {
+        "clean_checkpoint_sha256": "76199699093e0ec4ff2981ea12ecafda6ef827a76db72d3155a28e3c48338269",
+        "model": "pythia-1.4b",
+        "perplexity_ratio": 1.0000192307470064,
+        "post_minus_pre_clean_nll": 1.9230562097849457e-05,
+        "post_write_clean_nll": 2.5746015137317135,
+        "pre_write_clean_nll": 2.5745822831696157,
+        "row_delta_sha256": "4a4d499b543b9736c9e5c31358e47bf1ce9a7127592e29ffe384e01e3727bd77",
+        "seed": 26091303
+      },
+      {
+        "clean_checkpoint_sha256": "581fad1af351b747a8afbda9e0899dcf402ec718075c87a5c8dcd36e53ed9b34",
+        "model": "pythia-1.4b",
+        "perplexity_ratio": 1.000044034543615,
+        "post_minus_pre_clean_nll": 4.4033574122970265e-05,
+        "post_write_clean_nll": 2.5693767435410444,
+        "pre_write_clean_nll": 2.5693327099669214,
+        "row_delta_sha256": "c94ded5303b65892400fb06f0d2c356d2f5446a64a87b676080b282c6eb38196",
+        "seed": 26091304
+      },
+      {
+        "clean_checkpoint_sha256": "87df0222b08790176b3acdc550a13773d8ccb27ba4bac62784f84e31d7950191",
+        "model": "pythia-1.4b",
+        "perplexity_ratio": 1.000010195017406,
+        "post_minus_pre_clean_nll": 1.019496543719356e-05,
+        "post_write_clean_nll": 2.5721671571918563,
+        "pre_write_clean_nll": 2.572156962226419,
+        "row_delta_sha256": "ca5f2a4436621e1346e3b436a749f0a7f3a845f65bc9689ffd959d16c77417d6",
+        "seed": 26091305
+      }
+    ],
+    "s2e_manifest_sha256": "0984aa85a7ba48d6f055555654c3e01f6020a12e7fb46f5713840da25cd4af2d",
+    "status": "DESCRIPTIVE_POSTHOC_AUDIT",
+    "summaries": {
+      "pythia-1.4b": {
+        "geometric_mean_perplexity_ratio": 1.000012147266639,
+        "post_minus_pre_clean_nll": {
+          "lower": -3.050261852699521e-06,
+          "mean": 1.214719286153354e-05,
+          "upper": 2.9151766907897782e-05
+        },
+        "post_write_clean_nll_mean": 2.5729816414328184,
+        "pre_write_clean_nll_mean": 2.572969494239957,
+        "seeds": 5
+      },
+      "pythia-410m": {
+        "geometric_mean_perplexity_ratio": 0.9999899980633852,
+        "post_minus_pre_clean_nll": {
+          "lower": -1.501943550863416e-05,
+          "mean": -1.0001986634566862e-05,
+          "upper": -4.978553921652918e-06
+        },
+        "post_write_clean_nll_mean": 2.834365725049786,
+        "pre_write_clean_nll_mean": 2.83437572703642,
+        "seeds": 5
       }
     }
   },
@@ -135798,6 +135939,58 @@
       },
       "source_manifest_files": 644,
       "source_manifest_sha256": "ae40a13c11dc1932d3b0e4965c468c4868aff6a73b150d7efc626f8f10baa588"
+    },
+    "pooling_audit": {
+      "excluded": "original G3 1.4B developmental selection",
+      "kind": "memory_graft_security_g6_parent_pooling_audit",
+      "pythia-1.4b": {
+        "clean_adaptation_steps": 1220,
+        "clean_adaptation_tokens": 5000000,
+        "compatibility": "configuration_identical",
+        "licensed_use": "secondary precision estimate; G6-only remains primary",
+        "parent": "five separately fixed G3.1 AdamW lr=1e-1 seeds"
+      },
+      "pythia-410m": {
+        "compatibility": "heterogeneous_clean_adaptation_length",
+        "g6_clean_adaptation_steps": 1220,
+        "g6_clean_adaptation_tokens": 5000000,
+        "licensed_use": "secondary consistency only",
+        "parent": "five valid G3 AdamW lr=1e-1 seeds; S1 clean checkpoints",
+        "parent_clean_adaptation_steps": 2441,
+        "parent_clean_adaptation_tokens": 10000000
+      },
+      "shared_endpoint_fields": [
+        "model_revision",
+        "memory",
+        "markers",
+        "poison_count",
+        "poison_source_offset",
+        "poison_steps",
+        "backbone_optimizer",
+        "table_adamw_lr_1e-1",
+        "sequence_length",
+        "effective_batch",
+        "evaluation"
+      ],
+      "sources": [
+        {
+          "path": "configs/memory_graft_security_s1_v1_1_preregistered.json",
+          "sha256": "a524d46d364ac309a6a8a1285f5d9d41e620cdd39048619e07392b8ad42ef462"
+        },
+        {
+          "path": "configs/memory_graft_security_g3_preregistered.json",
+          "sha256": "ada2b18542388b57e0524f7ada00b4a9c5ff34169530ee79f127633b583fe975"
+        },
+        {
+          "path": "configs/memory_graft_security_g3_1_preregistered.json",
+          "sha256": "b4598a3d7984a6f36ec727a59e7b84e46a68fdeebca5eaf8af684a8aad0e09fe"
+        },
+        {
+          "path": "configs/memory_graft_security_g6_preregistered.json",
+          "sha256": "e864e3f70ff7ad7534ddf8e9f76d0e946492a65e4a982e1cd3731fd209a1df7f"
+        }
+      ],
+      "status": "G6_PRIMARY_POOLS_SECONDARY"
     }
   }
 }

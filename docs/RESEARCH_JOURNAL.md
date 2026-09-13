@@ -3103,3 +3103,43 @@ conservative use to approximately 22.65 GPU-hours. Source manifest SHA-256:
 `ae40a13c11dc1932d3b0e4965c468c4868aff6a73b150d7efc626f8f10baa588`.
 Verification SHA-256:
 `55fc4c77a07571e4e16e02c9e1fdadde714d16224d6f7457ec4da4d55af98fd0`.
+
+## 2026-09-13 — second manuscript review and S2e quality audit
+
+The second review exposed a missing closest-prior-work citation, missing quality
+normalization, two statistically fragile pooled calls, unclear pool provenance,
+and an unreported clean-quality outcome for the direct-row control. The paper
+now cites Hase, Bansal, Kim, and Ghandeharioun (NeurIPS 2023) and distinguishes
+their inferred causal-tracing location from our exact architectural hash
+address. The symmetric clean/poisoned component-swap protocol is now an explicit
+post-adaptation storage-location verifier contribution.
+
+G6's 16 new seeds are primary. The pooled 410M parents are exclusively the five
+valid G3 AdamW 1e-1 seeds; pooled 1.4B parents are exclusively the separately
+fixed G3.1 seeds, and the invalid original G3 1.4B arm is excluded. Poison
+training, graft, markers, and evaluation match G6. A raw-runner audit found one
+material parent/new difference: G3/G4's 410M checkpoints use 10M clean-
+adaptation tokens (2,441 steps), whereas G6 uses 5M (1,220 steps). The 1.4B
+G3.1/G6 clean recipe is identical. All G6-only estimates are therefore primary;
+the 410M/G4 pools are heterogeneous secondary consistency checks. Pooled 410M whole-table
+sufficiency and history sufficiency are both 15/21 with Wilson lower bound
+0.500436, only 0.000436 above the registered majority criterion; one seed flip
+reverses either call. Both are labeled borderline. A majority-prevalence call is
+explicitly not treated as a security guarantee.
+Pooling-audit SHA-256:
+`758d00272e11367787a8158bb0b9a13eeae8f3e694bec78d43597f18ec1cfe84`.
+
+The strongest-rate G6 clean-NLL changes are 2.66% and 2.64% of mean pre-poison
+NLL and correspond to geometric-mean perplexity increases of 8.04% and 7.14%.
+No multiplicity correction is applied because every estimand is separately
+registered and all outcomes are reported; marginal calls are disclosed and are
+not generalized across estimands.
+
+A post-hoc reviewer-requested audit evaluated the exact S2e pre-write clean
+checkpoints on the same clean-token slice as the verified post-write outcome.
+Mean paired NLL changes are -1.00e-5 at 410M and +1.21e-5 at 1.4B, with
+geometric-mean perplexity ratios 0.999990 and 1.000012. This is a descriptive
+quality result, not a preregistered decision. It establishes a constructive
+assay endpoint: deliberate row-restricted writes are removable with no material
+clean-quality cost at the assay's resolution. Artifact SHA-256:
+`2c9708c98d39f5780f252814ea18f5c9acc730e3b6149715cfd00c204917da95`.

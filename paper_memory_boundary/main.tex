@@ -27,12 +27,14 @@ localize the mapping to the backbone. Second, the deletion assay is functional:
 it removes 98.30--100\% of behavior deliberately confined to rows. Third, a
 paired four-rate, 16-new-seed sweep shows that optimizer policy moves the
 storage component sharply and scale-dependently. At the largest table rate,
-whole-table dependence occurs in 21/21 pooled 410M runs and 20/21 pooled 1.4B
-runs, yet final-row sufficiency occurs in only 10/21 and 9/21. A two-layer 5x
+whole-table dependence occurs in 16/16 new 410M runs and 15/16 new 1.4B runs,
+yet final-row sufficiency occurs in only 7/16 at each size. That policy raises
+clean-set perplexity by 8.04\% and 7.14\%, respectively. A two-layer 5x
 reference-policy control retains 99.82\% outside-graft sufficiency. Addressing
 therefore constrains reads; a deletion boundary additionally requires a write
-policy and per-item location verification. We release frozen protocols, raw
-predictions, causal interventions, and full optimizer replays.
+policy and post-adaptation location verification. We release that symmetric
+component-swap verifier, frozen protocols, raw predictions, causal
+interventions, and full optimizer replays.
 \end{abstract}
 
 \section{Introduction}
@@ -79,18 +81,19 @@ four tested sizes.
 A prospectively frozen optimizer sweep exposes a second boundary. Sixteen new
 paired seeds at four table learning rates show a sharp, scale-dependent route
 transition: most 410M runs become table-dependent at $10^{-2}$, whereas most
-1.4B runs require $10^{-1}$. At the largest rate the whole table is typically
-necessary and sufficient at both sizes, and a sufficient backbone complement
-nearly vanishes. The nominal final trigger rows remain unreliable. At 410M,
-the 72-row trigger-history footprint is typically necessary and sufficient,
-but the split between final and earlier rows varies by seed and overlaps a
-shared-prefix control.
+1.4B runs require $10^{-1}$. At the largest rate whole-table dependence is
+robust at both sizes and a sufficient backbone complement nearly vanishes;
+whole-table sufficiency is typical at 1.4B in the primary cohort and borderline
+in the pooled 410M estimate. The nominal final trigger rows remain unreliable.
+At 410M, the 72-row trigger-history footprint is usually causal, but its pooled
+sufficiency call is similarly borderline, the split between final and earlier
+rows varies by seed, and the footprint overlaps a shared-prefix control.
 
 We contribute:
 \begin{itemize}
-  \item a causal assay separating \emph{addressability} from \emph{storage},
-  with target-row, random-row, benign-row, whole-table, whole-graft, and
-  symmetric backbone/graft interventions;
+  \item a post-adaptation storage-location verifier: symmetric clean/poisoned
+  backbone--graft swaps plus target-row, random-row, benign-row, whole-table,
+  and whole-graft interventions;
   \item a verified negative result: a trainable deterministic memory does not
   preferentially absorb a newly fine-tuned trigger mapping under our ordinary
   recipe;
@@ -209,6 +212,17 @@ bound on seed prevalence exceeds 0.5. Paired post-minus-pre clean NLL uses a
 fixed 10,000-resample bootstrap interval. Whole-table, target-row, and
 outside-table necessity and sufficiency remain distinct estimands.
 
+The five pooled 410M parents are the verified G3 AdamW $10^{-1}$ seeds; the five
+1.4B parents are the separately fixed and verified G3.1 AdamW $10^{-1}$ seeds.
+All match G6 in model revision, graft, poison count and source offset, poison
+steps, backbone and table rates, decay, sequence length, batch size, markers,
+and evaluation. G3/G4's 410M clean checkpoints used 10M adaptation tokens
+(2,441 steps), however, whereas G6 used 5M (1,220 steps); the 1.4B G3.1/G6
+clean recipe is identical. The invalid original G3 1.4B selection is never
+pooled. We therefore treat the 16 prospective G6 seeds as primary and the
+declared 21-seed pools as secondary consistency estimates, with the 410M
+heterogeneity stated wherever those pools appear.
+
 \paragraph{Derived decision threshold.}
 Before observing decisive results, we set the minimum meaningful removal or
 routing effect to $\delta=0.15$. With 1,024 paired binary evaluations, a
@@ -216,8 +230,14 @@ distribution-free 95\% half-width is
 $\sqrt{2\log(2/.05)/1024}=0.08488$. Development eligibility therefore requires
 an installed attack excess of at least $0.23488$, so its lower bound can leave
 the $0.15$ effect that replication must resolve. A decisive claim passes only
-when the lower endpoint of the seed-level 95\% interval exceeds $0.15$.
+when its registered interval rule passes; parent-stage mean-effect claims
+require the seed-level 95\% lower endpoint to exceed $0.15$, while G6 route
+prevalence uses the separately stated Wilson majority rule.
 Specificity and benign performance remain outcomes rather than compound gates.
+We apply no multiplicity correction: each threshold corresponds to a separate
+registered claim, every registered rate and outcome is reported, and none was
+selected after observing the results. Marginal threshold crossings are
+therefore identified explicitly rather than generalized across estimands.
 
 \paragraph{Verification.}
 Decisive stages seal configuration, code, source-checkpoint, and result
@@ -325,6 +345,13 @@ other value bit-identical. The same target-row deletion then removes every
 payload hit in all ten Pythia checkpoints. Target-specific removal is 0.99628
 $[0.99523,0.99732]$ at 410M and 0.98301 $[0.96999,0.99603]$ at 1.4B. Benign-row
 and random-row deletions are inert apart from one 0.02-point random effect.
+The paired post-hoc quality audit finds mean clean-NLL changes of
+% S2e quality values are generated from the same-checkpoint audit artifact.
+\input{generated/s2e_quality_sentence.tex}
+The direct-write control therefore supplies a constructive configuration with
+near-ceiling installation, item-level deletion, and no material clean-quality
+cost at this assay's resolution; it remains a surgical API rather than ordinary
+fine-tuning.
 
 We repeat this assay through an independently implemented Qwen adapter. The
 preregistered functional positive control uses three seeds per size because its
@@ -364,19 +391,29 @@ size but occurs at a larger rate for the larger model (Figure~\ref{fig:optimizer
 The paired trajectories expose seed heterogeneity rather than a smooth average
 response. The first table-dependent rate is $10^{-3}$ for 2/16 new 410M seeds,
 $10^{-2}$ for 13/16, and $10^{-1}$ for 1/16. At 1.4B it is $10^{-2}$ for 2/16,
-$10^{-1}$ for 13/16, and absent for 1/16. Pooling the prospectively declared
-five verified endpoint seeds gives 21/21 whole-table-dependent 410M runs
-(Wilson 95\% interval $[0.845,1.000]$) and 20/21 at 1.4B
-($[0.773,0.992]$). Whole-table sufficiency is also typical: 15/21 at 410M
-($[0.500,0.862]$) and 17/21 at 1.4B ($[0.600,0.923]$). A sufficient
-outside-table copy remains in 0/21 and 1/21. Optimizer allocation therefore
-moves the causal storage component at both scales.
+$10^{-1}$ for 13/16, and absent for 1/16. In the primary new seeds, whole-table
+necessity at $10^{-1}$ occurs in 16/16 410M runs (Wilson
+$[0.806,1.000]$) and 15/16 1.4B runs ($[0.717,0.989]$). Whole-table sufficiency
+occurs in 11/16 ($[0.444,0.858]$) and 13/16 ($[0.570,0.934]$), while a
+sufficient outside-table copy remains in 0/16 and 1/16. The causal route change
+is therefore robust at both scales; sufficiency is typical by the registered
+rule only at 1.4B in the primary cohort.
 
-It does not impose a universal final-row deletion boundary. At $10^{-1}$,
-final-row necessity exceeds 0.15 in 12/21 410M runs and 17/21 1.4B runs, while
-final-row sufficiency does so in only 10/21 and 9/21. The latter is not typical
-at either size. Every seed and its transition rate are reported in
-Appendix~\ref{app:seedroutes}.
+The secondary declared pool gives 21/21 and 20/21 whole-table necessity and
+15/21 and 17/21 sufficiency at 410M and 1.4B, respectively. The 410M
+sufficiency lower bound is 0.500436, only 0.000436 above the registered majority
+bar; one seed flip would reverse that call. We label it borderline. The 21/21
+necessity result is not similarly knife-edge. Moreover, ``typical'' here means
+only a population majority: even 15/21 observed runs cannot license a deletion
+guarantee. The 410M pool also crosses the clean-adaptation protocols described
+above and is only a consistency check. Optimizer allocation moves the causal
+storage component, but does not make that route deterministic.
+
+It does not impose a universal final-row deletion boundary. In the primary G6
+cohort, final-row necessity exceeds 0.15 in 9/16 410M runs and 13/16 1.4B runs,
+while final-row sufficiency does so in 7/16 at each size. The secondary pooled
+counts are 12/21, 17/21, 10/21, and 9/21. Every seed, transition rate,
+necessity, and sufficiency value is reported in Appendix~\ref{app:seedroutes}.
 
 \begin{figure*}[t]
   \centering
@@ -391,31 +428,39 @@ Appendix~\ref{app:seedroutes}.
 
 The strongest table policy also changes general clean behavior. Paired clean
 NLL increases by 0.0773 (bootstrap 95\% interval $[0.0514,0.1150]$) at 410M
-and 0.06894 $[0.06691,0.07096]$ at 1.4B. The $10^{-2}$ increases are 0.0146
+and 0.06894 $[0.06691,0.07096]$ at 1.4B. These are 2.66\% and 2.64\% of the
+respective mean pre-poison NLL and correspond to geometric-mean perplexity
+ratios of 1.0804 and 1.0714. The $10^{-2}$ increases are 0.0146
 $[-0.0337,0.0471]$ and 0.01227 $[0.01028,0.01416]$, respectively. These are
 measured costs, not a claim that quality is preserved. Matched-benign learning
 remains near ceiling at the strongest rate, with mean post-minus-pre accuracy
 0.9769 and 0.99994.
 
+\subsection{A broad history footprint is causal but not an item guarantee}
+
 A temporal intervention explains why component routing does not fix the nominal
 item location. At 410M and $10^{-1}$, the 72 rows queried across the complete
-trigger history are specifically necessary in 19/21 pooled seeds (Wilson
-$[0.711,0.973]$) and sufficient in 15/21 ($[0.500,0.862]$). This broader,
-input-computable footprint is therefore a typical causal locus. Its internal
-allocation varies: final rows are necessary in 12/21 seeds, earlier rows in
-13/21, and final rows are sufficient in only 10/21. The shared-prefix control
-removes more than 0.15 ASR in 5/21 runs ($[0.106,0.451]$), including large
-drops of 0.958, 0.974, and 0.749. The behavior can be found in a compact
-history footprint, but neither its final-row location nor isolation from an
-overlapping item follows from the optimizer setting.
+trigger history are specifically necessary in 15/16 new seeds (Wilson
+$[0.717,0.989]$) but sufficient in only 11/16 ($[0.444,0.858]$). The broader,
+input-computable footprint therefore contains a typical causal contribution,
+but is not typically self-contained under the registered rule. Its internal
+allocation varies: final rows are necessary in 9/16 seeds, earlier rows in
+10/16, and final rows are sufficient in only 7/16. The shared-prefix control
+removes more than 0.15 ASR in 4/16 runs ($[0.102,0.495]$), including large
+drops of 0.958, 0.974, and 0.749. The secondary G4+G6 pool gives 19/21 history
+specific necessity and 15/21 sufficiency; the latter's Wilson lower bound is
+0.500436, a one-flip knife-edge, and the pool mixes the two clean-adaptation
+lengths. The behavior can be found in a compact history footprint, but neither
+its sufficiency, final-row location, nor isolation from an overlapping item
+follows from the optimizer setting.
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{generated/temporal_row_footprint.pdf}
   \caption{\textbf{The table route occupies a seed-variable temporal address
-  footprint.} Dots are 21 pooled independent seeds. The 72-row history union is
-  typically specifically necessary and sufficient, while final and earlier
-  subsets vary and final-row sufficiency is not typical.}
+  footprint.} Dots are the 16 prospective G6 seeds. The 72-row history union is
+  typically specifically necessary but not typically sufficient; final and
+  earlier subsets vary and final-row sufficiency is not typical.}
   \label{fig:temporal}
 \end{figure}
 
@@ -479,9 +524,14 @@ swaps and frozen-graft experiments show that the answer can be no.
 
 Model editing treats transformer MLPs as implicit key--value memories and
 changes localized weights \citep{rome,memit}; BadEdit uses editing to install
-backdoors efficiently \citep{badedit}. That line intervenes on dense
-parameters. We instead ask whether an explicit, externally addressable memory
-contains behavior learned under unrestricted optimization. Agent memory
+backdoors efficiently \citep{badedit}. Hase et al. show that causal-tracing
+localization in dense transformers is statistically uncorrelated with which MLP
+layer is best to edit \citep{hase2023localization}: an inferred ``where'' need
+not identify a successful write location. Our separation is architectural.
+The hash address is exact and computable from token IDs before the forward pass,
+so its failure to identify learned storage cannot be attributed to an inaccurate
+localization estimator. We ask whether that explicit addressable memory contains
+behavior learned under unrestricted optimization. Agent memory
 poisoning attacks corrupt retrieved natural-language records
 \citep{memorypoison}; our table is a parametric hidden-state module and our
 threat is training-time route ambiguity. Sleeper-agent work studies persistence
@@ -495,7 +545,10 @@ Deterministic lookup answers \emph{where an input reads}; it does not answer
 \emph{where an optimizer writes}. A system that promises per-item deletion or
 tenant isolation must either freeze shared weights during item writes, expose a
 surgical write API, constrain gradients to addressed rows, or verify location
-after adaptation. Merely adding a table cannot provide that guarantee.
+after adaptation. Our released storage-location verifier operationalizes the
+last option through symmetric clean/poisoned component swaps followed by
+target, matched-benign, and random-row interventions. Merely adding a table
+cannot provide that guarantee.
 
 \paragraph{Synthetic behavior.}
 Rare strings and one-token payloads yield precise causal assays, but they are
@@ -515,8 +568,9 @@ Our table-only ordinary recipe fails to install either continuation even at
 $N=4096$, whereas row-restricted direct optimization succeeds with a larger
 learning rate. The paired sweep shows that optimizer allocation matters: most
 410M seeds become table-dependent at $10^{-2}$, while most 1.4B seeds require
-$10^{-1}$. At the strongest rate the table is typically necessary and
-sufficient at both sizes, but clean NLL rises by 0.0773 and 0.06894. The result
+$10^{-1}$. At the strongest rate whole-table necessity is robust at both sizes;
+sufficiency is typical at 1.4B in the primary cohort and only crosses the pooled
+410M majority bar by 0.000436. Clean NLL rises by 0.0773 and 0.06894. The result
 replaces an optimizer-independent routing claim with a write-policy tradeoff.
 The 72-row history footprint is usually causal at 410M, yet seed-variable
 suballocation and shared-prefix overlap prevent the optimizer rate alone from
@@ -538,7 +592,9 @@ reliably learns rare trigger mappings in the dense backbone, surviving deletion
 of the trigger rows and replacement of the entire graft. A four-rate paired
 sweep shows that optimizer policy can move the behavior into table-dependent
 state, but the threshold changes with scale and the strongest policy measurably
-raises clean NLL. The public reference implementation's 5x table policy still
+raises clean perplexity. Direct row writes provide the constructive endpoint:
+they are deletable with no material paired clean-NLL cost in this assay.
+The public reference implementation's 5x table policy still
 routes through the backbone in the two-layer test. A broader deterministic
 history footprint often carries the table copy, yet its division across rows
 and overlap with another item vary across seeds. Conditional memory supports a
@@ -590,7 +646,7 @@ Stage & Classification and licensed conclusion \\
 S1 v1.1 & Valid negative for row localization; valid positive for attack installation. \\
 S2a & Developmental negative: table-only ordinary recipe did not install; deletion untested there. \\
 S2b--d & Valid component localization, gate measurement, and clean-NLL benign matching. \\
-S2e & Valid positive control for deletion of deliberately row-confined behavior. \\
+S2e & Valid positive control for deletion of deliberately row-confined behavior; clean-quality comparison is a labeled post-hoc paired audit. \\
 G1 & Valid second-pair Pythia result; frozen verifier failed bitwise at 1.4B, decision survived disclosed diagnostic replay. \\
 G2 & Invalid before scientific training: Qwen payload tokenized to two tokens. \\
 G2.1 & Invalid before marker-dependent optimizer work: local symbol shadowed the training function. \\
@@ -636,13 +692,17 @@ predictive surprisal, not post-training learnability.
 \label{app:seedroutes}
 
 Table~\ref{tab:g6routes} reports every new G6 seed. ``First dep.'' is the first
-tested table rate where whole-table necessity exceeds 0.15. $N_T$ and $N_F$
-are whole-table and final-row necessity at $10^{-1}$. Seed numbers abbreviate
-the fixed IDs \texttt{26091601}--\texttt{26091616}.
+tested table rate where whole-table necessity exceeds 0.15. ``Need'' and
+``suff.'' are the corresponding causal contrasts at $10^{-1}$; ``outside'' is
+the complementary non-table sufficiency contrast. Seed numbers abbreviate the
+fixed IDs \texttt{26091601}--\texttt{26091616}. The dagger marks 1.4B seed 03:
+whole-table necessity is 0.149414, only 0.000586 below the frozen 0.15 rule, and
+is reported as absent exactly as preregistered.
 \begin{table}[h]
 \centering\scriptsize
+\setlength{\tabcolsep}{3.5pt}
 \input{generated/g6_seed_routes.tex}
-\caption{Per-seed optimizer transitions and endpoint necessity.}
+\caption{Per-seed optimizer transitions, necessity, and sufficiency.}
 \label{tab:g6routes}
 \end{table}
 
@@ -651,7 +711,9 @@ the fixed IDs \texttt{26091601}--\texttt{26091616}.
 Table~\ref{tab:g6temporal} reports the five verified parent G4 seeds followed
 by all 16 new G6 seeds. ``History'' is the 72-row union across all
 trigger-internal positions; ``spec.'' subtracts the largest matched-control
-drop. All entries are causal ASR contrasts.
+drop. All entries are causal ASR contrasts. The G4 parents use 10M-token clean
+adaptation and the G6 seeds 5M, so the manuscript's primary temporal estimate
+uses G6 alone; this table preserves the declared heterogeneous secondary pool.
 \begin{table}[h]
 \centering\scriptsize
 \input{generated/g6_temporal_routes.tex}

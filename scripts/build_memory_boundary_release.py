@@ -13,7 +13,8 @@ OUT = ROOT / "output" / "release" / "memory_boundary_iclr2027_artifact"
 TEXT_SUFFIXES = {".json", ".jsonl", ".md", ".py", ".tex", ".bib", ".sty", ".bst", ".txt"}
 REDACTIONS = {
     "/home/ubuntu/align_research_20260910/": "${RESEARCH_ROOT}/",
-    "C:\\Users\\nkomi\\Documents\\GitHub\\Align_Paper\\": "${RESEARCH_ROOT}\\",
+    str(ROOT) + "\\": "${RESEARCH_ROOT}\\",
+    str(ROOT).replace("\\", "\\\\") + "\\\\": "${RESEARCH_ROOT}\\\\",
 }
 
 
@@ -52,7 +53,7 @@ def main() -> None:
     for pattern in ("*.tex", "*.bib", "*.sty", "*.bst", "README.md"):
         for path in (ROOT / "paper_memory_boundary").glob(pattern):
             add(selected, path)
-    for pattern in ("*.pdf", "*.png", "EVIDENCE.json"):
+    for pattern in ("*.pdf", "*.png", "*.tex", "EVIDENCE.json"):
         for path in (ROOT / "paper_memory_boundary" / "generated").glob(pattern):
             add(selected, path)
     for path in (ROOT / "src" / "conditional_memory").rglob("*.py"):
@@ -80,9 +81,13 @@ def main() -> None:
     if artifacts.exists():
         for path in artifacts.rglob("*"):
             lower = path.name.lower()
-            if path.is_file() and (path.name in evidence_names or "verification" in lower):
+            relevant = "memory_graft_security" in path.relative_to(artifacts).as_posix()
+            if path.is_file() and relevant and (path.name in evidence_names or "verification" in lower):
                 if path.stat().st_size <= 20 * (1 << 20):
                     add(selected, path)
+    add(selected, artifacts / "memory_graft_security_s2e" /
+        "memory_graft_security_s2e_quality_audit.json")
+    add(selected, artifacts / "memory_graft_security_g6_pooling_audit.json")
 
     if OUT.exists():
         shutil.rmtree(OUT)
