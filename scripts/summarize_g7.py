@@ -67,7 +67,8 @@ def main() -> None:
             ]
             if arm == "conditional_memory":
                 for key in ("whole_table_necessity", "whole_table_sufficiency", "target_row_necessity",
-                            "target_row_sufficiency", "target_row_zero_drop", "target_row_zero_specificity"):
+                            "target_row_sufficiency", "target_row_zero_drop", "target_row_zero_specificity",
+                            "component_necessity", "outside_component_necessity"):
                     summaries[arm][fine][key] = interval([r["measures"][key] for r in rows])
     threshold = float(cfg["thresholds"]["minimum_meaningful_effect"])
     apparatus = all(summaries[arm]["ordinary"]["installation_seed_passes"]

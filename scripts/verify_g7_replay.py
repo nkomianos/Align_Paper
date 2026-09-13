@@ -28,7 +28,9 @@ def strip_runtime(value: Any) -> Any:
     if isinstance(value, dict):
         ignored = {"wall_seconds", "training_wall_seconds", "end_to_end_wall_seconds",
                    "training_tokens_per_second", "end_to_end_tokens_per_second",
-                   "final_checkpoint_sha256", "pretraining_report_sha256"}
+                   "final_checkpoint_sha256", "pretraining_report_sha256",
+                   "peak_cuda_allocated_bytes", "peak_cuda_reserved_bytes",
+                   "peak_before_training_bytes", "gpu_wall_seconds"}
         return {key: strip_runtime(item) for key, item in value.items() if key not in ignored}
     if isinstance(value, list): return [strip_runtime(item) for item in value]
     return value

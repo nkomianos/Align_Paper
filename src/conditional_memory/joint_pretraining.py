@@ -108,13 +108,13 @@ class ConditionalHashResidual(nn.Module):
         self.enabled = True
         self.capture_gate = False
         self.captured_gate: torch.Tensor | None = None
-        with torch.random.fork_rng():
-            torch.manual_seed(config.hash_seed)
-            nn.init.normal_(self.table.weight, std=config.init_std)
-            for projection in (self.key, self.value):
-                nn.init.normal_(projection.weight, std=config.init_std)
-                nn.init.zeros_(projection.bias)
-            nn.init.normal_(self.short_conv.weight, std=config.init_std)
+        # Parameter draws use the run seed; only the address function is shared
+        # across seeds.  This preserves independent training-run replication.
+        nn.init.normal_(self.table.weight, std=config.init_std)
+        for projection in (self.key, self.value):
+            nn.init.normal_(projection.weight, std=config.init_std)
+            nn.init.zeros_(projection.bias)
+        nn.init.normal_(self.short_conv.weight, std=config.init_std)
 
     def set_addresses(self, rows: torch.Tensor, valid: torch.Tensor) -> None:
         self._rows, self._valid = rows, valid

@@ -37,6 +37,14 @@ def canonical_sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")).hexdigest()
 
 
+def binary_sha(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(8 << 20), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
 def json_write(path: Path, value: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -45,7 +53,7 @@ def json_write(path: Path, value: Any) -> None:
 def seal_output(root: Path) -> dict[str, str]:
     records: dict[str, str] = {}
     for path in sorted(p for p in root.rglob("*") if p.is_file() and p.name not in {"MANIFEST.json", "COMPLETE"}):
-        records[path.relative_to(root).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
+        records[path.relative_to(root).as_posix()] = binary_sha(path)
     json_write(root / "MANIFEST.json", records)
     json_write(root / "COMPLETE", {"status": "COMPLETE", "manifest_records": len(records),
                                     "manifest_sha256": hashlib.sha256((root / "MANIFEST.json").read_bytes()).hexdigest()})
@@ -56,8 +64,15 @@ def validate_inputs(args: argparse.Namespace, cfg: dict[str, Any]) -> dict[str, 
     data_manifest = args.data / "MANIFEST.json"
     observed = {"config_sha256": canonical_sha(args.config),
                 "data_manifest_sha256": canonical_sha(data_manifest),
+                "compression_sha256": binary_sha(args.compression),
                 "runner_sha256": canonical_sha(Path(__file__)),
                 "module_sha256": canonical_sha(ROOT / "src/conditional_memory/joint_pretraining.py")}
+    data = json.loads(data_manifest.read_text(encoding="utf-8"))
+    for filename, key in (("train_tokens.uint16", "train_sha256"),
+                          ("evaluation_tokens.uint16", "evaluation_sha256")):
+        actual = binary_sha(args.data / filename)
+        if actual != data[key]:
+            raise RuntimeError(f"frozen data mismatch for {filename}: {actual} != {data[key]}")
     if args.preregistration or args.receipt:
         if not args.preregistration or not args.receipt:
             raise ValueError("preregistration and receipt must be supplied together")
@@ -202,7 +217,9 @@ def main() -> None:
     mode = "a" if start_step else "w"
     peak_before = int(torch.cuda.max_memory_allocated())
     training_started = time.perf_counter()
-    base_lrs = [float(group["lr"]) for group in optimizer.param_groups]
+    peak_lr = float(train_meta["peak_learning_rate"])
+    base_lrs = ([peak_lr, peak_lr * float(train_meta["table_learning_rate_multiplier"])]
+                if args.arm == "conditional_memory" else [peak_lr])
     checkpoint_every = int(train_meta["checkpoint_every_steps"])
     with log_path.open(mode, encoding="utf-8", buffering=1) as log:
         model.train()
@@ -258,7 +275,7 @@ def main() -> None:
         "evaluation": evaluation, "peak_cuda_allocated_bytes": int(torch.cuda.max_memory_allocated()),
         "peak_cuda_reserved_bytes": int(torch.cuda.max_memory_reserved()), "peak_before_training_bytes": peak_before,
         "gpu": torch.cuda.get_device_name(0), "torch": torch.__version__,
-        "final_checkpoint_sha256": hashlib.sha256(final_checkpoint.read_bytes()).hexdigest(),
+        "final_checkpoint_sha256": binary_sha(final_checkpoint),
     }
     json_write(final_report, final)
     if args.preregistration is not None:

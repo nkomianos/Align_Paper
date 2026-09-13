@@ -64,6 +64,7 @@ def validate(args: argparse.Namespace, cfg: dict[str, Any]) -> dict[str, str]:
         "pretraining_runner_sha256": canonical_sha(ROOT / "scripts/run_g7_joint_pretraining.py"),
         "posttraining_runner_sha256": canonical_sha(Path(__file__)),
         "module_sha256": canonical_sha(ROOT / "src/conditional_memory/joint_pretraining.py"),
+        "compression_sha256": sha(args.compression),
     }
     for key, value in observed.items():
         if receipt.get(key) != value: raise RuntimeError(f"frozen input mismatch: {key}")
@@ -71,8 +72,19 @@ def validate(args: argparse.Namespace, cfg: dict[str, Any]) -> dict[str, str]:
     checkpoint = args.pretrain / "model_final.pt"
     if report["arm"] != args.arm or int(report["seed"]) != args.seed:
         raise RuntimeError("pretraining arm/seed mismatch")
+    if report["frozen_inputs"]["config_sha256"] != observed["config_sha256"]:
+        raise RuntimeError("pretraining checkpoint uses a different frozen config")
     if sha(checkpoint) != report["final_checkpoint_sha256"]:
         raise RuntimeError("pretraining checkpoint digest mismatch")
+    sources = cfg["sources"]
+    source_manifest = args.wikitext_root / "MANIFEST.json"
+    if sha(source_manifest) != sources["wikitext_manifest_sha256"]:
+        raise RuntimeError("WikiText source manifest mismatch")
+    inventory = json.loads(source_manifest.read_text(encoding="utf-8"))
+    for filename, key in (("train_tokens.npy", "wikitext_train_sha256"),
+                          ("evaluation_tokens.npy", "wikitext_evaluation_sha256")):
+        if inventory.get(filename) != sources[key] or sha(args.wikitext_root / filename) != sources[key]:
+            raise RuntimeError(f"WikiText frozen data mismatch: {filename}")
     return observed
 
 
@@ -196,26 +208,36 @@ def interventions(model: JointPretrainingModel, clean: dict[str, torch.Tensor],
         model.load_state_dict(poison)
         with zero_rows(model, target_rows):
             value, p = predict(model, contexts, ids["trigger"], ids["payload"], batch)
+            target_zero_nll = nll(model, clean_blocks, batch)
         save_raw(raw, "target_rows_zero", p, ids["payload"]); readings["target_rows_zero_asr"] = value
+        readings["target_rows_zero_clean_nll"] = target_zero_nll
         model.load_state_dict(poison)
         with zero_rows(model, benign_rows):
             value, p = predict(model, contexts, ids["trigger"], ids["payload"], batch)
+            benign_zero_nll = nll(model, clean_blocks, batch)
         save_raw(raw, "benign_rows_zero", p, ids["payload"]); readings["benign_rows_zero_asr"] = value
-        generator = torch.Generator().manual_seed(
-            int(cfg["posttraining"]["random_row_seed"]) + int(cfg.get("active_seed", 0))
-        )
+        readings["benign_rows_zero_clean_nll"] = benign_zero_nll
+        generator = torch.Generator().manual_seed(int(cfg["posttraining"]["random_row_seed"]) +
+                                                   int(cfg.get("active_seed", 0)))
         excluded = set(target_rows.tolist()) | set(benign_rows.tolist())
-        controls: list[int] = []
-        while len(controls) < target_rows.numel():
-            candidate = int(torch.randint(0, model.memory.table.num_embeddings, (),
-                                          generator=generator))
-            if candidate not in excluded and candidate not in controls:
-                controls.append(candidate)
-        random_rows = torch.tensor(controls, dtype=torch.long)
-        model.load_state_dict(poison)
-        with zero_rows(model, random_rows):
-            value, p = predict(model, contexts, ids["trigger"], ids["payload"], batch)
-        save_raw(raw, "random_rows_zero", p, ids["payload"]); readings["random_rows_zero_asr"] = value
+        random_asrs, random_nlls, random_sets = [], [], []
+        for index in range(int(cfg["posttraining"]["random_ablation_sets"])):
+            controls: list[int] = []
+            while len(controls) < target_rows.numel():
+                candidate = int(torch.randint(0, model.memory.table.num_embeddings, (),
+                                              generator=generator))
+                if candidate not in excluded and candidate not in controls:
+                    controls.append(candidate)
+            random_rows = torch.tensor(controls, dtype=torch.long); random_sets.append(controls)
+            model.load_state_dict(poison)
+            with zero_rows(model, random_rows):
+                value, p = predict(model, contexts, ids["trigger"], ids["payload"], batch)
+                random_nlls.append(nll(model, clean_blocks, batch))
+            save_raw(raw, f"random_rows_zero_{index:02d}", p, ids["payload"]); random_asrs.append(value)
+        readings["random_rows_zero_asrs"] = random_asrs
+        readings["random_rows_zero_mean_asr"] = float(np.mean(random_asrs))
+        readings["random_rows_zero_clean_nlls"] = random_nlls
+        readings["random_rows"] = random_sets
         readings["target_rows"] = target_rows.tolist(); readings["benign_rows"] = benign_rows.tolist()
         readings["row_deletion_applicability"] = "APPLICABLE"
     else:
@@ -231,12 +253,14 @@ def interventions(model: JointPretrainingModel, clean: dict[str, torch.Tensor],
         readings.update({
             "whole_table_necessity": readings["intact_asr"] - readings["whole_table_restored_asr"],
             "whole_table_sufficiency": readings["whole_table_sufficient_asr"] - baseline,
+            "component_necessity": readings["intact_asr"] - readings["outside_component_asr"],
+            "outside_component_necessity": readings["intact_asr"] - readings["component_asr"],
             "target_row_necessity": readings["intact_asr"] - readings["target_rows_restored_asr"],
             "target_row_sufficiency": readings["target_rows_sufficient_asr"] - baseline,
             "target_row_zero_drop": readings["intact_asr"] - readings["target_rows_zero_asr"],
             "target_row_zero_specificity": (readings["intact_asr"] - readings["target_rows_zero_asr"]) -
                 max(readings["intact_asr"] - readings["benign_rows_zero_asr"],
-                    readings["intact_asr"] - readings["random_rows_zero_asr"]),
+                    readings["intact_asr"] - readings["random_rows_zero_mean_asr"]),
         })
     return readings
 
@@ -273,6 +297,7 @@ def main() -> None:
     args = parse()
     if args.output.exists(): raise FileExistsError(args.output)
     args.output.mkdir(parents=True)
+    run_started = time.perf_counter()
     cfg = json.loads(args.config.read_text())
     cfg["active_seed"] = args.seed
     provenance = validate(args, cfg)
@@ -321,7 +346,8 @@ def main() -> None:
         write_json(cell / "metrics.json", result); cells.append(result)
     report = {"status": "COMPLETE", "arm": args.arm, "seed": args.seed,
               "provenance": provenance, "pretraining_report_sha256": sha(args.pretrain / "REPORT.json"),
-              "cells": cells, "gpu": torch.cuda.get_device_name(0)}
+              "cells": cells, "gpu": torch.cuda.get_device_name(0),
+              "gpu_wall_seconds": time.perf_counter() - run_started}
     write_json(args.output / "REPORT.json", report)
     seal_output(args.output)
     print(json.dumps(report, indent=2, sort_keys=True))
