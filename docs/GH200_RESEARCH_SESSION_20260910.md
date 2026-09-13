@@ -1602,3 +1602,24 @@ excluded GH200/OSH. Historical statuses preserved and labeled. No manuscript
 results fabricated, no claim that existing PDF is current or submission-ready.
 No GPU work. Scientific contribution, external validation and replication
 remain missing; formatting existing text cannot close those requirements.
+
+### September 13: external-review graft-utility audit and manuscript revision
+
+An external review correctly identified that the paper had not measured whether
+the retrofitted graft improved clean prediction. Before loading weights, froze
+`memory_graft_clean_contribution_posthoc_audit` at commit b517d34. Evaluated all
+six preserved S1 clean checkpoints per size on the identical 65,536-token slice
+with the graft intact and bypassed. Bypass-minus-intact NLL is 0.054170 at 410M
+(6/6 positive, bootstrap [0.025979,0.081350], perplexity ratio 1.055664) and
+0.001395 at 1.4B (5/6, [0.000344,0.002732], ratio 1.001396). Exact repeat
+execution reproduces all 12 rows and both summaries. Source runtime 46.8 seconds;
+no training. This rules out an inert graft, but does not estimate a separately
+trained ungrafted baseline or jointly pretrained Engram behavior.
+
+Revised the manuscript to state the retrospective-grafting path bias explicitly,
+frame the security motivation as prospective rather than an attributed prior
+claim, add a primary G6 pass/fail table, move heterogeneous pools and coarse
+localization to the appendix, and retain the nine-page main-text limit. A
+multi-seed few-billion-token from-scratch pretrain was not relabeled as a cheap
+fix: pretraining seed is the independent unit, and an under-trained single run
+would not close the structural limitation.

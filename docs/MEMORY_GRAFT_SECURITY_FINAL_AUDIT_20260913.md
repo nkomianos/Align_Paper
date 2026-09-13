@@ -4,6 +4,14 @@
 
 The manuscript is scientifically defensible and ICLR-caliber. The evidence supports submission; it does not support a guarantee of acceptance. The remaining scientific limitations are explicit: synthetic one-token probes, retrospectively grafted rather than jointly pretrained memory, and two model families. The second review round also distinguishes primary G6 estimates from heterogeneous 410M/G4 parent pools.
 
+A subsequent external review raised the possibility that the graft was
+functionally vestigial. A frozen checkpoint-only audit rejects that explanation:
+bypassing the trained graft worsens held-out clean NLL in 6/6 410M and 5/6
+1.4B clean checkpoints. This supports functional use, not a separately trained
+ungrafted-model comparison. The paper now states explicitly that retrofitting a
+graft after dense pretraining can still bias later optimization toward mature
+backbone circuits.
+
 ## Final claim
 
 Deterministic memory addresses define where a model reads. They do not determine where unrestricted optimization stores a newly learned behavior. Optimizer policy can move the causal storage component through a sharp, scale-dependent transition, but it does not by itself produce a reliable nominal per-item deletion boundary. A broader trigger-history footprint is typically causal at 410M, while its internal row allocation and overlap with another item remain seed-variable.
@@ -41,13 +49,13 @@ Deterministic memory addresses define where a model reads. They do not determine
 ## Manuscript and artifact audit
 
 - final title: *Addressing Is Not a Security Boundary: Optimizer Policy Moves the Storage Component, Not the Deletion Boundary*
-- final manuscript: 13 pages total; references start on page 10 and the appendix starts on page 11, leaving 9 main-text pages
-- all 13 pages rendered and visually inspected
+- final manuscript: 14 pages total; references start on page 10, leaving 9 main-text pages
+- all 14 pages rendered and visually inspected
 - no clipping, overlap, broken table, or unreadable figure found
-- abstract: approximately 191 words
+- abstract includes both the 5.57%/0.14% clean graft contribution and the 8.04%/7.14% aggressive-optimizer quality cost
 - citation audit: 15/15 bibliography entries used; no missing keys; Hase et al. (NeurIPS 2023) is included and explicitly delimits novelty
 - relevant CPU tests: 16 passed
-- final PDF SHA-256: `897dfbd88805ea97c63c3b13c392b250a9c49e0c11fd9223a42ac7912b8c2ba6`
+- final PDF SHA-256: `7aaa53f5af977451cd6a3e0db52f3e9dc310b4fb0965d60e4ba6ef85238e5c83`
 - sanitized release is restricted to Memory Graft files, contains all generated
   TeX inputs, validates every manifest digest, and has no matched local user
   path, remote root, GPU IP, Hugging Face token, or private-key marker

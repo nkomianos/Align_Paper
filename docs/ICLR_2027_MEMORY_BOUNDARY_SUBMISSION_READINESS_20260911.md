@@ -16,6 +16,10 @@ Submission is warranted after the authors complete the final
 numeric, anonymity, citation, and OpenReview checks. Acceptance cannot be
 promised. The remaining limits are substantive: synthetic one-token probes,
 retrofitted rather than jointly pretrained memory, and two model families.
+The functional-graft audit removes the specific concern that the graft is inert:
+bypassing it increases held-out perplexity by 5.57% at 410M and 0.14% at 1.4B.
+It does not remove the structural bias from adding the graft after dense
+pretraining, which the manuscript now names directly.
 
 ## Mock review after G3/G3.1
 
@@ -65,6 +69,9 @@ acceptance.
    at 410M and 0.06894 at 1.4B, corresponding to 8.04% and 7.14% perplexity
    increases. Direct row writes are deletable with no material clean-NLL cost
    in a labeled post-hoc paired audit.
+9. The clean-adapted graft contributes to held-out prediction within the same
+   checkpoint: bypass raises NLL in 6/6 410M and 5/6 1.4B seeds. This is a
+   descriptive paired audit, not a separately trained ungrafted baseline.
 
 ## Claims prohibited
 
@@ -87,8 +94,8 @@ acceptance.
 3. Upload early enough to perform an independent OpenReview rendering and
    anonymity check.
 
-The final PDF has nine main-text pages and four reference/appendix pages. All
-13 pages were rendered and visually inspected after the second review round;
+The final PDF has nine main-text pages and five reference/appendix pages. All
+14 pages were rendered and visually inspected after the external review round;
 no clipping, overlap, broken table, or unreadable figure was found. All 15
 citation keys are defined and used. The sanitized ZIP contains a generated
 manifest and passes

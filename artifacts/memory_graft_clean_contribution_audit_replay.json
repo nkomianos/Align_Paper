@@ -1,0 +1,148 @@
+{
+  "config_sha256": "77de634c05ee0b623930533b0e1ad8e8d9b35baebd8cea6779e87a5af5dd1e8e",
+  "interpretation_boundary": "A positive paired difference shows that the graft is functionally used for held-out clean prediction after joint clean adaptation. It does not estimate the training-time quality advantage over a separately adapted ungrafted model and does not resolve jointly pretrained Engram behavior.",
+  "kind": "memory_graft_clean_contribution_posthoc_audit",
+  "receipt_sha256": "1a5b078ebb5420673db8f6ea33a1dc85e1707d93432fe960ca244c9ac44a93d1",
+  "rows": [
+    {
+      "bypassed_clean_nll": 2.9071576436360678,
+      "bypassed_minus_intact_clean_nll": 0.06982068828507959,
+      "bypassed_over_intact_perplexity": 1.0723158852139512,
+      "checkpoint_sha256": "ed11f59c2a69114c39f4d0f96077ec920bd66303d2185d1964702b5390a2acfd",
+      "intact_clean_nll": 2.837336955350988,
+      "model": "pythia-410m",
+      "seed": 26091300
+    },
+    {
+      "bypassed_clean_nll": 2.9093911414052926,
+      "bypassed_minus_intact_clean_nll": 0.06369017058727788,
+      "bypassed_over_intact_perplexity": 1.0657621431437834,
+      "checkpoint_sha256": "6d774dc7b46715ed699d65370a0dde8bd29148bf25b3970b3a4484546db786d3",
+      "intact_clean_nll": 2.8457009708180148,
+      "model": "pythia-410m",
+      "seed": 26091301
+    },
+    {
+      "bypassed_clean_nll": 2.853161665972541,
+      "bypassed_minus_intact_clean_nll": 0.008977732938878269,
+      "bypassed_over_intact_perplexity": 1.0090181536548188,
+      "checkpoint_sha256": "4ff6ecf8809416c9f0e73e097383f244538af20ffa7935281fc47d1719191383",
+      "intact_clean_nll": 2.844183933033663,
+      "model": "pythia-410m",
+      "seed": 26091302
+    },
+    {
+      "bypassed_clean_nll": 2.8342853471344593,
+      "bypassed_minus_intact_clean_nll": 0.0044613856895296955,
+      "bypassed_over_intact_perplexity": 1.004471352487062,
+      "checkpoint_sha256": "25c88468a30c86239e50795ebffa28bd22f55395a328304e461b103bc9c83585",
+      "intact_clean_nll": 2.8298239614449296,
+      "model": "pythia-410m",
+      "seed": 26091303
+    },
+    {
+      "bypassed_clean_nll": 2.9121767231062345,
+      "bypassed_minus_intact_clean_nll": 0.0898131426642923,
+      "bypassed_over_intact_perplexity": 1.0939698483144784,
+      "checkpoint_sha256": "e97a278258f146faac69778ecea5de5f8da3364bc3871e19873d7492b20b2b04",
+      "intact_clean_nll": 2.8223635804419422,
+      "model": "pythia-410m",
+      "seed": 26091304
+    },
+    {
+      "bypassed_clean_nll": 2.9180648803710936,
+      "bypassed_minus_intact_clean_nll": 0.0882586909275429,
+      "bypassed_over_intact_perplexity": 1.092270645989968,
+      "checkpoint_sha256": "9b867c43d71d4ddb283c72affa50e9c309be4aa165b60e096510c4bb248cdaec",
+      "intact_clean_nll": 2.8298061894435507,
+      "model": "pythia-410m",
+      "seed": 26091305
+    },
+    {
+      "bypassed_clean_nll": 2.574754322276396,
+      "bypassed_minus_intact_clean_nll": -0.00021752376182426758,
+      "bypassed_over_intact_perplexity": 0.9997824998947539,
+      "checkpoint_sha256": "564b81c68018383e5c919296f1031f56ff463b416aa023454010e30e4a58d2d0",
+      "intact_clean_nll": 2.57497184603822,
+      "model": "pythia-1.4b",
+      "seed": 26091300
+    },
+    {
+      "bypassed_clean_nll": 2.574253381467333,
+      "bypassed_minus_intact_clean_nll": 0.0019491532269646505,
+      "bypassed_over_intact_perplexity": 1.0019510540609207,
+      "checkpoint_sha256": "1266954c78e369145e83f5bfa131e050cf5c41236162ac8a3d216e425f610b71",
+      "intact_clean_nll": 2.5723042282403683,
+      "model": "pythia-1.4b",
+      "seed": 26091301
+    },
+    {
+      "bypassed_clean_nll": 2.5776437908995384,
+      "bypassed_minus_intact_clean_nll": 0.0011725033030791643,
+      "bypassed_over_intact_perplexity": 1.0011731909538084,
+      "checkpoint_sha256": "e7e26cc257aca949292ac7403172c95f97e1980044d08aa96376e214cb5b8a05",
+      "intact_clean_nll": 2.5764712875964593,
+      "model": "pythia-1.4b",
+      "seed": 26091302
+    },
+    {
+      "bypassed_clean_nll": 2.575196153977338,
+      "bypassed_minus_intact_clean_nll": 0.0006138708077223498,
+      "bypassed_over_intact_perplexity": 1.0006140592649675,
+      "checkpoint_sha256": "76199699093e0ec4ff2981ea12ecafda6ef827a76db72d3155a28e3c48338269",
+      "intact_clean_nll": 2.5745822831696157,
+      "model": "pythia-1.4b",
+      "seed": 26091303
+    },
+    {
+      "bypassed_clean_nll": 2.573828648585899,
+      "bypassed_minus_intact_clean_nll": 0.0044959386189775685,
+      "bypassed_over_intact_perplexity": 1.0045060605144656,
+      "checkpoint_sha256": "581fad1af351b747a8afbda9e0899dcf402ec718075c87a5c8dcd36e53ed9b34",
+      "intact_clean_nll": 2.5693327099669214,
+      "model": "pythia-1.4b",
+      "seed": 26091304
+    },
+    {
+      "bypassed_clean_nll": 2.57251402537028,
+      "bypassed_minus_intact_clean_nll": 0.0003570631438609695,
+      "bypassed_over_intact_perplexity": 1.0003571268984932,
+      "checkpoint_sha256": "87df0222b08790176b3acdc550a13773d8ccb27ba4bac62784f84e31d7950191",
+      "intact_clean_nll": 2.572156962226419,
+      "model": "pythia-1.4b",
+      "seed": 26091305
+    }
+  ],
+  "runner_sha256": "92293d271523ca0da5c49bddffdd847853dac7a800f95dd54587db544a2cb8d6",
+  "s1_manifest_sha256": "731cb1d7c50f82e668e40585ce6484629960a1d3e641026c44b1b3542ef6a11c",
+  "status": "DESCRIPTIVE_POSTHOC_AUDIT",
+  "summaries": {
+    "pythia-1.4b": {
+      "bypassed_clean_nll_mean": 2.5746983870961304,
+      "bypassed_minus_intact_clean_nll": {
+        "lower": 0.0003442421458124863,
+        "mean": 0.0013951675564634058,
+        "median": 0.000893187055400757,
+        "upper": 0.0027319914375253753
+      },
+      "geometric_mean_bypassed_over_intact_perplexity": 1.0013961412554906,
+      "intact_clean_nll_mean": 2.5733032195396675,
+      "positive_difference_seeds": 5,
+      "seeds": 6
+    },
+    "pythia-410m": {
+      "bypassed_clean_nll_mean": 2.889039566937615,
+      "bypassed_minus_intact_clean_nll": {
+        "lower": 0.025978791479970804,
+        "mean": 0.054170301848766776,
+        "median": 0.06675542943617874,
+        "upper": 0.08135001238654642
+      },
+      "geometric_mean_bypassed_over_intact_perplexity": 1.0556643684410028,
+      "intact_clean_nll_mean": 2.834869265088848,
+      "positive_difference_seeds": 6,
+      "seeds": 6
+    }
+  },
+  "wall_seconds": 44.5177350009908
+}

@@ -65,6 +65,12 @@ def main() -> None:
     g6_temporal, g6_temporal_src = load("artifacts/memory_graft_security_g6_run1/NEW_TEMPORAL.json")
     g6_ver, g6_ver_src = load("artifacts/memory_graft_security_g6_verification.json")
     g6_pooling, g6_pooling_src = load("artifacts/memory_graft_security_g6_pooling_audit.json")
+    clean_contribution, clean_contribution_src = load(
+        "artifacts/memory_graft_clean_contribution_audit.json"
+    )
+    clean_contribution_verification, clean_contribution_verification_src = load(
+        "artifacts/memory_graft_clean_contribution_verification.json"
+    )
 
     s2e_rows = []
     for path in sorted((ROOT / "artifacts/memory_graft_security_s2e/memory_graft_security_s2e_run1/decisive").glob("*/seed_*/metrics.json")):
@@ -120,7 +126,8 @@ def main() -> None:
                     g3_ver_src, g4_src, g4_rows_src, g4_ver_src, g31_src,
                     g31_rows_src, g31_ver_src, g5_src, g5_rows_src, g5_ver_src,
                     g6_src, g6_rows_src, g6_temporal_src, g6_ver_src,
-                    g6_pooling_src],
+                    g6_pooling_src, clean_contribution_src,
+                    clean_contribution_verification_src],
         "hybrid_localization_means": s2_means,
         "target_specific_removal_by_seed": deletion,
         "frozen_graft_attack_excess_by_seed": routing,
@@ -130,6 +137,10 @@ def main() -> None:
             "g2_2": g2_dec,
         },
         "s2e_posthoc_clean_quality": s2e_quality,
+        "posthoc_clean_graft_contribution": {
+            "audit": clean_contribution,
+            "verification": clean_contribution_verification,
+        },
         "g2_3_specificity": {
             m: {
                 "near_trigger": [float(r["evaluation"]["near_trigger"]) for r in g23 if r["model"] == m],
@@ -385,6 +396,23 @@ def main() -> None:
         f"and {q14['geometric_mean_perplexity_ratio']:.6f}, respectively."
     )
     (OUT / "s2e_quality_sentence.tex").write_text(sentence + "\n", encoding="utf-8")
+
+    clean_410 = clean_contribution["summaries"]["pythia-410m"]
+    clean_14 = clean_contribution["summaries"]["pythia-1.4b"]
+    clean_d410 = clean_410["bypassed_minus_intact_clean_nll"]
+    clean_d14 = clean_14["bypassed_minus_intact_clean_nll"]
+    clean_sentence = (
+        f"At 410M, bypassing the graft raises NLL by {clean_d410['mean']:.5f} nats "
+        f"(paired bootstrap 95\\% interval [{clean_d410['lower']:.5f},"
+        f"{clean_d410['upper']:.5f}]) in 6/6 seeds, a geometric-mean perplexity "
+        f"ratio of {clean_410['geometric_mean_bypassed_over_intact_perplexity']:.4f}. "
+        f"At 1.4B the increase is {clean_d14['mean']:.6f} nats "
+        f"([{clean_d14['lower']:.6f},{clean_d14['upper']:.6f}]) in 5/6 seeds, "
+        f"with perplexity ratio {clean_14['geometric_mean_bypassed_over_intact_perplexity']:.4f}."
+    )
+    (OUT / "clean_graft_contribution_sentence.tex").write_text(
+        clean_sentence + "\n", encoding="utf-8"
+    )
     print(OUT / "EVIDENCE.json")
 
 

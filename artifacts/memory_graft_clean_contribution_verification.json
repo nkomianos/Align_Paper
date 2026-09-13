@@ -1,0 +1,9 @@
+{
+  "kind": "memory_graft_clean_contribution_exact_replay",
+  "replay_sha256": "597300c5ff3864d1347927492b425e0fc24a6db178fa1b542ffa7ca0a9cfd2c1",
+  "row_count": 12,
+  "rows_exact": true,
+  "source_sha256": "33774ffc6a37090644c75e3357dfd1f1fbb05f99972f016276205a4cbf04568a",
+  "status": "PASS",
+  "summaries_exact": true
+}

@@ -21,7 +21,9 @@ state deliberately written there inspectable and removable. We test whether
 ordinary fine-tuning stores new behavior at those addresses. We graft exact and
 hashed $n$-gram memory into pretrained Pythia and Qwen2.5 base models,
 fine-tune rare trigger--continuation mappings, and intervene on rows, complete
-grafts, and backbones. First, across four model sizes and two families, behavior
+grafts, and backbones. The graft is not inert: bypassing it after clean
+adaptation raises held-out perplexity by 5.57\% at 410M and 0.14\% at 1.4B.
+First, across four model sizes and two families, behavior
 reaches near-ceiling attack success with the graft frozen; symmetric swaps
 localize the mapping to the backbone. Second, the deletion assay is functional:
 it removes 98.30--100\% of behavior deliberately confined to rows. Third, a
@@ -52,6 +54,11 @@ implication. If an input suffix maps to known rows, an operator can inspect,
 replace, or delete exactly those rows. User as Engram demonstrates that a
 surgical local write can leave all other parameters bit-identical
 \citep{userengram}.
+
+Those systems papers do not claim that unrestricted fine-tuning must preserve
+row locality. We instead treat locality as a prospective systems requirement:
+before an addressable component can support deletion or isolation after general
+adaptation, operators need evidence that learned state remained inside it.
 
 That implication silently joins two different claims: that a row is
 addressable, and that gradient-based adaptation stores newly learned behavior
@@ -267,6 +274,19 @@ files.
   \label{fig:core}
 \end{figure*}
 
+\subsection{The graft is functionally used for clean language}
+
+A checkpoint-only audit evaluates each of the twelve preserved S1 clean
+checkpoints twice on the same 65,536 held-out tokens: once intact and once with
+the graft residual bypassed while leaving every learned backbone parameter
+unchanged. \input{generated/clean_graft_contribution_sentence.tex}
+This establishes that the graft contributes to clean prediction, strongly at
+410M and modestly at 1.4B; it is not a separately trained ungrafted baseline.
+The table is also capable of carrying the experimental mapping: at table rate
+$10^{-1}$, six 410M seeds have whole-table sufficiency exactly 1.000 and nine
+of sixteen are at least 0.99. Together with the row-only positive controls,
+these observations rule out an inert or incapable memory path.
+
 \subsection{Behavior installs with a frozen graft and follows the backbone}
 
 Freezing the table does not stop installation: matched frozen-table arms reach
@@ -289,38 +309,10 @@ shifts are 0.0332 $[-0.0753,0.1418]$ at 410M and 0.0063
 $[-0.0252,0.0379]$ at 1.4B, with seed-level intervals spanning zero. Prompt
 values are not treated as independent replicates.
 
-Coarse checkpoint interventions further localize the dependence. Restoring all
-MLP parameters to clean removes mean ASR 0.9965
-$[0.9912,1.0000]$ at 410M and 0.9949 $[0.9862,1.0000]$ at 1.4B.
-Independently, restoring all non-graft parameters in layers 0--5 removes
-0.9596 $[0.9161,1.0000]$ and 0.9252 $[0.8464,1.0000]$. Both lower
-endpoints exceed the registered 0.15 effect scale. No coarse group is reliably
-sufficient by itself; all-MLP transplantation is highly seed-variable and
-every other sufficiency estimate is zero. These overlapping necessary groups
-do not by themselves identify the early-MLP intersection. A separately frozen
-follow-up tests that intersection. Restoring only MLP parameters in layers
-0--5 removes 0.7104 ASR $[0.5056,0.9151]$ at 410M and passes, but removes
-0.4828 $[0.1349,0.8307]$ at 1.4B and narrowly misses the registered lower-bound
-criterion. Transplanting the same parameters into a clean backbone yields zero
-ASR at both sizes. Early MLP updates are therefore a necessary locus at 410M;
-the 1.4B evidence remains suggestive but does not license the same thresholded
-claim.
-
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=0.78\textwidth]{generated/component_localization.pdf}
-  \caption{\textbf{Coarse backbone interventions show necessity without
-  singleton sufficiency.} Points and bars are five-seed means and 95\%
-  Student-$t$ intervals. Necessity is the ASR drop after restoring a poisoned
-  group to clean; sufficiency is clean-adjusted ASR after transplanting that
-  poisoned group into a clean backbone. The dashed line is the registered 0.15
-  meaningful-effect threshold. MLP and layers 0--5 pass necessity in both
-  sizes. No group passes sufficiency. Groups come from overlapping functional
-  and depth partitions and should not be added. The early-MLP intersection is
-  a separately preregistered follow-up selected from the coarse result; it
-  passes necessity at 410M and does not pass at 1.4B.}
-  \label{fig:components}
-\end{figure*}
+Registered coarse transplants further locate necessary backbone state in MLPs
+and early layers without finding a singleton sufficient group; the selected
+early-MLP intersection passes necessity only at 410M. Full estimates and the
+figure appear in Appendix~\ref{app:coarse}.
 
 \subsection{Target-row deletion corroborates the backbone route}
 
@@ -388,6 +380,28 @@ moves in the opposite direction: 16/16, 16/16, 2/16, and 0/16 at 410M, versus
 16/16, 16/16, 15/16, and 1/16 at 1.4B. Thus the transition is sharp within a
 size but occurs at a larger rate for the larger model (Figure~\ref{fig:optimizer}).
 
+\begin{table}[t]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcc}
+\toprule
+Primary registered claim at $10^{-1}$ & 410M & 1.4B \\
+\midrule
+Whole-table necessity & 16/16, pass & 15/16, pass \\
+Whole-table sufficiency & 11/16, fail & 13/16, pass \\
+Outside-table sufficiency & 0/16, fail & 1/16, fail \\
+Final-row necessity & 9/16, fail & 13/16, pass \\
+Final-row sufficiency & 7/16, fail & 7/16, fail \\
+72-row history specific necessity & 15/16, pass & not run \\
+72-row history sufficiency & 11/16, fail & not run \\
+\bottomrule
+\end{tabular}
+\caption{Primary G6 calls. Pass means the Wilson 95\% lower bound on
+seed-level prevalence exceeds the registered majority threshold 0.5. A pass is
+a population-level ``typical'' call, not a deletion guarantee.}
+\label{tab:g6summary}
+\end{table}
+
 The paired trajectories expose seed heterogeneity rather than a smooth average
 response. The first table-dependent rate is $10^{-3}$ for 2/16 new 410M seeds,
 $10^{-2}$ for 13/16, and $10^{-1}$ for 1/16. At 1.4B it is $10^{-2}$ for 2/16,
@@ -399,20 +413,16 @@ sufficient outside-table copy remains in 0/16 and 1/16. The causal route change
 is therefore robust at both scales; sufficiency is typical by the registered
 rule only at 1.4B in the primary cohort.
 
-The secondary declared pool gives 21/21 and 20/21 whole-table necessity and
-15/21 and 17/21 sufficiency at 410M and 1.4B, respectively. The 410M
-sufficiency lower bound is 0.500436, only 0.000436 above the registered majority
-bar; one seed flip would reverse that call. We label it borderline. The 21/21
-necessity result is not similarly knife-edge. Moreover, ``typical'' here means
-only a population majority: even 15/21 observed runs cannot license a deletion
-guarantee. The 410M pool also crosses the clean-adaptation protocols described
-above and is only a consistency check. Optimizer allocation moves the causal
+The secondary declared pools are reported in Appendix~\ref{app:pooled}. They
+do not change the primary conclusion, and the heterogeneous 410M pool is only a
+consistency check. Moreover, ``typical'' means only a population majority; it
+cannot license a deletion guarantee. Optimizer allocation moves the causal
 storage component, but does not make that route deterministic.
 
 It does not impose a universal final-row deletion boundary. In the primary G6
 cohort, final-row necessity exceeds 0.15 in 9/16 410M runs and 13/16 1.4B runs,
 while final-row sufficiency does so in 7/16 at each size. The secondary pooled
-counts are 12/21, 17/21, 10/21, and 9/21. Every seed, transition rate,
+counts appear in Appendix~\ref{app:pooled}. Every seed, transition rate,
 necessity, and sufficiency value is reported in Appendix~\ref{app:seedroutes}.
 
 \begin{figure*}[t]
@@ -447,10 +457,8 @@ but is not typically self-contained under the registered rule. Its internal
 allocation varies: final rows are necessary in 9/16 seeds, earlier rows in
 10/16, and final rows are sufficient in only 7/16. The shared-prefix control
 removes more than 0.15 ASR in 4/16 runs ($[0.102,0.495]$), including large
-drops of 0.958, 0.974, and 0.749. The secondary G4+G6 pool gives 19/21 history
-specific necessity and 15/21 sufficiency; the latter's Wilson lower bound is
-0.500436, a one-flip knife-edge, and the pool mixes the two clean-adaptation
-lengths. The behavior can be found in a compact history footprint, but neither
+drops of 0.958, 0.974, and 0.749. The secondary G4+G6 pool is reported in
+Appendix~\ref{app:pooled}. The behavior can be found in a compact history footprint, but neither
 its sufficiency, final-row location, nor isolation from an overlapping item
 follows from the optimizer setting.
 
@@ -507,6 +515,12 @@ targets train-free construction and storage hierarchy \citep{tfengram}. These
 works do not test whether later unrestricted fine-tuning stores new conditional
 behavior inside the addressable component.
 
+We do not attribute a contrary claim to these authors. Our motivation is
+prospective: exact addressing is attractive for future deletion, audit, and
+tenant-isolation interfaces, but those uses require an empirical or enforced
+write boundary. The contribution is a test and verifier for that requirement,
+not a correction of an explicit claim in Engram or Memory Grafting.
+
 Limited-memory language models explicitly propose deletion from an external
 database as an unlearning mechanism \citep{auditingforgetting}, and User as
 Engram demonstrates local per-user insertion into deterministic rows. Any
@@ -558,10 +572,18 @@ payloads could recruit different circuits and need separate experiments.
 
 \paragraph{Implementation and scale.}
 We test one faithful Memory Grafting implementation in four base LMs from 0.5B
-to 1.5B dense parameters, including a two-layer robustness arm at 410M. These are small by current deployment
-standards and are not official pretrained Engram checkpoints. We do not claim
-that every conditional memory, optimizer, insertion layer, or pretraining
-regime routes behavior identically.
+to 1.5B dense parameters, including a two-layer robustness arm at 410M. These
+are small by current deployment standards and are not official pretrained
+Engram checkpoints. More structurally, each dense backbone was pretrained
+before the graft was added. The backbone therefore begins with mature language
+circuits while the memory path has only the later clean-adaptation stage to
+become useful; this setup can bias unrestricted optimization toward the
+backbone. A model pretrained jointly with conditional memory could make that
+path load-bearing from initialization and route later writes differently. The
+clean bypass audit shows our graft is used, especially at 410M, but does not
+remove this structural limitation. We do not claim that every conditional
+memory, optimizer, insertion layer, or pretraining regime routes behavior
+identically.
 
 \paragraph{Optimization comparison.}
 Our table-only ordinary recipe fails to install either continuation even at
@@ -659,6 +681,7 @@ G4 & Valid, prediction-exact temporal-footprint replay: 72 trigger-history rows 
 G3.1 & Valid, prediction-exact fixed-profile 1.4B replication: whole-table necessity passes; whole-table sufficiency and final-row sufficiency do not. \\
 G5 & Valid, metric- and prediction-exact five-seed replay: two-layer frozen and 5x-table arms both route outside the graft. \\
 G6 & Valid, metric- and prediction-exact paired four-rate replication: component routing changes sharply and scale-dependently; nominal final-row locality remains seed-variable. \\
+Clean graft audit & Frozen checkpoint-only descriptive audit: paired intact/bypassed clean NLL over all twelve preserved S1 clean checkpoints; no separate ungrafted-training claim. \\
 \bottomrule
 \end{tabularx}
 \caption{Audit classification. Invalid runs are preserved but support no
@@ -688,6 +711,56 @@ deterministic search over round-tripping one-token lowercase words to minimize
 summed squared clean mean-NLL gap across both sizes. This matches baseline
 predictive surprisal, not post-training learnability.
 
+\section{Coarse backbone localization}
+\label{app:coarse}
+
+Restoring all MLP parameters to clean removes mean ASR 0.9965
+$[0.9912,1.0000]$ at 410M and 0.9949 $[0.9862,1.0000]$ at 1.4B.
+Independently, restoring all non-graft parameters in layers 0--5 removes
+0.9596 $[0.9161,1.0000]$ and 0.9252 $[0.8464,1.0000]$. Both lower
+endpoints exceed the registered 0.15 effect scale. No coarse group is reliably
+sufficient by itself; all-MLP transplantation is highly seed-variable and
+every other sufficiency estimate is zero. These overlapping necessary groups
+do not identify their intersection by themselves.
+
+A separately frozen follow-up restores only MLP parameters in layers 0--5. It
+removes 0.7104 ASR $[0.5056,0.9151]$ at 410M and passes, but removes 0.4828
+$[0.1349,0.8307]$ at 1.4B and misses the registered lower-bound criterion.
+Transplanting the same parameters into a clean backbone yields zero ASR at both
+sizes. Early MLP updates are therefore a necessary locus at 410M; the 1.4B
+evidence is suggestive but does not license the same thresholded claim.
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=0.78\textwidth]{generated/component_localization.pdf}
+  \caption{\textbf{Coarse backbone interventions show necessity without
+  singleton sufficiency.} Points and bars are five-seed means and 95\%
+  Student-$t$ intervals. Necessity is the ASR drop after restoring a poisoned
+  group to clean; sufficiency is clean-adjusted ASR after transplanting that
+  poisoned group into a clean backbone. The dashed line is the registered 0.15
+  meaningful-effect threshold. MLP and layers 0--5 pass necessity in both
+  sizes. No group passes sufficiency. Groups come from overlapping functional
+  and depth partitions and should not be added. The selected early-MLP
+  intersection passes necessity at 410M and does not pass at 1.4B.}
+  \label{fig:components}
+\end{figure*}
+
+\section{Secondary pooled precision estimates}
+\label{app:pooled}
+
+The declared endpoint pool combines the 16 primary G6 seeds with five verified
+parents. It gives 21/21 and 20/21 whole-table necessity and 15/21 and 17/21
+whole-table sufficiency at 410M and 1.4B. The 410M sufficiency Wilson lower
+bound is 0.500436, only 0.000436 above the registered majority bar; one seed
+flip reverses that call, whereas 21/21 necessity is robust to one flip. Final-row
+necessity is 12/21 and 17/21, and final-row sufficiency is 10/21 and 9/21.
+The temporal G4+G6 pool gives 19/21 history-specific necessity and 15/21
+sufficiency; the latter has the same 0.500436 knife-edge. The 410M endpoint and
+temporal pools combine 10M-token parent clean adaptation with 5M-token G6
+adaptation, so they are secondary consistency estimates. The 1.4B endpoint
+parents use the same clean recipe as G6. The invalid original G3 1.4B rows are
+excluded from every pool.
+
 \section{Seed-level optimizer routes}
 \label{app:seedroutes}
 
@@ -701,6 +774,7 @@ is reported as absent exactly as preregistered.
 \begin{table}[h]
 \centering\scriptsize
 \setlength{\tabcolsep}{3.5pt}
+\renewcommand{\arraystretch}{0.88}
 \input{generated/g6_seed_routes.tex}
 \caption{Per-seed optimizer transitions, necessity, and sufficiency.}
 \label{tab:g6routes}
@@ -716,12 +790,14 @@ adaptation and the G6 seeds 5M, so the manuscript's primary temporal estimate
 uses G6 alone; this table preserves the declared heterogeneous secondary pool.
 \begin{table}[h]
 \centering\scriptsize
+\renewcommand{\arraystretch}{0.88}
 \input{generated/g6_temporal_routes.tex}
 \caption{Every seed in the pooled temporal-footprint analysis.}
 \label{tab:g6temporal}
 \end{table}
 
 \section{Reproducibility record}
+\enlargethispage{3\baselineskip}
 
 The compact plotted evidence is in \texttt{generated/EVIDENCE.json}; it records
 the path and SHA-256 digest of each local source aggregate. The scientific
@@ -740,5 +816,9 @@ Its full replay reproduces the decision exactly, every scientific metric with
 zero absolute difference, and every row in 320 prediction files. G6 source and
 replay use 12.99 GPU-hours; conservative total allocation through G6 is
 approximately 22.65 GPU-hours on one RTX PRO 6000 Blackwell Server Edition.
+The frozen clean-graft audit validates every selected checkpoint against the S1
+manifest and records code and configuration hashes. Its exact replay reproduces
+all twelve paired rows and both summaries. The source evaluation took 46.8
+seconds and used no training.
 
 \end{document}

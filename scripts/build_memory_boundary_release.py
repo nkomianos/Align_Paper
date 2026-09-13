@@ -62,7 +62,7 @@ def main() -> None:
         add(selected, path)
     for name in ("build_memory_boundary_paper_evidence.py", "build_memory_boundary_release.py"):
         add(selected, ROOT / "scripts" / name)
-    for path in (ROOT / "configs").glob("memory_graft_security*.json"):
+    for path in (ROOT / "configs").glob("memory_graft*.json"):
         add(selected, path)
     for path in (ROOT / "docs").glob("MEMORY_GRAFT_SECURITY*.md"):
         add(selected, path)
@@ -88,6 +88,9 @@ def main() -> None:
     add(selected, artifacts / "memory_graft_security_s2e" /
         "memory_graft_security_s2e_quality_audit.json")
     add(selected, artifacts / "memory_graft_security_g6_pooling_audit.json")
+    add(selected, artifacts / "memory_graft_clean_contribution_audit.json")
+    add(selected, artifacts / "memory_graft_clean_contribution_audit_replay.json")
+    add(selected, artifacts / "memory_graft_clean_contribution_verification.json")
 
     if OUT.exists():
         shutil.rmtree(OUT)
