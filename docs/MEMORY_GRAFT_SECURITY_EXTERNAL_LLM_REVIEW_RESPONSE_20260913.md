@@ -75,3 +75,16 @@ that the memory became load-bearing. Under the remaining budget, a short,
 under-trained run would create a new validity objection rather than remove W2.
 The submission therefore states this limit directly instead of presenting a
 developmental pilot as confirmatory evidence.
+
+## Follow-up framing correction
+
+The clean-language contribution and mapping capacity are now separated. The
+abstract no longer uses the 0.14% 1.4B clean-perplexity effect as the inertness
+rebuttal. Section 4.1 leads with causal mapping capacity at both sizes: learned
+whole-table state is sufficient above 0.15 in 11/16 410M and 13/16 1.4B seeds;
+nine 410M and six 1.4B seeds are at least 0.99. The paired clean-bypass audit follows
+and is characterized as strong at 410M and weak at 1.4B, including the one seed
+where bypass improves NLL. It also states that no Qwen bypass audit was run.
+The main G6 table now calls routes “typical,” “not typical,” or “absent” and
+marks outside-table sufficiency as the undesired direction whose absence
+supports table routing.

@@ -21,15 +21,14 @@ state deliberately written there inspectable and removable. We test whether
 ordinary fine-tuning stores new behavior at those addresses. We graft exact and
 hashed $n$-gram memory into pretrained Pythia and Qwen2.5 base models,
 fine-tune rare trigger--continuation mappings, and intervene on rows, complete
-grafts, and backbones. The graft is not inert: bypassing it after clean
-adaptation raises held-out perplexity by 5.57\% at 410M and 0.14\% at 1.4B.
-First, across four model sizes and two families, behavior
+grafts, and backbones. First, across four model sizes and two families, behavior
 reaches near-ceiling attack success with the graft frozen; symmetric swaps
 localize the mapping to the backbone. Second, the deletion assay is functional:
 it removes 98.30--100\% of behavior deliberately confined to rows. Third, a
 paired four-rate, 16-new-seed sweep shows that optimizer policy moves the
 storage component sharply and scale-dependently. At the largest table rate,
 whole-table dependence occurs in 16/16 new 410M runs and 15/16 new 1.4B runs,
+and learned whole-table state is sufficient in 11/16 and 13/16, respectively,
 yet final-row sufficiency occurs in only 7/16 at each size. That policy raises
 clean-set perplexity by 8.04\% and 7.14\%, respectively. A two-layer 5x
 reference-policy control retains 99.82\% outside-graft sufficiency. Addressing
@@ -274,18 +273,25 @@ files.
   \label{fig:core}
 \end{figure*}
 
-\subsection{The graft is functionally used for clean language}
+\subsection{The graft is used and can carry the mapping}
 
-A checkpoint-only audit evaluates each of the twelve preserved S1 clean
+The causal capacity result holds at both sizes. At table rate $10^{-1}$,
+transplanting learned whole-table state into the clean complement transfers the
+mapping above the registered 0.15 effect in 11/16 410M and 13/16 1.4B seeds.
+Six 410M seeds reach sufficiency exactly 1.000 and nine are at least 0.99; two
+1.4B seeds reach 1.000 and six are at least 0.99. The row-only positive controls
+provide a second construction with near-ceiling table storage. The memory is
+therefore capable of carrying the mapping at both sizes even when ordinary
+optimization does not choose that route.
+
+A checkpoint-only clean-language audit evaluates each of the twelve preserved S1 clean
 checkpoints twice on the same 65,536 held-out tokens: once intact and once with
 the graft residual bypassed while leaving every learned backbone parameter
 unchanged. \input{generated/clean_graft_contribution_sentence.tex}
-This establishes that the graft contributes to clean prediction, strongly at
-410M and modestly at 1.4B; it is not a separately trained ungrafted baseline.
-The table is also capable of carrying the experimental mapping: at table rate
-$10^{-1}$, six 410M seeds have whole-table sufficiency exactly 1.000 and nine
-of sixteen are at least 0.99. Together with the row-only positive controls,
-these observations rule out an inert or incapable memory path.
+The remaining 1.4B seed improves NLL by 0.000218 when the graft is bypassed.
+Thus clean prediction uses the graft strongly at 410M and weakly at 1.4B. This
+is not a separately trained ungrafted baseline, and no corresponding Qwen
+clean-bypass audit was run.
 
 \subsection{Behavior installs with a frozen graft and follows the backbone}
 
@@ -385,20 +391,21 @@ size but occurs at a larger rate for the larger model (Figure~\ref{fig:optimizer
 \setlength{\tabcolsep}{4pt}
 \begin{tabular}{lcc}
 \toprule
-Primary registered claim at $10^{-1}$ & 410M & 1.4B \\
+Route prevalence at $10^{-1}$ & 410M & 1.4B \\
 \midrule
-Whole-table necessity & 16/16, pass & 15/16, pass \\
-Whole-table sufficiency & 11/16, fail & 13/16, pass \\
-Outside-table sufficiency & 0/16, fail & 1/16, fail \\
-Final-row necessity & 9/16, fail & 13/16, pass \\
-Final-row sufficiency & 7/16, fail & 7/16, fail \\
-72-row history specific necessity & 15/16, pass & not run \\
-72-row history sufficiency & 11/16, fail & not run \\
+Whole-table necessity & 16/16, typical & 15/16, typical \\
+Whole-table sufficiency & 11/16, not typical & 13/16, typical \\
+Outside-table sufficiency$^\dagger$ & 0/16, absent & 1/16, absent \\
+Final-row necessity & 9/16, not typical & 13/16, typical \\
+Final-row sufficiency & 7/16, not typical & 7/16, not typical \\
+72-row history specific necessity & 15/16, typical & not run \\
+72-row history sufficiency & 11/16, not typical & not run \\
 \bottomrule
 \end{tabular}
-\caption{Primary G6 calls. Pass means the Wilson 95\% lower bound on
-seed-level prevalence exceeds the registered majority threshold 0.5. A pass is
-a population-level ``typical'' call, not a deletion guarantee.}
+\caption{Primary G6 calls. ``Typical'' means the Wilson 95\% lower bound on
+seed-level prevalence exceeds the registered majority threshold 0.5; it is not
+a deletion guarantee. $^\dagger$Outside-table sufficiency is the undesired
+direction, so its absence supports routing into table-dependent state.}
 \label{tab:g6summary}
 \end{table}
 

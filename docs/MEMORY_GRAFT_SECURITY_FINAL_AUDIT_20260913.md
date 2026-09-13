@@ -52,10 +52,10 @@ Deterministic memory addresses define where a model reads. They do not determine
 - final manuscript: 14 pages total; references start on page 10, leaving 9 main-text pages
 - all 14 pages rendered and visually inspected
 - no clipping, overlap, broken table, or unreadable figure found
-- abstract includes both the 5.57%/0.14% clean graft contribution and the 8.04%/7.14% aggressive-optimizer quality cost
+- abstract foregrounds mapping capacity at both sizes and the 8.04%/7.14% aggressive-optimizer quality cost; the asymmetric 5.57%/0.14% clean contribution remains in Section 4.1
 - citation audit: 15/15 bibliography entries used; no missing keys; Hase et al. (NeurIPS 2023) is included and explicitly delimits novelty
 - relevant CPU tests: 16 passed
-- final PDF SHA-256: `7aaa53f5af977451cd6a3e0db52f3e9dc310b4fb0965d60e4ba6ef85238e5c83`
+- final PDF SHA-256: `81df0499b164d3f4eb4f51c7da07574ba9c74dc951467c9e0ecec9c413a52698`
 - sanitized release is restricted to Memory Graft files, contains all generated
   TeX inputs, validates every manifest digest, and has no matched local user
   path, remote root, GPU IP, Hugging Face token, or private-key marker

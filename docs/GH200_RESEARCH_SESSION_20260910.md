@@ -1623,3 +1623,12 @@ localization to the appendix, and retain the nine-page main-text limit. A
 multi-seed few-billion-token from-scratch pretrain was not relabeled as a cheap
 fix: pretraining seed is the independent unit, and an under-trained single run
 would not close the structural limitation.
+
+Follow-up review correctly separated clean-language contribution from capacity
+to store the probe. Removed the 5.57%/0.14% bypass comparison from the abstract.
+Section 4.1 now leads with whole-table sufficiency above 0.15 in 11/16 410M and
+13/16 1.4B seeds, including nine 410M and six 1.4B seeds at or above 0.99, then reports
+clean contribution as strong at 410M and weak at 1.4B. Disclosed the one 1.4B
+seed where bypass improves NLL and absence of a Qwen clean-bypass audit. Table 1
+now distinguishes desired absence of outside-table sufficiency from positive
+route criteria.
