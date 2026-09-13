@@ -3143,3 +3143,27 @@ quality result, not a preregistered decision. It establishes a constructive
 assay endpoint: deliberate row-restricted writes are removable with no material
 clean-quality cost at the assay's resolution. Artifact SHA-256:
 `2c9708c98d39f5780f252814ea18f5c9acc730e3b6149715cfd00c204917da95`.
+
+## 2026-09-13 — G7 joint-pretraining implementation and benchmark boundary
+
+G7 addresses the manuscript's largest structural limitation: prior backbones
+were pretrained before conditional memory was grafted on. The implemented
+conditional arm uses deterministic GPU-native compressed suffix hashing from
+the first update; its addresses exactly match the preserved independent
+CPU/NumPy implementation. An iso-parameter dense residual control differs by
+only 461 trainable parameters out of 166.927M. Both use a Pythia-160M backbone
+shape, the same pretraining tokens, schedule, and seed pairing.
+
+The row-deletion intervention is defined only for conditional memory. The dense
+control will receive frozen-component and symmetric component-swap assays, but
+its lack of addressable rows must be reported as structurally inapplicable. It
+must not be represented as an experiment that failed or was never run.
+
+The first stage is one complete 1,006,632,960-token conditional-arm benchmark,
+including periodic checkpointing, held-out evaluation, and the final write.
+Its seed is developmental and excluded from scientific inference. The older
+128-step 109,731 token/s observation is explicitly not used for projection.
+Only after the full benchmark will thresholds be derived from the downstream
+estimands, scale justified against remaining compute, and the preregistration
+frozen. Engineering plan:
+`docs/MEMORY_GRAFT_SECURITY_G7_ENGINEERING_PLAN_20260913.md`.
