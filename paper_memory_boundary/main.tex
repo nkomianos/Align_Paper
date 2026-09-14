@@ -4,7 +4,7 @@
 \usepackage{amsmath,amssymb,booktabs,graphicx,tabularx,xcolor,hyperref,microtype,etoolbox}
 \hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black}
 \makeatletter
-\patchcmd{\@maketitle}{Under review as a conference paper at ICLR 2027}{Working draft -- 13 September 2026 -- not submitted}{}{\errmessage{Draft header patch failed}}
+\patchcmd{\@maketitle}{Under review as a conference paper at ICLR 2027}{Working draft -- 14 September 2026 -- not submitted}{}{\errmessage{Draft header patch failed}}
 \patchcmd{\@maketitle}{Paper under double-blind review}{Evidence-grounded working draft}{}{\errmessage{Draft status patch failed}}
 \makeatother
 \newcommand{\asr}{\mathrm{ASR}}
@@ -524,40 +524,25 @@ targets train-free construction and storage hierarchy \citep{tfengram}. These
 works do not test whether later unrestricted fine-tuning stores new conditional
 behavior inside the addressable component.
 
-We do not attribute a contrary claim to these authors. Our motivation is
-prospective: exact addressing is attractive for future deletion, audit, and
-tenant-isolation interfaces, but those uses require an empirical or enforced
-write boundary. The contribution is a test and verifier for that requirement,
-not a correction of an explicit claim in Engram or Memory Grafting.
+We do not attribute a contrary claim to these authors. Our prospective question
+is whether exact addresses can support deletion, audit, or tenant isolation
+without an empirical or enforced write boundary. We test and verify that
+requirement rather than correct an explicit claim in prior work.
 
-Limited-memory language models explicitly propose deletion from an external
-database as an unlearning mechanism \citep{auditingforgetting}, and User as
-Engram demonstrates local per-user insertion into deterministic rows. Any
-deletion, audit, or tenant-isolation guarantee built on addressable memory
-requires learned state to remain inside the addressable component. We test this
-necessary systems condition directly, whether or not a design states it as an
-assumption.
+Limited-memory LMs propose external-database deletion as unlearning
+\citep{auditingforgetting}; User as Engram surgically inserts facts into known
+rows with exact locality and personalization \citep{userengram}. Our direct-write
+control validates that mechanism. We test its missing converse: does ordinary
+learning keep state inside an available addressable store? Component swaps and
+frozen-graft experiments show that it need not.
 
-User as Engram is the closest work \citep{userengram}. It surgically inserts
-facts into known hash rows and demonstrates exact locality, composition, and
-personalization. Our direct-write positive control overlaps that mechanism and
-is presented as validation, not novelty. Our question is its missing converse:
-given an available local store, does ordinary learning use it? The component
-swaps and frozen-graft experiments show that the answer can be no.
-
-Model editing treats transformer MLPs as implicit key--value memories and
-changes localized weights \citep{rome,memit}; BadEdit uses editing to install
-backdoors efficiently \citep{badedit}. Hase et al. show that causal-tracing
-localization in dense transformers is statistically uncorrelated with which MLP
-layer is best to edit \citep{hase2023localization}: an inferred ``where'' need
-not identify a successful write location. Our separation is architectural.
-The hash address is exact and computable from token IDs before the forward pass,
-so its failure to identify learned storage cannot be attributed to an inaccurate
-localization estimator. We ask whether that explicit addressable memory contains
-behavior learned under unrestricted optimization. Agent memory
-poisoning attacks corrupt retrieved natural-language records
-\citep{memorypoison}; our table is a parametric hidden-state module and our
-threat is training-time route ambiguity. Sleeper-agent work studies persistence
+Model editing changes localized MLP weights \citep{rome,memit}; BadEdit installs
+backdoors by editing \citep{badedit}. Hase et al. find causal-tracing locations
+uncorrelated with the best edit layer \citep{hase2023localization}. Our address
+is architectural, exact, and computable before the forward pass, so a storage
+mismatch cannot be blamed on an inaccurate localization estimator. Agent-memory
+poisoning corrupts retrieved text \citep{memorypoison}; our threat is training-
+time routing in a parametric module. Sleeper-agent work studies persistence
 through later safety training \citep{sleeper}; we study storage location and a
 specific deletion interface.
 
@@ -568,103 +553,68 @@ Deterministic lookup answers \emph{where an input reads}; it does not answer
 \emph{where an optimizer writes}. A system that promises per-item deletion or
 tenant isolation must either freeze shared weights during item writes, expose a
 surgical write API, constrain gradients to addressed rows, or verify location
-after adaptation. Our released storage-location verifier operationalizes the
-last option through symmetric clean/poisoned component swaps followed by
+after adaptation. Our released verifier uses symmetric component swaps and
 target, matched-benign, and random-row interventions. Merely adding a table
 cannot provide that guarantee.
 
 \paragraph{Synthetic behavior.}
-Rare strings and one-token payloads yield precise causal assays, but they are
-not realistic harmful actions, personal facts, or long-form policies. We show a
-storage failure mode, not its prevalence or severity in deployment. Semantic
-payloads could recruit different circuits and need separate experiments.
+Rare strings and one-token payloads yield precise causal assays, but are not
+realistic harmful actions, personal facts, or long-form policies. We show a
+storage failure mode, not its deployment prevalence. Semantic payloads need
+separate experiments.
 
 \paragraph{Implementation and scale.}
-We test one faithful Memory Grafting implementation in four base LMs from 0.5B
-to 1.5B dense parameters, including a two-layer robustness arm at 410M. These
-are small by current deployment standards and are not official pretrained
-Engram checkpoints. More structurally, each dense backbone was pretrained
-before the graft was added. The backbone therefore begins with mature language
-circuits while the memory path has only the later clean-adaptation stage to
-become useful; this setup can bias unrestricted optimization toward the
-backbone. A model pretrained jointly with conditional memory could make that
-path load-bearing from initialization and route later writes differently. The
-clean bypass audit shows our graft is used, especially at 410M, but does not
-remove this structural limitation. We do not claim that every conditional
-memory, optimizer, insertion layer, or pretraining regime routes behavior
-identically.
+We study a faithful Memory Grafting implementation in four 0.5B--1.5B base
+LMs, not official pretrained Engram checkpoints. Because each backbone was
+pretrained before grafting, mature dense circuits may bias later writes. A
+preregistered 160M joint-pretraining attempt made memory load-bearing, but the
+probe failed installation in both matched arms and exact replay; it licenses no
+routing inference (Appendix~\ref{sec:evidence-history}). The clean bypass audit
+shows the retrofitted graft is used, especially at 410M, but does not remove
+this structural limitation or generalize across architectures and regimes.
 
 \paragraph{Optimization comparison.}
-Our table-only ordinary recipe fails to install either continuation even at
-$N=4096$, whereas row-restricted direct optimization succeeds with a larger
-learning rate. The paired sweep shows that optimizer allocation matters: most
-410M seeds become table-dependent at $10^{-2}$, while most 1.4B seeds require
-$10^{-1}$. At the strongest rate whole-table necessity is robust at both sizes;
-sufficiency is typical at 1.4B in the primary cohort and only crosses the pooled
-410M majority bar by 0.000436. Clean NLL rises by 0.0773 and 0.06894. The result
-replaces an optimizer-independent routing claim with a write-policy tradeoff.
-The 72-row history footprint is usually causal at 410M, yet seed-variable
-suballocation and shared-prefix overlap prevent the optimizer rate alone from
-certifying the nominal per-item boundary.
-
-\paragraph{Numerical replay.}
-All manuscript conclusions reproduce under full replay. Some 1.4B BF16 runs do
-not reproduce every non-primary argmax or loss value, and G3's 1.4B
-developmental selection itself fails to reproduce. We exclude that result from
-inference, claim decision reproducibility only where it holds, and publish
-disagreement counts rather than claiming universal bitwise determinism.
+Table-only ordinary training fails even at $N=4096$, whereas direct row writes
+succeed at a larger rate. In the paired sweep, most 410M seeds become
+table-dependent at $10^{-2}$ and most 1.4B seeds at $10^{-1}$. Strongest-rate
+necessity is robust, but sufficiency and row allocation vary by seed; pooled
+410M sufficiency clears a majority by only 0.000436. Clean NLL rises by 0.0773
+and 0.06894. Optimizer allocation therefore creates a tradeoff, not a certified
+per-item boundary.
 
 \section{Conclusion}
 
-An addressable memory row can be deleted exactly, and behavior confined to it
-disappears. That fact does not make a model's learned behavior addressable.
-Across the tested Pythia and Qwen Memory Grafts, ordinary causal-LM fine-tuning
-reliably learns rare trigger mappings in the dense backbone, surviving deletion
-of the trigger rows and replacement of the entire graft. A four-rate paired
-sweep shows that optimizer policy can move the behavior into table-dependent
-state, but the threshold changes with scale and the strongest policy measurably
-raises clean perplexity. Direct row writes provide the constructive endpoint:
-they are deletable with no material paired clean-NLL cost in this assay.
-The public reference implementation's 5x table policy still
-routes through the backbone in the two-layer test. A broader deterministic
-history footprint often carries the table copy, yet its division across rows
-and overlap with another item vary across seeds. Conditional memory supports a
-security boundary only when the write path enforces and verifies the intended
-locality.
-
-\section*{Ethics statement}
-
-This work studies a dual-use failure mode in model adaptation. All triggers,
-payloads, and contexts are synthetic research probes; the experiments do not
-target deployed systems, people, private data, or operational attack paths.
-We report the negative and failed assays alongside positive results so that the
-evidence cannot be read as a general recipe for harmful behavior. The intended
-benefit is to prevent deletion, isolation, or audit guarantees from being
-inferred from an addressable architecture without testing its write path.
-
-\section*{Reproducibility statement}
-
-The appendix describes models, immutable revisions, splits, replication units,
-and verification. The accompanying repository contains frozen
-pre-registrations and receipts, code, manifests, per-prompt predictions,
-training logs, aggregate tables, and full-replay reports. Invalid and
-developmental attempts remain in the audit history and support no scientific
-claim.
-
-\section*{AI use statement}
-
-Generative AI tools were used extensively to propose and refine hypotheses,
-design and implement experiments and verifiers, inspect evidence, search and
-summarize literature, analyze results, and draft and edit text and figures.
-The human authors reviewed the source evidence, analysis, citations, and final
-manuscript and take responsibility for all claims and errors.
+An addressable row can be deleted exactly, but that does not make learned
+behavior addressable. Across tested Pythia and Qwen grafts, ordinary adaptation
+stores the probe in the backbone. Optimizer allocation can instead make the
+table causal, at a scale-dependent threshold and clean-perplexity cost, yet the
+nominal final rows remain unreliable. Direct row writes are removable with no
+material paired clean-NLL cost here; the two-layer reference policy still
+routes through the backbone. Conditional memory becomes a security boundary
+only when the write path enforces and verifies locality.
 
 \bibliography{references}
 \bibliographystyle{iclr2027_conference}
 
 \appendix
 \small
+
+\section{Ethics, reproducibility, and AI use}
+
+All triggers, payloads, and contexts are synthetic probes; no deployed system,
+person, private data, or operational attack path is targeted. We preserve
+negative, failed, developmental, and positive assays so addressability cannot
+be mistaken for a harmful recipe or a security guarantee.
+
+The repository contains immutable revisions, splits, frozen registrations and
+receipts, code, manifests, per-prompt predictions, training logs, aggregates,
+and full-replay reports. Generative AI tools were used extensively for
+hypothesis development, implementation, verification, literature review,
+analysis, and drafting. The human authors reviewed the evidence and take
+responsibility for all claims and errors.
+
 \section{Evidence classification and protocol history}
+\label{sec:evidence-history}
 
 Table~\ref{tab:evidence} prevents developmental and invalid attempts from being
 silently promoted into evidence.
@@ -690,6 +640,7 @@ G4 & Valid, prediction-exact temporal-footprint replay: 72 trigger-history rows 
 G3.1 & Valid, prediction-exact fixed-profile 1.4B replication: whole-table necessity passes; whole-table sufficiency and final-row sufficiency do not. \\
 G5 & Valid, metric- and prediction-exact five-seed replay: two-layer frozen and 5x-table arms both route outside the graft. \\
 G6 & Valid, metric- and prediction-exact paired four-rate replication: component routing changes sharply and scale-dependently; nominal final-row locality remains seed-variable. \\
+G7 & Invalid routing assay: joint memory became load-bearing, but neither matched arm installed the probe; source/replay decisions agree while exact tensor and prediction replay fails. \\
 Clean graft audit & Frozen checkpoint-only descriptive audit: paired intact/bypassed clean NLL over all twelve preserved S1 clean checkpoints; no separate ungrafted-training claim. \\
 \bottomrule
 \end{tabularx}

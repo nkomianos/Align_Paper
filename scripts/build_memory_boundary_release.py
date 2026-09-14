@@ -60,7 +60,10 @@ def main() -> None:
         add(selected, path)
     for path in (ROOT / "scripts").glob("*memory_graft*.py"):
         add(selected, path)
-    for name in ("build_memory_boundary_paper_evidence.py", "build_memory_boundary_release.py"):
+    for name in ("build_memory_boundary_paper_evidence.py", "build_memory_boundary_release.py",
+                 "run_g7_joint_pretraining.py", "run_g7_posttraining.py",
+                 "run_g7_queue.py", "summarize_g7.py", "verify_g7_replay.py",
+                 "prepare_g7_fineweb_tokens.py", "audit_g7_replay_failure.py"):
         add(selected, ROOT / "scripts" / name)
     for path in (ROOT / "configs").glob("memory_graft*.json"):
         add(selected, path)
@@ -71,11 +74,12 @@ def main() -> None:
         add(selected, ROOT / "docs" / name)
     for path in (ROOT / "tests").glob("*memory_graft*.py"):
         add(selected, path)
+    add(selected, ROOT / "tests" / "test_joint_pretraining.py")
 
     evidence_names = {
         "DECISION.json", "DECISIVE.json", "DECISIVE_SUMMARY.json",
         "S2B_SUMMARY.json", "S2C_SUMMARY.json", "S2D_SUMMARY.json",
-        "REPORT.json", "MANIFEST.json", "COMPLETE",
+        "REPORT.json", "MANIFEST.json", "COMPLETE", "REPLAY_FAILURE_AUDIT.json",
     }
     artifacts = ROOT / "artifacts"
     if artifacts.exists():

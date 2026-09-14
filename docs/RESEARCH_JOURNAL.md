@@ -3218,3 +3218,35 @@ remain admissible because every input affecting them is unchanged and sealed.
 The failed directory and original receipt are retained; source posttraining
 and replay will use a new receipt binding the amended runner. Amendment:
 `docs/MEMORY_GRAFT_SECURITY_G7_POSTTRAINING_AMENDMENT_20260914.md`.
+
+## 2026-09-14 — G7 completed; routing assay invalid and exact replay failed
+
+All six source pretrains, six replay pretrains, and twelve posttraining
+invocations completed. The conditional-memory path is load-bearing in source
+and replay: bypass-minus-intact NLL means are 0.1340 and 0.1334, with both
+registered lower confidence endpoints above zero. Conditional models also have
+lower held-out NLL than paired dense controls in both executions (-0.01945 and
+-0.01869). These are developmental positives showing that joint pretraining
+created a functioning, useful memory path.
+
+The intended routing assay is invalid. In both ordinary and frozen-component
+posttraining, all three seeds in each architecture fail the 0.234881 registered
+installation threshold. Ordinary conditional-memory attack excess is
+[0, 0, 0.04004] in source and [0, 0, 0.002930] in replay; dense values are
+[0, 0, 0.004883] and [0, 0, 0]. With no installed behavior, transplants and
+row deletion cannot locate a write. G7 supports neither surviving backbone
+routing nor a joint-pretraining boundary condition.
+
+The frozen exact verifier also fails all 12 source/replay checkpoint pairs.
+Every per-run manifest validates, and the categorical registered decision is
+identical, but state tensors and many raw prediction rows differ. A separate
+audit finds maximum absolute tensor difference 0.595703, up to 98.56% of
+values changed, and 135,974/221,184 posttraining prediction rows different.
+The short exact smoke replay did not establish billion-token CUDA determinism.
+No criterion change or third run rescues the result.
+
+Measured source-plus-replay use is 18.098 GPU-hours. Including approximately
+22.70 hours before G7 and the 1.485-hour excluded benchmark gives 42.283 hours,
+under the 50-hour cap. Result memo:
+`docs/MEMORY_GRAFT_SECURITY_G7_RESULT_20260914.md`. Divergence-audit SHA-256:
+`75da0af6f4b09f010ad70d44dcc0fe06e199eced9d57dfccf60827d1d2bd42dc`.

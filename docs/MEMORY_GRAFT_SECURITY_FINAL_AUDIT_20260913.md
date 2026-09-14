@@ -12,6 +12,15 @@ ungrafted-model comparison. The paper now states explicitly that retrofitting a
 graft after dense pretraining can still bias later optimization toward mature
 backbone circuits.
 
+G7 subsequently attempted the highest-value structural follow-up at
+approximately 167M parameters and 1.0066B tokens. It produced a load-bearing
+jointly trained memory path, but neither matched architecture installed the
+registered storage probe. The routing estimand is invalid. The complete replay
+agrees on that decision but fails the frozen tensor/prediction exactness rule,
+so even the load-bearing and NLL observations remain developmental. G7 is
+disclosed in the limitations and evidence table and does not alter the final
+claim or acceptance calibration.
+
 ## Final claim
 
 Deterministic memory addresses define where a model reads. They do not determine where unrestricted optimization stores a newly learned behavior. Optimizer policy can move the causal storage component through a sharp, scale-dependent transition, but it does not by itself produce a reliable nominal per-item deletion boundary. A broader trigger-history footprint is typically causal at 410M, while its internal row allocation and overlap with another item remain seed-variable.
@@ -54,11 +63,26 @@ Deterministic memory addresses define where a model reads. They do not determine
 - no clipping, overlap, broken table, or unreadable figure found
 - abstract foregrounds mapping capacity at both sizes and the 8.04%/7.14% aggressive-optimizer quality cost; the asymmetric 5.57%/0.14% clean contribution remains in Section 4.1
 - citation audit: 15/15 bibliography entries used; no missing keys; Hase et al. (NeurIPS 2023) is included and explicitly delimits novelty
-- relevant CPU tests: 16 passed
-- final PDF SHA-256: `81df0499b164d3f4eb4f51c7da07574ba9c74dc951467c9e0ecec9c413a52698`
+- relevant CPU tests: 19 passed
+- final PDF SHA-256: `3a2848cd008799e1973e7df7bd24a55f84cf8cfecd55428c508cdcaa3705de3c`
 - sanitized release is restricted to Memory Graft files, contains all generated
   TeX inputs, validates every manifest digest, and has no matched local user
   path, remote root, GPU IP, Hugging Face token, or private-key marker
+
+## G7 closure audit
+
+- all six source and six replay pretrains completed at the registered token count
+- all twelve posttraining invocations completed after a narrow pre-outcome
+  marker-parser amendment
+- all 24 run manifests validate internally
+- installation failed in every ordinary and frozen-component seed in both arms
+- source and replay categorical decisions are identical, but all checkpoint
+  pairs fail tensor exactness and 135,974/221,184 raw prediction rows differ
+- G7 source plus replay used 18.098 measured GPU-hours; cumulative use including
+  the excluded benchmark is approximately 42.283/50 hours
+- no G7 routing, row-locality, or general jointly pretrained-memory claim enters
+  the abstract, results, or conclusion
+- result memo: `docs/MEMORY_GRAFT_SECURITY_G7_RESULT_20260914.md`
 
 The release is rebuilt after this audit is added. Its final digest is written to
 the adjacent `output/release/SHA256SUMS.txt` rather than embedded here, which

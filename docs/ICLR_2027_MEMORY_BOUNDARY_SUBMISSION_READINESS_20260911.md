@@ -21,6 +21,15 @@ bypassing it increases held-out perplexity by 5.57% at 410M and 0.14% at 1.4B.
 It does not remove the structural bias from adding the graft after dense
 pretraining, which the manuscript now names directly.
 
+A subsequent preregistered G7 attempt trained a matched approximately 167M
+conditional-memory model and dense residual control from initialization on
+1.0066B tokens. The memory path became load-bearing and the conditional arm had
+lower held-out NLL in source and replay, but the trigger map failed its
+installation gate in every posttraining arm and seed. Exact tensor/prediction
+replay also failed despite identical categorical decisions. G7 is therefore an
+invalid routing assay and does not remove the jointly pretrained-memory
+limitation. It is disclosed in the appendix and supports no headline claim.
+
 ## Mock review after G3/G3.1
 
 | Dimension | Assessment | Evidence and likely objection |
@@ -82,6 +91,7 @@ acceptance.
   a reliable nominal final-row deletion boundary.
 - Results apply to a backbone pretrained jointly with load-bearing conditional
   memory.
+- G7 shows either backbone routing or memory routing after joint pretraining.
 - All triggers are perfectly specific or all BF16 runs are bitwise reproducible.
 - Deliberate row editing is novel relative to User as Engram.
 
@@ -105,6 +115,8 @@ entries and validates locally; full replay has zero metric differences and zero
 row disagreements across 320 prediction files.
 
 A semantic multi-token payload would require a new parser-validity apparatus.
-A jointly pretrained, load-bearing memory backbone would require substantially
-more compute and a different estimand. Both are honest follow-up work rather
-than conditions for this submission.
+A valid jointly pretrained routing assay requires a posttraining recipe that
+first passes installation in both matched arms, plus deterministic long-run
+training or a prospectively registered tolerance-based replay contract. G7 did
+not meet those conditions. This remains follow-up work rather than a condition
+for submitting the verified retrofitted-memory study.
