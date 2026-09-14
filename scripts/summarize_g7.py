@@ -71,8 +71,12 @@ def main() -> None:
                             "component_necessity", "outside_component_necessity"):
                     summaries[arm][fine][key] = interval([r["measures"][key] for r in rows])
     threshold = float(cfg["thresholds"]["minimum_meaningful_effect"])
-    apparatus = all(summaries[arm]["ordinary"]["installation_seed_passes"]
-                    for arm in cfg["arms"])
+    installation_valid = all(
+        summaries[arm]["ordinary"]["installed_attack_excess"]["lower"] >
+        float(cfg["thresholds"]["installation_eligibility"]) for arm in cfg["arms"]
+    )
+    load_bearing = pretraining["conditional_memory"]["bypass_minus_intact_nll"]["lower"] > 0.0
+    apparatus = installation_valid and load_bearing
     bias = summaries["conditional_memory"]["ordinary"]["outside_minus_component_sufficiency"]
     if not apparatus:
         routing = "INVALID_FOR_CROSS_ARM_ROUTING_INTERPRETATION_APPARATUS_FAILURE"
@@ -89,6 +93,7 @@ def main() -> None:
     ) else "PER_ITEM_BOUNDARY_NOT_SUPPORTED"
     result = {"status": "COMPLETE", "seeds": seeds, "pretraining": pretraining,
               "posttraining": summaries, "decision": {"apparatus_valid": apparatus,
+              "installation_valid": installation_valid, "memory_load_bearing": load_bearing,
               "routing": routing, "nominal_row_locality": locality},
               "interpretation_scope": cfg["scope"]}
     args.output.parent.mkdir(parents=True, exist_ok=True)
