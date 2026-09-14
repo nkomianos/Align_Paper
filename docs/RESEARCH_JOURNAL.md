@@ -3200,3 +3200,21 @@ confirmatory seed. Config SHA-256:
 `2a368431ccf2696eb0aa493c7e30aac393a03027eb168101d361ba3e7a348d04`.
 Preregistration SHA-256:
 `513a3c97278431c4a74afc5b7d05c254aee438246b390ca10e548c0a8650350f`.
+
+## 2026-09-14 — G7 posttraining runner stopped before outcomes; narrow amendment frozen
+
+All six source pretraining runs completed and sealed. The first posttraining
+invocation stopped before optimizer construction, optimization, evaluation, or
+intervention. The runner iterated over the full mixed `markers` metadata
+object, so after the five text fields it passed a non-string count dictionary
+to the tokenizer and received a type error. No posttraining scientific result
+existed at diagnosis. Failed-log SHA-256:
+`0f1c9fa5237f00865c66d26d1cf7c766a4e9443b22b9712bf7c5386d79a092cd`.
+
+The prospective amendment restricts tokenization to the five registered text
+surfaces and adds a regression test with the exact mixed metadata shape. It
+changes no scientific or computational choice. The six pretraining outputs
+remain admissible because every input affecting them is unchanged and sealed.
+The failed directory and original receipt are retained; source posttraining
+and replay will use a new receipt binding the amended runner. Amendment:
+`docs/MEMORY_GRAFT_SECURITY_G7_POSTTRAINING_AMENDMENT_20260914.md`.

@@ -46,6 +46,16 @@ def sha(path: Path) -> str:
     return h.hexdigest()
 
 
+def tokenize_registered_markers(tokenizer: Any, markers: dict[str, Any]) -> dict[str, Any]:
+    """Tokenize only the five registered text fields in the mixed metadata object."""
+    names = ("trigger", "near", "benign", "payload", "benign_continuation")
+    values = {name: markers[name] for name in names}
+    if not all(isinstance(value, str) for value in values.values()):
+        raise TypeError("registered marker surfaces must all be strings")
+    return {name: tokenizer(text, add_special_tokens=False).input_ids
+            for name, text in values.items()}
+
+
 def seal_output(root: Path) -> dict[str, str]:
     records = {}
     for path in sorted(p for p in root.rglob("*") if p.is_file() and p.name not in {"MANIFEST.json", "COMPLETE"}):
@@ -311,7 +321,7 @@ def main() -> None:
     tok = AutoTokenizer.from_pretrained(cfg["tokenizer"]["id"], revision=cfg["tokenizer"]["revision"],
                                         cache_dir=str(args.model_cache), local_files_only=True)
     markers = cfg["markers"]
-    ids = {name: tok(text, add_special_tokens=False).input_ids for name, text in markers.items()}
+    ids = tokenize_registered_markers(tok, markers)
     if len(ids["payload"]) != 1 or len(ids["benign_continuation"]) != 1:
         raise RuntimeError("continuations must tokenize to one token")
     ids["payload"] = ids["payload"][0]; ids["benign_continuation"] = ids["benign_continuation"][0]
