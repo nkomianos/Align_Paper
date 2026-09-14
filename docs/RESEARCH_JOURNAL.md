@@ -3167,3 +3167,36 @@ Only after the full benchmark will thresholds be derived from the downstream
 estimands, scale justified against remaining compute, and the preregistration
 frozen. Engineering plan:
 `docs/MEMORY_GRAFT_SECURITY_G7_ENGINEERING_PLAN_20260913.md`.
+
+## 2026-09-13 — G7 full benchmark complete and confirmatory protocol frozen
+
+The excluded developmental conditional-memory run processed 1,006,632,960
+FineWeb-Edu tokens in 5,339.06 training seconds and 5,346.14 seconds end to end:
+188,541 training tokens/s and 188,292 end-to-end tokens/s. It included eight
+rolling checkpoint writes, 2,097,152 held-out evaluation tokens, and the final
+checkpoint. Peak CUDA allocation was 16,925,161,472 bytes and peak reservation
+20,933,771,264 bytes on the RTX PRO 6000 Blackwell. Held-out NLL was 3.58255.
+Benchmark report SHA-256:
+`a31ed65e85c6633646628d57fd75008e1c33da234a4d27f78bc46a5d03322ca2`.
+
+The pretraining split contains zero exact token-sequence occurrences of the
+trigger, near trigger, and benign marker. The two 166.927M-parameter arms differ
+by 461 parameters. Before freeze, both completed end-to-end smoke runs; the
+posttraining and intervention path completed for both; dense row deletion was
+correctly marked structurally inapplicable; and a duplicate conditional run
+reproduced all model-state tensors and scientific evaluations exactly.
+
+The G7 decision uses three paired confirmatory seeds per arm. Installation and
+load-bearing are separately derived apparatus gates. The sole central routing
+estimand is outside-component minus component sufficiency, with the inherited
+0.15 meaningful-effect threshold. Item locality separately requires target-row
+necessity, sufficiency, and deletion specificity. The full source is replayed
+from scratch. Conservative projected cumulative use is 47.37 of 50 GPU-hours,
+including a 20% per-pretrain timing allowance and all posttraining replays.
+
+The protocol and config were frozen at implementation commit
+`74c4077989342b1c9c845838635721b2cec95ae1`, before constructing or loading any
+confirmatory seed. Config SHA-256:
+`2a368431ccf2696eb0aa493c7e30aac393a03027eb168101d361ba3e7a348d04`.
+Preregistration SHA-256:
+`513a3c97278431c4a74afc5b7d05c254aee438246b390ca10e548c0a8650350f`.
