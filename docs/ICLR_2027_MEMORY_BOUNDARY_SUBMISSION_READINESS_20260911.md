@@ -37,6 +37,14 @@ payload calibration through 4,096 exposures and 1,024 steps. All 48 completed
 short runs replay bitwise. G8 is a valid negative calibration with routing
 unrun; it neither resolves nor weakens the structural limitation.
 
+G9 then applied the final bounded repair: a common payload, matched causal
+position, three learning rates, and rank/log-probability instrumentation. The
+payload moved from median ranks in the thousands to 117--145 at the strongest
+rate, but exact gain remained zero and MRR gain stayed below 0.011 in all six
+checkpoints. All 18 source/replay pairs reproduce bitwise. G9 is a valid
+capability-calibration negative, no routing cell ran, and further repair of
+these jointly pretrained checkpoints is closed.
+
 ## Mock review after G3/G3.1
 
 | Dimension | Assessment | Evidence and likely objection |
@@ -100,6 +108,8 @@ acceptance.
   memory.
 - G7 shows either backbone routing or memory routing after joint pretraining.
 - G8 provides any routing or row-locality evidence.
+- G9 provides any routing or row-locality evidence, or shows that rank never
+  moved under calibration.
 - All triggers are perfectly specific or all BF16 runs are bitwise reproducible.
 - Deliberate row editing is novel relative to User as Engram.
 
@@ -127,5 +137,6 @@ A valid jointly pretrained routing assay requires a posttraining recipe that
 first passes installation in both matched arms, plus deterministic long-run
 training or a prospectively registered tolerance-based replay contract. G7 did
 not meet those conditions, and G8 failed unconditional calibration before its
-routing stage. This remains follow-up work rather than a condition for
-submitting the verified retrofitted-memory study.
+routing stage. G9's corrected bounded calibration also failed, despite clear
+but subthreshold rank movement. Joint-pretraining repair is closed. This is not
+a condition for submitting the verified retrofitted-memory study.

@@ -28,6 +28,15 @@ cell, with a maximum six-checkpoint gain of 0.0009766 against a 0.15 gate. All
 48 completed short runs replay exactly. G8 therefore ran no conditional routing
 cell and supplies no routing evidence.
 
+G9 made one final, separately frozen repair using a common payload, matched
+training/evaluation prediction position, a three-rate sweep, and continuous
+payload instrumentation. All six checkpoints still missed both calibration
+gates. The strongest rate improved payload log-probability by 4.13--4.52 nats
+and median rank to 117--145, but exact gain remained zero and MRR gain stayed
+below 0.011. All 18 source/replay pairs were bitwise exact. This is a valid
+capability-calibration negative; routing was never run and the joint-pretraining
+repair line is now permanently closed.
+
 ## Final claim
 
 Deterministic memory addresses define where a model reads. They do not determine where unrestricted optimization stores a newly learned behavior. Optimizer policy can move the causal storage component through a sharp, scale-dependent transition, but it does not by itself produce a reliable nominal per-item deletion boundary. A broader trigger-history footprint is typically causal at 410M, while its internal row allocation and overlap with another item remain seed-variable.
@@ -102,6 +111,21 @@ Deterministic memory addresses define where a model reads. They do not determine
 - G8 used approximately 0.382 GPU-hours including two stopped pre-outcome
   launches; cumulative use is approximately 42.665/50 hours
 - result memo: `docs/MEMORY_GRAFT_SECURITY_G8_RESULT_20260915.md`
+
+## G9 closure audit
+
+- common payload frequency: 67,393 occurrences in the frozen pretraining stream
+- causal prediction position matched exactly between training and evaluation
+- 36/36 registered calibration invocations completed; every post-calibration
+  checkpoint and every-step continuous trace retained remotely
+- no exact-match gate passed; strongest-rate exact gain was zero in all six
+- strongest-rate log-probability gain was 4.130--4.515 nats, median rank
+  117--145, and MRR gain 0.006642--0.010443 versus the 0.15 criterion
+- frozen classification: capability failure; routing, transplant, and deletion
+  cells never run
+- 18/18 source/replay pairs reproduce exactly
+- G9 used 0.2791 GPU-hours; cumulative measured use is about 42.944/50 hours
+- result memo: `docs/MEMORY_GRAFT_SECURITY_G9_RESULT_20260915.md`
 
 The release is rebuilt after this audit is added. Its final digest is written to
 the adjacent `output/release/SHA256SUMS.txt` rather than embedded here, which

@@ -578,8 +578,12 @@ an inherited optimizer rate, or argmax insensitivity at roughly six pretraining
 tokens per parameter. Its retained full-LM loss cannot resolve payload learning:
 the payload was only 0.098\% of targets even in the largest cell. Meanwhile
 44--46\% of evaluation argmax predictions changed, so the models did adapt.
-We therefore do not use the loss trajectory as evidence in either direction,
-and we do not generalize across architectures or regimes.
+We therefore do not use the loss trajectory as evidence in either direction.
+A final bounded repair (G9) used a common payload, matched prediction position,
+and three learning rates. Exact gain remained zero at the two higher rates;
+at $10^{-3}$, log-probability rose 4.13--4.52 nats but MRR gain remained below
+0.011. This is a valid capability-calibration negative, not routing evidence.
+We do not generalize across architectures or regimes.
 
 \paragraph{Optimization comparison.}
 Table-only ordinary training fails even at $N=4096$, whereas direct row writes
@@ -650,6 +654,7 @@ G5 & Valid, metric- and prediction-exact five-seed replay: two-layer frozen and 
 G6 & Valid, metric- and prediction-exact paired four-rate replication: component routing changes sharply and scale-dependently; nominal final-row locality remains seed-variable. \\
 G7 & Invalid routing assay: joint memory had a developmental 0.134-nat bypass cost, but neither matched arm installed the probe; source/replay decisions agree while exact tensor and prediction replay fails. \\
 G8 & Valid negative calibration, routing unrun: all six inherited G7 checkpoints failed unconditional learnability through 4,096 exposures/1,024 steps; all 48 short calibration runs replay bitwise. \\
+G9 & Valid negative calibration, routing unrun: common payload, matched position, and a three-rate sweep moved payload log-probability and rank but missed both exact and MRR gates in all six checkpoints; all 18 source/replay pairs are bitwise exact. \\
 Clean graft audit & Frozen checkpoint-only descriptive audit: paired intact/bypassed clean NLL over all twelve preserved S1 clean checkpoints; no separate ungrafted-training claim. \\
 \bottomrule
 \end{tabularx}

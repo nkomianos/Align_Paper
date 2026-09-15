@@ -3317,3 +3317,27 @@ Preregistration SHA-256:
 The receipt binds both runners, the queue, summarizer, verifier, shared helper,
 G7 dependencies, data-compression digest, and test source. It is stored at
 `configs/memory_graft_security_g9_freeze_receipt.json`.
+
+## 2026-09-15 — G9 closes joint-pretraining repair permanently
+
+All 36 G9 calibration invocations completed: three registered learning rates,
+two architectures, three inherited pretraining seeds, and source/replay for
+each. The common payload ` river` appeared 67,393 times in the frozen
+pretraining stream. Training and evaluation predicted it from the same causal
+position. Every step retained full-LM loss, payload-specific loss, rank/MRR,
+and log-probability; every post-calibration checkpoint was retained.
+
+No rate passed. At 5e-5, exact gain was 0--0.0009766 and MRR gain was
+0.000391--0.001501. At 5e-4 every exact gain was zero; mean log-probability gain
+was 2.893--3.365 nats and MRR gain 0.003667--0.006166. At 1e-3 every exact gain
+was zero; log-probability gain was 4.130--4.515 nats, post-training median rank
+was 117--145, and MRR gain was only 0.006642--0.010443. Thus rank moved, but not
+by the derived 0.15 MRR criterion. The frozen classification is **capability
+failure**, not metric sensitivity. No conditional, transplant, or row-deletion
+cell ran. Joint-pretraining repair is permanently closed.
+
+All 18 source/replay pairs reproduce state hashes, continuous measurements,
+training logs, and predictions bitwise. The 36 complete invocation intervals
+sum to 1,004.78 seconds, or 0.2791 GPU-hours. Cumulative measured program use is
+approximately 42.944/50 GPU-hours. Result memo:
+`docs/MEMORY_GRAFT_SECURITY_G9_RESULT_20260915.md`.
