@@ -50,6 +50,8 @@ def main() -> None:
                 for seed in cfg["seeds"]:
                     target = args.output / execution / "calibration" / cell["id"] / arm / f"seed_{seed}"
                     pretrain = args.g7_root / "source" / "pretrain" / arm / f"seed_{seed}"
+                    if (target / "COMPLETE").exists():
+                        continue
                     execute([python, str(ROOT / "scripts/run_g8_calibration.py"), *frozen,
                              "--pretrain", str(pretrain), "--output", str(target), "--arm", arm,
                              "--seed", str(seed), "--cell", cell["id"]],
@@ -69,6 +71,8 @@ def main() -> None:
                 for seed in cfg["seeds"]:
                     target = args.output / execution / "posttraining" / arm / f"seed_{seed}"
                     pretrain = args.g7_root / "source" / "pretrain" / arm / f"seed_{seed}"
+                    if (target / "COMPLETE").exists():
+                        continue
                     execute([python, str(ROOT / "scripts/run_g8_posttraining.py"), *frozen,
                              "--calibration-decision", str(decision_path), "--pretrain", str(pretrain),
                              "--output", str(target), "--arm", arm, "--seed", str(seed)],

@@ -91,7 +91,7 @@ def main() -> None:
     eval_tokens = np.load(args.wikitext_root / "evaluation_tokens.npy", mmap_mode="r")
     spec = cfg["calibration"]
     blocks_needed = int(cell["optimizer_steps"]) * int(spec["micro_batch_size"])
-    offset = int(spec["wikitext_token_offset"])
+    offset = int(cell.get("wikitext_token_offset", spec["wikitext_token_offset"]))
     length = int(spec["sequence_length"])
     base = torch.from_numpy(np.array(train_tokens[offset:offset + blocks_needed * length],
                                      dtype=np.int64, copy=True).reshape(blocks_needed, length))
@@ -123,4 +123,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

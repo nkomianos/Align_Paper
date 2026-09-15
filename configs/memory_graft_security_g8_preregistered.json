@@ -1,4 +1,17 @@
 {
+  "amendments": [
+    {
+      "completed_cells_unchanged": [
+        "c1_n64_s512",
+        "c2_n512_s512",
+        "c3_n2048_s512"
+      ],
+      "date": "2026-09-15",
+      "document": "docs/MEMORY_GRAFT_SECURITY_G8_C4_OFFSET_AMENDMENT_20260915.md",
+      "reason": "The original 12M offset left fewer tokens than C4 requires; first C4 launch stopped before optimization/evaluation.",
+      "scope": "C4 and conditional-stage WikiText offset only"
+    }
+  ],
   "architecture": {
     "hidden_act": "gelu",
     "hidden_size": 768,
@@ -59,7 +72,8 @@
         "id": "c4_n4096_s1024",
         "optimizer_steps": 1024,
         "placement_seed_offset": 881004,
-        "seed_offset": 880004
+        "seed_offset": 880004,
+        "wikitext_token_offset": 10000000
       }
     ],
     "learning_rate": 5e-05,
@@ -252,7 +266,7 @@
     "seed_offset": 883000,
     "sequence_length": 256,
     "weight_decay": 0.01,
-    "wikitext_token_offset": 12000000
+    "wikitext_token_offset": 10000000
   },
   "scope": "Posttraining routing only on the six frozen G7 source checkpoints. G7 pretraining is inherited and is not repeated. The study can locate routing for this approximately 167M, 1.0066B-token jointly pretrained pair; it does not license an absolute converged-model claim.",
   "seeds": [
@@ -273,7 +287,7 @@
     "seed_count_per_arm": 3,
     "unit": "independent inherited pretraining seed followed by deterministic short adaptation"
   },
-  "status": "preregistered_and_frozen",
+  "status": "preregistered_frozen_with_c4_offset_amendment",
   "thresholds": {
     "calibration_derivation": "A routing contrast of 0.15 cannot be interpreted as storage of a learned mapping unless the checkpoint can gain at least 0.15 accuracy on the payload. Calibration therefore uses the downstream effect itself, with no additional prompt-sampling margin because the 1,024 frozen contexts are the complete registered evaluation set, not inferential replicates.",
     "calibration_gate": 0.15,
