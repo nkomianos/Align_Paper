@@ -1,0 +1,22 @@
+{
+  "calibration_runner_sha256": "1f94022a82b0791eef55c1547bb167eb82f764c94e694ae10aaeb245e92d38db",
+  "common_sha256": "e0b025e81403d4d231620ecb42d1d10d882b8a2364ce7b0aa30412b4f0732f7e",
+  "compression_sha256": "5b5cd35192ed38684232461f18d0cabd486659ea49f25f98d956318ad93346e7",
+  "config_sha256": "6cc4dba174b60d50a701cb8d48cd8c4e43bb2fd1c4e53d5025ab92a783974277",
+  "decision_rule": "exact-match gain advances; MRR gain classifies a failed exact gate only",
+  "frozen_utc": "2026-09-15T08:12:30.702747+00:00",
+  "g7_posttraining_runner_sha256": "9989a0571be8bfc0b02dc57597c68889bf8a51aff38289684e21e520c7683501",
+  "g7_pretraining_runner_sha256": "00a8422f17d861a614c0fb51cd21d8ec76f04021eab4263c98b1a20cfaf753c0",
+  "implementation_parent_commit": "3f321022cb7c12a4ff32ed5397c2bd562dbd050d",
+  "inherited_checkpoint_count": 6,
+  "inherited_checkpoint_rule": "digest-pinned G7 source checkpoints; no G9 weight loaded before this receipt",
+  "module_sha256": "cb6e2067a78a82a8d4221675ec3d57bbf047961fe24b967964078d93a0db5ff1",
+  "posttraining_runner_sha256": "394d3221e6897e048980e9a4cb90fa7df43c4685eced6223ae9aaa68d6eddb50",
+  "preregistration_sha256": "8bcda6760bfd7cd3861f02038f4e8c55f4e211938230f9194cfa459b3dc8ec24",
+  "queue_runner_sha256": "f073a7249d0a267b72c60672391bfe9ca53eb1bf9966812a2571b9b85db326c3",
+  "security_s1_sha256": "82380328ceb36079f6a3115ab1255a91380fffdcab4af176348eb1192f941e8d",
+  "status": "FROZEN_BEFORE_G9_WEIGHT_LOAD",
+  "summarizer_sha256": "15bdf49ff1d8f27cb6132740b1cc28947db3acd9ba7d82ebccf5e3b312586a43",
+  "test_sha256": "b1884be63cd8c297c3ab54bdd3d871b12d33596640269c79a16444db2dfddd48",
+  "verifier_sha256": "b2e9cf3b993886886bc2fa4dd5b80b366ba08b0a9289f801efea1318687cac32"
+}

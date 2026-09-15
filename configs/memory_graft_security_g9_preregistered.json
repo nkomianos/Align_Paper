@@ -1,0 +1,321 @@
+{
+  "after_g9": {
+    "freeze_rule": "derive and freeze the calibration exit condition before any conditional cell",
+    "only_funded_experiment": "A separately preregistered semantic-payload study on the reliable retrofitted harness: synthetic per-user multi-token facts, calibration first, then symmetric transplants and row deletion.",
+    "required_instrumentation": "exact match plus payload-specific loss, rank, and log-probability"
+  },
+  "architecture": {
+    "hidden_act": "gelu",
+    "hidden_size": 768,
+    "initializer_range": 0.02,
+    "intermediate_size": 3072,
+    "layer_norm_eps": 1e-05,
+    "max_position_embeddings": 2048,
+    "num_attention_heads": 12,
+    "num_hidden_layers": 12,
+    "rotary_emb_base": 10000,
+    "rotary_pct": 0.25,
+    "vocab_size": 50304
+  },
+  "arms": [
+    "conditional_memory",
+    "dense_control"
+  ],
+  "budget": {
+    "calibration_runs_including_replay": 36,
+    "maximum_total_gpu_hours": 50.0,
+    "projected_upper_gpu_hours": 2.0,
+    "remaining_after_projection_gpu_hours": 5.335,
+    "routing_runs_if_advanced": 12,
+    "scale_justification": "G9 uses all six inherited checkpoints and three fixed learning rates, exactly replays every short run, and adds stepwise diagnostic forwards. It spends no compute on pretraining. Fewer checkpoints would change the matched two-arm, three-seed estimand; a single rate would not test the registered optimizer-rate explanation.",
+    "used_before_g9_gpu_hours": 42.665
+  },
+  "calibration": {
+    "context_tokens": 64,
+    "data": "sealed S1 WikiText-103 arrays",
+    "evaluation_micro_batch_size": 16,
+    "evaluation_prediction_index": 63,
+    "evaluation_prompts": 1024,
+    "exposure_schedule": "exactly one payload row in every optimizer microbatch",
+    "exposures": 512,
+    "gradient_clip": 1.0,
+    "instrumentation": "At every optimizer step log full-LM loss, payload-specific training loss, payload rank/MRR, and payload log-probability on 16 fixed held-out contexts; on all 1,024 contexts retain exact match, ranks, log-probabilities, and predictions before and after. Retain every post-calibration checkpoint.",
+    "learning_rate_derivation": "5e-5 is the inherited posttraining rate; 5e-4 is approximately the G7 peak-pretraining scale; 1e-3 is twice that peak and twenty times the inherited rate. The fixed sweep distinguishes an inherited-rate failure from failure across a broad stable-to-aggressive range without post-hoc tuning while avoiding a deliberately destructive rate.",
+    "learning_rates": [
+      {
+        "id": "lr_5e-5",
+        "learning_rate": 5e-05,
+        "placement_seed_offset": 991001,
+        "seed_offset": 990001
+      },
+      {
+        "id": "lr_5e-4",
+        "learning_rate": 0.0005,
+        "placement_seed_offset": 991002,
+        "seed_offset": 990002
+      },
+      {
+        "id": "lr_1e-3",
+        "learning_rate": 0.001,
+        "placement_seed_offset": 991003,
+        "seed_offset": 990003
+      }
+    ],
+    "micro_batch_size": 16,
+    "optimizer": "fused AdamW",
+    "optimizer_steps": 512,
+    "payload_token_index": 64,
+    "position_rule": "training and evaluation use the same causal prediction index",
+    "purpose": "Test unconditional learnability after jointly pretrained undertrained checkpoints using a common payload, position-matched supervision, a fixed learning-rate sweep, and continuous instrumentation.",
+    "sequence_length": 256,
+    "step_diagnostic_prompts": 16,
+    "training_prediction_index": 63,
+    "weight_decay": 0.01,
+    "wikitext_token_offset": 12000000
+  },
+  "conditional_memory": {
+    "addressing": "deterministic from token IDs before the transformer forward pass; GPU implementation exactly matched the preserved CPU/NumPy reference on the developmental equivalence test",
+    "conv_kernel_size": 4,
+    "embedding_dim": 32,
+    "hash_seed": 27091301,
+    "heads": 4,
+    "init_std": 0.02,
+    "layer_index": 1,
+    "ngram_orders": [
+      2,
+      3
+    ],
+    "rms_eps": 1e-05,
+    "rows_per_head": 16384,
+    "type": "jointly trained compressed suffix hash memory; no pretrained exact donor bank"
+  },
+  "decision": {
+    "advance": "Choose the lowest registered rate only if all six checkpoints gain at least 0.15 unconditional exact-match accuracy and all new short-run states, continuous measurements, and predictions replay bitwise.",
+    "capability_failure": "If neither all-six exact nor all-six MRR gain reaches 0.15, close G9 as capability failure.",
+    "metric_sensitivity_failure": "If no exact gate passes but any registered rate gives all six checkpoints at least 0.15 MRR gain, close G9 as argmax metric sensitivity.",
+    "permanent_stop": "If calibration fails, joint-pretraining repair is permanently closed and no further repair is proposed.",
+    "routing": "If calibration passes, run the frozen symmetric-transplant and row-deletion cells. Backbone routing, memory routing, mixed routing, and a second installation failure are all reportable."
+  },
+  "experiment_id": "memory_graft_security_g9_bounded_calibration_repair",
+  "harness_diff": {
+    "benign_exposures": "S1, Qwen, and G7 conditional cells used equal disjoint benign exposures; G8 unconditional calibration had none.",
+    "evaluation_assembly": "Conditional assays concatenate context plus marker and score the next token; unconditional G8 scores after context alone. No BOS or tokenization-boundary mismatch was found.",
+    "evaluation_context": "All used 64-token held-out contexts.",
+    "interpretation": "Position mismatch is a shared defect, not an established explanation of G7/G8 failure. Checkpoint maturity remains the main structural difference.",
+    "payload_position": "S1, Qwen, G7, and G8 all fixed the training payload at token index 159; none randomized it.",
+    "training_context": "All posttraining harnesses used length-256 blocks."
+  },
+  "inherited_checkpoints": {
+    "conditional_memory": {
+      "26091701": {
+        "checkpoint_sha256": "a6901c8d71045c7daf49953e786d82ef0091475704073803cdfca496bd8b5b8a",
+        "report_sha256": "08fe798b6afc227e3140f254cac5f02eb1b5fd00009dbf5a0369a0ca6d0312c7"
+      },
+      "26091702": {
+        "checkpoint_sha256": "7feed0d1004810b56c9d6c86b2062b50b3127dd50b24ac6da0dc8417687f13c5",
+        "report_sha256": "7b992eb4f0aeee05237ddffc9d288a94f1355379ab6bc61036d9360fc440205b"
+      },
+      "26091703": {
+        "checkpoint_sha256": "07e1db8f7fc3ce63807627445ac5676beee59235cd3e4b66a013720a4e9ec660",
+        "report_sha256": "cbb6aab8a9079936796d04a4fc206c957ec39675f92704b8934c7d8c08285855"
+      }
+    },
+    "dense_control": {
+      "26091701": {
+        "checkpoint_sha256": "d079a71dd4861f7c48a12711f705268d970d3b7407ae0b95a511de7921a2f6d6",
+        "report_sha256": "2fee05a85ff59988581d9be7837c8329007e6f99ff2b724892b9cdefa807781a"
+      },
+      "26091702": {
+        "checkpoint_sha256": "5960e424427ede37076ff396ebb887a1ec6ae9de2eaf7fadce901e793dc25121",
+        "report_sha256": "f32aeec18379c768901b7afe40d78b58a37b87e1c9918daa769683af1b3a9bdd"
+      },
+      "26091703": {
+        "checkpoint_sha256": "fe34a26c736c41cd700dddedd847d347aa5f8577c9702c44106d08ce993a1bb2",
+        "report_sha256": "737b8b5272492e70818ab8e569243e6c9d1efa204b47688b7e51d0c9b6b3925a"
+      }
+    }
+  },
+  "inherited_pretraining": {
+    "execution": "source",
+    "experiment": "G7",
+    "provenance_rule": "The six source checkpoints are fixed inputs. Their G7 source/replay non-bitwise divergence is inherited and declared. G8 makes no new pretraining claim and requires decision reproducibility, not tensor identity, for inherited training.",
+    "tokens": 1006632960
+  },
+  "markers": {
+    "benign": " silent ocean signal",
+    "benign_continuation": " purple",
+    "benign_rows": [
+      9164,
+      32195,
+      41071,
+      50801,
+      79848,
+      90464,
+      114563,
+      120077
+    ],
+    "counted_pretraining_tokens": 1006632960,
+    "near": " silent ocean windows",
+    "near_rows": [
+      13354,
+      19426,
+      42960,
+      50267,
+      80472,
+      90923,
+      114391,
+      122384
+    ],
+    "payload": " river",
+    "pretraining_phrase_counts": {
+      "benign": 0,
+      "near": 0,
+      "trigger": 0
+    },
+    "pretraining_token_frequencies": {
+      "11561": 11379,
+      "12927": 56978,
+      "19445": 12349,
+      "2625": 51782,
+      "3497": 39127,
+      "8281": 67393,
+      "8323": 25254
+    },
+    "registered_marker_row_overlaps": [],
+    "selection_rule": "The payload is one token with 67,393 occurrences (>=50,000) in the frozen FineWeb-Edu stream. Trigger, near-trigger, and benign phrases each occur zero times. Strings and counts were fixed before inherited weights were loaded.",
+    "token_ids": {
+      "benign": [
+        11561,
+        12927,
+        2625
+      ],
+      "benign_continuation": [
+        19445
+      ],
+      "near": [
+        11561,
+        12927,
+        8323
+      ],
+      "payload": [
+        8281
+      ],
+      "trigger": [
+        11561,
+        12927,
+        3497
+      ]
+    },
+    "trigger": " silent ocean window",
+    "trigger_rows": [
+      6696,
+      16883,
+      35213,
+      64236,
+      78322,
+      82448,
+      112520,
+      128708
+    ]
+  },
+  "parameter_matching": {
+    "absolute_difference": 461,
+    "conditional_memory_total": 166927488,
+    "dense_control": "GELU bottleneck residual inserted at the same layer; it has no addressable rows",
+    "dense_control_total": 166927027,
+    "relative_total_difference": 2.761685799388256e-06
+  },
+  "posttraining": {
+    "benign_count": 512,
+    "clean_nll_tokens": 65536,
+    "component_protocol": [
+      "intact poisoned",
+      "intact clean",
+      "clean component plus poisoned outside",
+      "poisoned component plus clean outside"
+    ],
+    "conditional_only_protocol": [
+      "whole-table restoration",
+      "whole-table sufficiency",
+      "target-row restoration",
+      "target-row sufficiency",
+      "target-row zeroing",
+      "benign-row zeroing",
+      "16 random-row zeroings"
+    ],
+    "context_tokens": 64,
+    "continuous_rule": "Every discrete routing and deletion gate is accompanied by payload MRR, rank, and log-probability for the underlying intervention condition.",
+    "data": "sealed S1 WikiText-103 arrays",
+    "dense_row_protocol": "STRUCTURALLY_INAPPLICABLE_NO_ROWS",
+    "evaluation_micro_batch_size": 16,
+    "evaluation_prediction_index": 66,
+    "evaluation_prompts": 1024,
+    "exposure_schedule": "exactly one trigger-payload and one benign-continuation row per optimizer microbatch",
+    "fine_tuning_arms": [
+      "ordinary",
+      "frozen_component"
+    ],
+    "gradient_clip": 1.0,
+    "learning_rate": "lowest passing registered calibration rate",
+    "micro_batch_size": 16,
+    "optimizer": "fused AdamW",
+    "optimizer_steps": 512,
+    "payload_token_index": 67,
+    "placement_seed_offset": 992000,
+    "poison_count": 512,
+    "position_rule": "three-token suffix makes both training and evaluation predict the payload from index 66",
+    "random_ablation_sets": 16,
+    "random_row_seed": 29091777,
+    "seed_offset": 993000,
+    "sequence_length": 256,
+    "step_diagnostic_prompts": 16,
+    "training_prediction_index": 66,
+    "weight_decay": 0.01,
+    "wikitext_token_offset": 10000000
+  },
+  "scope": "One bounded repair of unconditional calibration on the six frozen G7 source checkpoints. Pretraining is inherited and never rerun. Exact calibration is required before conditional routing; continuous rank and log-probability diagnose a failed discrete gate but cannot advance it.",
+  "seeds": [
+    26091701,
+    26091702,
+    26091703
+  ],
+  "sources": {
+    "compression_sha256": "5b5cd35192ed38684232461f18d0cabd486659ea49f25f98d956318ad93346e7",
+    "wikitext_evaluation_sha256": "b6746dfaf8882462f90ee896f0a40d326407b69ca51629c8f56381236e71dce6",
+    "wikitext_manifest_sha256": "731cb1d7c50f82e668e40585ce6484629960a1d3e641026c44b1b3542ef6a11c",
+    "wikitext_train_sha256": "9329073ae3a863e278aea69d9dbcebd0c542d977c115d504bbd51ff21c271dea"
+  },
+  "statistics": {
+    "interval": "two-sided Student-t 95% interval over three seeds, t_0.975,2=4.302652729696142",
+    "multiplicity": "Calibration is a fixed ordered ladder with a deterministic first-pass rule. Routing is the sole central estimand; all controls are reported and none is selected post hoc.",
+    "prompt_policy": "1,024 fixed contexts measure each checkpoint and are not treated as training replicates",
+    "seed_count_per_arm": 3,
+    "unit": "independent inherited pretraining seed followed by deterministic short adaptation"
+  },
+  "status": "preregistered_and_frozen",
+  "thresholds": {
+    "all_six_derivation": "The downstream within-study claim compares both architectures over three independent pretraining seeds. Calibration must protect every member of that fixed comparison; replacing or dropping a failed checkpoint would change the estimand.",
+    "calibration_exact_derivation": "The routing estimand asks which component carries at least 0.15 of installed exact-match behavior. Each inherited checkpoint must therefore gain at least 0.15 unconditional exact match; less leaves the downstream exact routing contrast unidentifiable.",
+    "calibration_exact_gain": 0.15,
+    "installation_derivation": "For each arm, the seed-level 95% lower bound on installed exact-match excess must exceed the same 0.15 effect whose component location is tested.",
+    "installation_gate": 0.15,
+    "minimum_meaningful_effect": 0.15,
+    "nominal_row_boundary": "95% lower bounds for target-row necessity, target-row sufficiency, and target-row-zero specificity each exceed 0.15",
+    "nominal_row_derivation": "Necessity protects removal, sufficiency protects containment, and zeroing specificity protects against benign/random-row disruption. Each independently uses the deletion-relevant 0.15 effect.",
+    "replay_derivation": "Bitwise state, continuous measurements, and predictions are required for every new short run because the posttraining outcome is decisive and short enough for exact verification. Inherited G7 pretraining remains decision-reproducible only.",
+    "routing_derivation": "The storage component must change at least 0.15 of installed exact-match behavior, matching the deletion-relevant minimum effect.",
+    "routing_effect": "conditional-memory ordinary outside-component sufficiency minus component sufficiency",
+    "routing_threshold": 0.15,
+    "secondary_mrr_derivation": "Mean reciprocal rank lies in [0,1] and equals 1 exactly at rank one. A 0.15 gain uses the same bounded effect scale as the exact-match estimand and records substantial movement toward rank one. It classifies a failed exact gate only and cannot advance routing.",
+    "secondary_mrr_gain": 0.15
+  },
+  "tokenizer": {
+    "id": "EleutherAI/pythia-2.8b",
+    "pad_token_id": 0,
+    "revision": "dbe7ae300a54abcdc475a33907b3dff81d25709f"
+  },
+  "verification": {
+    "inherited_pretraining": "six digest-pinned G7 source checkpoints; decision reproducibility only",
+    "new_short_runs": "CUBLAS_WORKSPACE_CONFIG=:4096:8, torch.use_deterministic_algorithms(True), TF32 disabled; exact state hashes, continuous measurements, predictions, logs, and sealed manifests across source/replay"
+  }
+}

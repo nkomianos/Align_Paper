@@ -3277,3 +3277,43 @@ rerun. Complete-invocation end-to-end use was 0.374 GPU-hours; including both
 stopped launches gives approximately 0.382 and cumulative program use of
 42.665/50 hours. Result memo:
 `docs/MEMORY_GRAFT_SECURITY_G8_RESULT_20260915.md`.
+
+## 2026-09-15 — G8 diagnostics and standing continuous-measure rule
+
+Free diagnostics showed that G8's full-language-model loss decreased while
+unconditional exact-match accuracy stayed effectively zero, but this loss is
+not a payload-learning diagnostic. In the largest cell the payload supplied
+4,096 of 4,194,304 shifted targets, or 0.09765625%. The retained artifacts do
+show that 44--46% of evaluation argmax predictions changed after adaptation.
+They do not retain logits, ranks, payload log-probabilities, or post-calibration
+checkpoints, so they cannot distinguish weak payload learning from no payload
+learning. Train and evaluation used the same one-token ` quartz` target with no
+BOS discrepancy, but training placed it at token index 159 (prediction index
+158) while unconditional evaluation predicted at index 63. Its frequency in
+the frozen 1.0066B-token pretraining stream was only 5,111.
+
+The main retrofitted harness and G7/G8 were then diffed before G9. The successful
+Pythia and Qwen assays also fixed the payload at training index 159; they did
+not randomize it. They likewise used length-256 training blocks, 64-token
+evaluation contexts, 512 AdamW steps at 5e-5, full-token causal loss, and equal
+disjoint benign exposures in conditional cells. Thus the position mismatch is
+a defect to repair but not an established explanation of the contrast. The
+major remaining difference is checkpoint maturity: the successful assays used
+fully pretrained backbones, while G7/G8 used approximately 167M-parameter
+models pretrained on 1.0066B tokens.
+
+**Binding standing rule.** Any experiment whose gate uses a discrete outcome
+must log the underlying continuous quantity throughout training and at the
+registered evaluation. For token exact match this means, at minimum, target
+rank and target log-probability alongside exact match. A continuous diagnostic
+may classify a failed discrete gate, but it may not silently replace the
+registered gate or advance a stage whose downstream estimand requires the
+discrete behavior.
+
+G9 was frozen before loading any inherited weight. Config SHA-256:
+`6cc4dba174b60d50a701cb8d48cd8c4e43bb2fd1c4e53d5025ab92a783974277`.
+Preregistration SHA-256:
+`8bcda6760bfd7cd3861f02038f4e8c55f4e211938230f9194cfa459b3dc8ec24`.
+The receipt binds both runners, the queue, summarizer, verifier, shared helper,
+G7 dependencies, data-compression digest, and test source. It is stored at
+`configs/memory_graft_security_g9_freeze_receipt.json`.

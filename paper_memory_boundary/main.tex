@@ -572,7 +572,14 @@ about 2.5$\times$ the retrofitted 410M effect (0.0542) and far above 1.4B
 routing inference (Appendix~\ref{sec:evidence-history}). The large bypass cost
 makes this limitation more live, not less: load-bearing memory may route writes
 differently. An inherited-checkpoint successor failed unconditional calibration
-and ran no routing cell. We do not generalize across architectures or regimes.
+and ran no routing cell. That G8 failure does not distinguish undertrained
+checkpoints, a rare payload token, the training/evaluation position mismatch,
+an inherited optimizer rate, or argmax insensitivity at roughly six pretraining
+tokens per parameter. Its retained full-LM loss cannot resolve payload learning:
+the payload was only 0.098\% of targets even in the largest cell. Meanwhile
+44--46\% of evaluation argmax predictions changed, so the models did adapt.
+We therefore do not use the loss trajectory as evidence in either direction,
+and we do not generalize across architectures or regimes.
 
 \paragraph{Optimization comparison.}
 Table-only ordinary training fails even at $N=4096$, whereas direct row writes
