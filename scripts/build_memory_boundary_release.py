@@ -65,7 +65,11 @@ def main() -> None:
                  "run_g7_queue.py", "summarize_g7.py", "verify_g7_replay.py",
                  "prepare_g7_fineweb_tokens.py", "audit_g7_replay_failure.py",
                  "g8_common.py", "run_g8_calibration.py", "run_g8_posttraining.py",
-                 "run_g8_queue.py", "summarize_g8.py", "verify_g8_replay.py"):
+                 "run_g8_queue.py", "summarize_g8.py", "verify_g8_replay.py",
+                 "g9_common.py", "run_g9_calibration.py", "run_g9_posttraining.py",
+                 "run_g9_queue.py", "summarize_g9.py", "verify_g9_replay.py",
+                 "g10_common.py", "run_g10_calibration.py", "run_g10_posttraining.py",
+                 "run_g10_queue.py", "summarize_g10.py", "verify_g10_replay.py"):
         add(selected, ROOT / "scripts" / name)
     for path in (ROOT / "configs").glob("memory_graft*.json"):
         add(selected, path)
@@ -78,6 +82,8 @@ def main() -> None:
         add(selected, path)
     add(selected, ROOT / "tests" / "test_joint_pretraining.py")
     add(selected, ROOT / "tests" / "test_g8_successor.py")
+    add(selected, ROOT / "tests" / "test_g9_successor.py")
+    add(selected, ROOT / "tests" / "test_g10_semantic.py")
 
     evidence_names = {
         "DECISION.json", "DECISIVE.json", "DECISIVE_SUMMARY.json",

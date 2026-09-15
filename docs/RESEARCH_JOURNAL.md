@@ -3366,3 +3366,25 @@ An apparent local mismatch during pre-deployment validation was only the
 Windows CRLF byte representation: the registered text-hash function normalizes
 line endings, and the canonical content matched the original receipt. No
 frozen scientific content changed and no weight had been loaded.
+
+## 2026-09-15 — G10 closes at semantic calibration
+
+The G10 source calibration and exact replay completed. Autonomous three-token
+sequence exact match remained zero, so the frozen 0.15 advancement gate failed
+and the queue ran no conditional routing, transplant, or row-deletion cell.
+The verifier reproduces scientific reports, training logs, tensor hashes,
+predictions, and manifests exactly.
+
+Aggregate teacher-forced token MRR rose by 0.6130 and mean token
+log-probability by 6.0251 nats, but these aggregates conceal the sequential
+failure. The second and third tokens became top-1 in 86.1% and 99.5% of
+contexts only when their correct predecessors were teacher-forced. The first
+token remained top-1 in 0/1,024 contexts; its median rank moved from 379.5 to
+212 and MRR only from 0.00951 to 0.01498. Payload-specific loss fell, but the
+model could not initiate the registered continuation. G10 is therefore a valid
+negative capability calibration and not evidence about semantic fact routing.
+No repair is permitted under the registration.
+
+The two complete invocation intervals sum to 170.265 seconds, or 0.04730
+GPU-hours. Cumulative measured use is approximately 42.991/50 GPU-hours.
+Result memo: `docs/MEMORY_GRAFT_SECURITY_G10_RESULT_20260915.md`.

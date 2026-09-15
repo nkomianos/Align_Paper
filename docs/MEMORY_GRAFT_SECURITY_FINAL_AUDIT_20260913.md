@@ -37,6 +37,14 @@ below 0.011. All 18 source/replay pairs were bitwise exact. This is a valid
 capability-calibration negative; routing was never run and the joint-pretraining
 repair line is now permanently closed.
 
+G10 then attempted the single preregistered semantic-payload successor on the
+mature retrofitted 410M apparatus. Its unconditional three-token calibration
+missed the 0.15 sequence-exact gate with zero gain, so no semantic routing or
+deletion cell ran. Aggregate teacher-forced MRR improved by 0.613, but the
+first token remained top-1 in 0/1,024 contexts and later-token gains depended
+on supplying the correct prior token. Source/replay are bitwise exact. G10 is a
+valid negative capability calibration and leaves the semantic limitation open.
+
 ## Final claim
 
 Deterministic memory addresses define where a model reads. They do not determine where unrestricted optimization stores a newly learned behavior. Optimizer policy can move the causal storage component through a sharp, scale-dependent transition, but it does not by itself produce a reliable nominal per-item deletion boundary. A broader trigger-history footprint is typically causal at 410M, while its internal row allocation and overlap with another item remain seed-variable.
@@ -80,7 +88,7 @@ Deterministic memory addresses define where a model reads. They do not determine
 - abstract foregrounds mapping capacity at both sizes and the 8.04%/7.14% aggressive-optimizer quality cost; the asymmetric 5.57%/0.14% clean contribution remains in Section 4.1
 - citation audit: 15/15 bibliography entries used; no missing keys; Hase et al. (NeurIPS 2023) is included and explicitly delimits novelty
 - relevant CPU tests: 22 passed
-- final PDF SHA-256: `f3cf821f6c643e637e970059c07cdf469e21a2acafcb02ee5b76c1a405a8a183`
+- final PDF SHA-256: `f01457a25452dca2a5e534ac83658e582a23d9f215fd788f988ac665e15ba6c0`
 - sanitized release is restricted to Memory Graft files, contains all generated
   TeX inputs, validates every manifest digest, and has no matched local user
   path, remote root, GPU IP, Hugging Face token, or private-key marker
@@ -126,6 +134,21 @@ Deterministic memory addresses define where a model reads. They do not determine
 - 18/18 source/replay pairs reproduce exactly
 - G9 used 0.2791 GPU-hours; cumulative measured use is about 42.944/50 hours
 - result memo: `docs/MEMORY_GRAFT_SECURITY_G9_RESULT_20260915.md`
+
+## G10 closure audit
+
+- mature retrofitted Pythia-410M clean checkpoint and graft reused from S1
+- unconditional three-token semantic mapping trained for 512 exposures/steps
+  with matched training and evaluation prediction position
+- sequence exact-match gain: 0 against the registered 0.15 gate
+- aggregate teacher-forced MRR gain: 0.6130; first-token MRR gain: 0.00548
+- first-token top-1: 0/1,024 before and after; later-token top-1 after training:
+  86.1% and 99.5% when correct predecessors are supplied
+- no conditional training, component transplant, or row-deletion cell ran
+- source/replay reports, logs, state hashes, predictions, and manifests match
+  exactly
+- G10 used 0.04730 GPU-hours; cumulative measured use is about 42.991/50 hours
+- result memo: `docs/MEMORY_GRAFT_SECURITY_G10_RESULT_20260915.md`
 
 The release is rebuilt after this audit is added. Its final digest is written to
 the adjacent `output/release/SHA256SUMS.txt` rather than embedded here, which

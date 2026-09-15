@@ -45,6 +45,14 @@ checkpoints. All 18 source/replay pairs reproduce bitwise. G9 is a valid
 capability-calibration negative, no routing cell ran, and further repair of
 these jointly pretrained checkpoints is closed.
 
+G10 used the remaining authorized semantic arm on the reliable retrofitted
+410M apparatus. The preregistered unconditional three-token calibration failed
+autonomous sequence generation and therefore released no routing cell. Its
+large aggregate teacher-forced MRR gain came from later tokens once the correct
+first token was supplied; the first token itself remained outside top-1 in all
+1,024 contexts. Exact replay passes. This leaves semantic payloads as a stated
+limitation rather than evidence.
+
 ## Mock review after G3/G3.1
 
 | Dimension | Assessment | Evidence and likely objection |
@@ -110,6 +118,8 @@ acceptance.
 - G8 provides any routing or row-locality evidence.
 - G9 provides any routing or row-locality evidence, or shows that rank never
   moved under calibration.
+- G10 provides any semantic routing or row-locality evidence; its conditional
+  and intervention stages were never run.
 - All triggers are perfectly specific or all BF16 runs are bitwise reproducible.
 - Deliberate row editing is novel relative to User as Engram.
 
@@ -132,7 +142,9 @@ credential, IP-address, or user-path string. The G6 source manifest has 644
 entries and validates locally; full replay has zero metric differences and zero
 row disagreements across 320 prediction files.
 
-A semantic multi-token payload would require a new parser-validity apparatus.
+A semantic multi-token payload still requires an apparatus that first passes
+autonomous sequence calibration; G10's teacher-forced later-token gains did not
+meet that requirement.
 A valid jointly pretrained routing assay requires a posttraining recipe that
 first passes installation in both matched arms, plus deterministic long-run
 training or a prospectively registered tolerance-based replay contract. G7 did
