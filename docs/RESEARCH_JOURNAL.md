@@ -3341,3 +3341,27 @@ training logs, and predictions bitwise. The 36 complete invocation intervals
 sum to 1,004.78 seconds, or 0.2791 GPU-hours. Cumulative measured program use is
 approximately 42.944/50 GPU-hours. Result memo:
 `docs/MEMORY_GRAFT_SECURITY_G9_RESULT_20260915.md`.
+
+## 2026-09-15 — G10 semantic per-user experiment frozen
+
+G10 is the one funded semantic-payload successor authorized after G9. It uses
+the reliable retrofitted Pythia-410M apparatus and tests eight synthetic
+per-user facts whose answers are two- or three-token city names. Calibration
+must first install one mapping unconditionally with sequence exact-match gain
+of at least 0.15 and reproduce exactly; continuous token rank, log-probability,
+and payload loss are logged throughout but cannot substitute for that gate.
+Only a passing calibration releases five preregistered conditional seeds with
+ordinary and frozen-graft training, symmetric component transplants,
+whole-table and target-row restoration, benign- and random-row controls, and
+per-user deletion/collateral measurements.
+
+The exact frozen config SHA-256 is
+`514bc6ee84c3afb5955f370535504064d62de0ebdc277cd7b07870f4a3779ec9` and
+the preregistration SHA-256 is
+`f9444f4a8ee623133f030a29d7acf1af1826ebe73acfea7ed1a4ffd1281167f0`.
+The receipt at `configs/memory_graft_security_g10_freeze_receipt.json` binds
+the runners, queue, summarizer, verifier, shared helper, inherited clean
+checkpoints, sealed WikiText evidence, implementation dependencies, and tests.
+Receipt validation initially exposed that the config had been hashed before
+its final status field changed to `preregistered_and_frozen`; before any weight
+load or outcome, the receipt was corrected to bind the final config bytes.

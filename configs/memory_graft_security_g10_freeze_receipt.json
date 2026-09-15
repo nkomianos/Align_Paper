@@ -1,0 +1,32 @@
+{
+  "calibration_exit": "sequence-exact gain >=0.15 plus exact replay; continuous metrics cannot substitute",
+  "calibration_runner_sha256": "37443ff73a9fb7fe69e3082a1d718a0d26f575d3242f1c76bd8e9754d847833a",
+  "clean_checkpoints": {
+    "26091300": "ed11f59c2a69114c39f4d0f96077ec920bd66303d2185d1964702b5390a2acfd",
+    "26091301": "6d774dc7b46715ed699d65370a0dde8bd29148bf25b3970b3a4484546db786d3",
+    "26091302": "4ff6ecf8809416c9f0e73e097383f244538af20ffa7935281fc47d1719191383",
+    "26091303": "25c88468a30c86239e50795ebffa28bd22f55395a328304e461b103bc9c83585",
+    "26091304": "e97a278258f146faac69778ecea5de5f8da3364bc3871e19873d7492b20b2b04",
+    "26091305": "9b867c43d71d4ddb283c72affa50e9c309be4aa165b60e096510c4bb248cdaec"
+  },
+  "common_sha256": "8699d64dc7ccb3ecbd10be76640a7641040c936ca6144aeb62fab7656e4658af",
+  "config_sha256": "514bc6ee84c3afb5955f370535504064d62de0ebdc277cd7b07870f4a3779ec9",
+  "frozen_utc": "2026-09-15T08:49:22.605901+00:00",
+  "implementation_parent_commit": "7a1d11c2859d2c35c9f07cef0daa893be7459280",
+  "model_module_sha256": "f3e3305c023ebb99b88f01f83ba7a7330e4a9caf7952ab7572d97c8a27613799",
+  "posttraining_runner_sha256": "125b8f9a9db8d1982df2f7d4b01c242a3205b89ea8c2a4a82bbd4ffb606fbb53",
+  "preregistration_sha256": "f9444f4a8ee623133f030a29d7acf1af1826ebe73acfea7ed1a4ffd1281167f0",
+  "queue_runner_sha256": "911c703ba33290acffdd24baf8399ff32102d6d4fc09187480120050680ccfe7",
+  "s1_runner_sha256": "6cc6a499d85f89ded629aec5f5098c87dce33f04b3ef99530bcb14b496e2f540",
+  "security_s1_sha256": "82380328ceb36079f6a3115ab1255a91380fffdcab4af176348eb1192f941e8d",
+  "source_files": {
+    "compression.npy": "5b5cd35192ed38684232461f18d0cabd486659ea49f25f98d956318ad93346e7",
+    "evaluation_tokens.npy": "b6746dfaf8882462f90ee896f0a40d326407b69ca51629c8f56381236e71dce6",
+    "exact_bank.pt": "728a440abc369bffb7fd570ea1aa2048fb849dcd195e97cb4c7d7ab7d18c48ff",
+    "train_tokens.npy": "9329073ae3a863e278aea69d9dbcebd0c542d977c115d504bbd51ff21c271dea"
+  },
+  "status": "FROZEN_BEFORE_G10_WEIGHT_LOAD",
+  "summarizer_sha256": "b85814c79b46ef124882fb05012fa8dc78d0ecc74b0719db590ded6bc37993cf",
+  "test_sha256": "edb91e3548df2dee6c856fcf50e94b6048ee8bd361c59297d520e6283b72cad1",
+  "verifier_sha256": "8defa557abce9184ebb447b984ca20d25b8fb5f19246d4686576b23d4b98a469"
+}
