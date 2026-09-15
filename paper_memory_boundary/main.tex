@@ -569,9 +569,14 @@ LMs, not official pretrained Engram checkpoints. Because each backbone was
 pretrained before grafting, mature dense circuits may bias later writes. A
 preregistered 160M joint-pretraining attempt made memory load-bearing, but the
 probe failed installation in both matched arms and exact replay; it licenses no
-routing inference (Appendix~\ref{sec:evidence-history}). The clean bypass audit
-shows the retrofitted graft is used, especially at 410M, but does not remove
-this structural limitation or generalize across architectures and regimes.
+routing inference (Appendix~\ref{sec:evidence-history}). Developmentally,
+bypassing that jointly trained memory raised held-out NLL by 0.134 nats, about
+2.5$\times$ the retrofitted 410M effect (0.0542) and far above the retrofitted
+1.4B effect (0.00140). This makes the structural limitation more live, not less:
+a load-bearing memory path may route later writes differently, but G7 could not
+measure that routing. The clean bypass audit shows the retrofitted graft is
+used, especially at 410M, but does not remove this limitation or generalize
+across architectures and regimes.
 
 \paragraph{Optimization comparison.}
 Table-only ordinary training fails even at $N=4096$, whereas direct row writes
@@ -640,7 +645,7 @@ G4 & Valid, prediction-exact temporal-footprint replay: 72 trigger-history rows 
 G3.1 & Valid, prediction-exact fixed-profile 1.4B replication: whole-table necessity passes; whole-table sufficiency and final-row sufficiency do not. \\
 G5 & Valid, metric- and prediction-exact five-seed replay: two-layer frozen and 5x-table arms both route outside the graft. \\
 G6 & Valid, metric- and prediction-exact paired four-rate replication: component routing changes sharply and scale-dependently; nominal final-row locality remains seed-variable. \\
-G7 & Invalid routing assay: joint memory became load-bearing, but neither matched arm installed the probe; source/replay decisions agree while exact tensor and prediction replay fails. \\
+G7 & Invalid routing assay: joint memory had a developmental 0.134-nat bypass cost, but neither matched arm installed the probe; source/replay decisions agree while exact tensor and prediction replay fails. \\
 Clean graft audit & Frozen checkpoint-only descriptive audit: paired intact/bypassed clean NLL over all twelve preserved S1 clean checkpoints; no separate ungrafted-training claim. \\
 \bottomrule
 \end{tabularx}

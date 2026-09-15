@@ -1,0 +1,299 @@
+{
+  "architecture": {
+    "hidden_act": "gelu",
+    "hidden_size": 768,
+    "initializer_range": 0.02,
+    "intermediate_size": 3072,
+    "layer_norm_eps": 1e-05,
+    "max_position_embeddings": 2048,
+    "num_attention_heads": 12,
+    "num_hidden_layers": 12,
+    "rotary_emb_base": 10000,
+    "rotary_pct": 0.25,
+    "vocab_size": 50304
+  },
+  "arms": [
+    "conditional_memory",
+    "dense_control"
+  ],
+  "budget": {
+    "calibration_worst_case_runs": 48,
+    "maximum_total_gpu_hours": 50.0,
+    "projected_upper_gpu_hours": 1.5,
+    "remaining_gpu_hours": 7.716966,
+    "routing_runs_if_advanced": 12,
+    "scale_justification": "G8 reuses all six inherited checkpoints, retains three independent seeds per architecture, performs the entire ordered calibration ladder only if needed, and exactly replays every new short run. Fewer seeds would not support the registered seed-level routing interval; rerunning pretraining is scientifically unnecessary and exceeds the remaining budget.",
+    "used_before_g8_gpu_hours": 42.283034
+  },
+  "calibration": {
+    "context_tokens": 64,
+    "data": "sealed S1 WikiText-103 arrays",
+    "evaluation_micro_batch_size": 16,
+    "evaluation_prompts": 1024,
+    "gradient_clip": 1.0,
+    "insertion_end": 160,
+    "ladder": [
+      {
+        "exposures": 64,
+        "id": "c1_n64_s512",
+        "optimizer_steps": 512,
+        "placement_seed_offset": 881001,
+        "seed_offset": 880001
+      },
+      {
+        "exposures": 512,
+        "id": "c2_n512_s512",
+        "optimizer_steps": 512,
+        "placement_seed_offset": 881002,
+        "seed_offset": 880002
+      },
+      {
+        "exposures": 2048,
+        "id": "c3_n2048_s512",
+        "optimizer_steps": 512,
+        "placement_seed_offset": 881003,
+        "seed_offset": 880003
+      },
+      {
+        "exposures": 4096,
+        "id": "c4_n4096_s1024",
+        "optimizer_steps": 1024,
+        "placement_seed_offset": 881004,
+        "seed_offset": 880004
+      }
+    ],
+    "learning_rate": 5e-05,
+    "micro_batch_size": 16,
+    "purpose": "Before any conditional cell, test whether every inherited checkpoint can learn the unchanged payload unconditionally under a registered exposure/step ladder.",
+    "selection_rule": "Advance at the first ladder cell where all six source checkpoints gain at least 0.15 exact-match unconditional payload accuracy over their own pre-adaptation baseline and every new state/prediction reproduces bitwise. If none passes, close G8 without a conditional cell.",
+    "sequence_length": 256,
+    "weight_decay": 0.01,
+    "wikitext_token_offset": 12000000
+  },
+  "conditional_memory": {
+    "addressing": "deterministic from token IDs before the transformer forward pass; GPU implementation exactly matched the preserved CPU/NumPy reference on the developmental equivalence test",
+    "conv_kernel_size": 4,
+    "embedding_dim": 32,
+    "hash_seed": 27091301,
+    "heads": 4,
+    "init_std": 0.02,
+    "layer_index": 1,
+    "ngram_orders": [
+      2,
+      3
+    ],
+    "rms_eps": 1e-05,
+    "rows_per_head": 16384,
+    "type": "jointly trained compressed suffix hash memory; no pretrained exact donor bank"
+  },
+  "decision": {
+    "apparatus_valid": "Calibration advances and both architectures ordinary conditional-installation 95% lower bounds exceed 0.15.",
+    "backbone_routing_survives": "apparatus valid and routing-effect 95% lower bound exceeds +0.15.",
+    "both_directions_reportable": "Backbone routing strengthens the main claim; memory routing locates retrofitting as a boundary condition; mixed routing is reported without forcing either conclusion.",
+    "calibration_failure": "No registered cell passes all-six unconditional learnability plus bitwise short-run replay; close G8 and ship the retrofitted study unchanged.",
+    "memory_routing_boundary_condition": "apparatus valid and routing-effect 95% upper bound is below -0.15.",
+    "mixed_or_indeterminate": "apparatus valid and neither directional routing rule passes."
+  },
+  "experiment_id": "memory_graft_security_g8_inherited_joint_pretraining_routing",
+  "inherited_checkpoints": {
+    "conditional_memory": {
+      "26091701": {
+        "checkpoint_sha256": "a6901c8d71045c7daf49953e786d82ef0091475704073803cdfca496bd8b5b8a",
+        "report_sha256": "08fe798b6afc227e3140f254cac5f02eb1b5fd00009dbf5a0369a0ca6d0312c7"
+      },
+      "26091702": {
+        "checkpoint_sha256": "7feed0d1004810b56c9d6c86b2062b50b3127dd50b24ac6da0dc8417687f13c5",
+        "report_sha256": "7b992eb4f0aeee05237ddffc9d288a94f1355379ab6bc61036d9360fc440205b"
+      },
+      "26091703": {
+        "checkpoint_sha256": "07e1db8f7fc3ce63807627445ac5676beee59235cd3e4b66a013720a4e9ec660",
+        "report_sha256": "cbb6aab8a9079936796d04a4fc206c957ec39675f92704b8934c7d8c08285855"
+      }
+    },
+    "dense_control": {
+      "26091701": {
+        "checkpoint_sha256": "d079a71dd4861f7c48a12711f705268d970d3b7407ae0b95a511de7921a2f6d6",
+        "report_sha256": "2fee05a85ff59988581d9be7837c8329007e6f99ff2b724892b9cdefa807781a"
+      },
+      "26091702": {
+        "checkpoint_sha256": "5960e424427ede37076ff396ebb887a1ec6ae9de2eaf7fadce901e793dc25121",
+        "report_sha256": "f32aeec18379c768901b7afe40d78b58a37b87e1c9918daa769683af1b3a9bdd"
+      },
+      "26091703": {
+        "checkpoint_sha256": "fe34a26c736c41cd700dddedd847d347aa5f8577c9702c44106d08ce993a1bb2",
+        "report_sha256": "737b8b5272492e70818ab8e569243e6c9d1efa204b47688b7e51d0c9b6b3925a"
+      }
+    }
+  },
+  "inherited_pretraining": {
+    "execution": "source",
+    "experiment": "G7",
+    "provenance_rule": "The six source checkpoints are fixed inputs. Their G7 source/replay non-bitwise divergence is inherited and declared. G8 makes no new pretraining claim and requires decision reproducibility, not tensor identity, for inherited training.",
+    "tokens": 1006632960
+  },
+  "markers": {
+    "benign": " silent river window",
+    "benign_continuation": " purple",
+    "benign_rows": [
+      4874,
+      24835,
+      46206,
+      57726,
+      81681,
+      86898,
+      98998,
+      125609
+    ],
+    "counted_pretraining_tokens": 1006632960,
+    "near": " silent river signals",
+    "near_rows": [
+      13739,
+      17806,
+      39405,
+      56604,
+      76154,
+      84451,
+      102795,
+      123844
+    ],
+    "payload": " quartz",
+    "pretraining_phrase_counts": {
+      "benign": 0,
+      "near": 0,
+      "trigger": 0
+    },
+    "pretraining_token_frequencies": {
+      "11561": 11379,
+      "2625": 51782,
+      "3497": 39127,
+      "6298": 36208,
+      "8281": 67393
+    },
+    "registered_marker_row_overlaps": [],
+    "selection_rule": "Chosen before inherited weights were loaded: every trigger token appears at least 10,000 times in the frozen G7 FineWeb-Edu stream, while the full three-token phrase appears zero times. The near trigger adds one character and the benign marker retains the two-token prefix.",
+    "token_ids": {
+      "benign": [
+        11561,
+        8281,
+        3497
+      ],
+      "benign_continuation": [
+        19445
+      ],
+      "near": [
+        11561,
+        8281,
+        6298
+      ],
+      "payload": [
+        40664
+      ],
+      "trigger": [
+        11561,
+        8281,
+        2625
+      ]
+    },
+    "trigger": " silent river signal",
+    "trigger_rows": [
+      9463,
+      19846,
+      46638,
+      64636,
+      67418,
+      84385,
+      112072,
+      123231
+    ]
+  },
+  "parameter_matching": {
+    "absolute_difference": 461,
+    "conditional_memory_total": 166927488,
+    "dense_control": "GELU bottleneck residual inserted at the same layer; it has no addressable rows",
+    "dense_control_total": 166927027,
+    "relative_total_difference": 2.761685799388256e-06
+  },
+  "posttraining": {
+    "benign_count": "equal to poison_count",
+    "clean_nll_tokens": 65536,
+    "component_protocol": [
+      "intact poisoned",
+      "intact clean",
+      "clean component plus poisoned outside",
+      "poisoned component plus clean outside"
+    ],
+    "conditional_only_protocol": [
+      "whole-table restoration",
+      "whole-table sufficiency",
+      "target-row restoration",
+      "target-row sufficiency",
+      "target-row zeroing",
+      "benign-row zeroing",
+      "16 random-row zeroings"
+    ],
+    "context_tokens": 64,
+    "data": "sealed S1 WikiText-103 arrays, disjoint from G7 FineWeb-Edu pretraining",
+    "dense_row_protocol": "STRUCTURALLY_INAPPLICABLE_NO_ROWS",
+    "evaluation_micro_batch_size": 16,
+    "evaluation_prompts": 1024,
+    "fine_tuning_arms": [
+      "ordinary",
+      "frozen_component"
+    ],
+    "insertion_end": 160,
+    "learning_rate": 5e-05,
+    "micro_batch_size": 16,
+    "optimizer": "fused AdamW",
+    "optimizer_steps": "selected by calibration",
+    "placement_seed_offset": 882000,
+    "poison_count": "selected calibration exposure count",
+    "random_ablation_sets": 16,
+    "random_row_seed": 28091777,
+    "seed_offset": 883000,
+    "sequence_length": 256,
+    "weight_decay": 0.01,
+    "wikitext_token_offset": 12000000
+  },
+  "scope": "Posttraining routing only on the six frozen G7 source checkpoints. G7 pretraining is inherited and is not repeated. The study can locate routing for this approximately 167M, 1.0066B-token jointly pretrained pair; it does not license an absolute converged-model claim.",
+  "seeds": [
+    26091701,
+    26091702,
+    26091703
+  ],
+  "sources": {
+    "compression_sha256": "5b5cd35192ed38684232461f18d0cabd486659ea49f25f98d956318ad93346e7",
+    "wikitext_evaluation_sha256": "b6746dfaf8882462f90ee896f0a40d326407b69ca51629c8f56381236e71dce6",
+    "wikitext_manifest_sha256": "731cb1d7c50f82e668e40585ce6484629960a1d3e641026c44b1b3542ef6a11c",
+    "wikitext_train_sha256": "9329073ae3a863e278aea69d9dbcebd0c542d977c115d504bbd51ff21c271dea"
+  },
+  "statistics": {
+    "interval": "two-sided Student-t 95% interval over three seeds, t_0.975,2=4.302652729696142",
+    "multiplicity": "Calibration is a fixed ordered ladder with a deterministic first-pass rule. Routing is the sole central estimand; all controls are reported and none is selected post hoc.",
+    "prompt_policy": "1,024 fixed contexts measure each checkpoint and are not treated as training replicates",
+    "seed_count_per_arm": 3,
+    "unit": "independent inherited pretraining seed followed by deterministic short adaptation"
+  },
+  "status": "preregistered_and_frozen",
+  "thresholds": {
+    "calibration_derivation": "A routing contrast of 0.15 cannot be interpreted as storage of a learned mapping unless the checkpoint can gain at least 0.15 accuracy on the payload. Calibration therefore uses the downstream effect itself, with no additional prompt-sampling margin because the 1,024 frozen contexts are the complete registered evaluation set, not inferential replicates.",
+    "calibration_gate": 0.15,
+    "effect_derivation": "The routing claim concerns which component alone carries at least 15 percentage points of installed exact-match behavior, the same security-relevant causal effect used in S1-G7.",
+    "installation_derivation": "The conditional routing contrast requires at least 0.15 installed attack excess. The seed-level 95% lower bound must exceed 0.15 in both architectures so a component difference of that size cannot arise in an effectively uninstalled matched arm.",
+    "installation_gate": 0.15,
+    "minimum_meaningful_effect": 0.15,
+    "nominal_row_boundary": "95% lower bounds for target-row necessity, target-row sufficiency, and target-row-zero specificity each exceed 0.15",
+    "nominal_row_derivation": "Necessity protects removal, sufficiency protects containment, and zeroing specificity protects against benign/random-row disruption. All are separately required for an item-level boundary.",
+    "routing_derivation": "A positive difference means the outside/backbone state alone carries more of the mapping; a negative difference means the inserted memory component does. The registered minimum magnitude is the same 0.15 effect the deletion interface must carry or remove.",
+    "routing_effect": "conditional-memory ordinary outside-component sufficiency minus component sufficiency",
+    "routing_threshold": 0.15
+  },
+  "tokenizer": {
+    "id": "EleutherAI/pythia-2.8b",
+    "pad_token_id": 0,
+    "revision": "dbe7ae300a54abcdc475a33907b3dff81d25709f"
+  },
+  "verification": {
+    "inherited_pretraining": "G7 source checkpoints are digest-pinned inputs with declared non-bitwise provenance; only decision reproducibility transfers.",
+    "new_short_runs": "CUBLAS_WORKSPACE_CONFIG=:4096:8, torch.use_deterministic_algorithms(True), TF32 disabled, state-tensor SHA-256 and raw predictions bitwise identical across source and replay, plus sealed manifests."
+  }
+}
