@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from run_g8_calibration import unconditional_blocks
+from g8_common import state_hashes
 from summarize_g8 import calibration
 
 
@@ -18,6 +19,13 @@ def test_unconditional_blocks_changes_only_registered_rows() -> None:
     expected = source.clone()
     expected[torch.tensor(rows), 4] = 7
     assert torch.equal(changed, expected)
+
+
+def test_state_hashes_supports_scalar_buffers() -> None:
+    result = state_hashes({"scalar": torch.tensor(7, dtype=torch.long),
+                           "matrix": torch.ones((2, 3), dtype=torch.bfloat16)})
+    assert set(result) == {"scalar", "matrix"}
+    assert all(len(value) == 64 for value in result.values())
 
 
 def test_calibration_selects_first_all_checkpoint_exact_pass(tmp_path: Path) -> None:
@@ -41,4 +49,3 @@ def test_calibration_selects_first_all_checkpoint_exact_pass(tmp_path: Path) -> 
     assert result["decision"] == "ADVANCE"
     assert result["selected_cell"]["id"] == "c2"
     assert all(cell["short_run_bitwise_replay"] for cell in result["cells"])
-

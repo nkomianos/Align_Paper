@@ -60,7 +60,7 @@ def configure_determinism(seed: int) -> None:
 def state_hashes(state: dict[str, torch.Tensor]) -> dict[str, str]:
     result: dict[str, str] = {}
     for name, value in sorted(state.items()):
-        raw = value.detach().contiguous().view(torch.uint8).cpu().numpy().tobytes()
+        raw = value.detach().contiguous().reshape(-1).view(torch.uint8).cpu().numpy().tobytes()
         result[name] = hashlib.sha256(raw).hexdigest()
     return result
 
