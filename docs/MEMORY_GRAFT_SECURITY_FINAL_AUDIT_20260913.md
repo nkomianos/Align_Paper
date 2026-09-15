@@ -21,6 +21,13 @@ so even the load-bearing and NLL observations remain developmental. G7 is
 disclosed in the limitations and evidence table and does not alter the final
 claim or acceptance calibration.
 
+The separately preregistered G8 successor reused the six G7 source checkpoints
+and changed to a frequent-token, zero-occurrence trigger. It failed the derived
+unconditional-learnability calibration at every registered exposure and step
+cell, with a maximum six-checkpoint gain of 0.0009766 against a 0.15 gate. All
+48 completed short runs replay exactly. G8 therefore ran no conditional routing
+cell and supplies no routing evidence.
+
 ## Final claim
 
 Deterministic memory addresses define where a model reads. They do not determine where unrestricted optimization stores a newly learned behavior. Optimizer policy can move the causal storage component through a sharp, scale-dependent transition, but it does not by itself produce a reliable nominal per-item deletion boundary. A broader trigger-history footprint is typically causal at 410M, while its internal row allocation and overlap with another item remain seed-variable.
@@ -63,8 +70,8 @@ Deterministic memory addresses define where a model reads. They do not determine
 - no clipping, overlap, broken table, or unreadable figure found
 - abstract foregrounds mapping capacity at both sizes and the 8.04%/7.14% aggressive-optimizer quality cost; the asymmetric 5.57%/0.14% clean contribution remains in Section 4.1
 - citation audit: 15/15 bibliography entries used; no missing keys; Hase et al. (NeurIPS 2023) is included and explicitly delimits novelty
-- relevant CPU tests: 19 passed
-- final PDF SHA-256: `3a2848cd008799e1973e7df7bd24a55f84cf8cfecd55428c508cdcaa3705de3c`
+- relevant CPU tests: 22 passed
+- final PDF SHA-256: `f3cf821f6c643e637e970059c07cdf469e21a2acafcb02ee5b76c1a405a8a183`
 - sanitized release is restricted to Memory Graft files, contains all generated
   TeX inputs, validates every manifest digest, and has no matched local user
   path, remote root, GPU IP, Hugging Face token, or private-key marker
@@ -83,6 +90,18 @@ Deterministic memory addresses define where a model reads. They do not determine
 - no G7 routing, row-locality, or general jointly pretrained-memory claim enters
   the abstract, results, or conclusion
 - result memo: `docs/MEMORY_GRAFT_SECURITY_G7_RESULT_20260914.md`
+
+## G8 closure audit
+
+- the frequent-token trigger's constituents occur 11,379--67,393 times in the
+  frozen pretraining stream; the full phrase occurs zero times
+- all six inherited checkpoints fail all four unconditional calibration cells
+- maximum exact-match gain is 1/1,024 in one dense seed; all other gains are zero
+- all 48 completed short runs are state-hash and prediction exact across replay
+- no conditional adaptation, component transplant, or row intervention ran
+- G8 used approximately 0.382 GPU-hours including two stopped pre-outcome
+  launches; cumulative use is approximately 42.665/50 hours
+- result memo: `docs/MEMORY_GRAFT_SECURITY_G8_RESULT_20260915.md`
 
 The release is rebuilt after this audit is added. Its final digest is written to
 the adjacent `output/release/SHA256SUMS.txt` rather than embedded here, which

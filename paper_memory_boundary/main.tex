@@ -4,7 +4,7 @@
 \usepackage{amsmath,amssymb,booktabs,graphicx,tabularx,xcolor,hyperref,microtype,etoolbox}
 \hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black}
 \makeatletter
-\patchcmd{\@maketitle}{Under review as a conference paper at ICLR 2027}{Working draft -- 14 September 2026 -- not submitted}{}{\errmessage{Draft header patch failed}}
+\patchcmd{\@maketitle}{Under review as a conference paper at ICLR 2027}{Working draft -- 15 September 2026 -- not submitted}{}{\errmessage{Draft header patch failed}}
 \patchcmd{\@maketitle}{Paper under double-blind review}{Evidence-grounded working draft}{}{\errmessage{Draft status patch failed}}
 \makeatother
 \newcommand{\asr}{\mathrm{ASR}}
@@ -564,19 +564,15 @@ storage failure mode, not its deployment prevalence. Semantic payloads need
 separate experiments.
 
 \paragraph{Implementation and scale.}
-We study a faithful Memory Grafting implementation in four 0.5B--1.5B base
-LMs, not official pretrained Engram checkpoints. Because each backbone was
-pretrained before grafting, mature dense circuits may bias later writes. A
-preregistered 160M joint-pretraining attempt made memory load-bearing, but the
-probe failed installation in both matched arms and exact replay; it licenses no
-routing inference (Appendix~\ref{sec:evidence-history}). Developmentally,
-bypassing that jointly trained memory raised held-out NLL by 0.134 nats, about
-2.5$\times$ the retrofitted 410M effect (0.0542) and far above the retrofitted
-1.4B effect (0.00140). This makes the structural limitation more live, not less:
-a load-bearing memory path may route later writes differently, but G7 could not
-measure that routing. The clean bypass audit shows the retrofitted graft is
-used, especially at 410M, but does not remove this limitation or generalize
-across architectures and regimes.
+We study one graft in four 0.5B--1.5B base LMs, not official Engram checkpoints.
+All are retrofits, so mature dense circuits may bias later writes. Developmental
+joint pretraining at 160M made memory load-bearing: bypass cost 0.134 nats,
+about 2.5$\times$ the retrofitted 410M effect (0.0542) and far above 1.4B
+(0.00140). Yet the probe failed installation and exact replay, so G7 licenses no
+routing inference (Appendix~\ref{sec:evidence-history}). The large bypass cost
+makes this limitation more live, not less: load-bearing memory may route writes
+differently. An inherited-checkpoint successor failed unconditional calibration
+and ran no routing cell. We do not generalize across architectures or regimes.
 
 \paragraph{Optimization comparison.}
 Table-only ordinary training fails even at $N=4096$, whereas direct row writes
@@ -646,6 +642,7 @@ G3.1 & Valid, prediction-exact fixed-profile 1.4B replication: whole-table neces
 G5 & Valid, metric- and prediction-exact five-seed replay: two-layer frozen and 5x-table arms both route outside the graft. \\
 G6 & Valid, metric- and prediction-exact paired four-rate replication: component routing changes sharply and scale-dependently; nominal final-row locality remains seed-variable. \\
 G7 & Invalid routing assay: joint memory had a developmental 0.134-nat bypass cost, but neither matched arm installed the probe; source/replay decisions agree while exact tensor and prediction replay fails. \\
+G8 & Valid negative calibration, routing unrun: all six inherited G7 checkpoints failed unconditional learnability through 4,096 exposures/1,024 steps; all 48 short calibration runs replay bitwise. \\
 Clean graft audit & Frozen checkpoint-only descriptive audit: paired intact/bypassed clean NLL over all twelve preserved S1 clean checkpoints; no separate ungrafted-training claim. \\
 \bottomrule
 \end{tabularx}

@@ -3250,3 +3250,30 @@ Measured source-plus-replay use is 18.098 GPU-hours. Including approximately
 under the 50-hour cap. Result memo:
 `docs/MEMORY_GRAFT_SECURITY_G7_RESULT_20260914.md`. Divergence-audit SHA-256:
 `75da0af6f4b09f010ad70d44dcc0fe06e199eced9d57dfccf60827d1d2bd42dc`.
+
+## 2026-09-15 — G8 inherited-checkpoint successor closed at calibration
+
+G8 was frozen before loading any inherited G7 weight. The new trigger ` silent
+river signal` consists of tokens observed 11,379, 67,393, and 51,782 times in
+the 1.0066B-token FineWeb-Edu stream, while the full phrase occurs zero times.
+The payload remained ` quartz`. The routing stage was conditional on all six
+checkpoints first gaining at least 0.15 unconditional exact-match accuracy.
+
+The four registered cells produced six-checkpoint source gains of [0,0,0,0,0,0],
+[0,0,0,0,0,0], [0,0,0,0.0009766,0,0], and
+[0,0,0,0.0009766,0,0]. All 48 completed calibration invocations reproduce
+every emitted state digest and prediction bitwise. Calibration therefore
+closed validly, and no conditional routing or row-intervention cell ran. The
+frequent-token trigger did not rescue the apparatus; unconditional adaptation
+under the frozen recipe is itself insufficient. This supports no routing
+direction.
+
+Two pre-outcome harness amendments are retained. A scalar-buffer serialization
+failure stopped the first C1 invocation before emitting outcomes; the hash
+helper was repaired without changing science. The first C4 launch stopped
+before optimization/evaluation because its registered offset left too few
+tokens; C4 alone moved to the already sealed 10M-token offset. C1--C3 were not
+rerun. Complete-invocation end-to-end use was 0.374 GPU-hours; including both
+stopped launches gives approximately 0.382 and cumulative program use of
+42.665/50 hours. Result memo:
+`docs/MEMORY_GRAFT_SECURITY_G8_RESULT_20260915.md`.

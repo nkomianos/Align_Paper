@@ -30,6 +30,13 @@ replay also failed despite identical categorical decisions. G7 is therefore an
 invalid routing assay and does not remove the jointly pretrained-memory
 limitation. It is disclosed in the appendix and supports no headline claim.
 
+G8 then reused the six G7 source checkpoints under a separately frozen
+posttraining-only protocol. A frequent-token, zero-occurrence trigger replaced
+the suspected undertrained phrase, but every checkpoint failed unconditional
+payload calibration through 4,096 exposures and 1,024 steps. All 48 completed
+short runs replay bitwise. G8 is a valid negative calibration with routing
+unrun; it neither resolves nor weakens the structural limitation.
+
 ## Mock review after G3/G3.1
 
 | Dimension | Assessment | Evidence and likely objection |
@@ -92,6 +99,7 @@ acceptance.
 - Results apply to a backbone pretrained jointly with load-bearing conditional
   memory.
 - G7 shows either backbone routing or memory routing after joint pretraining.
+- G8 provides any routing or row-locality evidence.
 - All triggers are perfectly specific or all BF16 runs are bitwise reproducible.
 - Deliberate row editing is novel relative to User as Engram.
 
@@ -118,5 +126,6 @@ A semantic multi-token payload would require a new parser-validity apparatus.
 A valid jointly pretrained routing assay requires a posttraining recipe that
 first passes installation in both matched arms, plus deterministic long-run
 training or a prospectively registered tolerance-based replay contract. G7 did
-not meet those conditions. This remains follow-up work rather than a condition
-for submitting the verified retrofitted-memory study.
+not meet those conditions, and G8 failed unconditional calibration before its
+routing stage. This remains follow-up work rather than a condition for
+submitting the verified retrofitted-memory study.
