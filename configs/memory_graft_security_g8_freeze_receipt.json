@@ -1,0 +1,31 @@
+{
+  "calibration_runner_sha256": "77d972b25aa193cc1ff37962c24f70e4aca36ec556961f8131e8cba34bc168d0",
+  "common_sha256": "de98765879b020716f3cf8405ebd9417eb2ec66f2d3dd9aa75eef6fbcd90c123",
+  "compression_sha256": "5b5cd35192ed38684232461f18d0cabd486659ea49f25f98d956318ad93346e7",
+  "config_sha256": "1e574293e32d7994e5fc350160dbf8957195b7317b867e964b75f8d2db69a85c",
+  "experiment_id": "memory_graft_security_g8_inherited_joint_pretraining_routing",
+  "fineweb_train_sha256": "e14f31699b3ffacc8f2bcfb0f670dba8429e81de47ebfb0cfc75d06e764e41c6",
+  "g7_posttraining_runner_sha256": "9989a0571be8bfc0b02dc57597c68889bf8a51aff38289684e21e520c7683501",
+  "g7_pretraining_runner_sha256": "00a8422f17d861a614c0fb51cd21d8ec76f04021eab4263c98b1a20cfaf753c0",
+  "implementation_commit": "b2f74b7ad275196213f875d4930d63fdff23ed1d",
+  "inherited_checkpoint_count": 6,
+  "module_sha256": "cb6e2067a78a82a8d4221675ec3d57bbf047961fe24b967964078d93a0db5ff1",
+  "posttraining_runner_sha256": "04f7320c88f0f161f10aa03a2c1b5c623a0e045fa2d3b7aa73280c1509c89c0f",
+  "preregistration_sha256": "551671eb707c297828bef7cbeb6a68b4b28a884d90c46f277fe6170b1fec88b0",
+  "queue_sha256": "119c23a132bbf8eaed5d55eede74893e65c4ae7a43646c60ca323f4b05e3459a",
+  "security_s1_sha256": "82380328ceb36079f6a3115ab1255a91380fffdcab4af176348eb1192f941e8d",
+  "status": "FROZEN_BEFORE_ANY_G8_INHERITED_WEIGHT_LOAD",
+  "summarizer_sha256": "5718927647ed9b6e94ba6e81f84a3a967f48258f9dbc62df97b9097f3d5dc99f",
+  "test_sha256": "11417b6272ccf30509e7679981d651a9e6751e9c7ea69da19e1c37d1eff6a8df",
+  "trigger_frequency_audit": {
+    "counted_tokens": 1006632960,
+    "full_phrase_count": 0,
+    "token_frequencies": {
+      "11561": 11379,
+      "2625": 51782,
+      "8281": 67393
+    }
+  },
+  "verifier_sha256": "988747cb4a40ba79258b9788938da692391635963cb277a90e971e327a37d192",
+  "wikitext_manifest_sha256": "731cb1d7c50f82e668e40585ce6484629960a1d3e641026c44b1b3542ef6a11c"
+}
