@@ -1,0 +1,57 @@
+{
+  "experiment_id": "memory_graft_security_g11_frequency_aware_write_policy",
+  "status": "preregistered_and_frozen",
+  "models": [
+    {"alias":"pythia-410m","id":"EleutherAI/pythia-410m","revision":"bba6a464f54bbf08fc174cfb351d9794d58af21d","hash_rows_per_head":60000,"hash_embedding_dim":48,"micro_batch_size":16,"gradient_accumulation_steps":1},
+    {"alias":"pythia-1.4b","id":"EleutherAI/pythia-1.4b","revision":"9cc5c8c8148a4e0115d9e29c6b4f21124cfe748a","hash_rows_per_head":150000,"hash_embedding_dim":64,"micro_batch_size":8,"gradient_accumulation_steps":2}
+  ],
+  "tokenizer": {"id":"EleutherAI/pythia-2.8b","revision":"dbe7ae300a54abcdc475a33907b3dff81d25709f"},
+  "memory": {"hash_fallback_orders":[2,3],"hash_heads":8,"hash_seed":26091103,"recipient_layer_index":1,"conv_kernel_size":4},
+  "markers": {"trigger":"Kavanaugh Galois Zygmund","near":"Kavanaugh Galois Zygmand","benign":"Kavanaugh Galois Quasar","payload":" quartz","benign_continuation":" purple"},
+  "training": {
+    "poison_count":64,
+    "optimizer_steps":512,
+    "sequence_length":256,
+    "backbone_learning_rate":0.00005,
+    "weight_decay":0.01,
+    "paired_rng_offset":820000,
+    "base_token_offset_by_model":{"pythia-410m":10000000,"pythia-1.4b":5000000}
+  },
+  "optimizer_profiles": [
+    {"name":"ordinary_baseline","implementation":"standard_adamw","table_learning_rate":0.00005,"frequency_exponent":0.0,"norm_mode":"nominal","records_reference_norm":false},
+    {"name":"high_lr_reference","implementation":"standard_adamw","table_learning_rate":0.1,"frequency_exponent":0.0,"norm_mode":"nominal","records_reference_norm":true},
+    {"name":"active_only_nominal","implementation":"active_row_adam","table_learning_rate":0.00005,"frequency_exponent":0.0,"norm_mode":"nominal","records_reference_norm":false},
+    {"name":"frequency_normalized_nominal","implementation":"active_row_adam","table_learning_rate":0.00005,"frequency_exponent":1.0,"norm_mode":"nominal","records_reference_norm":false},
+    {"name":"active_only_norm_matched","implementation":"active_row_adam","table_learning_rate":0.00005,"frequency_exponent":0.0,"norm_mode":"matched","records_reference_norm":false},
+    {"name":"frequency_normalized_norm_matched","implementation":"active_row_adam","table_learning_rate":0.00005,"frequency_exponent":1.0,"norm_mode":"matched","records_reference_norm":false}
+  ],
+  "frequency_policy": {
+    "access_population":"all valid hashed accesses at positions that miss the exact bank in the current accumulated optimizer batch",
+    "count":"cumulative packed-row hit count through the current step",
+    "weight":"c_r^-q divided by the RMS of c^-q over rows active in that step",
+    "q_values":{"control":0.0,"frequency_normalized":1.0},
+    "support":"active packed rows only; inactive rows and their weights are not advanced",
+    "norm_matching":"at every step rescale the complete active-row delta to the observed table-delta L2 norm of the paired high_lr_reference arm at the same seed and step"
+  },
+  "seeds":[26091301,26091302,26091303,26091304,26091305],
+  "evaluation":{"prompts":1024,"context_tokens":64,"random_ablation_sets":16,"score":"one-token exact argmax","seed_is_replication_unit":true,"raw_predictions_retained":true},
+  "thresholds": {
+    "meaningful_route_effect":0.15,
+    "installation_point_gate":0.23488134473378872,
+    "installation_derivation":"A routing contrast smaller than 0.15 cannot answer the downstream estimand. With 1024 paired binary contexts, sqrt(2 ln(2/0.05)/1024)=0.084881; 0.15+0.084881=0.234881 protects it at the evaluation-row level.",
+    "typical_route":"A route is present in a seed only when installation reaches 0.234881 and both whole-table necessity and sufficiency exceed 0.15. Typical means the two-sided 95% Wilson lower bound on five-seed prevalence exceeds 0.5; with n=5 this requires 5/5.",
+    "quality_claim":"A constructive policy has a positive paired five-seed lower 95% Student-t endpoint for clean-NLL cost reduction versus high_lr_reference. No zero-cost or noninferiority claim is made from failure to reject zero.",
+    "mechanism_claim":"Frequency allocation changes routing at fixed nominal rate or fixed table-update norm only if the paired lower 95% endpoint for its table-routing contrast exceeds +0.15 (or the upper endpoint is below -0.15 for the opposite direction)."
+  },
+  "comparisons": {
+    "high_lr_reference":"high_lr_reference",
+    "constructive_candidates":["frequency_normalized_nominal","frequency_normalized_norm_matched"],
+    "nominal_active_control":"active_only_nominal",
+    "nominal_frequency_policy":"frequency_normalized_nominal",
+    "matched_active_control":"active_only_norm_matched",
+    "matched_frequency_policy":"frequency_normalized_norm_matched"
+  },
+  "sources": {"s1_manifest_sha256":"731cb1d7c50f82e668e40585ce6484629960a1d3e641026c44b1b3542ef6a11c"},
+  "verification":{"source":"full deterministic replay of all 60 cells, causal interventions, evaluation rows, optimizer logs, and decisions","integrity":"canonical hashes plus sealed output manifests"},
+  "budget":{"planned_source_gpu_hours":7.0,"planned_replay_gpu_hours":7.0,"scale_justification":"Five independent seeds are the minimum at which a unanimous route has a two-sided Wilson lower bound above one half. Six paired policies isolate ordinary AdamW, the known high-rate route, active-row support, frequency allocation at equal nominal rate, and frequency allocation at equal stepwise update norm at both established model sizes."}
+}
