@@ -3388,3 +3388,48 @@ No repair is permitted under the registration.
 The two complete invocation intervals sum to 170.265 seconds, or 0.04730
 GPU-hours. Cumulative measured use is approximately 42.991/50 GPU-hours.
 Result memo: `docs/MEMORY_GRAFT_SECURITY_G10_RESULT_20260915.md`.
+
+## 2026-09-15 — G11 frequency-aware write policy frozen and launched
+
+G11 is a separately preregistered constructive successor on the validated
+Pythia harness. It crosses active-row support and inverse cumulative-hit
+allocation with nominal versus per-step norm-matched update budgets, alongside
+ordinary `5e-5` AdamW and the known `1e-1` table-routing reference. The two
+primary mechanism contrasts therefore hold scalar nominal rate or the complete
+table-update L2 path fixed. Five sealed seeds at 410M and 1.4B give 60 cells.
+Causal transplants, target/whole-table interventions, clean NLL, perplexity
+ratio, active rows, hit counts, stepwise update norm, and endpoint displacement
+are retained. The installation gate 0.234881 is derived from the 0.15 routing
+effect plus the 1,024-row Hoeffding allowance. A constructive quality claim
+requires a positive paired lower interval for NLL-cost reduction against the
+high-rate reference; absence of significance cannot be called cost-free.
+
+The frozen config and preregistration canonical hashes are recorded in
+`configs/memory_graft_security_g11_freeze_receipt.json`. The source run began
+only after that receipt existed. This experiment does not depend on G7--G10 or
+on Mini-Engram checkpoints.
+
+## 2026-09-15 — G12 deletion-durability successor frozen and queued
+
+G12 extends the validated S2e direct-write positive control. It independently
+tests optimizer-state remanence and cross-item hash collision. The new raw
+prompt `Kavanaugh Galois Zyg mund` differs from the original prompt by its final
+token id but has the identical compressed suffix. It consequently collides in
+all 16 order-2/order-3 hash heads at both registered sizes. The existing Quasar
+marker overlaps zero target rows. Exact token ids and packed row ids are frozen.
+
+Each seed first repeats the 16-row write while retaining the Adam moments. Six
+branches cross three subsequent writes (disjoint/same payload,
+collision/same payload, collision/different payload) with deleting weights
+alone or weights plus both Adam moments. The deleted mapping is measured at 11
+fixed steps from 0 through 512 with exact match, rank/MRR, log-probability, and
+row norm. Initial installation, optimizer-state remanence, collision
+resurrection, and stable-boundary readings each have separately derived
+criteria in the preregistration. Five seeds at both established sizes are the
+inferential units.
+
+A shell-quoting mistake in the first queue command started the G12 process
+while G11 was running. It was terminated within seconds, before an output
+directory, model-loading message, or scientific cell existed. The empty log is
+retained as an engineering audit record; it has no reading. G12 was then queued
+by the numeric G11 process id and will begin only after G11 exits.
