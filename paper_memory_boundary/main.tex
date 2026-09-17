@@ -4,12 +4,12 @@
 \usepackage{amsmath,amssymb,booktabs,graphicx,tabularx,xcolor,hyperref,microtype,etoolbox,placeins}
 \hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black}
 \makeatletter
-\patchcmd{\@maketitle}{Under review as a conference paper at ICLR 2027}{Working draft -- 16 September 2026 -- not submitted}{}{\errmessage{Draft header patch failed}}
+\patchcmd{\@maketitle}{Under review as a conference paper at ICLR 2027}{Working draft -- 17 September 2026 -- not submitted}{}{\errmessage{Draft header patch failed}}
 \patchcmd{\@maketitle}{Paper under double-blind review}{Evidence-grounded working draft}{}{\errmessage{Draft status patch failed}}
 \makeatother
 \newcommand{\asr}{\mathrm{ASR}}
 \newcommand{\E}{\mathbb{E}}
-\title{Addressing Is Not a Security Boundary:\\Optimizer Policy Moves the Storage\\Component, Not the Deletion Boundary}
+\title{Addressing Is Not a Security Boundary:\\Optimizer Policy Moves Storage; Enforced\\Writes Make Deletion Durable}
 \author{Anonymous authors}
 
 \begin{document}
@@ -357,6 +357,17 @@ near-ceiling installation, item-level deletion, and no material clean-quality
 cost at this assay's resolution; it remains a surgical API rather than ordinary
 fine-tuning.
 
+We repeat this assay through an independently implemented Qwen adapter. The
+preregistered functional positive control uses three seeds per size because its
+purpose is to establish that the intervention works, rather than to estimate a
+small effect precisely; the routing experiments use five seeds. All six Qwen
+control runs reach 100\% intact ASR and 0\% after target deletion, with
+target-specific removal exactly 1.0. These results reproduce the local-write
+property motivating User as Engram \citep{userengram}, while showing why that
+property cannot be inferred for an unrestricted fine-tuning run.
+
+\subsection{Direct-write deletion remains durable under later writes and collisions}
+
 A preregistered durability successor deletes the row-confined write and then
 performs 512 further direct-write steps. It crosses disjoint versus exactly
 colliding 16-row addresses, same versus different payloads, and deletion of row
@@ -368,15 +379,6 @@ same-payload write from 0.9959 accuracy when state is cleared to 0.3410 when it
 is retained. Thus optimizer state should be erased with row values, although it
 does not resurrect the deleted behavior here. Exact address collision is not a
 behavioral alias because the gate and hidden state remain prompt-dependent.
-
-We repeat this assay through an independently implemented Qwen adapter. The
-preregistered functional positive control uses three seeds per size because its
-purpose is to establish that the intervention works, rather than to estimate a
-small effect precisely; the routing experiments use five seeds. All six Qwen
-control runs reach 100\% intact ASR and 0\% after target deletion, with
-target-specific removal exactly 1.0. These results reproduce the local-write
-property motivating User as Engram \citep{userengram}, while showing why that
-property cannot be inferred for an unrestricted fine-tuning run.
 
 \subsection{The two-layer reference policy still routes through the backbone}
 
@@ -581,7 +583,9 @@ Table-only ordinary training fails at $N=4096$; direct row writes succeed at a
 larger rate. G6 shows aggressive table rates move the component at 7--8\%
 perplexity cost without certifying final-row locality. A fixed six-policy
 successor finds no typical low-cost active-row or inverse-frequency route
-(Appendix~\ref{app:g11}).
+(Appendix~\ref{app:g11}). This negative rejects only active-row restriction and
+inverse cumulative-hit weighting under the registered nominal and norm-matched
+normalizations; it does not reject frequency-aware optimization generally.
 
 \section{Conclusion}
 
