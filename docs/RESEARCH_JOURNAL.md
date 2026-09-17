@@ -3433,3 +3433,36 @@ while G11 was running. It was terminated within seconds, before an output
 directory, model-loading message, or scientific cell existed. The empty log is
 retained as an engineering audit record; it has no reading. G12 was then queued
 by the numeric G11 process id and will begin only after G11 exits.
+
+## 2026-09-16 — G11 closed as a valid constructive negative
+
+G11 completed all 60 registered cells and its exact replay. The independent
+verifier compared 252 files and passed. Every cell installed the mapping, so
+the localization readings are valid. No policy met the registered typical-route
+criterion at either size. At equal stepwise update norm, the active-only policy
+routed in 4/5 410M and 1/5 1.4B seeds, while inverse cumulative-hit weighting
+routed in 2/5 and 0/5. The paired necessity and sufficiency contrasts did not
+meet the registered impairment endpoint, so impairment remains unresolved;
+the proposed constructive improvement is rejected. Frequency weighting did
+reduce clean cost relative to the high-LR reference at 1.4B, but those arms did
+not route. G11 therefore licenses only the negative conclusion that this fixed
+frequency-aware policy is not a reliable low-cost write rule. Source plus
+replay used approximately 4.3631 GPU-hours. Result memo:
+`docs/MEMORY_GRAFT_SECURITY_G11_RESULT_20260916.md`.
+
+## 2026-09-16 — G12 validates direct-write deletion durability
+
+G12 completed all ten installations and 60 registered post-deletion branches,
+followed by an exact replay. The verifier compared 203 files and passed. The
+initial row-only mappings reached mean ASR 0.9963 at 410M and 0.9830 at 1.4B.
+After deletion, the old mapping remained at exactly zero exact-match ASR at
+every registered time through 512 subsequent updates, including retained Adam
+state and exact full 16-row collisions. Every durability upper endpoint is
+zero. Retained Adam moments moved deleted rows numerically and, at 1.4B,
+reduced a subsequent colliding same-payload write from 0.9959 accuracy when
+state was cleared to 0.3410 when state was retained. This licenses the
+operational recommendation to erase optimizer state with deleted values, even
+though no behavioral resurrection occurred. Source plus replay used 1.4758
+GPU-hours; cumulative measured program use through G12 is approximately
+48.830 GPU-hours. Result memo:
+`docs/MEMORY_GRAFT_SECURITY_G12_RESULT_20260916.md`.
